@@ -1,57 +1,111 @@
-# Harness
+# Brain Harness
 
-> **Modular agent harness — everything is a plugin.**
+> **A modular, autonomous agent harness where *everything* is a plugin — and the harness becomes a reflection of your brain.**
 
-A Python-native framework where models, tools, agent loops, storage, and sandboxes are all swappable plugins running on a lightweight IoC micro-kernel. Inspired by DeepSeek Harness's "everything is a plugin" philosophy, built for the existing AI Agent & Forensic Simulation Ecosystem.
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-emerald.svg)](LICENSE)
+[![Tests](https://img.shields.io/badge/tests-443%20passed-brightgreen.svg)](tests/)
 
-## Key Features
+**Brain Harness** is an unopinionated, high-performance agent runtime engineered on an IoC micro-kernel architecture. Rather than locking you into a static collection of hardcoded tools, Harness is a **blank cognitive canvas** that ingests any GitHub repository, local project, ZIP archive, OpenAPI specification, or custom skill into an isolated, sandboxed plugin.
 
-- **IoC Micro-Kernel** — Service context with typed keys, dependency injection, and automatic cleanup
-- **Plugin Lifecycle** — `DISCOVERED → LOADED → VALIDATED → ENABLED → DISABLED → UNLOADED` with dependency resolution
-- **Event Bus** — Append-only event stream for observability and debugging
-- **GitHub → Plugin Pipeline** — `harness plugin add <github-url>` downloads, inspects, and auto-converts any repository into a live plugin
-- **Subprocess Sandboxing** — Untrusted plugins run in isolated subprocesses via JSON-RPC
-- **CLI-First** — Simple commands, no server to manage
+When you install and configure plugins, **your harness becomes a direct reflection of your brain** — tailored to your exact domain, knowledge, and workflow.
 
-## Documentation
+---
 
-📖 See the complete **[User Manual & Reference Guide](USER_MANUAL.md)** for detailed CLI commands, plugin authoring tutorials, sandbox architecture, ecosystem bridge setup, and Python SDK guides.
+## 🧠 The Philosophy: Harness Your Brain
 
-## Quick Start
+1. **Clean Micro-Kernel Core**: Models, tools, memory, storage engines, and agent loops are all plugins registered into a unified Inversion of Control (IoC) container with typed `ServiceKey[T]` resolution.
+2. **Universal Ingestion Pipeline**: Point Harness at any public/private GitHub repository or local ZIP archive (`harness plugin add <url/zip>`). The engine auto-inspects code, generates schema manifests, and wraps the codebase into a sandboxed plugin.
+3. **Subprocess Isolation by Default**: Ingested plugins run in isolated subprocess sandboxes via line-buffered JSON-RPC over `stdin`/`stdout`, protecting host memory and enforcing strict resource limits.
+4. **Agent Skill Knowledge Graph**: Harness indexes structured agent skills (`SKILL.md` and `CARD.md`) into a directed knowledge graph, enabling autonomous multi-step skill chaining, semantic intent routing, and anti-pattern defense.
+5. **Interactive Web Control Room & CLI**: Full visibility through live terminal commands, an interactive Web dashboard, and an append-only event stream.
+
+---
+
+## ⚡ Quick Start
+
+### 1. Installation
+```bash
+git clone https://github.com/SpectreDeath/Brain-Harness.git
+cd Brain-Harness
+pip install -e ".[dev]"
+```
+
+### 2. Initialize Your Workspace
+```bash
+harness init
+```
+
+### 3. Ingest Repositories & Shape Your Harness
+Ingest any repository or archive to create live agent plugins:
 
 ```bash
-pip install -e ".[dev]"
+# Ingest from GitHub
+harness plugin add https://github.com/psf/requests
 
-# Initialize a workspace
-harness init
+# Ingest from a local repository or ZIP archive
+harness plugin add ./path/to/my-custom-tools.zip
 
-# Add a plugin from GitHub
-harness plugin add https://github.com/owner/repo
-
-# List plugins
+# Inspect installed plugins
 harness plugin list
+```
 
-# Start the harness
+### 4. Query Skills & Run Autonomous Agents
+```bash
+# View the agent skill knowledge graph & visual brief
+harness skills graph --visual
+
+# Route an intent to matching skill chains
+harness skills route "fetch wine dataset from UCI and profile outliers"
+
+# Run an autonomous task using your ingested plugins
+harness agent run "Analyze open ports and generate a security report"
+
+# Start the interactive web control room
 harness run
 ```
 
-## Architecture
+---
+
+## 🏗️ Architecture Overview
 
 ```
-┌─────────────────────────────────────────────┐
-│                  CLI / API                   │
-├─────────────────────────────────────────────┤
-│              Service Context                 │
-│         (IoC Container + Registry)           │
-├──────────┬──────────┬───────────────────────┤
-│  Plugin  │  Event   │  GitHub → Plugin      │
-│  System  │  Bus     │  Ingestion Pipeline   │
-├──────────┴──────────┴───────────────────────┤
-│          Built-in Service Plugins            │
-│   (LLM · Storage · Tools · Sandbox)         │
-└─────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────────────────────────┐
+│                                 CLI & Web Dashboard                              │
+├──────────────────────────────────────────────────────────────────────────────────┤
+│                                  Harness Runtime                                 │
+│  ┌──────────────────────┬──────────────────────┬──────────────────────────────┐  │
+│  │   ServiceContext     │   PluginLifecycle    │          EventBus            │  │
+│  │  (Typed IoC Kernel)  │  (Topological Graph) │   (Append-Only Telemetry)    │  │
+│  └──────────────────────┴──────────────────────┴──────────────────────────────┘  │
+├──────────────────────────────────────────────────────────────────────────────────┤
+│                       Universal Ingestion & Sandbox Engine                       │
+│   • GitHub URL Fetcher & Inspector (AST analysis & auto-manifest)                │
+│   • ZIP / Local Codebase / OpenAPI / PyPI Converters                             │
+│   • Isolated Subprocess & Virtualenv Sandboxes (JSON-RPC Transport)              │
+├──────────────────────────────────────────────────────────────────────────────────┤
+│                              Core Service Plugins                                │
+│   • LLM Service (LiteLLM / OpenAI / Anthropic / Local LLMs)                      │
+│   • Dynamic Tool Registry & Dispatch Table                                       │
+│   • SQLite Storage Engine & Session State                                        │
+│   • Autonomous ReAct / Hierarchical Swarm Agent Loops                            │
+│   • Skill Knowledge Graph Service (Chaining & Routing)                           │
+├──────────────────────────────────────────────────────────────────────────────────┤
+│                              Your Ingested Plugins                               │
+│     [Your Repos]   [Your Domain Tools]   [Your APIs]   [Your Knowledge Skills]   │
+└──────────────────────────────────────────────────────────────────────────────────┘
 ```
 
-## Ecosystem
+---
 
-Part of the [AI Agent & Forensic Simulation Ecosystem](../README.md), alongside Memtext, Em-Cubed, Skill Flywheel, SME, and Strategify.
+## 📖 Documentation & Ecosystem
+
+- **[User Manual & Reference Guide](USER_MANUAL.md)**: Comprehensive guide covering CLI commands, custom plugin authoring, sandbox configurations, MCP server/client setup, and Python SDK usage.
+- **[Agent Standards (AGENTS.md)](AGENTS.md)**: Architectural invariants, code style conventions, and testing guidelines.
+- **Ecosystem Integration**: Native protocol bridges for **Memtext** (persistent memory & decision auditing), **Em-Cubed** (neuro-symbolic Prolog/Z3 surfaces), and **Model Context Protocol (MCP)**.
+
+---
+
+## 🛡️ License
+
+MIT License &copy; 2026. See [LICENSE](LICENSE) for details.

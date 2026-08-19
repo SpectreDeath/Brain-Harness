@@ -48,13 +48,17 @@
 
 ## 1. Introduction & Core Philosophy
 
-**Brain Harness** is an enterprise-grade agent execution environment engineered with a strict **micro-kernel architecture**.
+**Brain Harness** is an unopinionated, enterprise-grade agent execution environment engineered with a strict **micro-kernel architecture**.
+
+Rather than shipping a rigid, pre-packaged bundle of hardcoded domain tools, **Harness is a blank cognitive canvas**. By ingesting your own repositories, custom tools, ZIP archives, and agent skills, **your harness becomes a direct reflection of your brain**—tailored precisely to your domain, workflows, and thinking.
 
 ### Key Tenets
 - **Everything is a Plugin:** Models, tools, memory, storage engines, execution surfaces, and agent loops are all plugins registered into a unified Inversion of Control (IoC) container. No agent capability is hardcoded into the kernel.
+- **Your Brain, Your Harness:** Harness starts clean. You feed it GitHub URLs, local projects, or ZIP files (`harness plugin add <source>`), and the ingestion pipeline dynamically inspects, sandboxes, and mounts them into your personal runtime.
 - **Typed Service Keys:** All service registration, dependency injection, and resolution use typed `ServiceKey[T]` tokens rather than fragile raw strings.
 - **Transactional Lifecycle Management:** Plugins declare their dependencies (`requires`) and capabilities (`provides`). The lifecycle manager topologically sorts dependencies and ensures zero service leakage on plugin disabling or unloading.
 - **Subprocess Isolation by Default:** Ingested external code or untrusted tools execute in isolated subprocess sandboxes communicating via JSON-RPC over standard input/output (`stdin`/`stdout`).
+- **Agent Skill Knowledge Graph:** Declarative skill cards (`CARD.md` / `SKILL.md`) are automatically indexed into a directed knowledge graph, enabling autonomous multi-step skill chaining, semantic intent routing, and pre-commit failure-mode mitigation.
 - **Immutable Event Stream:** All system transitions, tool executions, agent reasoning steps, and errors are appended to an immutable audit log.
 
 ---
@@ -250,6 +254,26 @@ Available Tools (14):
 graph TD
   core_tools["core.tools"] --> core_storage["core.storage"]
   ...
+```
+
+---
+
+### Skill Knowledge Graph & Autonomous Chaining
+
+Harness indexes structured agent skills (`.agents/skills/` and plugin directories) into an in-memory directed knowledge graph with semantic intent routing, shortest-path chain synthesis, and anti-pattern defense:
+
+```bash
+# Display the graph and emit an interactive HTML Visual Brief in %TEMP%
+harness skills graph --visual
+
+# Route natural language intent to matching skills and recommended execution chains
+harness skills route "fetch wine dataset from UCI and profile distribution"
+
+# Compute the directed execution path between two skills
+harness skills chain structured-data-scout questio-reflection
+
+# Inspect topological dependencies, handoffs, and mitigated anti-patterns for a skill
+harness skills info questio-reflection
 ```
 
 ---
