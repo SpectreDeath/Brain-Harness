@@ -1,0 +1,34 @@
+{
+  "name": "domain.migration_assistant",
+  "version": "1.0.0",
+  "description": "Python framework migration checker (Pydantic v1 to v2, Python 3.10+ union syntax, unittest to pytest)",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "entrypoints": [
+    {
+      "name": "check_pydantic_v2_readiness",
+      "description": "Scan Python code for deprecated Pydantic v1 patterns (class Config, regex field parameter, validator decorator)",
+      "parameters": [
+        {
+          "name": "code",
+          "type": "string",
+          "description": "Python source code",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "check_python_version_compat",
+      "description": "Scan for deprecated legacy Python patterns (typing.Union instead of |, typing.Optional, distutils)",
+      "parameters": [
+        {
+          "name": "code",
+          "type": "string",
+          "description": "Python source code",
+          "required": true
+        }
+      ]
+    }
+  ]
+}

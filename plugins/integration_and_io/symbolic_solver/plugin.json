@@ -1,0 +1,64 @@
+{
+  "name": "plugin.symbolic_solver",
+  "version": "1.0.0",
+  "description": "Neuro-symbolic constraint solver, logic deduction, and safe arithmetic evaluation",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "entrypoints": [
+    {
+      "name": "solve_constraints",
+      "description": "Find satisfiable assignments for variables given mathematical and logical constraints",
+      "parameters": [
+        {
+          "name": "variables",
+          "type": "array",
+          "description": "List of variable definitions ({name, min, max, type})",
+          "required": true
+        },
+        {
+          "name": "constraints",
+          "type": "array",
+          "description": "List of constraint expressions as strings (e.g. 'x + y == 10', 'x > 2')",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "verify_logic_query",
+      "description": "Perform logical deduction over a set of facts and inference rules",
+      "parameters": [
+        {
+          "name": "facts",
+          "type": "array",
+          "description": "List of known ground facts (e.g. 'parent(alice, bob)')",
+          "required": true
+        },
+        {
+          "name": "rules",
+          "type": "array",
+          "description": "List of deduction rules (e.g. 'ancestor(X, Y) :- parent(X, Y)')",
+          "required": false
+        },
+        {
+          "name": "query",
+          "type": "string",
+          "description": "Query to prove or evaluate (e.g. 'parent(alice, bob)')",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "evaluate_math_expression",
+      "description": "Safely parse and calculate complex mathematical expressions without unsafe eval",
+      "parameters": [
+        {
+          "name": "expression",
+          "type": "string",
+          "description": "Mathematical expression (e.g. '2 ** 8 + (100 * 3.5) / sqrt(25)')",
+          "required": true
+        }
+      ]
+    }
+  ]
+}

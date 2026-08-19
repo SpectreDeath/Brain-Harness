@@ -1,0 +1,76 @@
+{
+  "name": "plugin.vector_index",
+  "version": "1.0.0",
+  "description": "Local semantic vector index, natural language code/doc retrieval, and hybrid search",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "entrypoints": [
+    {
+      "name": "vector_index_directory",
+      "description": "Scan and index source code or markdown documents in a directory for semantic search",
+      "parameters": [
+        {
+          "name": "path",
+          "type": "string",
+          "description": "Root directory path to index (default: '.')",
+          "required": false
+        },
+        {
+          "name": "extensions",
+          "type": "array",
+          "description": "List of file extensions to index (e.g. ['.py', '.md', '.json'], default: python & markdown)",
+          "required": false
+        },
+        {
+          "name": "chunk_lines",
+          "type": "integer",
+          "description": "Lines per document chunk (default: 30)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "vector_search_semantic",
+      "description": "Perform natural language semantic cosine search over the indexed chunks",
+      "parameters": [
+        {
+          "name": "query",
+          "type": "string",
+          "description": "Natural language search query",
+          "required": true
+        },
+        {
+          "name": "top_k",
+          "type": "integer",
+          "description": "Number of top results to return (default: 5)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "vector_search_hybrid",
+      "description": "Perform hybrid lexical + semantic search combining exact keyword and vector ranking",
+      "parameters": [
+        {
+          "name": "query",
+          "type": "string",
+          "description": "Semantic search query",
+          "required": true
+        },
+        {
+          "name": "keyword",
+          "type": "string",
+          "description": "Exact keyword to boost (optional)",
+          "required": false
+        },
+        {
+          "name": "top_k",
+          "type": "integer",
+          "description": "Number of top results to return (default: 5)",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

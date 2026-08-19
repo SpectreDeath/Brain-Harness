@@ -1,0 +1,52 @@
+{
+  "name": "domain.log_forensics",
+  "version": "1.0.0",
+  "description": "High-throughput SIEM log stream parser, anomaly detection, and incident timeline reconstructor",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "entrypoints": [
+    {
+      "name": "parse_log_stream",
+      "description": "Parse raw text log stream (Syslog, JSONL, Apache/Nginx, or standard key-value) into structured records",
+      "parameters": [
+        {
+          "name": "log_content",
+          "type": "string",
+          "description": "Raw log lines",
+          "required": true
+        },
+        {
+          "name": "format_hint",
+          "type": "string",
+          "description": "Optional format: 'jsonl', 'syslog', 'auto' (default: 'auto')",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "detect_log_anomalies",
+      "description": "Detect attack patterns (brute force, 4xx/5xx spikes, privilege escalation, suspicious IPs) in parsed logs",
+      "parameters": [
+        {
+          "name": "log_events",
+          "type": "array",
+          "description": "List of structured log dictionaries",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "build_incident_timeline",
+      "description": "Sort and synthesize a chronological incident timeline with severity tagging",
+      "parameters": [
+        {
+          "name": "log_events",
+          "type": "array",
+          "description": "List of log events",
+          "required": true
+        }
+      ]
+    }
+  ]
+}

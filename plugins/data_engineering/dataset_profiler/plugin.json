@@ -1,0 +1,58 @@
+{
+  "name": "domain.dataset_profiler",
+  "version": "1.0.0",
+  "description": "Tabular statistical profiling, outlier detection (Z-score), and correlation matrix calculator",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "entrypoints": [
+    {
+      "name": "profile_tabular_dataset",
+      "description": "Compute comprehensive statistics, null ratios, uniqueness, and distributions across all columns",
+      "parameters": [
+        {
+          "name": "records",
+          "type": "array",
+          "description": "List of tabular records",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "detect_outliers_zscore",
+      "description": "Detect numerical anomalies using standard Z-score deviations (> threshold)",
+      "parameters": [
+        {
+          "name": "values",
+          "type": "array",
+          "description": "List of numerical values",
+          "required": true
+        },
+        {
+          "name": "threshold",
+          "type": "number",
+          "description": "Z-score cutoff (default: 3.0)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "compute_correlation_matrix",
+      "description": "Compute Pearson correlation coefficients between numerical columns",
+      "parameters": [
+        {
+          "name": "records",
+          "type": "array",
+          "description": "List of tabular records",
+          "required": true
+        },
+        {
+          "name": "columns",
+          "type": "array",
+          "description": "Numerical column names to correlate",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

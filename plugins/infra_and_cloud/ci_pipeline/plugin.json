@@ -1,0 +1,46 @@
+{
+  "name": "domain.ci_pipeline",
+  "version": "1.0.0",
+  "description": "CI/CD pipeline workflow linter, circular job dependency detector, and action security auditor",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "entrypoints": [
+    {
+      "name": "validate_github_actions_workflow",
+      "description": "Validate GitHub Actions YAML workflow structure (name, on trigger, jobs, permissions)",
+      "parameters": [
+        {
+          "name": "workflow_yaml",
+          "type": "string",
+          "description": "GitHub Actions YAML workflow text",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "find_circular_job_dependencies",
+      "description": "Detect cyclic or broken 'needs:' dependencies across pipeline jobs",
+      "parameters": [
+        {
+          "name": "jobs",
+          "type": "object",
+          "description": "Job map ({'job_a': {'needs': ['job_b']}, 'job_b': {'needs': ['job_a']}})",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "audit_action_pins",
+      "description": "Audit third-party GitHub Actions for mutable tags (e.g. @v3) vs immutable commit SHA pins",
+      "parameters": [
+        {
+          "name": "workflow_yaml",
+          "type": "string",
+          "description": "Workflow YAML content",
+          "required": true
+        }
+      ]
+    }
+  ]
+}

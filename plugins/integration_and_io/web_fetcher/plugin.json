@@ -1,0 +1,82 @@
+{
+  "name": "plugin.web_fetcher",
+  "version": "1.0.0",
+  "description": "Safe web fetching, HTML-to-Markdown distillation, and REST API client",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "entrypoints": [
+    {
+      "name": "web_fetch_url",
+      "description": "Fetch a web page and return raw response text and headers",
+      "parameters": [
+        {
+          "name": "url",
+          "type": "string",
+          "description": "The URL to fetch",
+          "required": true
+        },
+        {
+          "name": "timeout",
+          "type": "number",
+          "description": "Timeout in seconds (default: 15.0)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "web_fetch_markdown",
+      "description": "Fetch web page and convert HTML into clean LLM-friendly Markdown",
+      "parameters": [
+        {
+          "name": "url",
+          "type": "string",
+          "description": "The web URL to distill into Markdown",
+          "required": true
+        },
+        {
+          "name": "timeout",
+          "type": "number",
+          "description": "Timeout in seconds (default: 15.0)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "web_http_request",
+      "description": "Perform an HTTP request with custom method, headers, or JSON body",
+      "parameters": [
+        {
+          "name": "url",
+          "type": "string",
+          "description": "Target HTTP URL",
+          "required": true
+        },
+        {
+          "name": "method",
+          "type": "string",
+          "description": "HTTP method (GET, POST, PUT, DELETE, PATCH, default: GET)",
+          "required": false
+        },
+        {
+          "name": "headers",
+          "type": "object",
+          "description": "Request headers dictionary (optional)",
+          "required": false
+        },
+        {
+          "name": "json_data",
+          "type": "object",
+          "description": "JSON payload body (optional)",
+          "required": false
+        },
+        {
+          "name": "timeout",
+          "type": "number",
+          "description": "Request timeout in seconds (default: 15.0)",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

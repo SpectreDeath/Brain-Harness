@@ -1,0 +1,82 @@
+{
+  "name": "plugin.task_planner",
+  "version": "1.0.0",
+  "description": "Hierarchical Directed Acyclic Graph (DAG) goal decomposition and milestone dependency tracker",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "entrypoints": [
+    {
+      "name": "plan_decompose_goal",
+      "description": "Create a new DAG execution plan for a goal with task dependencies",
+      "parameters": [
+        {
+          "name": "goal",
+          "type": "string",
+          "description": "High-level goal statement",
+          "required": true
+        },
+        {
+          "name": "subtasks",
+          "type": "array",
+          "description": "List of subtasks ({id, title, description, depends_on})",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "plan_get_next_milestone",
+      "description": "Get the next unblocked task(s) whose dependencies are completed",
+      "parameters": [
+        {
+          "name": "plan_id",
+          "type": "string",
+          "description": "Unique identifier of the plan",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "plan_update_status",
+      "description": "Update task status (pending, in_progress, completed, failed) and attach result",
+      "parameters": [
+        {
+          "name": "plan_id",
+          "type": "string",
+          "description": "Plan identifier",
+          "required": true
+        },
+        {
+          "name": "task_id",
+          "type": "string",
+          "description": "Task identifier within the plan",
+          "required": true
+        },
+        {
+          "name": "status",
+          "type": "string",
+          "description": "New status (pending, in_progress, completed, failed)",
+          "required": true
+        },
+        {
+          "name": "result",
+          "type": "string",
+          "description": "Result or output message (optional)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "plan_export_dag",
+      "description": "Export the DAG plan in structured JSON and Mermaid graph format",
+      "parameters": [
+        {
+          "name": "plan_id",
+          "type": "string",
+          "description": "Plan identifier",
+          "required": true
+        }
+      ]
+    }
+  ]
+}

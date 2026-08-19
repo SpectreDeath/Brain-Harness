@@ -1,0 +1,46 @@
+{
+  "name": "domain.agent_debater",
+  "version": "1.0.0",
+  "description": "Dialectical multi-agent reasoning, Proposer vs Challenger debate rounds, and arbiter verdict synthesizer",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "entrypoints": [
+    {
+      "name": "conduct_dialectical_debate",
+      "description": "Run structured dialectical debate rounds (Thesis / Proposer vs Antithesis / Challenger)",
+      "parameters": [
+        {
+          "name": "topic",
+          "type": "string",
+          "description": "Debate topic or architectural proposal",
+          "required": true
+        },
+        {
+          "name": "pro_arguments",
+          "type": "array",
+          "description": "List of supporting arguments",
+          "required": true
+        },
+        {
+          "name": "con_arguments",
+          "type": "array",
+          "description": "List of counter-arguments",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "synthesize_debate_verdict",
+      "description": "Synthesize final arbiter verdict, identifying concessions, unaddressed risks, and final recommendation",
+      "parameters": [
+        {
+          "name": "debate_summary",
+          "type": "object",
+          "description": "Debate summary dictionary from conduct_dialectical_debate",
+          "required": true
+        }
+      ]
+    }
+  ]
+}

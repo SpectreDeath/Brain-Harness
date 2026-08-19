@@ -1,0 +1,52 @@
+{
+  "name": "domain.agent_supervisor",
+  "version": "1.0.0",
+  "description": "Hierarchical multi-agent supervisor, token budget allocator, and consensus voting orchestrator",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "entrypoints": [
+    {
+      "name": "coordinate_swarm_tasks",
+      "description": "Decompose a swarm objective into worker agent assignments with assigned token budgets and roles",
+      "parameters": [
+        {
+          "name": "objective",
+          "type": "string",
+          "description": "Overall swarm goal",
+          "required": true
+        },
+        {
+          "name": "agents",
+          "type": "array",
+          "description": "List of candidate worker agents ({'id': 'agent_1', 'role': 'researcher', 'tools': [...]})",
+          "required": true
+        },
+        {
+          "name": "max_total_tokens",
+          "type": "integer",
+          "description": "Total token budget to divide (default: 50000)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "tally_consensus_votes",
+      "description": "Aggregate and tally multi-agent votes on proposals with configurable quorum and consensus threshold",
+      "parameters": [
+        {
+          "name": "votes",
+          "type": "array",
+          "description": "List of agent votes ({'agent_id': 'agent_1', 'vote': 'approve', 'confidence': 0.9})",
+          "required": true
+        },
+        {
+          "name": "threshold",
+          "type": "number",
+          "description": "Consensus percentage required (default: 0.66)",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

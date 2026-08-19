@@ -1,0 +1,58 @@
+{
+  "name": "domain.api_openapi",
+  "version": "1.0.0",
+  "description": "OpenAPI / Swagger 3.0 specification synthesis, schema validation, and mock response generator",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "entrypoints": [
+    {
+      "name": "generate_openapi_spec",
+      "description": "Synthesize a valid OpenAPI 3.0 JSON specification from route definitions",
+      "parameters": [
+        {
+          "name": "title",
+          "type": "string",
+          "description": "API title",
+          "required": true
+        },
+        {
+          "name": "version",
+          "type": "string",
+          "description": "API version (default: '1.0.0')",
+          "required": false
+        },
+        {
+          "name": "routes",
+          "type": "array",
+          "description": "List of route specs ({'path': '/users', 'method': 'get', 'summary': '...', 'parameters': []})",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "validate_openapi_spec",
+      "description": "Validate OpenAPI 3.0 specification structure against spec requirements",
+      "parameters": [
+        {
+          "name": "spec_dict",
+          "type": "object",
+          "description": "OpenAPI specification dictionary",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "generate_mock_endpoint_response",
+      "description": "Generate mock JSON response conforming to a route schema",
+      "parameters": [
+        {
+          "name": "response_schema",
+          "type": "object",
+          "description": "Response schema dictionary",
+          "required": true
+        }
+      ]
+    }
+  ]
+}

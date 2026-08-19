@@ -1,0 +1,70 @@
+{
+  "name": "plugin.database_sql",
+  "version": "1.0.0",
+  "description": "Universal SQL database schema inspector, query runner, and execution plan explainer",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "entrypoints": [
+    {
+      "name": "sql_inspect_schema",
+      "description": "Inspect all tables, columns, data types, primary keys, and row counts in a SQLite database",
+      "parameters": [
+        {
+          "name": "db_path",
+          "type": "string",
+          "description": "Path to SQLite database file (default: .harness/storage.db)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "sql_execute_query",
+      "description": "Execute a SQL query with read-only safety validation and result limits",
+      "parameters": [
+        {
+          "name": "query",
+          "type": "string",
+          "description": "SQL query to execute",
+          "required": true
+        },
+        {
+          "name": "db_path",
+          "type": "string",
+          "description": "Path to SQLite database (default: .harness/storage.db)",
+          "required": false
+        },
+        {
+          "name": "read_only",
+          "type": "boolean",
+          "description": "Enforce read-only queries (SELECT / PRAGMA / EXPLAIN) (default: true)",
+          "required": false
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "description": "Maximum number of rows to return (default: 50)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "sql_explain_query",
+      "description": "Get query execution plan (EXPLAIN QUERY PLAN) for a SQL statement",
+      "parameters": [
+        {
+          "name": "query",
+          "type": "string",
+          "description": "SQL query to explain",
+          "required": true
+        },
+        {
+          "name": "db_path",
+          "type": "string",
+          "description": "Path to SQLite database (default: .harness/storage.db)",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

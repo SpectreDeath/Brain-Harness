@@ -1,0 +1,52 @@
+{
+  "name": "domain.refactor_engine",
+  "version": "1.0.0",
+  "description": "Python AST refactoring engine, dead/unused code identifier, and function extraction tool",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "entrypoints": [
+    {
+      "name": "find_unused_functions",
+      "description": "Find declared functions in Python source code that are never called internally within the module",
+      "parameters": [
+        {
+          "name": "code",
+          "type": "string",
+          "description": "Python source code",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "extract_function_preview",
+      "description": "Preview extracting a block of lines into a new helper function with parameter discovery",
+      "parameters": [
+        {
+          "name": "code",
+          "type": "string",
+          "description": "Original Python code",
+          "required": true
+        },
+        {
+          "name": "start_line",
+          "type": "integer",
+          "description": "Start line number to extract",
+          "required": true
+        },
+        {
+          "name": "end_line",
+          "type": "integer",
+          "description": "End line number to extract",
+          "required": true
+        },
+        {
+          "name": "new_func_name",
+          "type": "string",
+          "description": "Name for extracted helper function",
+          "required": true
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "name": "domain.terraform_iac",
+  "version": "1.0.0",
+  "description": "Terraform / OpenTofu HCL parser, state drift detector, and cloud resource cost estimator",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "entrypoints": [
+    {
+      "name": "parse_hcl_blocks",
+      "description": "Parse Terraform HCL blocks (resource, variable, provider, output, module) from text",
+      "parameters": [
+        {
+          "name": "hcl_content",
+          "type": "string",
+          "description": "Terraform HCL configuration string",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "detect_state_drift",
+      "description": "Compare declared Terraform resource attributes against actual cloud state",
+      "parameters": [
+        {
+          "name": "declared_state",
+          "type": "object",
+          "description": "Declared resource state map",
+          "required": true
+        },
+        {
+          "name": "actual_state",
+          "type": "object",
+          "description": "Actual observed state map",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "estimate_resource_costs",
+      "description": "Estimate monthly cloud infrastructure costs based on resource type heuristics",
+      "parameters": [
+        {
+          "name": "resources",
+          "type": "array",
+          "description": "List of resource definitions ({'type': 'aws_instance', 'instance_type': 't3.micro'})",
+          "required": true
+        }
+      ]
+    }
+  ]
+}

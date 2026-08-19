@@ -1,0 +1,52 @@
+{
+  "name": "domain.threat_modeler",
+  "version": "1.0.0",
+  "description": "STRIDE threat modeling, MITRE ATT&CK taxonomy mapping, and attack graph generator",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "entrypoints": [
+    {
+      "name": "model_stride_threats",
+      "description": "Model STRIDE threats (Spoofing, Tampering, Repudiation, Info Disclosure, DoS, Elevation of Privilege) for architectural components",
+      "parameters": [
+        {
+          "name": "components",
+          "type": "array",
+          "description": "List of system components ({'name': 'API Gateway', 'type': 'web_service', 'stores_data': false, 'auth': false})",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "map_mitre_attack",
+      "description": "Map observed threat behaviors or technical findings to MITRE ATT&CK Enterprise tactics and techniques",
+      "parameters": [
+        {
+          "name": "observed_techniques",
+          "type": "array",
+          "description": "List of technique keywords (e.g. ['credential_dumping', 'sql_injection', 'privilege_escalation'])",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "generate_attack_tree",
+      "description": "Synthesize a hierarchical attack tree graph (in Mermaid and structured format) toward an adversary objective",
+      "parameters": [
+        {
+          "name": "adversary_goal",
+          "type": "string",
+          "description": "Goal of attacker (e.g., 'Exfiltrate Customer Database')",
+          "required": true
+        },
+        {
+          "name": "attack_vectors",
+          "type": "array",
+          "description": "List of candidate vectors",
+          "required": true
+        }
+      ]
+    }
+  ]
+}

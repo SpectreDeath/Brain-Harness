@@ -1,0 +1,58 @@
+{
+  "name": "domain.synthetic_generator",
+  "version": "1.0.0",
+  "description": "Schema-constrained synthetic mock dataset and time-series generator",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "entrypoints": [
+    {
+      "name": "generate_mock_records",
+      "description": "Generate synthetic tabular records conforming to a schema definition (name, email, uuid, integer, float, enum)",
+      "parameters": [
+        {
+          "name": "schema",
+          "type": "object",
+          "description": "Field schema dictionary ({'id': 'uuid', 'age': 'int:18:65', 'status': 'enum:active,pending,banned'})",
+          "required": true
+        },
+        {
+          "name": "count",
+          "type": "integer",
+          "description": "Number of records to generate (default: 10)",
+          "required": false
+        },
+        {
+          "name": "seed",
+          "type": "integer",
+          "description": "Optional deterministic random seed",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "generate_synthetic_timeseries",
+      "description": "Generate synthetic daily time-series values with trend, seasonality, and Gaussian noise",
+      "parameters": [
+        {
+          "name": "days",
+          "type": "integer",
+          "description": "Number of days of data to generate (default: 30)",
+          "required": false
+        },
+        {
+          "name": "baseline",
+          "type": "number",
+          "description": "Baseline metric value (default: 100.0)",
+          "required": false
+        },
+        {
+          "name": "trend",
+          "type": "number",
+          "description": "Daily upward/downward slope (default: 0.5)",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

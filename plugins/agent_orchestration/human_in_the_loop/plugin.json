@@ -1,0 +1,63 @@
+{
+  "name": "domain.human_in_the_loop",
+  "version": "1.0.0",
+  "description": "Human-in-the-loop permission escalation gate, decision checkpoints, and approval audit ledger",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "entrypoints": [
+    {
+      "name": "request_human_approval",
+      "description": "Create a pending approval request for a sensitive tool call or state transition (e.g. database drop, code push)",
+      "parameters": [
+        {
+          "name": "action_name",
+          "type": "string",
+          "description": "Sensitive action being attempted",
+          "required": true
+        },
+        {
+          "name": "risk_level",
+          "type": "string",
+          "description": "Risk category: 'low', 'medium', 'high', 'critical'",
+          "required": true
+        },
+        {
+          "name": "details",
+          "type": "object",
+          "description": "Detailed payload / arguments",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "record_human_decision",
+      "description": "Record human operator decision (approved / rejected) for an approval request",
+      "parameters": [
+        {
+          "name": "request_id",
+          "type": "string",
+          "description": "ID of approval request",
+          "required": true
+        },
+        {
+          "name": "approved",
+          "type": "boolean",
+          "description": "True if approved, False if rejected",
+          "required": true
+        },
+        {
+          "name": "reason",
+          "type": "string",
+          "description": "Operator explanation / reason",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "list_pending_approvals",
+      "description": "List all active approvals awaiting human decision",
+      "parameters": []
+    }
+  ]
+}

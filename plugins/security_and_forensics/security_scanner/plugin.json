@@ -1,0 +1,46 @@
+{
+  "name": "domain.security_scanner",
+  "version": "1.0.0",
+  "description": "Static code vulnerability scanner, secret detection, and dependency audit plugin",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "entrypoints": [
+    {
+      "name": "scan_secrets",
+      "description": "Scan text or code content for leaked API keys, tokens, private keys, and passwords",
+      "parameters": [
+        {
+          "name": "content",
+          "type": "string",
+          "description": "Source code or text content to scan",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "scan_code_vulnerabilities",
+      "description": "Perform static AST and pattern analysis for security vulnerabilities (injection, eval, deserialization)",
+      "parameters": [
+        {
+          "name": "code",
+          "type": "string",
+          "description": "Python source code snippet",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "audit_dependencies",
+      "description": "Audit a requirements.txt or dependency list against known vulnerability patterns and unpinned packages",
+      "parameters": [
+        {
+          "name": "requirements_content",
+          "type": "string",
+          "description": "Contents of requirements.txt",
+          "required": true
+        }
+      ]
+    }
+  ]
+}

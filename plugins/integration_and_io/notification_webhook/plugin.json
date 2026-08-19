@@ -1,0 +1,106 @@
+{
+  "name": "plugin.notification_webhook",
+  "version": "1.0.0",
+  "description": "Webhook notification dispatcher, Slack & Discord card builder, and agent event broadcaster",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "entrypoints": [
+    {
+      "name": "notify_webhook",
+      "description": "Send a JSON payload to a generic HTTP/HTTPS webhook URL",
+      "parameters": [
+        {
+          "name": "url",
+          "type": "string",
+          "description": "Target webhook URL",
+          "required": true
+        },
+        {
+          "name": "payload",
+          "type": "object",
+          "description": "JSON payload object to transmit",
+          "required": true
+        },
+        {
+          "name": "timeout",
+          "type": "number",
+          "description": "Request timeout in seconds (default: 10.0)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "notify_chat_channel",
+      "description": "Format and dispatch a rich message card to a Slack or Discord webhook",
+      "parameters": [
+        {
+          "name": "platform",
+          "type": "string",
+          "description": "Target platform: 'slack' or 'discord'",
+          "required": true
+        },
+        {
+          "name": "webhook_url",
+          "type": "string",
+          "description": "Channel webhook URL",
+          "required": true
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "description": "Notification card title",
+          "required": true
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "description": "Main notification text or description",
+          "required": true
+        },
+        {
+          "name": "status",
+          "type": "string",
+          "description": "Status level: 'success', 'warning', 'error', 'info' (default: 'info')",
+          "required": false
+        },
+        {
+          "name": "fields",
+          "type": "object",
+          "description": "Key-value metadata fields to display in the card (optional)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "notify_task_event",
+      "description": "Format and broadcast a standardized agent task lifecycle event",
+      "parameters": [
+        {
+          "name": "event_type",
+          "type": "string",
+          "description": "Event type (TASK_STARTED, TASK_COMPLETED, TASK_FAILED, MILESTONE_REACHED)",
+          "required": true
+        },
+        {
+          "name": "task_name",
+          "type": "string",
+          "description": "Name or goal of the task",
+          "required": true
+        },
+        {
+          "name": "details",
+          "type": "object",
+          "description": "Additional task metadata or metrics (optional)",
+          "required": false
+        },
+        {
+          "name": "webhook_url",
+          "type": "string",
+          "description": "Webhook destination URL (optional, if omitted event is returned as structured object)",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

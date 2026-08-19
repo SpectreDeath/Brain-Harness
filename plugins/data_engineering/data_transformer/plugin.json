@@ -1,0 +1,106 @@
+{
+  "name": "plugin.data_transformer",
+  "version": "1.0.0",
+  "description": "Multi-format data converter (JSON ↔ CSV ↔ YAML ↔ TOML), tabular filter, and statistical profiler",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "entrypoints": [
+    {
+      "name": "data_convert_format",
+      "description": "Convert structured data between JSON, CSV, YAML, and TOML formats",
+      "parameters": [
+        {
+          "name": "content",
+          "type": "string",
+          "description": "Source data text to convert",
+          "required": true
+        },
+        {
+          "name": "from_format",
+          "type": "string",
+          "description": "Source format (json, csv, toml)",
+          "required": true
+        },
+        {
+          "name": "to_format",
+          "type": "string",
+          "description": "Target format (json, csv, toml)",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "data_filter_table",
+      "description": "Filter, sort, and slice a list of dictionary records",
+      "parameters": [
+        {
+          "name": "records",
+          "type": "array",
+          "description": "List of dictionary records",
+          "required": true
+        },
+        {
+          "name": "filters",
+          "type": "object",
+          "description": "Key-value match filters (optional)",
+          "required": false
+        },
+        {
+          "name": "sort_by",
+          "type": "string",
+          "description": "Column key to sort by (optional)",
+          "required": false
+        },
+        {
+          "name": "descending",
+          "type": "boolean",
+          "description": "Sort in descending order (default: false)",
+          "required": false
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "description": "Max rows to return (optional)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "data_summarize_stats",
+      "description": "Compute statistical metrics (count, mean, min, max, nulls, unique count) for columns in tabular data",
+      "parameters": [
+        {
+          "name": "records",
+          "type": "array",
+          "description": "List of tabular dictionary records",
+          "required": true
+        },
+        {
+          "name": "columns",
+          "type": "array",
+          "description": "List of specific column names to analyze (default: all columns)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "data_validate_schema",
+      "description": "Validate a dictionary against expected types and required field schema",
+      "parameters": [
+        {
+          "name": "data",
+          "type": "object",
+          "description": "Target data object to validate",
+          "required": true
+        },
+        {
+          "name": "schema",
+          "type": "object",
+          "description": "Schema definition with required fields and types ({field: type_name})",
+          "required": true
+        }
+      ]
+    }
+  ]
+}

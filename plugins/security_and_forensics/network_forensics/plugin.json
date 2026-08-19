@@ -1,0 +1,46 @@
+{
+  "name": "domain.network_forensics",
+  "version": "1.0.0",
+  "description": "Network traffic metadata analyzer, TLS cert inspector, and port security auditor",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "entrypoints": [
+    {
+      "name": "audit_port_configuration",
+      "description": "Audit open ports and exposed network services against security best practices",
+      "parameters": [
+        {
+          "name": "open_ports",
+          "type": "array",
+          "description": "List of port numbers or objects ({'port': 22, 'service': 'ssh'})",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "analyze_packet_summary",
+      "description": "Analyze network flows (IP source/dest, protocol, packet sizes, flags) for port scans and DDoS signatures",
+      "parameters": [
+        {
+          "name": "flows",
+          "type": "array",
+          "description": "List of packet flow records ({'src_ip': '...', 'dst_ip': '...', 'dst_port': 80, 'proto': 'TCP'})",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "inspect_tls_certificate",
+      "description": "Validate TLS/SSL certificate metadata (issuer, expiration, cipher suites)",
+      "parameters": [
+        {
+          "name": "cert_info",
+          "type": "object",
+          "description": "Certificate dictionary ({'issuer': '...', 'days_to_expiry': 30, 'tls_version': 'TLSv1.3'})",
+          "required": true
+        }
+      ]
+    }
+  ]
+}

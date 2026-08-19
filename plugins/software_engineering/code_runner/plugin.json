@@ -1,0 +1,70 @@
+{
+  "name": "plugin.code_runner",
+  "version": "1.0.0",
+  "description": "Sandboxed Python REPL and script execution engine with output capture and timeout protection",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "entrypoints": [
+    {
+      "name": "python_exec",
+      "description": "Execute a Python code block in a sandboxed subprocess and capture stdout, stderr, and return code",
+      "parameters": [
+        {
+          "name": "code",
+          "type": "string",
+          "description": "Python source code to execute",
+          "required": true
+        },
+        {
+          "name": "timeout",
+          "type": "number",
+          "description": "Timeout in seconds (default: 10.0)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "python_eval",
+      "description": "Evaluate a Python expression and return the printed string representation of the result",
+      "parameters": [
+        {
+          "name": "expression",
+          "type": "string",
+          "description": "Python expression to evaluate",
+          "required": true
+        },
+        {
+          "name": "timeout",
+          "type": "number",
+          "description": "Timeout in seconds (default: 5.0)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "run_temp_script",
+      "description": "Execute a standalone Python script file with arguments and return output",
+      "parameters": [
+        {
+          "name": "script_content",
+          "type": "string",
+          "description": "Full script source code",
+          "required": true
+        },
+        {
+          "name": "args",
+          "type": "array",
+          "description": "Command line arguments list (optional)",
+          "required": false
+        },
+        {
+          "name": "timeout",
+          "type": "number",
+          "description": "Timeout in seconds (default: 15.0)",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "name": "plugin.context_compactor",
+  "version": "1.0.0",
+  "description": "Agent trajectory summarization, context compaction, and persistent memory offloading via Memtext",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "requires": ["memory.provider"],
+  "entrypoints": [
+    {
+      "name": "compact_conversation",
+      "description": "Compact a message list by summarizing earlier history while preserving recent messages",
+      "parameters": [
+        {
+          "name": "messages",
+          "type": "array",
+          "description": "List of message objects ({role, content})",
+          "required": true
+        },
+        {
+          "name": "preserve_recent",
+          "type": "integer",
+          "description": "Number of recent turns to preserve uncompressed (default: 4)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "offload_to_memory",
+      "description": "Offload important notes, code snippets, or facts to Memtext persistent memory",
+      "parameters": [
+        {
+          "name": "key",
+          "type": "string",
+          "description": "Subject key for memory recall",
+          "required": true
+        },
+        {
+          "name": "content",
+          "type": "string",
+          "description": "Content to remember",
+          "required": true
+        },
+        {
+          "name": "topic",
+          "type": "string",
+          "description": "Category or topic tag (default: general)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "recall_context",
+      "description": "Recall stored memories and context matching a query",
+      "parameters": [
+        {
+          "name": "query",
+          "type": "string",
+          "description": "Search query string",
+          "required": true
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "description": "Max number of items to return (default: 5)",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "name": "domain.docker_container",
+  "version": "1.0.0",
+  "description": "Docker container linter, multi-stage Dockerfile generator, and container security auditor",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "entrypoints": [
+    {
+      "name": "lint_dockerfile",
+      "description": "Lint Dockerfile for root user vulnerabilities, missing cache flags, latest tag usage, and security antipatterns",
+      "parameters": [
+        {
+          "name": "dockerfile_content",
+          "type": "string",
+          "description": "Dockerfile text content",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "generate_dockerfile",
+      "description": "Generate an optimized, production-ready multi-stage Dockerfile for a given language/runtime",
+      "parameters": [
+        {
+          "name": "runtime",
+          "type": "string",
+          "description": "Target runtime: 'python', 'node', 'go', 'rust'",
+          "required": true
+        },
+        {
+          "name": "entrypoint_command",
+          "type": "string",
+          "description": "Execution command (e.g. 'python main.py')",
+          "required": false
+        },
+        {
+          "name": "port",
+          "type": "integer",
+          "description": "Exposed port (default: 8080)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "audit_container_security",
+      "description": "Audit container runtime configuration (privileged mode, read-only rootfs, capabilities, volume mounts)",
+      "parameters": [
+        {
+          "name": "container_config",
+          "type": "object",
+          "description": "Container configuration dictionary ({'privileged': false, 'read_only': true, ...})",
+          "required": true
+        }
+      ]
+    }
+  ]
+}

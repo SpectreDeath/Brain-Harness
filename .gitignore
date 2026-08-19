@@ -60,10 +60,6 @@ logs/
 *.sqlite
 *.db
 
-# Plugins (optional ecosystem plugins reserved for separate branch/repo)
-plugins/*
-!plugins/.gitkeep
-
 # Temporary / OS artifacts
 .DS_Store
 Thumbs.db

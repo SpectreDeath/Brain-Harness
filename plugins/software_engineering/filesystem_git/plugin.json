@@ -1,0 +1,148 @@
+{
+  "name": "plugin.filesystem_git",
+  "version": "1.0.0",
+  "description": "Safe filesystem navigation, line-slice reading, regex search, and git operations",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "entrypoints": [
+    {
+      "name": "fs_read_file",
+      "description": "Read file content with optional start_line and end_line slicing (1-indexed)",
+      "parameters": [
+        {
+          "name": "path",
+          "type": "string",
+          "description": "Path to file",
+          "required": true
+        },
+        {
+          "name": "start_line",
+          "type": "integer",
+          "description": "Starting line number (1-indexed, optional)",
+          "required": false
+        },
+        {
+          "name": "end_line",
+          "type": "integer",
+          "description": "Ending line number (1-indexed, optional)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "fs_write_file",
+      "description": "Write or overwrite text content to a file",
+      "parameters": [
+        {
+          "name": "path",
+          "type": "string",
+          "description": "Path to file",
+          "required": true
+        },
+        {
+          "name": "content",
+          "type": "string",
+          "description": "Content to write",
+          "required": true
+        },
+        {
+          "name": "overwrite",
+          "type": "boolean",
+          "description": "Whether to overwrite if file exists (default: false)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "fs_list_dir",
+      "description": "List files and directories in a directory with file sizes and directory item counts",
+      "parameters": [
+        {
+          "name": "path",
+          "type": "string",
+          "description": "Directory path (default: '.')",
+          "required": false
+        },
+        {
+          "name": "max_depth",
+          "type": "integer",
+          "description": "Maximum recursion depth (default: 2)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "fs_search_text",
+      "description": "Search text or regex pattern across files in directory",
+      "parameters": [
+        {
+          "name": "pattern",
+          "type": "string",
+          "description": "Search pattern or string",
+          "required": true
+        },
+        {
+          "name": "search_path",
+          "type": "string",
+          "description": "Root path to search from (default: '.')",
+          "required": false
+        },
+        {
+          "name": "case_sensitive",
+          "type": "boolean",
+          "description": "Whether search is case-sensitive (default: false)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "git_status",
+      "description": "Get git repository status (staged, modified, untracked files, current branch)",
+      "parameters": [
+        {
+          "name": "repo_path",
+          "type": "string",
+          "description": "Path to git repository (default: '.')",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "git_diff",
+      "description": "Get git diff for uncommitted changes or against a commit/branch",
+      "parameters": [
+        {
+          "name": "repo_path",
+          "type": "string",
+          "description": "Path to git repository (default: '.')",
+          "required": false
+        },
+        {
+          "name": "target",
+          "type": "string",
+          "description": "Target branch or commit hash to diff against (optional)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "git_log",
+      "description": "Get recent git commit log",
+      "parameters": [
+        {
+          "name": "repo_path",
+          "type": "string",
+          "description": "Path to git repository (default: '.')",
+          "required": false
+        },
+        {
+          "name": "max_commits",
+          "type": "integer",
+          "description": "Maximum number of commits to return (default: 10)",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

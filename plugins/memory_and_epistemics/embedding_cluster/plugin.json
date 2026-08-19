@@ -1,0 +1,46 @@
+{
+  "name": "domain.embedding_cluster",
+  "version": "1.0.0",
+  "description": "Unsupervised text chunk clustering, topic keyword extraction, and cluster summary generator",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "entrypoints": [
+    {
+      "name": "cluster_text_chunks",
+      "description": "Cluster a collection of text documents or chunks into K topic groups based on TF-IDF representation",
+      "parameters": [
+        {
+          "name": "texts",
+          "type": "array",
+          "description": "List of text strings or objects with 'text' / 'content'",
+          "required": true
+        },
+        {
+          "name": "num_clusters",
+          "type": "integer",
+          "description": "Target number of clusters (default: 3)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "extract_cluster_topic_keywords",
+      "description": "Extract top TF-IDF keywords characterizing a cluster group",
+      "parameters": [
+        {
+          "name": "cluster_texts",
+          "type": "array",
+          "description": "List of texts within a single cluster",
+          "required": true
+        },
+        {
+          "name": "top_n",
+          "type": "integer",
+          "description": "Number of top keywords to return (default: 5)",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

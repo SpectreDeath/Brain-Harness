@@ -1,0 +1,100 @@
+{
+  "name": "plugin.artifact_generator",
+  "version": "1.0.0",
+  "description": "Interactive HTML report generation, Mermaid diagram visualization, and executive briefings",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "entrypoints": [
+    {
+      "name": "report_generate_html",
+      "description": "Generate an interactive, responsive HTML report with charts and formatted tables",
+      "parameters": [
+        {
+          "name": "title",
+          "type": "string",
+          "description": "Report title",
+          "required": true
+        },
+        {
+          "name": "sections",
+          "type": "array",
+          "description": "List of report sections ({title, content, type, data})",
+          "required": true
+        },
+        {
+          "name": "output_path",
+          "type": "string",
+          "description": "Destination file path (optional)",
+          "required": false
+        },
+        {
+          "name": "theme",
+          "type": "string",
+          "description": "Theme: 'dark' or 'light' (default: 'dark')",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "diagram_generate_mermaid",
+      "description": "Synthesize valid Mermaid diagram syntax from nodes and edges",
+      "parameters": [
+        {
+          "name": "nodes",
+          "type": "array",
+          "description": "List of diagram nodes ({id, label, shape})",
+          "required": true
+        },
+        {
+          "name": "edges",
+          "type": "array",
+          "description": "List of edges ({source, target, label, style})",
+          "required": true
+        },
+        {
+          "name": "direction",
+          "type": "string",
+          "description": "Flowchart direction (TD, LR, BT, RL, default: TD)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "report_create_briefing",
+      "description": "Create an executive markdown and HTML briefing summary",
+      "parameters": [
+        {
+          "name": "title",
+          "type": "string",
+          "description": "Briefing title",
+          "required": true
+        },
+        {
+          "name": "summary",
+          "type": "string",
+          "description": "Executive summary paragraph",
+          "required": true
+        },
+        {
+          "name": "metrics",
+          "type": "object",
+          "description": "Key-value metrics dictionary (optional)",
+          "required": false
+        },
+        {
+          "name": "recommendations",
+          "type": "array",
+          "description": "List of recommendations (optional)",
+          "required": false
+        },
+        {
+          "name": "output_path",
+          "type": "string",
+          "description": "Destination path for markdown file (optional)",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

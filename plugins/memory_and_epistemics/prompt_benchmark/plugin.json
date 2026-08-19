@@ -1,0 +1,52 @@
+{
+  "name": "domain.prompt_benchmark",
+  "version": "1.0.0",
+  "description": "LLM output evaluation, BLEU/ROUGE ngram similarity scoring, and regression benchmark suite",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "entrypoints": [
+    {
+      "name": "score_text_similarity_bleu_rouge",
+      "description": "Compute token precision (BLEU-1, BLEU-2) and recall/F1 (ROUGE-1, ROUGE-L) between reference and candidate text",
+      "parameters": [
+        {
+          "name": "reference",
+          "type": "string",
+          "description": "Ground truth reference text",
+          "required": true
+        },
+        {
+          "name": "candidate",
+          "type": "string",
+          "description": "Model candidate generated text",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "evaluate_model_outputs",
+      "description": "Run automated evaluation over a batch of prompt test cases against criteria (exact match, contains keywords, regex, length)",
+      "parameters": [
+        {
+          "name": "test_cases",
+          "type": "array",
+          "description": "List of test cases ({'input': '...', 'output': '...', 'expected_contains': ['...']})",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "generate_regression_matrix",
+      "description": "Compare benchmark scores across multiple prompt versions or model runs",
+      "parameters": [
+        {
+          "name": "runs",
+          "type": "array",
+          "description": "List of model run evaluations ({'model': 'gpt-4o', 'pass_rate': 0.95, 'avg_latency': 1.2})",
+          "required": true
+        }
+      ]
+    }
+  ]
+}

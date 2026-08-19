@@ -1,0 +1,58 @@
+{
+  "name": "domain.trajectory_auditor",
+  "version": "1.0.0",
+  "description": "Agent trajectory step auditor, repetitive loop / stuck detector, and recovery prompt synthesizer",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "entrypoints": [
+    {
+      "name": "audit_trajectory_steps",
+      "description": "Analyze an agent's execution history for repeated tool failures, excessive step counts, and inefficiency",
+      "parameters": [
+        {
+          "name": "steps",
+          "type": "array",
+          "description": "List of agent steps ({'step_number': 1, 'action': '...', 'observation': '...'})",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "detect_repetitive_loop",
+      "description": "Detect cyclic repetition in agent action sequences (e.g. A -> B -> A -> B)",
+      "parameters": [
+        {
+          "name": "actions",
+          "type": "array",
+          "description": "Sequential list of tool action strings",
+          "required": true
+        },
+        {
+          "name": "window_size",
+          "type": "integer",
+          "description": "Sequence cycle length to check (default: 2)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "synthesize_recovery_prompt",
+      "description": "Generate an intervention prompt to break an agent out of a stuck loop or error cycle",
+      "parameters": [
+        {
+          "name": "stuck_reason",
+          "type": "string",
+          "description": "Description of detected error or repeating pattern",
+          "required": true
+        },
+        {
+          "name": "last_failed_action",
+          "type": "string",
+          "description": "Name of action that repeatedly failed",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "name": "domain.k8s_manifest",
+  "version": "1.0.0",
+  "description": "Kubernetes manifest linter, resource request/limit validator, and pod security context checker",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "entrypoints": [
+    {
+      "name": "lint_k8s_manifest",
+      "description": "Lint Kubernetes YAML manifests for missing labels, deprecations, and missing namespaces",
+      "parameters": [
+        {
+          "name": "manifest_yaml",
+          "type": "string",
+          "description": "Kubernetes YAML manifest text",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "validate_resource_limits",
+      "description": "Ensure CPU/memory requests and limits are explicitly declared on all container specs",
+      "parameters": [
+        {
+          "name": "manifest_yaml",
+          "type": "string",
+          "description": "Kubernetes YAML manifest text",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "check_security_context",
+      "description": "Audit securityContext (runAsNonRoot, allowPrivilegeEscalation, drop capabilities)",
+      "parameters": [
+        {
+          "name": "manifest_yaml",
+          "type": "string",
+          "description": "Kubernetes YAML manifest text",
+          "required": true
+        }
+      ]
+    }
+  ]
+}

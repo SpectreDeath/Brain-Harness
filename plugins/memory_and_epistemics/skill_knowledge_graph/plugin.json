@@ -1,0 +1,82 @@
+{
+  "name": "domain.skill_knowledge_graph",
+  "version": "1.0.0",
+  "description": "Knowledge graph indexer, semantic router, and visual topology generator for agent skill cards",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "entrypoints": [
+    {
+      "name": "index_skill_catalog",
+      "description": "Scan workspace (.agents/skills and plugin directories) to build the in-memory skill knowledge graph",
+      "parameters": [
+        {
+          "name": "root_path",
+          "type": "string",
+          "description": "Root directory path to scan (default: '.')",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "query_skill_router",
+      "description": "Find the optimal skill or multi-skill execution chain for a given task description or intent",
+      "parameters": [
+        {
+          "name": "intent",
+          "type": "string",
+          "description": "Natural language task or intent prompt",
+          "required": true
+        },
+        {
+          "name": "top_k",
+          "type": "integer",
+          "description": "Number of top matching skills to return (default: 3)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "find_skill_chain",
+      "description": "Compute the shortest directed path or multi-skill pipeline from a start skill to a target objective",
+      "parameters": [
+        {
+          "name": "start_skill",
+          "type": "string",
+          "description": "Starting skill name",
+          "required": true
+        },
+        {
+          "name": "target_skill",
+          "type": "string",
+          "description": "Target skill name or objective",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "get_skill_topology",
+      "description": "Retrieve upstream prerequisites, downstream handoffs, invariants, and mitigated anti-patterns for a given skill",
+      "parameters": [
+        {
+          "name": "skill_name",
+          "type": "string",
+          "description": "Name of the skill to inspect",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "export_skill_graph_visual",
+      "description": "Generate an interactive visual HTML brief in %TEMP% rendering the Mermaid DAG of all skills and category clusters",
+      "parameters": [
+        {
+          "name": "output_path",
+          "type": "string",
+          "description": "Custom output HTML path (optional)",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

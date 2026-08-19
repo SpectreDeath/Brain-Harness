@@ -1,0 +1,58 @@
+{
+  "name": "plugin.evaluator_critic",
+  "version": "1.0.0",
+  "description": "Adversarial code review, AST static analysis, destructive command safety filter, and plan feasibility critique",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "entrypoints": [
+    {
+      "name": "critic_evaluate_code",
+      "description": "Statically analyze code syntax, complexity, function docstrings, and potential anti-patterns",
+      "parameters": [
+        {
+          "name": "code",
+          "type": "string",
+          "description": "Source code text to analyze",
+          "required": true
+        },
+        {
+          "name": "language",
+          "type": "string",
+          "description": "Programming language (python, javascript, json, default: python)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "critic_review_plan",
+      "description": "Evaluate an execution plan for logical consistency, risk factors, and missing dependencies",
+      "parameters": [
+        {
+          "name": "goal",
+          "type": "string",
+          "description": "The high-level goal statement",
+          "required": true
+        },
+        {
+          "name": "steps",
+          "type": "array",
+          "description": "List of planned action steps as strings",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "critic_check_safety",
+      "description": "Scan a CLI shell command for dangerous or irreversible operations",
+      "parameters": [
+        {
+          "name": "command",
+          "type": "string",
+          "description": "Shell command to scan for safety violations",
+          "required": true
+        }
+      ]
+    }
+  ]
+}
