@@ -1,0 +1,1548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brain Harness — Autonomous Agent Control Room & Visual Event Sourcing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    :root {
+      --bg-base: #090d16;
+      --bg-card: rgba(15, 23, 42, 0.75);
+      --bg-card-hover: rgba(30, 41, 59, 0.85);
+      --bg-card-alt: rgba(10, 15, 29, 0.9);
+      --border-color: rgba(255, 255, 255, 0.09);
+      --border-focus: rgba(56, 189, 248, 0.5);
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --accent-cyan: #38bdf8;
+      --accent-emerald: #10b981;
+      --accent-purple: #a855f7;
+      --accent-rose: #f43f5e;
+      --accent-amber: #f59e0b;
+      --accent-indigo: #6366f1;
+      --glow-cyan: rgba(56, 189, 248, 0.18);
+      --glow-purple: rgba(168, 85, 247, 0.18);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-base);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* Ambient Background Glows */
+    .ambient-glow {
+      position: fixed;
+      top: -25%;
+      left: 15%;
+      width: 70vw;
+      height: 70vw;
+      background: radial-gradient(circle, var(--glow-cyan) 0%, var(--glow-purple) 35%, transparent 70%);
+      filter: blur(140px);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(16px);
+      background: rgba(9, 13, 22, 0.85);
+      border-bottom: 1px solid var(--border-color);
+      padding: 0.85rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .logo-badge {
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+      color: #fff;
+      font-weight: 800;
+      font-size: 1.05rem;
+      padding: 0.35rem 0.85rem;
+      border-radius: 8px;
+      letter-spacing: 0.08em;
+      box-shadow: 0 0 16px var(--glow-cyan);
+    }
+
+    .logo-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, #fff, #94a3b8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .header-nav {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(0, 0, 0, 0.35);
+      padding: 0.3rem 0.4rem;
+      border-radius: 10px;
+      border: 1px solid var(--border-color);
+    }
+
+    .nav-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0.4rem 0.85rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .nav-btn:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .nav-btn.active {
+      background: var(--accent-cyan);
+      color: #090d16;
+      box-shadow: 0 0 12px var(--glow-cyan);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .ws-status {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      background: rgba(255, 255, 255, 0.04);
+      padding: 0.35rem 0.75rem;
+      border-radius: 20px;
+      border: 1px solid var(--border-color);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--accent-rose);
+      box-shadow: 0 0 8px var(--accent-rose);
+      transition: all 0.3s ease;
+    }
+    .status-dot.connected {
+      background-color: var(--accent-emerald);
+      box-shadow: 0 0 8px var(--accent-emerald);
+    }
+
+    /* Main Container & Tab Views */
+    main {
+      position: relative;
+      z-index: 10;
+      flex: 1;
+      padding: 1.5rem 2rem 2.5rem;
+      max-width: 1700px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .view-panel {
+      display: none;
+      animation: fadeIn 0.25s ease-in-out;
+    }
+    .view-panel.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 1.25rem;
+    }
+
+    .col-3 { grid-column: span 3; }
+    .col-4 { grid-column: span 4; }
+    .col-5 { grid-column: span 5; }
+    .col-6 { grid-column: span 6; }
+    .col-7 { grid-column: span 7; }
+    .col-8 { grid-column: span 8; }
+    .col-9 { grid-column: span 9; }
+    .col-12 { grid-column: span 12; }
+
+    @media (max-width: 1200px) {
+      .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9 { grid-column: span 12; }
+    }
+
+    .card {
+      background: var(--bg-card);
+      -webkit-backdrop-filter: blur(14px);
+      backdrop-filter: blur(14px);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 1.35rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      transition: border-color 0.2s, background-color 0.2s;
+    }
+    .card:hover {
+      background: var(--bg-card-hover);
+      border-color: rgba(255, 255, 255, 0.16);
+    }
+
+    .card-title {
+      font-size: 1.02rem;
+      font-weight: 600;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* Metric stats */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 1rem;
+    }
+    @media (max-width: 1100px) {
+      .metrics-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 650px) {
+      .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .metric-box {
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 0.9rem;
+      text-align: center;
+      transition: transform 0.15s;
+    }
+    .metric-box:hover { transform: translateY(-2px); }
+    .metric-value {
+      font-size: 1.65rem;
+      font-weight: 700;
+      color: var(--accent-cyan);
+      font-family: 'Fira Code', monospace;
+    }
+    .metric-label {
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-top: 0.25rem;
+    }
+
+    /* Buttons & Controls */
+    .btn {
+      background: var(--accent-cyan);
+      color: #090d16;
+      font-weight: 600;
+      font-size: 0.85rem;
+      padding: 0.45rem 0.95rem;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .btn:hover { opacity: 0.92; transform: translateY(-1px); box-shadow: 0 0 10px var(--glow-cyan); }
+    .btn.btn-outline {
+      background: transparent;
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+    }
+    .btn.btn-outline:hover { background: rgba(255, 255, 255, 0.08); }
+    .btn.btn-danger {
+      background: rgba(244, 63, 94, 0.15);
+      color: var(--accent-rose);
+      border: 1px solid rgba(244, 63, 94, 0.3);
+    }
+    .btn.btn-danger:hover { background: rgba(244, 63, 94, 0.3); }
+    .btn.btn-success {
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--accent-emerald);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+    .btn.btn-success:hover { background: rgba(16, 185, 129, 0.3); }
+    .btn-group { display: flex; gap: 0.4rem; }
+    .btn-group-sm { display: flex; gap: 0.25rem; }
+    .btn-xs { font-size: 0.74rem; padding: 0.25rem 0.55rem; }
+    .btn-action { padding: 0.2rem 0.45rem; font-size: 0.74rem; }
+    .btn-toggle { padding: 0.2rem 0.5rem; font-size: 0.74rem; }
+
+    /* Inputs */
+    .agent-input {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 0.65rem 0.9rem;
+      color: #fff;
+      font-family: inherit;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .agent-input:focus { border-color: var(--accent-cyan); }
+    .search-input { width: 100%; font-size: 0.85rem; padding: 0.5rem 0.8rem; }
+
+    /* Tables */
+    .plugin-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+    .plugin-table th, .plugin-table td {
+      padding: 0.65rem 0.5rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .plugin-table th {
+      color: var(--text-secondary);
+      font-weight: 600;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .plugin-row {
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .plugin-row:hover {
+      background: rgba(255, 255, 255, 0.03);
+    }
+    .td-chevron { color: var(--text-secondary); font-size: 0.75rem; width: 20px; }
+    .td-name { font-weight: 600; font-family: 'Fira Code', monospace; font-size: 0.85rem; }
+    .tool-count-badge {
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--accent-cyan);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 0.15rem 0.45rem;
+      border-radius: 10px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .tool-count-empty { color: var(--text-muted); font-size: 0.75rem; }
+
+    /* Pills */
+    .pill {
+      font-size: 0.74rem;
+      font-weight: 600;
+      padding: 0.2rem 0.55rem;
+      border-radius: 10px;
+      display: inline-block;
+    }
+    .pill.enabled { background: rgba(16, 185, 129, 0.2); color: var(--accent-emerald); border: 1px solid rgba(16, 185, 129, 0.4); }
+    .pill.disabled { background: rgba(244, 63, 94, 0.2); color: var(--accent-rose); border: 1px solid rgba(244, 63, 94, 0.4); }
+    .pill.discovered { background: rgba(245, 158, 11, 0.2); color: var(--accent-amber); border: 1px solid rgba(245, 158, 11, 0.4); }
+    .pill.in_process { background: rgba(168, 85, 247, 0.2); color: var(--accent-purple); border: 1px solid rgba(168, 85, 247, 0.4); }
+    .pill.subprocess { background: rgba(56, 189, 248, 0.2); color: var(--accent-cyan); border: 1px solid rgba(56, 189, 248, 0.4); }
+    .pill.venv { background: rgba(245, 158, 11, 0.2); color: var(--accent-amber); border: 1px solid rgba(245, 158, 11, 0.4); }
+    .pill.docker { background: rgba(99, 102, 241, 0.2); color: var(--accent-indigo); border: 1px solid rgba(99, 102, 241, 0.4); }
+
+    /* Tool Drawers */
+    .tool-drawer-row { display: none; background: rgba(0, 0, 0, 0.35); }
+    .tool-drawer-row.open { display: table-row; }
+    .drawer-td { padding: 0; }
+    .tool-drawer-container {
+      padding: 0.75rem 1rem;
+      border-left: 3px solid var(--accent-cyan);
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .drawer-title { font-size: 0.78rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; }
+    .tool-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.45rem 0.75rem;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 6px;
+      font-size: 0.82rem;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .tool-meta { display: flex; flex-direction: column; gap: 0.15rem; }
+    .tool-name { font-family: 'Fira Code', monospace; color: var(--accent-cyan); font-weight: 600; }
+    .tool-desc { color: var(--text-secondary); font-size: 0.75rem; }
+
+    /* Terminal & Log Box */
+    .terminal-box {
+      background: #06090e;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 0.85rem 1rem;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.82rem;
+      color: #e2e8f0;
+      height: 320px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .terminal-tall { height: 420px; }
+    .terminal-full { height: 540px; }
+    .log-line { line-height: 1.45; word-break: break-all; }
+    .log-ts { color: #64748b; margin-right: 0.4rem; }
+    .log-type { color: var(--accent-purple); font-weight: 600; }
+    .log-src { color: var(--accent-cyan); }
+    .log-error { color: var(--accent-rose); }
+    .log-success { color: var(--accent-emerald); }
+
+    /* Timeline Scrubber Controls */
+    .timeline-controls {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: rgba(0, 0, 0, 0.35);
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+    }
+    .timeline-slider {
+      flex: 1;
+      accent-color: var(--accent-cyan);
+      cursor: pointer;
+    }
+
+    /* Mermaid Architecture Graph Viewer */
+    .mermaid-container {
+      background: #06090e;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1.5rem;
+      min-height: 480px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: auto;
+    }
+
+    /* Modal */
+    .modal-backdrop {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.75);
+      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-backdrop.open { display: flex; }
+    .modal {
+      background: #0d1322;
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 1.5rem;
+      width: 100%;
+      max-width: 540px;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+    }
+    .modal-large { max-width: 720px; max-height: 85vh; }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; }
+    .modal-title { font-size: 1.1rem; font-weight: 700; color: #fff; }
+    .modal-close { background: transparent; border: none; color: var(--text-secondary); font-size: 1.2rem; cursor: pointer; }
+    .modal-tabs { display: flex; gap: 0.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.4rem; }
+    .tab-btn { background: transparent; border: none; color: var(--text-secondary); font-weight: 600; font-size: 0.85rem; padding: 0.35rem 0.75rem; border-radius: 6px; cursor: pointer; }
+    .tab-btn.active { background: rgba(56, 189, 248, 0.15); color: var(--accent-cyan); }
+    .tab-content { display: none; flex-direction: column; gap: 0.85rem; }
+    .tab-content.active { display: flex; }
+    .dropzone { border: 2px dashed var(--border-color); border-radius: 8px; padding: 1.5rem; text-align: center; color: var(--text-secondary); cursor: pointer; }
+    .dropzone:hover { border-color: var(--accent-cyan); }
+    .guide-doc-text { font-size: 0.88rem; line-height: 1.6; color: #cbd5e1; white-space: pre-wrap; }
+    .guide-card-pre { background: #06090e; padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color); font-family: 'Fira Code', monospace; font-size: 0.82rem; color: var(--accent-cyan); overflow-x: auto; }
+    .table-scroll { max-height: 480px; overflow-y: auto; }
+    .w-full { width: 100%; }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <div class="ambient-glow"></div>
+
+  <header>
+    <div class="logo-container">
+      <div class="logo-badge">HARNESS</div>
+      <div class="logo-title">Control Room</div>
+    </div>
+
+    <!-- Navigation Bar across views -->
+    <nav class="header-nav">
+      <button class="nav-btn active" onclick="switchView('overview')" id="nav-overview">📊 Overview</button>
+      <button class="nav-btn" onclick="switchView('timeline')" id="nav-timeline">⏱️ Timeline & Sourcing</button>
+      <button class="nav-btn" onclick="switchView('graph')" id="nav-graph">🕸️ Service Graph</button>
+      <button class="nav-btn" onclick="switchView('agent')" id="nav-agent">🤖 Agent & Sessions</button>
+      <button class="nav-btn" onclick="switchView('plugins')" id="nav-plugins">🧩 Plugins & Tools</button>
+      <button class="nav-btn" onclick="switchView('sandboxes')" id="nav-sandboxes">🛡️ Sandboxes</button>
+    </nav>
+
+    <div class="header-actions">
+      <button class="btn btn-outline" onclick="openCreatorModal()" style="border-color: var(--accent-purple); color: var(--accent-purple);">✨ Scaffold Plugin</button>
+      <button class="btn" onclick="openAddPluginModal()">+ Ingest Plugin</button>
+      <div class="ws-status">
+        <div class="status-dot" id="wsDot"></div>
+        <span id="wsText">Connecting...</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Modal for Ingesting Plugins -->
+  <div class="modal-backdrop" id="addPluginModal">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title">Universal Plugin Ingestion</div>
+        <button class="modal-close" onclick="closeAddPluginModal()">&times;</button>
+      </div>
+
+      <div class="modal-tabs">
+        <button class="tab-btn active" id="tabUrlBtn" onclick="switchModalTab('url')">GitHub / URL / PyPI</button>
+        <button class="tab-btn" id="tabZipBtn" onclick="switchModalTab('zip')">Upload ZIP</button>
+      </div>
+
+      <!-- Tab 1: URL -->
+      <div class="tab-content active" id="tabUrl">
+        <div class="form-group">
+          <label class="form-label" style="font-size: 0.8rem; color: var(--text-secondary); display: block; margin-bottom: 0.3rem;">Source (GitHub repo, PyPI, or OpenAPI URL)</label>
+          <input type="text" id="pluginSourceInput" class="agent-input w-full" placeholder="e.g. owner/repo, pypi:requests, or https://github.com/owner/repo">
+        </div>
+        <div class="form-group">
+          <label class="form-label" style="font-size: 0.8rem; color: var(--text-secondary); display: block; margin-bottom: 0.3rem;">Git Ref / Branch (optional)</label>
+          <input type="text" id="pluginRefInput" class="agent-input w-full" placeholder="main" value="main">
+        </div>
+        <button class="btn" id="btnIngestUrl" onclick="submitPluginUrl()">Ingest & Sandboxed Activate</button>
+      </div>
+
+      <!-- Tab 2: Upload ZIP -->
+      <div class="tab-content" id="tabZip">
+        <div class="dropzone" onclick="document.getElementById('pluginZipFile').click()">
+          <input type="file" id="pluginZipFile" accept=".zip" class="hidden" onchange="onZipFileSelected(this)">
+          <div id="dropzoneText">Click or drag & drop a plugin <b>.zip</b> archive here</div>
+        </div>
+        <button class="btn" id="btnUploadZip" onclick="submitPluginZip()" disabled>Upload & Provision</button>
+      </div>
+
+      <div id="modalStatus" style="font-size: 0.85rem; display: none;"></div>
+    </div>
+  </div>
+
+  <!-- Modal for Plugin Guide & Summary Card -->
+  <div class="modal-backdrop" id="pluginGuideModal">
+    <div class="modal modal-large">
+      <div class="modal-header">
+        <div class="modal-title" id="guideModalTitle">Plugin Documentation & Schema</div>
+        <button class="modal-close" onclick="closePluginGuideModal()">&times;</button>
+      </div>
+
+      <div class="modal-tabs">
+        <button class="tab-btn active" id="tabGuideDocBtn" onclick="switchGuideTab('doc')">🎯 Quick Start Guide</button>
+        <button class="tab-btn" id="tabGuideCardBtn" onclick="switchGuideTab('card')">📋 Summary Card</button>
+      </div>
+
+      <div style="overflow-y: auto; max-height: 55vh; padding-right: 0.4rem;">
+        <div class="tab-content active" id="tabGuideDoc">
+          <div id="guideDocContent" class="guide-doc-text"></div>
+        </div>
+        <div class="tab-content" id="tabGuideCard">
+          <pre id="guideCardContent" class="guide-card-pre"></pre>
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; border-top: 1px solid var(--border-color); padding-top: 0.75rem;">
+        <button class="btn btn-outline" onclick="closePluginGuideModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Creating & Scaffolding Plugins -->
+  <div class="modal-backdrop" id="creatorModal">
+    <div class="modal modal-large">
+      <div class="modal-header">
+        <div class="modal-title">✨ Plugin Creator & Scaffolder</div>
+        <button class="modal-close" onclick="closeCreatorModal()">&times;</button>
+      </div>
+
+      <div style="padding: 0.5rem 0;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label class="form-label" style="font-size: 0.8rem; color: var(--text-secondary); display: block; margin-bottom: 0.3rem;">Plugin Name *</label>
+            <input type="text" id="creatorName" class="agent-input w-full" placeholder="e.g. data_cleaner">
+          </div>
+          <div class="form-group">
+            <label class="form-label" style="font-size: 0.8rem; color: var(--text-secondary); display: block; margin-bottom: 0.3rem;">Language</label>
+            <select id="creatorLanguage" class="agent-input w-full">
+              <option value="python">Python</option>
+              <option value="javascript">JavaScript</option>
+              <option value="typescript">TypeScript</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label class="form-label" style="font-size: 0.8rem; color: var(--text-secondary); display: block; margin-bottom: 0.3rem;">Archetype Preset</label>
+            <select id="creatorPreset" class="agent-input w-full">
+              <option value="general">General Plugin</option>
+              <option value="tool">LLM Skill / Tool</option>
+              <option value="api_wrapper">API Wrapper (httpx)</option>
+              <option value="service">Service Provider</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" style="font-size: 0.8rem; color: var(--text-secondary); display: block; margin-bottom: 0.3rem;">Sandbox Isolation</label>
+            <select id="creatorIsolation" class="agent-input w-full">
+              <option value="subprocess">Subprocess (Default)</option>
+              <option value="venv">Isolated Venv</option>
+              <option value="in_process">In-Process (Trusted)</option>
+              <option value="docker">Docker Container</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" style="font-size: 0.8rem; color: var(--text-secondary); display: block; margin-bottom: 0.3rem;">Tools / Entrypoints (comma-separated)</label>
+          <input type="text" id="creatorTools" class="agent-input w-full" placeholder="e.g. clean_csv,validate_json" value="execute">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" style="font-size: 0.8rem; color: var(--text-secondary); display: block; margin-bottom: 0.3rem;">External Dependencies (comma-separated)</label>
+          <input type="text" id="creatorDeps" class="agent-input w-full" placeholder="e.g. httpx>=0.27.0,pydantic">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" style="font-size: 0.8rem; color: var(--text-secondary); display: block; margin-bottom: 0.3rem;">Description</label>
+          <input type="text" id="creatorDesc" class="agent-input w-full" placeholder="Provides capabilities for data processing">
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 0.5rem; margin: 0.75rem 0;">
+          <input type="checkbox" id="creatorAutoEnable" checked>
+          <label for="creatorAutoEnable" style="font-size: 0.85rem; color: var(--text-secondary); cursor: pointer;">Automatically load and enable in running lifecycle</label>
+        </div>
+
+        <div id="creatorStatus" style="font-size: 0.85rem; padding: 0.5rem; border-radius: 6px; display: none; margin-bottom: 0.75rem;"></div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 0.75rem; border-top: 1px solid var(--border-color); padding-top: 0.75rem;">
+          <button class="btn btn-outline" onclick="closeCreatorModal()">Cancel</button>
+          <button class="btn" id="btnCreatorScaffold" onclick="submitCreatorScaffold()">🚀 Scaffold & Mount</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <!-- VIEW 1: OVERVIEW & SYSTEM HEALTH -->
+    <div class="view-panel active" id="view-overview">
+      <div class="grid-container">
+        <!-- Top Metrics -->
+        <div class="card col-12">
+          <div class="metrics-grid">
+            <div class="metric-box">
+              <div class="metric-value" id="ovPlugins">0</div>
+              <div class="metric-label">Active Plugins</div>
+            </div>
+            <div class="metric-box">
+              <div class="metric-value" id="ovServices">0</div>
+              <div class="metric-label">Registered Services</div>
+            </div>
+            <div class="metric-box">
+              <div class="metric-value" id="ovTools">0</div>
+              <div class="metric-label">Mounted Tools</div>
+            </div>
+            <div class="metric-box">
+              <div class="metric-value" id="ovEvents">0</div>
+              <div class="metric-label">Captured Events</div>
+            </div>
+            <div class="metric-box">
+              <div class="metric-value" id="ovTokens">0</div>
+              <div class="metric-label">Tokens Consumed</div>
+            </div>
+            <div class="metric-box">
+              <div class="metric-value" id="ovSandboxes">0</div>
+              <div class="metric-label">Active Sandboxes</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- System Summary Cards -->
+        <div class="card col-6">
+          <div class="card-title">
+            <span>Kernel & Core Services</span>
+            <button class="btn btn-outline btn-xs" onclick="loadAllData()">Refresh</button>
+          </div>
+          <div id="serviceContextList" style="display: flex; flex-direction: column; gap: 0.5rem;">
+            <div style="color: var(--text-secondary); font-size: 0.85rem;">Loading services...</div>
+          </div>
+        </div>
+
+        <!-- Live Quick Stream -->
+        <div class="card col-6">
+          <div class="card-title">
+            <span>Live Activity Stream</span>
+            <button class="btn btn-outline btn-xs" onclick="clearStream()">Clear</button>
+          </div>
+          <div class="terminal-box" id="overviewStreamBox">
+            <div class="log-line"><span class="log-ts">></span> Listening for harness telemetry...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 2: SPATIOTEMPORAL TIMELINE & SOURCING -->
+    <div class="view-panel" id="view-timeline">
+      <div class="grid-container">
+        <div class="card col-12">
+          <div class="card-title">
+            <span>Spatiotemporal Event Timeline & Replay Scrubber</span>
+            <div class="btn-group">
+              <button class="btn btn-outline btn-xs" onclick="fetchTimelineEvents()">Fetch Window</button>
+              <button class="btn btn-outline btn-xs" onclick="replayAllEvents()">Replay All</button>
+            </div>
+          </div>
+
+          <div class="timeline-controls">
+            <span style="font-size: 0.8rem; color: var(--text-secondary); font-family: 'Fira Code', monospace;" id="timelineStartLabel">Start: -</span>
+            <input type="range" min="0" max="100" value="100" class="timeline-slider" id="timelineScrubber" oninput="onTimelineScrub(this.value)">
+            <span style="font-size: 0.8rem; color: var(--text-secondary); font-family: 'Fira Code', monospace;" id="timelineEndLabel">Live (100%)</span>
+          </div>
+
+          <div style="display: flex; gap: 0.75rem;">
+            <input type="text" id="timelineFilterType" class="agent-input" style="width: 250px;" placeholder="Filter by event type (e.g. tool.*, agent.*)" oninput="filterTimelineList()">
+            <input type="text" id="timelineFilterSource" class="agent-input" style="width: 250px;" placeholder="Filter by source plugin..." oninput="filterTimelineList()">
+          </div>
+
+          <div class="terminal-box terminal-tall" id="timelineBox">
+            <div class="log-line"><span class="log-ts">></span> Loading historical event timeline...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 3: ARCHITECTURE & SERVICE GRAPH -->
+    <div class="view-panel" id="view-graph">
+      <div class="grid-container">
+        <div class="card col-12">
+          <div class="card-title">
+            <span>Declarative Micro-Kernel Dependency Graph</span>
+            <button class="btn btn-outline btn-xs" onclick="renderMermaidGraph()">Re-render Graph</button>
+          </div>
+          <div class="mermaid-container" id="mermaidGraphBox">
+            <div style="color: var(--text-secondary); font-size: 0.9rem;">Rendering architecture graph...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 4: AGENT & SESSION CONTROL -->
+    <div class="view-panel" id="view-agent">
+      <div class="grid-container">
+        <!-- Agent Task Runner -->
+        <div class="card col-7">
+          <div class="card-title">
+            <span>Autonomous Agent Mission Control</span>
+          </div>
+          <div style="display: flex; gap: 0.6rem;">
+            <input type="text" id="agentPromptInput" class="agent-input" style="flex: 1;" placeholder="Enter autonomous task..." value="Calculate sum of 40 and 2 using python surface">
+            <button class="btn" onclick="executeAgentTask()" id="btnExecAgent">Launch Task</button>
+          </div>
+          <div class="terminal-box terminal-tall" id="agentConsoleBox">
+            <div class="log-line"><span class="log-ts">></span> Agent loop ready. Standby for missions.</div>
+          </div>
+        </div>
+
+        <!-- Multi-Turn Session Explorer -->
+        <div class="card col-5">
+          <div class="card-title">
+            <span>Session History & Artifacts</span>
+            <button class="btn btn-outline btn-xs" onclick="loadSessions()">Refresh</button>
+          </div>
+          <div class="table-scroll" style="max-height: 420px;">
+            <table class="plugin-table">
+              <thead>
+                <tr>
+                  <th>Session ID</th>
+                  <th>Status</th>
+                  <th>Steps</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="sessionTableBody">
+                <tr><td colspan="4" style="text-align: center; color: var(--text-secondary);">No previous sessions</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 5: PLUGINS & TOOL MATRIX -->
+    <div class="view-panel" id="view-plugins">
+      <div class="grid-container">
+        <div class="card col-12">
+          <div class="card-title">
+            <span>Plugin Ecosystem & Granular Tool Registry</span>
+            <div class="btn-group">
+              <button class="btn btn-outline btn-success btn-xs" onclick="enableAllPlugins()">Enable All</button>
+              <button class="btn btn-outline btn-danger btn-xs" onclick="disableAllPlugins()">Disable All</button>
+              <button class="btn btn-outline btn-xs" onclick="loadPluginsAndTools()">Refresh</button>
+            </div>
+          </div>
+          <input type="text" id="pluginSearchBox" class="agent-input search-input" placeholder="Filter plugins or tools (e.g. llm, storage, react, supervisor)..." oninput="filterPluginMatrix()">
+          <div class="table-scroll">
+            <table class="plugin-table">
+              <thead>
+                <tr>
+                  <th class="td-chevron"></th>
+                  <th>Plugin Name</th>
+                  <th>Mounted Tools</th>
+                  <th>Lifecycle State</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="pluginsMatrixTableBody">
+                <tr><td colspan="5" style="text-align: center; color: var(--text-secondary);">Loading plugin catalog...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 6: SANDBOXES & PROCESS ISOLATION -->
+    <div class="view-panel" id="view-sandboxes">
+      <div class="grid-container">
+        <div class="card col-12">
+          <div class="card-title">
+            <span>Sandbox Executor & Isolation Monitor</span>
+            <button class="btn btn-outline btn-xs" onclick="loadSandboxes()">Refresh Sandboxes</button>
+          </div>
+          <div class="table-scroll">
+            <table class="plugin-table">
+              <thead>
+                <tr>
+                  <th>Plugin</th>
+                  <th>Isolation Mode</th>
+                  <th>Running State</th>
+                  <th>Process PID</th>
+                  <th>Trust Level</th>
+                </tr>
+              </thead>
+              <tbody id="sandboxTableBody">
+                <tr><td colspan="5" style="text-align: center; color: var(--text-secondary);">Querying sandbox executors...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    mermaid.initialize({ startOnLoad: false, theme: 'dark' });
+
+    let activeView = 'overview';
+    let globalEvents = [];
+    let cachedPlugins = {};
+    let cachedTools = [];
+    let cachedSandboxes = [];
+    let expandedPlugins = new Set();
+
+    const wsDot = document.getElementById('wsDot');
+    const wsText = document.getElementById('wsText');
+    const overviewStreamBox = document.getElementById('overviewStreamBox');
+    const timelineBox = document.getElementById('timelineBox');
+    const agentConsoleBox = document.getElementById('agentConsoleBox');
+
+    // Navigation Switcher
+    function switchView(viewName) {
+      activeView = viewName;
+      document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.view-panel').forEach(panel => panel.classList.remove('active'));
+
+      const navBtn = document.getElementById(`nav-${viewName}`);
+      const panel = document.getElementById(`view-${viewName}`);
+      if (navBtn) navBtn.classList.add('active');
+      if (panel) panel.classList.add('active');
+
+      if (viewName === 'graph') {
+        renderMermaidGraph();
+      } else if (viewName === 'timeline') {
+        fetchTimelineEvents();
+      } else if (viewName === 'sandboxes') {
+        loadSandboxes();
+      } else if (viewName === 'agent') {
+        loadSessions();
+      } else if (viewName === 'plugins') {
+        loadPluginsAndTools();
+      }
+    }
+
+    // WebSocket Telemetry
+    function connectWS() {
+      const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+      const wsUrl = `${protocol}//${window.location.host}/ws/events`;
+      const ws = new WebSocket(wsUrl);
+
+      ws.onopen = () => {
+        wsDot.classList.add('connected');
+        wsText.textContent = 'Live Connected';
+      };
+
+      ws.onmessage = (event) => {
+        try {
+          const msg = JSON.parse(event.data);
+          if (msg.type === 'event' && msg.data) {
+            handleIncomingEvent(msg.data);
+          }
+        } catch(e) {}
+      };
+
+      ws.onclose = () => {
+        wsDot.classList.remove('connected');
+        wsText.textContent = 'Disconnected (Reconnecting...)';
+        setTimeout(connectWS, 2500);
+      };
+    }
+
+    function handleIncomingEvent(ev) {
+      globalEvents.push(ev);
+      document.getElementById('ovEvents').textContent = globalEvents.length;
+
+      // Update overview stream
+      const time = ev.timestamp ? ev.timestamp.substring(11, 19) : '';
+      const line = document.createElement('div');
+      line.className = 'log-line';
+      line.innerHTML = `<span class="log-ts">[${time}]</span> <span class="log-type">[${ev.event_type}]</span> <span class="log-src">${ev.source}</span> ${JSON.stringify(ev.payload || {})}`;
+      
+      overviewStreamBox.appendChild(line);
+      overviewStreamBox.scrollTop = overviewStreamBox.scrollHeight;
+
+      if (activeView === 'timeline') {
+        renderTimelineList(globalEvents);
+      }
+    }
+
+    function clearStream() {
+      overviewStreamBox.innerHTML = '<div class="log-line"><span class="log-ts">></span> Activity stream cleared.</div>';
+    }
+
+    // Load Overall Data
+    async function loadAllData() {
+      await Promise.all([loadStatus(), loadPluginsAndTools(), loadMetrics(), loadSandboxes()]);
+    }
+
+    async function loadStatus() {
+      try {
+        const res = await fetch('/api/status');
+        const data = await res.json();
+        cachedPlugins = data.plugins || {};
+        document.getElementById('ovPlugins').textContent = data.plugins_count || 0;
+        document.getElementById('ovServices').textContent = data.services_count || 0;
+
+        // Render service context list
+        const sList = document.getElementById('serviceContextList');
+        sList.innerHTML = '';
+        const services = data.services || ['events.bus', 'storage.sqlite', 'tools.registry', 'llm.provider', 'agent.loop'];
+        for (const s of services) {
+          const item = document.createElement('div');
+          item.style = 'display: flex; justify-content: space-between; align-items: center; padding: 0.4rem 0.6rem; background: rgba(0,0,0,0.3); border-radius: 6px; font-size: 0.82rem; border: 1px solid var(--border-color);';
+          item.innerHTML = `<span style="font-family: 'Fira Code', monospace; color: var(--accent-cyan);">${s}</span> <span class="pill enabled">Active</span>`;
+          sList.appendChild(item);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    async function loadMetrics() {
+      try {
+        const res = await fetch('/api/metrics');
+        const data = await res.json();
+        document.getElementById('ovTokens').textContent = data.total_tokens || 0;
+      } catch (err) {}
+    }
+
+    async function loadPluginsAndTools() {
+      try {
+        const [resStatus, resTools] = await Promise.all([fetch('/api/status'), fetch('/api/tools')]);
+        const statusData = await resStatus.json();
+        const toolsData = await resTools.json();
+
+        cachedPlugins = statusData.plugins || {};
+        cachedTools = toolsData.tools || [];
+
+        const activeTools = cachedTools.filter(t => t.enabled).length;
+        document.getElementById('ovTools').textContent = `${activeTools} / ${cachedTools.length}`;
+
+        renderPluginMatrixTable();
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    function renderPluginMatrixTable() {
+      const tbody = document.getElementById('pluginsMatrixTableBody');
+      const query = (document.getElementById('pluginSearchBox')?.value || '').toLowerCase().trim();
+      tbody.innerHTML = '';
+
+      if (Object.keys(cachedPlugins).length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:var(--text-secondary);">No plugins found</td></tr>';
+        return;
+      }
+
+      for (const [name, state] of Object.entries(cachedPlugins)) {
+        const pluginTools = cachedTools.filter(t => t.provider === name || (t.name.startsWith(name + '.') && !t.provider));
+        const activeToolCount = pluginTools.filter(t => t.enabled).length;
+
+        if (query && !name.toLowerCase().includes(query)) {
+          const matchTool = pluginTools.some(t => t.name.toLowerCase().includes(query));
+          if (!matchTool) continue;
+        }
+
+        const isExpanded = expandedPlugins.has(name);
+        const isEnabled = state === 'enabled';
+
+        const tr = document.createElement('tr');
+        tr.className = 'plugin-row';
+        tr.onclick = (e) => {
+          if (e.target.tagName === 'BUTTON' || e.target.closest('button')) return;
+          toggleDrawer(name);
+        };
+
+        const chevron = pluginTools.length > 0 ? (isExpanded ? '&#9660;' : '&#9654;') : '';
+        const toolBadge = pluginTools.length > 0 ? `<span class="tool-count-badge">${activeToolCount}/${pluginTools.length}</span>` : '<span class="tool-count-empty">0</span>';
+
+        tr.innerHTML = `
+          <td class="td-chevron">${chevron}</td>
+          <td class="td-name">${name}</td>
+          <td>${toolBadge}</td>
+          <td><span class="pill ${state}">${state}</span></td>
+          <td>
+            <div class="btn-group-sm">
+              <button class="btn btn-outline btn-action" onclick="openPluginGuide('${name}')" title="Documentation & Quickstart">📖 Info</button>
+              <button class="btn btn-outline btn-toggle" onclick="togglePlugin('${name}', '${isEnabled ? 'disable' : 'enable'}')">${isEnabled ? 'Disable' : 'Enable'}</button>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(tr);
+
+        if (pluginTools.length > 0) {
+          const drawerTr = document.createElement('tr');
+          drawerTr.className = `tool-drawer-row ${isExpanded ? 'open' : ''}`;
+          drawerTr.id = `drawer-${name}`;
+
+          let toolsHtml = '';
+          for (const tool of pluginTools) {
+            const shortName = tool.name.startsWith(name + '.') ? tool.name.substring(name.length + 1) : tool.name;
+            const isToolOn = tool.enabled;
+            toolsHtml += `
+              <div class="tool-item">
+                <div class="tool-meta">
+                  <span class="tool-name">${shortName}</span>
+                  <span class="tool-desc">${tool.description || '(no description)'}</span>
+                </div>
+                <button class="btn btn-xs ${isToolOn ? 'btn-outline btn-success' : 'btn-outline btn-danger'}" onclick="toggleToolState('${tool.name}', ${!isToolOn})">
+                  ${isToolOn ? 'ON' : 'OFF'}
+                </button>
+              </div>
+            `;
+          }
+
+          drawerTr.innerHTML = `
+            <td colspan="5" class="drawer-td">
+              <div class="tool-drawer-container">
+                <div class="drawer-title">Granular Tools & Capabilities (${pluginTools.length})</div>
+                ${toolsHtml}
+              </div>
+            </td>
+          `;
+          tbody.appendChild(drawerTr);
+        }
+      }
+    }
+
+    function toggleDrawer(name) {
+      if (expandedPlugins.has(name)) expandedPlugins.delete(name);
+      else expandedPlugins.add(name);
+      renderPluginMatrixTable();
+    }
+
+    function filterPluginMatrix() {
+      renderPluginMatrixTable();
+    }
+
+    async function togglePlugin(name, action) {
+      await fetch('/api/plugins/toggle', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ name, action })
+      });
+      await loadAllData();
+    }
+
+    async function toggleToolState(toolName, newState) {
+      await fetch('/api/tools/toggle', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ name: toolName, enabled: newState })
+      });
+      await loadPluginsAndTools();
+    }
+
+    async function enableAllPlugins() {
+      await fetch('/api/plugins/enable-all', { method: 'POST' });
+      await loadAllData();
+    }
+
+    async function disableAllPlugins() {
+      await fetch('/api/plugins/disable-all', { method: 'POST' });
+      await loadAllData();
+    }
+
+    // Timeline Sourcing
+    async function fetchTimelineEvents() {
+      try {
+        const res = await fetch('/api/timeline?limit=200');
+        const data = await res.json();
+        globalEvents = data.events || [];
+        document.getElementById('ovEvents').textContent = data.total || globalEvents.length;
+        renderTimelineList(globalEvents);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    function renderTimelineList(events) {
+      const typeFilter = (document.getElementById('timelineFilterType')?.value || '').toLowerCase().trim();
+      const srcFilter = (document.getElementById('timelineFilterSource')?.value || '').toLowerCase().trim();
+
+      timelineBox.innerHTML = '';
+      if (!events || events.length === 0) {
+        timelineBox.innerHTML = '<div class="log-line"><span class="log-ts">></span> No events recorded yet.</div>';
+        return;
+      }
+
+      document.getElementById('timelineStartLabel').textContent = `Events: ${events.length}`;
+
+      for (const ev of events) {
+        const etype = (ev.event_type || '').toLowerCase();
+        const esrc = (ev.source || '').toLowerCase();
+
+        if (typeFilter && !etype.includes(typeFilter.replace('*', ''))) continue;
+        if (srcFilter && !esrc.includes(srcFilter)) continue;
+
+        const time = ev.timestamp ? ev.timestamp.substring(11, 19) : '';
+        const line = document.createElement('div');
+        line.className = 'log-line';
+        line.innerHTML = `<span class="log-ts">[${time}]</span> <span class="log-type">[${ev.event_type}]</span> <span class="log-src">${ev.source}</span> ${JSON.stringify(ev.payload || {})}`;
+        timelineBox.appendChild(line);
+      }
+      timelineBox.scrollTop = timelineBox.scrollHeight;
+    }
+
+    function filterTimelineList() {
+      renderTimelineList(globalEvents);
+    }
+
+    function onTimelineScrub(val) {
+      const pct = parseInt(val, 10);
+      const count = Math.max(1, Math.round((pct / 100) * globalEvents.length));
+      const sliced = globalEvents.slice(0, count);
+      document.getElementById('timelineEndLabel').textContent = `Scrub: ${count}/${globalEvents.length} (${pct}%)`;
+      renderTimelineList(sliced);
+    }
+
+    function replayAllEvents() {
+      timelineBox.innerHTML = '';
+      let i = 0;
+      const interval = setInterval(() => {
+        if (i >= globalEvents.length) {
+          clearInterval(interval);
+          return;
+        }
+        const ev = globalEvents[i];
+        const time = ev.timestamp ? ev.timestamp.substring(11, 19) : '';
+        const line = document.createElement('div');
+        line.className = 'log-line';
+        line.innerHTML = `<span class="log-ts">[${time}]</span> <span class="log-type">[${ev.event_type}]</span> <span class="log-src">${ev.source}</span> ${JSON.stringify(ev.payload || {})}`;
+        timelineBox.appendChild(line);
+        timelineBox.scrollTop = timelineBox.scrollHeight;
+        i++;
+      }, 50);
+    }
+
+    // Architecture Graph
+    async function renderMermaidGraph() {
+      const box = document.getElementById('mermaidGraphBox');
+      box.innerHTML = '<div style="color: var(--text-secondary);">Loading architecture graph...</div>';
+      try {
+        const res = await fetch('/api/graph');
+        const data = await res.json();
+        const code = data.mermaid || 'graph TD\n  Harness[Harness MicroKernel]';
+        box.innerHTML = `<div class="mermaid">${code}</div>`;
+        mermaid.run({ nodes: box.querySelectorAll('.mermaid') });
+      } catch (err) {
+        box.innerHTML = `<div style="color: var(--accent-rose);">Failed to render graph: ${err}</div>`;
+      }
+    }
+
+    // Sandboxes Inspector
+    async function loadSandboxes() {
+      try {
+        const res = await fetch('/api/sandboxes');
+        const data = await res.json();
+        cachedSandboxes = data.sandboxes || [];
+        document.getElementById('ovSandboxes').textContent = cachedSandboxes.filter(s => s.is_running).length;
+
+        const tbody = document.getElementById('sandboxTableBody');
+        tbody.innerHTML = '';
+
+        if (cachedSandboxes.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:var(--text-secondary);">No sandboxes registered</td></tr>';
+          return;
+        }
+
+        for (const s of cachedSandboxes) {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td class="td-name">${s.plugin}</td>
+            <td><span class="pill ${s.executor}">${s.executor}</span></td>
+            <td><span class="pill ${s.is_running ? 'enabled' : 'disabled'}">${s.is_running ? 'Running' : 'Stopped'}</span></td>
+            <td style="font-family: 'Fira Code', monospace;">${s.pid || '-'}</td>
+            <td><span class="pill ${s.trusted ? 'enabled' : 'disabled'}">${s.trusted ? 'Trusted' : 'Untrusted (Isolated)'}</span></td>
+          `;
+          tbody.appendChild(tr);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    // Agent Tasks & Sessions
+    async function executeAgentTask() {
+      const prompt = document.getElementById('agentPromptInput').value.trim();
+      if (!prompt) return;
+
+      const btn = document.getElementById('btnExecAgent');
+      btn.disabled = true;
+      btn.textContent = 'Running...';
+
+      const line = document.createElement('div');
+      line.className = 'log-line';
+      line.innerHTML = `<span class="log-ts">></span> <b>Running Task:</b> ${prompt}`;
+      agentConsoleBox.appendChild(line);
+
+      try {
+        const res = await fetch('/api/agent/run', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ task: prompt, max_steps: 10 })
+        });
+        const data = await res.json();
+
+        const resLine = document.createElement('div');
+        resLine.className = 'log-line';
+        resLine.innerHTML = `<span class="log-ts">></span> <b class="log-success">Outcome (${data.task_status}):</b> ${data.final_answer || data.error || 'Done'}`;
+        agentConsoleBox.appendChild(resLine);
+        agentConsoleBox.scrollTop = agentConsoleBox.scrollHeight;
+
+        await loadSessions();
+      } catch (err) {
+        const errLine = document.createElement('div');
+        errLine.className = 'log-line';
+        errLine.innerHTML = `<span class="log-ts">></span> <span class="log-error">Error: ${err}</span>`;
+        agentConsoleBox.appendChild(errLine);
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Launch Task';
+      }
+    }
+
+    async function loadSessions() {
+      try {
+        const res = await fetch('/api/sessions');
+        const data = await res.json();
+        const tbody = document.getElementById('sessionTableBody');
+        tbody.innerHTML = '';
+
+        const sessions = data.sessions || [];
+        if (sessions.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--text-secondary);">No previous sessions</td></tr>';
+          return;
+        }
+
+        for (const s of sessions) {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td style="font-family: 'Fira Code', monospace; font-size: 0.8rem;">${s.id || s.session_id}</td>
+            <td><span class="pill ${s.status === 'completed' ? 'enabled' : 'disabled'}">${s.status}</span></td>
+            <td>${s.steps_count || (s.steps ? s.steps.length : 0)}</td>
+            <td>
+              <button class="btn btn-outline btn-xs" onclick="exportSession('${s.id || s.session_id}')">Export</button>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        }
+      } catch (err) {}
+    }
+
+    async function exportSession(sessionId) {
+      try {
+        const res = await fetch(`/api/sessions/${sessionId}/export?format=json`);
+        const data = await res.json();
+        const blob = new Blob([data.content || JSON.stringify(data, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `session_${sessionId}.json`;
+        a.click();
+      } catch (err) {
+        alert(`Export failed: ${err}`);
+      }
+    }
+
+    // Modal Controls
+    const addPluginModal = document.getElementById('addPluginModal');
+    const modalStatus = document.getElementById('modalStatus');
+    let selectedZipFile = null;
+
+    function openAddPluginModal() {
+      addPluginModal.classList.add('open');
+      modalStatus.style.display = 'none';
+    }
+
+    function closeAddPluginModal() {
+      addPluginModal.classList.remove('open');
+    }
+
+    function switchModalTab(tab) {
+      document.getElementById('tabUrlBtn').classList.toggle('active', tab === 'url');
+      document.getElementById('tabZipBtn').classList.toggle('active', tab === 'zip');
+      document.getElementById('tabUrl').classList.toggle('active', tab === 'url');
+      document.getElementById('tabZip').classList.toggle('active', tab === 'zip');
+    }
+
+    async function submitPluginUrl() {
+      const source = document.getElementById('pluginSourceInput').value.trim();
+      const ref = document.getElementById('pluginRefInput').value.trim() || 'main';
+      if (!source) return;
+
+      const btn = document.getElementById('btnIngestUrl');
+      btn.disabled = true;
+      btn.textContent = 'Ingesting...';
+      modalStatus.style.display = 'block';
+      modalStatus.style.color = 'var(--accent-cyan)';
+      modalStatus.innerHTML = 'Synthesizing manifest and initializing sandbox...';
+
+      try {
+        const res = await fetch('/api/plugins/ingest', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ source, ref })
+        });
+        const data = await res.json();
+        if (data.status === 'ok') {
+          modalStatus.style.color = 'var(--accent-emerald)';
+          modalStatus.innerHTML = `✓ Plugin <b>${data.plugin.name}</b> ingested successfully!`;
+          await loadAllData();
+          setTimeout(closeAddPluginModal, 1200);
+        } else {
+          modalStatus.style.color = 'var(--accent-rose)';
+          modalStatus.innerHTML = `✗ Ingestion failed: ${data.error}`;
+        }
+      } catch (err) {
+        modalStatus.style.color = 'var(--accent-rose)';
+        modalStatus.innerHTML = `✗ Error: ${err}`;
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Ingest & Sandboxed Activate';
+      }
+    }
+
+    function onZipFileSelected(input) {
+      if (input.files && input.files[0]) {
+        selectedZipFile = input.files[0];
+        document.getElementById('dropzoneText').innerHTML = `Selected: <b>${selectedZipFile.name}</b>`;
+        document.getElementById('btnUploadZip').disabled = false;
+      }
+    }
+
+    async function submitPluginZip() {
+      if (!selectedZipFile) return;
+      const btn = document.getElementById('btnUploadZip');
+      btn.disabled = true;
+      btn.textContent = 'Uploading...';
+
+      const formData = new FormData();
+      formData.append('file', selectedZipFile);
+
+      try {
+        const res = await fetch('/api/plugins/upload', { method: 'POST', body: formData });
+        const data = await res.json();
+        if (data.status === 'ok') {
+          modalStatus.style.display = 'block';
+          modalStatus.style.color = 'var(--accent-emerald)';
+          modalStatus.innerHTML = `✓ Plugin <b>${data.plugin.name}</b> installed successfully!`;
+          await loadAllData();
+          setTimeout(closeAddPluginModal, 1200);
+        }
+      } catch (err) {}
+    }
+
+    // Guide Modal
+    const pluginGuideModal = document.getElementById('pluginGuideModal');
+    const guideDocContent = document.getElementById('guideDocContent');
+    const guideCardContent = document.getElementById('guideCardContent');
+
+    async function openPluginGuide(name) {
+      document.getElementById('guideModalTitle').textContent = `Plugin Guide: ${name}`;
+      guideDocContent.textContent = 'Loading guide and card...';
+      guideCardContent.textContent = 'Loading card...';
+      pluginGuideModal.classList.add('open');
+      switchGuideTab('doc');
+
+      try {
+        const res = await fetch(`/api/plugins/${name}/guide`);
+        const data = await res.json();
+        if (data.status === 'ok') {
+          guideDocContent.textContent = data.guide || 'No guide available.';
+          guideCardContent.textContent = data.card || 'No card available.';
+        }
+      } catch (err) {
+        guideDocContent.textContent = `Error: ${err}`;
+      }
+    }
+
+    function closePluginGuideModal() {
+      pluginGuideModal.classList.remove('open');
+    }
+
+    function switchGuideTab(tab) {
+      document.getElementById('tabGuideDocBtn').classList.toggle('active', tab === 'doc');
+      document.getElementById('tabGuideCardBtn').classList.toggle('active', tab === 'card');
+      document.getElementById('tabGuideDoc').classList.toggle('active', tab === 'doc');
+      document.getElementById('tabGuideCard').classList.toggle('active', tab === 'card');
+    }
+
+    // Creator Modal Controls
+    const creatorModal = document.getElementById('creatorModal');
+    const creatorStatus = document.getElementById('creatorStatus');
+
+    function openCreatorModal() {
+      creatorModal.classList.add('open');
+      creatorStatus.style.display = 'none';
+    }
+
+    function closeCreatorModal() {
+      creatorModal.classList.remove('open');
+    }
+
+    async function submitCreatorScaffold() {
+      const name = document.getElementById('creatorName').value.trim();
+      if (!name) {
+        alert('Please specify a plugin name.');
+        return;
+      }
+
+      const language = document.getElementById('creatorLanguage').value;
+      const preset = document.getElementById('creatorPreset').value;
+      const isolation = document.getElementById('creatorIsolation').value;
+      const toolsRaw = document.getElementById('creatorTools').value.trim();
+      const depsRaw = document.getElementById('creatorDeps').value.trim();
+      const description = document.getElementById('creatorDesc').value.trim();
+      const autoEnable = document.getElementById('creatorAutoEnable').checked;
+
+      const tools = toolsRaw.split(',').map(s => s.trim()).filter(Boolean);
+      const dependencies = depsRaw.split(',').map(s => s.trim()).filter(Boolean);
+
+      const btn = document.getElementById('btnCreatorScaffold');
+      btn.disabled = true;
+      btn.textContent = 'Scaffolding...';
+      creatorStatus.style.display = 'block';
+      creatorStatus.style.background = 'rgba(56, 189, 248, 0.1)';
+      creatorStatus.style.color = 'var(--accent-cyan)';
+      creatorStatus.innerHTML = 'Scaffolding project structure, manifest, and tests...';
+
+      try {
+        const res = await fetch('/api/creator/scaffold', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            name,
+            language,
+            preset,
+            isolation,
+            tools: tools.length ? tools : ['execute'],
+            dependencies,
+            description,
+            auto_enable: autoEnable
+          })
+        });
+
+        const data = await res.json();
+        if (data.status === 'ok') {
+          creatorStatus.style.background = 'rgba(16, 185, 129, 0.1)';
+          creatorStatus.style.color = 'var(--accent-emerald)';
+          creatorStatus.innerHTML = `✓ Plugin <b>${data.plugin.name}</b> scaffolded successfully at <code>${data.plugin.path}</code>!`;
+          await loadAllData();
+          setTimeout(closeCreatorModal, 1500);
+        } else {
+          creatorStatus.style.background = 'rgba(244, 63, 94, 0.1)';
+          creatorStatus.style.color = 'var(--accent-rose)';
+          creatorStatus.innerHTML = `✗ Scaffolding failed: ${data.error}`;
+        }
+      } catch (err) {
+        creatorStatus.style.background = 'rgba(244, 63, 94, 0.1)';
+        creatorStatus.style.color = 'var(--accent-rose)';
+        creatorStatus.innerHTML = `✗ Error: ${err}`;
+      } finally {
+        btn.disabled = false;
+        btn.textContent = '🚀 Scaffold & Mount';
+      }
+    }
+
+    // Initialization
+    window.addEventListener('DOMContentLoaded', () => {
+      connectWS();
+      loadAllData();
+      setInterval(loadAllData, 6000);
+    });
+  </script>
+</body>
+</html>
