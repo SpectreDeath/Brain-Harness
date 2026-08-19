@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from plugins.task_planner.main import (
+from plugins.agent_orchestration.task_planner.main import (
     plan_decompose_goal,
     plan_export_dag,
     plan_get_next_milestone,

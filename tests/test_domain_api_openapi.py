@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from plugins.api_openapi.main import (
+from plugins.integration_and_io.api_openapi.main import (
     generate_mock_endpoint_response,
     generate_openapi_spec,
     validate_openapi_spec,

@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pytest
 
-from plugins.filesystem_git.main import (
+from plugins.software_engineering.filesystem_git.main import (
     fs_list_dir,
     fs_read_file,
     fs_search_text,

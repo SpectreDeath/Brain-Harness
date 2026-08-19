@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from plugins.evaluator_critic.main import (
+from plugins.agent_orchestration.evaluator_critic.main import (
     critic_check_safety,
     critic_evaluate_code,
     critic_review_plan,

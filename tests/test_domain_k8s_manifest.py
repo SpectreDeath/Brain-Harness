@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from plugins.k8s_manifest.main import (
+from plugins.infra_and_cloud.k8s_manifest.main import (
     check_security_context,
     lint_k8s_manifest,
     validate_resource_limits,

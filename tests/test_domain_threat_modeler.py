@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from plugins.threat_modeler.main import (
+from plugins.security_and_forensics.threat_modeler.main import (
     generate_attack_tree,
     map_mitre_attack,
     model_stride_threats,

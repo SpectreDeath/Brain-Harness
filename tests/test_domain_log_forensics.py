@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from plugins.log_forensics.main import (
+from plugins.security_and_forensics.log_forensics.main import (
     build_incident_timeline,
     detect_log_anomalies,
     parse_log_stream,

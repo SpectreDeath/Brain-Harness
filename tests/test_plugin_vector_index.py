@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pytest
 
-from plugins.vector_index.main import (
+from plugins.memory_and_epistemics.vector_index.main import (
     vector_index_directory,
     vector_search_hybrid,
     vector_search_semantic,

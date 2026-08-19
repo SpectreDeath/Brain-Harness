@@ -790,7 +790,10 @@ def skills() -> None:
 @click.option("--path", default=".", help="Root directory to scan for skills")
 def skills_graph(visual: bool, path: str) -> None:
     """Index and display the workspace skill knowledge graph."""
-    from plugins.skill_knowledge_graph.main import export_skill_graph_visual, index_skill_catalog
+    try:
+        from plugins.memory_and_epistemics.skill_knowledge_graph.main import export_skill_graph_visual, index_skill_catalog
+    except ImportError:
+        from plugins.skill_knowledge_graph.main import export_skill_graph_visual, index_skill_catalog
 
     res = index_skill_catalog(path)
     click.echo(f"📊 Indexed {res['indexed_skills']} skills across {len(res['categories'])} categories.")
@@ -807,7 +810,10 @@ def skills_graph(visual: bool, path: str) -> None:
 @click.option("--top-k", default=3, help="Max matches to return")
 def skills_route(intent: str, top_k: int) -> None:
     """Route natural language task intent to matching skills."""
-    from plugins.skill_knowledge_graph.main import query_skill_router
+    try:
+        from plugins.memory_and_epistemics.skill_knowledge_graph.main import query_skill_router
+    except ImportError:
+        from plugins.skill_knowledge_graph.main import query_skill_router
 
     res = query_skill_router(intent, top_k=top_k)
     click.echo(f"🎯 Route matches for: {intent!r}")
@@ -824,7 +830,10 @@ def skills_route(intent: str, top_k: int) -> None:
 @click.argument("target_skill")
 def skills_chain(start_skill: str, target_skill: str) -> None:
     """Find directed execution path between two skills."""
-    from plugins.skill_knowledge_graph.main import find_skill_chain
+    try:
+        from plugins.memory_and_epistemics.skill_knowledge_graph.main import find_skill_chain
+    except ImportError:
+        from plugins.skill_knowledge_graph.main import find_skill_chain
 
     res = find_skill_chain(start_skill, target_skill)
     if res["status"] == "ok":
@@ -838,7 +847,10 @@ def skills_chain(start_skill: str, target_skill: str) -> None:
 @click.argument("skill_name")
 def skills_info(skill_name: str) -> None:
     """Inspect topological dependencies and anti-patterns for a skill."""
-    from plugins.skill_knowledge_graph.main import get_skill_topology
+    try:
+        from plugins.memory_and_epistemics.skill_knowledge_graph.main import get_skill_topology
+    except ImportError:
+        from plugins.skill_knowledge_graph.main import get_skill_topology
 
     res = get_skill_topology(skill_name)
     if res["status"] == "ok":

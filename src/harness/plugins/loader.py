@@ -45,10 +45,10 @@ class PluginLoader:
         self._loaded_modules: dict[str, Any] = {}
 
     def load_from_directory(self, directory: Path) -> list[HarnessPlugin]:
-        """Scan a directory for plugins.
+        """Scan a directory for plugins (supporting both flat and domain-nested layouts).
 
         Looks for:
-        1. Subdirectories containing ``plugin.json`` — manifest-based plugins
+        1. Direct or nested subdirectories containing ``plugin.json`` — manifest-based plugins
         2. Python files containing ``HarnessPlugin`` subclasses
 
         Args:
@@ -74,44 +74,41 @@ class PluginLoader:
             except Exception as e:
                 logger.warning("Failed to load direct manifest plugin", error=str(e))
 
-        for child in directory.iterdir():
-            if child.is_dir():
-                # Check for manifest-based plugin
-                manifest_path = child / "plugin.json"
-                if manifest_path.exists():
-                    try:
-                        plugin = self._load_manifest_plugin(child, manifest_path)
-                        if plugin:
-                            plugins.append(plugin)
-                    except Exception as e:
-                        logger.warning(
-                            "Failed to load manifest plugin",
-                            directory=str(child),
-                            error=str(e),
-                        )
-                else:
-                    # Scan for Python modules with HarnessPlugin subclasses
-                    for py_file in child.glob("*.py"):
-                        try:
-                            found = self._load_python_module(py_file)
-                            plugins.extend(found)
-                        except Exception as e:
-                            logger.warning(
-                                "Failed to load module",
-                                file=str(py_file),
-                                error=str(e),
-                            )
+        # Discover all child directories with plugin.json (direct or domain-nested)
+        processed_dirs: set[Path] = set()
+        for manifest_path in sorted(directory.glob("**/plugin.json")):
+            plugin_dir = manifest_path.parent
+            if plugin_dir in processed_dirs or any(p.name.startswith(".") for p in plugin_dir.parents) or plugin_dir.name.startswith("."):
+                continue
+            processed_dirs.add(plugin_dir)
+            try:
+                plugin = self._load_manifest_plugin(plugin_dir, manifest_path)
+                if plugin:
+                    plugins.append(plugin)
+            except Exception as e:
+                logger.warning(
+                    "Failed to load manifest plugin",
+                    directory=str(plugin_dir),
+                    error=str(e),
+                )
 
-            elif child.suffix == ".py":
-                try:
-                    found = self._load_python_module(child)
-                    plugins.extend(found)
-                except Exception as e:
-                    logger.warning(
-                        "Failed to load module",
-                        file=str(child),
-                        error=str(e),
-                    )
+        # Scan for Python modules with HarnessPlugin subclasses outside manifest dirs
+        for py_file in sorted(directory.glob("**/*.py")):
+            if (
+                py_file.parent in processed_dirs
+                or any(p.name.startswith(".") for p in py_file.parents)
+                or py_file.name.startswith(".")
+            ):
+                continue
+            try:
+                found = self._load_python_module(py_file)
+                plugins.extend(found)
+            except Exception as e:
+                logger.warning(
+                    "Failed to load module",
+                    file=str(py_file),
+                    error=str(e),
+                )
 
         if plugins:
             logger.info(
@@ -199,7 +196,7 @@ class PluginLoader:
     # --- Catalog & Metadata Seam ---
 
     def list_catalog(self) -> list[dict[str, Any]]:
-        """List all discovered, installed, and cached plugins in catalog format.
+        """List all discovered, installed, and cached plugins in catalog format (including domain groups).
 
         Returns:
             List of dict summaries for all available plugins.
@@ -212,13 +209,19 @@ class PluginLoader:
                 continue
 
             for item in sorted(p_dir.iterdir()):
-                if item.is_dir() and not item.name.startswith("."):
+                if not item.is_dir() or item.name.startswith("."):
+                    continue
+
+                manifest_path = item / "plugin.json"
+                nested_manifests = list(item.glob("*/plugin.json"))
+
+                if manifest_path.exists() or not nested_manifests:
+                    # Direct plugin directory (with or without manifest)
                     resolved_path = str(item.resolve())
                     if resolved_path in seen_paths:
                         continue
                     seen_paths.add(resolved_path)
 
-                    manifest_path = item / "plugin.json"
                     has_manifest = manifest_path.exists()
                     manifest = None
                     if has_manifest:
@@ -229,41 +232,71 @@ class PluginLoader:
 
                     catalog.append({
                         "name": manifest.name if manifest else item.name,
+                        "domain": "",
                         "path": resolved_path,
                         "has_manifest": has_manifest,
                         "version": manifest.version if manifest else "0.0.0",
                         "description": manifest.description if manifest else "",
                         "isolation": manifest.isolation.value if manifest else "unknown",
                     })
+                else:
+                    # Domain directory containing nested plugins
+                    domain_name = item.name
+                    for nested in sorted(item.iterdir()):
+                        if not nested.is_dir() or nested.name.startswith("."):
+                            continue
+                        resolved_path = str(nested.resolve())
+                        if resolved_path in seen_paths:
+                            continue
+                        seen_paths.add(resolved_path)
+
+                        nested_manifest = nested / "plugin.json"
+                        has_manifest = nested_manifest.exists()
+                        manifest = None
+                        if has_manifest:
+                            try:
+                                manifest = PluginManifest.from_file(nested_manifest)
+                            except Exception:
+                                pass
+
+                        catalog.append({
+                            "name": manifest.name if manifest else nested.name,
+                            "domain": domain_name,
+                            "path": resolved_path,
+                            "has_manifest": has_manifest,
+                            "version": manifest.version if manifest else "0.0.0",
+                            "description": manifest.description if manifest else "",
+                            "isolation": manifest.isolation.value if manifest else "unknown",
+                        })
 
         return catalog
 
     def find_plugin_dir(self, name: str) -> Path | None:
-        """Find the root directory for a named plugin."""
+        """Find the root directory for a named plugin (searching flat and domain-nested layouts)."""
         clean_name = name.lower().strip()
 
         for p_dir in self._plugin_dirs:
             if not p_dir.exists():
                 continue
 
-            # Exact folder match
-            direct = p_dir / name
-            if direct.exists() and direct.is_dir():
-                return direct.resolve()
+            # 1. Exact folder match anywhere in hierarchy
+            for candidate in p_dir.glob(f"**/{name}"):
+                if candidate.is_dir() and not candidate.name.startswith("."):
+                    return candidate.resolve()
 
-            # Iterate children to check manifest name or folder name match
-            for item in p_dir.iterdir():
-                if item.is_dir() and not item.name.startswith("."):
-                    if item.name.lower() == clean_name:
+            # 2. Match manifest name or folder name
+            for manifest_path in p_dir.glob("**/plugin.json"):
+                if any(p.name.startswith(".") for p in manifest_path.parents):
+                    continue
+                item = manifest_path.parent
+                if item.name.lower() == clean_name:
+                    return item.resolve()
+                try:
+                    m = PluginManifest.from_file(manifest_path)
+                    if m.name.lower() == clean_name:
                         return item.resolve()
-                    manifest_path = item / "plugin.json"
-                    if manifest_path.exists():
-                        try:
-                            m = PluginManifest.from_file(manifest_path)
-                            if m.name.lower() == clean_name:
-                                return item.resolve()
-                        except Exception:
-                            pass
+                except Exception:
+                    pass
 
         return None
 

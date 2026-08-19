@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from plugins.terraform_iac.main import (
+from plugins.infra_and_cloud.terraform_iac.main import (
     detect_state_drift,
     estimate_resource_costs,
     parse_hcl_blocks,

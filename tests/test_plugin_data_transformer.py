@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from plugins.data_transformer.main import (
+from plugins.data_engineering.data_transformer.main import (
     data_convert_format,
     data_filter_table,
     data_summarize_stats,

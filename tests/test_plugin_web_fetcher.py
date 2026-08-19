@@ -6,7 +6,7 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from plugins.web_fetcher.main import (
+from plugins.integration_and_io.web_fetcher.main import (
     _html_to_markdown,
     web_fetch_markdown,
     web_fetch_url,

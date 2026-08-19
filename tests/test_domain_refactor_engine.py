@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from plugins.refactor_engine.main import (
+from plugins.software_engineering.refactor_engine.main import (
     extract_function_preview,
     find_unused_functions,
 )

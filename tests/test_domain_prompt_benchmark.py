@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from plugins.prompt_benchmark.main import (
+from plugins.memory_and_epistemics.prompt_benchmark.main import (
     evaluate_model_outputs,
     generate_regression_matrix,
     score_text_similarity_bleu_rouge,

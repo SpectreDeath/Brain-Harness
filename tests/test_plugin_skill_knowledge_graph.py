@@ -8,7 +8,7 @@ from click.testing import CliRunner
 
 from harness.kernel.context import ServiceContext
 from harness.services.skill_graph import SKILL_GRAPH_KEY, SkillGraphService
-from plugins.skill_knowledge_graph.main import (
+from plugins.memory_and_epistemics.skill_knowledge_graph.main import (
     SkillGraphPlugin,
     export_skill_graph_visual,
     find_skill_chain,
@@ -16,9 +16,9 @@ from plugins.skill_knowledge_graph.main import (
     index_skill_catalog,
     query_skill_router,
 )
-from plugins.skill_knowledge_graph.models import EdgeType, SkillNode, StageNode
-from plugins.skill_knowledge_graph.parser import SkillCardParser
-from plugins.skill_knowledge_graph.graph import SkillKnowledgeGraph
+from plugins.memory_and_epistemics.skill_knowledge_graph.models import EdgeType, SkillNode, StageNode
+from plugins.memory_and_epistemics.skill_knowledge_graph.parser import SkillCardParser
+from plugins.memory_and_epistemics.skill_knowledge_graph.graph import SkillKnowledgeGraph
 from harness.cli import main as cli_main
 
 

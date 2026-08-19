@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from plugins.code_runner.main import (
+from plugins.software_engineering.code_runner.main import (
     python_eval,
     python_exec,
     run_temp_script,

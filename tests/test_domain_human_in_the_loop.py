@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from plugins.human_in_the_loop.main import (
+from plugins.agent_orchestration.human_in_the_loop.main import (
     list_pending_approvals,
     record_human_decision,
     request_human_approval,

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from plugins.symbolic_solver.main import (
+from plugins.integration_and_io.symbolic_solver.main import (
     evaluate_math_expression,
     solve_constraints,
     verify_logic_query,

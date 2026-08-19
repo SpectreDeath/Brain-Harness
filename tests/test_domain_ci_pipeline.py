@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from plugins.ci_pipeline.main import (
+from plugins.infra_and_cloud.ci_pipeline.main import (
     audit_action_pins,
     find_circular_job_dependencies,
     validate_github_actions_workflow,

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from plugins.embedding_cluster.main import (
+from plugins.memory_and_epistemics.embedding_cluster.main import (
     cluster_text_chunks,
     extract_cluster_topic_keywords,
 )

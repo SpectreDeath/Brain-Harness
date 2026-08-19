@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from plugins.agent_debater.main import (
+from plugins.agent_orchestration.agent_debater.main import (
     conduct_dialectical_debate,
     synthesize_debate_verdict,
 )

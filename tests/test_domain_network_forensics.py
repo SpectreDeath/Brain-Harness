@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from plugins.network_forensics.main import (
+from plugins.security_and_forensics.network_forensics.main import (
     analyze_packet_summary,
     audit_port_configuration,
     inspect_tls_certificate,

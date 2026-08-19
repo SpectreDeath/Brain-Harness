@@ -4,11 +4,18 @@ from __future__ import annotations
 
 from typing import Any
 
-from plugins.task_planner.main import (
-    plan_decompose_goal,
-    plan_get_next_milestone,
-    plan_update_status,
-)
+try:
+    from plugins.agent_orchestration.task_planner.main import (
+        plan_decompose_goal,
+        plan_get_next_milestone,
+        plan_update_status,
+    )
+except ImportError:
+    from plugins.task_planner.main import (
+        plan_decompose_goal,
+        plan_get_next_milestone,
+        plan_update_status,
+    )
 
 
 def run_dag_milestones() -> dict[str, Any]:

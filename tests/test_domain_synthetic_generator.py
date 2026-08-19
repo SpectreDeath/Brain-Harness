@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from plugins.synthetic_generator.main import (
+from plugins.data_engineering.synthetic_generator.main import (
     generate_mock_records,
     generate_synthetic_timeseries,
 )

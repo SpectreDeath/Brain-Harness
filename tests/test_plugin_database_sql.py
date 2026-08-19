@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pytest
 
-from plugins.database_sql.main import (
+from plugins.data_engineering.database_sql.main import (
     sql_execute_query,
     sql_explain_query,
     sql_inspect_schema,

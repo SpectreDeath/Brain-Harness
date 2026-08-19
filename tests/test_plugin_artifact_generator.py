@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pytest
 
-from plugins.artifact_generator.main import (
+from plugins.software_engineering.artifact_generator.main import (
     diagram_generate_mermaid,
     report_create_briefing,
     report_generate_html,

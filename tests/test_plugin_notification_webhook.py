@@ -6,7 +6,7 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from plugins.notification_webhook.main import (
+from plugins.integration_and_io.notification_webhook.main import (
     notify_chat_channel,
     notify_task_event,
     notify_webhook,

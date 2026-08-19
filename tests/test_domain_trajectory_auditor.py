@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from plugins.trajectory_auditor.main import (
+from plugins.security_and_forensics.trajectory_auditor.main import (
     audit_trajectory_steps,
     detect_repetitive_loop,
     synthesize_recovery_prompt,

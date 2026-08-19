@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from plugins.context_compactor.main import (
+from plugins.memory_and_epistemics.context_compactor.main import (
     compact_conversation,
     offload_to_memory,
     recall_context,

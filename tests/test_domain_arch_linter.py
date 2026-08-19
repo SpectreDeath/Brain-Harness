@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pytest
 
-from plugins.arch_linter.main import (
+from plugins.software_engineering.arch_linter.main import (
     compute_module_coupling,
     detect_circular_imports,
     verify_clean_boundaries,

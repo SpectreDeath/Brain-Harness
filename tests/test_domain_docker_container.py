@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from plugins.docker_container.main import (
+from plugins.infra_and_cloud.docker_container.main import (
     audit_container_security,
     generate_dockerfile,
     lint_dockerfile,

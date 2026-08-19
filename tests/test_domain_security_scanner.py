@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from plugins.security_scanner.main import (
+from plugins.security_and_forensics.security_scanner.main import (
     audit_dependencies,
     scan_code_vulnerabilities,
     scan_secrets,

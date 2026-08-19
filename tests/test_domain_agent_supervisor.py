@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from plugins.agent_supervisor.main import (
+from plugins.agent_orchestration.agent_supervisor.main import (
     coordinate_swarm_tasks,
     tally_consensus_votes,
 )

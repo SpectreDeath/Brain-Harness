@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from plugins.dataset_profiler.main import (
+from plugins.data_engineering.dataset_profiler.main import (
     compute_correlation_matrix,
     detect_outliers_zscore,
     profile_tabular_dataset,

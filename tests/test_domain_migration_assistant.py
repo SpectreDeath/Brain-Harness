@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from plugins.migration_assistant.main import (
+from plugins.software_engineering.migration_assistant.main import (
     check_pydantic_v2_readiness,
     check_python_version_compat,
 )
