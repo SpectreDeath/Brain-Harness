@@ -42,11 +42,21 @@ class AgentSession:
     total_tokens: int = 0
     steps: list[AgentStep] = field(default_factory=list)
     metadata: dict[str, Any] = field(default_factory=dict)
+    parent_session_id: str | None = None
+    children_session_ids: list[str] = field(default_factory=list)
+    node_id: str | None = None
+    role: str | None = None
 
     def add_step(self, step: AgentStep) -> None:
         """Add a step and touch the updated timestamp."""
         self.steps.append(step)
         self.updated_at = time.time()
+
+    def add_child_session(self, child_session_id: str) -> None:
+        """Link a child sub-agent session to this parent session."""
+        if child_session_id not in self.children_session_ids:
+            self.children_session_ids.append(child_session_id)
+            self.updated_at = time.time()
 
     def mark_completed(self, answer: str, total_tokens: int = 0) -> None:
         """Mark session as successfully completed."""
@@ -84,7 +94,13 @@ class AgentSession:
             final_answer=self.final_answer,
             steps=list(self.steps),
             total_tokens=self.total_tokens,
-            metadata={**self.metadata, "session_id": self.session_id},
+            metadata={
+                **self.metadata,
+                "session_id": self.session_id,
+                "parent_session_id": self.parent_session_id,
+                "node_id": self.node_id,
+                "role": self.role,
+            },
             session_id=self.session_id,
         )
 
@@ -96,7 +112,13 @@ class AgentSession:
             status=self.status,
             final_answer=self.final_answer,
             total_tokens=self.total_tokens,
-            metadata={**self.metadata, "session_id": self.session_id},
+            metadata={
+                **self.metadata,
+                "session_id": self.session_id,
+                "parent_session_id": self.parent_session_id,
+                "node_id": self.node_id,
+                "role": self.role,
+            },
         )
         traj.session_id = self.session_id
         return traj
@@ -114,6 +136,10 @@ class AgentSession:
             "total_tokens": self.total_tokens,
             "steps": [s.to_dict() for s in self.steps],
             "metadata": self.metadata,
+            "parent_session_id": self.parent_session_id,
+            "children_session_ids": list(self.children_session_ids),
+            "node_id": self.node_id,
+            "role": self.role,
         }
 
     @classmethod
@@ -141,6 +167,10 @@ class AgentSession:
             total_tokens=data.get("total_tokens", 0),
             steps=steps,
             metadata=data.get("metadata", {}),
+            parent_session_id=data.get("parent_session_id"),
+            children_session_ids=list(data.get("children_session_ids", [])),
+            node_id=data.get("node_id"),
+            role=data.get("role"),
         )
 
     def to_markdown(self) -> str:
@@ -154,6 +184,12 @@ class AgentSession:
             f"- **Steps Executed**: {len(self.steps)}",
             f"- **Total Tokens**: {self.total_tokens}",
         ]
+        if self.parent_session_id:
+            lines.append(f"- **Parent Session**: `{self.parent_session_id}`")
+        if self.node_id or self.role:
+            lines.append(f"- **Node / Role**: `{self.node_id or 'none'}` ({self.role or 'default'})")
+        if self.children_session_ids:
+            lines.append(f"- **Child Sessions**: {len(self.children_session_ids)}")
         if self.completed_at:
             duration = self.completed_at - self.created_at
             lines.append(f"- **Duration**: {duration:.2f}s")
@@ -415,6 +451,9 @@ class AgentSessionManager:
         *,
         session_id: str | None = None,
         metadata: dict[str, Any] | None = None,
+        parent_session_id: str | None = None,
+        node_id: str | None = None,
+        role: str | None = None,
     ) -> AgentSession:
         """Create and persist a new agent execution session."""
         sid = session_id or f"sess_{uuid.uuid4().hex[:12]}"
@@ -422,9 +461,26 @@ class AgentSessionManager:
             session_id=sid,
             task=task,
             metadata=metadata or {},
+            parent_session_id=parent_session_id,
+            node_id=node_id,
+            role=role,
         )
         await self.store.save(session)
-        logger.info("Agent session created", session_id=sid, task=task[:50])
+
+        # Link child session to parent if applicable
+        if parent_session_id:
+            parent = await self.store.get(parent_session_id)
+            if parent:
+                parent.add_child_session(sid)
+                await self.store.save(parent)
+
+        logger.info(
+            "Agent session created",
+            session_id=sid,
+            task=task[:50],
+            parent_session_id=parent_session_id,
+            node_id=node_id,
+        )
 
         if self.event_bus:
             await self.event_bus.emit(
@@ -436,6 +492,121 @@ class AgentSessionManager:
                 )
             )
         return session
+
+    async def create_child_session(
+        self,
+        parent_session_id: str,
+        task: str,
+        *,
+        session_id: str | None = None,
+        node_id: str | None = None,
+        role: str | None = None,
+        metadata: dict[str, Any] | None = None,
+    ) -> AgentSession:
+        """Create and link a child sub-agent session to an existing parent session."""
+        return await self.create_session(
+            task=task,
+            session_id=session_id,
+            metadata=metadata,
+            parent_session_id=parent_session_id,
+            node_id=node_id,
+            role=role,
+        )
+
+    async def get_subtree_metrics(self, session_id: str) -> dict[str, Any]:
+        """Compute recursive aggregations (tokens, steps, duration, statuses) across a session subtree."""
+        tree = await self.get_session_tree(session_id)
+        if not tree:
+            return {
+                "total_sessions": 0,
+                "total_tokens": 0,
+                "total_steps": 0,
+                "total_duration": 0.0,
+                "completed_count": 0,
+                "failed_count": 0,
+            }
+
+        total_tokens = 0
+        total_steps = 0
+        completed_count = 0
+        failed_count = 0
+        total_sessions = 0
+        min_created = float("inf")
+        max_completed = 0.0
+
+        def _collect(node: dict[str, Any]) -> None:
+            nonlocal total_tokens, total_steps, completed_count, failed_count, total_sessions, min_created, max_completed
+            total_sessions += 1
+            total_tokens += int(node.get("total_tokens", 0) or 0)
+            total_steps += len(node.get("steps", []) or [])
+            st = node.get("status", "")
+            if st == "completed":
+                completed_count += 1
+            elif st in ("error", "failed", "max_steps_reached"):
+                failed_count += 1
+
+            cr = float(node.get("created_at", 0) or 0)
+            if cr > 0 and cr < min_created:
+                min_created = cr
+            cm = float(node.get("completed_at", 0) or node.get("updated_at", 0) or 0)
+            if cm > max_completed:
+                max_completed = cm
+
+            for child in node.get("children", []):
+                _collect(child)
+
+        _collect(tree)
+        duration = max(0.0, round(max_completed - min_created, 3)) if min_created < float("inf") else 0.0
+
+        return {
+            "total_sessions": total_sessions,
+            "total_tokens": total_tokens,
+            "total_steps": total_steps,
+            "total_duration": duration,
+            "completed_count": completed_count,
+            "failed_count": failed_count,
+        }
+
+    async def get_session_tree(self, session_id: str) -> dict[str, Any] | None:
+        """Recursively build hierarchical session execution tree with all child sessions and metrics."""
+        session = await self.store.get(session_id)
+        if not session:
+            return None
+
+        tree = session.to_dict()
+        children: list[dict[str, Any]] = []
+        for child_id in session.children_session_ids:
+            child_tree = await self.get_session_tree(child_id)
+            if child_tree:
+                children.append(child_tree)
+
+        tree["children"] = children
+
+        # Compute rollups
+        total_subtree_tokens = tree.get("total_tokens", 0)
+        total_subtree_steps = len(tree.get("steps", []))
+        for c in children:
+            sub = c.get("subtree_metrics", {})
+            total_subtree_tokens += sub.get("total_tokens", c.get("total_tokens", 0))
+            total_subtree_steps += sub.get("total_steps", len(c.get("steps", [])))
+
+        tree["subtree_metrics"] = {
+            "total_tokens": total_subtree_tokens,
+            "total_steps": total_subtree_steps,
+            "child_count": len(children),
+        }
+        return tree
+
+    async def list_root_sessions(
+        self,
+        status: str | None = None,
+        limit: int = 50,
+        offset: int = 0,
+    ) -> list[AgentSession]:
+        """List root-level sessions (excluding child sub-agent executions)."""
+        all_sessions = await self.store.list(status=status, limit=1000)
+        root_sessions = [s for s in all_sessions if s.parent_session_id is None]
+        return root_sessions[offset : offset + limit]
 
     async def record_step(self, session_id: str, step: AgentStep) -> AgentSession:
         """Append an execution step to the session and update persistence store."""

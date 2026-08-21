@@ -11,6 +11,7 @@ Inspired by DeepSeek Harness's Creator Mode presets, this allows:
 
 from __future__ import annotations
 
+import ast
 import inspect
 import types
 from collections.abc import Callable
@@ -19,6 +20,7 @@ from typing import TYPE_CHECKING, Any
 
 import structlog
 
+from harness.creator.introspection import RuntimeIntrospector
 from harness.kernel.context import ServiceContext, ServiceKey
 from harness.plugins.base import HarnessPlugin
 from harness.plugins.manifest import (
@@ -34,6 +36,41 @@ if TYPE_CHECKING:
     from harness.creator.scaffold import ScaffoldResult
 
 logger = structlog.get_logger()
+
+
+def _compile_dynamic_module(
+    name: str,
+    code: str,
+) -> tuple[types.ModuleType, dict[str, Callable[..., Any]]]:
+    """Compile and extract callables from raw Python source code.
+
+    Authoritative single execution site for dynamic in-memory plugins.
+    """
+    # Pre-validate syntax before executing
+    try:
+        ast.parse(code, filename=f"<dynamic_plugin_{name}>")
+    except SyntaxError as e:
+        raise ValueError(
+            f"Syntax error in dynamic plugin '{name}': {e.msg} (line {e.lineno})"
+        ) from e
+
+    module = types.ModuleType(f"dynamic_plugin_{name}")
+    try:
+        exec(code, module.__dict__)  # noqa: S102
+    except Exception as e:
+        raise RuntimeError(
+            f"Execution error in dynamic plugin '{name}': {e}"
+        ) from e
+
+    tools: dict[str, Callable[..., Any]] = {}
+    for attr_name in dir(module):
+        if not attr_name.startswith("_"):
+            attr = getattr(module, attr_name)
+            if callable(attr):
+                tools[attr_name] = attr
+
+    logger.info("Compiled dynamic in-memory module", name=name, tools_count=len(tools))
+    return module, tools
 
 
 class DynamicPythonPlugin(ToolMountMixin, HarnessPlugin):
@@ -104,16 +141,7 @@ class DynamicPythonPlugin(ToolMountMixin, HarnessPlugin):
 
     async def reload_code(self, new_code: str) -> None:
         """Hot-reload in-memory functions from updated Python source code."""
-        module = types.ModuleType(f"dynamic_plugin_{self.name}")
-        exec(new_code, module.__dict__)  # noqa: S102
-
-        new_tools: dict[str, Callable[..., Any]] = {}
-        for attr_name in dir(module):
-            if not attr_name.startswith("_"):
-                attr = getattr(module, attr_name)
-                if callable(attr):
-                    new_tools[attr_name] = attr
-
+        _, new_tools = _compile_dynamic_module(self.name, new_code)
         self._tools = new_tools
         self._code = new_code
 
@@ -214,21 +242,14 @@ class DynamicPluginBuilder:
         name: str,
         code: str,
         version: str = "0.1.0",
+        description: str = "",
     ) -> DynamicPythonPlugin:
         """Create a live in-memory plugin by executing raw Python code in a namespace."""
-        module = types.ModuleType(f"dynamic_plugin_{name}")
-        exec(code, module.__dict__)  # noqa: S102
-
-        tools: dict[str, Callable[..., Any]] = {}
-        for attr_name in dir(module):
-            if not attr_name.startswith("_"):
-                attr = getattr(module, attr_name)
-                if callable(attr):
-                    tools[attr_name] = attr
-
+        _, tools = _compile_dynamic_module(name, code)
         return DynamicPythonPlugin(
             name=name,
             version=version,
+            description=description,
             tools=tools,
             code=code,
         )
@@ -302,10 +323,9 @@ class DynamicPluginBuilder:
         return await PluginCreator.from_github(source, ref=ref, github_token=github_token, target_dir=target_dir)
 
 
-from harness.creator.introspection import RuntimeIntrospector
-
 __all__ = [
     "DynamicPluginBuilder",
     "DynamicPythonPlugin",
     "RuntimeIntrospector",
+    "_compile_dynamic_module",
 ]

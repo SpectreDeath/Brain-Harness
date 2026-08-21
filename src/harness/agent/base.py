@@ -151,5 +151,6 @@ class AgentLoopService(ABC):
         *,
         max_steps: int = 10,
         context: dict[str, Any] | None = None,
+        session_id: str | None = None,
     ) -> AgentTaskResult:
         """Execute an autonomous task."""

@@ -17,7 +17,7 @@ from harness.agent.swarm import (
     SwarmDAG,
     SwarmNode,
 )
-from harness.creator.dynamic import RuntimeIntrospector
+from harness.creator.introspection import RuntimeIntrospector
 from harness.events.bus import EventBus
 from harness.kernel.context import ServiceContext
 from harness.kernel.lifecycle import PluginLifecycle

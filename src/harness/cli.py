@@ -869,6 +869,79 @@ def skills_info(skill_name: str) -> None:
         click.echo(f"✗ {res.get('reason', 'Skill not found')}", err=True)
 
 
+@skills.command("create")
+@click.argument("name")
+@click.option("--description", "-d", default="", help="Skill description and trigger bounds")
+@click.option("--category", "-c", default="engineering / meta-skills", help="Skill domain category")
+@click.option("--target-dir", "-t", default=None, help="Destination directory (defaults to .agents/skills/<name>)")
+@click.option("--trigger", "-g", "triggers", multiple=True, help="Trigger phrases for skill routing")
+@click.option("--validate", "auto_validate", is_flag=True, help="Validate skill specifications on creation")
+def skills_create(
+    name: str,
+    description: str,
+    category: str,
+    target_dir: str | None,
+    triggers: tuple[str, ...],
+    auto_validate: bool,
+) -> None:
+    """Scaffold a high-precision agent skill with SKILL.md and CARD.md specifications."""
+    from harness.creator.skills import SkillOptions, SkillScaffoldEngine
+
+    clean_name = name.strip().lower().replace("_", "-")
+    out_dir = Path(target_dir) if target_dir else Path(".agents") / "skills" / clean_name
+
+    opts = SkillOptions(
+        name=clean_name,
+        description=description,
+        category=category,
+        triggers=list(triggers),
+        auto_validate=auto_validate,
+    )
+    result = SkillScaffoldEngine.scaffold(out_dir, options=opts)
+    click.echo(f"✨ Scaffolded agent skill '{clean_name}' at: {result.path}")
+    for gen in result.generated_files:
+        click.echo(f"   📄 {gen.name}")
+
+    if result.validation_report:
+        rep = result.validation_report
+        status = "✓ VALID" if rep.valid else "✗ INVALID"
+        click.echo(f"\n🔍 Pre-Flight Validation: {status}")
+        if rep.warnings:
+            for w in rep.warnings:
+                click.echo(f"   ⚠️  {w}")
+        if rep.errors:
+            for e in rep.errors:
+                click.echo(f"   ❌ {e}")
+
+
+@skills.command("validate")
+@click.argument("skill_dir", default=".")
+def skills_validate(skill_dir: str) -> None:
+    """Validate an agent skill package against deep-module craft standards."""
+    from harness.creator.skills import SkillValidator
+
+    target = Path(skill_dir).resolve()
+    report = SkillValidator.validate(target)
+    status = "✓ PASS" if report.valid else "✗ FAIL"
+    click.echo(f"Skill Diagnostic Report: {target}")
+    click.echo("━" * 58)
+    click.echo(f"Overall Status: {status}\n")
+    for c in report.checks:
+        mark = "  ✓" if c.passed else "  ✗"
+        sev = f"[{c.severity.value.upper()}]" if not c.passed else ""
+        click.echo(f"{mark} {c.name:<25} {sev} {c.message}")
+    if report.warnings:
+        click.echo("\nWarnings:")
+        for w in report.warnings:
+            click.echo(f"  • {w}")
+    if report.errors:
+        click.echo("\nErrors:")
+        for err in report.errors:
+            click.echo(f"  • {err}")
+    if not report.valid:
+        sys.exit(1)
+
+
 if __name__ == "__main__":
     main()
 

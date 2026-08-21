@@ -9,11 +9,13 @@ from __future__ import annotations
 import asyncio
 from collections import defaultdict, deque
 from dataclasses import dataclass, field
+import time
 from typing import Any, Callable
 
 import structlog
 
 from harness.agent.base import AgentLoopService, AgentTaskResult
+from harness.agent.session import AGENT_SESSION_MANAGER_KEY, AgentSessionManager
 from harness.events.bus import EventBus
 from harness.events.types import EventType, HarnessEvent
 from harness.kernel.context import ServiceContext, ServiceKey
@@ -204,6 +206,175 @@ class ConsensusEngine:
 
 
 @dataclass
+class SwarmNodeExecution:
+    """Detailed execution telemetry for an individual Swarm DAG node."""
+
+    id: str
+    role: str
+    task: str
+    dependencies: list[str] = field(default_factory=list)
+    status: str = "pending"
+    start_time: float = 0.0
+    end_time: float = 0.0
+    duration: float = 0.0
+    tokens_used: int = 0
+    result: Any = None
+    error: str | None = None
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "id": self.id,
+            "role": self.role,
+            "task": self.task,
+            "dependencies": list(self.dependencies),
+            "status": self.status,
+            "start_time": self.start_time,
+            "end_time": self.end_time,
+            "duration": round(self.duration, 4),
+            "tokens_used": self.tokens_used,
+            "result": self.result,
+            "error": self.error,
+        }
+
+
+@dataclass
+class SwarmWaveMetrics:
+    """Telemetry for a parallel wave of node executions in the Swarm DAG."""
+
+    wave_index: int
+    node_ids: list[str]
+    start_time: float = 0.0
+    end_time: float = 0.0
+    duration: float = 0.0
+    total_tokens: int = 0
+    bottleneck_node_id: str | None = None
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "wave_index": self.wave_index,
+            "node_ids": list(self.node_ids),
+            "start_time": self.start_time,
+            "end_time": self.end_time,
+            "duration": round(self.duration, 4),
+            "total_tokens": self.total_tokens,
+            "bottleneck_node_id": self.bottleneck_node_id,
+        }
+
+
+@dataclass
+class SwarmExecutionTree:
+    """Hierarchical execution telemetry, critical path analysis, and wave metrics for a Swarm run."""
+
+    run_id: str
+    objective: str
+    status: str
+    start_time: float = 0.0
+    end_time: float = 0.0
+    duration: float = 0.0
+    total_tokens: int = 0
+    nodes: dict[str, SwarmNodeExecution] = field(default_factory=dict)
+    waves: list[SwarmWaveMetrics] = field(default_factory=list)
+    critical_path: list[str] = field(default_factory=list)
+    critical_path_duration: float = 0.0
+    bottlenecks: list[dict[str, Any]] = field(default_factory=list)
+
+    def calculate_critical_path(self) -> list[str]:
+        """Compute the sequence of dependent nodes that determined the maximum cumulative latency path."""
+        if not self.nodes:
+            return []
+
+        memo: dict[str, tuple[float, list[str]]] = {}
+
+        def _longest_path(node_id: str) -> tuple[float, list[str]]:
+            if node_id in memo:
+                return memo[node_id]
+            node = self.nodes[node_id]
+            dur = node.duration
+            if not node.dependencies:
+                res = (dur, [node_id])
+                memo[node_id] = res
+                return res
+
+            best_parent_dur = 0.0
+            best_parent_path: list[str] = []
+            for dep in node.dependencies:
+                if dep in self.nodes:
+                    p_dur, p_path = _longest_path(dep)
+                    if p_dur > best_parent_dur:
+                        best_parent_dur = p_dur
+                        best_parent_path = p_path
+
+            res = (best_parent_dur + dur, best_parent_path + [node_id])
+            memo[node_id] = res
+            return res
+
+        best_total = 0.0
+        best_overall_path: list[str] = []
+        for nid in self.nodes:
+            tot, path = _longest_path(nid)
+            if tot > best_total:
+                best_total = tot
+                best_overall_path = path
+
+        self.critical_path = best_overall_path
+        self.critical_path_duration = round(best_total, 4)
+        return best_overall_path
+
+    def calculate_bottlenecks(
+        self, token_threshold: int = 10_000, duration_threshold: float = 5.0
+    ) -> list[dict[str, Any]]:
+        """Identify execution bottleneck nodes based on latency and token consumption."""
+        bottlenecks = []
+        for nid, node in self.nodes.items():
+            reasons = []
+            if node.duration >= duration_threshold:
+                reasons.append(f"high_latency ({round(node.duration, 2)}s)")
+            if node.tokens_used >= token_threshold:
+                reasons.append(f"high_tokens ({node.tokens_used})")
+            if node.status == "failed":
+                reasons.append(f"node_failure: {node.error}")
+
+            if reasons:
+                bottlenecks.append({
+                    "node_id": nid,
+                    "role": node.role,
+                    "duration": round(node.duration, 4),
+                    "tokens_used": node.tokens_used,
+                    "reasons": reasons,
+                })
+        self.bottlenecks = bottlenecks
+        return bottlenecks
+
+    def to_mermaid_graph(self) -> str:
+        """Render Mermaid DAG topology annotated with execution status and metrics."""
+        lines = ["graph TD"]
+        for nid, node in self.nodes.items():
+            dur_str = f"{round(node.duration, 2)}s"
+            tok_str = f"{node.tokens_used}t"
+            label = f"{node.id} [{node.role}]<br/>{node.status} | {dur_str} | {tok_str}"
+            lines.append(f'    {nid}["{label}"]')
+            for dep in node.dependencies:
+                lines.append(f"    {dep} --> {nid}")
+        return "\n".join(lines)
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "run_id": self.run_id,
+            "objective": self.objective,
+            "status": self.status,
+            "start_time": self.start_time,
+            "end_time": self.end_time,
+            "duration": round(self.duration, 4),
+            "total_tokens": self.total_tokens,
+            "critical_path": self.critical_path,
+            "critical_path_duration": self.critical_path_duration,
+            "nodes": {k: v.to_dict() for k, v in self.nodes.items()},
+            "waves": [w.to_dict() for w in self.waves],
+            "bottlenecks": self.bottlenecks,
+        }
+
+
+@dataclass
 class SwarmTaskResult:
     """Outcome of a complete Swarm DAG execution."""
 
@@ -215,9 +386,10 @@ class SwarmTaskResult:
     total_tokens: int = 0
     consensus: dict[str, Any] | None = None
     metadata: dict[str, Any] = field(default_factory=dict)
+    execution_tree: SwarmExecutionTree | None = None
 
     def to_dict(self) -> dict[str, Any]:
-        return {
+        res = {
             "run_id": self.run_id,
             "objective": self.objective,
             "status": self.status,
@@ -227,6 +399,9 @@ class SwarmTaskResult:
             "consensus": self.consensus,
             "metadata": self.metadata,
         }
+        if self.execution_tree is not None:
+            res["execution_tree"] = self.execution_tree.to_dict()
+        return res
 
 
 class SwarmCoordinator:
@@ -305,6 +480,24 @@ class SwarmCoordinator:
         execution_plan = dag.get_execution_plan()
         accumulated_results: dict[str, Any] = {}
 
+        # Look up optional AgentSessionManager for persistent hierarchical execution tracking
+        session_mgr: AgentSessionManager | None = (
+            self.context.optional(AGENT_SESSION_MANAGER_KEY)
+            if hasattr(self.context, "optional")
+            else None
+        )
+        if session_mgr is not None:
+            await session_mgr.create_session(
+                task=objective,
+                session_id=actual_run_id,
+                metadata={
+                    "is_swarm": True,
+                    "nodes_total": len(dag.nodes),
+                    "waves_total": len(execution_plan),
+                    **(context or {}),
+                },
+            )
+
         self._active_runs[actual_run_id] = {
             "run_id": actual_run_id,
             "objective": objective,
@@ -325,19 +518,44 @@ class SwarmCoordinator:
 
         all_success = True
 
+        swarm_start_time = time.time()
+        node_executions: dict[str, SwarmNodeExecution] = {}
+        wave_metrics_list: list[SwarmWaveMetrics] = []
+
         try:
             for wave_idx, wave_node_ids in enumerate(execution_plan, start=1):
                 logger.info("Executing swarm wave", run_id=actual_run_id, wave=wave_idx, nodes=wave_node_ids)
+                wave_start_time = time.time()
+                wave_tokens_before = governor.tokens_consumed
 
-                async def _execute_single_node(node_id: str) -> tuple[str, Any, int, str | None]:
+                async def _execute_single_node(node_id: str) -> tuple[str, Any, int, str | None, float, float]:
                     node = dag.nodes[node_id]
                     node.status = "running"
+                    child_sid = f"{actual_run_id}_{node_id}"
+                    n_start = time.time()
+
+                    # Create child session in hierarchical session manager if present
+                    if session_mgr is not None:
+                        await session_mgr.create_child_session(
+                            parent_session_id=actual_run_id,
+                            task=node.task,
+                            session_id=child_sid,
+                            node_id=node.id,
+                            role=node.role,
+                            metadata={
+                                "dependencies": list(node.dependencies),
+                                "allocated_tokens": node.allocated_tokens,
+                            },
+                        )
 
                     # Check budget
                     if governor.is_exhausted():
                         node.status = "failed"
                         node.error = "Token budget exhausted before execution"
-                        return node_id, None, 0, node.error
+                        n_end = time.time()
+                        if session_mgr is not None:
+                            await session_mgr.fail_session(child_sid, node.error)
+                        return node_id, None, 0, node.error, n_start, n_end
 
                     # Collect upstream context from dependencies
                     upstream_ctx: dict[str, Any] = {}
@@ -369,6 +587,8 @@ class SwarmCoordinator:
                                     enriched_prompt,
                                     max_steps=6,
                                     context=upstream_ctx,
+                                    session_id=child_sid,
+                                    parent_session_id=actual_run_id,
                                 )
                                 node.result = agent_res.final_answer or agent_res.status
                                 tokens_used = agent_res.total_tokens or 150
@@ -379,20 +599,78 @@ class SwarmCoordinator:
 
                         node.tokens_used = tokens_used
                         governor.record_usage(node.id, tokens_used)
-                        return node_id, node.result, tokens_used, None
+                        n_end = time.time()
+
+                        # Update child session in session manager
+                        if session_mgr is not None:
+                            if node.status == "completed":
+                                await session_mgr.complete_session(
+                                    child_sid,
+                                    final_answer=str(node.result),
+                                    total_tokens=tokens_used,
+                                )
+                            else:
+                                await session_mgr.fail_session(
+                                    child_sid,
+                                    error_message=node.error or "Node execution failed",
+                                )
+
+                        return node_id, node.result, tokens_used, None, n_start, n_end
                     except Exception as e:
                         node.status = "failed"
                         node.error = str(e)
+                        n_end = time.time()
                         logger.error("Swarm node execution failed", run_id=actual_run_id, node=node_id, error=str(e))
-                        return node_id, None, tokens_used, str(e)
+                        if session_mgr is not None:
+                            await session_mgr.fail_session(child_sid, str(e))
+                        return node_id, None, tokens_used, str(e), n_start, n_end
 
                 # Execute wave concurrently
                 results = await asyncio.gather(*(_execute_single_node(nid) for nid in wave_node_ids))
+                wave_end_time = time.time()
+                wave_duration = max(0.0, wave_end_time - wave_start_time)
+                wave_tokens = governor.tokens_consumed - wave_tokens_before
 
-                for nid, res, tokens, err in results:
+                slowest_node_id: str | None = None
+                max_node_dur = 0.0
+
+                for nid, res, tokens, err, n_start, n_end in results:
                     if err:
                         all_success = False
                     accumulated_results[nid] = res
+                    n_dur = max(0.0, n_end - n_start)
+                    node_obj = dag.nodes[nid]
+                    node_executions[nid] = SwarmNodeExecution(
+                        id=nid,
+                        role=node_obj.role,
+                        task=node_obj.task,
+                        dependencies=list(node_obj.dependencies),
+                        status=node_obj.status,
+                        start_time=n_start,
+                        end_time=n_end,
+                        duration=n_dur,
+                        tokens_used=tokens,
+                        result=res,
+                        error=err,
+                    )
+                    if n_dur > max_node_dur:
+                        max_node_dur = n_dur
+                        slowest_node_id = nid
+
+                wave_metrics_list.append(
+                    SwarmWaveMetrics(
+                        wave_index=wave_idx,
+                        node_ids=list(wave_node_ids),
+                        start_time=wave_start_time,
+                        end_time=wave_end_time,
+                        duration=wave_duration,
+                        total_tokens=wave_tokens,
+                        bottleneck_node_id=slowest_node_id,
+                    )
+                )
+
+            swarm_end_time = time.time()
+            total_duration = max(0.0, swarm_end_time - swarm_start_time)
 
             # Synthesize final output
             final_synthesis = ""
@@ -418,6 +696,21 @@ class SwarmCoordinator:
 
             task_status = "completed" if all_success else "partial"
 
+            # Construct execution tree
+            exec_tree = SwarmExecutionTree(
+                run_id=actual_run_id,
+                objective=objective,
+                status=task_status,
+                start_time=swarm_start_time,
+                end_time=swarm_end_time,
+                duration=total_duration,
+                total_tokens=governor.tokens_consumed,
+                nodes=node_executions,
+                waves=wave_metrics_list,
+            )
+            exec_tree.calculate_critical_path()
+            exec_tree.calculate_bottlenecks()
+
             task_result = SwarmTaskResult(
                 run_id=actual_run_id,
                 objective=objective,
@@ -427,7 +720,22 @@ class SwarmCoordinator:
                 total_tokens=governor.tokens_consumed,
                 consensus=consensus_data,
                 metadata=governor.get_stats(),
+                execution_tree=exec_tree,
             )
+
+            # Mark root session complete in session manager
+            if session_mgr is not None:
+                if all_success:
+                    await session_mgr.complete_session(
+                        actual_run_id,
+                        final_answer=final_synthesis,
+                        total_tokens=governor.tokens_consumed,
+                    )
+                else:
+                    await session_mgr.fail_session(
+                        actual_run_id,
+                        error_message=f"Swarm completed with partial failures: {task_status}",
+                    )
 
             self._emit(
                 EventType.AGENT_TASK_COMPLETED if all_success else EventType.AGENT_TASK_FAILED,
@@ -443,6 +751,27 @@ class SwarmCoordinator:
     def get_run(self, run_id: str) -> SwarmTaskResult | None:
         """Fetch a completed or archived swarm run by ID."""
         return self._run_history.get(run_id)
+
+    def analyze_run(self, run_id: str) -> dict[str, Any] | None:
+        """Fetch post-flight execution analytics and critical path breakdown for a run."""
+        run = self.get_run(run_id)
+        if not run:
+            return None
+        if run.execution_tree is not None:
+            return run.execution_tree.to_dict()
+        return run.to_dict()
+
+    async def get_run_session_tree(self, run_id: str) -> dict[str, Any] | None:
+        """Retrieve full hierarchical execution session tree for a swarm run."""
+        session_mgr: AgentSessionManager | None = (
+            self.context.optional(AGENT_SESSION_MANAGER_KEY)
+            if hasattr(self.context, "optional")
+            else None
+        )
+        if session_mgr is not None:
+            return await session_mgr.get_session_tree(run_id)
+        run = self.get_run(run_id)
+        return run.to_dict() if run else None
 
     def list_runs(self, limit: int = 50) -> list[SwarmTaskResult]:
         """List historical swarm execution outcomes."""

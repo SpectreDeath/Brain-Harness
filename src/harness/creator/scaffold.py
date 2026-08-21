@@ -51,6 +51,45 @@ class ScaffoldOptions:
     extra_files: dict[str, str] = field(default_factory=dict)
     auto_validate: bool = False
 
+    @classmethod
+    def from_kwargs(
+        cls,
+        options: ScaffoldOptions | None = None,
+        *,
+        name: str | None = None,
+        target_dir: Path | str | None = None,
+        description: str = "",
+        language: str = "python",
+        tools: list[str] | None = None,
+        dependencies: list[str] | None = None,
+        author: str = "Harness Developer",
+        category: str = "general",
+        preset: str = "general",
+        isolation: IsolationMode = IsolationMode.SUBPROCESS,
+        tags: list[str] | None = None,
+        auto_validate: bool = False,
+        **extra_kwargs: Any,
+    ) -> ScaffoldOptions:
+        """Construct or merge ScaffoldOptions from caller arguments."""
+        if options is not None:
+            return options
+
+        resolved_name = name or (Path(target_dir).name if target_dir else "untitled")
+        return cls(
+            name=resolved_name,
+            description=description,
+            language=language,
+            tools=tools or ["execute"],
+            dependencies=dependencies or [],
+            author=author,
+            category=category,
+            preset=preset,
+            isolation=isolation,
+            tags=tags or [],
+            auto_validate=auto_validate,
+            **extra_kwargs,
+        )
+
 
 @dataclass
 class ScaffoldResult(os.PathLike[str]):
@@ -59,7 +98,7 @@ class ScaffoldResult(os.PathLike[str]):
     path: Path
     manifest: PluginManifest
     generated_files: list[Path] = field(default_factory=list)
-    validation_report: Any | None = None
+    validation_report: ValidationReport | None = None
 
     @property
     def files_count(self) -> int:
@@ -96,7 +135,7 @@ class ScaffoldResult(os.PathLike[str]):
             "manifest": self.manifest.model_dump(),
             "generated_files": [str(f) for f in self.generated_files],
             "files_count": self.files_count,
-            "validation_report": self.validation_report.to_dict() if hasattr(self.validation_report, "to_dict") else None,
+            "validation_report": self.validation_report.to_dict() if self.validation_report is not None else None,
         }
 
 
@@ -233,39 +272,27 @@ class PluginScaffoldEngine:
         category: str = "general",
         preset: str = "general",
         auto_validate: bool = False,
+        **extra_kwargs: Any,
     ) -> ScaffoldResult:
-        """Scaffold a complete plugin directory with all boilerplate files synchronously.
-
-        Args:
-            target_dir: Target destination path.
-            options: Full ScaffoldOptions instance (takes precedence).
-            name: Plugin name (used if options is None).
-            description: Plugin description.
-            language: Plugin programming language.
-            tools: List of tool stub names.
-            dependencies: External package dependencies.
-            category: Plugin domain category.
-            preset: Plugin archetype preset.
-            auto_validate: If True, executes PluginValidator on the created project.
-
-        Returns:
-            ScaffoldResult containing resolved path, manifest, generated files, and validation report.
-        """
-        opts = options or ScaffoldOptions(
-            name=name or target_dir.name,
+        """Scaffold a complete plugin directory with all boilerplate files synchronously."""
+        opts = ScaffoldOptions.from_kwargs(
+            options=options,
+            name=name,
+            target_dir=target_dir,
             description=description,
             language=language,
-            tools=tools or ["execute"],
-            dependencies=dependencies or [],
+            tools=tools,
+            dependencies=dependencies,
             category=category,
             preset=preset,
             auto_validate=auto_validate,
+            **extra_kwargs,
         )
 
         manifest, generated_files = self._write_scaffold_files(target_dir, opts)
 
         validation_report = None
-        if opts.auto_validate or auto_validate:
+        if opts.auto_validate:
             from harness.creator.validator import PluginValidator
             try:
                 validation_report = PluginValidator.validate_sync(target_dir, dry_run=False)
@@ -302,23 +329,27 @@ class PluginScaffoldEngine:
         category: str = "general",
         preset: str = "general",
         auto_validate: bool = False,
+        **extra_kwargs: Any,
     ) -> ScaffoldResult:
         """Scaffold a complete plugin directory asynchronously with native coroutine validation."""
-        opts = options or ScaffoldOptions(
-            name=name or target_dir.name,
+        opts = ScaffoldOptions.from_kwargs(
+            options=options,
+            name=name,
+            target_dir=target_dir,
             description=description,
             language=language,
-            tools=tools or ["execute"],
-            dependencies=dependencies or [],
+            tools=tools,
+            dependencies=dependencies,
             category=category,
             preset=preset,
             auto_validate=auto_validate,
+            **extra_kwargs,
         )
 
         manifest, generated_files = self._write_scaffold_files(target_dir, opts)
 
         validation_report = None
-        if opts.auto_validate or auto_validate:
+        if opts.auto_validate:
             from harness.creator.validator import PluginValidator
             try:
                 validation_report = await PluginValidator.validate(target_dir, dry_run=False)

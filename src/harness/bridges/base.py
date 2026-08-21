@@ -6,6 +6,7 @@ management across Em-Cubed, Memtext, Skill Flywheel, and other ecosystem peers.
 
 from __future__ import annotations
 
+from enum import Enum
 import inspect
 from pathlib import Path
 from typing import Any, Generic, TypeVar
@@ -21,6 +22,18 @@ from harness.services.tools import TOOL_REGISTRY_KEY, ToolSpec
 logger = structlog.get_logger()
 
 TSubstrate = TypeVar("TSubstrate")
+
+
+class BridgeCapability(str, Enum):
+    """Capabilities exposed by peer ecosystem bridges."""
+
+    VECTOR_INDEX = "vector_index"
+    MEMORY_GRAPH = "memory_graph"
+    PROMPT_OPTIMIZATION = "prompt_optimization"
+    CODE_EXECUTION = "code_execution"
+    EPISTEMIC_AUDIT = "epistemic_audit"
+    TOOL_HOSTING = "tool_hosting"
+    REACTIVE_EVENT_STORE = "reactive_event_store"
 
 
 class EcosystemBridgeCatalog:
@@ -51,6 +64,31 @@ class EcosystemBridgeCatalog:
         return cls._registry.get(project_name)
 
     @classmethod
+    def find_bridges_by_capability(
+        cls, capability: BridgeCapability | str
+    ) -> list[type[EcosystemBridgePlugin[Any]]]:
+        """Find bridge plugin classes that provide the specified capability."""
+        cls._ensure_builtins_registered()
+        cap_val = capability.value if isinstance(capability, BridgeCapability) else str(capability)
+        matches = []
+        for bridge_cls in cls._registry.values():
+            caps = getattr(bridge_cls, "capabilities", [])
+            cap_vals = [c.value if isinstance(c, BridgeCapability) else str(c) for c in caps]
+            if cap_val in cap_vals:
+                matches.append(bridge_cls)
+        return matches
+
+    @classmethod
+    def get_capability_matrix(cls) -> dict[str, list[str]]:
+        """Return a mapping of bridge names to their exposed capability lists."""
+        cls._ensure_builtins_registered()
+        matrix: dict[str, list[str]] = {}
+        for name, bridge_cls in cls._registry.items():
+            caps = getattr(bridge_cls, "capabilities", [])
+            matrix[name] = [c.value if isinstance(c, BridgeCapability) else str(c) for c in caps]
+        return matrix
+
+    @classmethod
     def status(cls) -> dict[str, dict[str, Any]]:
         """Return discovery status for all registered ecosystem bridges."""
         cls._ensure_builtins_registered()
@@ -58,11 +96,13 @@ class EcosystemBridgeCatalog:
         for name, bridge_cls in cls._registry.items():
             env_var = getattr(bridge_cls, "env_var", "")
             path = EcosystemLocator.locate(name, env_var=env_var)
+            caps = getattr(bridge_cls, "capabilities", [])
             report[name] = {
                 "available": path is not None,
                 "path": str(path) if path else None,
                 "env_var": env_var,
                 "service_key": getattr(bridge_cls, "service_key", None),
+                "capabilities": [c.value if isinstance(c, BridgeCapability) else str(c) for c in caps],
             }
         return report
 
@@ -73,16 +113,7 @@ class EcosystemBridgeCatalog:
         *,
         include_unresolved: bool = True,
     ) -> list[HarnessPlugin]:
-        """Instantiate bridge plugins for registered ecosystem repositories.
-
-        Args:
-            override_paths: Optional path overrides by project name.
-            include_unresolved: If True, returns bridge instances even if the peer repo
-                is not present on disk (bridges run in fallback mode).
-
-        Returns:
-            List of initialized EcosystemBridgePlugin instances.
-        """
+        """Instantiate bridge plugins for registered ecosystem repositories."""
         cls._ensure_builtins_registered()
         plugins: list[HarnessPlugin] = []
         overrides = override_paths or {}
@@ -117,6 +148,7 @@ class EcosystemBridgePlugin(ToolMountMixin, HarnessPlugin, Generic[TSubstrate]):
     project_name: str
     env_var: str
     service_key: ServiceKey[Any]
+    capabilities: list[BridgeCapability] = []
 
     def __init_subclass__(cls, **kwargs: Any) -> None:
         super().__init_subclass__(**kwargs)
@@ -139,6 +171,20 @@ class EcosystemBridgePlugin(ToolMountMixin, HarnessPlugin, Generic[TSubstrate]):
     @property
     def trusted(self) -> bool:
         return True
+
+    async def health_check(self) -> dict[str, Any]:
+        """Perform health and connectivity check of the substrate."""
+        root = self.resolve_root()
+        sub = await self.get_substrate()
+        return {
+            "name": self.name,
+            "project_name": self.project_name,
+            "available": root is not None and root.exists(),
+            "substrate_loaded": sub is not None,
+            "root_path": str(root) if root else None,
+            "capabilities": [c.value if isinstance(c, BridgeCapability) else str(c) for c in self.capabilities],
+            "status": "healthy" if (root is not None and sub is not None) else "fallback",
+        }
 
     @property
     def substrate(self) -> TSubstrate | None:

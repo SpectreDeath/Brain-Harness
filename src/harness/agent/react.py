@@ -320,20 +320,21 @@ class ReActAgentLoop(AgentLoopService):
         *,
         max_steps: int = 10,
         context: dict[str, Any] | None = None,
+        session_id: str | None = None,
     ) -> AgentTaskResult:
         """Run an autonomous task with tool calling, reasoning, and reflection."""
-        session_id = (context or {}).get("session_id")
+        actual_session_id = session_id or (context or {}).get("session_id")
 
         if self.session_manager:
             async with self.session_manager.session_scope(
-                task, session_id=session_id, metadata=context, agent_name="agent.react"
+                task, session_id=actual_session_id, metadata=context, agent_name="agent.react"
             ) as scope:
                 return await self._execute_task_loop(
                     task, max_steps=max_steps, context=context, session_id=scope.session_id, scope=scope
                 )
 
         return await self._execute_task_loop(
-            task, max_steps=max_steps, context=context, session_id=session_id, scope=None
+            task, max_steps=max_steps, context=context, session_id=actual_session_id, scope=None
         )
 
     async def _execute_task_loop(

@@ -10,6 +10,7 @@ The event log is append-only — events are never mutated or deleted.
 from __future__ import annotations
 
 import asyncio
+import inspect
 from collections import defaultdict, deque
 from collections.abc import AsyncIterator, Awaitable, Callable, Iterator
 from datetime import datetime
@@ -129,6 +130,14 @@ class EventBus:
                     loop.create_task(self._safe_call(h, event))
             except RuntimeError:
                 pass
+
+    def fire(self, event: HarnessEvent) -> None:
+        """Emit an event synchronously to the log and schedule async handlers.
+
+        Canonical context-aware emission seam: appends to the log immediately and persists to disk.
+        If an active asyncio event loop is running, schedules handlers in the background.
+        """
+        self.emit_sync(event)
 
     def on(
         self,
@@ -481,7 +490,9 @@ class EventBus:
         self, handler: EventHandler, event: HarnessEvent
     ) -> None:
         """Call a handler with error isolation."""
-        await handler(event)
+        res = handler(event)
+        if inspect.isawaitable(res):
+            await res
 
     async def _persist_event(self, event: HarnessEvent) -> None:
         """Append event to the JSONL log file."""

@@ -23,7 +23,7 @@ from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 
 from harness.agent.base import AGENT_LOOP_KEY
-from harness.creator.dynamic import RuntimeIntrospector
+from harness.creator.introspection import RuntimeIntrospector
 from harness.events.bus import EventBus
 from harness.events.types import HarnessEvent
 from harness.ingestion.pipeline import PluginIngestionPipeline
@@ -77,29 +77,6 @@ class CreatorValidateRequest(BaseModel):
     timeout: float = 15.0
 
 
-class ConnectionManager:
-    """Manages active WebSocket connections for event broadcasting."""
-
-    def __init__(self) -> None:
-        self.active_connections: list[WebSocket] = []
-
-    async def connect(self, websocket: WebSocket) -> None:
-        await websocket.accept()
-        self.active_connections.append(websocket)
-
-    def disconnect(self, websocket: WebSocket) -> None:
-        if websocket in self.active_connections:
-            self.active_connections.remove(websocket)
-
-    async def broadcast(self, message: dict[str, Any]) -> None:
-        text = json.dumps(message)
-        for connection in list(self.active_connections):
-            try:
-                await connection.send_text(text)
-            except Exception:
-                self.disconnect(connection)
-
-
 class RuntimeAdapter:
     """Authoritative adapter normalizing access between unified HarnessRuntime and standalone kernel components."""
 
@@ -130,14 +107,6 @@ class RuntimeAdapter:
         """Enable all discovered plugins."""
         if self._runtime is not None:
             return await self._runtime.enable_all_plugins()
-
-        for name, entry in list(self.lifecycle.plugins.items()):
-            if entry.state == PluginState.DISCOVERED:
-                try:
-                    await self.lifecycle.load(name)
-                    await self.lifecycle.validate(name)
-                except Exception as e:
-                    logger.warning("Failed loading plugin before enable_all", plugin=name, error=str(e))
         return await self.lifecycle.enable_all()
 
     async def disable_all(self, *, keep_core: bool = True) -> list[str]:
@@ -221,21 +190,18 @@ def create_app(
     )
 
     app = FastAPI(title="Harness Control Dashboard", version="0.1.0")
-    manager = ConnectionManager()
 
-    # Hook event bus to broadcast to WebSocket clients
-    if adapter.event_bus is not None:
-        async def ws_event_handler(event: HarnessEvent) -> None:
-            await manager.broadcast({
-                "type": "event",
-                "data": event.to_dict(),
-            })
-
-        adapter.event_bus.on_all(ws_event_handler)
+    from harness.ui.projection import UIProjectionEngine
+    projection_engine = UIProjectionEngine(adapter=adapter, event_bus=adapter.event_bus)
+    app.state.projection_engine = projection_engine
 
     @app.get("/api/status")
     async def get_status() -> dict[str, Any]:
         return adapter.get_introspector().get_status_report()
+
+    @app.get("/api/projection/status")
+    async def get_projection_status_api() -> dict[str, Any]:
+        return projection_engine.get_projection_status()
 
     @app.get("/api/plugins")
     async def get_plugins() -> dict[str, Any]:
@@ -314,10 +280,13 @@ def create_app(
             }
 
             if adapter.event_bus is not None:
-                await manager.broadcast({
-                    "type": "plugin_ingested",
-                    "data": plugin_data,
-                })
+                await projection_engine.broadcast(
+                    channel="system",
+                    message={
+                        "type": "plugin_ingested",
+                        "data": plugin_data,
+                    },
+                )
 
             return {"status": "ok", "plugin": plugin_data}
         except Exception as e:
@@ -348,10 +317,13 @@ def create_app(
             }
 
             if adapter.event_bus is not None:
-                await manager.broadcast({
-                    "type": "plugin_ingested",
-                    "data": plugin_data,
-                })
+                await projection_engine.broadcast(
+                    channel="system",
+                    message={
+                        "type": "plugin_ingested",
+                        "data": plugin_data,
+                    },
+                )
 
             return {"status": "ok", "plugin": plugin_data}
         except Exception as e:
@@ -397,10 +369,13 @@ def create_app(
             }
 
             if adapter.event_bus is not None:
-                await manager.broadcast({
-                    "type": "plugin_scaffolded",
-                    "data": plugin_data,
-                })
+                await projection_engine.broadcast(
+                    channel="system",
+                    message={
+                        "type": "plugin_scaffolded",
+                        "data": plugin_data,
+                    },
+                )
 
             return {"status": "ok", "plugin": plugin_data}
         except Exception as e:
@@ -580,18 +555,13 @@ def create_app(
 
     @app.websocket("/ws/events")
     async def websocket_events(websocket: WebSocket) -> None:
-        await manager.connect(websocket)
+        await projection_engine.connect_client(websocket)
         try:
             while True:
                 data_text = await websocket.receive_text()
-                try:
-                    msg = json.loads(data_text)
-                    if msg.get("type") == "ping":
-                        await websocket.send_text(json.dumps({"type": "pong", "time": str(datetime.now(timezone.utc))}))
-                except Exception:
-                    pass
+                await projection_engine.handle_client_message(websocket, data_text)
         except WebSocketDisconnect:
-            manager.disconnect(websocket)
+            projection_engine.disconnect_client(websocket)
 
     # Static HTML frontend
     static_dir = Path(__file__).parent / "static"

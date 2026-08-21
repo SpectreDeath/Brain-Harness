@@ -59,6 +59,39 @@ class ReconciliationResult:
         return len(self.errors) == 0
 
 
+@dataclass
+class ConfigurationDriftReport:
+    """Pre-flight drift analysis comparing target declarative configuration with live runtime state."""
+
+    to_add: list[str] = field(default_factory=list)
+    to_remove: list[str] = field(default_factory=list)
+    to_update: list[str] = field(default_factory=list)
+    to_disable: list[str] = field(default_factory=list)
+    to_enable: list[str] = field(default_factory=list)
+    unchanged: list[str] = field(default_factory=list)
+
+    @property
+    def has_drift(self) -> bool:
+        return bool(
+            self.to_add
+            or self.to_remove
+            or self.to_update
+            or self.to_disable
+            or self.to_enable
+        )
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "has_drift": self.has_drift,
+            "to_add": list(self.to_add),
+            "to_remove": list(self.to_remove),
+            "to_update": list(self.to_update),
+            "to_disable": list(self.to_disable),
+            "to_enable": list(self.to_enable),
+            "unchanged": list(self.unchanged),
+        }
+
+
 class ConfigurationReconciler:
     """Reconciles declarative configuration trees against the live HarnessRuntime.
 
@@ -73,6 +106,61 @@ class ConfigurationReconciler:
     @property
     def runtime(self) -> HarnessRuntime:
         return self._runtime
+
+    def detect_drift(
+        self, config: HarnessConfigTree | dict[str, Any] | list[dict[str, Any]]
+    ) -> ConfigurationDriftReport:
+        """Compute pre-flight declarative drift without applying any lifecycle mutations."""
+        if isinstance(config, list):
+            target_tree = HarnessConfigTree(
+                plugins=[PluginConfigEntry.model_validate(item) for item in config]
+            )
+        elif isinstance(config, dict):
+            target_tree = HarnessConfigTree.model_validate(config)
+        else:
+            target_tree = config
+
+        target_map = {entry.id: entry for entry in target_tree.plugins}
+        current_map = self._last_config
+        lifecycle = self._runtime.lifecycle
+
+        report = ConfigurationDriftReport()
+
+        # Check removed
+        for entry_id, old_entry in current_map.items():
+            if entry_id not in target_map:
+                report.to_remove.append(old_entry.name)
+
+        # Check existing vs target
+        for entry_id, target_entry in target_map.items():
+            plugin_name = target_entry.name
+            if entry_id in current_map:
+                old_entry = current_map[entry_id]
+                if target_entry.disabled and not old_entry.disabled:
+                    report.to_disable.append(plugin_name)
+                elif not target_entry.disabled and old_entry.disabled:
+                    report.to_enable.append(plugin_name)
+                elif (
+                    target_entry.config != old_entry.config
+                    or target_entry.isolate != old_entry.isolate
+                ):
+                    report.to_update.append(plugin_name)
+                else:
+                    report.unchanged.append(plugin_name)
+            else:
+                # New entry
+                if target_entry.source or plugin_name not in lifecycle.plugins:
+                    report.to_add.append(plugin_name)
+                else:
+                    state = lifecycle.get_state(plugin_name)
+                    if target_entry.disabled and state == PluginState.ENABLED:
+                        report.to_disable.append(plugin_name)
+                    elif not target_entry.disabled and state != PluginState.ENABLED:
+                        report.to_enable.append(plugin_name)
+                    else:
+                        report.unchanged.append(plugin_name)
+
+        return report
 
     async def reconcile(
         self, config: HarnessConfigTree | dict[str, Any] | list[dict[str, Any]]

@@ -388,15 +388,6 @@ class HarnessRuntime:
             for plugin in user_plugins:
                 self._lifecycle.discover(plugin)
 
-        # Load and validate all discovered plugins
-        for name, entry in list(self._lifecycle.plugins.items()):
-            if entry.state == PluginState.DISCOVERED:
-                try:
-                    await self._lifecycle.load(name)
-                    await self._lifecycle.validate(name)
-                except Exception as e:
-                    logger.warning("Plugin startup validation failed", plugin=name, error=str(e))
-
         # If initial declarative configuration is present, reconcile it
         if getattr(self, "_initial_config_tree", None) is not None:
             await self.reconcile(self._initial_config_tree)
@@ -471,13 +462,6 @@ class HarnessRuntime:
 
     async def enable_all_plugins(self) -> dict[str, bool]:
         """Enable all discovered and validated plugins."""
-        for name, entry in list(self._lifecycle.plugins.items()):
-            if entry.state == PluginState.DISCOVERED:
-                try:
-                    await self._lifecycle.load(name)
-                    await self._lifecycle.validate(name)
-                except Exception as e:
-                    logger.warning("Failed loading plugin before enable_all", plugin=name, error=str(e))
         return await self._lifecycle.enable_all()
 
     async def disable_all_plugins(self, *, keep_core: bool = True) -> list[str]:

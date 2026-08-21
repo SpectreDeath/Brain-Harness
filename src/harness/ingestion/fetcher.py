@@ -84,6 +84,11 @@ class RepoFetcher:
         return self._plugin_dir
 
     @property
+    def github_token(self) -> str | None:
+        """Configured GitHub API token, if any."""
+        return self._token
+
+    @property
     def event_bus(self) -> Any | None:
         """Attached event bus, if any."""
         return self._event_bus
@@ -98,16 +103,7 @@ class RepoFetcher:
             from harness.events.types import ingestion_event
 
             evt = ingestion_event(event_type, url, **extra)
-            if hasattr(self._event_bus, "emit_sync"):
-                self._event_bus.emit_sync(evt)
-            elif hasattr(self._event_bus, "emit"):
-                import asyncio
-
-                try:
-                    loop = asyncio.get_running_loop()
-                    loop.create_task(self._event_bus.emit(evt))
-                except RuntimeError:
-                    pass
+            self._event_bus.fire(evt)
 
     async def fetch(
         self,

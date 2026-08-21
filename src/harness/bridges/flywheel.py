@@ -12,7 +12,7 @@ from typing import Any
 
 import structlog
 
-from harness.bridges.base import EcosystemBridgePlugin
+from harness.bridges.base import BridgeCapability, EcosystemBridgePlugin
 from harness.kernel.context import ServiceKey
 from harness.services.tools import ToolSpec
 
@@ -27,6 +27,10 @@ class FlywheelBridgePlugin(EcosystemBridgePlugin[Any]):
     project_name = "Skill Flywheel"
     env_var = "FLYWHEEL_PATH"
     service_key = FLYWHEEL_BRIDGE_KEY
+    capabilities = [
+        BridgeCapability.PROMPT_OPTIMIZATION,
+        BridgeCapability.TOOL_HOSTING,
+    ]
 
     def __init__(
         self,

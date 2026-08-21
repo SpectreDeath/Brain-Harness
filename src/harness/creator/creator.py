@@ -13,12 +13,15 @@ from __future__ import annotations
 
 from collections.abc import Callable
 from pathlib import Path
-from typing import Any
+from typing import TYPE_CHECKING, Any
+
+if TYPE_CHECKING:
+    from harness.creator.skills import SkillResult
 
 import structlog
 
 from harness.creator.archetypes import ArchetypeRegistry, PluginArchetype
-from harness.creator.dynamic import DynamicPythonPlugin
+from harness.creator.dynamic import DynamicPythonPlugin, _compile_dynamic_module
 from harness.creator.introspection import RuntimeIntrospector
 from harness.creator.scaffold import (
     PluginScaffoldEngine,
@@ -62,22 +65,26 @@ class PluginCreator:
         tags: list[str] | None = None,
         auto_validate: bool = False,
         templates_dir: Path | None = None,
+        **extra_kwargs: Any,
     ) -> ScaffoldResult:
         """Scaffold a new plugin project directory synchronously."""
         out_dir = Path(target_dir).resolve()
         engine = PluginScaffoldEngine(templates_dir=templates_dir)
-        opts = options or ScaffoldOptions(
-            name=name or out_dir.name,
+        opts = ScaffoldOptions.from_kwargs(
+            options=options,
+            name=name,
+            target_dir=out_dir,
             description=description,
             language=language,
-            tools=tools or ["execute"],
-            dependencies=dependencies or [],
+            tools=tools,
+            dependencies=dependencies,
             author=author,
             category=category,
             preset=preset,
             isolation=isolation,
-            tags=tags or [],
+            tags=tags,
             auto_validate=auto_validate,
+            **extra_kwargs,
         )
         return engine.scaffold(out_dir, options=opts)
 
@@ -99,22 +106,26 @@ class PluginCreator:
         tags: list[str] | None = None,
         auto_validate: bool = False,
         templates_dir: Path | None = None,
+        **extra_kwargs: Any,
     ) -> ScaffoldResult:
         """Scaffold a new plugin project directory asynchronously."""
         out_dir = Path(target_dir).resolve()
         engine = PluginScaffoldEngine(templates_dir=templates_dir)
-        opts = options or ScaffoldOptions(
-            name=name or out_dir.name,
+        opts = ScaffoldOptions.from_kwargs(
+            options=options,
+            name=name,
+            target_dir=out_dir,
             description=description,
             language=language,
-            tools=tools or ["execute"],
-            dependencies=dependencies or [],
+            tools=tools,
+            dependencies=dependencies,
             author=author,
             category=category,
             preset=preset,
             isolation=isolation,
-            tags=tags or [],
+            tags=tags,
             auto_validate=auto_validate,
+            **extra_kwargs,
         )
         return await engine.scaffold_async(out_dir, options=opts)
 
@@ -168,18 +179,7 @@ class PluginCreator:
         description: str = "",
     ) -> DynamicPythonPlugin:
         """Create a live in-memory plugin by executing raw Python source code."""
-        import types
-
-        module = types.ModuleType(f"dynamic_plugin_{name}")
-        exec(code, module.__dict__)  # noqa: S102
-
-        tools: dict[str, Callable[..., Any]] = {}
-        for attr_name in dir(module):
-            if not attr_name.startswith("_"):
-                attr = getattr(module, attr_name)
-                if callable(attr):
-                    tools[attr_name] = attr
-
+        _, tools = _compile_dynamic_module(name, code)
         return DynamicPythonPlugin(
             name=name,
             version=version,
@@ -329,6 +329,39 @@ class PluginCreator:
             lifecycle=lifecycle,
             tool_registry=tool_registry,
         )
+
+    # 7. Agent Skill Crafting & Validation
+    @classmethod
+    def scaffold_skill(
+        cls,
+        target_dir: Path | str,
+        *,
+        name: str | None = None,
+        description: str = "",
+        category: str = "engineering / meta-skills",
+        triggers: list[str] | None = None,
+        target: str = "",
+        auto_validate: bool = False,
+    ) -> SkillResult:
+        """Scaffold a high-precision agent skill with SKILL.md and CARD.md specifications."""
+        from harness.creator.skills import SkillOptions, SkillScaffoldEngine
+
+        opts = SkillOptions(
+            name=name or Path(target_dir).name,
+            description=description,
+            category=category,
+            triggers=triggers or [],
+            target=target,
+            auto_validate=auto_validate,
+        )
+        return SkillScaffoldEngine.scaffold(target_dir, options=opts)
+
+    @classmethod
+    def validate_skill(cls, skill_dir: Path | str) -> ValidationReport:
+        """Validate an agent skill directory against deep-module craft standards."""
+        from harness.creator.skills import SkillValidator
+
+        return SkillValidator.validate(skill_dir)
 
 
 __all__ = ["PluginCreator"]

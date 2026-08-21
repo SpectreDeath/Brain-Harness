@@ -35,6 +35,14 @@ class MCPRequest:
     params: dict[str, Any]
 
 
+@dataclass(frozen=True)
+class MCPNotification:
+    """Parsed JSON-RPC 2.0 MCP notification (request without an id)."""
+
+    method: str
+    params: dict[str, Any]
+
+
 class MCPProtocolCodec:
     """Authoritative codec for MCP JSON-RPC 2.0 requests, responses, and schema translation."""
 
@@ -63,6 +71,64 @@ class MCPProtocolCodec:
             params = {"value": params}
 
         return MCPRequest(id=req_id, method=method, params=params)
+
+    @classmethod
+    def parse_payload(
+        cls, raw_text: str | bytes
+    ) -> MCPRequest | list[MCPRequest] | MCPNotification:
+        """Parse raw JSON-RPC string or bytes into either a single request, a notification, or a batch of requests.
+
+        Raises:
+            ValueError: If JSON is malformed or empty batch.
+        """
+        if isinstance(raw_text, bytes):
+            raw_text = raw_text.decode("utf-8")
+
+        try:
+            data = json.loads(raw_text)
+        except Exception as e:
+            raise ValueError(f"JSON parse error: {e}") from e
+
+        if isinstance(data, list):
+            if not data:
+                raise ValueError("Invalid JSON-RPC: batch payload cannot be empty")
+            batch_reqs: list[MCPRequest] = []
+            for item in data:
+                if not isinstance(item, dict):
+                    raise ValueError("Invalid JSON-RPC batch item: must be an object")
+                req_id = item.get("id")
+                method = str(item.get("method", ""))
+                params = item.get("params") or {}
+                if not isinstance(params, dict):
+                    params = {"value": params}
+                batch_reqs.append(MCPRequest(id=req_id, method=method, params=params))
+            return batch_reqs
+
+        if not isinstance(data, dict):
+            raise ValueError("Invalid JSON-RPC: payload must be a JSON object or array")
+
+        method = str(data.get("method", ""))
+        params = data.get("params") or {}
+        if not isinstance(params, dict):
+            params = {"value": params}
+
+        if "id" not in data or data.get("id") is None:
+            return MCPNotification(method=method, params=params)
+
+        return MCPRequest(id=data.get("id"), method=method, params=params)
+
+    @classmethod
+    def encode_notification(
+        cls,
+        method: str,
+        params: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        """Encode an outgoing JSON-RPC 2.0 notification payload (no id)."""
+        return {
+            "jsonrpc": "2.0",
+            "method": method,
+            "params": params or {},
+        }
 
     @classmethod
     def encode_response(cls, req_id: Any, result: Any) -> dict[str, Any]:

@@ -12,7 +12,7 @@ from typing import Any, cast
 
 import structlog
 
-from harness.bridges.base import EcosystemBridgePlugin
+from harness.bridges.base import BridgeCapability, EcosystemBridgePlugin
 from harness.kernel.context import ServiceKey
 from harness.services.tools import ToolSpec
 
@@ -28,6 +28,11 @@ class EmCubedPlugin(EcosystemBridgePlugin[Any]):
     project_name = "em-cubed"
     env_var = "EM_CUBED_PATH"
     service_key = EM_CUBED_BRIDGE_KEY
+    capabilities = [
+        BridgeCapability.CODE_EXECUTION,
+        BridgeCapability.TOOL_HOSTING,
+        BridgeCapability.VECTOR_INDEX,
+    ]
 
     def __init__(
         self,

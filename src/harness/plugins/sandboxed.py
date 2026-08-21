@@ -1,11 +1,15 @@
 """Sandboxed plugin adapter — unified executor-backed plugin wrapper.
 
 Binds a PluginManifest, filesystem root, and SandboxExecutor into a
-full-fledged HarnessPlugin implementation.
+full-fledged HarnessPlugin implementation with structured invocation results,
+categorized error handling, and runtime telemetry.
 """
 
 from __future__ import annotations
 
+import time
+import uuid
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
@@ -23,10 +27,41 @@ from harness.plugins.tool_mount import ToolMountMixin
 logger = structlog.get_logger()
 
 
+@dataclass(slots=True)
+class PluginCallResult:
+    """Structured result from a plugin method invocation."""
+
+    status: str  # "ok" or "error"
+    result: Any = None
+    error: str | None = None
+    error_code: str | None = None  # "TIMEOUT", "NOT_FOUND", "SANDBOX_NOT_RUNNING", "NO_EXECUTOR", "EXECUTION_ERROR"
+    latency_ms: float = 0.0
+    method: str = ""
+    plugin: str = ""
+    correlation_id: str = field(default_factory=lambda: uuid.uuid4().hex[:12])
+
+    @property
+    def is_ok(self) -> bool:
+        return self.status == "ok"
+
+    @property
+    def is_error(self) -> bool:
+        return self.status == "error"
+
+    def to_dict(self) -> dict[str, Any]:
+        """Backward-compatible dictionary conversion."""
+        if self.status == "ok":
+            return {"status": "ok", "result": self.result}
+        d: dict[str, Any] = {"status": "error", "error": self.error or "Unknown error"}
+        if self.error_code:
+            d["code"] = self.error_code
+        return d
+
+
 class SandboxedPlugin(ToolMountMixin, HarnessPlugin):
     """Canonical HarnessPlugin wrapper for manifest-based and ingested plugins.
 
-    Delegates execution to a configured SandboxExecutor (InProcess, Subprocess, Venv)
+    Delegates execution to a configured SandboxExecutor (InProcess, Subprocess, Venv, Container)
     and exposes declared entrypoints as native tools in ToolRegistry upon enable.
     """
 
@@ -179,15 +214,16 @@ class SandboxedPlugin(ToolMountMixin, HarnessPlugin):
         self.teardown_tool_mount()
         self._ctx = None
 
-    async def call(
+    async def invoke_typed(
         self,
         method: str,
         params: dict[str, Any] | None = None,
         *,
         timeout: float = 30.0,
-    ) -> dict[str, Any]:
-        """Execute a method on the plugin via its sandbox executor."""
-        import time
+        correlation_id: str | None = None,
+    ) -> PluginCallResult:
+        """Execute a method on the plugin returning a strongly-typed PluginCallResult."""
+        cid = correlation_id or uuid.uuid4().hex[:12]
 
         if self._executor is None:
             self._executor = self._resolve_executor()
@@ -195,11 +231,28 @@ class SandboxedPlugin(ToolMountMixin, HarnessPlugin):
         if self._executor is None:
             self._errors += 1
             self._last_error = "No executor configured"
-            return {"status": "error", "error": "No executor configured"}
+            self._emit_failure_event(method, "No executor configured", "NO_EXECUTOR", cid)
+            return PluginCallResult(
+                status="error",
+                error="No executor configured",
+                error_code="NO_EXECUTOR",
+                method=method,
+                plugin=self.name,
+                correlation_id=cid,
+            )
+
         if not self._executor.is_running:
             self._errors += 1
             self._last_error = "Executor not running"
-            return {"status": "error", "error": "Executor not running"}
+            self._emit_failure_event(method, "Executor not running", "SANDBOX_NOT_RUNNING", cid)
+            return PluginCallResult(
+                status="error",
+                error="Executor not running",
+                error_code="SANDBOX_NOT_RUNNING",
+                method=method,
+                plugin=self.name,
+                correlation_id=cid,
+            )
 
         start_t = time.perf_counter()
         try:
@@ -207,27 +260,88 @@ class SandboxedPlugin(ToolMountMixin, HarnessPlugin):
             duration_ms = (time.perf_counter() - start_t) * 1000.0
 
             if res.get("status") == "error":
-                self._errors += 1
-                self._last_error = res.get("error", "Unknown error")
-            else:
-                self._invocations += 1
-                self._total_duration_ms += duration_ms
+                err_msg = res.get("error", "Unknown error")
+                err_code = "TIMEOUT" if "Timeout" in err_msg else "EXECUTION_ERROR"
+                if "not found" in err_msg.lower():
+                    err_code = "NOT_FOUND"
 
-            return res
+                self._errors += 1
+                self._last_error = err_msg
+                self._emit_failure_event(method, err_msg, err_code, cid)
+                return PluginCallResult(
+                    status="error",
+                    error=err_msg,
+                    error_code=err_code,
+                    latency_ms=duration_ms,
+                    method=method,
+                    plugin=self.name,
+                    correlation_id=cid,
+                )
+
+            self._invocations += 1
+            self._total_duration_ms += duration_ms
+            return PluginCallResult(
+                status="ok",
+                result=res.get("result"),
+                latency_ms=duration_ms,
+                method=method,
+                plugin=self.name,
+                correlation_id=cid,
+            )
         except Exception as e:
+            duration_ms = (time.perf_counter() - start_t) * 1000.0
             self._errors += 1
             self._last_error = str(e)
+            self._emit_failure_event(method, str(e), "SANDBOX_EXCEPTION", cid)
             raise
+
+    async def call(
+        self,
+        method: str,
+        params: dict[str, Any] | None = None,
+        *,
+        timeout: float = 30.0,
+    ) -> dict[str, Any]:
+        """Execute a method on the plugin via its sandbox executor (dict interface)."""
+        call_res = await self.invoke_typed(method, params, timeout=timeout)
+        return call_res.to_dict()
+
+    def _emit_failure_event(
+        self, method: str, error: str, error_code: str, correlation_id: str
+    ) -> None:
+        """Emit a structured failure event to the harness EventBus if available."""
+        if not self._ctx:
+            return
+        bus_key = ServiceKey("events.bus")
+        if self._ctx.has(bus_key):
+            try:
+                from harness.events.types import EventType, HarnessEvent
+
+                bus = self._ctx.require(bus_key)
+                evt = HarnessEvent(
+                    event_type=EventType.PLUGIN_ERROR,
+                    source=self.name,
+                    payload={
+                        "plugin": self.name,
+                        "method": method,
+                        "error": error,
+                        "error_code": error_code,
+                        "correlation_id": correlation_id,
+                    },
+                )
+                bus.fire(evt)
+            except Exception:
+                pass
 
     def _make_tool_executor(self, method_name: str) -> Any:
         async def _exec(**kwargs: Any) -> Any:
-            res = await self.call(method_name, kwargs)
-            if res.get("status") == "error":
-                err_msg = res.get("error", "Unknown sandbox error")
-                err_code = res.get("code")
+            res = await self.invoke_typed(method_name, kwargs)
+            if res.is_error:
+                err_msg = res.error or "Unknown sandbox error"
+                err_code = res.error_code
                 full_msg = f"[{err_code}] {err_msg}" if err_code else err_msg
                 raise RuntimeError(full_msg)
-            return res.get("result")
+            return res.result
 
         return _exec
 

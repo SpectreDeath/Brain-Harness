@@ -17,6 +17,7 @@ from typing import Any
 import structlog
 
 from harness.plugins.base import HarnessPlugin
+from harness.plugins.catalog import PluginCatalog
 from harness.plugins.manifest import PluginManifest
 
 logger = structlog.get_logger()
@@ -43,6 +44,18 @@ class PluginLoader:
         """
         self._plugin_dirs = plugin_dirs or [Path("plugins")]
         self._loaded_modules: dict[str, Any] = {}
+        self._catalog: PluginCatalog | None = None
+
+    @property
+    def catalog(self) -> PluginCatalog:
+        """The authoritative PluginCatalog index."""
+        if self._catalog is None:
+            self._catalog = PluginCatalog(self._plugin_dirs)
+        return self._catalog
+
+    def refresh_catalog(self) -> int:
+        """Force a rebuild of the plugin catalog index."""
+        return self.catalog.refresh()
 
     def load_from_directory(self, directory: Path) -> list[HarnessPlugin]:
         """Scan a directory for plugins (supporting both flat and domain-nested layouts).
@@ -201,128 +214,19 @@ class PluginLoader:
         Returns:
             List of dict summaries for all available plugins.
         """
-        catalog: list[dict[str, Any]] = []
-        seen_paths: set[str] = set()
-
-        for p_dir in self._plugin_dirs:
-            if not p_dir.exists() or not p_dir.is_dir():
-                continue
-
-            for item in sorted(p_dir.iterdir()):
-                if not item.is_dir() or item.name.startswith("."):
-                    continue
-
-                manifest_path = item / "plugin.json"
-                nested_manifests = list(item.glob("*/plugin.json"))
-
-                if manifest_path.exists() or not nested_manifests:
-                    # Direct plugin directory (with or without manifest)
-                    resolved_path = str(item.resolve())
-                    if resolved_path in seen_paths:
-                        continue
-                    seen_paths.add(resolved_path)
-
-                    has_manifest = manifest_path.exists()
-                    manifest = None
-                    if has_manifest:
-                        try:
-                            manifest = PluginManifest.from_file(manifest_path)
-                        except Exception:
-                            pass
-
-                    catalog.append({
-                        "name": manifest.name if manifest else item.name,
-                        "domain": "",
-                        "path": resolved_path,
-                        "has_manifest": has_manifest,
-                        "version": manifest.version if manifest else "0.0.0",
-                        "description": manifest.description if manifest else "",
-                        "isolation": manifest.isolation.value if manifest else "unknown",
-                    })
-                else:
-                    # Domain directory containing nested plugins
-                    domain_name = item.name
-                    for nested in sorted(item.iterdir()):
-                        if not nested.is_dir() or nested.name.startswith("."):
-                            continue
-                        resolved_path = str(nested.resolve())
-                        if resolved_path in seen_paths:
-                            continue
-                        seen_paths.add(resolved_path)
-
-                        nested_manifest = nested / "plugin.json"
-                        has_manifest = nested_manifest.exists()
-                        manifest = None
-                        if has_manifest:
-                            try:
-                                manifest = PluginManifest.from_file(nested_manifest)
-                            except Exception:
-                                pass
-
-                        catalog.append({
-                            "name": manifest.name if manifest else nested.name,
-                            "domain": domain_name,
-                            "path": resolved_path,
-                            "has_manifest": has_manifest,
-                            "version": manifest.version if manifest else "0.0.0",
-                            "description": manifest.description if manifest else "",
-                            "isolation": manifest.isolation.value if manifest else "unknown",
-                        })
-
-        return catalog
+        return self.catalog.list_all()
 
     def find_plugin_dir(self, name: str) -> Path | None:
         """Find the root directory for a named plugin (searching flat and domain-nested layouts)."""
-        clean_name = name.lower().strip()
-
-        for p_dir in self._plugin_dirs:
-            if not p_dir.exists():
-                continue
-
-            # 1. Exact folder match anywhere in hierarchy
-            for candidate in p_dir.glob(f"**/{name}"):
-                if candidate.is_dir() and not candidate.name.startswith("."):
-                    return candidate.resolve()
-
-            # 2. Match manifest name or folder name
-            for manifest_path in p_dir.glob("**/plugin.json"):
-                if any(p.name.startswith(".") for p in manifest_path.parents):
-                    continue
-                item = manifest_path.parent
-                if item.name.lower() == clean_name:
-                    return item.resolve()
-                try:
-                    m = PluginManifest.from_file(manifest_path)
-                    if m.name.lower() == clean_name:
-                        return item.resolve()
-                except Exception:
-                    pass
-
-        return None
+        return self.catalog.find_dir(name)
 
     def get_manifest(self, name: str) -> PluginManifest | None:
         """Inspect and return the manifest for a plugin by name or path."""
-        # 1. Direct path check
-        as_path = Path(name)
-        if as_path.exists() and as_path.is_dir():
-            from harness.ingestion.inspector import RepoInspector
-            return RepoInspector().inspect(as_path.resolve())
-
-        # 2. Search configured catalog directories
-        target_dir = self.find_plugin_dir(name)
-        if target_dir and target_dir.exists():
-            from harness.ingestion.inspector import RepoInspector
-            return RepoInspector().inspect(target_dir)
-
-        return None
+        return self.catalog.get_manifest(name)
 
     def get_guide(self, name: str) -> tuple[PluginManifest, str] | None:
         """Return the manifest and formatted Quick Start Guide for a plugin."""
-        manifest = self.get_manifest(name)
-        if not manifest:
-            return None
-        guide = manifest.usage_guide or manifest.format_quickstart()
-        return manifest, guide
+        return self.catalog.get_guide(name)
 
     # --- Private helpers ---
 

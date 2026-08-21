@@ -12,7 +12,7 @@ from typing import Any
 
 import structlog
 
-from harness.bridges.base import EcosystemBridgePlugin
+from harness.bridges.base import BridgeCapability, EcosystemBridgePlugin
 from harness.kernel.context import ServiceKey
 from harness.services.tools import ToolSpec
 
@@ -58,28 +58,33 @@ class LocalMemtextService(MemtextService):
 
     async def recall(self, query: str, limit: int = 5) -> list[dict[str, Any]]:
         query_lower = query.lower()
-        results = [
-            m for m in self._memories
-            if query_lower in m["key"].lower() or query_lower in m["content"].lower()
-        ]
-        return results[:limit]
+        results: list[dict[str, Any]] = []
+        for mem in self._memories:
+            if query_lower in mem["key"].lower() or query_lower in mem["content"].lower():
+                results.append(mem)
+                if len(results) >= limit:
+                    break
+        return results
 
     async def log_decision(self, agent: str, decision: str, context: dict[str, Any] | None = None) -> None:
-        entry = {
+        self._ledger.append({
             "agent": agent,
             "decision": decision,
             "context": context or {},
-        }
-        self._ledger.append(entry)
-        logger.info("Agent decision logged", agent=agent, decision=decision)
+        })
+        logger.info("Decision logged", agent=agent, decision=decision)
 
 
 class MemtextServicePlugin(EcosystemBridgePlugin[MemtextService]):
-    """Plugin providing persistent memory services to the Harness."""
+    """Bridge plugin exposing Memtext as an authoritative `memory.provider` service."""
 
     project_name = "Memtext"
     env_var = "MEMTEXT_PATH"
     service_key = MEMORY_SERVICE_KEY
+    capabilities = [
+        BridgeCapability.MEMORY_GRAPH,
+        BridgeCapability.EPISTEMIC_AUDIT,
+    ]
 
     def __init__(
         self,

@@ -1,4 +1,4 @@
-﻿"""System commands — pure async entry points for runtime introspection."""
+"""System commands — pure async entry points for runtime introspection."""
 
 from __future__ import annotations
 
@@ -23,7 +23,7 @@ async def run_introspect(db_path: str = ":memory:") -> dict[str, Any]:
     Returns a dict with ``plugins``, ``services``, ``tools``, and the
     Mermaid graph string — ready for display or JSON serialisation.
     """
-    from harness.creator.dynamic import RuntimeIntrospector
+    from harness.creator.introspection import RuntimeIntrospector
     from harness.kernel.runtime import HarnessRuntime
 
     async with HarnessRuntime.create(db_path=db_path) as runtime:

@@ -14,7 +14,8 @@ from __future__ import annotations
 
 import json
 from abc import ABC, abstractmethod
-from typing import Any
+from contextlib import contextmanager
+from typing import TYPE_CHECKING, Any, Iterator
 
 from harness.plugins.manifest import (
     EntrypointSpec,
@@ -22,6 +23,9 @@ from harness.plugins.manifest import (
     ParameterSpec,
     PluginManifest,
 )
+
+if TYPE_CHECKING:
+    from harness.creator.scaffold import ScaffoldOptions
 
 
 class PluginArchetype(ABC):
@@ -38,22 +42,22 @@ class PluginArchetype(ABC):
         return f"Archetype preset for {self.name}"
 
     @abstractmethod
-    def generate_manifest(self, options: Any) -> PluginManifest:
+    def generate_manifest(self, options: ScaffoldOptions) -> PluginManifest:
         """Generate a validated PluginManifest."""
 
     @abstractmethod
-    def generate_entrypoint_code(self, options: Any) -> str:
+    def generate_entrypoint_code(self, options: ScaffoldOptions) -> str:
         """Generate entrypoint source code."""
 
     @abstractmethod
-    def generate_test_code(self, options: Any) -> str:
+    def generate_test_code(self, options: ScaffoldOptions) -> str:
         """Generate unit test code."""
 
     @abstractmethod
-    def generate_project_config(self, options: Any) -> tuple[str, str]:
+    def generate_project_config(self, options: ScaffoldOptions) -> tuple[str, str]:
         """Generate package/requirements configuration (filename, content)."""
 
-    def generate_extra_files(self, options: Any) -> dict[str, str]:
+    def generate_extra_files(self, options: ScaffoldOptions) -> dict[str, str]:
         """Generate optional auxiliary files (relative_path -> file_content)."""
         return {}
 
@@ -69,7 +73,7 @@ class GeneralArchetype(PluginArchetype):
     def description(self) -> str:
         return "Standard execution plugin with multi-tool handler stubs"
 
-    def generate_manifest(self, options: Any) -> PluginManifest:
+    def generate_manifest(self, options: ScaffoldOptions) -> PluginManifest:
         entrypoint = "main.py" if options.language == "python" else ("index.ts" if options.language == "typescript" else "index.js")
         desc = options.description or f"Plugin providing capabilities for {options.name}"
 
@@ -119,7 +123,7 @@ class GeneralArchetype(PluginArchetype):
             metadata={"scaffolded_by": "harness.creator.archetypes", "preset": self.name},
         )
 
-    def generate_entrypoint_code(self, options: Any) -> str:
+    def generate_entrypoint_code(self, options: ScaffoldOptions) -> str:
         lang = options.language.lower()
         tools = options.tools or ["execute"]
 
@@ -161,7 +165,7 @@ class GeneralArchetype(PluginArchetype):
             f"{exports_block}\n"
         )
 
-    def generate_test_code(self, options: Any) -> str:
+    def generate_test_code(self, options: ScaffoldOptions) -> str:
         lang = options.language.lower()
         tools = options.tools or ["execute"]
         first_tool = tools[0]
@@ -187,7 +191,7 @@ class GeneralArchetype(PluginArchetype):
             f'}});\n'
         )
 
-    def generate_project_config(self, options: Any) -> tuple[str, str]:
+    def generate_project_config(self, options: ScaffoldOptions) -> tuple[str, str]:
         lang = options.language.lower()
         deps = list(options.dependencies)
         if lang == "python":
@@ -204,7 +208,7 @@ class GeneralArchetype(PluginArchetype):
         }
         return "package.json", json.dumps(pkg, indent=2)
 
-    def generate_extra_files(self, options: Any) -> dict[str, str]:
+    def generate_extra_files(self, options: ScaffoldOptions) -> dict[str, str]:
         return {
             ".gitignore": "__pycache__/\n*.pyc\nnode_modules/\n.env\n.pytest_cache/\n",
         }
@@ -221,7 +225,7 @@ class ToolArchetype(GeneralArchetype):
     def description(self) -> str:
         return "Typed LLM tool and skill provider with structured schemas"
 
-    def generate_manifest(self, options: Any) -> PluginManifest:
+    def generate_manifest(self, options: ScaffoldOptions) -> PluginManifest:
         manifest = super().generate_manifest(options)
         manifest.category = options.category or "developer_tools"
         if "tool" not in manifest.tags:
@@ -240,7 +244,7 @@ class ApiWrapperArchetype(PluginArchetype):
     def description(self) -> str:
         return "REST/HTTP API client wrapper with async connection pooling"
 
-    def generate_manifest(self, options: Any) -> PluginManifest:
+    def generate_manifest(self, options: ScaffoldOptions) -> PluginManifest:
         entrypoint = "main.py" if options.language == "python" else ("index.ts" if options.language == "typescript" else "index.js")
         desc = options.description or f"API wrapper plugin for {options.name}"
 
@@ -281,7 +285,7 @@ class ApiWrapperArchetype(PluginArchetype):
             metadata={"scaffolded_by": "harness.creator.archetypes", "preset": self.name},
         )
 
-    def generate_entrypoint_code(self, options: Any) -> str:
+    def generate_entrypoint_code(self, options: ScaffoldOptions) -> str:
         lang = options.language.lower()
         tools = options.tools or ["request", "status"]
 
@@ -320,7 +324,7 @@ class ApiWrapperArchetype(PluginArchetype):
         exports_block = "\n\n".join(tool_exports)
         return f"/**\n * API Wrapper entrypoint for {options.name}\n */\n\n{exports_block}\n"
 
-    def generate_test_code(self, options: Any) -> str:
+    def generate_test_code(self, options: ScaffoldOptions) -> str:
         lang = options.language.lower()
         tools = options.tools or ["request", "status"]
         first_tool = tools[0]
@@ -346,7 +350,7 @@ class ApiWrapperArchetype(PluginArchetype):
             f'}});\n'
         )
 
-    def generate_project_config(self, options: Any) -> tuple[str, str]:
+    def generate_project_config(self, options: ScaffoldOptions) -> tuple[str, str]:
         lang = options.language.lower()
         deps = list(options.dependencies)
         if lang == "python":
@@ -376,7 +380,8 @@ class ServiceArchetype(PluginArchetype):
     def description(self) -> str:
         return "Core ServiceProvider plugin registering typed ServiceKey contracts"
 
-    def generate_manifest(self, options: Any) -> PluginManifest:
+    def generate_manifest(self, options: ScaffoldOptions) -> PluginManifest:
+        entrypoint = "main.py" if options.language == "python" else ("index.ts" if options.language == "typescript" else "index.js")
         service_key_name = f"service.{options.name}"
         cat = options.category if options.category and options.category != "general" else "core"
         return PluginManifest(
@@ -384,7 +389,7 @@ class ServiceArchetype(PluginArchetype):
             version=options.version,
             description=options.description or f"Service provider for {options.name}",
             language=options.language,
-            entrypoint="main.py",
+            entrypoint=entrypoint,
             isolation=IsolationMode.IN_PROCESS,
             trusted=True,
             author=options.author,
@@ -397,66 +402,105 @@ class ServiceArchetype(PluginArchetype):
             metadata={"scaffolded_by": "harness.creator.archetypes", "preset": self.name},
         )
 
-    def generate_entrypoint_code(self, options: Any) -> str:
-        service_class = "".join(part.capitalize() for part in options.name.replace("-", "_").split("_")) + "Service"
-        plugin_class = service_class + "Plugin"
-        service_key_name = f"service.{options.name}"
+    def generate_entrypoint_code(self, options: ScaffoldOptions) -> str:
+        lang = options.language.lower()
+        if lang == "python":
+            service_class = "".join(part.capitalize() for part in options.name.replace("-", "_").split("_")) + "Service"
+            plugin_class = service_class + "Plugin"
+            service_key_name = f"service.{options.name}"
 
+            return (
+                f'"""Service provider implementation for {options.name}.\n"""\n\n'
+                f'from __future__ import annotations\n'
+                f'from typing import Any\n'
+                f'from harness.kernel.context import ServiceContext, ServiceKey\n'
+                f'from harness.plugins.base import HarnessPlugin\n\n\n'
+                f'SERVICE_KEY: ServiceKey[{service_class}] = ServiceKey("{service_key_name}")\n\n\n'
+                f'def get_status(**kwargs: Any) -> dict[str, Any]:\n'
+                f'    """Query service health status."""\n'
+                f'    return {{"status": "healthy", "service": "{options.name}", "extra": kwargs}}\n\n\n'
+                f'class {service_class}:\n'
+                f'    """Service instance for {options.name}."""\n\n'
+                f'    def __init__(self) -> None:\n'
+                f'        self.initialized = True\n\n'
+                f'    def get_status(self) -> dict[str, Any]:\n'
+                f'        return {{"status": "healthy", "service": "{options.name}"}}\n\n\n'
+                f'class {plugin_class}(HarnessPlugin):\n'
+                f'    """Plugin wrapper providing {service_key_name}."""\n\n'
+                f'    def __init__(self) -> None:\n'
+                f'        self._service = {service_class}()\n'
+                f'        self._ctx: ServiceContext | None = None\n\n'
+                f'    @property\n'
+                f'    def name(self) -> str:\n'
+                f'        return "{options.name}"\n\n'
+                f'    @property\n'
+                f'    def provides(self) -> list[ServiceKey[Any]]:\n'
+                f'        return [SERVICE_KEY]\n\n'
+                f'    @property\n'
+                f'    def trusted(self) -> bool:\n'
+                f'        return True\n\n'
+                f'    async def on_load(self, ctx: ServiceContext) -> None:\n'
+                f'        self._ctx = ctx\n'
+                f'        ctx.provide(SERVICE_KEY, self._service, provider=self.name)\n\n'
+                f'    async def on_unload(self) -> None:\n'
+                f'        self._ctx = None\n'
+            )
+
+        param_sig = "(kwargs = {})" if lang != "typescript" else "(kwargs: Record<string, any> = {})"
+        return_sig = "" if lang != "typescript" else ": Promise<{ status: string; service: string; extra: Record<string, any> }>"
         return (
-            f'"""Service provider implementation for {options.name}.\n"""\n\n'
-            f'from __future__ import annotations\n'
-            f'from typing import Any\n'
-            f'from harness.kernel.context import ServiceContext, ServiceKey\n'
-            f'from harness.plugins.base import HarnessPlugin\n\n\n'
-            f'SERVICE_KEY: ServiceKey[{service_class}] = ServiceKey("{service_key_name}")\n\n\n'
-            f'class {service_class}:\n'
-            f'    """Service instance for {options.name}."""\n\n'
-            f'    def __init__(self) -> None:\n'
-            f'        self.initialized = True\n\n'
-            f'    def get_status(self) -> dict[str, Any]:\n'
-            f'        return {{"status": "healthy", "service": "{options.name}"}}\n\n\n'
-            f'class {plugin_class}(HarnessPlugin):\n'
-            f'    """Plugin wrapper providing {service_key_name}."""\n\n'
-            f'    def __init__(self) -> None:\n'
-            f'        self._service = {service_class}()\n'
-            f'        self._ctx: ServiceContext | None = None\n\n'
-            f'    @property\n'
-            f'    def name(self) -> str:\n'
-            f'        return "{options.name}"\n\n'
-            f'    @property\n'
-            f'    def provides(self) -> list[ServiceKey[Any]]:\n'
-            f'        return [SERVICE_KEY]\n\n'
-            f'    @property\n'
-            f'    def trusted(self) -> bool:\n'
-            f'        return True\n\n'
-            f'    async def on_load(self, ctx: ServiceContext) -> None:\n'
-            f'        self._ctx = ctx\n'
-            f'        ctx.provide(SERVICE_KEY, self._service, provider=self.name)\n\n'
-            f'    async def on_unload(self) -> None:\n'
-            f'        self._ctx = None\n'
+            f"/**\n"
+            f" * Service provider for {options.name}\n"
+            f" */\n\n"
+            f"export async function get_status{param_sig}{return_sig} {{\n"
+            f"  return {{ status: 'healthy', service: '{options.name}', extra: kwargs }};\n"
+            f"}}\n"
         )
 
-    def generate_test_code(self, options: Any) -> str:
-        service_class = "".join(part.capitalize() for part in options.name.replace("-", "_").split("_")) + "Service"
-        plugin_class = service_class + "Plugin"
-        service_key_name = f"service.{options.name}"
+    def generate_test_code(self, options: ScaffoldOptions) -> str:
+        lang = options.language.lower()
+        if lang == "python":
+            service_class = "".join(part.capitalize() for part in options.name.replace("-", "_").split("_")) + "Service"
+            plugin_class = service_class + "Plugin"
+            service_key_name = f"service.{options.name}"
+
+            return (
+                f'"""Unit tests for {plugin_class}."""\n\n'
+                f'import pytest\n'
+                f'from harness.kernel.context import ServiceContext, ServiceKey\n'
+                f'from main import {plugin_class}, {service_class}, SERVICE_KEY, get_status\n\n\n'
+                f'@pytest.mark.asyncio\n'
+                f'async def test_service_registration():\n'
+                f'    ctx = ServiceContext()\n'
+                f'    plugin = {plugin_class}()\n'
+                f'    await plugin.on_load(ctx)\n'
+                f'    service = ctx.require(SERVICE_KEY)\n'
+                f'    assert service.get_status()["status"] == "healthy"\n'
+                f'    assert get_status()["status"] == "healthy"\n'
+            )
 
         return (
-            f'"""Unit tests for {plugin_class}."""\n\n'
-            f'import pytest\n'
-            f'from harness.kernel.context import ServiceContext, ServiceKey\n'
-            f'from main import {plugin_class}, {service_class}, SERVICE_KEY\n\n\n'
-            f'@pytest.mark.asyncio\n'
-            f'async def test_service_registration():\n'
-            f'    ctx = ServiceContext()\n'
-            f'    plugin = {plugin_class}()\n'
-            f'    await plugin.on_load(ctx)\n'
-            f'    service = ctx.require(SERVICE_KEY)\n'
-            f'    assert service.get_status()["status"] == "healthy"\n'
+            f'// Unit tests for {options.name}\n'
+            f'import {{ get_status }} from "./index.js";\n\n'
+            f'test("get_status returns healthy", async () => {{\n'
+            f'  const res = await get_status();\n'
+            f'  expect(res.status).toBe("healthy");\n'
+            f'}});\n'
         )
 
-    def generate_project_config(self, options: Any) -> tuple[str, str]:
-        return "requirements.txt", "# In-process Harness core dependency\n"
+    def generate_project_config(self, options: ScaffoldOptions) -> tuple[str, str]:
+        lang = options.language.lower()
+        if lang == "python":
+            return "requirements.txt", "# In-process Harness core dependency\n"
+        pkg = {
+            "name": options.name,
+            "version": options.version,
+            "description": options.description or f"Service provider {options.name}",
+            "main": "index.ts" if lang == "typescript" else "index.js",
+            "type": "module",
+            "dependencies": {dep: "*" for dep in options.dependencies},
+        }
+        return "package.json", json.dumps(pkg, indent=2)
 
 
 class McpBridgeArchetype(PluginArchetype):
@@ -470,14 +514,15 @@ class McpBridgeArchetype(PluginArchetype):
     def description(self) -> str:
         return "Model Context Protocol bridge forwarding tool calls to external MCP servers"
 
-    def generate_manifest(self, options: Any) -> PluginManifest:
+    def generate_manifest(self, options: ScaffoldOptions) -> PluginManifest:
+        entrypoint = "main.py" if options.language == "python" else ("index.ts" if options.language == "typescript" else "index.js")
         return PluginManifest(
             name=options.name,
             version=options.version,
             description=options.description or f"MCP Bridge plugin for {options.name}",
             language=options.language,
-            entrypoint="main.py",
-            isolation=IsolationMode.SUBPROCESS,
+            entrypoint=entrypoint,
+            isolation=options.isolation,
             author=options.author,
             category="bridge",
             tags=["mcp", "protocol", "bridge"],
@@ -493,35 +538,70 @@ class McpBridgeArchetype(PluginArchetype):
                     returns="dict",
                 )
             ],
-            dependencies=["mcp>=1.0.0"],
+            dependencies=["mcp>=1.0.0"] if options.language == "python" else ["@modelcontextprotocol/sdk"],
             metadata={"scaffolded_by": "harness.creator.archetypes", "preset": self.name},
         )
 
-    def generate_entrypoint_code(self, options: Any) -> str:
+    def generate_entrypoint_code(self, options: ScaffoldOptions) -> str:
+        lang = options.language.lower()
+        if lang == "python":
+            return (
+                f'"""MCP Bridge entrypoint for {options.name}.\n"""\n\n'
+                f'from __future__ import annotations\n'
+                f'from typing import Any\n\n\n'
+                f'def mcp_call(method: str = "tools/list", params: dict[str, Any] | None = None, **kwargs: Any) -> dict[str, Any]:\n'
+                f'    """Execute an MCP tool call over stdio transport."""\n'
+                f'    return {{"status": "ok", "action": "mcp_call", "method": method, "params": params or {{}}, "extra": kwargs}}\n\n\n'
+                f'if __name__ == "__main__":\n'
+                f'    import json, sys\n'
+                f'    print(json.dumps(mcp_call("ping")))\n'
+            )
+
+        param_sig = "(method = 'tools/list', params = {}, kwargs = {})" if lang != "typescript" else "(method: string = 'tools/list', params: Record<string, any> = {}, kwargs: Record<string, any> = {})"
         return (
-            f'"""MCP Bridge entrypoint for {options.name}.\n"""\n\n'
-            f'from __future__ import annotations\n'
-            f'from typing import Any\n\n\n'
-            f'def mcp_call(method: str, params: dict[str, Any] | None = None, **kwargs: Any) -> dict[str, Any]:\n'
-            f'    """Execute an MCP tool call over stdio transport."""\n'
-            f'    return {{"status": "ok", "action": "mcp_call", "method": method, "params": params or {{}}, "extra": kwargs}}\n\n\n'
-            f'if __name__ == "__main__":\n'
-            f'    import json, sys\n'
-            f'    print(json.dumps(mcp_call("ping")))\n'
+            f"/**\n"
+            f" * MCP Bridge entrypoint for {options.name}\n"
+            f" */\n\n"
+            f"export async function mcp_call{param_sig} {{\n"
+            f"  return {{ status: 'ok', action: 'mcp_call', method, params, extra: kwargs }};\n"
+            f"}}\n"
         )
 
-    def generate_test_code(self, options: Any) -> str:
+    def generate_test_code(self, options: ScaffoldOptions) -> str:
+        lang = options.language.lower()
+        if lang == "python":
+            return (
+                f'"""Unit tests for {options.name} MCP Bridge."""\n\n'
+                f'from main import mcp_call\n\n\n'
+                f'def test_mcp_call():\n'
+                f'    res = mcp_call("tools/list")\n'
+                f'    assert res["status"] == "ok"\n'
+                f'    assert res["method"] == "tools/list"\n'
+            )
+
         return (
-            f'"""Unit tests for {options.name} MCP Bridge."""\n\n'
-            f'from main import mcp_call\n\n\n'
-            f'def test_mcp_call():\n'
-            f'    res = mcp_call("tools/list")\n'
-            f'    assert res["status"] == "ok"\n'
-            f'    assert res["method"] == "tools/list"\n'
+            f'// Unit tests for {options.name}\n'
+            f'import {{ mcp_call }} from "./index.js";\n\n'
+            f'test("mcp_call returns ok", async () => {{\n'
+            f'  const res = await mcp_call("tools/list");\n'
+            f'  expect(res.status).toBe("ok");\n'
+            f'  expect(res.method).toBe("tools/list");\n'
+            f'}});\n'
         )
 
-    def generate_project_config(self, options: Any) -> tuple[str, str]:
-        return "requirements.txt", "mcp>=1.0.0\n"
+    def generate_project_config(self, options: ScaffoldOptions) -> tuple[str, str]:
+        lang = options.language.lower()
+        if lang == "python":
+            return "requirements.txt", "mcp>=1.0.0\n"
+        pkg = {
+            "name": options.name,
+            "version": options.version,
+            "description": options.description,
+            "main": "index.ts" if lang == "typescript" else "index.js",
+            "type": "module",
+            "dependencies": {"@modelcontextprotocol/sdk": "^1.0.0"},
+        }
+        return "package.json", json.dumps(pkg, indent=2)
 
 
 class AgenticWorkflowArchetype(PluginArchetype):
@@ -535,7 +615,7 @@ class AgenticWorkflowArchetype(PluginArchetype):
     def description(self) -> str:
         return "Autonomous agent workflow loop with multi-step planning and evaluation hooks"
 
-    def generate_manifest(self, options: Any) -> PluginManifest:
+    def generate_manifest(self, options: ScaffoldOptions) -> PluginManifest:
         entrypoint = "main.py" if options.language == "python" else ("index.ts" if options.language == "typescript" else "index.js")
         desc = options.description or f"Agentic workflow engine for {options.name}"
 
@@ -586,55 +666,107 @@ class AgenticWorkflowArchetype(PluginArchetype):
             metadata={"scaffolded_by": "harness.creator.archetypes", "preset": self.name},
         )
 
-    def generate_entrypoint_code(self, options: Any) -> str:
+    def generate_entrypoint_code(self, options: ScaffoldOptions) -> str:
+        lang = options.language.lower()
+        if lang == "python":
+            return (
+                f'"""Agentic Workflow engine for {options.name}.\n\n'
+                f'{options.description or f"Implements autonomous agent workflow logic for {options.name}."}\n'
+                f'"""\n\n'
+                f'from __future__ import annotations\n'
+                f'from typing import Any\n\n\n'
+                f'def plan(goal: str = "", **kwargs: Any) -> dict[str, Any]:\n'
+                f'    """Formulate multi-step action plan for goal."""\n'
+                f'    steps = [\n'
+                f'        f"1. Analyze requirements for: {{goal}}",\n'
+                f'        f"2. Execute core operations",\n'
+                f'        f"3. Verify and synthesize results",\n'
+                f'    ]\n'
+                f'    return {{"status": "ok", "action": "plan", "goal": goal, "steps": steps, "extra": kwargs}}\n\n\n'
+                f'def execute_step(step: str = "", context: dict[str, Any] | None = None, **kwargs: Any) -> dict[str, Any]:\n'
+                f'    """Execute an individual step action."""\n'
+                f'    ctx = context or {{}}\n'
+                f'    return {{"status": "ok", "action": "execute_step", "step": step, "output": f"Completed: {{step}}", "context": ctx}}\n\n\n'
+                f'def evaluate(result: dict[str, Any] | None = None, **kwargs: Any) -> dict[str, Any]:\n'
+                f'    """Evaluate results against completion criteria."""\n'
+                f'    res = result or {{}}\n'
+                f'    is_success = res.get("status") == "ok"\n'
+                f'    return {{"status": "ok", "action": "evaluate", "passed": is_success, "score": 1.0 if is_success else 0.0}}\n\n\n'
+                f'if __name__ == "__main__":\n'
+                f'    import json\n'
+                f'    p = plan("Sample Agent Task")\n'
+                f'    print(json.dumps(p, indent=2))\n'
+            )
+
         return (
-            f'"""Agentic Workflow engine for {options.name}.\n\n'
-            f'{options.description or f"Implements autonomous agent workflow logic for {options.name}."}\n'
-            f'"""\n\n'
-            f'from __future__ import annotations\n'
-            f'from typing import Any\n\n\n'
-            f'def plan(goal: str, **kwargs: Any) -> dict[str, Any]:\n'
-            f'    """Formulate multi-step action plan for goal."""\n'
-            f'    steps = [\n'
-            f'        f"1. Analyze requirements for: {{goal}}",\n'
-            f'        f"2. Execute core operations",\n'
-            f'        f"3. Verify and synthesize results",\n'
-            f'    ]\n'
-            f'    return {{"status": "ok", "action": "plan", "goal": goal, "steps": steps, "extra": kwargs}}\n\n\n'
-            f'def execute_step(step: str, context: dict[str, Any] | None = None, **kwargs: Any) -> dict[str, Any]:\n'
-            f'    """Execute an individual step action."""\n'
-            f'    ctx = context or {{}}\n'
-            f'    return {{"status": "ok", "action": "execute_step", "step": step, "output": f"Completed: {{step}}", "context": ctx}}\n\n\n'
-            f'def evaluate(result: dict[str, Any], **kwargs: Any) -> dict[str, Any]:\n'
-            f'    """Evaluate results against completion criteria."""\n'
-            f'    is_success = result.get("status") == "ok"\n'
-            f'    return {{"status": "ok", "action": "evaluate", "passed": is_success, "score": 1.0 if is_success else 0.0}}\n\n\n'
-            f'if __name__ == "__main__":\n'
-            f'    import json\n'
-            f'    p = plan("Sample Agent Task")\n'
-            f'    print(json.dumps(p, indent=2))\n'
+            f"/**\n"
+            f" * Agentic Workflow engine for {options.name}\n"
+            f" */\n\n"
+            f"export async function plan(goal = '', kwargs = {{}}) {{\n"
+            f"  const steps = [\n"
+            f"    `1. Analyze requirements for: ${{goal}}`,\n"
+            f"    `2. Execute core operations`,\n"
+            f"    `3. Verify and synthesize results`,\n"
+            f"  ];\n"
+            f"  return {{ status: 'ok', action: 'plan', goal, steps, extra: kwargs }};\n"
+            f"}}\n\n"
+            f"export async function execute_step(step = '', context = {{}}, kwargs = {{}}) {{\n"
+            f"  return {{ status: 'ok', action: 'execute_step', step, output: `Completed: ${{step}}`, context, extra: kwargs }};\n"
+            f"}}\n\n"
+            f"export async function evaluate(result = {{}}, kwargs = {{}}) {{\n"
+            f"  const passed = result.status === 'ok';\n"
+            f"  return {{ status: 'ok', action: 'evaluate', passed, score: passed ? 1.0 : 0.0, extra: kwargs }};\n"
+            f"}}\n"
         )
 
-    def generate_test_code(self, options: Any) -> str:
+    def generate_test_code(self, options: ScaffoldOptions) -> str:
+        lang = options.language.lower()
+        if lang == "python":
+            return (
+                f'"""Unit tests for {options.name} agentic workflow."""\n\n'
+                f'from main import plan, execute_step, evaluate\n\n\n'
+                f'def test_workflow_lifecycle():\n'
+                f'    plan_res = plan("Test Goal")\n'
+                f'    assert plan_res["status"] == "ok"\n'
+                f'    assert len(plan_res["steps"]) == 3\n\n'
+                f'    step_res = execute_step(plan_res["steps"][0])\n'
+                f'    assert step_res["status"] == "ok"\n'
+                f'    assert "Completed:" in step_res["output"]\n\n'
+                f'    eval_res = evaluate(step_res)\n'
+                f'    assert eval_res["status"] == "ok"\n'
+                f'    assert eval_res["passed"] is True\n'
+            )
+
         return (
-            f'"""Unit tests for {options.name} agentic workflow."""\n\n'
-            f'from main import plan, execute_step, evaluate\n\n\n'
-            f'def test_workflow_lifecycle():\n'
-            f'    plan_res = plan("Test Goal")\n'
-            f'    assert plan_res["status"] == "ok"\n'
-            f'    assert len(plan_res["steps"]) == 3\n\n'
-            f'    step_res = execute_step(plan_res["steps"][0])\n'
-            f'    assert step_res["status"] == "ok"\n'
-            f'    assert "Completed:" in step_res["output"]\n\n'
-            f'    eval_res = evaluate(step_res)\n'
-            f'    assert eval_res["status"] == "ok"\n'
-            f'    assert eval_res["passed"] is True\n'
+            f'// Unit tests for {options.name}\n'
+            f'import {{ plan, execute_step, evaluate }} from "./index.js";\n\n'
+            f'test("workflow lifecycle", async () => {{\n'
+            f'  const planRes = await plan("Test Goal");\n'
+            f'  expect(planRes.status).toBe("ok");\n'
+            f'  expect(planRes.steps.length).toBe(3);\n\n'
+            f'  const stepRes = await execute_step(planRes.steps[0]);\n'
+            f'  expect(stepRes.status).toBe("ok");\n\n'
+            f'  const evalRes = await evaluate(stepRes);\n'
+            f'  expect(evalRes.status).toBe("ok");\n'
+            f'  expect(evalRes.passed).toBe(true);\n'
+            f'}});\n'
         )
 
-    def generate_project_config(self, options: Any) -> tuple[str, str]:
-        return "requirements.txt", "# Agent workflow dependencies\n"
+    def generate_project_config(self, options: ScaffoldOptions) -> tuple[str, str]:
+        lang = options.language.lower()
+        if lang == "python":
+            return "requirements.txt", "# Agent workflow dependencies\n"
+        pkg = {
+            "name": options.name,
+            "version": options.version,
+            "description": options.description,
+            "main": "index.ts" if lang == "typescript" else "index.js",
+            "type": "module",
+            "dependencies": {dep: "*" for dep in options.dependencies},
+        }
+        return "package.json", json.dumps(pkg, indent=2)
 
-    def generate_extra_files(self, options: Any) -> dict[str, str]:
+    def generate_extra_files(self, options: ScaffoldOptions) -> dict[str, str]:
         readme = (
             f"# {options.name}\n\n"
             f"{options.description or 'Autonomous Agent Workflow Plugin'}\n\n"
@@ -645,7 +777,7 @@ class AgenticWorkflowArchetype(PluginArchetype):
         )
         return {
             "README.md": readme,
-            ".gitignore": "__pycache__/\n*.pyc\n.pytest_cache/\n",
+            ".gitignore": "__pycache__/\n*.pyc\n.pytest_cache/\nnode_modules/\n",
         }
 
 
@@ -660,8 +792,8 @@ class ContainerArchetype(PluginArchetype):
     def description(self) -> str:
         return "Containerized plugin with Dockerfile and sandbox container isolation"
 
-    def generate_manifest(self, options: Any) -> PluginManifest:
-        entrypoint = "main.py" if options.language == "python" else "index.js"
+    def generate_manifest(self, options: ScaffoldOptions) -> PluginManifest:
+        entrypoint = "main.py" if options.language == "python" else ("index.ts" if options.language == "typescript" else "index.js")
         desc = options.description or f"Containerized plugin for {options.name}"
 
         tools = options.tools or ["execute"]
@@ -694,46 +826,112 @@ class ContainerArchetype(PluginArchetype):
             metadata={"scaffolded_by": "harness.creator.archetypes", "preset": self.name},
         )
 
-    def generate_entrypoint_code(self, options: Any) -> str:
+    def generate_entrypoint_code(self, options: ScaffoldOptions) -> str:
+        lang = options.language.lower()
+        tools = options.tools or ["execute"]
+        if lang == "python":
+            tool_fns = []
+            for t in tools:
+                tool_fns.append(
+                    f'def {t}(command: str = "", **kwargs: Any) -> dict[str, Any]:\n'
+                    f'    """Execute inside container environment."""\n'
+                    f'    return {{"status": "ok", "action": "{t}", "command": command, "container": True, "extra": kwargs}}\n'
+                )
+            tools_block = "\n".join(tool_fns)
+            return (
+                f'"""Containerized entrypoint for {options.name}.\n"""\n\n'
+                f'from __future__ import annotations\n'
+                f'from typing import Any\n\n\n'
+                f'{tools_block}\n'
+                f'if __name__ == "__main__":\n'
+                f'    import json\n'
+                f'    print(json.dumps({tools[0]}("healthcheck")))\n'
+            )
+
+        tool_exports = []
+        for t in tools:
+            param_sig = "(command = '', kwargs = {})" if lang != "typescript" else "(command: string = '', kwargs: Record<string, any> = {})"
+            tool_exports.append(
+                f"export async function {t}{param_sig} {{\n"
+                f"  return {{ status: 'ok', action: '{t}', command, container: true, extra: kwargs }};\n"
+                f"}}"
+            )
+        exports_block = "\n\n".join(tool_exports)
+        return (
+            f"/**\n"
+            f" * Containerized entrypoint for {options.name}\n"
+            f" */\n\n"
+            f"{exports_block}\n"
+        )
+
+    def generate_test_code(self, options: ScaffoldOptions) -> str:
+        lang = options.language.lower()
         tools = options.tools or ["execute"]
         first_tool = tools[0]
+        if lang == "python":
+            return (
+                f'"""Unit tests for containerized {options.name}."""\n\n'
+                f'from main import {first_tool}\n\n\n'
+                f'def test_{first_tool}_container():\n'
+                f'    res = {first_tool}("test-command")\n'
+                f'    assert res["status"] == "ok"\n'
+                f'    assert res["container"] is True\n'
+            )
+
         return (
-            f'"""Containerized entrypoint for {options.name}.\n"""\n\n'
-            f'from __future__ import annotations\n'
-            f'from typing import Any\n\n\n'
-            f'def {first_tool}(command: str = "", **kwargs: Any) -> dict[str, Any]:\n'
-            f'    """Execute inside container environment."""\n'
-            f'    return {{"status": "ok", "action": "{first_tool}", "command": command, "container": True, "extra": kwargs}}\n\n\n'
-            f'if __name__ == "__main__":\n'
-            f'    import json\n'
-            f'    print(json.dumps({first_tool}("healthcheck")))\n'
+            f'// Unit tests for {options.name}\n'
+            f'import {{ {first_tool} }} from "./index.js";\n\n'
+            f'test("{first_tool} container execution", async () => {{\n'
+            f'  const res = await {first_tool}("test-command");\n'
+            f'  expect(res.status).toBe("ok");\n'
+            f'  expect(res.container).toBe(true);\n'
+            f'}});\n'
         )
 
-    def generate_test_code(self, options: Any) -> str:
-        tools = options.tools or ["execute"]
-        first_tool = tools[0]
-        return (
-            f'"""Unit tests for containerized {options.name}."""\n\n'
-            f'from main import {first_tool}\n\n\n'
-            f'def test_{first_tool}_container():\n'
-            f'    res = {first_tool}("test-command")\n'
-            f'    assert res["status"] == "ok"\n'
-            f'    assert res["container"] is True\n'
-        )
+    def generate_project_config(self, options: ScaffoldOptions) -> tuple[str, str]:
+        lang = options.language.lower()
+        if lang == "python":
+            return "requirements.txt", "# Container dependencies\n"
+        pkg = {
+            "name": options.name,
+            "version": options.version,
+            "description": options.description,
+            "main": "index.ts" if lang == "typescript" else "index.js",
+            "type": "module",
+            "dependencies": {dep: "*" for dep in options.dependencies},
+        }
+        return "package.json", json.dumps(pkg, indent=2)
 
-    def generate_project_config(self, options: Any) -> tuple[str, str]:
-        return "requirements.txt", "# Container dependencies\n"
-
-    def generate_extra_files(self, options: Any) -> dict[str, str]:
-        dockerfile = (
-            "FROM python:3.11-slim\n\n"
-            "WORKDIR /app\n\n"
-            "COPY requirements.txt .\n"
-            "RUN pip install --no-cache-dir -r requirements.txt\n\n"
-            "COPY . .\n\n"
-            'ENTRYPOINT ["python", "main.py"]\n'
-        )
-        dockerignore = ".git\n__pycache__\n*.pyc\n.pytest_cache\n"
+    def generate_extra_files(self, options: ScaffoldOptions) -> dict[str, str]:
+        lang = options.language.lower()
+        if lang == "python":
+            dockerfile = (
+                "FROM python:3.11-slim\n\n"
+                "WORKDIR /app\n\n"
+                "COPY requirements.txt .\n"
+                "RUN pip install --no-cache-dir -r requirements.txt\n\n"
+                "COPY . .\n\n"
+                'ENTRYPOINT ["python", "main.py"]\n'
+            )
+        elif lang == "typescript":
+            dockerfile = (
+                "FROM node:20-alpine\n\n"
+                "WORKDIR /app\n\n"
+                "COPY package*.json tsconfig.json ./\n"
+                "RUN npm install\n\n"
+                "COPY . .\n\n"
+                'ENTRYPOINT ["npx", "tsx", "index.ts"]\n'
+            )
+        else:
+            dockerfile = (
+                "FROM node:20-alpine\n\n"
+                "WORKDIR /app\n\n"
+                "COPY package*.json ./\n"
+                "RUN npm install\n\n"
+                "COPY . .\n\n"
+                'ENTRYPOINT ["node", "index.js"]\n'
+            )
+        dockerignore = ".git\n__pycache__\n*.pyc\n.pytest_cache\nnode_modules\n"
         return {
             "Dockerfile": dockerfile,
             ".dockerignore": dockerignore,
@@ -752,6 +950,16 @@ class ArchetypeRegistry:
         "containerized": "container",
         "api": "api_wrapper",
     }
+
+    @classmethod
+    @contextmanager
+    def snapshot(cls) -> Iterator[None]:
+        """Context manager preserving registry state for test isolation."""
+        saved = dict(cls._archetypes)
+        try:
+            yield
+        finally:
+            cls._archetypes = saved
 
     @classmethod
     def register(cls, archetype: PluginArchetype | type[PluginArchetype]) -> None:

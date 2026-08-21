@@ -259,16 +259,7 @@ class ServiceContext:
                 source=source,
                 payload=payload,
             )
-            if hasattr(self._event_bus, "emit_sync"):
-                self._event_bus.emit_sync(evt)
-            elif hasattr(self._event_bus, "emit"):
-                import asyncio
-
-                try:
-                    loop = asyncio.get_running_loop()
-                    loop.create_task(self._event_bus.emit(evt))
-                except RuntimeError:
-                    pass
+            self._event_bus.fire(evt)
 
     def for_plugin(self, plugin_name: str) -> ScopedServiceContext:
         """Create a scoped context for a specific plugin."""

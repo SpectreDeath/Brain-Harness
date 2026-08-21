@@ -124,16 +124,7 @@ class PluginLifecycle:
             from harness.events.types import plugin_event
 
             evt = plugin_event(event_type, plugin_name, **extra)
-            if hasattr(bus, "emit_sync"):
-                bus.emit_sync(evt)
-            elif hasattr(bus, "emit"):
-                import asyncio
-
-                try:
-                    loop = asyncio.get_running_loop()
-                    loop.create_task(bus.emit(evt))
-                except RuntimeError:
-                    pass
+            bus.fire(evt)
 
     @property
     def plugins(self) -> dict[str, PluginEntry]:

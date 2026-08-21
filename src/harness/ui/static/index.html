@@ -491,8 +491,36 @@
     .guide-doc-text { font-size: 0.88rem; line-height: 1.6; color: #cbd5e1; white-space: pre-wrap; }
     .guide-card-pre { background: #06090e; padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color); font-family: 'Fira Code', monospace; font-size: 0.82rem; color: var(--accent-cyan); overflow-x: auto; }
     .table-scroll { max-height: 480px; overflow-y: auto; }
+    .table-scroll-420 { max-height: 420px; overflow-y: auto; }
     .w-full { width: 100%; }
     .hidden { display: none; }
+    .flex-1 { flex: 1; }
+
+    /* Utility & Form Classes */
+    .btn-scaffold { border-color: var(--accent-purple); color: var(--accent-purple); }
+    .form-label { font-size: 0.8rem; color: var(--text-secondary); display: block; margin-bottom: 0.3rem; }
+    .modal-status { font-size: 0.85rem; display: none; }
+    .guide-scroll-container { overflow-y: auto; max-height: 55vh; padding-right: 0.4rem; }
+    .modal-footer { display: flex; justify-content: flex-end; border-top: 1px solid var(--border-color); padding-top: 0.75rem; }
+    .modal-footer-gap { gap: 0.75rem; }
+    .creator-form-body { padding: 0.5rem 0; }
+    .form-grid-half { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .checkbox-row { display: flex; align-items: center; gap: 0.5rem; margin: 0.75rem 0; }
+    .checkbox-label { font-size: 0.85rem; color: var(--text-secondary); cursor: pointer; }
+    .creator-status { font-size: 0.85rem; padding: 0.5rem; border-radius: 6px; display: none; margin-bottom: 0.75rem; }
+    .service-context-list { display: flex; flex-direction: column; gap: 0.5rem; }
+    .service-item { display: flex; justify-content: space-between; align-items: center; padding: 0.4rem 0.6rem; background: rgba(0, 0, 0, 0.3); border-radius: 6px; font-size: 0.82rem; border: 1px solid var(--border-color); }
+    .text-muted-sm { color: var(--text-secondary); font-size: 0.85rem; }
+    .text-muted-md { color: var(--text-secondary); font-size: 0.9rem; }
+    .text-error { color: var(--accent-rose); }
+    .text-code-cyan { font-family: 'Fira Code', monospace; color: var(--accent-cyan); }
+    .text-code { font-family: 'Fira Code', monospace; }
+    .text-code-sm { font-family: 'Fira Code', monospace; font-size: 0.8rem; }
+    .timeline-label { font-size: 0.8rem; color: var(--text-secondary); font-family: 'Fira Code', monospace; }
+    .timeline-filter-bar { display: flex; gap: 0.75rem; }
+    .timeline-filter-input { width: 250px; }
+    .agent-action-bar { display: flex; gap: 0.6rem; }
+    .table-empty-cell { text-align: center; color: var(--text-secondary); }
   </style>
 </head>
 <body>
@@ -515,7 +543,7 @@
     </nav>
 
     <div class="header-actions">
-      <button class="btn btn-outline" onclick="openCreatorModal()" style="border-color: var(--accent-purple); color: var(--accent-purple);">✨ Scaffold Plugin</button>
+      <button class="btn btn-outline btn-scaffold" onclick="openCreatorModal()">✨ Scaffold Plugin</button>
       <button class="btn" onclick="openAddPluginModal()">+ Ingest Plugin</button>
       <div class="ws-status">
         <div class="status-dot" id="wsDot"></div>
@@ -540,11 +568,11 @@
       <!-- Tab 1: URL -->
       <div class="tab-content active" id="tabUrl">
         <div class="form-group">
-          <label class="form-label" style="font-size: 0.8rem; color: var(--text-secondary); display: block; margin-bottom: 0.3rem;">Source (GitHub repo, PyPI, or OpenAPI URL)</label>
+          <label class="form-label">Source (GitHub repo, PyPI, or OpenAPI URL)</label>
           <input type="text" id="pluginSourceInput" class="agent-input w-full" placeholder="e.g. owner/repo, pypi:requests, or https://github.com/owner/repo">
         </div>
         <div class="form-group">
-          <label class="form-label" style="font-size: 0.8rem; color: var(--text-secondary); display: block; margin-bottom: 0.3rem;">Git Ref / Branch (optional)</label>
+          <label class="form-label">Git Ref / Branch (optional)</label>
           <input type="text" id="pluginRefInput" class="agent-input w-full" placeholder="main" value="main">
         </div>
         <button class="btn" id="btnIngestUrl" onclick="submitPluginUrl()">Ingest & Sandboxed Activate</button>
@@ -559,7 +587,7 @@
         <button class="btn" id="btnUploadZip" onclick="submitPluginZip()" disabled>Upload & Provision</button>
       </div>
 
-      <div id="modalStatus" style="font-size: 0.85rem; display: none;"></div>
+      <div id="modalStatus" class="modal-status"></div>
     </div>
   </div>
 
@@ -576,7 +604,7 @@
         <button class="tab-btn" id="tabGuideCardBtn" onclick="switchGuideTab('card')">📋 Summary Card</button>
       </div>
 
-      <div style="overflow-y: auto; max-height: 55vh; padding-right: 0.4rem;">
+      <div class="guide-scroll-container">
         <div class="tab-content active" id="tabGuideDoc">
           <div id="guideDocContent" class="guide-doc-text"></div>
         </div>
@@ -585,7 +613,7 @@
         </div>
       </div>
 
-      <div style="display: flex; justify-content: flex-end; border-top: 1px solid var(--border-color); padding-top: 0.75rem;">
+      <div class="modal-footer">
         <button class="btn btn-outline" onclick="closePluginGuideModal()">Close</button>
       </div>
     </div>
@@ -599,14 +627,14 @@
         <button class="modal-close" onclick="closeCreatorModal()">&times;</button>
       </div>
 
-      <div style="padding: 0.5rem 0;">
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+      <div class="creator-form-body">
+        <div class="form-grid-half">
           <div class="form-group">
-            <label class="form-label" style="font-size: 0.8rem; color: var(--text-secondary); display: block; margin-bottom: 0.3rem;">Plugin Name *</label>
+            <label class="form-label">Plugin Name *</label>
             <input type="text" id="creatorName" class="agent-input w-full" placeholder="e.g. data_cleaner">
           </div>
           <div class="form-group">
-            <label class="form-label" style="font-size: 0.8rem; color: var(--text-secondary); display: block; margin-bottom: 0.3rem;">Language</label>
+            <label class="form-label">Language</label>
             <select id="creatorLanguage" class="agent-input w-full">
               <option value="python">Python</option>
               <option value="javascript">JavaScript</option>
@@ -615,9 +643,9 @@
           </div>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+        <div class="form-grid-half">
           <div class="form-group">
-            <label class="form-label" style="font-size: 0.8rem; color: var(--text-secondary); display: block; margin-bottom: 0.3rem;">Archetype Preset</label>
+            <label class="form-label">Archetype Preset</label>
             <select id="creatorPreset" class="agent-input w-full">
               <option value="general">General Plugin</option>
               <option value="tool">LLM Skill / Tool</option>
@@ -626,7 +654,7 @@
             </select>
           </div>
           <div class="form-group">
-            <label class="form-label" style="font-size: 0.8rem; color: var(--text-secondary); display: block; margin-bottom: 0.3rem;">Sandbox Isolation</label>
+            <label class="form-label">Sandbox Isolation</label>
             <select id="creatorIsolation" class="agent-input w-full">
               <option value="subprocess">Subprocess (Default)</option>
               <option value="venv">Isolated Venv</option>
@@ -637,28 +665,28 @@
         </div>
 
         <div class="form-group">
-          <label class="form-label" style="font-size: 0.8rem; color: var(--text-secondary); display: block; margin-bottom: 0.3rem;">Tools / Entrypoints (comma-separated)</label>
+          <label class="form-label">Tools / Entrypoints (comma-separated)</label>
           <input type="text" id="creatorTools" class="agent-input w-full" placeholder="e.g. clean_csv,validate_json" value="execute">
         </div>
 
         <div class="form-group">
-          <label class="form-label" style="font-size: 0.8rem; color: var(--text-secondary); display: block; margin-bottom: 0.3rem;">External Dependencies (comma-separated)</label>
+          <label class="form-label">External Dependencies (comma-separated)</label>
           <input type="text" id="creatorDeps" class="agent-input w-full" placeholder="e.g. httpx>=0.27.0,pydantic">
         </div>
 
         <div class="form-group">
-          <label class="form-label" style="font-size: 0.8rem; color: var(--text-secondary); display: block; margin-bottom: 0.3rem;">Description</label>
+          <label class="form-label">Description</label>
           <input type="text" id="creatorDesc" class="agent-input w-full" placeholder="Provides capabilities for data processing">
         </div>
 
-        <div style="display: flex; align-items: center; gap: 0.5rem; margin: 0.75rem 0;">
+        <div class="checkbox-row">
           <input type="checkbox" id="creatorAutoEnable" checked>
-          <label for="creatorAutoEnable" style="font-size: 0.85rem; color: var(--text-secondary); cursor: pointer;">Automatically load and enable in running lifecycle</label>
+          <label for="creatorAutoEnable" class="checkbox-label">Automatically load and enable in running lifecycle</label>
         </div>
 
-        <div id="creatorStatus" style="font-size: 0.85rem; padding: 0.5rem; border-radius: 6px; display: none; margin-bottom: 0.75rem;"></div>
+        <div id="creatorStatus" class="creator-status"></div>
 
-        <div style="display: flex; justify-content: flex-end; gap: 0.75rem; border-top: 1px solid var(--border-color); padding-top: 0.75rem;">
+        <div class="modal-footer modal-footer-gap">
           <button class="btn btn-outline" onclick="closeCreatorModal()">Cancel</button>
           <button class="btn" id="btnCreatorScaffold" onclick="submitCreatorScaffold()">🚀 Scaffold & Mount</button>
         </div>
@@ -706,8 +734,8 @@
             <span>Kernel & Core Services</span>
             <button class="btn btn-outline btn-xs" onclick="loadAllData()">Refresh</button>
           </div>
-          <div id="serviceContextList" style="display: flex; flex-direction: column; gap: 0.5rem;">
-            <div style="color: var(--text-secondary); font-size: 0.85rem;">Loading services...</div>
+          <div id="serviceContextList" class="service-context-list">
+            <div class="text-muted-sm">Loading services...</div>
           </div>
         </div>
 
@@ -737,14 +765,14 @@
           </div>
 
           <div class="timeline-controls">
-            <span style="font-size: 0.8rem; color: var(--text-secondary); font-family: 'Fira Code', monospace;" id="timelineStartLabel">Start: -</span>
+            <span class="timeline-label" id="timelineStartLabel">Start: -</span>
             <input type="range" min="0" max="100" value="100" class="timeline-slider" id="timelineScrubber" oninput="onTimelineScrub(this.value)">
-            <span style="font-size: 0.8rem; color: var(--text-secondary); font-family: 'Fira Code', monospace;" id="timelineEndLabel">Live (100%)</span>
+            <span class="timeline-label" id="timelineEndLabel">Live (100%)</span>
           </div>
 
-          <div style="display: flex; gap: 0.75rem;">
-            <input type="text" id="timelineFilterType" class="agent-input" style="width: 250px;" placeholder="Filter by event type (e.g. tool.*, agent.*)" oninput="filterTimelineList()">
-            <input type="text" id="timelineFilterSource" class="agent-input" style="width: 250px;" placeholder="Filter by source plugin..." oninput="filterTimelineList()">
+          <div class="timeline-filter-bar">
+            <input type="text" id="timelineFilterType" class="agent-input timeline-filter-input" placeholder="Filter by event type (e.g. tool.*, agent.*)" oninput="filterTimelineList()">
+            <input type="text" id="timelineFilterSource" class="agent-input timeline-filter-input" placeholder="Filter by source plugin..." oninput="filterTimelineList()">
           </div>
 
           <div class="terminal-box terminal-tall" id="timelineBox">
@@ -763,7 +791,7 @@
             <button class="btn btn-outline btn-xs" onclick="renderMermaidGraph()">Re-render Graph</button>
           </div>
           <div class="mermaid-container" id="mermaidGraphBox">
-            <div style="color: var(--text-secondary); font-size: 0.9rem;">Rendering architecture graph...</div>
+            <div class="text-muted-md">Rendering architecture graph...</div>
           </div>
         </div>
       </div>
@@ -777,8 +805,8 @@
           <div class="card-title">
             <span>Autonomous Agent Mission Control</span>
           </div>
-          <div style="display: flex; gap: 0.6rem;">
-            <input type="text" id="agentPromptInput" class="agent-input" style="flex: 1;" placeholder="Enter autonomous task..." value="Calculate sum of 40 and 2 using python surface">
+          <div class="agent-action-bar">
+            <input type="text" id="agentPromptInput" class="agent-input flex-1" placeholder="Enter autonomous task..." value="Calculate sum of 40 and 2 using python surface">
             <button class="btn" onclick="executeAgentTask()" id="btnExecAgent">Launch Task</button>
           </div>
           <div class="terminal-box terminal-tall" id="agentConsoleBox">
@@ -792,7 +820,7 @@
             <span>Session History & Artifacts</span>
             <button class="btn btn-outline btn-xs" onclick="loadSessions()">Refresh</button>
           </div>
-          <div class="table-scroll" style="max-height: 420px;">
+          <div class="table-scroll-420">
             <table class="plugin-table">
               <thead>
                 <tr>
@@ -803,7 +831,7 @@
                 </tr>
               </thead>
               <tbody id="sessionTableBody">
-                <tr><td colspan="4" style="text-align: center; color: var(--text-secondary);">No previous sessions</td></tr>
+                <tr><td colspan="4" class="table-empty-cell">No previous sessions</td></tr>
               </tbody>
             </table>
           </div>
@@ -836,7 +864,7 @@
                 </tr>
               </thead>
               <tbody id="pluginsMatrixTableBody">
-                <tr><td colspan="5" style="text-align: center; color: var(--text-secondary);">Loading plugin catalog...</td></tr>
+                <tr><td colspan="5" class="table-empty-cell">Loading plugin catalog...</td></tr>
               </tbody>
             </table>
           </div>
@@ -864,7 +892,7 @@
                 </tr>
               </thead>
               <tbody id="sandboxTableBody">
-                <tr><td colspan="5" style="text-align: center; color: var(--text-secondary);">Querying sandbox executors...</td></tr>
+                <tr><td colspan="5" class="table-empty-cell">Querying sandbox executors...</td></tr>
               </tbody>
             </table>
           </div>
@@ -981,8 +1009,8 @@
         const services = data.services || ['events.bus', 'storage.sqlite', 'tools.registry', 'llm.provider', 'agent.loop'];
         for (const s of services) {
           const item = document.createElement('div');
-          item.style = 'display: flex; justify-content: space-between; align-items: center; padding: 0.4rem 0.6rem; background: rgba(0,0,0,0.3); border-radius: 6px; font-size: 0.82rem; border: 1px solid var(--border-color);';
-          item.innerHTML = `<span style="font-family: 'Fira Code', monospace; color: var(--accent-cyan);">${s}</span> <span class="pill enabled">Active</span>`;
+          item.className = 'service-item';
+          item.innerHTML = `<span class="text-code-cyan">${s}</span> <span class="pill enabled">Active</span>`;
           sList.appendChild(item);
         }
       } catch (err) {
@@ -1022,7 +1050,7 @@
       tbody.innerHTML = '';
 
       if (Object.keys(cachedPlugins).length === 0) {
-        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:var(--text-secondary);">No plugins found</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="5" class="table-empty-cell">No plugins found</td></tr>';
         return;
       }
 
@@ -1210,7 +1238,7 @@
     // Architecture Graph
     async function renderMermaidGraph() {
       const box = document.getElementById('mermaidGraphBox');
-      box.innerHTML = '<div style="color: var(--text-secondary);">Loading architecture graph...</div>';
+      box.innerHTML = '<div class="text-muted-sm">Loading architecture graph...</div>';
       try {
         const res = await fetch('/api/graph');
         const data = await res.json();
@@ -1218,7 +1246,7 @@
         box.innerHTML = `<div class="mermaid">${code}</div>`;
         mermaid.run({ nodes: box.querySelectorAll('.mermaid') });
       } catch (err) {
-        box.innerHTML = `<div style="color: var(--accent-rose);">Failed to render graph: ${err}</div>`;
+        box.innerHTML = `<div class="text-error">Failed to render graph: ${err}</div>`;
       }
     }
 
@@ -1234,7 +1262,7 @@
         tbody.innerHTML = '';
 
         if (cachedSandboxes.length === 0) {
-          tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:var(--text-secondary);">No sandboxes registered</td></tr>';
+          tbody.innerHTML = '<tr><td colspan="5" class="table-empty-cell">No sandboxes registered</td></tr>';
           return;
         }
 
@@ -1244,7 +1272,7 @@
             <td class="td-name">${s.plugin}</td>
             <td><span class="pill ${s.executor}">${s.executor}</span></td>
             <td><span class="pill ${s.is_running ? 'enabled' : 'disabled'}">${s.is_running ? 'Running' : 'Stopped'}</span></td>
-            <td style="font-family: 'Fira Code', monospace;">${s.pid || '-'}</td>
+            <td class="text-code">${s.pid || '-'}</td>
             <td><span class="pill ${s.trusted ? 'enabled' : 'disabled'}">${s.trusted ? 'Trusted' : 'Untrusted (Isolated)'}</span></td>
           `;
           tbody.appendChild(tr);
@@ -1303,14 +1331,14 @@
 
         const sessions = data.sessions || [];
         if (sessions.length === 0) {
-          tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--text-secondary);">No previous sessions</td></tr>';
+          tbody.innerHTML = '<tr><td colspan="4" class="table-empty-cell">No previous sessions</td></tr>';
           return;
         }
 
         for (const s of sessions) {
           const tr = document.createElement('tr');
           tr.innerHTML = `
-            <td style="font-family: 'Fira Code', monospace; font-size: 0.8rem;">${s.id || s.session_id}</td>
+            <td class="text-code-sm">${s.id || s.session_id}</td>
             <td><span class="pill ${s.status === 'completed' ? 'enabled' : 'disabled'}">${s.status}</span></td>
             <td>${s.steps_count || (s.steps ? s.steps.length : 0)}</td>
             <td>

@@ -98,8 +98,15 @@ class ValidationReport:
             "Diagnostic Checks:",
         ]
         for c in self.checks:
-            mark = "  ✓" if c.passed else "  ✗"
-            sev_badge = f"[{c.severity.value.upper()}]" if not c.passed else ""
+            if not c.passed:
+                mark = "  ✗"
+                sev_badge = f"[{c.severity.value.upper()}]"
+            elif c.severity == RuleSeverity.WARNING:
+                mark = "  ⚠"
+                sev_badge = "[WARNING]"
+            else:
+                mark = "  ✓"
+                sev_badge = ""
             lines.append(f"{mark} {c.name:<30} {sev_badge} {c.message}")
 
         if self.remediations:
@@ -351,11 +358,33 @@ class AstFunctionInspectionRule(ValidationRule):
             if missing_funcs:
                 if ctx.remediate:
                     # Auto-append missing function stubs to entrypoint file
+                    has_typing_import = bool(
+                        re.search(r"^\s*(from\s+typing\s+import|import\s+typing)\b", code_content, re.MULTILINE)
+                    )
                     stubs = [
                         f'\ndef {fn}(task: str = "", **kwargs: Any) -> dict[str, Any]:\n    """Auto-remediated stub for {fn}."""\n    return {{"status": "ok", "action": "{fn}", "result": task}}\n'
                         for fn in missing_funcs
                     ]
-                    entrypoint_path.write_text(code_content + "\n" + "\n".join(stubs), encoding="utf-8")
+                    code_to_write = code_content
+                    if not has_typing_import:
+                        if (
+                            tree.body
+                            and isinstance(tree.body[0], ast.Expr)
+                            and isinstance(tree.body[0].value, ast.Constant)
+                            and isinstance(tree.body[0].value.value, str)
+                            and hasattr(tree.body[0], "end_lineno")
+                            and tree.body[0].end_lineno is not None
+                        ):
+                            doc_end = tree.body[0].end_lineno
+                            lines = code_content.splitlines(keepends=True)
+                            head = "".join(lines[:doc_end])
+                            tail = "".join(lines[doc_end:])
+                            code_to_write = head + "\n\nfrom typing import Any\n" + tail
+                        else:
+                            code_to_write = "from typing import Any\n\n" + code_content
+
+                    new_code = code_to_write.rstrip() + "\n" + "\n".join(stubs)
+                    entrypoint_path.write_text(new_code, encoding="utf-8")
                     ctx.add_remediation(f"Appended function stubs in {entrypoint_name} for: {missing_funcs}")
                     ctx.add_pass(self.name, f"Remediated missing functions: {missing_funcs}", category=self.category)
                     return True
@@ -406,19 +435,27 @@ class AstSignatureMatchingRule(ValidationRule):
             tree = ast.parse(code_content, filename=str(entrypoint_path))
 
             fn_args: dict[str, list[str]] = {}
+            fn_has_kwarg: dict[str, bool] = {}
             for node in ast.walk(tree):
                 if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
-                    fn_args[node.name] = [arg.arg for arg in node.args.args]
+                    posonly = [a.arg for a in getattr(node.args, "posonlyargs", [])]
+                    standard = [a.arg for a in node.args.args]
+                    kwonly = [a.arg for a in getattr(node.args, "kwonlyargs", [])]
+                    fn_args[node.name] = posonly + standard + kwonly
+                    fn_has_kwarg[node.name] = node.args.kwarg is not None
 
             warnings: list[str] = []
             for ep in ctx.manifest.entrypoints:
                 if ep.name in fn_args:
                     declared_params = [p.name for p in ep.parameters if p.required]
                     actual_args = fn_args[ep.name]
-                    # Check required parameters presence
-                    for p_name in declared_params:
-                        if p_name not in actual_args and not any(isinstance(node, ast.FunctionDef) and node.args.kwarg for node in [tree]):
-                            warnings.append(f"Function '{ep.name}' signature may lack parameter '{p_name}'")
+                    has_kwarg = fn_has_kwarg.get(ep.name, False)
+
+                    # If function accepts **kwargs, any undeclared or additional parameter is accepted
+                    if not has_kwarg:
+                        for p_name in declared_params:
+                            if p_name not in actual_args:
+                                warnings.append(f"Function '{ep.name}' signature may lack parameter '{p_name}'")
 
             if warnings:
                 for w in warnings:
@@ -635,6 +672,22 @@ class SandboxDryRunRule(ValidationRule):
             return False
 
 
+def _run_coro_sync(coro: Any) -> Any:
+    """Safely run a coroutine synchronously even within existing event loops."""
+    import asyncio
+    try:
+        loop = asyncio.get_running_loop()
+    except RuntimeError:
+        loop = None
+
+    if loop and loop.is_running():
+        import concurrent.futures
+
+        with concurrent.futures.ThreadPoolExecutor() as pool:
+            return pool.submit(asyncio.run, coro).result()
+    return asyncio.run(coro)
+
+
 class ValidationFixer:
     """Authoritative auto-remediation engine for fixing plugin structure issues."""
 
@@ -647,8 +700,7 @@ class ValidationFixer:
     @classmethod
     def remediate_sync(cls, plugin_dir: Path | str) -> ValidationReport:
         """Synchronously auto-repair plugin issues."""
-        import asyncio
-        return asyncio.run(cls.remediate(plugin_dir))
+        return _run_coro_sync(cls.remediate(plugin_dir))
 
 
 class ValidationPipeline:
@@ -686,8 +738,7 @@ class ValidationPipeline:
 
         for rule in self.rules:
             should_continue = await rule.validate(ctx)
-            # Only halt if a critical error indicates the directory does not exist or cannot be inspected
-            if not should_continue and not path.exists():
+            if not should_continue:
                 break
 
         return ctx.report
@@ -726,8 +777,7 @@ class PluginValidator:
         pipeline: ValidationPipeline | None = None,
     ) -> ValidationReport:
         """Synchronous helper for validating a plugin directory."""
-        import asyncio
-        return asyncio.run(
+        return _run_coro_sync(
             cls.validate(
                 plugin_dir,
                 dry_run=dry_run,
@@ -760,4 +810,5 @@ __all__ = [
     "ValidationPipeline",
     "ValidationReport",
     "ValidationRule",
+    "_run_coro_sync",
 ]

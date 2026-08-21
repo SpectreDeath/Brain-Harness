@@ -1,4 +1,4 @@
-"""Plugin ingestion pipeline — unified GitHub to plugin workflow.
+"""Plugin ingestion pipeline — unified GitHub and multi-source to plugin workflow.
 
 Encapsulates fetching, inspecting, converting, and sandboxing any external
 repository or archive into a live HarnessPlugin.
@@ -14,6 +14,11 @@ import structlog
 from harness.ingestion.converter import RepoConverter
 from harness.ingestion.fetcher import RepoFetcher
 from harness.ingestion.inspector import RepoInspector
+from harness.ingestion.resolvers import (
+    ResolvedSource,
+    SourceResolver,
+    UniversalSourceRegistry,
+)
 from harness.plugins.manifest import IsolationMode, PluginManifest
 from harness.plugins.sandboxed import SandboxedPlugin
 
@@ -36,6 +41,7 @@ class PluginIngestionPipeline:
         plugin_dir: Path | None = None,
         github_token: str | None = None,
         event_bus: Any | None = None,
+        registry: UniversalSourceRegistry | None = None,
     ) -> None:
         self.plugin_dir = plugin_dir or Path("plugins")
         self._event_bus = event_bus
@@ -46,6 +52,7 @@ class PluginIngestionPipeline:
         )
         self.inspector = inspector or RepoInspector()
         self.converter = converter or RepoConverter()
+        self.registry = registry or UniversalSourceRegistry.create_default(github_token=github_token)
 
     @property
     def event_bus(self) -> Any | None:
@@ -58,22 +65,13 @@ class PluginIngestionPipeline:
         if hasattr(self.fetcher, "attach_event_bus"):
             self.fetcher.attach_event_bus(event_bus)
 
-    def _emit_event(self, event_type: Any, url: str, **extra: Any) -> None:
+    async def _emit_event(self, event_type: Any, url: str, **extra: Any) -> None:
         """Emit an ingestion event onto the attached event bus."""
         if self._event_bus is not None:
             from harness.events.types import ingestion_event
 
             evt = ingestion_event(event_type, url, **extra)
-            if hasattr(self._event_bus, "emit_sync"):
-                self._event_bus.emit_sync(evt)
-            elif hasattr(self._event_bus, "emit"):
-                import asyncio
-
-                try:
-                    loop = asyncio.get_running_loop()
-                    loop.create_task(self._event_bus.emit(evt))
-                except RuntimeError:
-                    pass
+            await self._event_bus.emit(evt)
 
     async def ingest(
         self,
@@ -87,7 +85,7 @@ class PluginIngestionPipeline:
         """Download, inspect, and convert a repository into a ready-to-run plugin.
 
         Args:
-            source: GitHub URL, local file path to zip, or existing directory.
+            source: GitHub URL, local file path to zip, PyPI package, OpenAPI spec, or existing directory.
             ref: Git ref (branch/tag) when fetching from GitHub.
             force: Re-fetch if already cached.
             isolation: Optional override for isolation mode.
@@ -101,35 +99,20 @@ class PluginIngestionPipeline:
         source_str = str(source)
         logger.info("Ingesting plugin source", source=source_str)
 
-        # 1. Fetch / resolve plugin directory via specialized or unified fetch seam
-        if source_str.startswith("pypi:"):
-            from harness.ingestion.pypi_converter import PyPIConverter
-
-            pypi_conv = PyPIConverter(output_base_dir=self.plugin_dir)
-            repo_dir = await pypi_conv.convert(source_str)
-        elif source_str.startswith(("openapi:", "swagger:")):
-            from harness.ingestion.openapi_converter import OpenAPIConverter
-
-            raw_source = source_str.split(":", 1)[1].strip()
-            spec_content = raw_source
-            if raw_source.startswith(("http://", "https://")):
-                import httpx
-
-                async with httpx.AsyncClient(timeout=30.0, follow_redirects=True) as client:
-                    resp = await client.get(raw_source)
-                    resp.raise_for_status()
-                    spec_content = resp.text
-            elif Path(raw_source).exists():
-                spec_content = Path(raw_source).read_text(encoding="utf-8")
-
-            openapi_conv = OpenAPIConverter(output_base_dir=self.plugin_dir)
-            repo_dir = openapi_conv.convert(spec_content)
-        else:
-            repo_dir = await self.fetcher.fetch(source_str, ref=ref, force=force)
+        # 1. Resolve source via UniversalSourceRegistry
+        resolved: ResolvedSource = await self.registry.resolve(
+            source_str,
+            target_base_dir=self.plugin_dir,
+            ref=ref,
+            force=force,
+            github_token=self.fetcher.github_token,
+            event_bus=self.event_bus,
+        )
+        repo_dir = resolved.directory
 
         # 2. Inspect codebase structure and synthesize manifest
-        manifest = self.inspector.inspect(repo_dir)
-        self._emit_event(
+        manifest = resolved.manifest_override or self.inspector.inspect(repo_dir)
+        await self._emit_event(
             EventType.REPO_INSPECTED,
             source_str,
             plugin=manifest.name,
@@ -153,7 +136,7 @@ class PluginIngestionPipeline:
 
         # 4. Convert to sandboxed plugin
         plugin = self.converter.convert(repo_dir, manifest, force_isolation=eff_isolation)
-        self._emit_event(
+        await self._emit_event(
             EventType.REPO_CONVERTED,
             source_str,
             plugin=plugin.name,
@@ -226,4 +209,3 @@ class PluginIngestionPipeline:
 
 # Backward compatibility alias
 PluginIngestionEngine = PluginIngestionPipeline
-
