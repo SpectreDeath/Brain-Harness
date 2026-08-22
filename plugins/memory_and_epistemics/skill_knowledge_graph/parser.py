@@ -166,7 +166,7 @@ class SkillCardParser:
                 meta["invocation"] = clean.split(":", 1)[1].strip()
             elif clean.startswith("Version:"):
                 meta["version"] = clean.split(":", 1)[1].strip()
-            elif clean.startswith("Trigger:"):
+            elif clean.startswith("Trigger:") or clean.startswith("Triggers:"):
                 val = clean.split(":", 1)[1].strip()
                 extracted = re.findall(r'"([^"]+)"', val)
                 if extracted:
@@ -175,6 +175,27 @@ class SkillCardParser:
                     triggers.append(val.strip('"'))
             elif clean.startswith("Target:"):
                 meta["target"] = clean.split(":", 1)[1].strip()
+            else:
+                table_match = re.match(r"^\|\s*\*{0,2}([a-zA-Z]+)\*{0,2}\s*\|\s*(.*?)\s*\|?$", clean)
+                if table_match:
+                    k_norm = table_match.group(1).lower()
+                    v_val = table_match.group(2).strip().strip("`")
+                    if k_norm == "name":
+                        meta["name"] = v_val
+                    elif k_norm == "category":
+                        meta["category"] = v_val
+                    elif k_norm == "invocation":
+                        meta["invocation"] = v_val
+                    elif k_norm == "version":
+                        meta["version"] = v_val
+                    elif k_norm in ("trigger", "triggers"):
+                        extracted = re.findall(r'"([^"]+)"', v_val)
+                        if extracted:
+                            triggers.extend(extracted)
+                        else:
+                            triggers.extend([t.strip().strip('"') for t in v_val.split(",") if t.strip()])
+                    elif k_norm == "target":
+                        meta["target"] = v_val
 
         if triggers:
             meta["triggers"] = triggers
@@ -263,7 +284,7 @@ class SkillCardParser:
                 if m:
                     name = m.group(1).strip()
                     desc = m.group(2).strip()
-                    anti_patterns.append(AntiPatternNode(name=name, description=desc))
+                    anti_patterns.append(AntiPatternNode(name=name, description=desc, mitigation=""))
 
         return anti_patterns
 

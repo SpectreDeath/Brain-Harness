@@ -9,8 +9,7 @@ Validates:
 
 import asyncio
 import pytest
-from unittest.mock import AsyncMock, MagicMock
-from httpx import ASGITransport, AsyncClient
+from unittest.mock import AsyncMock
 
 from harness.events.bus import EventBus
 from harness.events.types import EventType, HarnessEvent

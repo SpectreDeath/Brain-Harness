@@ -59,7 +59,7 @@ class ToolMountMixin:
             name: Optional provider name (defaults to self.name if available).
         """
         self._mount_ctx = ctx
-        self._mount_name = name or getattr(self, "name", "")
+        self._mount_name = str(name or getattr(self, "name", ""))
 
     def teardown_tool_mount(self) -> None:
         """Clean up context reference on plugin unload."""

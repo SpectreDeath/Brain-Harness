@@ -147,13 +147,13 @@ def verify_clean_boundaries(
     violations: list[dict[str, Any]] = []
 
     for src_mod, targets in graph.items():
-        src_layer = next((l for l in layers if f".{l}" in f".{src_mod}" or src_mod.startswith(l)), None)
+        src_layer = next((lyr for lyr in layers if f".{lyr}" in f".{src_mod}" or src_mod.startswith(lyr)), None)
         if not src_layer:
             continue
         src_idx = layer_order[src_layer]
 
         for target in targets:
-            tgt_layer = next((l for l in layers if f".{l}" in f".{target}" or target.startswith(l)), None)
+            tgt_layer = next((lyr for lyr in layers if f".{lyr}" in f".{target}" or target.startswith(lyr)), None)
             if not tgt_layer or tgt_layer == src_layer:
                 continue
             tgt_idx = layer_order[tgt_layer]

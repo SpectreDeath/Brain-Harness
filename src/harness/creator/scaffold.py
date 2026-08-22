@@ -18,7 +18,6 @@ import structlog
 from harness.plugins.manifest import (
     EntrypointSpec,
     IsolationMode,
-    ParameterSpec,
     PluginManifest,
 )
 

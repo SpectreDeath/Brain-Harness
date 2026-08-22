@@ -7,6 +7,7 @@ error envelope isolation, and ToolSpec ↔ MCP schema translation.
 from __future__ import annotations
 
 import json
+from collections.abc import Awaitable
 from dataclasses import dataclass
 from typing import Any, Callable
 
@@ -336,7 +337,7 @@ class MCPPrompt:
     name: str
     description: str = ""
     arguments: list[dict[str, Any]] | None = None
-    template_handler: Callable[[dict[str, Any]], list[dict[str, Any]]] | None = None
+    template_handler: Callable[[dict[str, Any]], list[dict[str, Any]] | Awaitable[list[dict[str, Any]]]] | None = None
 
     def to_dict(self) -> dict[str, Any]:
         return {

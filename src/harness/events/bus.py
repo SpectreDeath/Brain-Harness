@@ -11,16 +11,19 @@ from __future__ import annotations
 
 import asyncio
 import inspect
+from abc import ABC, abstractmethod
 from collections import defaultdict, deque
 from collections.abc import AsyncIterator, Awaitable, Callable, Iterator
 from datetime import datetime
 from pathlib import Path
-from typing import Any
+from typing import Any, Generic, TypeVar
 
 import structlog
 
 from harness.kernel.context import ServiceKey
 from .types import EventType, HarnessEvent
+
+T = TypeVar("T")
 
 logger = structlog.get_logger()
 
@@ -157,6 +160,8 @@ class EventBus:
             event_type=key,
             handler=handler.__name__,
         )
+
+    subscribe = on
 
     def off(self, handler: EventHandler) -> None:
         """Unsubscribe a handler from all event types.
@@ -518,12 +523,6 @@ class EventBus:
             f"EventBus(events={len(self._log)}, "
             f"handlers={self.handler_count})"
         )
-
-
-from abc import ABC, abstractmethod
-from typing import Generic, TypeVar
-
-T = TypeVar("T")
 
 
 class EventProjection(ABC, Generic[T]):

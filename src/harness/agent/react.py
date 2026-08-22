@@ -17,10 +17,13 @@ from harness.agent.base import (
     AgentTaskResult,
     AgentTrajectory,
 )
+from harness.agent.session import (
+    AGENT_SESSION_MANAGER_KEY,
+    AgentSessionManager,
+)
 from harness.events.bus import EVENT_BUS_KEY, EventBus
 from harness.events.types import (
     EventType,
-    HarnessEvent,
     agent_event,
     llm_event,
 )
@@ -256,13 +259,6 @@ class StepExecutionEngine:
         return True
 
 
-from harness.agent.session import (
-    AGENT_SESSION_MANAGER_KEY,
-    AgentSession,
-    AgentSessionManager,
-)
-
-
 class ReActAgentLoop(AgentLoopService):
     """Reason + Act autonomous agent execution orchestrator.
 
@@ -321,13 +317,18 @@ class ReActAgentLoop(AgentLoopService):
         max_steps: int = 10,
         context: dict[str, Any] | None = None,
         session_id: str | None = None,
+        parent_session_id: str | None = None,
     ) -> AgentTaskResult:
         """Run an autonomous task with tool calling, reasoning, and reflection."""
         actual_session_id = session_id or (context or {}).get("session_id")
 
         if self.session_manager:
             async with self.session_manager.session_scope(
-                task, session_id=actual_session_id, metadata=context, agent_name="agent.react"
+                task,
+                session_id=actual_session_id,
+                metadata=context,
+                agent_name="agent.react",
+                parent_session_id=parent_session_id,
             ) as scope:
                 return await self._execute_task_loop(
                     task, max_steps=max_steps, context=context, session_id=scope.session_id, scope=scope

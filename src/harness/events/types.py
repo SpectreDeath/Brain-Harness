@@ -20,6 +20,7 @@ class EventType(str, Enum):
     # Plugin lifecycle
     PLUGIN_DISCOVERED = "plugin.discovered"
     PLUGIN_LOADED = "plugin.loaded"
+    PLUGIN_RELOADED = "plugin.reloaded"
     PLUGIN_VALIDATED = "plugin.validated"
     PLUGIN_ENABLED = "plugin.enabled"
     PLUGIN_DISABLED = "plugin.disabled"

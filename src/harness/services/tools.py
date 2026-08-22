@@ -10,6 +10,8 @@ from __future__ import annotations
 
 import asyncio
 import inspect
+import json
+import time
 from abc import ABC, abstractmethod
 from collections.abc import Awaitable, Callable
 from dataclasses import dataclass, field
@@ -108,10 +110,6 @@ class TelemetryInterceptor(ToolInterceptor):
                 )
 
         return result
-
-
-import json
-import time
 
 
 class AccessControlInterceptor(ToolInterceptor):
@@ -338,7 +336,7 @@ class ToolExecutionPipeline:
             guard = TimeoutGuardInterceptor()
             return await guard.intercept(c, lambda _: asyncio.sleep(0, result={"status": "ok"}))  # type: ignore[return-value]
 
-        handler = _terminal
+        handler: Callable[[ToolExecutionContext], Awaitable[dict[str, Any]]] = _terminal
         for interceptor in reversed(self._interceptors):
             prev_handler = handler
 
@@ -460,7 +458,7 @@ class ToolSpec:
         import types
         from typing import Union, get_type_hints
 
-        tool_name = name or getattr(func, "__name__", "custom_tool")
+        tool_name = str(name or getattr(func, "__name__", "custom_tool"))
         doc = description or inspect.getdoc(func) or f"Execute {tool_name}"
 
         properties: dict[str, Any] = {}
@@ -832,6 +830,14 @@ class ToolRegistry:
     def count(self) -> int:
         """Number of registered tools."""
         return len(self._tools)
+
+    def has_tool(self, name: str) -> bool:
+        """Check if a tool is registered."""
+        return name in self._tools
+
+    def get_tool(self, name: str) -> ToolSpec | None:
+        """Get a registered ToolSpec by name."""
+        return self._tools.get(name)
 
     def __contains__(self, name: str) -> bool:
         return name in self._tools

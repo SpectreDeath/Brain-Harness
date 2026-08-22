@@ -14,7 +14,7 @@ from typing import Any
 import pytest
 
 from harness.kernel.context import ServiceContext, ServiceKey
-from harness.kernel.lifecycle import PluginLifecycle, PluginState
+from harness.kernel.lifecycle import PluginState
 from harness.kernel.reconciler import (
     ConfigurationReconciler,
     HarnessConfigTree,

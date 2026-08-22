@@ -12,7 +12,7 @@ import uuid
 from abc import ABC, abstractmethod
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
-from dataclasses import asdict, dataclass, field
+from dataclasses import dataclass, field
 from typing import Any
 
 import structlog
@@ -326,7 +326,7 @@ class StorageBackedSessionStore(AgentSessionStore):
         return sessions[offset : offset + limit]
 
     async def delete(self, session_id: str) -> bool:
-        return await self.storage.delete(self._key(session_id))
+        return bool(await self.storage.delete(self._key(session_id)))
 
 
 class AgentSessionScope:
@@ -425,6 +425,7 @@ class AgentSessionManager:
         session_id: str | None = None,
         metadata: dict[str, Any] | None = None,
         agent_name: str = "agent.session_manager",
+        parent_session_id: str | None = None,
     ) -> AsyncIterator[AgentSessionScope]:
         """Async context manager orchestrating complete agent execution lifecycle."""
         session: AgentSession | None = None
@@ -432,7 +433,10 @@ class AgentSessionManager:
             session = await self.get_session(session_id)
         if session is None:
             session = await self.create_session(
-                task, session_id=session_id, metadata=metadata
+                task,
+                session_id=session_id,
+                metadata=metadata,
+                parent_session_id=parent_session_id,
             )
 
         scope = AgentSessionScope(self, session, agent_name=agent_name)

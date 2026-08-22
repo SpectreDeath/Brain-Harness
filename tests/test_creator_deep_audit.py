@@ -2,19 +2,14 @@
 
 from __future__ import annotations
 
-import json
 from pathlib import Path
 import pytest
 
-from harness.creator.archetypes import ContainerArchetype
 from harness.creator.creator import PluginCreator
-from harness.creator.scaffold import ScaffoldOptions, ScaffoldResult
-from harness.creator.skills import SkillOptions, SkillResult, SkillScaffoldEngine, SkillValidator
+from harness.creator.scaffold import ScaffoldResult
+from harness.creator.skills import SkillResult, SkillScaffoldEngine, SkillValidator
 from harness.creator.validator import (
     AstFunctionInspectionRule,
-    DirectoryExistenceRule,
-    ManifestSchemaRule,
-    PluginValidator,
     RuleSeverity,
     ValidationContext,
     ValidationPipeline,
@@ -89,7 +84,7 @@ class TestCreatorDeepAuditFixes:
     def test_container_archetype_typescript_dockerfile(self, tmp_path: Path) -> None:
         """Verify ContainerArchetype generates tsx entrypoint and tsconfig in Dockerfile for TypeScript."""
         target = tmp_path / "ts_container"
-        res = PluginCreator.scaffold(
+        _ = PluginCreator.scaffold(
             target,
             name="ts-container",
             preset="container",

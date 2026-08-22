@@ -16,11 +16,10 @@ from harness.ingestion.fetcher import RepoFetcher
 from harness.ingestion.inspector import RepoInspector
 from harness.ingestion.resolvers import (
     ResolvedSource,
-    SourceResolver,
     UniversalSourceRegistry,
 )
+from harness.plugins.base import HarnessPlugin
 from harness.plugins.manifest import IsolationMode, PluginManifest
-from harness.plugins.sandboxed import SandboxedPlugin
 
 logger = structlog.get_logger()
 
@@ -81,7 +80,7 @@ class PluginIngestionPipeline:
         force: bool = False,
         isolation: IsolationMode | None = None,
         force_isolation: IsolationMode | None = None,
-    ) -> SandboxedPlugin:
+    ) -> HarnessPlugin:
         """Download, inspect, and convert a repository into a ready-to-run plugin.
 
         Args:
@@ -92,7 +91,7 @@ class PluginIngestionPipeline:
             force_isolation: Alias for isolation for backward compatibility.
 
         Returns:
-            A configured SandboxedPlugin ready for lifecycle registration.
+            A configured HarnessPlugin ready for lifecycle registration.
         """
         from harness.events.types import EventType
 

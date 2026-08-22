@@ -26,6 +26,7 @@ from harness.kernel.lifecycle import PluginLifecycle, PluginState
 
 if TYPE_CHECKING:
     from harness.events.bus import EventBus
+    from harness.kernel.reconciler import ConfigurationReconciler, HarnessConfigTree
     from harness.plugins.base import HarnessPlugin
     from harness.plugins.loader import PluginLoader
 
@@ -63,6 +64,8 @@ class HarnessRuntime:
         self._loader = loader
         self._auto_load_user_plugins = auto_load_user_plugins
         self._is_running = False
+        self._initial_config_tree: HarnessConfigTree | None = None
+        self._reconciler: ConfigurationReconciler | None = None
 
     @classmethod
     def create(
@@ -296,7 +299,7 @@ class HarnessRuntime:
         mgr = self.sessions
         if mgr is None:
             raise RuntimeError("Agent session manager is not available in runtime")
-        return await mgr.export_session(session_id, format=format)
+        return str(await mgr.export_session(session_id, format=format))
 
     # --- Convenience service accessors ---
 
@@ -484,19 +487,19 @@ class HarnessRuntime:
     def enable_tool(self, name: str) -> bool:
         """Enable an individual tool by name."""
         if self.tools is not None:
-            return self.tools.enable_tool(name)
+            return bool(self.tools.enable_tool(name))
         return False
 
     def disable_tool(self, name: str) -> bool:
         """Disable an individual tool by name."""
         if self.tools is not None:
-            return self.tools.disable_tool(name)
+            return bool(self.tools.disable_tool(name))
         return False
 
     def toggle_tool(self, name: str, enabled: bool | None = None) -> bool:
         """Toggle an individual tool's enabled state."""
         if self.tools is not None:
-            return self.tools.toggle_tool(name, enabled=enabled)
+            return bool(self.tools.toggle_tool(name, enabled=enabled))
         return False
 
     async def run_task(

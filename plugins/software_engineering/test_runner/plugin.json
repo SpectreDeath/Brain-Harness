@@ -1,0 +1,52 @@
+{
+  "name": "plugin.test_runner",
+  "version": "1.0.0",
+  "description": "Autonomous test discovery, test execution, and structured failure parsing for TDD workflows",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "entrypoints": [
+    {
+      "name": "discover_tests",
+      "description": "Discover test files, classes, and test functions across a directory tree",
+      "parameters": [
+        {
+          "name": "root_dir",
+          "type": "string",
+          "description": "Workspace root or target directory to scan for tests",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "run_tests",
+      "description": "Execute pytest on a target path and return structured pass/fail results with tracebacks",
+      "parameters": [
+        {
+          "name": "target_path",
+          "type": "string",
+          "description": "File path, test directory, or node ID to run",
+          "required": false
+        },
+        {
+          "name": "markers",
+          "type": "string",
+          "description": "Pytest marker expression (e.g. 'unit and not slow')",
+          "required": false
+        },
+        {
+          "name": "keyword_filter",
+          "type": "string",
+          "description": "Pytest keyword expression (-k)",
+          "required": false
+        },
+        {
+          "name": "timeout",
+          "type": "number",
+          "description": "Maximum execution timeout in seconds",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

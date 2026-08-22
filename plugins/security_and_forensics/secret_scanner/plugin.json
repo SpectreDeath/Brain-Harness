@@ -1,0 +1,52 @@
+{
+  "name": "plugin.secret_scanner",
+  "version": "1.0.0",
+  "description": "Pre-ingestion and on-demand credential & API key scanner with Shannon entropy analysis",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "entrypoints": [
+    {
+      "name": "scan_text",
+      "description": "Scan raw text or code string for potential credentials, tokens, and private keys",
+      "parameters": [
+        {
+          "name": "text",
+          "type": "string",
+          "description": "Text content to analyze for secrets",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "scan_file",
+      "description": "Scan a specific file on disk for leaked credentials and keys",
+      "parameters": [
+        {
+          "name": "file_path",
+          "type": "string",
+          "description": "Path to the file to scan",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "scan_directory",
+      "description": "Recursively scan a directory tree for leaked credentials and secret tokens",
+      "parameters": [
+        {
+          "name": "dir_path",
+          "type": "string",
+          "description": "Root directory path to scan",
+          "required": false
+        },
+        {
+          "name": "max_depth",
+          "type": "integer",
+          "description": "Maximum directory traversal depth",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

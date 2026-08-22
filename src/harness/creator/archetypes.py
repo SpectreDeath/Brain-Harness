@@ -15,7 +15,7 @@ from __future__ import annotations
 import json
 from abc import ABC, abstractmethod
 from contextlib import contextmanager
-from typing import TYPE_CHECKING, Any, Iterator
+from typing import TYPE_CHECKING, Iterator
 
 from harness.plugins.manifest import (
     EntrypointSpec,
@@ -462,7 +462,6 @@ class ServiceArchetype(PluginArchetype):
         if lang == "python":
             service_class = "".join(part.capitalize() for part in options.name.replace("-", "_").split("_")) + "Service"
             plugin_class = service_class + "Plugin"
-            service_key_name = f"service.{options.name}"
 
             return (
                 f'"""Unit tests for {plugin_class}."""\n\n'
@@ -619,7 +618,6 @@ class AgenticWorkflowArchetype(PluginArchetype):
         entrypoint = "main.py" if options.language == "python" else ("index.ts" if options.language == "typescript" else "index.js")
         desc = options.description or f"Agentic workflow engine for {options.name}"
 
-        tools = options.tools or ["plan", "execute_step", "evaluate"]
         entrypoints = [
             EntrypointSpec(
                 name="plan",

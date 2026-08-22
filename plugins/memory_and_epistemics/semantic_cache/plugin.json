@@ -1,0 +1,62 @@
+{
+  "name": "plugin.semantic_cache",
+  "version": "1.0.0",
+  "description": "Similarity-based semantic cache for LLM prompts and agent task results",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "entrypoints": [
+    {
+      "name": "cache_set",
+      "description": "Store a prompt and response in the semantic cache with optional TTL",
+      "parameters": [
+        {
+          "name": "prompt",
+          "type": "string",
+          "description": "Input prompt or query string",
+          "required": true
+        },
+        {
+          "name": "response",
+          "type": "string",
+          "description": "Generated response to cache",
+          "required": true
+        },
+        {
+          "name": "ttl",
+          "type": "number",
+          "description": "Cache time-to-live in seconds (default: 3600)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "cache_get",
+      "description": "Retrieve cached response based on prompt token similarity threshold",
+      "parameters": [
+        {
+          "name": "prompt",
+          "type": "string",
+          "description": "Prompt query to match against cached entries",
+          "required": true
+        },
+        {
+          "name": "similarity_threshold",
+          "type": "number",
+          "description": "Minimum similarity score required for cache hit (0.0 to 1.0, default 0.90)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "cache_stats",
+      "description": "Get current cache metrics including hits, misses, and hit rate",
+      "parameters": []
+    },
+    {
+      "name": "cache_clear",
+      "description": "Purge all cached entries",
+      "parameters": []
+    }
+  ]
+}

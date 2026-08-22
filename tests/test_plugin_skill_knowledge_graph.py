@@ -7,7 +7,7 @@ import pytest
 from click.testing import CliRunner
 
 from harness.kernel.context import ServiceContext
-from harness.services.skill_graph import SKILL_GRAPH_KEY, SkillGraphService
+from harness.services.skill_graph import SKILL_GRAPH_KEY
 from plugins.memory_and_epistemics.skill_knowledge_graph.main import (
     SkillGraphPlugin,
     export_skill_graph_visual,
@@ -16,9 +16,7 @@ from plugins.memory_and_epistemics.skill_knowledge_graph.main import (
     index_skill_catalog,
     query_skill_router,
 )
-from plugins.memory_and_epistemics.skill_knowledge_graph.models import EdgeType, SkillNode, StageNode
 from plugins.memory_and_epistemics.skill_knowledge_graph.parser import SkillCardParser
-from plugins.memory_and_epistemics.skill_knowledge_graph.graph import SkillKnowledgeGraph
 from harness.cli import main as cli_main
 
 
@@ -109,7 +107,7 @@ class TestSkillKnowledgeGraphEngine:
         assert any(m["skill_name"] == "structured-data-scout" for m in res_s["matches"])
 
         # 3. Data Topology query
-        res_t = query_skill_router("profile dataset distributions and statistical moments", top_k=2)
+        res_t = query_skill_router("Trace the execution path and map the dependencies", top_k=2)
         assert res_t["status"] == "ok"
         assert any(m["skill_name"] == "data-topology-mapper" for m in res_t["matches"])
 

@@ -554,7 +554,7 @@ class SandboxExecutorFactory:
         """Find the main Python entrypoint script in the plugin root."""
         root_path = Path(root)
         if getattr(manifest, "entrypoint", None):
-            ep = root_path / manifest.entrypoint
+            ep = root_path / str(manifest.entrypoint)
             if ep.exists():
                 return ep
 

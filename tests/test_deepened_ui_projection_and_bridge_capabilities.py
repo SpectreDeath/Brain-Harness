@@ -1,15 +1,14 @@
 """Tests for UIProjectionEngine, Ecosystem Bridge capabilities, and ConfigurationReconciler drift detection."""
 
 import pytest
-from unittest.mock import AsyncMock, MagicMock
+from unittest.mock import AsyncMock
 
-from harness.bridges.base import BridgeCapability, EcosystemBridgeCatalog, EcosystemBridgePlugin
+from harness.bridges.base import BridgeCapability, EcosystemBridgeCatalog
 from harness.bridges.em_cubed import EmCubedPlugin
 from harness.bridges.flywheel import FlywheelBridgePlugin
 from harness.bridges.memtext import MemtextServicePlugin
 from harness.events.bus import EventBus
 from harness.events.types import EventType, HarnessEvent
-from harness.kernel.context import ServiceContext
 from harness.kernel.reconciler import ConfigurationReconciler, HarnessConfigTree, PluginConfigEntry
 from harness.kernel.runtime import HarnessRuntime
 from harness.ui.projection import UIProjectionEngine

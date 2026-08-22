@@ -12,7 +12,6 @@ Inspired by DeepSeek Harness's Creator Mode presets, this allows:
 from __future__ import annotations
 
 import ast
-import inspect
 import types
 from collections.abc import Callable
 from pathlib import Path
@@ -24,9 +23,7 @@ from harness.creator.introspection import RuntimeIntrospector
 from harness.kernel.context import ServiceContext, ServiceKey
 from harness.plugins.base import HarnessPlugin
 from harness.plugins.manifest import (
-    EntrypointSpec,
     IsolationMode,
-    ParameterSpec,
     PluginManifest,
 )
 from harness.plugins.tool_mount import TOOL_REGISTRY_KEY, ToolMountMixin

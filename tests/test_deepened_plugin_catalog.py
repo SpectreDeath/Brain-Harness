@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import asyncio
 from pathlib import Path
 from typing import Any
 
@@ -11,7 +10,7 @@ import pytest
 from harness.events.bus import EventBus
 from harness.events.types import EventType
 from harness.kernel.context import ServiceContext, ServiceKey
-from harness.plugins.catalog import PluginCatalog, PluginCatalogEntry
+from harness.plugins.catalog import PluginCatalog
 from harness.plugins.loader import PluginLoader
 from harness.plugins.manifest import IsolationMode, PluginManifest
 from harness.plugins.sandbox import InProcessExecutor

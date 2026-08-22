@@ -3,12 +3,16 @@
 from __future__ import annotations
 
 import json
+import subprocess
 from pathlib import Path
 
 import pytest
 
 from plugins.memory_and_epistemics.brain_bridge.main import (
     _detect_brain_format,
+    _index_text_files,
+    _is_git_url,
+    _parse_git_commits,
     brain_attach,
     brain_detach,
     brain_list_attached,
@@ -42,11 +46,96 @@ class TestBrainBridgePlugin:
         (vault_dir / "note.md").write_text("# Knowledge\nSee [[Architecture]] for details.")
         assert _detect_brain_format(vault_dir) == "obsidian_vault"
 
-        # 5. Raw Docs
+        # 5. Git Repository via .git folder
+        git_dir = tmp_path / "git_repo"
+        (git_dir / ".git").mkdir(parents=True)
+        assert _detect_brain_format(git_dir) == "git_repository"
+
+        # 6. Code Repository via manifest file
+        code_dir = tmp_path / "code_repo"
+        code_dir.mkdir()
+        (code_dir / "Cargo.toml").write_text("[package]\nname = 'test'")
+        assert _detect_brain_format(code_dir) == "git_repository"
+
+        # 7. Raw Docs
         raw_dir = tmp_path / "raw_docs"
         raw_dir.mkdir()
         (raw_dir / "guide.txt").write_text("Plain text documentation.")
         assert _detect_brain_format(raw_dir) == "raw_docs"
+
+    def test_is_git_url(self) -> None:
+        assert _is_git_url("https://github.com/owner/repo") is True
+        assert _is_git_url("https://github.com/owner/repo.git") is True
+        assert _is_git_url("git@github.com:owner/repo.git") is True
+        assert _is_git_url("http://gitlab.com/group/proj") is True
+        assert _is_git_url("/local/path/to/dir") is False
+        assert _is_git_url(r"C:\projects\Brain Harness") is False
+
+    def test_multi_language_indexing(self, tmp_path: Path) -> None:
+        repo_dir = tmp_path / "multi_lang_repo"
+        repo_dir.mkdir()
+
+        (repo_dir / "app.py").write_text("def run():\n    print('python')\n")
+        (repo_dir / "service.ts").write_text("export function serve(): void {\n  console.log('ts');\n}\n")
+        (repo_dir / "main.rs").write_text("fn main() {\n    println!(\"rust\");\n}\n")
+        (repo_dir / "Dockerfile").write_text("FROM python:3.11\nWORKDIR /app\n")
+        (repo_dir / "pyproject.toml").write_text("[project]\nname = 'test'\n")
+
+        chunks, doc_freq, languages, manifests = _index_text_files(repo_dir)
+
+        assert len(chunks) >= 4
+        assert "py" in languages
+        assert "ts" in languages
+        assert "rs" in languages
+        assert "pyproject.toml" in manifests
+        assert "Dockerfile" in manifests or any("dockerfile" in m.lower() for m in manifests)
+
+    def test_git_repo_attach_and_query(self, tmp_path: Path) -> None:
+        repo = tmp_path / "mock_git_repo"
+        repo.mkdir()
+
+        # Initialize real git repo
+        subprocess.run(["git", "init", str(repo)], check=True, capture_output=True)
+        subprocess.run(["git", "-C", str(repo), "config", "user.name", "Test User"], check=True)
+        subprocess.run(["git", "-C", str(repo), "config", "user.email", "test@example.com"], check=True)
+
+        # Create code file and commit
+        code_file = repo / "core.py"
+        code_file.write_text("class HyperTransformer:\n    def transform(self, data):\n        return data * 2\n")
+        subprocess.run(["git", "-C", str(repo), "add", "core.py"], check=True)
+        subprocess.run(["git", "-C", str(repo), "commit", "-m", "Implement HyperTransformer core engine"], check=True)
+
+        # Create second file and commit
+        manifest = repo / "pyproject.toml"
+        manifest.write_text("[project]\nname = 'hyper-transformer'\nversion = '0.1.0'\n")
+        subprocess.run(["git", "-C", str(repo), "add", "pyproject.toml"], check=True)
+        subprocess.run(["git", "-C", str(repo), "commit", "-m", "Add project manifest and packaging metadata"], check=True)
+
+        # Attach
+        attach_res = brain_attach(str(repo), alias="mock_repo")
+        assert attach_res["status"] == "ok"
+        assert attach_res["alias"] == "mock_repo"
+        assert attach_res["detected_format"] == "git_repository"
+        assert attach_res["summary"]["git_commit_chunks"] >= 2
+        assert "py" in attach_res["summary"]["detected_languages"]
+
+        # Query code
+        code_query = brain_query("HyperTransformer transform data", brain_alias="mock_repo")
+        assert code_query["status"] == "ok"
+        assert code_query["results_count"] >= 1
+        assert "core.py" in code_query["results"][0]["file"]
+
+        # Query commit trajectory
+        commit_query = brain_query("packaging metadata project manifest", brain_alias="mock_repo")
+        assert commit_query["status"] == "ok"
+        assert commit_query["results_count"] >= 1
+        # Commit should be found in results
+        types = [r["type"] for r in commit_query["results"]]
+        assert "git_commit" in types or "document_chunk" in types
+
+        # Detach
+        detach_res = brain_detach("mock_repo")
+        assert detach_res["status"] == "ok"
 
     def test_brain_attach_and_query(self, tmp_path: Path) -> None:
         target = tmp_path / "external_brain"

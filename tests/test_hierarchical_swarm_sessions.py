@@ -11,12 +11,10 @@ import pytest
 from harness.agent.base import AgentLoopService, AgentStep, AgentTaskResult
 from harness.agent.session import (
     AGENT_SESSION_MANAGER_KEY,
-    AgentSession,
     AgentSessionManager,
     InMemoryAgentSessionStore,
 )
 from harness.agent.swarm import (
-    SWARM_COORDINATOR_KEY,
     SwarmCoordinator,
     SwarmDAG,
     SwarmNode,

@@ -120,18 +120,49 @@ class PluginCatalog:
     multi-criteria filtering, and keyword search.
     """
 
-    def __init__(self, plugin_dirs: list[Path] | None = None) -> None:
+    def __init__(
+        self,
+        plugin_dirs: list[Path] | None = None,
+        *,
+        event_bus: Any | None = None,
+    ) -> None:
         self._plugin_dirs: list[Path] = [Path(p) for p in (plugin_dirs or [Path("plugins")])]
         self._entries_by_path: dict[str, PluginCatalogEntry] = {}
         self._entries_by_name: dict[str, PluginCatalogEntry] = {}
         self._entries_by_alias: dict[str, PluginCatalogEntry] = {}
         self._entries_by_domain: dict[str, list[PluginCatalogEntry]] = {}
+        self._event_bus: Any | None = None
         self._lock = threading.RLock()
         self.refresh()
+        if event_bus is not None:
+            self.attach_event_bus(event_bus)
 
     @property
     def plugin_dirs(self) -> list[Path]:
         return list(self._plugin_dirs)
+
+    def attach_event_bus(self, event_bus: Any) -> None:
+        """Attach an event bus to automatically invalidate catalog caches on lifecycle events."""
+        self._event_bus = event_bus
+        subscriber = getattr(event_bus, "on", getattr(event_bus, "subscribe", None))
+        if subscriber is not None:
+            from harness.events.types import EventType
+
+            async def _handle_event(evt: Any) -> None:
+                pname = getattr(evt, "payload", {}).get("plugin_name") or getattr(evt, "source", "")
+                self.invalidate(pname)
+
+            for et in (EventType.PLUGIN_RELOADED, EventType.PLUGIN_LOADED, EventType.PLUGIN_UNLOADED, EventType.PLUGIN_DISCOVERED):
+                subscriber(et, _handle_event)
+
+    def invalidate(self, name_or_path: str | Path | None = None) -> int:
+        """Invalidate cached manifest/guide for a plugin, or rebuild entire catalog if None.
+
+        Returns:
+            Total count of indexed plugin entries after invalidation.
+        """
+        with self._lock:
+            return self.refresh()
 
     def refresh(self) -> int:
         """Rebuild the catalog index by scanning all configured plugin directories.

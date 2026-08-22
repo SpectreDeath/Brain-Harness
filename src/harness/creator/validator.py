@@ -13,18 +13,17 @@ Provides composable, rule-based diagnostic validation with auto-remediation:
 from __future__ import annotations
 
 import ast
-import inspect
 import json
 import re
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from enum import Enum
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 import structlog
 
-from harness.plugins.manifest import EntrypointSpec, ParameterSpec, PluginManifest
+from harness.plugins.manifest import EntrypointSpec, PluginManifest
 from harness.plugins.sandbox import SandboxExecutorFactory
 
 logger = structlog.get_logger()
@@ -700,7 +699,7 @@ class ValidationFixer:
     @classmethod
     def remediate_sync(cls, plugin_dir: Path | str) -> ValidationReport:
         """Synchronously auto-repair plugin issues."""
-        return _run_coro_sync(cls.remediate(plugin_dir))
+        return cast(ValidationReport, _run_coro_sync(cls.remediate(plugin_dir)))
 
 
 class ValidationPipeline:
@@ -777,14 +776,17 @@ class PluginValidator:
         pipeline: ValidationPipeline | None = None,
     ) -> ValidationReport:
         """Synchronous helper for validating a plugin directory."""
-        return _run_coro_sync(
-            cls.validate(
-                plugin_dir,
-                dry_run=dry_run,
-                timeout=timeout,
-                remediate=remediate,
-                pipeline=pipeline,
-            )
+        return cast(
+            ValidationReport,
+            _run_coro_sync(
+                cls.validate(
+                    plugin_dir,
+                    dry_run=dry_run,
+                    timeout=timeout,
+                    remediate=remediate,
+                    pipeline=pipeline,
+                )
+            ),
         )
 
     @classmethod

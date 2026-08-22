@@ -2,13 +2,59 @@
 
 from __future__ import annotations
 
+import json
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
+
+import structlog
 
 from harness.ingestion.pipeline import PluginIngestionPipeline
 from harness.plugins.base import HarnessPlugin
 from harness.plugins.loader import PluginLoader
 from harness.plugins.manifest import PluginManifest
+
+logger = structlog.get_logger()
+
+
+def _update_persistent_config(
+    *,
+    enabled: list[str] | None = None,
+    disabled: list[str] | None = None,
+    config_dir: Path | None = None,
+) -> None:
+    """Persist enabled/disabled plugin changes to .harness/config.json if directory exists."""
+    target_dir = config_dir or Path(".harness")
+    if not target_dir.exists():
+        return
+
+    config_file = target_dir / "config.json"
+    data: dict[str, Any] = {}
+    if config_file.exists():
+        try:
+            data = json.loads(config_file.read_text(encoding="utf-8"))
+        except Exception:
+            data = {}
+
+    enabled_set = set(data.get("enabled_plugins", []))
+    disabled_set = set(data.get("disabled_plugins", []))
+
+    if enabled:
+        for p in enabled:
+            enabled_set.add(p)
+            disabled_set.discard(p)
+
+    if disabled:
+        for p in disabled:
+            disabled_set.add(p)
+            enabled_set.discard(p)
+
+    data["enabled_plugins"] = sorted(enabled_set)
+    data["disabled_plugins"] = sorted(disabled_set)
+
+    try:
+        config_file.write_text(json.dumps(data, indent=2), encoding="utf-8")
+    except Exception as e:
+        logger.debug("Failed to persist plugin config updates", error=str(e))
 
 
 async def add_plugin(
@@ -73,7 +119,10 @@ async def enable_plugin(
 ) -> bool:
     """Enable a plugin on a running runtime or standalone lifecycle."""
     if runtime is not None:
-        return await runtime.enable_plugin(name)
+        success = await runtime.enable_plugin(name)
+        if success:
+            _update_persistent_config(enabled=[name])
+        return bool(success)
     return False
 
 
@@ -84,7 +133,10 @@ async def disable_plugin(
 ) -> bool:
     """Disable a plugin on a running runtime."""
     if runtime is not None:
-        return await runtime.disable_plugin(name)
+        success = await runtime.disable_plugin(name)
+        if success:
+            _update_persistent_config(disabled=[name])
+        return bool(success)
     return False
 
 
@@ -93,6 +145,7 @@ async def enable_plugin_by_name(
     *,
     db_path: str = ":memory:",
     runtime: Any | None = None,
+    config_dir: Path | None = None,
 ) -> list[str]:
     """Enable plugin(s) matching a name or pattern."""
     if runtime is not None:
@@ -102,6 +155,8 @@ async def enable_plugin_by_name(
                 success = await runtime.enable_plugin(pname)
                 if success:
                     matched.append(pname)
+        if matched:
+            _update_persistent_config(enabled=matched, config_dir=config_dir)
         return matched
 
     from harness.kernel.runtime import HarnessRuntime
@@ -113,6 +168,8 @@ async def enable_plugin_by_name(
                 success = await rt.enable_plugin(pname)
                 if success:
                     matched.append(pname)
+    if matched:
+        _update_persistent_config(enabled=matched, config_dir=config_dir)
     return matched
 
 
@@ -121,6 +178,7 @@ async def disable_plugin_by_name(
     *,
     db_path: str = ":memory:",
     runtime: Any | None = None,
+    config_dir: Path | None = None,
 ) -> list[str]:
     """Disable plugin(s) matching a name or pattern."""
     if runtime is not None:
@@ -130,6 +188,8 @@ async def disable_plugin_by_name(
                 success = await runtime.disable_plugin(pname)
                 if success:
                     matched.append(pname)
+        if matched:
+            _update_persistent_config(disabled=matched, config_dir=config_dir)
         return matched
 
     from harness.kernel.runtime import HarnessRuntime
@@ -141,6 +201,8 @@ async def disable_plugin_by_name(
                 success = await rt.disable_plugin(pname)
                 if success:
                     matched.append(pname)
+    if matched:
+        _update_persistent_config(disabled=matched, config_dir=config_dir)
     return matched
 
 
@@ -148,15 +210,24 @@ async def enable_all_plugins(
     *,
     runtime: Any | None = None,
     db_path: str = ":memory:",
+    config_dir: Path | None = None,
 ) -> dict[str, bool]:
     """Enable all plugins on a running runtime or new instance."""
     if runtime is not None:
-        return await runtime.enable_all_plugins()
+        results = await runtime.enable_all_plugins()
+        enabled = [p for p, ok in results.items() if ok]
+        if enabled:
+            _update_persistent_config(enabled=enabled, config_dir=config_dir)
+        return cast(dict[str, bool], results)
 
     from harness.kernel.runtime import HarnessRuntime
 
     async with HarnessRuntime.create(db_path=db_path) as rt:
-        return await rt.enable_all_plugins()
+        results = await rt.enable_all_plugins()
+        enabled = [p for p, ok in results.items() if ok]
+        if enabled:
+            _update_persistent_config(enabled=enabled, config_dir=config_dir)
+        return cast(dict[str, bool], results)
 
 
 async def disable_all_plugins(
@@ -164,13 +235,21 @@ async def disable_all_plugins(
     runtime: Any | None = None,
     keep_core: bool = True,
     db_path: str = ":memory:",
+    config_dir: Path | None = None,
 ) -> list[str]:
     """Disable all plugins on a running runtime or new instance."""
     if runtime is not None:
-        return await runtime.disable_all_plugins(keep_core=keep_core)
+        disabled = await runtime.disable_all_plugins(keep_core=keep_core)
+        if disabled:
+            _update_persistent_config(disabled=disabled, config_dir=config_dir)
+        return cast(list[str], disabled)
 
     from harness.kernel.runtime import HarnessRuntime
 
     async with HarnessRuntime.create(db_path=db_path) as rt:
-        return await rt.disable_all_plugins(keep_core=keep_core)
+        disabled = await rt.disable_all_plugins(keep_core=keep_core)
+        if disabled:
+            _update_persistent_config(disabled=disabled, config_dir=config_dir)
+        return cast(list[str], disabled)
+
 

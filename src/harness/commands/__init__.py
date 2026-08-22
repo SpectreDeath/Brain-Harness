@@ -22,6 +22,15 @@ from .plugins import (
     list_plugins,
     remove_plugin,
 )
+from .skills import (
+    export_skill_graph_visual_cmd,
+    find_skill_chain_cmd,
+    get_skill_topology_cmd,
+    index_skills_cmd,
+    route_skills_cmd,
+    scaffold_skill_cmd,
+    validate_skill_cmd,
+)
 from .system import list_services, run_introspect
 from .tools import disable_tool, enable_tool, list_tools, toggle_tool
 
@@ -34,15 +43,23 @@ __all__ = [
     "enable_all_plugins",
     "enable_plugin",
     "enable_tool",
+    "export_skill_graph_visual_cmd",
+    "find_skill_chain_cmd",
+    "get_skill_topology_cmd",
+    "index_skills_cmd",
     "inspect_plugin",
     "list_archetypes_cmd",
     "list_plugins",
     "list_services",
     "list_tools",
     "remove_plugin",
+    "route_skills_cmd",
     "run_agent",
     "run_introspect",
     "scaffold_plugin_cmd",
+    "scaffold_skill_cmd",
     "toggle_tool",
     "validate_plugin_cmd",
+    "validate_skill_cmd",
 ]
+

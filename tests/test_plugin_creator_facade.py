@@ -4,15 +4,13 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-from typing import Any
 
 import pytest
 from click.testing import CliRunner
 
 from harness.cli import main
 from harness.creator.creator import PluginCreator
-from harness.creator.scaffold import ScaffoldOptions, ScaffoldResult
-from harness.creator.validator import PluginValidator, RuleSeverity
+from harness.creator.scaffold import ScaffoldResult
 
 
 @pytest.mark.unit
@@ -153,7 +151,7 @@ def multiplier(val: int, factor: int = 2) -> int:
         assert any("pydantic" in warn for warn in report.warnings)
 
         # Auto-remediate should append pydantic to requirements.txt
-        fixed_report = await PluginCreator.remediate(target)
+        _ = await PluginCreator.remediate(target)
         req_text = (target / "requirements.txt").read_text(encoding="utf-8")
         assert "pydantic>=2.0.0" in req_text
 

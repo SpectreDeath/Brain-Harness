@@ -8,21 +8,14 @@ from typing import Any
 
 import pytest
 
-from harness.creator.archetypes import (
-    AgenticWorkflowArchetype,
-    ArchetypeRegistry,
-    ContainerArchetype,
-)
-from harness.creator.dynamic import DynamicPluginBuilder, DynamicPythonPlugin
+from harness.creator.dynamic import DynamicPluginBuilder
 from harness.creator.scaffold import (
     PluginScaffoldEngine,
     ScaffoldOptions,
     ScaffoldResult,
 )
 from harness.creator.validator import (
-    AstSignatureMatchingRule,
     PluginValidator,
-    RuleSeverity,
     ValidationFixer,
 )
 from harness.kernel.context import ServiceContext
@@ -60,7 +53,7 @@ class TestDeepenedScaffoldEngine:
     def test_scaffold_agentic_workflow_archetype(self, tmp_path: Path) -> None:
         target = tmp_path / "my_workflow"
         engine = PluginScaffoldEngine()
-        res = engine.scaffold(
+        _ = engine.scaffold(
             target,
             options=ScaffoldOptions(
                 name="agent-optimizer",
@@ -90,7 +83,7 @@ class TestDeepenedScaffoldEngine:
     def test_scaffold_container_archetype(self, tmp_path: Path) -> None:
         target = tmp_path / "container_plugin"
         engine = PluginScaffoldEngine()
-        res = engine.scaffold(
+        _ = engine.scaffold(
             target,
             options=ScaffoldOptions(
                 name="sandbox-runner",
@@ -251,7 +244,7 @@ def text_summarize(text: str) -> str:
         plugin = DynamicPluginBuilder.from_code("text-summarizer", code)
         target = tmp_path / "exported_text_plugin"
 
-        res = plugin.export_project(target, preset="tool")
+        _ = plugin.export_project(target, preset="tool")
         assert (target / "plugin.json").exists()
         assert (target / "main.py").exists()
         assert (target / "tests" / "test_plugin.py").exists()

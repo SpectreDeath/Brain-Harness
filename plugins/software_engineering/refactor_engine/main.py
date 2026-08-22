@@ -54,7 +54,7 @@ def extract_function_preview(
 
     extracted_lines = lines[start_line - 1 : end_line]
     indent = "    "
-    body_indented = "\n".join(f"{indent}{l.strip()}" for l in extracted_lines if l.strip())
+    body_indented = "\n".join(f"{indent}{ln.strip()}" for ln in extracted_lines if ln.strip())
 
     func_def = f"def {new_func_name}():\n{body_indented}\n"
 

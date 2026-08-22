@@ -20,7 +20,7 @@ import pytest
 from harness.events.bus import EventBus
 from harness.events.types import EventType, HarnessEvent
 from harness.kernel.context import ServiceContext, ServiceKey
-from harness.kernel.lifecycle import DependencyError, PluginLifecycle, PluginState
+from harness.kernel.lifecycle import PluginLifecycle, PluginState
 from harness.plugins.base import HarnessPlugin
 from harness.plugins.tool_mount import ToolMountMixin
 from harness.services.tools import ToolRegistry, ToolSpec
@@ -146,7 +146,7 @@ def test_revertible_effect_early_self_disposal() -> None:
         return lambda: log.append("revert_b")
 
     disp_a = ctx.effect(effect_a)
-    disp_b = ctx.effect(effect_b)
+    _ = ctx.effect(effect_b)
     assert log == ["apply_a", "apply_b"]
 
     # Revert A early

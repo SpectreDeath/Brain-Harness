@@ -10,7 +10,7 @@ import json
 import re
 import textwrap
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 import structlog
 
@@ -32,15 +32,15 @@ class OpenAPIConverter:
 
         text = spec_content.strip()
         if text.startswith("{") or text.startswith("["):
-            return json.loads(text)
+            return cast(dict[str, Any], json.loads(text))
 
         try:
             import yaml  # type: ignore
 
-            return yaml.safe_load(text)
+            return cast(dict[str, Any], yaml.safe_load(text))
         except ImportError:
             # Fallback: try json
-            return json.loads(text)
+            return cast(dict[str, Any], json.loads(text))
 
     def _sanitize_identifier(self, name: str) -> str:
         """Convert any string to a valid Python identifier."""

@@ -11,7 +11,6 @@ Realizes Section 5.2 of the Spatiotemporal Composability framework:
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
 import structlog
@@ -21,7 +20,6 @@ from harness.kernel.lifecycle import PluginState
 
 if TYPE_CHECKING:
     from harness.kernel.runtime import HarnessRuntime
-    from harness.plugins.base import HarnessPlugin
 
 logger = structlog.get_logger()
 

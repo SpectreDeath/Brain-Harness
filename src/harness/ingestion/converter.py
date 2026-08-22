@@ -19,8 +19,12 @@ from harness.plugins.manifest import IsolationMode, PluginManifest
 from harness.plugins.sandbox import (
     SandboxExecutorFactory,
 )
+from harness.plugins.sandboxed import SandboxedPlugin
 
 logger = structlog.get_logger()
+
+# Backward compatibility alias
+ConvertedPlugin = SandboxedPlugin
 
 
 class ConversionError(Exception):
@@ -94,9 +98,3 @@ class RepoConverter:
         )
 
         return plugin
-
-
-from harness.plugins.sandboxed import SandboxedPlugin
-
-# Backward compatibility alias
-ConvertedPlugin = SandboxedPlugin

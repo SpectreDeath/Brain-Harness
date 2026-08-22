@@ -98,7 +98,7 @@ class ServiceContext:
     ) -> None:
         self._entries: dict[str, ServiceEntry] = {}
         self._parent = parent
-        self._event_bus = event_bus or (parent._event_bus if parent else None)
+        self._event_bus: Any | None = event_bus or (parent._event_bus if parent else None)
         # Track which plugin provided which services (for automatic revocation)
         self._plugin_services: dict[str, list[str]] = {}
         # Accumulator φ: LIFO stack of inverse operations (Revertible Effects, Definition 2)
@@ -244,8 +244,10 @@ class ServiceContext:
             return lambda: None
 
         def _forward() -> Any:
-            bus.on(event_type, handler)
-            return lambda: bus.off(handler)
+            if bus is not None:
+                bus.on(event_type, handler)
+                return lambda: bus.off(handler)
+            return lambda: None
 
         return self.effect(_forward)
 
@@ -547,13 +549,20 @@ class ScopedServiceContext(ServiceContext):
     ) -> None:
         actual_provider = provider or self.plugin_name
         self._provided_keys.add(key.name)
-        target_ctx = self._parent if self._parent is not None else super()
-        target_ctx.provide(
-            key,
-            instance,
-            provider=actual_provider,
-            allow_override=allow_override,
-        )
+        if self._parent is not None:
+            self._parent.provide(
+                key,
+                instance,
+                provider=actual_provider,
+                allow_override=allow_override,
+            )
+        else:
+            super().provide(
+                key,
+                instance,
+                provider=actual_provider,
+                allow_override=allow_override,
+            )
 
     @property
     def provided_keys(self) -> set[str]:

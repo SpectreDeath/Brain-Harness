@@ -6,7 +6,6 @@ PyPI packages, OpenAPI/Swagger specifications, and local plugin directories.
 
 from __future__ import annotations
 
-import asyncio
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from pathlib import Path

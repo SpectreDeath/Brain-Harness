@@ -19,11 +19,7 @@ from harness.services.tools import (
     AccessControlInterceptor,
     MemoizationInterceptor,
     RateLimitInterceptor,
-    SchemaValidationInterceptor,
-    TelemetryInterceptor,
-    TimeoutGuardInterceptor,
     ToolExecutionContext,
-    ToolExecutionPipeline,
     ToolRegistry,
     ToolSpec,
 )
@@ -299,7 +295,6 @@ async def test_event_bus_replay_stream() -> None:
     bus = EventBus()
 
     # Pre-populate events
-    t0 = time.time()
     await bus.emit(plugin_event(EventType.PLUGIN_DISCOVERED, "p1"))
     await asyncio.sleep(0.01)
     t1 = time.time()

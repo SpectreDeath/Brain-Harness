@@ -4,32 +4,24 @@ from __future__ import annotations
 
 import asyncio
 from pathlib import Path
-from typing import Any
 
 import pytest
 
-from harness.creator.creator import PluginCreator
-from harness.creator.dynamic import _compile_dynamic_module, DynamicPythonPlugin
-from harness.creator.scaffold import ScaffoldOptions, ScaffoldResult
+from harness.creator.dynamic import _compile_dynamic_module
+from harness.creator.scaffold import ScaffoldOptions
 from harness.creator.skills import (
-    SkillCardRule,
-    SkillDirectoryRule,
     SkillFrontmatterRule,
     SkillOptions,
-    SkillPillarRule,
-    SkillResult,
     SkillScaffoldEngine,
     SkillValidator,
 )
 from harness.creator.validator import (
     AstFunctionInspectionRule,
-    PluginValidator,
     RuleSeverity,
     ValidationContext,
-    ValidationPipeline,
     _run_coro_sync,
 )
-from harness.plugins.manifest import EntrypointSpec, IsolationMode, PluginManifest
+from harness.plugins.manifest import EntrypointSpec, PluginManifest
 
 
 @pytest.mark.unit

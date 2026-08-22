@@ -10,12 +10,10 @@ Provides:
 
 from __future__ import annotations
 
-import json
 import shutil
 import tempfile
-from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 import structlog
 from fastapi import FastAPI, File, UploadFile, WebSocket, WebSocketDisconnect
@@ -25,7 +23,6 @@ from pydantic import BaseModel
 from harness.agent.base import AGENT_LOOP_KEY
 from harness.creator.introspection import RuntimeIntrospector
 from harness.events.bus import EventBus
-from harness.events.types import HarnessEvent
 from harness.ingestion.pipeline import PluginIngestionPipeline
 from harness.kernel.context import ServiceContext
 from harness.kernel.lifecycle import PluginLifecycle, PluginState
@@ -75,6 +72,13 @@ class CreatorValidateRequest(BaseModel):
     path: str
     dry_run: bool = False
     timeout: float = 15.0
+
+
+class SwarmRunRequest(BaseModel):
+    objective: str
+    max_tokens: int = 100_000
+    consensus_threshold: float = 0.66
+    run_id: str | None = None
 
 
 class RuntimeAdapter:
@@ -545,13 +549,105 @@ def create_app(
         swarm_key: ServiceKey[Any] = ServiceKey("agent.swarm")
         swarm_coord = adapter.context.optional(swarm_key)
         if swarm_coord is not None and hasattr(swarm_coord, "get_status"):
-            return await swarm_coord.get_status()
+            return cast(dict[str, Any], await swarm_coord.get_status())
 
         return {
             "status": "ready",
             "active_swarms": 0,
             "coordinator_available": swarm_coord is not None,
         }
+
+    @app.get("/api/swarm/runs")
+    async def list_swarm_runs(limit: int = 50) -> dict[str, Any]:
+        from harness.kernel.context import ServiceKey
+
+        swarm_key: ServiceKey[Any] = ServiceKey("agent.swarm")
+        swarm_coord = adapter.context.optional(swarm_key)
+        if swarm_coord is None:
+            return {"runs": [], "total": 0}
+
+        if hasattr(swarm_coord, "list_runs_async"):
+            runs = await swarm_coord.list_runs_async(limit=limit)
+        else:
+            raw_runs = swarm_coord.list_runs(limit=limit)
+            runs = [r.to_dict() if hasattr(r, "to_dict") else r for r in raw_runs]
+
+        return {"runs": runs, "total": len(runs)}
+
+    @app.get("/api/swarm/runs/{run_id}")
+    async def get_swarm_run_endpoint(run_id: str) -> dict[str, Any]:
+        from harness.kernel.context import ServiceKey
+
+        swarm_key: ServiceKey[Any] = ServiceKey("agent.swarm")
+        swarm_coord = adapter.context.optional(swarm_key)
+        if swarm_coord is None:
+            return {"status": "error", "error": "SwarmCoordinator service not available"}
+
+        if hasattr(swarm_coord, "get_run_async"):
+            run_data = await swarm_coord.get_run_async(run_id)
+        else:
+            raw_run = swarm_coord.get_run(run_id)
+            run_data = raw_run.to_dict() if raw_run and hasattr(raw_run, "to_dict") else raw_run
+
+        if run_data is None:
+            return {"status": "error", "error": f"Swarm run '{run_id}' not found"}
+
+        return {"status": "ok", "run": run_data if isinstance(run_data, dict) else run_data.to_dict()}
+
+    @app.get("/api/swarm/runs/{run_id}/tree")
+    async def get_swarm_run_tree_endpoint(run_id: str) -> dict[str, Any]:
+        from harness.kernel.context import ServiceKey
+
+        swarm_key: ServiceKey[Any] = ServiceKey("agent.swarm")
+        swarm_coord = adapter.context.optional(swarm_key)
+        if swarm_coord is None:
+            return {"status": "error", "error": "SwarmCoordinator service not available"}
+
+        if hasattr(swarm_coord, "get_run_session_tree"):
+            tree = await swarm_coord.get_run_session_tree(run_id)
+            if tree is not None:
+                return {"status": "ok", "tree": tree}
+
+        if hasattr(swarm_coord, "analyze_run"):
+            analytics = swarm_coord.analyze_run(run_id)
+            if analytics is not None:
+                return {"status": "ok", "tree": analytics}
+
+        return {"status": "error", "error": f"Execution tree for '{run_id}' not found"}
+
+    @app.post("/api/swarm/run")
+    async def run_swarm_endpoint(req: SwarmRunRequest) -> dict[str, Any]:
+        from harness.kernel.context import ServiceKey
+
+        swarm_key: ServiceKey[Any] = ServiceKey("agent.swarm")
+        swarm_coord = adapter.context.optional(swarm_key)
+        if swarm_coord is None:
+            return {"status": "error", "error": "SwarmCoordinator service not available"}
+
+        try:
+            if hasattr(swarm_coord, "run_swarm"):
+                res = await swarm_coord.run_swarm(
+                    objective=req.objective,
+                    max_tokens=req.max_tokens,
+                    consensus_threshold=req.consensus_threshold,
+                    run_id=req.run_id,
+                )
+            else:
+                return {"status": "error", "error": "run_swarm execution method not supported on coordinator"}
+
+            payload = res.to_dict() if hasattr(res, "to_dict") else res
+            if adapter.event_bus is not None:
+                await projection_engine.broadcast(
+                    channel="agent",
+                    message={
+                        "type": "swarm_task_completed",
+                        "data": payload,
+                    },
+                )
+            return {"status": "ok", "result": payload}
+        except Exception as e:
+            logger.error("Swarm run execution failed from API", error=str(e))
+            return {"status": "error", "error": str(e)}
 
     @app.websocket("/ws/events")
     async def websocket_events(websocket: WebSocket) -> None:

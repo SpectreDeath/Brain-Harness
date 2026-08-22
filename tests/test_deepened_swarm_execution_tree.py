@@ -1,18 +1,14 @@
 """Tests for deepened SwarmExecutionTree, critical path analysis, and subtree metrics."""
 
 import pytest
-from unittest.mock import AsyncMock
 
-from harness.agent.base import AgentLoopService, AgentTaskResult
 from harness.agent.session import AgentSessionManager, InMemoryAgentSessionStore
 from harness.agent.swarm import (
-    ConsensusEngine,
     SwarmCoordinator,
     SwarmDAG,
     SwarmExecutionTree,
     SwarmNode,
     SwarmNodeExecution,
-    SwarmWaveMetrics,
 )
 from harness.kernel.context import ServiceContext
 
@@ -94,9 +90,9 @@ async def test_agent_session_subtree_metrics() -> None:
     store = InMemoryAgentSessionStore()
     mgr = AgentSessionManager(store=store)
 
-    parent = await mgr.create_session("Parent Task", session_id="p1")
-    c1 = await mgr.create_child_session("p1", "Child 1", session_id="c1")
-    c2 = await mgr.create_child_session("p1", "Child 2", session_id="c2")
+    await mgr.create_session("Parent Task", session_id="p1")
+    await mgr.create_child_session("p1", "Child 1", session_id="c1")
+    await mgr.create_child_session("p1", "Child 2", session_id="c2")
 
     await mgr.complete_session("c1", "Done 1", total_tokens=250)
     await mgr.complete_session("c2", "Done 2", total_tokens=350)

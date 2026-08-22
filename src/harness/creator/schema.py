@@ -6,7 +6,6 @@ into ParameterSpec, EntrypointSpec, and PluginManifest definitions for Harness p
 
 from __future__ import annotations
 
-import ast
 import inspect
 import re
 import types
@@ -225,7 +224,7 @@ class SchemaInferrer:
     @classmethod
     def infer_entrypoint_spec(cls, fn: Callable[..., Any], name: str | None = None) -> EntrypointSpec:
         """Infer an EntrypointSpec from a single callable."""
-        fn_name = name or getattr(fn, "__name__", "execute")
+        fn_name = str(name or getattr(fn, "__name__", "execute"))
         doc = inspect.getdoc(fn) or ""
         summary, _ = cls.parse_docstring_param_descriptions(doc)
         desc = summary or f"Handler for {fn_name}"

@@ -10,18 +10,16 @@ Implements the high-precision craft standards defined in crafting-skills:
 from __future__ import annotations
 
 import asyncio
-import json
 import os
 import re
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 import structlog
 
 from harness.creator.validator import (
     RuleSeverity,
-    ValidationCheck,
     ValidationContext,
     ValidationPipeline,
     ValidationReport,
@@ -506,7 +504,7 @@ class SkillValidator:
         pipeline: ValidationPipeline | None = None,
     ) -> ValidationReport:
         """Validate an agent skill directory."""
-        return _run_coro_sync(cls.validate_async(skill_dir, pipeline=pipeline))
+        return cast(ValidationReport, _run_coro_sync(cls.validate_async(skill_dir, pipeline=pipeline)))
 
     @classmethod
     def validate_sync(

@@ -19,18 +19,19 @@ import structlog
 
 from harness.mcp.protocol import (
     JSONRPC_INTERNAL_ERROR,
-    JSONRPC_INVALID_PARAMS,
     JSONRPC_METHOD_NOT_FOUND,
     JSONRPC_PARSE_ERROR,
     MCPNotification,
     MCPPrompt,
     MCPProtocolCodec,
-    MCPRequest,
     MCPResource,
 )
+from harness.kernel.context import ServiceKey
 from harness.services.tools import ToolRegistry
 
 logger = structlog.get_logger()
+
+MCP_REGISTRY_KEY: ServiceKey[MCPRegistry] = ServiceKey("mcp.registry")
 
 
 @dataclass
@@ -175,9 +176,17 @@ class MCPRegistry:
         """Register a custom MCP resource."""
         self._custom_resources[resource.uri] = resource
 
+    def unregister_resource(self, uri: str) -> bool:
+        """Unregister a custom MCP resource by URI."""
+        return self._custom_resources.pop(uri, None) is not None
+
     def register_prompt(self, prompt: MCPPrompt) -> None:
         """Register a custom MCP prompt template."""
         self._custom_prompts[prompt.name] = prompt
+
+    def unregister_prompt(self, name: str) -> bool:
+        """Unregister a custom MCP prompt template by name."""
+        return self._custom_prompts.pop(name, None) is not None
 
     def list_resources(self) -> list[dict[str, Any]]:
         """List all available MCP resources."""

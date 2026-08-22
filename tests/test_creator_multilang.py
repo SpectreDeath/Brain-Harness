@@ -5,7 +5,6 @@ from __future__ import annotations
 from pathlib import Path
 import pytest
 
-from harness.creator.archetypes import ArchetypeRegistry
 from harness.creator.creator import PluginCreator
 from harness.creator.validator import AstSignatureMatchingRule, ValidationContext
 from harness.plugins.manifest import EntrypointSpec, ParameterSpec, PluginManifest

@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Any
 
 from harness.creator.creator import PluginCreator
 from harness.creator.scaffold import ScaffoldOptions, ScaffoldResult

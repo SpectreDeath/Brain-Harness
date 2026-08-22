@@ -2,24 +2,20 @@
 
 from __future__ import annotations
 
-from pathlib import Path
 from typing import Any
 
 import pytest
 
 from harness.agent.base import AgentStep
 from harness.agent.session import (
-    AGENT_SESSION_MANAGER_KEY,
-    AgentSession,
     AgentSessionManager,
-    AgentSessionPlugin,
     AgentSessionScope,
     InMemoryAgentSessionStore,
 )
-from harness.bridges.base import EcosystemBridgeCatalog, EcosystemBridgePlugin
+from harness.bridges.base import EcosystemBridgeCatalog
 from harness.events.bus import EventBus
 from harness.events.types import EventType, HarnessEvent
-from harness.kernel.context import ServiceContext, ServiceKey
+from harness.kernel.context import ServiceKey
 from harness.kernel.runtime import HarnessRuntime
 from harness.services.llm import LiteLLMService, LLMResponse
 

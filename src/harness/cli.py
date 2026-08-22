@@ -790,18 +790,15 @@ def skills() -> None:
 @click.option("--path", default=".", help="Root directory to scan for skills")
 def skills_graph(visual: bool, path: str) -> None:
     """Index and display the workspace skill knowledge graph."""
-    try:
-        from plugins.memory_and_epistemics.skill_knowledge_graph.main import export_skill_graph_visual, index_skill_catalog
-    except ImportError:
-        from plugins.skill_knowledge_graph.main import export_skill_graph_visual, index_skill_catalog
+    from harness.commands.skills import export_skill_graph_visual_cmd, index_skills_cmd
 
-    res = index_skill_catalog(path)
+    res = index_skills_cmd(path)
     click.echo(f"📊 Indexed {res['indexed_skills']} skills across {len(res['categories'])} categories.")
     click.echo(f"   Nodes: {res['total_nodes']} | Relation Edges: {res['total_edges']}")
     click.echo(f"   Categories: {', '.join(res['categories'])}")
 
     if visual:
-        vis_res = export_skill_graph_visual()
+        vis_res = export_skill_graph_visual_cmd()
         click.echo(f"\n🌐 Visual Brief generated: {vis_res['html_path']}")
 
 
@@ -810,12 +807,9 @@ def skills_graph(visual: bool, path: str) -> None:
 @click.option("--top-k", default=3, help="Max matches to return")
 def skills_route(intent: str, top_k: int) -> None:
     """Route natural language task intent to matching skills."""
-    try:
-        from plugins.memory_and_epistemics.skill_knowledge_graph.main import query_skill_router
-    except ImportError:
-        from plugins.skill_knowledge_graph.main import query_skill_router
+    from harness.commands.skills import route_skills_cmd
 
-    res = query_skill_router(intent, top_k=top_k)
+    res = route_skills_cmd(intent, top_k=top_k)
     click.echo(f"🎯 Route matches for: {intent!r}")
     for idx, match in enumerate(res["matches"], 1):
         click.echo(f"  {idx}. {match['skill_name']} [{match['category']}] - Confidence: {match['confidence']*100:.1f}%")
@@ -830,12 +824,9 @@ def skills_route(intent: str, top_k: int) -> None:
 @click.argument("target_skill")
 def skills_chain(start_skill: str, target_skill: str) -> None:
     """Find directed execution path between two skills."""
-    try:
-        from plugins.memory_and_epistemics.skill_knowledge_graph.main import find_skill_chain
-    except ImportError:
-        from plugins.skill_knowledge_graph.main import find_skill_chain
+    from harness.commands.skills import find_skill_chain_cmd
 
-    res = find_skill_chain(start_skill, target_skill)
+    res = find_skill_chain_cmd(start_skill, target_skill)
     if res["status"] == "ok":
         click.echo(f"🔗 Execution Path ({res['length']} steps):")
         click.echo(f"   {' → '.join(res['chain'])}")
@@ -847,12 +838,9 @@ def skills_chain(start_skill: str, target_skill: str) -> None:
 @click.argument("skill_name")
 def skills_info(skill_name: str) -> None:
     """Inspect topological dependencies and anti-patterns for a skill."""
-    try:
-        from plugins.memory_and_epistemics.skill_knowledge_graph.main import get_skill_topology
-    except ImportError:
-        from plugins.skill_knowledge_graph.main import get_skill_topology
+    from harness.commands.skills import get_skill_topology_cmd
 
-    res = get_skill_topology(skill_name)
+    res = get_skill_topology_cmd(skill_name)
     if res["status"] == "ok":
         topo = res["topology"]
         skill = topo["skill"]
@@ -885,19 +873,17 @@ def skills_create(
     auto_validate: bool,
 ) -> None:
     """Scaffold a high-precision agent skill with SKILL.md and CARD.md specifications."""
-    from harness.creator.skills import SkillOptions, SkillScaffoldEngine
+    from harness.commands.skills import scaffold_skill_cmd
 
     clean_name = name.strip().lower().replace("_", "-")
-    out_dir = Path(target_dir) if target_dir else Path(".agents") / "skills" / clean_name
-
-    opts = SkillOptions(
+    result = scaffold_skill_cmd(
         name=clean_name,
         description=description,
         category=category,
-        triggers=list(triggers),
+        target_dir=target_dir,
+        triggers=triggers,
         auto_validate=auto_validate,
     )
-    result = SkillScaffoldEngine.scaffold(out_dir, options=opts)
     click.echo(f"✨ Scaffolded agent skill '{clean_name}' at: {result.path}")
     for gen in result.generated_files:
         click.echo(f"   📄 {gen.name}")
@@ -918,10 +904,10 @@ def skills_create(
 @click.argument("skill_dir", default=".")
 def skills_validate(skill_dir: str) -> None:
     """Validate an agent skill package against deep-module craft standards."""
-    from harness.creator.skills import SkillValidator
+    from harness.commands.skills import validate_skill_cmd
 
+    report = validate_skill_cmd(skill_dir)
     target = Path(skill_dir).resolve()
-    report = SkillValidator.validate(target)
     status = "✓ PASS" if report.valid else "✗ FAIL"
     click.echo(f"Skill Diagnostic Report: {target}")
     click.echo("━" * 58)

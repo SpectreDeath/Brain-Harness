@@ -6,7 +6,6 @@ agent session trees, swarm executions, and system event streams.
 
 from __future__ import annotations
 
-import asyncio
 import json
 from collections import defaultdict, deque
 from datetime import datetime, timezone
@@ -19,7 +18,6 @@ from harness.events.bus import EventBus
 from harness.events.types import EventType, HarnessEvent
 
 if TYPE_CHECKING:
-    from harness.kernel.runtime import HarnessRuntime
     from harness.ui.server import RuntimeAdapter
 
 logger = structlog.get_logger()

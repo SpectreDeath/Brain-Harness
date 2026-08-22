@@ -10,12 +10,9 @@ import pytest
 
 from harness.agent.base import (
     AgentStep,
-    AgentTaskResult,
-    AgentTrajectory,
 )
 from harness.agent.react import ReActAgentLoop
 from harness.agent.session import (
-    AGENT_SESSION_MANAGER_KEY,
     AgentSession,
     AgentSessionManager,
     InMemoryAgentSessionStore,
@@ -25,7 +22,6 @@ from harness.creator.dynamic import DynamicPluginBuilder
 from harness.creator.scaffold import PluginScaffoldEngine, ScaffoldOptions
 from harness.events.bus import EventBus
 from harness.events.types import EventType
-from harness.plugins.manifest import IsolationMode
 from harness.services.llm import LLMMessage, LLMResponse, LLMService
 from harness.services.storage import SQLiteStorageService
 from harness.services.tools import ToolRegistry, ToolSpec

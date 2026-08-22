@@ -22,25 +22,19 @@ from harness.ingestion.resolvers import (
 from harness.ingestion.pipeline import PluginIngestionPipeline
 from harness.mcp.protocol import (
     JSONRPC_METHOD_NOT_FOUND,
-    JSONRPC_PARSE_ERROR,
     MCPNotification,
-    MCPPrompt,
     MCPProtocolCodec,
     MCPRequest,
-    MCPResource,
 )
 from harness.mcp.server import (
-    AsyncStdioServerTransport,
     HarnessMCPServer,
     MCPAccessControlInterceptor,
-    MCPInterceptor,
     MCPInterceptorPipeline,
     MCPMethodRouter,
     MCPRegistry,
     MCPRequestContext,
     MCPTelemetryInterceptor,
 )
-from harness.plugins.manifest import IsolationMode, PluginManifest
 from harness.services.tools import ToolRegistry, ToolSpec
 
 

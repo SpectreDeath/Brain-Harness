@@ -1,126 +1,204 @@
 ---
 name: data-topology-mapper
-description: Run statistical pre-flight profiling on tabular datasets using lightweight moment extraction and Isolation Forests. Use when the user asks to analyze data distributions, detect anomalies, profile dataset topology, or inspect dataset health without flooding the context window.
+description: Map complex problem domains, causal DAG lineages, execution queues, and data structures (graphs, trees, hash maps, sets, priority queues, hybrid topologies) before code modification. Trigger when analyzing architecture, database schemas, execution pipelines, or multi-agent routing.
 ---
 
-# Data Topology Mapper Engine
+# Data Topology Mapper
 
-The `data-topology-mapper` engine operationalizes the *Parameter Sandbox* and *Distiller* methodologies. It runs an out-of-core statistical audit on tabular files via `auditor.py`, producing a high-density, low-token topological fingerprint ($\le 200$ tokens) covering statistical moments, sparsity, and anomaly contamination while protecting the 6GB VRAM hardware ceiling.
+`data-topology-mapper` forces agents to explicitly declare, decompose, and visually map the underlying data structure of a problem domain before modifying code. By translating abstract architectural questions into concrete, visually rendered topologies (Graphs, Trees, Hash Maps/Sets, Execution Queues/Heaps, and Hybrid Compositions) inspired by visual data structure analogies, it eliminates speculative assumptions, preserves topological invariants, and contains blast radius.
 
-Every profiling cycle follows a strict five-stage progression:
+Every topology mapping workflow follows a strict four-stage progression:
 
 ```
-[1. Target Seam] → [2. Statistical Pre-Flight] → [3. Anomaly & Distribution Mapping] → [4. Visual Topology Brief (Temp HTML)] → [5. Distilled State Emission]
+[1. Domain Analysis & Hybrid Mapping] → [2. The Visual Brief] → [3. Triage Checkpoint & Schema] → [4. Execution & Algorithmic Verification]
 ```
 
-See [CARD.md](CARD.md) for the quick-reference cheat sheet, statistical moment formulas, and completion criteria.
-Consult `/crafting-skills` for the underlying design standard and three foundational pillars.
+See [CARD.md](CARD.md) for the quick-reference summary card, analogy matrix, and verification invariants.
+Consult `/crafting-skills` for the underlying deep-module design standards and `/deepen-architecture` for seam optimization.
 
 ---
 
-## 1. Target Seam Identification
+## 1. Domain Analysis & Hybrid Analogy Mapping
 
-Identify the target dataset path and verify format bounds before inspection:
-1. Locate target file in `data/processed/` or `data/raw/` (`.parquet`, `.csv`, `.feather`).
-2. Verify file size on disk using filesystem metadata.
-3. **Never** execute raw `view_file` or `cat` on large data tables.
+When triggered by an architectural request, refactor, or multi-agent design task, classify the problem domain into one of four cognitive lenses or declare a **Hybrid Composition**:
 
-> **Completion criterion**: Target dataset path verified with disk size and format metadata.
+### The 4 Base Cognitive Lenses
 
----
+1. **Interconnected Networks (The Graph Topology)**
+   - *Mental Model Analogy*: Social networks (undirected), follower networks (directed), or route maps with variable travel costs (weighted).
+   - *Agent Application*: Multi-agent routing, polyglot state flows, or microservice bridges. Identify **vertices** (Python, Prolog, Lisp modules) and **edges** (JSON-RPC bridges, APIs, event buses). Map directed edges to compute the exact **blast radius**.
 
-## 2. Statistical Pre-Flight Probe (The Parameter Sandbox)
+2. **Hierarchical Lineage (The Tree Topology)**
+   - *Mental Model Analogy*: Inverted family tree (root at top, branches spreading down) or binary search decision tree (halving problem space at each step).
+   - *Agent Application*: Epistemic lineage, UI/DOM hierarchies, or Prolog decision trees. Identify the **root node** and trace strict **parent-child execution paths**.
+   - *Hard Invariant*: Strictly forbidden from introducing cyclic dependencies (circular parent-child loops).
 
-Execute an out-of-core statistical audit in an isolated subprocess via `auditor.py`:
-1. Calculate parametric & non-parametric moments:
-   - **Central Tendency & Spread**: Mean ($\mu$), Standard Deviation ($\sigma$), Median, Interquartile Range ($\text{IQR}$).
-   - **Shape**: Skewness ($\gamma_1$) and Excess Kurtosis ($\gamma_2$).
-2. Compute completeness:
-   - Missing value percentage per column.
-   - Zero-variance / constant feature detection.
-   - Total memory footprint in bytes.
+3. **Direct Access & Unique States (Hash Maps & Sets)**
+   - *Mental Model Analogy*:
+     - *Hash Map*: A magical machine that takes a key and instantly points to a specific drawer ($O(1)$ direct access, eliminating sequential scans).
+     - *Set*: A VIP club guest list that automatically rejects duplicates and guarantees uniqueness.
+   - *Agent Application*: IoC service registry lookups, configuration state maps, Semantic Memory Engine indexes ($O(1)$ key-value routing), and idempotency/subscriber sets (strict deduplication).
 
-```bash
-python -m harness.utils.auditor --input "data/processed/dataset.parquet" --output-format json
-```
+4. **Execution Order (Stacks, Queues, & Priority Heaps)**
+   - *Mental Model Analogy*:
+     - *Stack (LIFO)*: A pile of washed plates; last plate added is first removed (undo histories, recursive backtracking).
+     - *Queue (FIFO)*: A fair ticket line; first come, first served (standard background task workers).
+     - *Priority Queue / Max-Heap*: An emergency room triage desk where critical patients skip the line regardless of arrival time.
+   - *Agent Application*: Task execution pipelines, gateway command routing, and human-in-the-loop triage interrupts.
 
-> **Completion criterion**: JSON statistical receipt emitted with zero raw rows printed to stdout.
+### Hybrid Topology Compositions
 
----
+For complex, multi-tiered architectures, declare how base topologies nest or compose:
+- **Graph of Trees**: A microservice network where individual services manage internal hierarchical entity or rule trees.
+- **Hash-Indexed Queue / Heap**: A priority task execution pipeline with $O(1)$ direct key lookup by Task ID for cancellation and status monitoring.
+- **Tree of DAGs**: A hierarchical module packaging system where each subsystem encapsulates an internal directed acyclic workflow.
 
-## 3. Anomaly & Distribution Mapping
-
-Run topological anomaly detection and feature classification:
-1. **Isolation Forest Profiling**: Run a fast `IsolationForest(n_estimators=50, contamination='auto')` or Tukey IQR fences to quantify outlier contamination rate ($C_{\text{outlier}}$).
-2. **Distribution Classification**: Classify each numeric feature into standard taxonomies (`Gaussian`, `Log-Normal`, `Bimodal`, `Uniform`, `Zero-Inflated/Sparse`).
-3. **Collinearity Scan**: Rank top pairwise Pearson/Spearman correlation coefficients ($|r| \ge 0.80$).
-
-> **Completion criterion**: Contamination score, distribution classifications, and collinearity pairs computed.
+> **Completion criterion**: Core data structure category (or explicit hybrid composition) and mental model analogy are declared in the output.
 
 ---
 
-## 4. Recommend (The Visual Topology Brief)
+## 2. The Visual Brief
 
-Synthesize distributions, outlier scores, and correlation heatmaps into an interactive HTML visual brief:
+Generate an interactive, self-contained HTML brief in `%TEMP%` to visually map the blast radius and architectural topology before touching code:
 
-1. **Target Path**: Write to `%TEMP%\data-topology-<timestamp>.html` (Windows) or `/tmp/data-topology-<timestamp>.html` (Unix).
+1. **Target Location**: Write to `%TEMP%\data-topology-review-<timestamp>.html` (Windows) or `/tmp/data-topology-review-<timestamp>.html` (Unix).
 2. **Visual Standards**:
-   - Load Tailwind CSS and Mermaid.js via CDN in a sleek dark theme (`#0d1117`).
-   - Include distribution histogram cards for high-variance features.
-   - Render an interactive **Anomaly & Collinearity Heatmap** identifying feature clusters.
-3. **Surface**: Deliver the absolute, clickable HTML file path to the user.
+   - Load Tailwind CSS and Mermaid.js via CDN using dark theme (`#0d1117`).
+   - Render a side-by-side **Before vs. After** Mermaid diagram illustrating node modifications, edge transitions, and blast radius.
+   - Embed an **Interactive Blast Radius Table** detailing affected vertices, risk levels, and isolation boundaries.
+3. **Delivery**: Surface the absolute file path with a clickable `file:///` link directly to the user.
 
 ```html
-<!-- Location: %TEMP%\data-topology-<timestamp>.html -->
+<!-- Location: %TEMP%\data-topology-review-<timestamp>.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Dataset Topology Report</title>
+  <title>Data Topology Review</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
   <script>mermaid.initialize({startOnLoad:true, theme:'dark'});</script>
 </head>
-<body class="bg-[#0d1117] text-[#c9d1d9] p-8 max-w-6xl mx-auto font-sans">
-  <header class="border-b border-[#30363d] pb-4 mb-6">
-    <h1 class="text-2xl font-bold text-white">Dataset Topology & Statistical Fingerprint</h1>
-    <p class="text-sm text-gray-400 mt-1">Out-of-Core Moment Extraction & Anomaly Profiling</p>
+<body class="bg-[#0d1117] text-[#c9d1d9] p-8 max-w-6xl mx-auto font-sans leading-relaxed">
+  <header class="border-b border-[#30363d] pb-4 mb-6 flex items-center justify-between">
+    <div>
+      <h1 class="text-2xl font-bold text-white">Data Topology Review</h1>
+      <p class="text-sm text-gray-400 mt-1">Pre-modification structural blast radius mapping</p>
+    </div>
+    <span class="bg-[#238636] text-white text-xs px-3 py-1 rounded-full font-mono font-semibold">Topology: Hybrid (DAG + Hash Index)</span>
   </header>
-  <!-- Interactive Distribution Cards & Anomaly Metrics -->
+
+  <main class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+    <section class="bg-[#161b22] border border-[#30363d] rounded-xl p-5 shadow-lg">
+      <h2 class="text-lg font-semibold text-gray-200 mb-3 border-b border-[#30363d] pb-2">Current Architecture</h2>
+      <div class="mermaid">
+        graph TD
+          A[Client] --> B[Service]
+      </div>
+    </section>
+    <section class="bg-[#161b22] border border-emerald-700/60 rounded-xl p-5 shadow-lg">
+      <h2 class="text-lg font-semibold text-emerald-400 mb-3 border-b border-[#30363d] pb-2">Proposed Topology</h2>
+      <div class="mermaid">
+        graph TD
+          A[Client] --> B[Service]
+          B --> C[IoC Registry]
+      </div>
+    </section>
+  </main>
+
+  <section class="bg-[#161b22] border border-[#30363d] rounded-xl p-5">
+    <h3 class="text-sm font-bold text-gray-300 uppercase tracking-wider mb-3">Blast Radius Impact Matrix</h3>
+    <table class="w-full text-left text-xs border-collapse">
+      <thead>
+        <tr class="border-b border-[#30363d] text-gray-400">
+          <th class="py-2">Vertex ID</th>
+          <th class="py-2">Module / Seam</th>
+          <th class="py-2">Topological Role</th>
+          <th class="py-2">Impact Level</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-[#30363d] text-gray-300">
+        <tr>
+          <td class="py-2 font-mono text-emerald-400">v_kernel</td>
+          <td class="py-2">src/harness/kernel/</td>
+          <td class="py-2">Root Coordinator</td>
+          <td class="py-2"><span class="px-2 py-0.5 rounded bg-amber-900/50 text-amber-300 border border-amber-700/50">Direct Edit</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
 </body>
 </html>
 ```
 
-> **Completion criterion**: Self-contained HTML report written to `%TEMP%` and delivered to user.
+> **Completion criterion**: Interactive HTML file written to `%TEMP%` and delivered to user as a clickable URI link.
 
 ---
 
-## 5. Distilled State Emission & Checkpoint (The Distiller)
+## 3. Mandatory Checkpoint & Structured Schema Block
 
-Emit a high-leverage markdown fingerprint block ($\le 200$ tokens) into the conversation context window:
+Halt execution to achieve consensus on the structural map before any modifications occur. This acts as an **ER Triage / Max-Heap Priority Interrupt**:
+
+1. Generate or update the `implementation_plan.md` artifact detailing proposed topology changes.
+2. Embed a formal **Structured Topology Specification Block** in JSON/Markdown format:
 
 ```markdown
-### [Data Topology Fingerprint]
-- **Target**: `data/processed/wine_quality.parquet` (Rows: 4,898 | Cols: 12 | Size: 82 KB)
-- **Data Health**: Completeness 100.0% | Anomaly Contamination: 2.8%
-- **Key Distributions**:
-  - `alcohol` (Continuous, $\mu=10.4$, $\sigma=1.2$, Skew: 0.56, Right-Skewed)
-  - `density` (Normal-like, $\mu=0.994$, $\sigma=0.003$)
-  - `chlorides` (Zero-Inflated / Long-Tail, Outliers: 4.2%)
-- **Collinearity Flags**: (`free_sulfur_dioxide`, `total_sulfur_dioxide`, $r=0.62$)
-- **Action Gate**: Distribution verified; ready for downstream modeling.
+### [Topology Specification Block]
+```json
+{
+  "topology_type": "Directed Acyclic Graph (DAG)",
+  "is_hybrid": false,
+  "composition": null,
+  "vertices": [
+    {"id": "v_kernel", "label": "Kernel Micro-Core", "type": "module"},
+    {"id": "v_registry", "label": "IoC Service Registry", "type": "hash_map"}
+  ],
+  "edges": [
+    {"from": "v_kernel", "to": "v_registry", "protocol": "in_memory", "directed": true}
+  ],
+  "invariants": ["strictly_acyclic", "single_root", "o1_lookup"],
+  "blast_radius_nodes": 2
+}
+```
 ```
 
-1. Update `implementation_plan.md` with `RequestFeedback: true` prior to training or mutating models.
-2. Proceed with reasoning/modeling strictly using the abstracted state.
+3. Explicitly set `RequestFeedback: true` in artifact metadata.
+4. **STOP and wait** for explicit user approval before executing any destructive or modifying code commands.
 
-> **Completion criterion**: Compact fingerprint emitted; raw data remains safely out of VRAM/context; user approval received.
+> **Completion criterion**: Agent pauses execution and requests human-in-the-loop approval on `implementation_plan.md` containing the structured topology block.
+
+---
+
+## 4. Execution & Algorithmic Invariant Verification
+
+Upon receiving user approval, execute code modifications strictly aligned with the approved topology and run algorithmic verification:
+
+1. **Confine Blast Radius**: Restrict edits exclusively to the vertices and edges defined in the approved Visual Brief.
+2. **Algorithmic Invariant Verification Protocols**:
+   - **Tree / DAG Acyclicity Protocol**: Verify that no circular references exist (e.g. Kahn's topological sort or DFS cycle detection).
+   - **Hash Map / Set Uniqueness Protocol**: Verify that key mappings remain collision-free and set insertion enforces strict deduplication without $O(N)$ scanning.
+   - **Queue Ordering & Starvation Protocol**: Verify that FIFO task orders are preserved and Priority Heap triage interrupts correctly preempt lower queues without indefinite starvation.
+3. Run automated unit and integration tests to confirm zero regressions (`pytest -v`).
+
+> **Completion criterion**: Code is modified, passing algorithmic invariant checks and 100% of automated test suites.
+
+---
+
+## In-File Reference
+
+- **Vertex / Node**: A discrete module, agent, file, or data entity within the system.
+- **Edge / Bridge**: The communication vector, JSON-RPC interface, dependency link, or transition between nodes.
+- **Blast Radius**: The transitive set of vertices and edges impacted by modifying a target node.
+- **Acyclic Invariant**: The structural guarantee that following directed edges will never form a closed loop.
+- **Triage Interrupt**: A high-priority Max-Heap execution jump that halts lower-priority background tasks for critical human alignment.
+- **Hybrid Composition**: A structured hierarchy combining two or more base data topologies (e.g., Graph of Trees).
 
 ---
 
 ## Anti-Patterns
 
-- **Context Window Flooding** — Using `cat`, `head -n 500`, or raw `view_file` on large data tables.
-- **In-Memory Giant Scans** — Loading multi-GB tables into memory at once instead of streaming chunks through `auditor.py`.
-- **Heuristic-Free Modeling** — Initiating model training or inference before knowing feature distribution skewness or contamination rates.
-- **Silent Truncation** — Relying on arbitrary head/tail slices rather than computing true population moments.
+- **Speculative Abstraction** — Applying complex design patterns before categorizing the base data structure analogy.
+- **Blind Execution** — Modifying code without generating the Visual Brief and mapping the systemic blast radius.
+- **Horizontal Slicing** — Modifying horizontal layers (e.g., all database adapters) instead of tracing vertical DAG execution paths.
+- **Topology Confusion** — Permitting cyclic dependency loops in a designated Tree structure, or using $O(N)$ linear scans where Hash Map/Set lookups are required.
+- **Unchecked Cycles** — Adding dependency edges across modules without running topological cycle verification.

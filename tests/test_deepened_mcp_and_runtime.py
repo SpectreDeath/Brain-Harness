@@ -3,20 +3,17 @@
 from __future__ import annotations
 
 import json
-from pathlib import Path
 from typing import Any
 
 import pytest
 from httpx import ASGITransport, AsyncClient
 
 from harness.events.bus import EventBus
-from harness.events.types import EventType, HarnessEvent
 from harness.kernel.context import ServiceContext, ServiceKey
-from harness.kernel.lifecycle import PluginLifecycle, PluginState
+from harness.kernel.lifecycle import PluginLifecycle
 from harness.kernel.runtime import HarnessRuntime
 from harness.mcp.protocol import (
     JSONRPC_METHOD_NOT_FOUND,
-    JSONRPC_PARSE_ERROR,
     MCPProtocolCodec,
     MCPRequest,
 )

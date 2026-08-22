@@ -1,31 +1,43 @@
 {
   "name": "plugin.brain_bridge",
-  "version": "1.0.0",
-  "description": "Mounts, inspects, and federates external agent brains, IDE transcripts, and knowledge libraries via folder path",
+  "version": "1.1.0",
+  "description": "Mounts, inspects, and federates external agent brains, Git/GitHub repositories, IDE transcripts, and knowledge libraries",
   "entrypoint": "main.py",
   "isolation": "in_process",
   "trusted": true,
   "entrypoints": [
     {
       "name": "brain_attach",
-      "description": "Inspect and mount an external brain, IDE state, or knowledge directory",
+      "description": "Inspect and mount an external brain, Git repository (local path or remote URL), IDE state, or knowledge directory",
       "parameters": [
         {
           "name": "folder_path",
           "type": "string",
-          "description": "Absolute or relative path to the brain/knowledge directory",
+          "description": "Absolute/relative path to a directory or remote Git URL (e.g. 'https://github.com/org/repo')",
           "required": true
         },
         {
           "name": "alias",
           "type": "string",
-          "description": "Short mnemonic name for this mounted brain (e.g. 'upstream_harness', 'docs_vault')",
+          "description": "Short mnemonic name for this mounted brain/repo (e.g. 'upstream_harness', 'fastapi_core')",
           "required": false
         },
         {
           "name": "read_transcripts",
           "type": "boolean",
           "description": "Whether to parse and index conversation transcripts and trajectory logs (default: true)",
+          "required": false
+        },
+        {
+          "name": "read_commits",
+          "type": "boolean",
+          "description": "Whether to parse and index Git commit history into cognitive trajectory chunks (default: true)",
+          "required": false
+        },
+        {
+          "name": "max_commits",
+          "type": "integer",
+          "description": "Maximum number of Git commits to index as trajectory steps (default: 100)",
           "required": false
         },
         {
@@ -38,7 +50,7 @@
     },
     {
       "name": "brain_query",
-      "description": "Query across one or all mounted external brains for knowledge, solutions, or transcripts",
+      "description": "Query across one or all mounted external brains/repos for knowledge, code, solutions, or trajectories",
       "parameters": [
         {
           "name": "query",
@@ -49,13 +61,13 @@
         {
           "name": "brain_alias",
           "type": "string",
-          "description": "Specific attached brain alias to target (or all if omitted)",
+          "description": "Specific attached brain/repo alias to target (or all if omitted)",
           "required": false
         },
         {
           "name": "include_trajectories",
           "type": "boolean",
-          "description": "Include past agent tool execution steps and error recoveries",
+          "description": "Include past agent tool execution steps and git commit histories",
           "required": false
         },
         {
@@ -68,17 +80,17 @@
     },
     {
       "name": "brain_list_attached",
-      "description": "List all currently mounted external brains, their detected formats, and index statistics",
+      "description": "List all currently mounted external brains and repositories, their detected formats, and index statistics",
       "parameters": []
     },
     {
       "name": "brain_detach",
-      "description": "Unmount a foreign brain and release its memory indexes",
+      "description": "Unmount a foreign brain or repository and release its memory indexes",
       "parameters": [
         {
           "name": "brain_alias",
           "type": "string",
-          "description": "Alias of the brain to unmount",
+          "description": "Alias of the brain/repository to unmount",
           "required": true
         }
       ]

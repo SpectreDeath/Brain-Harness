@@ -17,11 +17,10 @@ import pytest
 from click.testing import CliRunner
 
 from harness.agent.base import AgentTrajectory
-from harness.agent.react import ReActAgentLoop, StepExecutionEngine
+from harness.agent.react import StepExecutionEngine
 from harness.cli import main
 from harness.kernel.context import ServiceContext, ServiceKey
 from harness.kernel.lifecycle import PluginState
-from harness.kernel.reconciler import HarnessConfigTree, PluginConfigEntry
 from harness.kernel.runtime import HarnessRuntime
 from harness.plugins.base import HarnessPlugin
 from harness.services.llm import LLMMessage, LLMResponse, LLMService

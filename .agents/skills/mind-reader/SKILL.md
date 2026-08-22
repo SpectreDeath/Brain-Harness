@@ -28,7 +28,7 @@ Mount the target brain folder using the `plugin.brain_bridge` entrypoint:
    - `read_transcripts`: `true` to ingest execution steps, tool invocations, and error recoveries.
    - `attach_mode`: `"lens"` (read-only ephemeral introspection).
 2. **Verify Format Signature**:
-   Confirm whether the detected signature is `antigravity_brain`, `harness_instance`, `ide_memo`, `obsidian_vault`, or `raw_docs`.
+   Confirm whether the detected signature is `antigravity_brain`, `harness_instance`, `ide_memo`, `obsidian_vault`, `git_repository`, or `raw_docs`. (For in-depth Git repository code and commit trajectory distillation, see `/repo-reader`).
 3. **Log Mount Volume**:
    Confirm chunk count, transcript count, and unique vocabulary index size.
 

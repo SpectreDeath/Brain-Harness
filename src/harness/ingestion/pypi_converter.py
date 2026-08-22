@@ -9,7 +9,7 @@ from __future__ import annotations
 import re
 import textwrap
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 import httpx
 import structlog
@@ -40,7 +40,7 @@ class PyPIConverter:
             async with httpx.AsyncClient(timeout=15.0, follow_redirects=True) as client:
                 res = await client.get(url)
                 if res.status_code == 200:
-                    return res.json()
+                    return cast(dict[str, Any], res.json())
         except Exception as e:
             logger.warning("Could not fetch PyPI API metadata", package=clean_name, error=str(e))
 

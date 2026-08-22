@@ -14,7 +14,7 @@ from typing import Any
 import pytest
 
 from harness.ingestion.pipeline import PluginIngestionPipeline
-from harness.kernel.context import ServiceContext, ServiceKey, ServiceNotFoundError
+from harness.kernel.context import ServiceContext, ServiceKey
 from harness.plugins.base import HarnessPlugin
 
 

@@ -19,8 +19,12 @@ import structlog
 from harness.plugins.base import HarnessPlugin
 from harness.plugins.catalog import PluginCatalog
 from harness.plugins.manifest import PluginManifest
+from harness.plugins.sandboxed import SandboxedPlugin
 
 logger = structlog.get_logger()
+
+# Backward compatibility alias
+ManifestPlugin = SandboxedPlugin
 
 
 class PluginLoadError(Exception):
@@ -35,14 +39,21 @@ class PluginLoadError(Exception):
 class PluginLoader:
     """Discovers and loads HarnessPlugin instances from various sources."""
 
-    def __init__(self, plugin_dirs: list[Path] | None = None) -> None:
+    def __init__(
+        self,
+        plugin_dirs: list[Path] | None = None,
+        *,
+        event_bus: Any | None = None,
+    ) -> None:
         """Initialize the loader.
 
         Args:
             plugin_dirs: Directories to scan for plugins. Defaults to
                 ``["plugins"]`` relative to the current working directory.
+            event_bus: Optional EventBus for cache telemetry and invalidation.
         """
         self._plugin_dirs = plugin_dirs or [Path("plugins")]
+        self._event_bus = event_bus
         self._loaded_modules: dict[str, Any] = {}
         self._catalog: PluginCatalog | None = None
 
@@ -50,7 +61,7 @@ class PluginLoader:
     def catalog(self) -> PluginCatalog:
         """The authoritative PluginCatalog index."""
         if self._catalog is None:
-            self._catalog = PluginCatalog(self._plugin_dirs)
+            self._catalog = PluginCatalog(self._plugin_dirs, event_bus=self._event_bus)
         return self._catalog
 
     def refresh_catalog(self) -> int:
@@ -296,12 +307,6 @@ class PluginLoader:
                     )
 
         return plugins
-
-
-from harness.plugins.sandboxed import SandboxedPlugin
-
-# Backward compatibility alias
-ManifestPlugin = SandboxedPlugin
 
 
 # --- Utility ---

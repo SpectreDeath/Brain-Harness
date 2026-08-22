@@ -1,0 +1,58 @@
+{
+  "name": "plugin.critic_loop",
+  "version": "1.0.0",
+  "description": "Autonomous generate-critique-revise loop with rubric scoring and iterative refinement",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "entrypoints": [
+    {
+      "name": "evaluate_rubric",
+      "description": "Evaluate draft text or code against a criteria checklist and produce itemized scoring",
+      "parameters": [
+        {
+          "name": "content",
+          "type": "string",
+          "description": "The draft text or code to evaluate",
+          "required": true
+        },
+        {
+          "name": "rubric",
+          "type": "array",
+          "description": "List of criteria assertions to check",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "run_critic_loop",
+      "description": "Run iterative multi-turn critique and refinement until threshold score is achieved",
+      "parameters": [
+        {
+          "name": "task",
+          "type": "string",
+          "description": "The original goal or prompt",
+          "required": true
+        },
+        {
+          "name": "draft",
+          "type": "string",
+          "description": "Initial draft content",
+          "required": true
+        },
+        {
+          "name": "threshold",
+          "type": "number",
+          "description": "Minimum passing score (0.0 to 1.0)",
+          "required": false
+        },
+        {
+          "name": "max_iterations",
+          "type": "integer",
+          "description": "Maximum refinement rounds",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

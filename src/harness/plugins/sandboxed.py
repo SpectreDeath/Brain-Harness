@@ -98,7 +98,7 @@ class SandboxedPlugin(ToolMountMixin, HarnessPlugin):
 
     @property
     def requires(self) -> list[ServiceKey[Any]]:
-        declared = [ServiceKey(name) for name in self._manifest.requires]
+        declared: list[ServiceKey[Any]] = [ServiceKey(name) for name in self._manifest.requires]
         if self._manifest.entrypoints:
             mount_reqs = [k for k in ToolMountMixin.tool_mount_requires() if k not in declared]
             return declared + mount_reqs
@@ -312,7 +312,7 @@ class SandboxedPlugin(ToolMountMixin, HarnessPlugin):
         """Emit a structured failure event to the harness EventBus if available."""
         if not self._ctx:
             return
-        bus_key = ServiceKey("events.bus")
+        bus_key: ServiceKey[Any] = ServiceKey("events.bus")
         if self._ctx.has(bus_key):
             try:
                 from harness.events.types import EventType, HarnessEvent

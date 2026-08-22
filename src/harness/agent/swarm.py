@@ -10,11 +10,11 @@ import asyncio
 from collections import defaultdict, deque
 from dataclasses import dataclass, field
 import time
-from typing import Any, Callable
+from typing import Any, Callable, cast
 
 import structlog
 
-from harness.agent.base import AgentLoopService, AgentTaskResult
+from harness.agent.base import AgentTaskResult
 from harness.agent.session import AGENT_SESSION_MANAGER_KEY, AgentSessionManager
 from harness.events.bus import EventBus
 from harness.events.types import EventType, HarnessEvent
@@ -457,26 +457,35 @@ class SwarmCoordinator:
 
     async def run_swarm(
         self,
-        dag_or_objective: SwarmDAG | str,
+        dag_or_objective: SwarmDAG | str | None = None,
         *,
+        objective: str | None = None,
+        dag: SwarmDAG | None = None,
         max_total_tokens: int = 100_000,
+        max_tokens: int | None = None,
         context: dict[str, Any] | None = None,
         custom_executor: Callable[[SwarmNode, dict[str, Any]], Any] | None = None,
         run_id: str | None = None,
+        consensus_threshold: float = 0.66,
     ) -> SwarmTaskResult:
         """Execute all nodes in the Swarm DAG in topological dependency waves."""
         import uuid
 
+        target = dag_or_objective if dag_or_objective is not None else (dag if dag is not None else objective)
+        if target is None:
+            raise ValueError("Either dag or objective must be provided to run_swarm")
+
+        effective_max_tokens = max_tokens if max_tokens is not None else max_total_tokens
         actual_run_id = run_id or f"swarm_{uuid.uuid4().hex[:8]}"
 
-        if isinstance(dag_or_objective, str):
-            dag = self.decompose(dag_or_objective)
-            objective = dag_or_objective
+        if isinstance(target, str):
+            dag = self.decompose(target)
+            objective = target
         else:
-            dag = dag_or_objective
-            objective = "Custom Swarm DAG Execution"
+            dag = target
+            objective = objective or "Custom Swarm DAG Execution"
 
-        governor = TokenGovernor(max_tokens=max_total_tokens)
+        governor = TokenGovernor(max_tokens=effective_max_tokens)
         execution_plan = dag.get_execution_plan()
         accumulated_results: dict[str, Any] = {}
 
@@ -723,8 +732,14 @@ class SwarmCoordinator:
                 execution_tree=exec_tree,
             )
 
-            # Mark root session complete in session manager
+            # Store swarm task result in root session metadata and complete in session manager
             if session_mgr is not None:
+                root_session = await session_mgr.get_session(actual_run_id)
+                if root_session is not None:
+                    root_session.metadata["swarm_run"] = task_result.to_dict()
+                    root_session.metadata["is_swarm"] = True
+                    await session_mgr.store.save(root_session)
+
                 if all_success:
                     await session_mgr.complete_session(
                         actual_run_id,
@@ -748,9 +763,29 @@ class SwarmCoordinator:
         finally:
             self._active_runs.pop(actual_run_id, None)
 
+    execute_dag = run_swarm
+
     def get_run(self, run_id: str) -> SwarmTaskResult | None:
-        """Fetch a completed or archived swarm run by ID."""
+        """Fetch a completed or archived swarm run by ID from in-memory cache."""
         return self._run_history.get(run_id)
+
+    async def get_run_async(self, run_id: str) -> SwarmTaskResult | dict[str, Any] | None:
+        """Fetch a completed swarm run by ID, falling back to persistent session store."""
+        if run_id in self._run_history:
+            return self._run_history[run_id]
+
+        session_mgr: AgentSessionManager | None = (
+            self.context.optional(AGENT_SESSION_MANAGER_KEY)
+            if hasattr(self.context, "optional")
+            else None
+        )
+        if session_mgr is not None:
+            sess = await session_mgr.get_session(run_id)
+            if sess and "swarm_run" in sess.metadata:
+                return cast(dict[str, Any], sess.metadata["swarm_run"])
+            if sess:
+                return sess.to_dict()
+        return None
 
     def analyze_run(self, run_id: str) -> dict[str, Any] | None:
         """Fetch post-flight execution analytics and critical path breakdown for a run."""
@@ -774,9 +809,33 @@ class SwarmCoordinator:
         return run.to_dict() if run else None
 
     def list_runs(self, limit: int = 50) -> list[SwarmTaskResult]:
-        """List historical swarm execution outcomes."""
+        """List historical swarm execution outcomes from in-memory cache."""
         runs = list(self._run_history.values())
         return runs[-limit:] if limit > 0 else runs
+
+    async def list_runs_async(self, limit: int = 50) -> list[dict[str, Any]]:
+        """List historical swarm execution outcomes from memory and persistent session store."""
+        results: list[dict[str, Any]] = [r.to_dict() for r in self._run_history.values()]
+        seen_ids = {r["run_id"] for r in results if "run_id" in r}
+
+        session_mgr: AgentSessionManager | None = (
+            self.context.optional(AGENT_SESSION_MANAGER_KEY)
+            if hasattr(self.context, "optional")
+            else None
+        )
+        if session_mgr is not None:
+            sessions = await session_mgr.list_sessions(limit=limit * 2)
+            for s in sessions:
+                if s.session_id not in seen_ids and s.metadata.get("is_swarm"):
+                    swarm_payload = s.metadata.get("swarm_run")
+                    if swarm_payload:
+                        results.append(swarm_payload)
+                        seen_ids.add(s.session_id)
+                    else:
+                        results.append(s.to_dict())
+                        seen_ids.add(s.session_id)
+
+        return results[-limit:] if limit > 0 else results
 
     async def get_status(self) -> dict[str, Any]:
         """Return status report of the swarm coordinator."""

@@ -12,7 +12,6 @@ import pytest
 from httpx import ASGITransport, AsyncClient
 
 from harness.agent.swarm import (
-    ConsensusEngine,
     SwarmCoordinator,
     SwarmDAG,
     SwarmNode,
@@ -22,10 +21,10 @@ from harness.events.bus import EventBus
 from harness.kernel.context import ServiceContext
 from harness.kernel.lifecycle import PluginLifecycle
 from harness.kernel.runtime import HarnessRuntime
-from harness.mcp.protocol import MCPPrompt, MCPProtocolCodec, MCPResource
+from harness.mcp.protocol import MCPPrompt, MCPResource
 from harness.mcp.server import HarnessMCPServer, MCPRegistry
 from harness.plugins.base import HarnessPlugin
-from harness.services.tools import ToolRegistry, ToolSpec
+from harness.services.tools import ToolRegistry
 from harness.ui.server import RuntimeAdapter, create_app
 
 

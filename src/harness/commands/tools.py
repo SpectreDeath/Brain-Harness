@@ -33,21 +33,21 @@ def list_tools(
 def enable_tool(registry: Any, name: str) -> bool:
     """Enable a specific tool in the registry."""
     if registry is not None:
-        return registry.enable_tool(name)
+        return bool(registry.enable_tool(name))
     return False
 
 
 def disable_tool(registry: Any, name: str) -> bool:
     """Disable a specific tool in the registry."""
     if registry is not None:
-        return registry.disable_tool(name)
+        return bool(registry.disable_tool(name))
     return False
 
 
 def toggle_tool(registry: Any, name: str, enabled: bool | None = None) -> bool:
     """Toggle a specific tool in the registry."""
     if registry is not None:
-        return registry.toggle_tool(name, enabled=enabled)
+        return bool(registry.toggle_tool(name, enabled=enabled))
     return False
 
 

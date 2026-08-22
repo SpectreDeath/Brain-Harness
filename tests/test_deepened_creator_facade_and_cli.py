@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import collections.abc
 from pathlib import Path
 from typing import Any, Coroutine
 

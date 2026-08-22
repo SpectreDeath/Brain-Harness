@@ -6,26 +6,22 @@ from pathlib import Path
 import pytest
 from httpx import ASGITransport, AsyncClient
 
-from harness.agent.base import AgentLoopService, AgentStep, AgentTaskResult
+from harness.agent.base import AgentStep
 from harness.agent.session import (
     AGENT_SESSION_MANAGER_KEY,
-    AgentSession,
     AgentSessionManager,
     AgentSessionPlugin,
-    InMemoryAgentSessionStore,
     StorageBackedSessionStore,
 )
 from harness.events.bus import EventBus
 from harness.events.types import EventType, HarnessEvent
 from harness.ingestion.pipeline import PluginIngestionPipeline
 from harness.kernel.context import ServiceContext, ServiceKey
-from harness.kernel.lifecycle import DependencyError, PluginLifecycle, PluginState
+from harness.kernel.lifecycle import PluginLifecycle
 from harness.kernel.runtime import HarnessRuntime
-from harness.mcp.protocol import MCPProtocolCodec
 from harness.mcp.server import HarnessMCPServer
 from harness.plugins.base import HarnessPlugin
-from harness.plugins.manifest import PluginManifest
-from harness.services.storage import SQLiteStorageService, StoragePlugin
+from harness.services.storage import StoragePlugin
 from harness.services.tools import ToolRegistry, ToolSpec
 from harness.ui.server import create_app
 
