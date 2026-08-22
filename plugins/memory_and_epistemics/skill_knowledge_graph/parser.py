@@ -290,14 +290,27 @@ class SkillCardParser:
 
     @staticmethod
     def _extract_invariants(content: str) -> list[InvariantNode]:
-        """Extract checklist items from CARD.md."""
+        """Extract invariants and checklist items from CARD.md."""
         invariants: list[InvariantNode] = []
+        in_invariants_section = False
+
         for line in content.splitlines():
             line_s = line.strip()
+            if re.search(r"^##\s+.*(invariant|guardrail|checklist)", line_s, re.IGNORECASE):
+                in_invariants_section = True
+                continue
+            elif line_s.startswith("## ") and in_invariants_section:
+                in_invariants_section = False
+
             if line_s.startswith("- [ ]") or line_s.startswith("- [x]"):
                 clean = line_s.replace("- [ ]", "").replace("- [x]", "").strip()
                 clean_text = re.sub(r"\*\*([^*]+)\*\*", r"\1", clean).strip()
                 invariants.append(InvariantNode(rule=clean_text, is_blocking=True))
+            elif in_invariants_section and (line_s.startswith("-") or line_s.startswith("*") or re.match(r"^\d+\.", line_s)):
+                clean = re.sub(r"^[\-\*\d\.]+\s*", "", line_s).strip()
+                clean_text = re.sub(r"\*\*([^*]+)\*\*", r"\1", clean).strip()
+                if clean_text:
+                    invariants.append(InvariantNode(rule=clean_text, is_blocking=True))
         return invariants
 
     @staticmethod

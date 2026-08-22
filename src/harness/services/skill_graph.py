@@ -1,10 +1,51 @@
-"""Skill Knowledge Graph service protocol and typed ServiceKey."""
+"""Skill Knowledge Graph service protocol, typed models, and ServiceKey."""
 
 from __future__ import annotations
 
 from typing import Any, Protocol
+from pydantic import BaseModel, Field
 
 from harness.kernel.context import ServiceKey
+
+
+class SkillStageDefinition(BaseModel):
+    """Execution stage within an agent skill."""
+
+    stage_num: int = Field(..., description="Stage sequence number (1-indexed)")
+    name: str = Field(..., description="Stage title")
+    completion_gate: str = Field(default="", description="Crisp completion criterion")
+
+
+class SkillAntiPatternDefinition(BaseModel):
+    """Guarded failure mode within a skill."""
+
+    name: str = Field(..., description="Anti-pattern identifier")
+    symptom: str = Field(default="", description="Telltale failure symptom")
+    remedy: str = Field(default="", description="Prescribed corrective pattern")
+
+
+class SkillCardDefinition(BaseModel):
+    """Parsed and validated Skill Card model."""
+
+    name: str = Field(..., description="Skill kebab-case identifier")
+    category: str = Field(default="general", description="Domain classification")
+    invocation: str = Field(default="", description="Command / trigger format e.g. /deepen-architecture")
+    triggers: list[str] = Field(default_factory=list, description="Natural language trigger phrases")
+    version: str = Field(default="1.0.0", description="Semantic version")
+    target: str = Field(default="", description="Operational target summary")
+    stages: list[SkillStageDefinition] = Field(default_factory=list, description="Execution progression")
+    anti_patterns: list[SkillAntiPatternDefinition] = Field(default_factory=list, description="Guarded anti-patterns")
+    dependencies: list[str] = Field(default_factory=list, description="Referenced peer skills")
+
+
+class SkillChainResult(BaseModel):
+    """Topological execution chain between skills."""
+
+    status: str = Field(default="ok", description="ok or no_path")
+    start_skill: str = Field(..., description="Origin skill")
+    target_skill: str = Field(..., description="Destination skill")
+    chain: list[str] = Field(default_factory=list, description="Ordered skill names")
+    length: int = Field(default=0, description="Step count")
 
 
 class SkillGraphService(Protocol):
@@ -28,3 +69,4 @@ class SkillGraphService(Protocol):
 
 
 SKILL_GRAPH_KEY: ServiceKey[SkillGraphService] = ServiceKey("service.skill_knowledge_graph")
+

@@ -6,12 +6,15 @@ configuration, and data. Ships with a SQLite-backed implementation.
 
 from __future__ import annotations
 
+import hashlib
 import json
 import sqlite3
 from abc import ABC, abstractmethod
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from pydantic import BaseModel, Field
 import structlog
 
 from harness.kernel.context import ServiceContext, ServiceKey
@@ -19,14 +22,43 @@ from harness.plugins.base import HarnessPlugin
 
 logger = structlog.get_logger()
 
-# Canonical service key for storage
-STORAGE_SERVICE_KEY: ServiceKey[StorageService] = ServiceKey("storage.default")
+
+
+class IsnadLineageNode(BaseModel):
+    """Lineage node representing a primary source, test receipt, or manifest."""
+
+    node_type: str = Field(..., description="Node category: primary_code, verification_test, manifest, tool_event")
+    uri: str = Field(..., description="File path, URL, or identifier with line slice (e.g. file:///...#L10-L20)")
+    sha256_hash: str | None = Field(default=None, description="SHA-256 hash of node content")
+    verified: bool = Field(default=False, description="Whether node has been verified against ground truth")
+
+
+class IsnadLineageBlock(BaseModel):
+    """Complete Isnad chain-of-custody block verifying architectural claims."""
+
+    decision_id: str = Field(..., description="Unique decision or learning identifier")
+    timestamp: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat(), description="ISO timestamp")
+    claims: list[dict[str, Any]] = Field(default_factory=list, description="Audited assertions and provenance nodes")
+    status: str = Field(default="VERIFIED", description="Lineage status: VERIFIED, HYPOTHESIS, REJECTED")
+
+
+class KnowledgeItemRecord(BaseModel):
+    """Ground-truth Knowledge Item (KI) extracted from brains, repos, or audits."""
+
+    id: str = Field(..., description="Unique KI identifier (e.g. ki_20260822_01)")
+    title: str = Field(..., description="Actionable heuristic or pattern title")
+    source_target: str = Field(..., description="Origin folder path, Git URL, or brain URI")
+    detected_format: str = Field(..., description="Format signature: antigravity_brain, git_repository, ide_memo, etc.")
+    isnad: IsnadLineageBlock | dict[str, Any] = Field(default_factory=dict, description="Chain of custody provenance")
+    tags: list[str] = Field(default_factory=list, description="Categorization tags")
+    summary: str = Field(default="", description="Operational guideline and implementation details")
+    created_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
 
 
 class StorageService(ABC):
     """Abstract storage interface for plugins.
 
-    Provides both key-value and document-style operations.
+    Provides key-value, document-style, and knowledge-item operations.
     """
 
     @abstractmethod
@@ -79,6 +111,40 @@ class StorageService(ABC):
             if await self.delete(key):
                 deleted += 1
         return deleted
+
+    async def save_knowledge_item(self, item: KnowledgeItemRecord) -> None:
+        """Save a Knowledge Item record under the canonical knowledge prefix."""
+        payload = item.model_dump()
+        await self.set(f"ki:{item.id}", payload)
+
+    async def get_knowledge_item(self, ki_id: str) -> KnowledgeItemRecord | None:
+        """Retrieve a Knowledge Item by its ID."""
+        raw = await self.get(f"ki:{ki_id}")
+        if raw is None:
+            return None
+        return KnowledgeItemRecord.model_validate(raw)
+
+    async def list_knowledge_items(self, tag: str | None = None) -> list[KnowledgeItemRecord]:
+        """List all Knowledge Items, optionally filtered by tag."""
+        records = await self.get_all(prefix="ki:")
+        items: list[KnowledgeItemRecord] = []
+        for val in records.values():
+            try:
+                ki = KnowledgeItemRecord.model_validate(val)
+                if tag is None or tag in ki.tags:
+                    items.append(ki)
+            except Exception as e:
+                logger.warning("Failed to validate knowledge item", error=str(e))
+        return items
+
+    def compute_sha256(self, content: str | bytes) -> str:
+        """Compute SHA-256 hash for provenance nodes."""
+        data = content.encode("utf-8") if isinstance(content, str) else content
+        return hashlib.sha256(data).hexdigest()
+
+
+# Canonical service key for storage
+STORAGE_SERVICE_KEY: ServiceKey[StorageService] = ServiceKey("storage.default")
 
 
 class SQLiteStorageService(StorageService):

@@ -69,6 +69,9 @@ class SkillKnowledgeGraph:
             ("codebase-design", "deepen-architecture"),
             ("questio-reflection", "deepen-architecture"),
             ("crafting-skills", "questio-reflection"),
+            ("repo-reader", "repo-to-plugin-forge"),
+            ("repo-to-plugin-forge", "deepen-architecture"),
+            ("mind-reader", "repo-to-plugin-forge"),
         ]
 
         for s1, s2 in pipeline_pairs:

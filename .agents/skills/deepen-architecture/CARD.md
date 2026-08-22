@@ -43,6 +43,7 @@
 
 ## 🚫 Guardrails & Invariants
 
-1. **Always preserve public contract backward compatibility** unless deprecation was explicitly planned.
-2. **Never execute code modifications without an approved `implementation_plan.md`**.
-3. **Always verify 100% test pass rate** before completing the cycle.
+- [ ] **Backward Compatibility**: Always preserve public contract backward compatibility unless deprecation was explicitly planned.
+- [ ] **Mandatory Plan Approval**: Never execute code modifications without an approved `implementation_plan.md`.
+- [ ] **Zero-Regression Verification**: Always verify 100% test pass rate before completing the cycle.
+

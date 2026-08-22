@@ -135,12 +135,19 @@ Persist approved learnings into the host repository's knowledge directory:
    {
      "id": "ki_20260822_repo_01",
      "title": "Typed Service Key Registration in Plugin Systems",
-     "source_repo": "https://github.com/org/repo",
+     "source_target": "https://github.com/org/repo",
      "detected_format": "git_repository",
      "isnad": {
-       "primary_source": "src/kernel/context.py#L42-L68",
-       "commit_hash": "a1b2c3d4",
-       "verified": true
+       "decision_id": "dec_20260822_repo_01",
+       "claims": [
+         {
+           "assertion": "Typed ServiceKey[T] registration required for IoC containers",
+           "lineage": [
+             {"node_type": "primary_code", "uri": "src/kernel/context.py#L42-L68", "sha256_hash": "a1b2c3d4", "verified": true}
+           ]
+         }
+       ],
+       "status": "VERIFIED"
      },
      "tags": ["architecture", "ioc_container", "plugin_lifecycle"]
    }

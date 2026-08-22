@@ -133,11 +133,19 @@ Persist approved learnings into the host repository's knowledge directory:
    {
      "id": "ki_20260821_01",
      "title": "Subprocess Plugin Sandbox Boundary Guard",
-     "source_brain": "C:/Users/.../brain",
+     "source_target": "C:/Users/.../brain",
      "detected_format": "antigravity_brain",
      "isnad": {
-       "primary_source": "transcript.jsonl#L142",
-       "verified": true
+       "decision_id": "dec_20260821_01",
+       "claims": [
+         {
+           "assertion": "Untrusted plugins run in subprocess sandboxes",
+           "lineage": [
+             {"node_type": "primary_code", "uri": "transcript.jsonl#L142", "verified": true}
+           ]
+         }
+       ],
+       "status": "VERIFIED"
      },
      "tags": ["plugin_system", "sandbox", "isolation"]
    }
