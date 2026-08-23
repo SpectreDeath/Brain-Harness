@@ -10,6 +10,8 @@
 │ Trigger:     "scout dataset", "fetch structured data", │
 │              "pull tabular data", "source dataset"     │
 │ Version:     1.0.0                                     │
+│ Requires:    "crafting-skills"                         │
+│ Provides:    "dataset_sourcing"                        │
 ├────────────────────────────────────────────────────────┤
 │ Target:      Fetch pre-cleaned tabular data from       │
 │              curated registries (UCI, Kaggle, OpenData)│
@@ -49,9 +51,19 @@
 
 ---
 
-## Verification & Quality Checklist
+## Anti-Patterns Cheat Sheet
+
+- **Raw DOM Scraping Fallback**: Scraping messy HTML tables when direct API/Parquet endpoints exist.
+- **Context Flooding**: Dumping raw CSV rows or large dumps directly into chat context.
+- **Monolithic Buffering**: Loading multi-GB datasets into RAM all at once instead of streaming to disk.
+- **Unvalidated Ingestion**: Proceeding with unverified files containing corrupted headers.
+
+---
+
+## Invariants & Guardrails
 
 - [ ] **No Context Flooding**: Raw rows are never printed directly into the chat prompt.
 - [ ] **Streamed to Disk**: Files are saved to `data/raw/` with zero in-memory buffering.
 - [ ] **Normalized Parquet Saved**: Clean columnar copies created in `data/processed/`.
 - [ ] **Visual Sourcing Brief Present**: Temp HTML report generated and delivered.
+- [ ] **Verification Receipt Emitted**: Ingestion receipt delivered before downstream modeling.

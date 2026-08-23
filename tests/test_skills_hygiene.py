@@ -43,7 +43,7 @@ class TestSkillsEcosystemHygiene:
     def test_all_skills_directory_structure(self, skills_root: Path) -> None:
         assert skills_root.exists(), f"Skills root missing: {skills_root}"
         skill_dirs = [d for d in skills_root.iterdir() if d.is_dir() and not d.name.startswith(".")]
-        assert len(skill_dirs) >= 8, f"Expected >= 8 skills, found {len(skill_dirs)}"
+        assert len(skill_dirs) >= 10, f"Expected >= 10 skills, found {len(skill_dirs)}"
 
         for sdir in skill_dirs:
             skill_file = sdir / "SKILL.md"
@@ -59,13 +59,14 @@ class TestSkillsEcosystemHygiene:
 
     def test_all_skills_parser_and_pillars(self, skills_root: Path) -> None:
         discovered = SkillCardParser.scan_root(skills_root)
-        assert len(discovered) >= 8
+        assert len(discovered) >= 10, f"Expected >= 10 skills parsed, found {len(discovered)}"
 
         for name, node in discovered.items():
             assert node.name == name
             assert len(node.stages) >= 2, f"Skill {name} has too few stages ({len(node.stages)})"
             assert len(node.anti_patterns) >= 1, f"Skill {name} missing anti-patterns"
             assert len(node.invariants) >= 1, f"Skill {name} missing invariants"
+            assert all(inv.is_blocking for inv in node.invariants), f"Skill {name} invariants must be blocking"
 
 
 @pytest.mark.unit

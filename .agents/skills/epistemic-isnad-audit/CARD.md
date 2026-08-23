@@ -10,6 +10,8 @@
 │ Trigger:     "epistemic audit", "verify isnad",        │
 │              "check claim lineage", "audit provenance" │
 │ Version:     1.0.0                                     │
+│ Requires:    "crafting-skills"                         │
+│ Provides:    "isnad_lineage"                           │
 ├────────────────────────────────────────────────────────┤
 │ Target:      Enforce unbroken chain-of-custody         │
 │              provenance on all factual assertions      │
@@ -47,7 +49,16 @@
 
 ---
 
-## Verification & Quality Checklist
+## Anti-Patterns Cheat Sheet
+
+- **Floating Assertions**: Stating facts without citing concrete source lines or tool receipts.
+- **Inference Conflation**: Treating plausible inferences as verified ground truth.
+- **Stale Lineage Pointers**: Citing outdated line ranges without checking current workspace.
+- **Unanchored Commits**: Writing unverified decisions into persistent memory stores.
+
+---
+
+## Invariants & Guardrails
 
 - [ ] **Zero Floating Assertions**: Every core proposition has an unambiguous file/event link.
 - [ ] **Empty Mind Compliance**: Extraction is completed prior to evaluation or synthesis.

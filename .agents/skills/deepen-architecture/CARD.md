@@ -9,6 +9,8 @@
 │ Invocation:  /deepen-architecture                      │
 │ Trigger:     "deepen the architecture", "run the loop" │
 │ Version:     1.0.0                                     │
+│ Requires:    "codebase_design"                         │
+│ Provides:    "architecture_deepening"                  │
 ├────────────────────────────────────────────────────────┤
 │ Target:      Transform shallow, leaky modules into     │
 │              deep abstractions with pure seams.        │
@@ -41,9 +43,20 @@
 
 ---
 
-## 🚫 Guardrails & Invariants
+## 🚫 Anti-Patterns Cheat Sheet
+
+- **Speculative Abstraction**: Creating deep wrappers around simple utilities that have only one trivial caller.
+- **Interface Churn**: Breaking public contracts or CLI flags without measurable locality/leverage gains.
+- **Skipping Visual Verification**: Presenting raw text diffs instead of the temp HTML visual brief.
+- **Proceeding Without Plan Approval**: Executing code refactors before explicit sign-off on `implementation_plan.md`.
+
+---
+
+## 🛡️ Guardrails & Invariants
 
 - [ ] **Backward Compatibility**: Always preserve public contract backward compatibility unless deprecation was explicitly planned.
 - [ ] **Mandatory Plan Approval**: Never execute code modifications without an approved `implementation_plan.md`.
 - [ ] **Zero-Regression Verification**: Always verify 100% test pass rate before completing the cycle.
+- [ ] **Visual Brief Delivery**: Always emit an interactive `%TEMP%` HTML report with Before/After Mermaid diagrams.
+
 

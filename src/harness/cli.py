@@ -921,13 +921,67 @@ def skills_validate(skill_dir: str) -> None:
         for w in report.warnings:
             click.echo(f"  • {w}")
     if report.errors:
-        click.echo("\nErrors:")
         for err in report.errors:
             click.echo(f"  • {err}")
     if not report.valid:
         sys.exit(1)
 
 
+@main.command("assess-compute")
+@click.argument("prompt")
+@click.option("--files", "-f", "files_count", default=1, type=int, help="Number of files in target task scope")
+@click.option("--arch", "-a", "is_architecture", is_flag=True, help="Mark task as architectural refactoring")
+@click.option("--debug-task", "-d", "is_debugging", is_flag=True, help="Mark task as debugging / diagnostic investigation")
+@click.option("--override", "-o", "override_tier", type=click.Choice(["high_reasoning", "standard_agentic", "fast_mechanical", "high", "medium", "low"]), default=None, help="Force specific model tier override")
+@click.option("--json", "output_json", is_flag=True, help="Output raw assessment in JSON format")
+@click.option("--html", "generate_html", is_flag=True, help="Generate interactive HTML visual review brief in %TEMP%")
+def assess_compute(
+    prompt: str,
+    files_count: int,
+    is_architecture: bool,
+    is_debugging: bool,
+    override_tier: str | None,
+    output_json: bool,
+    generate_html: bool,
+) -> None:
+    """Assess task surface complexity and recommend optimal model tier & reasoning budget."""
+    from harness.services.compute_assessor import ComputeRouter, ModelTier
+
+    tier_enum = None
+    if override_tier:
+        if override_tier in ("high", "high_reasoning"):
+            tier_enum = ModelTier.HIGH_REASONING
+        elif override_tier in ("low", "fast_mechanical"):
+            tier_enum = ModelTier.FAST_MECHANICAL
+        elif override_tier in ("medium", "standard_agentic"):
+            tier_enum = ModelTier.STANDARD_AGENTIC
+
+    assessment = ComputeRouter.assess(
+        prompt,
+        files_count=files_count,
+        is_architecture=is_architecture,
+        is_debugging=is_debugging,
+        override_tier=tier_enum,
+    )
+
+    if output_json:
+        click.echo(json.dumps(assessment.to_dict(), indent=2))
+        return
+
+    click.echo("\n" + assessment.format_recommendation_block())
+
+    if generate_html:
+        html_path = ComputeRouter.generate_visual_brief(
+            prompt,
+            files_count=files_count,
+            is_architecture=is_architecture,
+            is_debugging=is_debugging,
+            task_title="CLI Compute Assessment",
+        )
+        click.echo(f"\n✨ Generated Interactive HTML Visual Brief:\n   {html_path}")
+
+
 if __name__ == "__main__":
     main()
+
 

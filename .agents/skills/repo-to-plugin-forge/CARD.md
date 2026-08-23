@@ -12,6 +12,8 @@
 │              "scaffold plugin from attached repo",     │
 │              "bridge repo to plugin creator"           │
 │ Version:     1.0.0                                     │
+│ Requires:    "repo-reader", "crafting-skills"          │
+│ Provides:    "plugin_forging"                          │
 ├────────────────────────────────────────────────────────┤
 │ Target:      Bridge repository AST introspection into  │
 │              PluginCreator to forge verified plugins.  │
@@ -45,10 +47,20 @@
 
 ---
 
-## 🚫 Guardrails & Invariants
+## 🚫 Anti-Patterns Cheat Sheet
+
+- **Blind Code Copying**: Dumping raw uncurated files from external repositories without archetype structuring.
+- **Missing Parameter Schemas**: Registering tools with empty or unconstrained parameter schemas.
+- **In-Process Sandboxing of Untrusted Code**: Setting in-process execution on external repos without security review.
+- **Unverified Tool Executors**: Generating tool handler stubs that fail at runtime when invoked.
+
+---
+
+## 🛡️ Guardrails & Invariants
 
 - [ ] **Mandatory Subprocess Isolation**: Always enforce `IsolationMode.SUBPROCESS` for untrusted or external GitHub repositories.
 - [ ] **Strict Tool Parameter Schemas**: Every exported tool must have typed parameter properties and descriptions (no empty schemas).
 - [ ] **Pre-Commit Plan Checkpoint**: Never scaffold code without explicit user sign-off on `implementation_plan.md`.
 - [ ] **Zero-Error Diagnostic Validation**: The scaffolded plugin must pass 100% of `PluginValidator` rules before completion.
 - [ ] **Cryptographic Lineage**: Plugin metadata must record source repository provenance, commit hash, and file coordinates.
+- [ ] **Visual Brief Delivery**: Always emit an interactive `%TEMP%` HTML report with Before/After Mermaid DAG before code modification.

@@ -12,6 +12,8 @@
 │              "data topology", "blast radius",          │
 │              "hybrid topology", "cycle detection"      │
 │ Version:     2.1.0                                     │
+│ Requires:    "deepen-architecture"                     │
+│ Provides:    "topology_mapping"                        │
 ├────────────────────────────────────────────────────────┤
 │ Target:      Map complex architectures, DAG lineages,  │
 │              execution queues, and hybrid topologies   │
@@ -58,6 +60,15 @@
 │                                │ Queues, or Tree of DAGs.       │
 └────────────────────────────────┴────────────────────────────────┘
 ```
+
+---
+
+## Anti-Patterns Cheat Sheet
+
+- **Speculative Abstraction**: Applying complex design patterns before categorizing the base data structure analogy.
+- **Blind Execution**: Modifying code without generating the Visual Brief and mapping systemic blast radius.
+- **Horizontal Slicing**: Modifying horizontal layers instead of tracing vertical DAG execution paths.
+- **Topology Confusion**: Permitting cyclic dependency loops in a designated Tree structure.
 
 ---
 

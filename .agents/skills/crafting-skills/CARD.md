@@ -10,6 +10,7 @@
 │ Trigger:     "craft a skill", "refactor this skill",   │
 │              "author skill", "upgrade skill design"    │
 │ Version:     1.0.0                                     │
+│ Provides:    "skill_crafting"                          │
 ├────────────────────────────────────────────────────────┤
 │ Target:      Author and refactor agent skills into     │
 │              high-precision, deep-module blueprints    │

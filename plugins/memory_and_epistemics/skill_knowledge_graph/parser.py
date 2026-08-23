@@ -77,6 +77,9 @@ class SkillCardParser:
             # Extract invariants from checklist
             invariants.extend(cls._extract_invariants(card_text))
 
+            if card_meta.get("requires"):
+                references.extend(card_meta["requires"])
+
             # Extract references
             references.extend(cls._extract_references(card_text, exclude_self=name))
 
@@ -173,6 +176,20 @@ class SkillCardParser:
                     triggers.extend(extracted)
                 else:
                     triggers.append(val.strip('"'))
+            elif clean.startswith("Requires:") or clean.startswith("Require:"):
+                val = clean.split(":", 1)[1].strip()
+                extracted = re.findall(r'"([^"]+)"|\'([^\']+)\'', val)
+                req_list = [t[0] or t[1] for t in extracted if (t[0] or t[1])]
+                if not req_list:
+                    req_list = [t.strip().strip('"').strip("'") for t in val.split(",") if t.strip()]
+                meta["requires"] = req_list
+            elif clean.startswith("Provides:") or clean.startswith("Provide:"):
+                val = clean.split(":", 1)[1].strip()
+                extracted = re.findall(r'"([^"]+)"|\'([^\']+)\'', val)
+                prov_list = [t[0] or t[1] for t in extracted if (t[0] or t[1])]
+                if not prov_list:
+                    prov_list = [t.strip().strip('"').strip("'") for t in val.split(",") if t.strip()]
+                meta["provides"] = prov_list
             elif clean.startswith("Target:"):
                 meta["target"] = clean.split(":", 1)[1].strip()
             else:
@@ -188,6 +205,10 @@ class SkillCardParser:
                         meta["invocation"] = v_val
                     elif k_norm == "version":
                         meta["version"] = v_val
+                    elif k_norm in ("requires", "require"):
+                        meta["requires"] = [t.strip().strip('"').strip("'") for t in v_val.split(",") if t.strip()]
+                    elif k_norm in ("provides", "provide"):
+                        meta["provides"] = [t.strip().strip('"').strip("'") for t in v_val.split(",") if t.strip()]
                     elif k_norm in ("trigger", "triggers"):
                         extracted = re.findall(r'"([^"]+)"', v_val)
                         if extracted:

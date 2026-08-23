@@ -10,6 +10,8 @@
 │ Trigger:     "adversarial reflection", "questio check",│
 │              "stress test plan", "pre-commit reflection│
 │ Version:     1.0.0                                     │
+│ Requires:    "crafting-skills"                         │
+│ Provides:    "adversarial_gate"                        │
 ├────────────────────────────────────────────────────────┤
 │ Target:      Force Aquinas-style adversarial self-     │
 │              reflection and tri-vector failure mode    │
@@ -47,6 +49,15 @@
 │                                │ missing edge-case verification │
 └────────────────────────────────┴────────────────────────────────┘
 ```
+
+---
+
+## Anti-Patterns Cheat Sheet
+
+- **Strawman Objections**: Formulating trivial, easily dismissed objections instead of severe failure modes.
+- **Phantom Grounding**: Citing conceptual patterns without linking to active code lines.
+- **Unmitigated Invariants**: Proceeding with a plan when one or more objections remain unresolved.
+- **Rubber-Stamping**: Generating the questio block as commentary rather than a blocking gate.
 
 ---
 
