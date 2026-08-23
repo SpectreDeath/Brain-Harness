@@ -1,0 +1,156 @@
+{
+  "name": "plugin.openrouter_gateway",
+  "version": "1.0.0",
+  "description": "OpenRouter Gateway routing, JSON-RPC 2.0 protocol engine, and Context Epoch prompt optimizer",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "category": "integration_and_io",
+  "author": "Brain Harness Forge Engine",
+  "provides": [
+    "service.openrouter_gateway"
+  ],
+  "entrypoints": [
+    {
+      "name": "openrouter_chat",
+      "description": "Execute chat completion via OpenRouter / Kilo Gateway with model routing and reasoning controls",
+      "parameters": [
+        {
+          "name": "messages",
+          "type": "array",
+          "description": "List of conversation message objects (role, content)",
+          "required": true
+        },
+        {
+          "name": "model",
+          "type": "string",
+          "description": "Target model identifier (e.g. anthropic/claude-3.7-sonnet)",
+          "required": false
+        },
+        {
+          "name": "reasoning",
+          "type": "object",
+          "description": "Reasoning effort configuration (effort: high|medium|low|off)",
+          "required": false
+        },
+        {
+          "name": "temperature",
+          "type": "number",
+          "description": "Sampling temperature between 0.0 and 2.0",
+          "required": false
+        },
+        {
+          "name": "max_tokens",
+          "type": "integer",
+          "description": "Maximum number of tokens to generate",
+          "required": false
+        },
+        {
+          "name": "order",
+          "type": "array",
+          "description": "Provider routing preference list (e.g. ['Anthropic', 'Together'])",
+          "required": false
+        },
+        {
+          "name": "allow_fallbacks",
+          "type": "boolean",
+          "description": "Whether to allow automatic fallback to other providers",
+          "required": false,
+          "default": true
+        },
+        {
+          "name": "api_key",
+          "type": "string",
+          "description": "Optional API key override",
+          "required": false
+        },
+        {
+          "name": "task_id",
+          "type": "string",
+          "description": "Optional task attribution tracking identifier",
+          "required": false
+        },
+        {
+          "name": "feature",
+          "type": "string",
+          "description": "Optional feature attribution tag",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "openrouter_list_models",
+      "description": "Fetch and filter available models from OpenRouter catalogue",
+      "parameters": [
+        {
+          "name": "provider",
+          "type": "string",
+          "description": "Filter models by provider prefix or substring",
+          "required": false
+        },
+        {
+          "name": "modality",
+          "type": "string",
+          "description": "Filter models by modality (e.g. text->text, text+image->text)",
+          "required": false
+        },
+        {
+          "name": "max_price",
+          "type": "number",
+          "description": "Maximum prompt price threshold per 1M tokens",
+          "required": false
+        },
+        {
+          "name": "api_key",
+          "type": "string",
+          "description": "Optional API key override",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "openrouter_resolve_route",
+      "description": "Intelligently match task complexity and tier to optimal OpenRouter model routes",
+      "parameters": [
+        {
+          "name": "task_type",
+          "type": "string",
+          "description": "Task description or category (e.g. reasoning, code_edit, summary)",
+          "required": true
+        },
+        {
+          "name": "tier",
+          "type": "string",
+          "description": "Desired model tier (high, medium, low)",
+          "required": false,
+          "default": "medium"
+        },
+        {
+          "name": "budget",
+          "type": "string",
+          "description": "Token and cost budget preference (standard, premium, low)",
+          "required": false,
+          "default": "standard"
+        }
+      ]
+    },
+    {
+      "name": "openrouter_jsonrpc_call",
+      "description": "Execute direct JSON-RPC 2.0 protocol request against OpenRouter Gateway",
+      "parameters": [
+        {
+          "name": "request_payload",
+          "type": "object",
+          "description": "JSON-RPC 2.0 request or batch request object",
+          "required": true
+        },
+        {
+          "name": "api_key",
+          "type": "string",
+          "description": "Optional API key override",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

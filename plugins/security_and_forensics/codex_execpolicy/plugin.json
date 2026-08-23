@@ -1,0 +1,94 @@
+{
+  "name": "plugin.codex_execpolicy",
+  "version": "1.0.0",
+  "description": "Deterministic AST-level shell command execution policy, approval elevation, and sandbox resolution engine ported from OpenAI Codex",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "entrypoints": [
+    {
+      "name": "evaluate_command_policy",
+      "description": "Evaluates a candidate shell command against active prefix rules and danger patterns to determine allow, prompt, or deny status",
+      "parameters": [
+        {
+          "name": "command",
+          "type": "string",
+          "description": "Full shell command string to evaluate",
+          "required": true
+        },
+        {
+          "name": "working_dir",
+          "type": "string",
+          "description": "Execution working directory path",
+          "required": false
+        },
+        {
+          "name": "custom_rules",
+          "type": "array",
+          "description": "Optional list of custom prefix rules to evaluate against",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "amend_prefix_rule",
+      "description": "Dynamically add or update an allowed/prompt/deny prefix rule in the active execution policy",
+      "parameters": [
+        {
+          "name": "prefix_pattern",
+          "type": "string",
+          "description": "Command prefix pattern (e.g., 'git status', 'pytest *', 'npm run build')",
+          "required": true
+        },
+        {
+          "name": "action",
+          "type": "string",
+          "description": "Policy action: 'allow', 'prompt', or 'deny'",
+          "required": true
+        },
+        {
+          "name": "comment",
+          "type": "string",
+          "description": "Human-readable description or rationale for this rule",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "tokenize_shell_ast",
+      "description": "Parses a shell command string into structured AST components (binary, args, operators, redirections) without executing it",
+      "parameters": [
+        {
+          "name": "command",
+          "type": "string",
+          "description": "Shell command string to parse",
+          "required": true
+        },
+        {
+          "name": "shell_flavor",
+          "type": "string",
+          "description": "Shell syntax flavor: 'bash', 'powershell', or 'cmd'",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "check_sandbox_requirements",
+      "description": "Determines platform-native sandboxing requirements (Linux Landlock/Bwrap, macOS Seatbelt, Windows Tokens) for a command",
+      "parameters": [
+        {
+          "name": "command",
+          "type": "string",
+          "description": "Command string to analyze for sandbox restrictions",
+          "required": true
+        },
+        {
+          "name": "target_platform",
+          "type": "string",
+          "description": "Target platform: 'linux', 'macos', or 'windows' (defaults to current OS)",
+          "required": false
+        }
+      ]
+    }
+  ]
+}
