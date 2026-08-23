@@ -5,12 +5,12 @@ description: Assess task complexity and recommend optimal model tiers and thinki
 
 # Compute & Model Assessor Engine
 
-`compute-model-assessor` is the authoritative task classification, dimensional scoring, and reasoning budget allocation engine for Brain Harness. Backed by `harness.services.compute_assessor`, it evaluates incoming user prompts, architectural tasks, and multi-agent subtasks across 5 orthogonal dimensions (Ambiguity, Span, Depth, Rigor, Concurrency)—recommending the optimal model tier and thinking budget (`High`, `Medium`, `Low`, `Off`) to maximize solution quality while eliminating latency and token waste.
+`compute-model-assessor` is the authoritative task classification, dimensional scoring, token economics, reasoning budget allocation, and dynamic trajectory escalation engine for Brain Harness. Backed by `harness.services.compute_assessor`, it evaluates incoming user prompts, architectural tasks, and multi-agent subtasks across 5 orthogonal dimensions (Ambiguity, Span, Depth, Rigor, Concurrency)—recommending the optimal model tier and thinking budget (`High`, `Medium`, `Low`, `Off`) to maximize solution quality while eliminating latency and token waste.
 
 Every compute assessment follows a strict five-stage progression:
 
 ```
-[1. Task Surface Analysis] → [2. Compute Calibration] → [3. Visual Budget Brief] → [4. Recommendation Checkpoint] → [5. Routing Commit]
+[1. Task Surface Analysis] → [2. Compute Calibration & Economics] → [3. Visual Budget Brief] → [4. Recommendation Checkpoint] → [5. Routing Commit & Escalation]
 ```
 
 See [CARD.md](CARD.md) for the quick-reference summary card, calibration heuristics matrix, and invariants checklist.
@@ -18,9 +18,9 @@ Consult `/crafting-skills` for skill design standards and `/deepen-architecture`
 
 ---
 
-## 1. Task Surface Analysis (5-Dimensional Complexity Vector)
+## 1. Task Surface Analysis & Scoring Profiles
 
-Inspect the incoming user task across 5 core complexity dimensions using `DimensionalScorer`:
+Inspect the incoming user task across 5 core complexity dimensions using `DimensionalScorer` and configurable `ScoringProfile` presets:
 
 1. **Solution Ambiguity & Branching (`ambiguity`)**:
    - Does the prompt require exploring multiple alternative designs or reconciling conflicting constraints?
@@ -46,13 +46,19 @@ Inspect the incoming user task across 5 core complexity dimensions using `Dimens
 5. **Concurrency & Race Potential (`concurrency`)**:
    - Does the task involve async event loops, thread safety, locks, semaphores, or distributed synchronization?
 
+### Scoring Profile Presets:
+- `balanced` (default): General balanced weights across all 5 dimensions.
+- `reasoning_heavy`: Lower threshold for high reasoning, elevated weight on ambiguity and depth.
+- `cost_optimized`: Higher threshold for high reasoning, minimizes token expenditure.
+- `latency_optimized`: Biased towards faster turnaround tiers.
+
 > **Completion criterion**: Task scored across the 5 dimensions, producing a `ComplexityVector` and an `AssessmentTrace`.
 
 ---
 
-## 2. Compute Calibration & Multi-Provider Matrix
+## 2. Compute Calibration, Economics & Multi-Provider Matrix
 
-Map the assessed complexity level to explicit model tiers and provider-specific reasoning configurations:
+Map the assessed complexity level to explicit model tiers, token economics projections, and provider-specific reasoning configurations:
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
@@ -78,13 +84,17 @@ Map the assessed complexity level to explicit model tiers and provider-specific 
    - *Primary*: Gemini 2.0 Flash / Flash-Lite (`thinking_budget="off"`, 0 tokens), GPT-4o-mini, Claude 3.5 Haiku.
    - *Alternative / Open*: Llama-3.3-8B-Instruct, Mistral-Small.
 
-> **Completion criterion**: Concrete model recommendation and thinking budget declared with provider-specific configuration arguments.
+### Token Economics Projection (`ComputeEconomics`):
+- `estimated_query_cost_usd`: Projected USD cost per query.
+- `expected_latency_p50_seconds` / `expected_latency_p95_seconds`: Latency percentile distributions.
+
+> **Completion criterion**: Concrete model recommendation, token economics, and thinking budget declared with provider-specific configuration arguments.
 
 ---
 
-## 3. The Visual Budget Brief
+## 3. The Visual Budget Brief & Live Provider Studio
 
-Synthesize complexity evaluation, model tiers, and cost/latency tradeoffs into an interactive HTML visual brief using `ComputeVisualBriefGenerator`:
+Synthesize complexity evaluation, model tiers, and cost/latency tradeoffs into an interactive HTML visual brief with live multi-provider payload copying using `ComputeVisualBriefGenerator`:
 
 1. **Programmatic Generation**:
    ```python
@@ -94,14 +104,15 @@ Synthesize complexity evaluation, model tiers, and cost/latency tradeoffs into a
        "Refactor kernel service registry",
        files_count=4,
        is_architecture=True,
+       profile="balanced",
    )
    ```
 2. **Target Location**: Writes to `%TEMP%\compute-assessor-<timestamp>.html` (Windows) or `/tmp/compute-assessor-<timestamp>.html` (Unix).
-3. **Visual Standards**:
+3. **Visual Standards & Live Studio**:
    - Dark mode (`#0d1117`) with Tailwind CSS and Mermaid.js.
-   - 5-Dimensional Complexity Vector bars & Composite Score badge.
+   - 5-Dimensional Complexity Vector bars, Composite Score badge, and Token Economics card.
    - Interactive Mermaid Decision DAG.
-   - High and Low complexity indicator lists.
+   - **Live Provider Payload Studio**: Interactive tabs to preview and copy exact JSON payloads for Google Gemini, Anthropic Claude, OpenAI o-series, DeepSeek, and Ollama.
 4. **Delivery**: Surface the absolute file path with clickable links to the user.
 
 > **Completion criterion**: Self-contained HTML report written to `%TEMP%` and delivered to user.
@@ -114,10 +125,10 @@ Present the compute recommendation and pause for user or harness confirmation:
 
 ### CLI Command
 ```bash
-# Markdown block output
-harness assess-compute "Refactor kernel service registry" --arch --files 4
+# Markdown block output with profile
+harness assess-compute "Refactor kernel service registry" --arch --files 4 --profile balanced
 
-# JSON output
+# JSON output with economics
 harness assess-compute "Fix typo in docstrings" --json
 
 # Generate HTML visual brief
@@ -133,32 +144,56 @@ harness assess-compute "Migrate persistent database" --html
 - **Alternative / Peer Models**: `claude-3-7-sonnet | o3-mini | deepseek-r1`
 - **Rationale**: High complexity: cross-module scope, structural ambiguity, or architectural constraints.
 - **Vector Breakdown**: Ambiguity: 0.6, Span: 0.9, Depth: 0.8, Rigor: 0.7, Concurrency: 0.1
+- **Economics Projection**: ~$0.0105 est. cost | Latency: p50 ~4.5s, p95 ~12.0s
 ```
 
 > **Completion criterion**: Structured recommendation block emitted and approved.
 
 ---
 
-## 5. Routing Commit & Provider Payload Synthesis
+## 5. Routing Commit, Dynamic Escalation & EventBus Telemetry
 
-Commit the assessed configuration directly to the agent runtime using `ProviderReasoningAdapter`:
+Commit the assessed configuration directly to the agent runtime, handle reactive retry escalation, and emit immutable audit events to the kernel `EventBus`:
 
+### IoC Service & EventBus Audit:
 ```python
-from harness.services.compute_assessor import ComputeRouter, ProviderReasoningAdapter
+from harness.services.compute_assessor import (
+    COMPUTE_ASSESSOR_SERVICE,
+    ComputeAssessorService,
+    DynamicTrajectoryEscalator,
+    TrajectoryState,
+)
 
-assessment = ComputeRouter.assess("Refactor database schema", files_count=3, is_architecture=True)
-payload = ComputeRouter.synthesize_payload(assessment)
-# Returns:
-# {
-#   "model": "gemini-3.7-flash",
-#   "temperature": 0.7,
-#   "thinking_config": {"thinking_budget": 16384},
-#   "thinking_budget": "high",
-#   "reasoning_effort": "high"
-# }
+# IoC Container resolution
+assessor_service = ctx.require(COMPUTE_ASSESSOR_SERVICE)
+
+# Asynchronous assessment with append-only EventBus telemetry
+assessment = await assessor_service.assess_and_publish("Refactor database schema", files_count=3, is_architecture=True)
+payload = assessor_service.synthesize_payload(assessment)
 ```
 
-> **Completion criterion**: Target execution context configured with recommended model and thinking parameters.
+### Dynamic Trajectory Escalation on Error / Retry:
+```python
+# Track agent trajectory across attempts
+trajectory = TrajectoryState()
+trajectory.record_attempt(success=False, error="Syntax error during compilation")
+
+# Automatically escalate thinking budget (e.g. Fast -> Standard -> High Reasoning)
+escalated_assessment = assessor_service.escalate(assessment, trajectory)
+print(f"Escalated model tier: {escalated_assessment.model_tier} (Budget: {escalated_assessment.budget_tokens:,} tokens)")
+```
+
+### Hierarchical Tree Budget Allocation:
+```python
+# Proportional token allocation across swarm tree branches
+allocated_shares = DynamicTrajectoryEscalator.allocate_tree_budget(
+    total_budget_tokens=32000,
+    branch_weights=[0.5, 0.25, 0.25],
+)
+# Returns [16000, 8000, 8000]
+```
+
+> **Completion criterion**: Target execution context configured with recommended model, thinking parameters, and trajectory escalation policy.
 
 ---
 

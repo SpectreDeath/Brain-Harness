@@ -153,11 +153,32 @@ class LiteLLMService(LLMService):
         if tools is not None:
             call_kwargs["tools"] = tools
 
-        # Map thinking_budget / reasoning_effort to litellm arguments
+        # Map thinking_budget / reasoning_effort using ProviderReasoningAdapter
         if thinking_budget:
-            budget_str = thinking_budget.value if isinstance(thinking_budget, ThinkingBudget) else str(thinking_budget)
-            if budget_str.lower() != "off":
-                call_kwargs["reasoning_effort"] = reasoning_effort or budget_str.lower()
+            budget_enum = (
+                thinking_budget
+                if isinstance(thinking_budget, ThinkingBudget)
+                else ThinkingBudget(str(thinking_budget).lower())
+                if str(thinking_budget).lower() in [b.value for b in ThinkingBudget]
+                else None
+            )
+            if budget_enum:
+                budget_tokens = kwargs.pop(
+                    "budget_tokens",
+                    16384 if budget_enum == ThinkingBudget.HIGH else 4096 if budget_enum == ThinkingBudget.MEDIUM else 1024 if budget_enum == ThinkingBudget.LOW else 0,
+                )
+                provider_params = ProviderReasoningAdapter.get_provider_payload(
+                    model,
+                    budget_enum,
+                    budget_tokens,
+                    temperature=temperature,
+                    max_tokens=max_tokens,
+                )
+                for param_key in ("thinking_config", "thinking", "extra_body", "options", "reasoning_effort", "thinking_budget"):
+                    if param_key in provider_params:
+                        call_kwargs[param_key] = provider_params[param_key]
+                if "max_tokens" in provider_params and not max_tokens:
+                    call_kwargs["max_tokens"] = provider_params["max_tokens"]
         elif reasoning_effort:
             call_kwargs["reasoning_effort"] = reasoning_effort
 
@@ -212,9 +233,30 @@ class LiteLLMService(LLMService):
             **kwargs,
         }
         if thinking_budget:
-            budget_str = thinking_budget.value if isinstance(thinking_budget, ThinkingBudget) else str(thinking_budget)
-            if budget_str.lower() != "off":
-                call_kwargs["reasoning_effort"] = reasoning_effort or budget_str.lower()
+            budget_enum = (
+                thinking_budget
+                if isinstance(thinking_budget, ThinkingBudget)
+                else ThinkingBudget(str(thinking_budget).lower())
+                if str(thinking_budget).lower() in [b.value for b in ThinkingBudget]
+                else None
+            )
+            if budget_enum:
+                budget_tokens = kwargs.pop(
+                    "budget_tokens",
+                    16384 if budget_enum == ThinkingBudget.HIGH else 4096 if budget_enum == ThinkingBudget.MEDIUM else 1024 if budget_enum == ThinkingBudget.LOW else 0,
+                )
+                provider_params = ProviderReasoningAdapter.get_provider_payload(
+                    model,
+                    budget_enum,
+                    budget_tokens,
+                    temperature=temperature,
+                    max_tokens=max_tokens,
+                )
+                for param_key in ("thinking_config", "thinking", "extra_body", "options", "reasoning_effort", "thinking_budget"):
+                    if param_key in provider_params:
+                        call_kwargs[param_key] = provider_params[param_key]
+                if "max_tokens" in provider_params and not max_tokens:
+                    call_kwargs["max_tokens"] = provider_params["max_tokens"]
         elif reasoning_effort:
             call_kwargs["reasoning_effort"] = reasoning_effort
 

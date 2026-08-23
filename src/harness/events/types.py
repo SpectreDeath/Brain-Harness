@@ -42,6 +42,7 @@ class EventType(str, Enum):
     LLM_REQUEST = "llm.request"
     LLM_RESPONSE = "llm.response"
     LLM_ERROR = "llm.error"
+    COMPUTE_ASSESSED = "compute.assessed"
 
     # Ingestion pipeline
     REPO_FETCH_STARTED = "ingestion.fetch_started"
@@ -181,4 +182,18 @@ def llm_event(
         source=source,
         payload=extra,
     )
+
+
+def compute_event(
+    event_type: EventType = EventType.COMPUTE_ASSESSED,
+    source: str = "compute.assessor",
+    **extra: Any,
+) -> HarnessEvent:
+    """Create a compute assessment telemetry event."""
+    return HarnessEvent(
+        event_type=event_type,
+        source=source,
+        payload=extra,
+    )
+
 
