@@ -23,3 +23,8 @@ _Avoid_: Todo list, checklist, schedule
 **Checkpoint**:
 A blocking pause in execution that mandates explicit human review before proceeding with irreversible actions.
 _Avoid_: Breakpoint, pause, stop sign
+
+**Questio Check**:
+An Aquinas-style adversarial reflection step that formulates objections and answers before executing destructive or structural operations.
+_Avoid_: Self-review, sanity check, pre-flight inspection
+

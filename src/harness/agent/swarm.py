@@ -19,6 +19,7 @@ from harness.agent.session import AGENT_SESSION_MANAGER_KEY, AgentSessionManager
 from harness.events.bus import EventBus
 from harness.events.types import EventType, HarnessEvent
 from harness.kernel.context import ServiceContext, ServiceKey
+from harness.kernel.graph import DependencyGraph, GraphCycleError
 from harness.plugins.base import HarnessPlugin
 
 logger = structlog.get_logger()
@@ -75,42 +76,31 @@ class SwarmDAG:
         if from_node_id not in self.nodes[to_node_id].dependencies:
             self.nodes[to_node_id].dependencies.append(from_node_id)
 
+    def to_dependency_graph(self) -> DependencyGraph[str]:
+        """Convert SwarmDAG into an authoritative DependencyGraph instance."""
+        graph = DependencyGraph[str]()
+        for node_id, node in self.nodes.items():
+            graph.add_node(node_id, data=node)
+
+        for node_id, node in self.nodes.items():
+            for dep in node.dependencies:
+                if dep not in self.nodes:
+                    raise ValueError(f"Node '{node_id}' references non-existent dependency '{dep}'")
+                graph.add_edge(from_node=dep, to_node=node_id)
+
+        return graph
+
     def get_execution_plan(self) -> list[list[str]]:
         """Compute parallel execution waves via topological sorting.
 
         Raises:
             ValueError: If a cyclic dependency is detected.
         """
-        in_degree: dict[str, int] = {node_id: 0 for node_id in self.nodes}
-        dependents: dict[str, list[str]] = defaultdict(list)
-
-        for node_id, node in self.nodes.items():
-            for dep in node.dependencies:
-                if dep not in self.nodes:
-                    raise ValueError(f"Node '{node_id}' references non-existent dependency '{dep}'")
-                dependents[dep].append(node_id)
-                in_degree[node_id] += 1
-
-        waves: list[list[str]] = []
-        ready = deque([node_id for node_id, deg in in_degree.items() if deg == 0])
-        processed = 0
-
-        while ready:
-            current_wave = list(ready)
-            ready.clear()
-            waves.append(current_wave)
-            processed += len(current_wave)
-
-            for node_id in current_wave:
-                for dep in dependents[node_id]:
-                    in_degree[dep] -= 1
-                    if in_degree[dep] == 0:
-                        ready.append(dep)
-
-        if processed < len(self.nodes):
-            raise ValueError("Cycle detected in SwarmDAG task dependencies")
-
-        return waves
+        graph = self.to_dependency_graph()
+        try:
+            return graph.execution_waves()
+        except GraphCycleError as e:
+            raise ValueError(f"Cycle detected in SwarmDAG task dependencies: {e}") from e
 
     def to_dict(self) -> dict[str, Any]:
         return {

@@ -19,3 +19,8 @@ _Avoid_: Alert sender, HTTP poster
 **Symbolic Solver**:
 A formal verification engine that uses SMT/Z3 solvers to verify logical formulas and compute constraint solutions.
 _Avoid_: Math engine, formula calculator
+
+**Plugin Forge**:
+An autonomous pipeline that translates external repository architectures into Harness plugins with typed services and manifests.
+_Avoid_: Plugin creator, repo converter, wrapper generator
+

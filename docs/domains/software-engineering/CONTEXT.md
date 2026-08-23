@@ -19,3 +19,16 @@ _Avoid_: Diff report, summary page, HTML preview
 **Runner**:
 An isolated execution wrapper that runs test scripts and evaluates return codes without mutating host process state.
 _Avoid_: Script launcher, terminal runner
+
+**Deep Module**:
+A software component with a simple, narrow interface hiding extensive internal complexity and implementation details.
+_Avoid_: Big class, fat service, monolithic package
+
+**Skill Engine**:
+A standardized multi-stage agent blueprint combining visual HTML briefs, human-in-the-loop checkpoints, and explicit anti-patterns.
+_Avoid_: Prompt template, agent prompt, runbook script
+
+**Compute Budget**:
+A calibrated tiering of model capacity and reasoning effort (High, Medium, Low, Off) matched to task complexity.
+_Avoid_: Model picker, reasoning level, prompt token budget
+

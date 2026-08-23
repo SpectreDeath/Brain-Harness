@@ -19,3 +19,12 @@ _Avoid_: Cleaner, converter, sanitizer
 **Synthetic Matrix**:
 An artificially generated tabular dataset preserving target statistical distributions and correlation structures for benchmarking.
 _Avoid_: Fake data, mock table, dummy data
+
+**Time-to-Event Model**:
+A semiparametric or nonparametric statistical model (Cox PH, Kaplan-Meier) analyzing duration until a binary event under right-censoring.
+_Avoid_: Survival calculator, churn predictor, failure timer
+
+**Data Topology Map**:
+A formal graph representation of data structures, causal DAG lineages, and execution queues across system boundaries.
+_Avoid_: Data flow diagram, schema map, entity relationship chart
+

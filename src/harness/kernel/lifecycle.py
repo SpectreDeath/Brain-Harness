@@ -70,12 +70,12 @@ class DependencyError(Exception):
         )
 
 
-class CyclicDependencyError(Exception):
-    """Raised when a dependency cycle is detected."""
-
-    def __init__(self, cycle: list[str]) -> None:
-        self.cycle = cycle
-        super().__init__(f"Cyclic dependency detected: {' → '.join(cycle)}")
+from harness.kernel.graph import (
+    CyclicDependencyError,
+    DependencyGraph,
+    GraphCycleError,
+    GraphDependencyError,
+)
 
 
 @dataclass
@@ -475,11 +475,59 @@ class PluginLifecycle:
 
     # --- Batch operations ---
 
+    def build_dependency_graph(self, names: list[str] | None = None) -> DependencyGraph[str]:
+        """Construct the DependencyGraph for tracked or specified plugins."""
+        if names is None:
+            names = [
+                n
+                for n, e in self._entries.items()
+                if e.state in (PluginState.VALIDATED, PluginState.LOADED, PluginState.DISABLED)
+            ]
+
+        graph = DependencyGraph[str]()
+        for n in names:
+            graph.add_node(n)
+
+        # Build a provides → plugin_name lookup
+        provider_map: dict[str, str] = {}
+        for name in names:
+            entry = self._entries.get(name)
+            if entry:
+                for key in entry.plugin.provides:
+                    provider_map[key.name] = name
+
+        # Add directed dependency edges (dep_plugin must load before name)
+        for name in names:
+            entry = self._entries.get(name)
+            if entry:
+                for key in entry.plugin.requires:
+                    dep_plugin = provider_map.get(key.name)
+                    if dep_plugin and dep_plugin != name and graph.has_node(dep_plugin):
+                        graph.add_edge(from_node=dep_plugin, to_node=name)
+
+        return graph
+
+    def resolve_enable_waves(self, names: list[str] | None = None) -> list[list[str]]:
+        """Compute parallel execution waves for enabling plugins.
+
+        Args:
+            names: Specific plugins to schedule. Defaults to all validated/loaded plugins.
+
+        Returns:
+            List of waves, where each wave is a list of plugin names that can be safely
+            enabled in parallel.
+
+        Raises:
+            CyclicDependencyError: If a dependency cycle is detected.
+        """
+        graph = self.build_dependency_graph(names)
+        try:
+            return graph.execution_waves()
+        except GraphCycleError as e:
+            raise CyclicDependencyError(e.cycle) from e
+
     def resolve_enable_order(self, names: list[str] | None = None) -> list[str]:
         """Topological sort of plugins by their dependency graph.
-
-        Delegates to the pure ``topological_sort()`` function in
-        ``harness.kernel.graph`` so the algorithm is independently testable.
 
         Args:
             names: Specific plugins to sort. Defaults to all validated plugins.
@@ -490,34 +538,11 @@ class PluginLifecycle:
         Raises:
             CyclicDependencyError: If a dependency cycle is detected.
         """
-        from harness.kernel.graph import topological_sort
-
-        if names is None:
-            names = [
-                n
-                for n, e in self._entries.items()
-                if e.state in (PluginState.VALIDATED, PluginState.LOADED, PluginState.DISABLED)
-            ]
-
-        # Build a provides → plugin_name lookup
-        provider_map: dict[str, str] = {}
-        for name in names:
-            entry = self._entries.get(name)
-            if entry:
-                for key in entry.plugin.provides:
-                    provider_map[key.name] = name
-
-        # Build adjacency: plugin → set of plugins it depends on
-        edges: dict[str, set[str]] = {n: set() for n in names}
-        for name in names:
-            entry = self._entries.get(name)
-            if entry:
-                for key in entry.plugin.requires:
-                    dep_plugin = provider_map.get(key.name)
-                    if dep_plugin and dep_plugin != name:
-                        edges[name].add(dep_plugin)
-
-        return topological_sort(names, edges)
+        graph = self.build_dependency_graph(names)
+        try:
+            return graph.topological_sort()
+        except GraphCycleError as e:
+            raise CyclicDependencyError(e.cycle) from e
 
     async def enable_all(self) -> dict[str, bool]:
         """Enable all validated or disabled plugins in dependency order.

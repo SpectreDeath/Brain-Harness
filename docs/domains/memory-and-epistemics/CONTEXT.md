@@ -23,3 +23,12 @@ _Avoid_: Summarizer, trimmer, minifier
 **Prompt Benchmark**:
 A structured matrix comparing prompt efficacy, token consumption, and model latency across test workloads.
 _Avoid_: Prompt score, evaluation test
+
+**Brain Introspector**:
+A reflection engine that analyzes attached brain transcripts and conversation trees to distill reusable procedural patterns.
+_Avoid_: Memory searcher, history parser, log crawler
+
+**Repository Introspector**:
+An analytical tool that extracts architectural patterns, commit trajectories, and engineering heuristics from Git repositories.
+_Avoid_: Code scanner, repo scraper, git summarizer
+

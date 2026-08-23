@@ -456,9 +456,11 @@ class TestLiteLLMReasoningDeepSeam:
         mock_response.usage = {"total_tokens": 100}
         mock_response.model_dump.return_value = {}
 
-        with patch("litellm.acompletion", new_callable=AsyncMock) as mock_acomplete:
-            mock_acomplete.return_value = mock_response
+        mock_litellm = MagicMock()
+        mock_acomplete = AsyncMock(return_value=mock_response)
+        mock_litellm.acompletion = mock_acomplete
 
+        with patch.dict("sys.modules", {"litellm": mock_litellm}):
             res = await service.complete(
                 [LLMMessage(role="user", content="Test prompt")],
                 model="gemini-3.7-flash",
@@ -482,9 +484,11 @@ class TestLiteLLMReasoningDeepSeam:
         mock_response.usage = {"total_tokens": 100}
         mock_response.model_dump.return_value = {}
 
-        with patch("litellm.acompletion", new_callable=AsyncMock) as mock_acomplete:
-            mock_acomplete.return_value = mock_response
+        mock_litellm = MagicMock()
+        mock_acomplete = AsyncMock(return_value=mock_response)
+        mock_litellm.acompletion = mock_acomplete
 
+        with patch.dict("sys.modules", {"litellm": mock_litellm}):
             await service.complete(
                 [LLMMessage(role="user", content="Refactor architecture")],
                 model="claude-3-7-sonnet",
