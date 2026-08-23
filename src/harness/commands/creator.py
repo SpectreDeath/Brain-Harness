@@ -64,8 +64,21 @@ def list_archetypes_cmd() -> list[dict[str, str]]:
     return PluginCreator.list_archetypes()
 
 
+async def remediate_plugin_cmd(path: Path | str = ".") -> ValidationReport:
+    """Auto-repair missing manifest, boilerplate functions, and dependency files."""
+    return await PluginCreator.remediate(path)
+
+
+# Backward-compatible alias
+build_plugin_cmd = scaffold_plugin_cmd
+
+
 __all__ = [
+    "build_plugin_cmd",
     "list_archetypes_cmd",
+    "remediate_plugin_cmd",
     "scaffold_plugin_cmd",
     "validate_plugin_cmd",
 ]
+
+

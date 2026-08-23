@@ -76,29 +76,14 @@ def main(debug: bool) -> None:
 @click.argument("path", default=".", type=click.Path())
 def init(path: str) -> None:
     """Initialize a harness workspace."""
-    workspace = Path(path).resolve()
-    plugins_dir = workspace / "plugins"
-    config_dir = workspace / ".harness"
+    from harness.commands.workspace import init_workspace_cmd
 
-    plugins_dir.mkdir(parents=True, exist_ok=True)
-    config_dir.mkdir(parents=True, exist_ok=True)
-
-    # Create default config
-    config_file = config_dir / "config.json"
-    if not config_file.exists():
-        config = {
-            "version": "0.1.0",
-            "plugin_dirs": ["plugins"],
-            "event_log": ".harness/events.jsonl",
-            "storage_db": ".harness/storage.db",
-        }
-        with open(config_file, "w", encoding="utf-8") as f:
-            json.dump(config, f, indent=2)
-
-    click.echo(f"✓ Workspace initialized at {workspace}")
+    res = init_workspace_cmd(path)
+    click.echo(f"✓ Workspace initialized at {res.workspace_path}")
     click.echo("  plugins/          → Drop-in plugin directory")
     click.echo("  .harness/         → Configuration and data")
     click.echo("\nNext: harness plugin add <github-url>")
+
 
 
 @main.group()
@@ -379,25 +364,26 @@ def services() -> None:
 @click.option("--limit", default=50, help="Max events to show")
 def events(event_type: str | None, limit: int) -> None:
     """Show the event log."""
-    from harness.events.bus import EventBus
+    from harness.commands.events import get_events_cmd
 
     log_path = Path(".harness") / "events.jsonl"
     if not log_path.exists():
         click.echo("No event log found. Initialize with 'harness init' first.")
         return
 
-    evts = EventBus.read_log_file(log_path, event_type=event_type, limit=limit)
-    if not evts:
+    res = get_events_cmd(event_type=event_type, limit=limit, log_path=log_path)
+    if not res.events:
         click.echo("No events found.")
         return
 
-    for evt in evts:
+    for evt in res.events:
         ts = evt.timestamp.isoformat()[:19]
         etype = evt.event_type.value
         source = evt.source
         click.echo(f"  {ts}  [{etype}]  {source}")
 
-    click.echo(f"\nShowing {len(evts)} event(s)")
+    click.echo(f"\nShowing {len(res.events)} event(s)")
+
 
 
 @main.group()
@@ -467,24 +453,25 @@ def creator_build(
     author: str,
 ) -> None:
     """Scaffold a new plugin project."""
-    from harness.creator.creator import PluginCreator
-    from harness.plugins.manifest import IsolationMode
+    from harness.commands.creator import scaffold_plugin_cmd
 
     out_dir = Path(target_dir) if target_dir else Path("plugins") / name
     tools_list = [t.strip() for t in tools.split(",") if t.strip()]
     deps_list = [d.strip() for d in deps.split(",") if d.strip()]
 
-    PluginCreator.scaffold(
-        target_dir=out_dir,
-        name=name,
-        description=description,
-        language=language.lower(),
-        tools=tools_list,
-        dependencies=deps_list,
-        author=author,
-        category=category,
-        preset=preset.lower(),
-        isolation=IsolationMode(isolation.lower()),
+    _run_async(
+        scaffold_plugin_cmd(
+            name=name,
+            target_dir=out_dir,
+            description=description,
+            language=language,
+            tools=tools_list,
+            dependencies=deps_list,
+            author=author,
+            category=category,
+            preset=preset,
+            isolation=isolation,
+        )
     )
     click.echo(f"✓ Created plugin scaffold at {out_dir}")
     click.echo(f"  ├── plugin.json (language: {language}, isolation: {isolation})")
@@ -499,8 +486,7 @@ creator.add_command(creator_build, name="scaffold")
 @creator.command("init")
 def creator_init() -> None:
     """Interactive wizard for scaffolding a new plugin project."""
-    from harness.creator.creator import PluginCreator
-    from harness.plugins.manifest import IsolationMode
+    from harness.commands.creator import scaffold_plugin_cmd
 
     click.echo("🚀 Brain Harness — Plugin Creator Wizard")
     click.echo("━" * 45)
@@ -532,16 +518,18 @@ def creator_init() -> None:
     deps_list = [d.strip() for d in deps_raw.split(",") if d.strip()]
     out_dir = Path(target_dir)
 
-    PluginCreator.scaffold(
-        target_dir=out_dir,
-        name=name,
-        description=description,
-        language=language.lower(),
-        tools=tools_list,
-        dependencies=deps_list,
-        category=category,
-        preset=preset.lower(),
-        isolation=IsolationMode(isolation.lower()),
+    _run_async(
+        scaffold_plugin_cmd(
+            name=name,
+            target_dir=out_dir,
+            description=description,
+            language=language,
+            tools=tools_list,
+            dependencies=deps_list,
+            category=category,
+            preset=preset,
+            isolation=isolation,
+        )
     )
     click.echo(f"\n✓ Successfully initialized plugin '{name}' at {out_dir}")
 
@@ -553,9 +541,9 @@ def creator_init() -> None:
 @click.option("--fix", "--remediate", "remediate", is_flag=True, default=False, help="Automatically repair detected issues")
 def creator_validate(plugin_path: str, dry_run: bool, timeout: float, remediate: bool) -> None:
     """Validate a plugin manifest, source files, and sandbox execution."""
-    from harness.creator.creator import PluginCreator
+    from harness.commands.creator import validate_plugin_cmd
 
-    report = _run_async(PluginCreator.validate(plugin_path, dry_run=dry_run, timeout=timeout, remediate=remediate))
+    report = _run_async(validate_plugin_cmd(plugin_path, dry_run=dry_run, timeout=timeout, remediate=remediate))
     click.echo(report.format_cli())
     if not report.valid:
         raise click.ClickException("Validation failed. See details above.")
@@ -565,9 +553,9 @@ def creator_validate(plugin_path: str, dry_run: bool, timeout: float, remediate:
 @click.argument("plugin_path", default=".")
 def creator_remediate(plugin_path: str) -> None:
     """Auto-repair missing manifest, boilerplate functions, and dependency files."""
-    from harness.creator.creator import PluginCreator
+    from harness.commands.creator import remediate_plugin_cmd
 
-    report = _run_async(PluginCreator.remediate(plugin_path))
+    report = _run_async(remediate_plugin_cmd(plugin_path))
     click.echo(report.format_cli())
     if report.valid:
         click.echo("✓ Successfully auto-remediated plugin package.")
@@ -578,13 +566,14 @@ def creator_remediate(plugin_path: str) -> None:
 @creator.command("archetypes")
 def creator_archetypes() -> None:
     """List all available plugin archetypes and templates."""
-    from harness.creator.creator import PluginCreator
+    from harness.commands.creator import list_archetypes_cmd
 
-    archetypes = PluginCreator.list_archetypes()
+    archetypes = list_archetypes_cmd()
     click.echo("📦 Available Plugin Archetypes")
     click.echo("━" * 45)
     for a in archetypes:
         click.echo(f"  • {a['name']:<18} — {a['description']}")
+
 
 
 # Register top-level aliases for rapid creator access
@@ -626,25 +615,23 @@ def run() -> None:
     click.echo("━" * 40)
 
     async def _run() -> None:
-        from harness.kernel.runtime import HarnessRuntime
+        from harness.commands.runtime import run_harness_cmd
 
         event_log = Path(".harness") / "events.jsonl"
         click.echo("⟳ Loading built-in and ecosystem plugins...")
 
-        runtime = HarnessRuntime.create(
-            event_log_path=event_log if event_log.parent.exists() else None
+        res = await run_harness_cmd(
+            event_log_path=event_log if event_log.parent.exists() else None,
+            blocking=False,
         )
-        await runtime.start()
+        runtime = res.runtime
+        click.echo(f"  ✓ {res.enabled_count}/{len(res.summary)} plugins enabled\n")
 
-        summary = runtime.summary()
-        enabled_count = sum(1 for s in summary.values() if s == "enabled")
-        click.echo(f"  ✓ {enabled_count}/{len(summary)} plugins enabled\n")
-
-        for name, state in summary.items():
+        for name, state in res.summary.items():
             icon = "✓" if state == "enabled" else "✗"
             click.echo(f"  {icon} {name:<30} [{state}]")
 
-        click.echo(f"\n  Services: {len(runtime.context.list_services())}\n")
+        click.echo(f"\n  Services: {res.services_count}\n")
         click.echo("Harness is running. Press Ctrl+C to stop.")
 
         try:
@@ -689,19 +676,9 @@ def mcp() -> None:
 @mcp.command("serve")
 def mcp_serve() -> None:
     """Start the MCP STDIO server exposing Harness tools to external agents."""
+    from harness.commands.mcp import serve_mcp_cmd
 
-    async def _serve() -> None:
-        from harness.kernel.runtime import HarnessRuntime
-        from harness.mcp.server import HarnessMCPServer
-
-        async with HarnessRuntime.create(db_path=":memory:") as runtime:
-            tool_reg = runtime.tools
-            if not tool_reg:
-                raise RuntimeError("Tool registry service not available")
-            server = HarnessMCPServer(tool_reg)
-            await server.run_stdio()
-
-    _run_async(_serve())
+    _run_async(serve_mcp_cmd(stdio=True))
 
 
 @main.command()
@@ -709,14 +686,16 @@ def watch() -> None:
     """Run the harness with live filesystem hot-reloading enabled."""
 
     async def _watch() -> None:
+        from harness.commands.workspace import watch_workspace_cmd
         from harness.kernel.runtime import HarnessRuntime
-        from harness.plugins.watcher import PluginWatcher
 
         runtime = HarnessRuntime.create(db_path=":memory:")
         await runtime.start()
 
-        watcher = PluginWatcher([Path("plugins")], runtime.loader, runtime.lifecycle)
-        watcher.start()
+        watcher = await watch_workspace_cmd(
+            plugin_dirs=[Path("plugins")],
+            runtime=runtime,
+        )
 
         click.echo("👁️  Harness Watcher active. Monitoring plugins/ for live hot-reload...")
         click.echo("Press Ctrl+C to stop.")
@@ -741,14 +720,12 @@ def apply(config_file: str) -> None:
     """Apply and reconcile a declarative configuration tree against Harness."""
 
     async def _apply() -> None:
-        from harness.kernel.runtime import HarnessRuntime
+        from harness.commands.runtime import apply_config_cmd
 
         p = Path(config_file).resolve()
         click.echo(f"🔄 Reconciling configuration from {p.name}...")
-        runtime = HarnessRuntime.from_config(p)
-        await runtime.start()
+        await apply_config_cmd(p)
         click.echo("✓ Declarative reconciliation applied successfully.")
-        await runtime.stop()
 
     _run_async(_apply())
 
@@ -762,22 +739,16 @@ def config() -> None:
 @click.argument("config_file", type=click.Path(exists=True))
 def config_validate(config_file: str) -> None:
     """Validate syntax and schema of a declarative configuration file."""
-    import json
-    from harness.kernel.reconciler import HarnessConfigTree
+    from harness.commands.runtime import validate_config_cmd
 
     p = Path(config_file).resolve()
-    text = p.read_text(encoding="utf-8")
-    try:
-        try:
-            import yaml
-            data = yaml.safe_load(text)
-        except ImportError:
-            data = json.loads(text)
-        tree = HarnessConfigTree.model_validate(data)
-        click.echo(f"✓ Configuration file {p.name} is valid (version: {tree.version}, plugins: {len(tree.plugins)})")
-    except Exception as e:
-        click.echo(f"✗ Configuration validation failed: {e}", err=True)
+    res = validate_config_cmd(p)
+    if res.valid:
+        click.echo(f"✓ Configuration file {p.name} is valid (version: {res.version}, plugins: {res.plugins_count})")
+    else:
+        click.echo(f"✗ Configuration validation failed: {res.error_message}", err=True)
         sys.exit(1)
+
 
 
 @main.group()
@@ -947,42 +918,28 @@ def assess_compute(
     generate_html: bool,
 ) -> None:
     """Assess task surface complexity and recommend optimal model tier & reasoning budget."""
-    from harness.services.compute_assessor import ComputeRouter, ModelTier
+    from harness.commands.compute import assess_compute_cmd
 
-    tier_enum = None
-    if override_tier:
-        if override_tier in ("high", "high_reasoning"):
-            tier_enum = ModelTier.HIGH_REASONING
-        elif override_tier in ("low", "fast_mechanical"):
-            tier_enum = ModelTier.FAST_MECHANICAL
-        elif override_tier in ("medium", "standard_agentic"):
-            tier_enum = ModelTier.STANDARD_AGENTIC
-
-    assessment = ComputeRouter.assess(
+    res = assess_compute_cmd(
         prompt,
         files_count=files_count,
         is_architecture=is_architecture,
         is_debugging=is_debugging,
-        override_tier=tier_enum,
+        override_tier=override_tier,
         profile=profile,
+        generate_html=generate_html,
+        task_title="CLI Compute Assessment",
     )
 
     if output_json:
-        click.echo(json.dumps(assessment.to_dict(), indent=2))
+        click.echo(json.dumps(res.assessment.to_dict(), indent=2))
         return
 
-    click.echo("\n" + assessment.format_recommendation_block())
+    click.echo("\n" + res.recommendation_block)
 
-    if generate_html:
-        html_path = ComputeRouter.generate_visual_brief(
-            prompt,
-            files_count=files_count,
-            is_architecture=is_architecture,
-            is_debugging=is_debugging,
-            profile=profile,
-            task_title="CLI Compute Assessment",
-        )
-        click.echo(f"\n✨ Generated Interactive HTML Visual Brief:\n   {html_path}")
+    if res.html_path:
+        click.echo(f"\n✨ Generated Interactive HTML Visual Brief:\n   {res.html_path}")
+
 
 
 if __name__ == "__main__":
