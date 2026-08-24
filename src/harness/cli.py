@@ -22,6 +22,12 @@ import asyncio
 import json
 import sys
 from pathlib import Path
+
+# Ensure src is in sys.path when executed directly
+_src_dir = Path(__file__).resolve().parent.parent
+if str(_src_dir) not in sys.path:
+    sys.path.insert(0, str(_src_dir))
+
 from typing import Any
 
 import click
@@ -937,9 +943,120 @@ def assess_compute(
 
     click.echo("\n" + res.recommendation_block)
 
-    if res.html_path:
-        click.echo(f"\n✨ Generated Interactive HTML Visual Brief:\n   {res.html_path}")
+@main.group("knowledge")
+def knowledge_cmd() -> None:
+    """Manage and query the distilled Knowledge Vault and Isnad lineage."""
+    pass
 
+
+@knowledge_cmd.command("sync")
+@click.option("--vault", "-v", "vault_dir", default=".harness/knowledge", help="Path to knowledge vault root directory")
+@click.option("--db", "db_path", default=None, help="Path to SQLite storage database (defaults to ~/.harness/storage.db)")
+def knowledge_sync(vault_dir: str, db_path: str | None) -> None:
+    """Sync all on-disk Knowledge Items from .harness/knowledge/ into the storage database."""
+    from harness.services.storage import SQLiteStorageService
+
+    storage_path = db_path or (Path.home() / ".harness" / "storage.db")
+    storage = SQLiteStorageService(storage_path)
+
+    async def _sync():
+        count = await storage.sync_knowledge_vault(vault_dir)
+        return count
+
+    synced = _run_async(_sync())
+    storage.close()
+    click.echo(f"✓ Successfully synced {synced} Knowledge Item(s) from '{vault_dir}' into storage.")
+
+
+@knowledge_cmd.command("list")
+@click.option("--tag", "-t", default=None, help="Filter by tag")
+@click.option("--vault", "-v", "vault_dir", default=".harness/knowledge", help="Path to knowledge vault root directory")
+def knowledge_list(tag: str | None, vault_dir: str) -> None:
+    """List all Knowledge Items in storage (hydrates from disk if DB is empty)."""
+    from harness.services.storage import SQLiteStorageService
+
+    storage = SQLiteStorageService(":memory:")
+
+    async def _list():
+        await storage.sync_knowledge_vault(vault_dir)
+        return await storage.list_knowledge_items(tag=tag)
+
+    items = _run_async(_list())
+    storage.close()
+
+    click.echo(f"\nKnowledge Vault ({len(items)} items):\n" + "━" * 70)
+    for item in items:
+        tags_str = f"[{', '.join(item.tags)}]" if item.tags else ""
+        click.echo(f"  • {item.id:<20} {item.title:<40} {tags_str}")
+    click.echo()
+
+
+@knowledge_cmd.command("query")
+@click.argument("query_str")
+@click.option("--tag", "-t", default=None, help="Filter by tag")
+@click.option("--status", "-s", default=None, help="Filter by Isnad status (e.g. VERIFIED)")
+@click.option("--vault", "-v", "vault_dir", default=".harness/knowledge", help="Path to knowledge vault root directory")
+def knowledge_query(query_str: str, tag: str | None, status: str | None, vault_dir: str) -> None:
+    """Search Knowledge Items by keyword, tag, or Isnad status."""
+    from harness.services.storage import SQLiteStorageService
+
+    storage = SQLiteStorageService(":memory:")
+
+    async def _query():
+        await storage.sync_knowledge_vault(vault_dir)
+        return await storage.query_knowledge(query=query_str, tag=tag, status=status)
+
+    results = _run_async(_query())
+    storage.close()
+
+    click.echo(f"\nQuery Results for '{query_str}' ({len(results)} matches):\n" + "━" * 70)
+    for item in results:
+        status_val = (
+            item.isnad.status
+            if hasattr(item.isnad, "status")
+            else item.isnad.get("status", "UNKNOWN")
+            if isinstance(item.isnad, dict)
+            else "UNKNOWN"
+        )
+        click.echo(f"  [{status_val}] {item.id}: {item.title}")
+        if item.summary:
+            summary_first = item.summary.split("\n")[0].strip("# ")
+            click.echo(f"      {summary_first[:80]}")
+    click.echo()
+
+
+@knowledge_cmd.command("verify")
+@click.argument("ki_id")
+@click.option("--vault", "-v", "vault_dir", default=".harness/knowledge", help="Path to knowledge vault root directory")
+def knowledge_verify(ki_id: str, vault_dir: str) -> None:
+    """Audit Isnad lineage nodes and primary source file existence for a Knowledge Item."""
+    from harness.services.storage import SQLiteStorageService
+
+    storage = SQLiteStorageService(":memory:")
+
+    async def _verify():
+        await storage.sync_knowledge_vault(vault_dir)
+        return await storage.verify_isnad_integrity(ki_id)
+
+    report = _run_async(_verify())
+    storage.close()
+
+    if report.get("status") == "error":
+        click.echo(f"✗ Error: {report.get('error')}")
+        sys.exit(1)
+
+    status_symbol = "✓ PASS" if report.get("integrity_verified") else "⚠ WARNING (Some lineage targets missing)"
+    click.echo(f"\nIsnad Lineage Audit: {report.get('ki_id')} — {report.get('title')}")
+    click.echo("━" * 70)
+    click.echo(f"Integrity Status: {status_symbol}")
+    click.echo(f"Isnad Claim Status: {report.get('isnad_status')}\n")
+
+    for claim in report.get("claims_audited", []):
+        click.echo(f"Claim: \"{claim.get('assertion')}\"")
+        for node in claim.get("nodes", []):
+            mark = "  ✓" if node.get("file_exists") else "  ✗"
+            click.echo(f"  {mark} {node.get('uri')} -> exists: {node.get('file_exists')}")
+    click.echo()
 
 
 if __name__ == "__main__":

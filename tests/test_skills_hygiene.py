@@ -15,6 +15,7 @@ from harness.services.skill_graph import (
     SkillStageDefinition,
 )
 from harness.services.storage import (
+    KNOWLEDGE_VAULT_KEY,
     STORAGE_SERVICE_KEY,
     IsnadLineageBlock,
     IsnadLineageNode,
@@ -131,6 +132,97 @@ class TestStorageKnowledgeAndIsnadLineage:
         assert len(missing_tag) == 0
 
         storage.close()
+
+    async def test_sync_knowledge_vault_from_real_disk(self) -> None:
+        """Test sync_knowledge_vault against active .harness/knowledge directory."""
+        storage = SQLiteStorageService(":memory:")
+        vault_path = Path(__file__).parent.parent / ".harness" / "knowledge"
+        assert vault_path.exists()
+
+        synced_count = await storage.sync_knowledge_vault(vault_path)
+        assert synced_count >= 14
+
+        items = await storage.list_knowledge_items()
+        assert len(items) == synced_count
+
+        # Check retrieval of specific distilled items
+        ki_01 = await storage.get_knowledge_item("ki_20260823_01")
+        assert ki_01 is not None
+        assert "Subprocess" in ki_01.title
+        assert "sandbox" in ki_01.tags
+
+        storage.close()
+
+    async def test_export_knowledge_vault_roundtrip(self, tmp_path: Path) -> None:
+        """Test roundtrip export and sync fidelity using temporary directory."""
+        storage_src = SQLiteStorageService(":memory:")
+        vault_path = Path(__file__).parent.parent / ".harness" / "knowledge"
+        await storage_src.sync_knowledge_vault(vault_path)
+
+        export_dir = tmp_path / "exported_vault"
+        exported_count = await storage_src.export_knowledge_vault(export_dir)
+        assert exported_count >= 14
+
+        # Read back into a clean storage instance
+        storage_dst = SQLiteStorageService(":memory:")
+        synced_back = await storage_dst.sync_knowledge_vault(export_dir)
+        assert synced_back == exported_count
+
+        for item in await storage_src.list_knowledge_items():
+            dst_item = await storage_dst.get_knowledge_item(item.id)
+            assert dst_item is not None
+            assert dst_item.title == item.title
+            assert dst_item.tags == item.tags
+
+        storage_src.close()
+        storage_dst.close()
+
+    async def test_query_knowledge_filtering(self) -> None:
+        """Test query_knowledge filtering across query strings, tags, and status."""
+        storage = SQLiteStorageService(":memory:")
+        vault_path = Path(__file__).parent.parent / ".harness" / "knowledge"
+        await storage.sync_knowledge_vault(vault_path)
+
+        # Keyword search
+        sandbox_items = await storage.query_knowledge(query="subprocess")
+        assert len(sandbox_items) >= 1
+        assert any("ki_20260823_01" == item.id for item in sandbox_items)
+
+        # Tag search
+        cli_items = await storage.query_knowledge(tag="powershell")
+        assert len(cli_items) >= 1
+        assert any("ki_20260823_03" == item.id for item in cli_items)
+
+        # Status search
+        verified_items = await storage.query_knowledge(status="VERIFIED")
+        assert len(verified_items) >= 1
+
+        storage.close()
+
+    async def test_verify_isnad_integrity(self) -> None:
+        """Test verify_isnad_integrity on knowledge item lineage nodes."""
+        storage = SQLiteStorageService(":memory:")
+        vault_path = Path(__file__).parent.parent / ".harness" / "knowledge"
+        await storage.sync_knowledge_vault(vault_path)
+
+        res = await storage.verify_isnad_integrity("ki_20260823_01")
+        assert res["status"] in ("ok", "warning")
+        assert res["ki_id"] == "ki_20260823_01"
+        assert len(res["claims_audited"]) >= 1
+
+        storage.close()
+
+    async def test_storage_plugin_provides_both_keys(self) -> None:
+        """Test that StoragePlugin provides both STORAGE_SERVICE_KEY and KNOWLEDGE_VAULT_KEY."""
+        plugin = StoragePlugin()
+        assert STORAGE_SERVICE_KEY in plugin.provides
+        assert KNOWLEDGE_VAULT_KEY in plugin.provides
+
+        ctx = ServiceContext()
+        await plugin.on_load(ctx)
+        assert ctx.has(STORAGE_SERVICE_KEY)
+        assert ctx.has(KNOWLEDGE_VAULT_KEY)
+        await plugin.on_unload()
 
 
 @pytest.mark.unit

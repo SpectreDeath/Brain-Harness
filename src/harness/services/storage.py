@@ -137,14 +137,180 @@ class StorageService(ABC):
                 logger.warning("Failed to validate knowledge item", error=str(e))
         return items
 
+    async def sync_knowledge_vault(self, vault_dir: Path | str = ".harness/knowledge") -> int:
+        """Scan on-disk dual-file knowledge vault (.harness/knowledge/) and sync to storage."""
+        root = Path(vault_dir).resolve()
+        if not root.exists() or not root.is_dir():
+            return 0
+
+        synced_count = 0
+        for ki_dir in root.iterdir():
+            if not ki_dir.is_dir():
+                continue
+            meta_file = ki_dir / "metadata.json"
+            if not meta_file.exists():
+                continue
+            try:
+                meta = json.loads(meta_file.read_text(encoding="utf-8"))
+                summary_file = ki_dir / "summary.md"
+                summary_text = ""
+                if summary_file.exists():
+                    summary_text = summary_file.read_text(encoding="utf-8")
+
+                if "summary" not in meta or not meta["summary"]:
+                    meta["summary"] = summary_text
+
+                ki = KnowledgeItemRecord(
+                    id=meta.get("id", ki_dir.name),
+                    title=meta.get("title", ki_dir.name),
+                    source_target=meta.get("source_target", meta.get("source_brain", "")),
+                    detected_format=meta.get("detected_format", "raw_docs"),
+                    isnad=meta.get("isnad", {}),
+                    tags=meta.get("tags", []),
+                    summary=meta.get("summary", summary_text),
+                )
+                await self.save_knowledge_item(ki)
+                synced_count += 1
+            except Exception as e:
+                logger.warning("Failed to sync knowledge item from disk", dir=str(ki_dir), error=str(e))
+
+        return synced_count
+
+    async def export_knowledge_vault(self, vault_dir: Path | str = ".harness/knowledge") -> int:
+        """Export all stored knowledge items to the on-disk dual-file vault."""
+        root = Path(vault_dir).resolve()
+        root.mkdir(parents=True, exist_ok=True)
+        items = await self.list_knowledge_items()
+        exported = 0
+
+        for item in items:
+            ki_dir = root / item.id
+            ki_dir.mkdir(parents=True, exist_ok=True)
+            meta_file = ki_dir / "metadata.json"
+            summary_file = ki_dir / "summary.md"
+
+            meta_data = {
+                "id": item.id,
+                "title": item.title,
+                "source_target": item.source_target,
+                "detected_format": item.detected_format,
+                "isnad": item.isnad.model_dump() if isinstance(item.isnad, IsnadLineageBlock) else item.isnad,
+                "tags": item.tags,
+                "context": getattr(item, "context", f"Knowledge item {item.id}"),
+                "distilled_learning": item.summary.split("\n")[0] if item.summary else item.title,
+            }
+            meta_file.write_text(json.dumps(meta_data, indent=2), encoding="utf-8")
+
+            if item.summary:
+                summary_file.write_text(item.summary, encoding="utf-8")
+            elif not summary_file.exists():
+                summary_file.write_text(f"# {item.title}\n\n{item.summary or item.title}\n", encoding="utf-8")
+
+            exported += 1
+
+        return exported
+
+    async def query_knowledge(
+        self,
+        query: str = "",
+        tag: str | None = None,
+        status: str | None = None,
+    ) -> list[KnowledgeItemRecord]:
+        """Query knowledge items by search term, tag, and isnad status."""
+        items = await self.list_knowledge_items(tag=tag)
+        if not query and not status:
+            return items
+
+        q_lower = query.lower().strip()
+        filtered: list[KnowledgeItemRecord] = []
+
+        for item in items:
+            if status:
+                item_status = "UNKNOWN"
+                if isinstance(item.isnad, IsnadLineageBlock):
+                    item_status = item.isnad.status
+                elif isinstance(item.isnad, dict):
+                    item_status = item.isnad.get("status", "VERIFIED" if item.isnad.get("verified") else "UNKNOWN")
+                if item_status.upper() != status.upper():
+                    continue
+
+            if q_lower:
+                searchable = f"{item.title} {item.summary} {' '.join(item.tags)} {item.source_target}".lower()
+                if q_lower not in searchable:
+                    continue
+
+            filtered.append(item)
+
+        return filtered
+
+    async def verify_isnad_integrity(self, ki_id: str, base_dir: Path | str = ".") -> dict[str, Any]:
+        """Verify the Isnad lineage claims and primary source files for a given KI."""
+        ki = await self.get_knowledge_item(ki_id)
+        if not ki:
+            return {"status": "error", "error": f"Knowledge item {ki_id} not found"}
+
+        base = Path(base_dir).resolve()
+        claims_checked: list[dict[str, Any]] = []
+        all_valid = True
+
+        isnad_data = (
+            ki.isnad.model_dump()
+            if isinstance(ki.isnad, IsnadLineageBlock)
+            else (ki.isnad if isinstance(ki.isnad, dict) else {})
+        )
+        claims = isnad_data.get("claims", [])
+        if not claims and "primary_source" in isnad_data:
+            claims = [
+                {
+                    "assertion": ki.title,
+                    "lineage": [{"uri": isnad_data["primary_source"], "verified": isnad_data.get("verified", False)}],
+                }
+            ]
+
+        for claim in claims:
+            assertion = claim.get("assertion", "")
+            lineage_nodes = claim.get("lineage", [])
+            node_results = []
+            for node in lineage_nodes:
+                uri = node.get("uri", "")
+                clean_path_part = uri.replace("file:///", "").replace("file://", "").split("#")[0]
+                target_file = base / clean_path_part if not Path(clean_path_part).is_absolute() else Path(clean_path_part)
+                exists = target_file.exists()
+                if not exists:
+                    all_valid = False
+                node_results.append(
+                    {
+                        "uri": uri,
+                        "target_path": str(target_file),
+                        "file_exists": exists,
+                        "claimed_verified": node.get("verified", False),
+                    }
+                )
+            claims_checked.append(
+                {
+                    "assertion": assertion,
+                    "nodes": node_results,
+                }
+            )
+
+        return {
+            "status": "ok" if all_valid else "warning",
+            "ki_id": ki_id,
+            "title": ki.title,
+            "isnad_status": isnad_data.get("status", "VERIFIED"),
+            "integrity_verified": all_valid,
+            "claims_audited": claims_checked,
+        }
+
     def compute_sha256(self, content: str | bytes) -> str:
         """Compute SHA-256 hash for provenance nodes."""
         data = content.encode("utf-8") if isinstance(content, str) else content
         return hashlib.sha256(data).hexdigest()
 
 
-# Canonical service key for storage
+# Canonical service key for storage & knowledge vault
 STORAGE_SERVICE_KEY: ServiceKey[StorageService] = ServiceKey("storage.default")
+KNOWLEDGE_VAULT_KEY: ServiceKey[StorageService] = ServiceKey("storage.knowledge_vault")
 
 
 class SQLiteStorageService(StorageService):
@@ -320,7 +486,7 @@ class StoragePlugin(HarnessPlugin):
 
     @property
     def provides(self) -> list[ServiceKey[Any]]:
-        return [STORAGE_SERVICE_KEY]
+        return [STORAGE_SERVICE_KEY, KNOWLEDGE_VAULT_KEY]
 
     @property
     def trusted(self) -> bool:
@@ -332,7 +498,8 @@ class StoragePlugin(HarnessPlugin):
             db_path.parent.mkdir(parents=True, exist_ok=True)
         self._service = SQLiteStorageService(db_path)
         ctx.provide(STORAGE_SERVICE_KEY, self._service, provider=self.name)
-        logger.info("Storage service registered", db_path=str(db_path))
+        ctx.provide(KNOWLEDGE_VAULT_KEY, self._service, provider=self.name)
+        logger.info("Storage & Knowledge Vault services registered", db_path=str(db_path))
 
     async def on_unload(self) -> None:
         if self._service:
