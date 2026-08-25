@@ -1,0 +1,112 @@
+{
+  "name": "plugin.graphiti_memory",
+  "version": "0.1.0",
+  "description": "Temporal knowledge graph engine with bi-temporal edge invalidation and tri-brid search reranking",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "entrypoints": [
+    {
+      "name": "graphiti_add_episode",
+      "description": "Ingest episodic interaction text into the temporal knowledge graph, extracting entities and facts",
+      "parameters": [
+        {
+          "name": "content",
+          "type": "string",
+          "description": "Raw interaction text, message payload, or document segment",
+          "required": true
+        },
+        {
+          "name": "group_id",
+          "type": "string",
+          "description": "Multi-tenant namespace or session identifier partition (default: 'default')",
+          "required": false
+        },
+        {
+          "name": "source_description",
+          "type": "string",
+          "description": "Provenance context description (e.g. 'user_message', 'ide_transcript', 'git_commit')",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "graphiti_search",
+      "description": "Execute tri-brid search (dense vector, BM25 keyword, BFS graph proximity) with balanced merge reranking",
+      "parameters": [
+        {
+          "name": "query",
+          "type": "string",
+          "description": "Natural language search query or concept",
+          "required": true
+        },
+        {
+          "name": "group_id",
+          "type": "string",
+          "description": "Optional group ID partition filter (default: 'default')",
+          "required": false
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "description": "Maximum number of ranked facts to return (default: 5)",
+          "required": false
+        },
+        {
+          "name": "include_invalidated",
+          "type": "boolean",
+          "description": "Set true for historical time-travel analysis of superseded facts (default: false)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "graphiti_get_entity",
+      "description": "Retrieve full entity node state, summaries, attributes, and incident relationships",
+      "parameters": [
+        {
+          "name": "name_or_uuid",
+          "type": "string",
+          "description": "Canonical entity name or UUID identifier",
+          "required": true
+        },
+        {
+          "name": "group_id",
+          "type": "string",
+          "description": "Partition group identifier (default: 'default')",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "graphiti_invalidate_fact",
+      "description": "Mark a fact relation edge as invalidated with a timestamped record to preserve historical truth",
+      "parameters": [
+        {
+          "name": "edge_uuid",
+          "type": "string",
+          "description": "UUID of the EntityEdge to invalidate",
+          "required": true
+        },
+        {
+          "name": "reason",
+          "type": "string",
+          "description": "Explanation for why the fact is no longer valid",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "graphiti_get_status",
+      "description": "Inspect knowledge graph memory statistics and driver backend health",
+      "parameters": [
+        {
+          "name": "group_id",
+          "type": "string",
+          "description": "Optional group ID partition filter (default: 'default')",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

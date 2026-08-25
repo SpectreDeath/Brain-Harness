@@ -1,0 +1,185 @@
+{
+  "name": "plugin.memgraphrag",
+  "version": "0.1.0",
+  "description": "Three-layer memory knowledge graph engine with conflict-aware graph construction and hybrid PPR retrieval",
+  "category": "memory_and_epistemics",
+  "language": "python",
+  "entrypoint": "main.py",
+  "isolation": "subprocess",
+  "trusted": true,
+  "dependencies": [
+    "pydantic>=2.0.0",
+    "structlog>=23.1.0"
+  ],
+  "entrypoints": [
+    {
+      "name": "memgraphrag_index",
+      "description": "Ingest document passages, construct the 3-layer memory hierarchy, and build the retrieval graph",
+      "parameters": [
+        {
+          "name": "docs",
+          "type": "array",
+          "description": "List of text passage strings or document dict objects to index",
+          "required": true
+        },
+        {
+          "name": "save_dir",
+          "type": "string",
+          "description": "Output partition directory for memory persistence (default: 'outputs/default')",
+          "required": false,
+          "default": "outputs/default"
+        },
+        {
+          "name": "chunk_size",
+          "type": "integer",
+          "description": "Token chunk size for passage splitting (default: 256)",
+          "required": false,
+          "default": 256
+        },
+        {
+          "name": "chunk_overlap",
+          "type": "integer",
+          "description": "Token overlap between consecutive passage chunks (default: 32)",
+          "required": false,
+          "default": 32
+        },
+        {
+          "name": "skip_conflict_resolution",
+          "type": "boolean",
+          "description": "Bypass conflict detection and resolution if true (default: false)",
+          "required": false,
+          "default": false
+        }
+      ]
+    },
+    {
+      "name": "memgraphrag_retrieve",
+      "description": "Execute hybrid multi-layer graph retrieval combining dense similarity and Personalized PageRank",
+      "parameters": [
+        {
+          "name": "query",
+          "type": "string",
+          "description": "Natural language query or question",
+          "required": true
+        },
+        {
+          "name": "save_dir",
+          "type": "string",
+          "description": "Partition directory to retrieve from (default: 'outputs/default')",
+          "required": false,
+          "default": "outputs/default"
+        },
+        {
+          "name": "num_to_retrieve",
+          "type": "integer",
+          "description": "Maximum number of ranked evidence passages to return (default: 5)",
+          "required": false,
+          "default": 5
+        },
+        {
+          "name": "damping",
+          "type": "number",
+          "description": "Damping factor for Personalized PageRank graph propagation (default: 0.5)",
+          "required": false,
+          "default": 0.5
+        },
+        {
+          "name": "passage_node_weight",
+          "type": "number",
+          "description": "Multiplier weight for passage entity seeds during PPR (default: 0.1)",
+          "required": false,
+          "default": 0.1
+        }
+      ]
+    },
+    {
+      "name": "memgraphrag_query",
+      "description": "Synthesize an answer using retrieved multi-layer knowledge graph evidence",
+      "parameters": [
+        {
+          "name": "query",
+          "type": "string",
+          "description": "Question to answer using graph memory",
+          "required": true
+        },
+        {
+          "name": "save_dir",
+          "type": "string",
+          "description": "Partition directory to query (default: 'outputs/default')",
+          "required": false,
+          "default": "outputs/default"
+        },
+        {
+          "name": "num_passages",
+          "type": "integer",
+          "description": "Number of candidate evidence passages to retrieve for synthesis (default: 5)",
+          "required": false,
+          "default": 5
+        }
+      ]
+    },
+    {
+      "name": "memgraphrag_add_passage",
+      "description": "Incrementally inject a passage chunk and factual relation triples into the active memory graph",
+      "parameters": [
+        {
+          "name": "chunk_id",
+          "type": "string",
+          "description": "Unique passage chunk identifier",
+          "required": true
+        },
+        {
+          "name": "content",
+          "type": "string",
+          "description": "Text content of the passage chunk",
+          "required": true
+        },
+        {
+          "name": "extracted_triples",
+          "type": "array",
+          "description": "Optional pre-extracted list of [head, relation, tail] triples",
+          "required": false
+        },
+        {
+          "name": "schema_tuple",
+          "type": "array",
+          "description": "Optional ontology schema [head_type, relation, tail_type]",
+          "required": false
+        },
+        {
+          "name": "save_dir",
+          "type": "string",
+          "description": "Partition directory (default: 'outputs/default')",
+          "required": false,
+          "default": "outputs/default"
+        }
+      ]
+    },
+    {
+      "name": "memgraphrag_get_memory_summary",
+      "description": "Inspect statistical distribution and count metrics for schema, fact, and passage layers",
+      "parameters": [
+        {
+          "name": "save_dir",
+          "type": "string",
+          "description": "Partition directory to summarize (default: 'outputs/default')",
+          "required": false,
+          "default": "outputs/default"
+        }
+      ]
+    },
+    {
+      "name": "memgraphrag_detect_conflicts",
+      "description": "Scan candidate facts for hard semantic contradictions with supporting passage evidence groups",
+      "parameters": [
+        {
+          "name": "save_dir",
+          "type": "string",
+          "description": "Target memory partition directory (default: 'outputs/default')",
+          "required": false,
+          "default": "outputs/default"
+        }
+      ]
+    }
+  ]
+}

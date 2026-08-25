@@ -1,0 +1,453 @@
+{
+  "name": "plugin.gods_eye_view",
+  "version": "0.1.0",
+  "description": "Planetary intelligence, real-time OSINT feeds, spatial analytics engine, and 3D globe rendering",
+  "category": "geospatial_and_osint",
+  "language": "python",
+  "entrypoint": "main.py",
+  "isolation": "subprocess",
+  "trusted": true,
+  "dependencies": [
+    "httpx>=0.25.0",
+    "pydantic>=2.0.0",
+    "structlog>=23.1.0"
+  ],
+  "entrypoints": [
+    {
+      "name": "gev_analyst_query",
+      "description": "Execute multi-layer spatial queries, compound filters, and aggregations across flights, vessels, fires, and earthquakes",
+      "parameters": [
+        {
+          "name": "layer",
+          "type": "string",
+          "description": "Target layer: 'flights', 'military', 'ais-live-vessels', 'earthquakes', 'local-firms', or 'infrastructure'",
+          "required": true
+        },
+        {
+          "name": "filters",
+          "type": "array",
+          "description": "Compound filters: list of dicts with {field, op, value} where op is 'eq','neq','gt','gte','lt','lte','contains'",
+          "required": false
+        },
+        {
+          "name": "lat",
+          "type": "number",
+          "description": "Center latitude for spatial radius filter",
+          "required": false
+        },
+        {
+          "name": "lon",
+          "type": "number",
+          "description": "Center longitude for spatial radius filter",
+          "required": false
+        },
+        {
+          "name": "radius_km",
+          "type": "number",
+          "description": "Search radius in kilometers",
+          "required": false
+        },
+        {
+          "name": "bbox",
+          "type": "array",
+          "description": "Bounding box coordinates in [North, South, West, East] order",
+          "required": false
+        },
+        {
+          "name": "follow_up_token",
+          "type": "string",
+          "description": "Session token from a previous query to perform conversational follow-up filtering",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "gev_fetch_live_flights",
+      "description": "Fetch live aviation transponder vectors with altitude, velocity, and military designation",
+      "parameters": [
+        {
+          "name": "bbox",
+          "type": "array",
+          "description": "Bounding box [North, South, West, East]",
+          "required": false
+        },
+        {
+          "name": "icao24",
+          "type": "string",
+          "description": "Specific 24-bit hex transponder address",
+          "required": false
+        },
+        {
+          "name": "callsign",
+          "type": "string",
+          "description": "Flight number or radiotelephony callsign substring",
+          "required": false
+        },
+        {
+          "name": "military_only",
+          "type": "boolean",
+          "description": "Filter strictly for military/government aircraft",
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "description": "Maximum records to return",
+          "required": false,
+          "default": 200
+        }
+      ]
+    },
+    {
+      "name": "gev_fetch_ais_vessels",
+      "description": "Retrieve real-time maritime AIS vessel records with coordinates, heading, and deadweight cargo class",
+      "parameters": [
+        {
+          "name": "bbox",
+          "type": "array",
+          "description": "Bounding box [North, South, West, East]",
+          "required": false
+        },
+        {
+          "name": "mmsi",
+          "type": "string",
+          "description": "Specific Maritime Mobile Service Identity (MMSI)",
+          "required": false
+        },
+        {
+          "name": "ship_type",
+          "type": "string",
+          "description": "Vessel classification filter (e.g. Cargo, Tanker, Military, Fishing)",
+          "required": false
+        },
+        {
+          "name": "destination",
+          "type": "string",
+          "description": "Destination port substring",
+          "required": false
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "description": "Maximum records to return",
+          "required": false,
+          "default": 200
+        }
+      ]
+    },
+    {
+      "name": "gev_fetch_earthquakes",
+      "description": "Query USGS live seismic telemetry feeds for tectonic activity, depth, and tsunami alerts",
+      "parameters": [
+        {
+          "name": "min_magnitude",
+          "type": "number",
+          "description": "Minimum seismic magnitude threshold",
+          "required": false,
+          "default": 2.5
+        },
+        {
+          "name": "timeframe",
+          "type": "string",
+          "description": "Feed time window ('all_day' or 'all_week')",
+          "required": false,
+          "default": "all_day"
+        },
+        {
+          "name": "lat",
+          "type": "number",
+          "description": "Center latitude for proximity query",
+          "required": false
+        },
+        {
+          "name": "lon",
+          "type": "number",
+          "description": "Center longitude for proximity query",
+          "required": false
+        },
+        {
+          "name": "radius_km",
+          "type": "number",
+          "description": "Search radius in kilometers",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "gev_fetch_firms_hotspots",
+      "description": "Fetch NASA FIRMS satellite thermal anomalies and active wildfire perimeters with Fire Radiative Power (MW)",
+      "parameters": [
+        {
+          "name": "bbox",
+          "type": "array",
+          "description": "Bounding box [North, South, West, East]",
+          "required": false
+        },
+        {
+          "name": "min_frp",
+          "type": "number",
+          "description": "Minimum Fire Radiative Power (MW)",
+          "required": false,
+          "default": 0.0
+        },
+        {
+          "name": "source",
+          "type": "string",
+          "description": "Instrument source ('VIIRS_NOAA20' or 'MODIS_TERRA')",
+          "required": false,
+          "default": "VIIRS_NOAA20"
+        },
+        {
+          "name": "days",
+          "type": "integer",
+          "description": "Lookback window in days",
+          "required": false,
+          "default": 1
+        }
+      ]
+    },
+    {
+      "name": "gev_query_military_awareness",
+      "description": "Compute tactical military awareness corridor: airborne fighters/transports, naval contacts, and proximity to military installations",
+      "parameters": [
+        {
+          "name": "lat",
+          "type": "number",
+          "description": "Center latitude",
+          "required": true
+        },
+        {
+          "name": "lon",
+          "type": "number",
+          "description": "Center longitude",
+          "required": true
+        },
+        {
+          "name": "radius_km",
+          "type": "number",
+          "description": "Corridor radius in kilometers",
+          "required": false,
+          "default": 250.0
+        },
+        {
+          "name": "include_bases",
+          "type": "boolean",
+          "description": "Include military airbases and radar installations in report",
+          "required": false,
+          "default": true
+        }
+      ]
+    },
+    {
+      "name": "gev_calculate_satellite_passes",
+      "description": "Predict upcoming orbital passes (ISS, Starlink, reconnaissance) over specified ground coordinates",
+      "parameters": [
+        {
+          "name": "lat",
+          "type": "number",
+          "description": "Observer latitude in decimal degrees",
+          "required": true
+        },
+        {
+          "name": "lon",
+          "type": "number",
+          "description": "Observer longitude in decimal degrees",
+          "required": true
+        },
+        {
+          "name": "sat_name",
+          "type": "string",
+          "description": "Satellite name (e.g. 'ISS', 'STARLINK')",
+          "required": false,
+          "default": "ISS"
+        },
+        {
+          "name": "norad_id",
+          "type": "integer",
+          "description": "NORAD Catalog Number (e.g. 25544 for ISS)",
+          "required": false,
+          "default": 25544
+        },
+        {
+          "name": "horizon_hours",
+          "type": "integer",
+          "description": "Prediction time horizon in hours",
+          "required": false,
+          "default": 24
+        }
+      ]
+    },
+    {
+      "name": "gev_query_infrastructure",
+      "description": "Query offline global submarine fiber cables, landing stations, hyperscale datacenters, dams, and defense installations",
+      "parameters": [
+        {
+          "name": "infra_type",
+          "type": "string",
+          "description": "Asset type: 'submarine_cable', 'landing_point', 'datacenter', 'dam', 'installation', or 'all'",
+          "required": true
+        },
+        {
+          "name": "query",
+          "type": "string",
+          "description": "Text search query or asset name",
+          "required": false
+        },
+        {
+          "name": "lat",
+          "type": "number",
+          "description": "Center latitude for proximity filter",
+          "required": false
+        },
+        {
+          "name": "lon",
+          "type": "number",
+          "description": "Center longitude for proximity filter",
+          "required": false
+        },
+        {
+          "name": "radius_km",
+          "type": "number",
+          "description": "Proximity radius in kilometers",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "gev_render_sat_ortho",
+      "description": "Stitch high-resolution satellite orthomosaic imagery from Google 3D Map Tiles with Ground Sample Distance georeferencing",
+      "parameters": [
+        {
+          "name": "lat",
+          "type": "number",
+          "description": "Center latitude",
+          "required": true
+        },
+        {
+          "name": "lon",
+          "type": "number",
+          "description": "Center longitude",
+          "required": true
+        },
+        {
+          "name": "zoom",
+          "type": "integer",
+          "description": "Tile zoom level (typically 20-22)",
+          "required": false,
+          "default": 21
+        },
+        {
+          "name": "size",
+          "type": "integer",
+          "description": "Output square size in pixels",
+          "required": false,
+          "default": 2048
+        },
+        {
+          "name": "outdir",
+          "type": "string",
+          "description": "Target output directory for image asset",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "gev_capture_streetview_headings",
+      "description": "Capture 8 compass headings (360 ground view) at target coordinates with optional street graph neighbor crawling",
+      "parameters": [
+        {
+          "name": "lat",
+          "type": "number",
+          "description": "Center latitude",
+          "required": true
+        },
+        {
+          "name": "lon",
+          "type": "number",
+          "description": "Center longitude",
+          "required": true
+        },
+        {
+          "name": "fov",
+          "type": "integer",
+          "description": "Field of View in degrees",
+          "required": false,
+          "default": 90
+        },
+        {
+          "name": "pitch",
+          "type": "integer",
+          "description": "Camera pitch angle in degrees",
+          "required": false,
+          "default": 0
+        },
+        {
+          "name": "neighbors",
+          "type": "boolean",
+          "description": "Traverse and capture 1st-order street network neighbors",
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "outdir",
+          "type": "string",
+          "description": "Output directory path",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "gev_render_globe_snapshot",
+      "description": "Render photorealistic 3D Cesium globe snapshots with post-processing shaders (thermal, surveillance, noir, snow)",
+      "parameters": [
+        {
+          "name": "lat",
+          "type": "number",
+          "description": "Camera target latitude",
+          "required": true
+        },
+        {
+          "name": "lon",
+          "type": "number",
+          "description": "Camera target longitude",
+          "required": true
+        },
+        {
+          "name": "altitude_m",
+          "type": "number",
+          "description": "Camera vantage altitude in meters",
+          "required": false,
+          "default": 1000.0
+        },
+        {
+          "name": "pitch",
+          "type": "number",
+          "description": "Camera pitch angle in degrees",
+          "required": false,
+          "default": -45.0
+        },
+        {
+          "name": "heading",
+          "type": "number",
+          "description": "Camera heading in degrees clockwise from North",
+          "required": false,
+          "default": 0.0
+        },
+        {
+          "name": "style",
+          "type": "string",
+          "description": "Visual post-processing shader: 'normal', 'thermal', 'surveillance', 'noir', 'snow', 'retro', 'anime'",
+          "required": false,
+          "default": "normal"
+        },
+        {
+          "name": "outdir",
+          "type": "string",
+          "description": "Output directory path",
+          "required": false
+        }
+      ]
+    }
+  ]
+}
