@@ -1,4 +1,4 @@
-"""Entrypoint module and HarnessPlugin implementation for Skill Knowledge Graph."""
+"""Entrypoint module and HarnessPlugin implementation for Skill Knowledge Graph & Registry."""
 
 from __future__ import annotations
 
@@ -7,13 +7,63 @@ from typing import Any
 
 from harness.kernel.context import ServiceContext, ServiceKey
 from harness.plugins.base import HarnessPlugin
+from harness.services.skill_graph import (
+    SKILL_GRAPH_KEY,
+    SKILL_REGISTRY_KEY,
+    SkillAntiPatternDefinition,
+    SkillCardDefinition,
+    SkillChainResult,
+    SkillInvariantDefinition,
+    SkillStageDefinition,
+)
 
 from .graph import SkillKnowledgeGraph
+from .models import SkillNode
 from .parser import SkillCardParser
 from .visualizer import SkillGraphVisualizer
 
 # Global cached graph instance
 _GRAPH_INSTANCE = SkillKnowledgeGraph()
+
+
+def _node_to_card_def(node: SkillNode) -> SkillCardDefinition:
+    """Convert an internal SkillNode AST into the canonical SkillCardDefinition model."""
+    return SkillCardDefinition(
+        name=node.name,
+        category=node.category,
+        invocation=node.invocation,
+        triggers=list(node.triggers),
+        version=node.version,
+        target=node.target,
+        stages=[
+            SkillStageDefinition(
+                stage_num=s.stage_num,
+                name=s.name,
+                completion_gate=s.completion_gate or s.objective,
+            )
+            for s in node.stages
+        ],
+        anti_patterns=[
+            SkillAntiPatternDefinition(
+                name=ap.name,
+                symptom=ap.description,
+                remedy=ap.mitigation,
+            )
+            for ap in node.anti_patterns
+        ],
+        invariants=[
+            SkillInvariantDefinition(
+                rule=inv.rule,
+                is_blocking=inv.is_blocking,
+            )
+            for inv in node.invariants
+        ],
+        dependencies=list(node.references),
+        services=[],
+        tools=[],
+        card_path=node.card_path,
+        skill_path=node.skill_path,
+    )
 
 
 def _ensure_indexed(root_path: str = ".") -> SkillKnowledgeGraph:
@@ -109,11 +159,11 @@ def export_skill_graph_visual(output_path: str | None = None) -> dict[str, Any]:
 # --- Service Protocol & HarnessPlugin Implementation ---
 
 class SkillGraphPlugin(HarnessPlugin):
-    """In-process Harness plugin for the Skill Knowledge Graph service."""
+    """In-process Harness plugin providing SkillGraphService and SkillRegistryService."""
 
     name = "plugin.skill_knowledge_graph"
     version = "1.0.0"
-    description = "Knowledge graph indexer, semantic router, and visual topology generator for agent skill cards"
+    description = "Knowledge graph indexer, semantic router, and authoritative workspace skill registry"
     trusted = True
 
     def __init__(self) -> None:
@@ -121,12 +171,11 @@ class SkillGraphPlugin(HarnessPlugin):
 
     @property
     def provides(self) -> list[ServiceKey[Any]]:
-        from harness.services.skill_graph import SKILL_GRAPH_KEY
-        return [SKILL_GRAPH_KEY]
+        return [SKILL_GRAPH_KEY, SKILL_REGISTRY_KEY]
 
     async def on_load(self, ctx: ServiceContext) -> None:
-        from harness.services.skill_graph import SKILL_GRAPH_KEY
         ctx.provide(SKILL_GRAPH_KEY, self)
+        ctx.provide(SKILL_REGISTRY_KEY, self)
 
     async def on_enable(self) -> None:
         index_skill_catalog(".")
@@ -137,7 +186,7 @@ class SkillGraphPlugin(HarnessPlugin):
     async def on_unload(self) -> None:
         pass
 
-    # Protocol Implementation
+    # --- SkillGraphService Protocol Implementation ---
     async def index(self, root_dir: str = ".") -> int:
         res = index_skill_catalog(root_dir)
         return int(res.get("indexed_skills", 0))
@@ -152,3 +201,26 @@ class SkillGraphPlugin(HarnessPlugin):
     async def export_html_brief(self, output_path: str | None = None) -> str:
         res = export_skill_graph_visual(output_path)
         return str(res.get("html_path", ""))
+
+    # --- SkillRegistryService Protocol Implementation ---
+    def discover_all(self, root_dir: str = ".") -> list[SkillCardDefinition]:
+        graph = _ensure_indexed(root_dir)
+        return [_node_to_card_def(node) for node in graph.nodes.values()]
+
+    def get_skill(self, name: str) -> SkillCardDefinition | None:
+        graph = _ensure_indexed()
+        node = graph.nodes.get(name)
+        return _node_to_card_def(node) if node is not None else None
+
+    def route_intent(self, intent: str, top_k: int = 3) -> dict[str, Any]:
+        return query_skill_router(intent, top_k=top_k)
+
+    def get_chain(self, start_skill: str, target_skill: str) -> SkillChainResult:
+        res = find_skill_chain(start_skill, target_skill)
+        return SkillChainResult(
+            status=str(res.get("status", "no_path")),
+            start_skill=start_skill,
+            target_skill=target_skill,
+            chain=list(res.get("chain", [])),
+            length=int(res.get("length", 0)),
+        )

@@ -112,6 +112,7 @@ from harness.services.skill_graph import (
     SkillCardDefinition,
     SkillChainResult,
     SkillGraphService,
+    SkillInvariantDefinition,
     SkillRegistryService,
 )
 from harness.services.stagehand_browser import (
@@ -237,6 +238,7 @@ __all__ = [
     "SkillCardDefinition",
     "SkillChainResult",
     "SkillGraphService",
+    "SkillInvariantDefinition",
     "SkillRegistryService",
     "STAGEHAND_BROWSER_KEY",
     "StagehandBrowserService",

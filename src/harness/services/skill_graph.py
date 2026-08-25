@@ -24,6 +24,13 @@ class SkillAntiPatternDefinition(BaseModel):
     remedy: str = Field(default="", description="Prescribed corrective pattern")
 
 
+class SkillInvariantDefinition(BaseModel):
+    """Guarded non-negotiable invariant rule within a skill."""
+
+    rule: str = Field(..., description="Invariant rule description or assertion")
+    is_blocking: bool = Field(default=True, description="Whether violation blocks execution")
+
+
 class SkillCardDefinition(BaseModel):
     """Parsed and validated Skill Card model."""
 
@@ -35,7 +42,12 @@ class SkillCardDefinition(BaseModel):
     target: str = Field(default="", description="Operational target summary")
     stages: list[SkillStageDefinition] = Field(default_factory=list, description="Execution progression")
     anti_patterns: list[SkillAntiPatternDefinition] = Field(default_factory=list, description="Guarded anti-patterns")
+    invariants: list[SkillInvariantDefinition] = Field(default_factory=list, description="Guarded invariants")
     dependencies: list[str] = Field(default_factory=list, description="Referenced peer skills")
+    services: list[str] = Field(default_factory=list, description="Required micro-kernel ServiceKey identifiers")
+    tools: list[str] = Field(default_factory=list, description="Required tool names")
+    card_path: str = Field(default="", description="Path to companion CARD.md")
+    skill_path: str = Field(default="", description="Path to authoritative SKILL.md")
 
 
 class SkillChainResult(BaseModel):

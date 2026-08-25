@@ -154,6 +154,8 @@ class TestSkillKnowledgeGraphServiceAndCLI:
 
     @pytest.mark.asyncio
     async def test_plugin_lifecycle_and_ioc(self) -> None:
+        from harness.services.skill_graph import SKILL_REGISTRY_KEY, SkillRegistryService
+
         ctx = ServiceContext()
         plugin = SkillGraphPlugin()
 
@@ -161,9 +163,26 @@ class TestSkillKnowledgeGraphServiceAndCLI:
         service = ctx.require(SKILL_GRAPH_KEY)
         assert service is not None
 
+        registry = ctx.require(SKILL_REGISTRY_KEY)
+        assert registry is not None
+        assert isinstance(registry, SkillRegistryService)
+
         await plugin.on_enable()
         chain = await service.find_chain("structured-data-scout", "data-topology-mapper")
         assert len(chain) == 2
+
+        # Verify SkillRegistryService methods
+        all_skills = registry.discover_all(".")
+        assert len(all_skills) >= 4
+        questio = registry.get_skill("questio-reflection")
+        assert questio is not None
+        assert questio.name == "questio-reflection"
+        assert len(questio.invariants) >= 1
+        assert any("INV-" in inv.rule or "Checklist" in inv.rule or len(inv.rule) > 5 for inv in questio.invariants)
+
+        chain_res = registry.get_chain("structured-data-scout", "data-topology-mapper")
+        assert chain_res.status == "ok"
+        assert len(chain_res.chain) == 2
 
     def test_cli_skills_graph_and_route(self) -> None:
         runner = CliRunner()
