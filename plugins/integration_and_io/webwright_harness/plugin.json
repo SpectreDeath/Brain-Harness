@@ -1,0 +1,176 @@
+{
+  "name": "plugin.webwright_harness",
+  "version": "1.0.0",
+  "description": "SWE-style browser agent harness with trajectory skill learning, semantic retrieval, parameterized routing, persistent Chromium daemon, and multimodal verification",
+  "category": "integration_and_io",
+  "language": "python",
+  "entrypoint": "main.py",
+  "isolation": "subprocess",
+  "trusted": true,
+  "dependencies": [
+    "pydantic>=2.0.0",
+    "structlog>=23.1.0",
+    "httpx>=0.27.0",
+    "jinja2>=3.1.0"
+  ],
+  "entrypoints": [
+    {
+      "name": "webwright_skill_learn",
+      "description": "Synthesize reusable Python web automation skill scripts from agent trajectory runs and execution traces",
+      "parameters": [
+        {
+          "name": "trajectory_dirs",
+          "type": "array",
+          "description": "Directory paths containing agent runs (task.json, agent_response.json, final_script.py)",
+          "required": true
+        },
+        {
+          "name": "template",
+          "type": "string",
+          "description": "Canonical task description template (e.g. 'Search flights from {origin} to {dest}')",
+          "required": true
+        },
+        {
+          "name": "library_dir",
+          "type": "string",
+          "description": "Target learned library storage path",
+          "required": false,
+          "default": "skills"
+        }
+      ]
+    },
+    {
+      "name": "webwright_skill_retrieve",
+      "description": "Semantically match and rank relevant candidate skills from the skill library for a target task",
+      "parameters": [
+        {
+          "name": "task",
+          "type": "string",
+          "description": "User goal or prompt description",
+          "required": true
+        },
+        {
+          "name": "k",
+          "type": "integer",
+          "description": "Maximum candidate skills to retrieve",
+          "required": false,
+          "default": 3
+        },
+        {
+          "name": "library_dir",
+          "type": "string",
+          "description": "Library directory path",
+          "required": false,
+          "default": "skills"
+        }
+      ]
+    },
+    {
+      "name": "webwright_skill_route_and_execute",
+      "description": "Route a task to direct skill execution (with slot filling) or fallback to agent solving",
+      "parameters": [
+        {
+          "name": "task",
+          "type": "string",
+          "description": "Goal description",
+          "required": true
+        },
+        {
+          "name": "start_url",
+          "type": "string",
+          "description": "Initial web page URL",
+          "required": true
+        },
+        {
+          "name": "library_dir",
+          "type": "string",
+          "description": "Skills library path",
+          "required": false,
+          "default": "skills"
+        },
+        {
+          "name": "timeout_s",
+          "type": "integer",
+          "description": "Execution timeout in seconds",
+          "required": false,
+          "default": 120
+        }
+      ]
+    },
+    {
+      "name": "webwright_browser_session_manage",
+      "description": "Manage persistent local Chromium browser daemons with DevTools remote debugging endpoints",
+      "parameters": [
+        {
+          "name": "action",
+          "type": "string",
+          "description": "Action: 'create', 'info', or 'release'",
+          "required": true
+        },
+        {
+          "name": "port",
+          "type": "integer",
+          "description": "DevTools debugging port",
+          "required": false,
+          "default": 9222
+        },
+        {
+          "name": "headless",
+          "type": "boolean",
+          "description": "Run in headless mode",
+          "required": false,
+          "default": true
+        }
+      ]
+    },
+    {
+      "name": "webwright_image_qa",
+      "description": "Perform high-detail multimodal visual question answering on web screenshots and DOM captures",
+      "parameters": [
+        {
+          "name": "image_path",
+          "type": "string",
+          "description": "Path to web screenshot image",
+          "required": true
+        },
+        {
+          "name": "question",
+          "type": "string",
+          "description": "Verification question or extraction prompt",
+          "required": true
+        },
+        {
+          "name": "model",
+          "type": "string",
+          "description": "Vision model identifier",
+          "required": false,
+          "default": "gpt-4o"
+        }
+      ]
+    },
+    {
+      "name": "webwright_self_reflection",
+      "description": "Critique and verify task success over screenshot sequences and chronological action histories",
+      "parameters": [
+        {
+          "name": "task",
+          "type": "string",
+          "description": "Original goal",
+          "required": true
+        },
+        {
+          "name": "screenshots_dir",
+          "type": "string",
+          "description": "Path to screenshots directory",
+          "required": true
+        },
+        {
+          "name": "action_history",
+          "type": "array",
+          "description": "Chronological log of browser actions",
+          "required": true
+        }
+      ]
+    }
+  ]
+}

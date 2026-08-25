@@ -1,0 +1,168 @@
+{
+  "name": "plugin.stagehand_browser",
+  "version": "1.0.0",
+  "description": "Browserbase's next-generation AI browser automation engine with Act, Extract, Observe, and WebMCP protocol integration",
+  "category": "integration_and_io",
+  "language": "python",
+  "entrypoint": "main.py",
+  "isolation": "subprocess",
+  "trusted": true,
+  "dependencies": [
+    "pydantic>=2.0.0",
+    "structlog>=23.1.0",
+    "websockets>=12.0.0"
+  ],
+  "entrypoints": [
+    {
+      "name": "stagehand_act",
+      "description": "Execute high-level natural language actions (clicks, keyboard input, navigation) on active page",
+      "parameters": [
+        {
+          "name": "action",
+          "type": "string",
+          "description": "Natural language command (e.g. 'click the login button')",
+          "required": true
+        },
+        {
+          "name": "model",
+          "type": "string",
+          "description": "LLM model name for action inference",
+          "required": false,
+          "default": "gpt-4o"
+        },
+        {
+          "name": "timeout_s",
+          "type": "integer",
+          "description": "Timeout for action completion in seconds",
+          "required": false,
+          "default": 30
+        },
+        {
+          "name": "variables",
+          "type": "object",
+          "description": "Template variables to substitute into action",
+          "required": false,
+          "default": {}
+        }
+      ]
+    },
+    {
+      "name": "stagehand_extract",
+      "description": "Extract structured data matching a target JSON schema directly from live DOM & rendered layout",
+      "parameters": [
+        {
+          "name": "instruction",
+          "type": "string",
+          "description": "Extraction goal (e.g. 'Extract all product prices and titles')",
+          "required": true
+        },
+        {
+          "name": "schema",
+          "type": "object",
+          "description": "Target JSON Schema dictionary",
+          "required": true
+        },
+        {
+          "name": "model",
+          "type": "string",
+          "description": "Extraction model name",
+          "required": false,
+          "default": "gpt-4o"
+        },
+        {
+          "name": "use_text_extract",
+          "type": "boolean",
+          "description": "Force text-only extraction mode",
+          "required": false,
+          "default": false
+        }
+      ]
+    },
+    {
+      "name": "stagehand_observe",
+      "description": "Inspect live DOM to return interactive elements, locators, and suggested next actions",
+      "parameters": [
+        {
+          "name": "instruction",
+          "type": "string",
+          "description": "Focus area instruction or element description",
+          "required": false,
+          "default": ""
+        },
+        {
+          "name": "model",
+          "type": "string",
+          "description": "Observation model name",
+          "required": false,
+          "default": "gpt-4o"
+        },
+        {
+          "name": "return_action",
+          "type": "boolean",
+          "description": "Include actionable advice per element",
+          "required": false,
+          "default": true
+        }
+      ]
+    },
+    {
+      "name": "stagehand_webmcp_tool_invoke",
+      "description": "Discover and invoke WebMCP (Web Model Context Protocol) tools exposed by web pages",
+      "parameters": [
+        {
+          "name": "tool_name",
+          "type": "string",
+          "description": "WebMCP tool name to invoke (or '__list__' to enumerate all available tools)",
+          "required": true
+        },
+        {
+          "name": "arguments",
+          "type": "object",
+          "description": "Arguments dictionary passed to the WebMCP tool",
+          "required": false,
+          "default": {}
+        },
+        {
+          "name": "page_id",
+          "type": "string",
+          "description": "Target page identifier",
+          "required": false,
+          "default": "active"
+        }
+      ]
+    },
+    {
+      "name": "stagehand_session_control",
+      "description": "Manage browser session lifecycle, navigation, JavaScript evaluation, and page capture",
+      "parameters": [
+        {
+          "name": "action",
+          "type": "string",
+          "description": "Session action: 'init', 'goto', 'screenshot', 'evaluate', or 'close'",
+          "required": true
+        },
+        {
+          "name": "url",
+          "type": "string",
+          "description": "Target URL when action is 'goto' or 'init'",
+          "required": false,
+          "default": ""
+        },
+        {
+          "name": "script",
+          "type": "string",
+          "description": "JavaScript snippet when action is 'evaluate'",
+          "required": false,
+          "default": ""
+        },
+        {
+          "name": "provider",
+          "type": "string",
+          "description": "Provider: 'local' (CDP) or 'browserbase' (Cloud)",
+          "required": false,
+          "default": "local"
+        }
+      ]
+    }
+  ]
+}
