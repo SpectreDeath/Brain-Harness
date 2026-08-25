@@ -1,0 +1,217 @@
+{
+  "name": "plugin.context_type_system",
+  "version": "1.1.0",
+  "description": "Context provenance, type channel separation, origin ledger verification, token budgeting, and prompt assembly engine",
+  "category": "memory_and_epistemics",
+  "language": "python",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "dependencies": [
+    "pydantic>=2.0.0",
+    "structlog>=23.1.0"
+  ],
+  "entrypoints": [
+    {
+      "name": "context_add",
+      "description": "Register a typed context item into a session, checking origin ledger against protected channels",
+      "parameters": [
+        {
+          "name": "session_id",
+          "type": "string",
+          "description": "Unique context session identifier",
+          "required": true
+        },
+        {
+          "name": "context_type",
+          "type": "string",
+          "description": "Context channel type: 'instruction', 'memory', 'evidence', or 'tool_output'",
+          "required": true
+        },
+        {
+          "name": "content",
+          "type": "string",
+          "description": "Text content of the context item",
+          "required": true
+        },
+        {
+          "name": "source",
+          "type": "string",
+          "description": "Origin source identifier (e.g. 'system', 'tool:database', 'docs_retriever')",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "priority",
+          "type": "integer",
+          "description": "Priority ranking for ordering within prompt section (higher priority renders first)",
+          "required": false,
+          "default": 0
+        }
+      ]
+    },
+    {
+      "name": "context_transform",
+      "description": "Explicitly transition a context item across permitted policy boundaries, recording derivation lineage",
+      "parameters": [
+        {
+          "name": "session_id",
+          "type": "string",
+          "description": "Unique context session identifier",
+          "required": true
+        },
+        {
+          "name": "request_id",
+          "type": "string",
+          "description": "Request ID of the item to transform",
+          "required": true
+        },
+        {
+          "name": "to_type",
+          "type": "string",
+          "description": "Target context type (e.g. 'evidence', 'memory')",
+          "required": true
+        },
+        {
+          "name": "source",
+          "type": "string",
+          "description": "Optional override source label for the transformed item",
+          "required": false,
+          "default": null
+        }
+      ]
+    },
+    {
+      "name": "context_validate_tool_output",
+      "description": "Validate raw tool execution output and elevate it to evidence if passing validation criteria",
+      "parameters": [
+        {
+          "name": "session_id",
+          "type": "string",
+          "description": "Unique context session identifier",
+          "required": true
+        },
+        {
+          "name": "tool_request_id",
+          "type": "string",
+          "description": "Request ID of the tool_output context item to validate and promote",
+          "required": true
+        },
+        {
+          "name": "strict_mode",
+          "type": "boolean",
+          "description": "Enforce strict error keyword checking during validation",
+          "required": false,
+          "default": false
+        }
+      ]
+    },
+    {
+      "name": "context_assemble_prompt",
+      "description": "Render typed context items into ordered prompt sections with optional token budgeting and channel quotas",
+      "parameters": [
+        {
+          "name": "session_id",
+          "type": "string",
+          "description": "Unique context session identifier",
+          "required": true
+        },
+        {
+          "name": "section_order",
+          "type": "array",
+          "description": "Custom sequence of ContextTypes to render (default: ['instruction', 'memory', 'evidence', 'tool_output'])",
+          "required": false,
+          "default": ["instruction", "memory", "evidence", "tool_output"]
+        },
+        {
+          "name": "custom_labels",
+          "type": "object",
+          "description": "Optional dictionary mapping context types to custom section headers",
+          "required": false,
+          "default": {}
+        },
+        {
+          "name": "max_tokens",
+          "type": "integer",
+          "description": "Optional token ceiling for total prompt assembly with priority knapsack pruning",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "channel_quotas",
+          "type": "object",
+          "description": "Optional dictionary mapping context types to budget quota fractions (e.g. {'evidence': 0.4, 'instruction': 0.3})",
+          "required": false,
+          "default": null
+        }
+      ]
+    },
+    {
+      "name": "context_inspect_ledger",
+      "description": "Audit provenance records, origin types, transition history, and ledger keys for a context session",
+      "parameters": [
+        {
+          "name": "session_id",
+          "type": "string",
+          "description": "Unique context session identifier",
+          "required": true
+        },
+        {
+          "name": "filter_type",
+          "type": "string",
+          "description": "Optional ContextType string to filter returned items by",
+          "required": false,
+          "default": null
+        }
+      ]
+    },
+    {
+      "name": "context_get_lineage",
+      "description": "Trace the full multi-hop derivation chain back to the root observation (Isnad lineage audit)",
+      "parameters": [
+        {
+          "name": "session_id",
+          "type": "string",
+          "description": "Unique context session identifier",
+          "required": true
+        },
+        {
+          "name": "request_id",
+          "type": "string",
+          "description": "Target context item request ID to trace lineage for",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "context_export_session",
+      "description": "Export session state as a portable snapshot dictionary",
+      "parameters": [
+        {
+          "name": "session_id",
+          "type": "string",
+          "description": "Unique context session identifier",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "context_import_session",
+      "description": "Restore a session from a snapshot dictionary",
+      "parameters": [
+        {
+          "name": "session_id",
+          "type": "string",
+          "description": "Unique context session identifier",
+          "required": true
+        },
+        {
+          "name": "data",
+          "type": "object",
+          "description": "Serialized session snapshot dictionary",
+          "required": true
+        }
+      ]
+    }
+  ]
+}
