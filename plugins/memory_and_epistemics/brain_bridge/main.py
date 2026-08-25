@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import asyncio
 import json
 import math
 import os
@@ -11,20 +12,20 @@ import subprocess
 from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any
+import structlog
 
-# In-memory registry of attached external brains and repositories
-# Schema: alias -> {
-#   "alias": str,
-#   "path": str,
-#   "format": str,
-#   "mode": str,
-#   "chunks": list[dict[str, Any]],
-#   "doc_freq": dict[str, int],
-#   "total_docs": int,
-#   "trajectories": list[dict[str, Any]],
-#   "summary": dict[str, Any]
-# }
-_MOUNTS: dict[str, dict[str, Any]] = {}
+from harness.kernel.context import ServiceContext, ServiceKey
+from harness.plugins.base import HarnessPlugin
+from harness.services.brain_bridge import (
+    BRAIN_BRIDGE_KEY,
+    BrainAttachResult,
+    BrainBridgeService,
+    BrainDetachResult,
+    BrainListResult,
+    BrainQueryResult,
+)
+
+logger = structlog.get_logger(__name__)
 
 DEFAULT_CODE_EXTS: set[str] = {
     # Source languages
@@ -199,7 +200,6 @@ def _parse_transcripts(root: Path) -> tuple[list[dict[str, Any]], list[dict[str,
     transcript_files.extend(root.glob("**/.system_generated/logs/transcript*.jsonl"))
     transcript_files.extend(root.glob("**/transcript*.jsonl"))
 
-    # Deduplicate paths
     unique_paths = list({p.resolve(): p for p in transcript_files}.values())
     chunks: list[dict[str, Any]] = []
     trajectories: list[dict[str, Any]] = []
@@ -221,7 +221,6 @@ def _parse_transcripts(root: Path) -> tuple[list[dict[str, Any]], list[dict[str,
                     content = record.get("content", "")
                     tool_calls = record.get("tool_calls", [])
 
-                    # Summarize trajectory
                     traj_entry = {
                         "file": str(tf.relative_to(root) if tf.is_relative_to(root) else tf.name),
                         "step_index": record.get("step_index", line_idx),
@@ -232,7 +231,6 @@ def _parse_transcripts(root: Path) -> tuple[list[dict[str, Any]], list[dict[str,
                     }
                     trajectories.append(traj_entry)
 
-                    # Build searchable chunk
                     text_blob = f"Type: {step_type}\nContent: {content}\nTools: {json.dumps(tool_calls)}"
                     tokens = _tokenize(text_blob)
                     if tokens:
@@ -268,12 +266,10 @@ def _parse_git_commits(
     if not git_dir.exists():
         return chunks, trajectories, doc_freq, branch_name
 
-    # Check git executable
     if not shutil.which("git"):
         return chunks, trajectories, doc_freq, branch_name
 
     try:
-        # Get active branch name
         branch_proc = subprocess.run(
             ["git", "-C", str(root), "rev-parse", "--abbrev-ref", "HEAD"],
             capture_output=True,
@@ -283,7 +279,6 @@ def _parse_git_commits(
         if branch_proc.returncode == 0:
             branch_name = branch_proc.stdout.strip()
 
-        # Get git log with commit delimiter
         delimiter = "---GIT_COMMIT_RECORD_DELIMITER---"
         log_proc = subprocess.run(
             [
@@ -372,7 +367,6 @@ def _clone_remote_repo(url: str, alias: str) -> tuple[Path | None, str | None]:
     cache_dir.parent.mkdir(parents=True, exist_ok=True)
 
     if cache_dir.exists():
-        # Try pulling latest if already cloned
         try:
             pull_res = subprocess.run(
                 ["git", "-C", str(cache_dir), "pull"],
@@ -385,7 +379,6 @@ def _clone_remote_repo(url: str, alias: str) -> tuple[Path | None, str | None]:
         except Exception:
             pass
 
-    # Clean target if partially exists
     if cache_dir.exists():
         try:
             shutil.rmtree(cache_dir, ignore_errors=True)
@@ -406,6 +399,184 @@ def _clone_remote_repo(url: str, alias: str) -> tuple[Path | None, str | None]:
         return None, f"Failed to clone repository: {exc}"
 
 
+class BrainBridgeEngine:
+    """Encapsulated engine managing external brain and repository attachments."""
+
+    def __init__(self) -> None:
+        self._mounts: dict[str, dict[str, Any]] = {}
+
+    def attach(
+        self,
+        folder_path: str,
+        alias: str | None = None,
+        read_transcripts: bool = True,
+        read_commits: bool = True,
+        max_commits: int = 100,
+        attach_mode: str = "lens",
+    ) -> dict[str, Any]:
+        is_remote = _is_git_url(folder_path)
+        if is_remote:
+            default_alias = folder_path.rstrip("/").split("/")[-1].replace(".git", "").lower()
+            mount_alias = alias or default_alias or "remote_repo"
+            root, clone_err = _clone_remote_repo(folder_path, mount_alias)
+            if not root or clone_err:
+                return {"status": "error", "error": f"Failed to attach remote repository: {clone_err}"}
+        else:
+            root = Path(folder_path).resolve()
+            if not root.exists() or not root.is_dir():
+                return {"status": "error", "error": f"Directory not found: {folder_path}"}
+            mount_alias = alias or root.name.lower().replace(" ", "_").replace("-", "_")
+
+        detected_format = _detect_brain_format(root)
+        doc_chunks, doc_freq, detected_languages, manifests = _index_text_files(root)
+
+        transcript_chunks: list[dict[str, Any]] = []
+        trajectories: list[dict[str, Any]] = []
+        if read_transcripts:
+            transcript_chunks, t_trajs, t_doc_freq = _parse_transcripts(root)
+            trajectories.extend(t_trajs)
+            for term, cnt in t_doc_freq.items():
+                doc_freq[term] += cnt
+
+        git_chunks: list[dict[str, Any]] = []
+        branch_name: str | None = None
+        if read_commits:
+            git_chunks, g_trajs, g_doc_freq, branch_name = _parse_git_commits(root, max_commits=max_commits)
+            trajectories.extend(g_trajs)
+            for term, cnt in g_doc_freq.items():
+                doc_freq[term] += cnt
+
+        all_chunks = doc_chunks + transcript_chunks + git_chunks
+        for idx, c in enumerate(all_chunks):
+            c["id"] = idx
+
+        total_docs = len(all_chunks)
+        for c in all_chunks:
+            c["vector"] = _compute_vector(c["tokens"], doc_freq, total_docs)
+
+        summary = {
+            "format": detected_format,
+            "mode": attach_mode,
+            "total_chunks": len(all_chunks),
+            "document_chunks": len(doc_chunks),
+            "transcript_chunks": len(transcript_chunks),
+            "git_commit_chunks": len(git_chunks),
+            "trajectories_recorded": len(trajectories),
+            "unique_terms": len(doc_freq),
+            "detected_languages": detected_languages,
+            "manifest_files": manifests,
+            "branch": branch_name,
+            "is_remote": is_remote,
+        }
+
+        self._mounts[mount_alias] = {
+            "alias": mount_alias,
+            "path": str(root),
+            "original_source": folder_path,
+            "format": detected_format,
+            "mode": attach_mode,
+            "chunks": all_chunks,
+            "doc_freq": doc_freq,
+            "total_docs": total_docs,
+            "trajectories": trajectories,
+            "summary": summary,
+        }
+
+        return {
+            "status": "ok",
+            "alias": mount_alias,
+            "path": str(root),
+            "original_source": folder_path,
+            "detected_format": detected_format,
+            "mode": attach_mode,
+            "summary": summary,
+        }
+
+    def query(
+        self,
+        query: str,
+        brain_alias: str | None = None,
+        include_trajectories: bool = True,
+        top_k: int = 5,
+    ) -> dict[str, Any]:
+        if not self._mounts:
+            return {"status": "ok", "query": query, "results_count": 0, "results": [], "note": "No brains or repositories attached. Run brain_attach first."}
+
+        targets = [self._mounts[brain_alias]] if brain_alias and brain_alias in self._mounts else list(self._mounts.values())
+        if brain_alias and brain_alias not in self._mounts:
+            return {"status": "error", "error": f"Attached brain alias '{brain_alias}' not found."}
+
+        query_tokens = _tokenize(query)
+        if not query_tokens:
+            return {"status": "ok", "query": query, "results_count": 0, "results": []}
+
+        scored_results: list[dict[str, Any]] = []
+
+        for mount in targets:
+            q_vec = _compute_vector(query_tokens, mount["doc_freq"], mount["total_docs"])
+            for chunk in mount["chunks"]:
+                chunk_type = chunk.get("type", "document_chunk")
+                if not include_trajectories and chunk_type in ("transcript_step", "git_commit"):
+                    continue
+
+                score = sum(q_weight * chunk["vector"].get(term, 0.0) for term, q_weight in q_vec.items())
+                if score > 0.01:
+                    scored_results.append({
+                        "score": round(score, 4),
+                        "brain_alias": mount["alias"],
+                        "brain_format": mount["format"],
+                        "type": chunk_type,
+                        "file": chunk["file"],
+                        "start_line": chunk["start_line"],
+                        "end_line": chunk["end_line"],
+                        "snippet": chunk["content"][:350] + ("..." if len(chunk["content"]) > 350 else ""),
+                    })
+
+        scored_results.sort(key=lambda x: x["score"], reverse=True)
+        top_results = scored_results[:top_k]
+
+        return {
+            "status": "ok",
+            "query": query,
+            "searched_brains": [m["alias"] for m in targets],
+            "results_count": len(top_results),
+            "results": top_results,
+        }
+
+    def list_attached(self) -> dict[str, Any]:
+        mount_list = [
+            {
+                "alias": m["alias"],
+                "path": m["path"],
+                "original_source": m.get("original_source", m["path"]),
+                "format": m["format"],
+                "mode": m["mode"],
+                "summary": m["summary"],
+            }
+            for m in self._mounts.values()
+        ]
+        return {
+            "status": "ok",
+            "attached_count": len(mount_list),
+            "brains": mount_list,
+        }
+
+    def detach(self, brain_alias: str) -> dict[str, Any]:
+        if brain_alias not in self._mounts:
+            return {"status": "error", "error": f"Attached brain alias '{brain_alias}' not found."}
+
+        removed = self._mounts.pop(brain_alias)
+        return {
+            "status": "ok",
+            "detached_alias": brain_alias,
+            "path": removed["path"],
+        }
+
+
+# Global default engine for direct module functions
+_GLOBAL_ENGINE = BrainBridgeEngine()
+
+
 def brain_attach(
     folder_path: str,
     alias: str | None = None,
@@ -415,91 +586,14 @@ def brain_attach(
     attach_mode: str = "lens",
 ) -> dict[str, Any]:
     """Inspect and mount an external brain, repository, IDE state, or knowledge directory."""
-    global _MOUNTS
-
-    # Check for remote git URL
-    is_remote = _is_git_url(folder_path)
-    if is_remote:
-        default_alias = folder_path.rstrip("/").split("/")[-1].replace(".git", "").lower()
-        mount_alias = alias or default_alias or "remote_repo"
-        root, clone_err = _clone_remote_repo(folder_path, mount_alias)
-        if not root or clone_err:
-            return {"status": "error", "error": f"Failed to attach remote repository: {clone_err}"}
-    else:
-        root = Path(folder_path).resolve()
-        if not root.exists() or not root.is_dir():
-            return {"status": "error", "error": f"Directory not found: {folder_path}"}
-        mount_alias = alias or root.name.lower().replace(" ", "_").replace("-", "_")
-
-    detected_format = _detect_brain_format(root)
-
-    # Index text and code files across all major programming languages
-    doc_chunks, doc_freq, detected_languages, manifests = _index_text_files(root)
-
-    transcript_chunks: list[dict[str, Any]] = []
-    trajectories: list[dict[str, Any]] = []
-    if read_transcripts:
-        transcript_chunks, t_trajs, t_doc_freq = _parse_transcripts(root)
-        trajectories.extend(t_trajs)
-        for term, cnt in t_doc_freq.items():
-            doc_freq[term] += cnt
-
-    git_chunks: list[dict[str, Any]] = []
-    branch_name: str | None = None
-    if read_commits:
-        git_chunks, g_trajs, g_doc_freq, branch_name = _parse_git_commits(root, max_commits=max_commits)
-        trajectories.extend(g_trajs)
-        for term, cnt in g_doc_freq.items():
-            doc_freq[term] += cnt
-
-    all_chunks = doc_chunks + transcript_chunks + git_chunks
-    # Renumber chunk ids
-    for idx, c in enumerate(all_chunks):
-        c["id"] = idx
-
-    total_docs = len(all_chunks)
-
-    # Precalculate TF-IDF vectors
-    for c in all_chunks:
-        c["vector"] = _compute_vector(c["tokens"], doc_freq, total_docs)
-
-    summary = {
-        "format": detected_format,
-        "mode": attach_mode,
-        "total_chunks": len(all_chunks),
-        "document_chunks": len(doc_chunks),
-        "transcript_chunks": len(transcript_chunks),
-        "git_commit_chunks": len(git_chunks),
-        "trajectories_recorded": len(trajectories),
-        "unique_terms": len(doc_freq),
-        "detected_languages": detected_languages,
-        "manifest_files": manifests,
-        "branch": branch_name,
-        "is_remote": is_remote,
-    }
-
-    _MOUNTS[mount_alias] = {
-        "alias": mount_alias,
-        "path": str(root),
-        "original_source": folder_path,
-        "format": detected_format,
-        "mode": attach_mode,
-        "chunks": all_chunks,
-        "doc_freq": doc_freq,
-        "total_docs": total_docs,
-        "trajectories": trajectories,
-        "summary": summary,
-    }
-
-    return {
-        "status": "ok",
-        "alias": mount_alias,
-        "path": str(root),
-        "original_source": folder_path,
-        "detected_format": detected_format,
-        "mode": attach_mode,
-        "summary": summary,
-    }
+    return _GLOBAL_ENGINE.attach(
+        folder_path=folder_path,
+        alias=alias,
+        read_transcripts=read_transcripts,
+        read_commits=read_commits,
+        max_commits=max_commits,
+        attach_mode=attach_mode,
+    )
 
 
 def brain_query(
@@ -509,80 +603,148 @@ def brain_query(
     top_k: int = 5,
 ) -> dict[str, Any]:
     """Query across one or all mounted external brains/repos for knowledge, code, solutions, or trajectories."""
-    if not _MOUNTS:
-        return {"status": "ok", "query": query, "results_count": 0, "results": [], "note": "No brains or repositories attached. Run brain_attach first."}
-
-    targets = [_MOUNTS[brain_alias]] if brain_alias and brain_alias in _MOUNTS else list(_MOUNTS.values())
-    if brain_alias and brain_alias not in _MOUNTS:
-        return {"status": "error", "error": f"Attached brain alias '{brain_alias}' not found."}
-
-    query_tokens = _tokenize(query)
-    if not query_tokens:
-        return {"status": "ok", "query": query, "results_count": 0, "results": []}
-
-    scored_results: list[dict[str, Any]] = []
-
-    for mount in targets:
-        q_vec = _compute_vector(query_tokens, mount["doc_freq"], mount["total_docs"])
-        for chunk in mount["chunks"]:
-            chunk_type = chunk.get("type", "document_chunk")
-            if not include_trajectories and chunk_type in ("transcript_step", "git_commit"):
-                continue
-
-            score = sum(q_weight * chunk["vector"].get(term, 0.0) for term, q_weight in q_vec.items())
-            if score > 0.01:
-                scored_results.append({
-                    "score": round(score, 4),
-                    "brain_alias": mount["alias"],
-                    "brain_format": mount["format"],
-                    "type": chunk_type,
-                    "file": chunk["file"],
-                    "start_line": chunk["start_line"],
-                    "end_line": chunk["end_line"],
-                    "snippet": chunk["content"][:350] + ("..." if len(chunk["content"]) > 350 else ""),
-                })
-
-    scored_results.sort(key=lambda x: x["score"], reverse=True)
-    top_results = scored_results[:top_k]
-
-    return {
-        "status": "ok",
-        "query": query,
-        "searched_brains": [m["alias"] for m in targets],
-        "results_count": len(top_results),
-        "results": top_results,
-    }
+    return _GLOBAL_ENGINE.query(
+        query=query,
+        brain_alias=brain_alias,
+        include_trajectories=include_trajectories,
+        top_k=top_k,
+    )
 
 
 def brain_list_attached() -> dict[str, Any]:
     """List all currently mounted external brains/repositories, their detected formats, and index statistics."""
-    mount_list = [
-        {
-            "alias": m["alias"],
-            "path": m["path"],
-            "original_source": m.get("original_source", m["path"]),
-            "format": m["format"],
-            "mode": m["mode"],
-            "summary": m["summary"],
-        }
-        for m in _MOUNTS.values()
-    ]
-    return {
-        "status": "ok",
-        "attached_count": len(mount_list),
-        "brains": mount_list,
-    }
+    return _GLOBAL_ENGINE.list_attached()
 
 
 def brain_detach(brain_alias: str) -> dict[str, Any]:
     """Unmount a foreign brain or repository and release its memory indexes."""
-    global _MOUNTS
-    if brain_alias not in _MOUNTS:
-        return {"status": "error", "error": f"Attached brain alias '{brain_alias}' not found."}
+    return _GLOBAL_ENGINE.detach(brain_alias=brain_alias)
 
-    removed = _MOUNTS.pop(brain_alias)
-    return {
-        "status": "ok",
-        "detached_alias": brain_alias,
-        "path": removed["path"],
-    }
+
+class BrainBridgePlugin(HarnessPlugin, BrainBridgeService):
+    """Harness Plugin providing federated external brain and Git repository attachment services."""
+
+    name = "plugin.brain_bridge"
+    version = "1.0.0"
+    description = "Federated brain bridge, multi-repository attachment, and cross-codebase knowledge indexer"
+    trusted = True
+
+    def __init__(self, engine: BrainBridgeEngine | None = None) -> None:
+        self._engine = engine or _GLOBAL_ENGINE
+
+    @property
+    def provides(self) -> list[ServiceKey[Any]]:
+        return [BRAIN_BRIDGE_KEY]
+
+    @property
+    def requires(self) -> list[ServiceKey[Any]]:
+        return []
+
+    async def on_load(self, ctx: ServiceContext) -> None:
+        logger.info("loading_plugin", plugin=self.name)
+        ctx.provide(BRAIN_BRIDGE_KEY, self, provider=self.name)
+
+    async def on_enable(self) -> None:
+        logger.info("enabling_plugin", plugin=self.name)
+
+    async def on_disable(self) -> None:
+        logger.info("disabling_plugin", plugin=self.name)
+
+    async def on_unload(self) -> None:
+        logger.info("unloading_plugin", plugin=self.name)
+
+    # -------------------------------------------------------------------------
+    # BrainBridgeService Protocol Implementation
+    # -------------------------------------------------------------------------
+
+    def attach(
+        self,
+        folder_path: str,
+        alias: str | None = None,
+        read_transcripts: bool = True,
+        read_commits: bool = True,
+        max_commits: int = 100,
+        attach_mode: str = "lens",
+    ) -> BrainAttachResult:
+        res = self._engine.attach(
+            folder_path=folder_path,
+            alias=alias,
+            read_transcripts=read_transcripts,
+            read_commits=read_commits,
+            max_commits=max_commits,
+            attach_mode=attach_mode,
+        )
+        return BrainAttachResult(
+            status=res["status"],
+            alias=res.get("alias"),
+            path=res.get("path"),
+            original_source=res.get("original_source"),
+            detected_format=res.get("detected_format"),
+            mode=res.get("mode", attach_mode),
+            summary=res.get("summary", {}),
+            error=res.get("error"),
+        )
+
+    async def attach_async(
+        self,
+        folder_path: str,
+        alias: str | None = None,
+        read_transcripts: bool = True,
+        read_commits: bool = True,
+        max_commits: int = 100,
+        attach_mode: str = "lens",
+    ) -> BrainAttachResult:
+        return await asyncio.to_thread(
+            self.attach, folder_path, alias, read_transcripts, read_commits, max_commits, attach_mode
+        )
+
+    def query(
+        self,
+        query: str,
+        brain_alias: str | None = None,
+        include_trajectories: bool = True,
+        top_k: int = 5,
+    ) -> BrainQueryResult:
+        res = self._engine.query(
+            query=query,
+            brain_alias=brain_alias,
+            include_trajectories=include_trajectories,
+            top_k=top_k,
+        )
+        return BrainQueryResult(
+            status=res["status"],
+            query=res.get("query", query),
+            searched_brains=res.get("searched_brains", []),
+            results_count=res.get("results_count", 0),
+            results=res.get("results", []),
+            note=res.get("note"),
+            error=res.get("error"),
+        )
+
+    async def query_async(
+        self,
+        query: str,
+        brain_alias: str | None = None,
+        include_trajectories: bool = True,
+        top_k: int = 5,
+    ) -> BrainQueryResult:
+        return await asyncio.to_thread(
+            self.query, query, brain_alias, include_trajectories, top_k
+        )
+
+    def list_attached(self) -> BrainListResult:
+        res = self._engine.list_attached()
+        return BrainListResult(
+            status=res["status"],
+            attached_count=res.get("attached_count", 0),
+            brains=res.get("brains", []),
+        )
+
+    def detach(self, brain_alias: str) -> BrainDetachResult:
+        res = self._engine.detach(brain_alias=brain_alias)
+        return BrainDetachResult(
+            status=res["status"],
+            detached_alias=res.get("detached_alias"),
+            path=res.get("path"),
+            error=res.get("error"),
+        )

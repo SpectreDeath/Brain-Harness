@@ -1,10 +1,15 @@
 {
-  "name": "domain.prompt_benchmark",
+  "name": "plugin.prompt_benchmark",
   "version": "1.0.0",
   "description": "LLM output evaluation, BLEU/ROUGE ngram similarity scoring, and regression benchmark suite",
   "entrypoint": "main.py",
   "isolation": "in_process",
   "trusted": true,
+  "category": "memory_and_epistemics",
+  "author": "Brain Harness Forge Engine",
+  "provides": [
+    "service.prompt_benchmark"
+  ],
   "entrypoints": [
     {
       "name": "score_text_similarity_bleu_rouge",

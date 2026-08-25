@@ -1,61 +1,66 @@
 {
   "name": "plugin.symbolic_solver",
   "version": "1.0.0",
-  "description": "Neuro-symbolic constraint solver, logic deduction, and safe arithmetic evaluation",
+  "description": "Neuro-symbolic constraint solver, safe arithmetic evaluation, and Horn-clause rule engine",
   "entrypoint": "main.py",
   "isolation": "in_process",
   "trusted": true,
+  "category": "integration_and_io",
+  "author": "Brain Harness Forge Engine",
+  "provides": [
+    "service.symbolic_solver"
+  ],
   "entrypoints": [
     {
+      "name": "evaluate_math_expression",
+      "description": "Safely evaluate mathematical and logic expressions without eval() vulnerability",
+      "parameters": [
+        {
+          "name": "expression",
+          "type": "string",
+          "description": "Mathematical formula to parse and evaluate (e.g. 'sqrt(16) * 4 + 2^3')",
+          "required": true
+        }
+      ]
+    },
+    {
       "name": "solve_constraints",
-      "description": "Find satisfiable assignments for variables given mathematical and logical constraints",
+      "description": "Find satisfiable assignments for variables across a set of mathematical constraints",
       "parameters": [
         {
           "name": "variables",
           "type": "array",
-          "description": "List of variable definitions ({name, min, max, type})",
+          "description": "List of variable definitions ({'name': 'x', 'min': 1, 'max': 10})",
           "required": true
         },
         {
           "name": "constraints",
           "type": "array",
-          "description": "List of constraint expressions as strings (e.g. 'x + y == 10', 'x > 2')",
+          "description": "List of boolean expression constraints (e.g. ['x + y == 10', 'x > y'])",
           "required": true
         }
       ]
     },
     {
       "name": "verify_logic_query",
-      "description": "Perform logical deduction over a set of facts and inference rules",
+      "description": "Verify whether a query statement holds given known facts and deduction rules",
       "parameters": [
         {
           "name": "facts",
           "type": "array",
-          "description": "List of known ground facts (e.g. 'parent(alice, bob)')",
+          "description": "List of ground true facts (e.g. ['mammal(cat)', 'animal(dog)'])",
           "required": true
         },
         {
           "name": "rules",
           "type": "array",
-          "description": "List of deduction rules (e.g. 'ancestor(X, Y) :- parent(X, Y)')",
+          "description": "List of deduction rules (e.g. ['mortal(X) :- mammal(X)'])",
           "required": false
         },
         {
           "name": "query",
           "type": "string",
-          "description": "Query to prove or evaluate (e.g. 'parent(alice, bob)')",
-          "required": true
-        }
-      ]
-    },
-    {
-      "name": "evaluate_math_expression",
-      "description": "Safely parse and calculate complex mathematical expressions without unsafe eval",
-      "parameters": [
-        {
-          "name": "expression",
-          "type": "string",
-          "description": "Mathematical expression (e.g. '2 ** 8 + (100 * 3.5) / sqrt(25)')",
+          "description": "Statement to prove or verify",
           "required": true
         }
       ]

@@ -5,10 +5,19 @@ from __future__ import annotations
 import json
 import subprocess
 from pathlib import Path
-
 import pytest
 
+from harness.kernel.context import ServiceContext
+from harness.services.brain_bridge import (
+    BRAIN_BRIDGE_KEY,
+    BrainAttachResult,
+    BrainBridgeService,
+    BrainDetachResult,
+    BrainListResult,
+    BrainQueryResult,
+)
 from plugins.memory_and_epistemics.brain_bridge.main import (
+    BrainBridgePlugin,
     _detect_brain_format,
     _index_text_files,
     _is_git_url,
@@ -129,7 +138,6 @@ class TestBrainBridgePlugin:
         commit_query = brain_query("packaging metadata project manifest", brain_alias="mock_repo")
         assert commit_query["status"] == "ok"
         assert commit_query["results_count"] >= 1
-        # Commit should be found in results
         types = [r["type"] for r in commit_query["results"]]
         assert "git_commit" in types or "document_chunk" in types
 
@@ -196,3 +204,40 @@ class TestBrainBridgePlugin:
         res = brain_attach("/non/existent/path/for/sure")
         assert res["status"] == "error"
         assert "not found" in res["error"].lower()
+
+    @pytest.mark.asyncio
+    async def test_brain_bridge_plugin_ioc_lifecycle(self, tmp_path: Path) -> None:
+        plugin = BrainBridgePlugin()
+        assert plugin.name == "plugin.brain_bridge"
+        assert BRAIN_BRIDGE_KEY in plugin.provides
+
+        ctx = ServiceContext()
+        await plugin.on_load(ctx)
+        await plugin.on_enable()
+
+        service = ctx.require(BRAIN_BRIDGE_KEY)
+        assert isinstance(service, BrainBridgeService)
+
+        doc_dir = tmp_path / "ioc_brain"
+        doc_dir.mkdir()
+        (doc_dir / "readme.md").write_text("# IoC Memory Service\nDeepened memory service architecture.")
+
+        attach_res = await service.attach_async(str(doc_dir), alias="ioc_test")
+        assert isinstance(attach_res, BrainAttachResult)
+        assert attach_res.status == "ok"
+
+        query_res = await service.query_async("Deepened memory service", brain_alias="ioc_test")
+        assert isinstance(query_res, BrainQueryResult)
+        assert query_res.status == "ok"
+        assert query_res.results_count >= 1
+
+        list_res = service.list_attached()
+        assert isinstance(list_res, BrainListResult)
+        assert list_res.attached_count >= 1
+
+        detach_res = service.detach("ioc_test")
+        assert isinstance(detach_res, BrainDetachResult)
+        assert detach_res.status == "ok"
+
+        await plugin.on_disable()
+        await plugin.on_unload()

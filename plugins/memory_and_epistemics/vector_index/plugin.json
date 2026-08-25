@@ -5,6 +5,11 @@
   "entrypoint": "main.py",
   "isolation": "in_process",
   "trusted": true,
+  "category": "memory_and_epistemics",
+  "author": "Brain Harness Forge Engine",
+  "provides": [
+    "service.vector_index"
+  ],
   "entrypoints": [
     {
       "name": "vector_index_directory",

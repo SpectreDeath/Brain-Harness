@@ -5,7 +5,11 @@
   "entrypoint": "main.py",
   "isolation": "in_process",
   "trusted": true,
-  "requires": ["memory.provider"],
+  "category": "memory_and_epistemics",
+  "author": "Brain Harness Forge Engine",
+  "provides": [
+    "service.context_compactor"
+  ],
   "entrypoints": [
     {
       "name": "compact_conversation",

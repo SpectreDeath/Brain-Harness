@@ -5,6 +5,11 @@
   "entrypoint": "main.py",
   "isolation": "in_process",
   "trusted": true,
+  "category": "software_engineering",
+  "author": "Brain Harness Forge Engine",
+  "provides": [
+    "service.code_runner"
+  ],
   "entrypoints": [
     {
       "name": "python_exec",

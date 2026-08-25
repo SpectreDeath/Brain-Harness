@@ -7,6 +7,18 @@ import random
 import re
 from collections import Counter, defaultdict
 from typing import Any
+import structlog
+
+from harness.kernel.context import ServiceContext, ServiceKey
+from harness.plugins.base import HarnessPlugin
+from harness.services.embedding_cluster import (
+    EMBEDDING_CLUSTER_KEY,
+    ClusterKeywordsResult,
+    ClusterTextResult,
+    EmbeddingClusterService,
+)
+
+logger = structlog.get_logger(__name__)
 
 
 def _tokenize(text: str) -> list[str]:
@@ -40,7 +52,7 @@ def cluster_text_chunks(
     """K-Means clustering over text documents using TF-IDF representation."""
     clean_texts = [t.get("text", t.get("content", str(t))) if isinstance(t, dict) else str(t) for t in texts]
     if not clean_texts:
-        return {"status": "ok", "clusters_count": 0, "clusters": []}
+        return {"status": "ok", "total_documents": 0, "clusters_count": 0, "clusters": []}
 
     k = min(max(1, num_clusters), len(clean_texts))
     tokenized = [_tokenize(t) for t in clean_texts]
@@ -52,7 +64,7 @@ def cluster_text_chunks(
 
     vectors = [_build_tfidf_vector(toks, doc_freq, len(clean_texts)) for toks in tokenized]
 
-    # Initialize centroids randomly with seed
+    # Initialize centroids randomly with deterministic seed
     rng = random.Random(42)
     sample_indices = rng.sample(range(len(vectors)), k)
     centroids = [dict(vectors[i]) for i in sample_indices]
@@ -114,3 +126,63 @@ def extract_cluster_topic_keywords(cluster_texts: list[str], top_n: int = 5) -> 
         "status": "ok",
         "keywords": top,
     }
+
+
+class EmbeddingClusterPlugin(HarnessPlugin, EmbeddingClusterService):
+    """Harness Plugin providing unsupervised text clustering and topic extraction services."""
+
+    name = "plugin.embedding_cluster"
+    version = "1.0.0"
+    description = "Unsupervised text clustering, TF-IDF vectorization, and topic keyword extraction"
+    trusted = True
+
+    @property
+    def provides(self) -> list[ServiceKey[Any]]:
+        return [EMBEDDING_CLUSTER_KEY]
+
+    @property
+    def requires(self) -> list[ServiceKey[Any]]:
+        return []
+
+    async def on_load(self, ctx: ServiceContext) -> None:
+        logger.info("loading_plugin", plugin=self.name)
+        ctx.provide(EMBEDDING_CLUSTER_KEY, self, provider=self.name)
+
+    async def on_enable(self) -> None:
+        logger.info("enabling_plugin", plugin=self.name)
+
+    async def on_disable(self) -> None:
+        logger.info("disabling_plugin", plugin=self.name)
+
+    async def on_unload(self) -> None:
+        logger.info("unloading_plugin", plugin=self.name)
+
+    # -------------------------------------------------------------------------
+    # EmbeddingClusterService Protocol Implementation
+    # -------------------------------------------------------------------------
+
+    def cluster_text_chunks(
+        self,
+        texts: list[Any],
+        num_clusters: int = 3,
+    ) -> ClusterTextResult:
+        res = cluster_text_chunks(texts=texts, num_clusters=num_clusters)
+        return ClusterTextResult(
+            status=res["status"],
+            total_documents=res.get("total_documents", len(texts)),
+            clusters_count=res.get("clusters_count", 0),
+            clusters=res.get("clusters", []),
+            error=res.get("error"),
+        )
+
+    def extract_cluster_topic_keywords(
+        self,
+        cluster_texts: list[str],
+        top_n: int = 5,
+    ) -> ClusterKeywordsResult:
+        res = extract_cluster_topic_keywords(cluster_texts=cluster_texts, top_n=top_n)
+        return ClusterKeywordsResult(
+            status=res["status"],
+            keywords=res.get("keywords", []),
+            error=res.get("error"),
+        )

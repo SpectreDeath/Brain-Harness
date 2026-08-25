@@ -6,6 +6,19 @@ import ast
 import math
 import operator
 from typing import Any
+import structlog
+
+from harness.kernel.context import ServiceContext, ServiceKey
+from harness.plugins.base import HarnessPlugin
+from harness.services.symbolic_solver import (
+    SYMBOLIC_SOLVER_KEY,
+    ConstraintSolveResult,
+    LogicQueryResult,
+    MathEvalResult,
+    SymbolicSolverService,
+)
+
+logger = structlog.get_logger(__name__)
 
 # Allowed safe binary operators
 _SAFE_OPERATORS = {
@@ -206,3 +219,75 @@ def verify_logic_query(
         return {"status": "ok", "proved": False, "method": "unproven"}
     except Exception as e:
         return {"status": "error", "error": str(e)}
+
+
+class SymbolicSolverPlugin(HarnessPlugin, SymbolicSolverService):
+    """Harness Plugin providing neuro-symbolic math evaluation, constraint solving, and logic queries."""
+
+    name = "plugin.symbolic_solver"
+    version = "1.0.0"
+    description = "Neuro-symbolic constraint solver and logic evaluation tools"
+    trusted = True
+
+    @property
+    def provides(self) -> list[ServiceKey[Any]]:
+        return [SYMBOLIC_SOLVER_KEY]
+
+    @property
+    def requires(self) -> list[ServiceKey[Any]]:
+        return []
+
+    async def on_load(self, ctx: ServiceContext) -> None:
+        logger.info("loading_plugin", plugin=self.name)
+        ctx.provide(SYMBOLIC_SOLVER_KEY, self, provider=self.name)
+
+    async def on_enable(self) -> None:
+        logger.info("enabling_plugin", plugin=self.name)
+
+    async def on_disable(self) -> None:
+        logger.info("disabling_plugin", plugin=self.name)
+
+    async def on_unload(self) -> None:
+        logger.info("unloading_plugin", plugin=self.name)
+
+    # -------------------------------------------------------------------------
+    # SymbolicSolverService Protocol Implementation (CPU-bound)
+    # -------------------------------------------------------------------------
+
+    def evaluate_math_expression(self, expression: str) -> MathEvalResult:
+        res = evaluate_math_expression(expression=expression)
+        return MathEvalResult(
+            status=res["status"],
+            expression=res.get("expression", expression),
+            result=res.get("result"),
+            error=res.get("error"),
+        )
+
+    def solve_constraints(
+        self,
+        variables: list[dict[str, Any]],
+        constraints: list[str],
+    ) -> ConstraintSolveResult:
+        res = solve_constraints(variables=variables, constraints=constraints)
+        return ConstraintSolveResult(
+            status=res["status"],
+            satisfiable=res.get("satisfiable", False),
+            solutions_count=res.get("solutions_count", 0),
+            solutions=res.get("solutions", []),
+            error=res.get("error"),
+        )
+
+    def verify_logic_query(
+        self,
+        facts: list[str],
+        rules: list[str] | None = None,
+        query: str = "",
+    ) -> LogicQueryResult:
+        res = verify_logic_query(facts=facts, rules=rules, query=query)
+        return LogicQueryResult(
+            status=res["status"],
+            proved=res.get("proved", False),
+            method=res.get("method", "unproven"),
+            rule=res.get("rule"),
+            error=res.get("error"),
+        )

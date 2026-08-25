@@ -4,6 +4,18 @@ from __future__ import annotations
 
 import ast
 from typing import Any
+import structlog
+
+from harness.kernel.context import ServiceContext, ServiceKey
+from harness.plugins.base import HarnessPlugin
+from harness.services.refactor_engine import (
+    REFACTOR_ENGINE_KEY,
+    FunctionExtractResult,
+    RefactorEngineService,
+    UnusedFunctionsResult,
+)
+
+logger = structlog.get_logger(__name__)
 
 
 def find_unused_functions(code: str) -> dict[str, Any]:
@@ -74,3 +86,69 @@ def extract_function_preview(
         "function_definition": func_def,
         "refactored_preview": refactored_code,
     }
+
+
+class RefactorEnginePlugin(HarnessPlugin, RefactorEngineService):
+    """Harness Plugin providing AST-based unused function detection and function extraction."""
+
+    name = "plugin.refactor_engine"
+    version = "1.0.0"
+    description = "Python AST refactoring engine, dead/unused code identifier, and function extraction tool"
+    trusted = True
+
+    @property
+    def provides(self) -> list[ServiceKey[Any]]:
+        return [REFACTOR_ENGINE_KEY]
+
+    @property
+    def requires(self) -> list[ServiceKey[Any]]:
+        return []
+
+    async def on_load(self, ctx: ServiceContext) -> None:
+        logger.info("loading_plugin", plugin=self.name)
+        ctx.provide(REFACTOR_ENGINE_KEY, self, provider=self.name)
+
+    async def on_enable(self) -> None:
+        logger.info("enabling_plugin", plugin=self.name)
+
+    async def on_disable(self) -> None:
+        logger.info("disabling_plugin", plugin=self.name)
+
+    async def on_unload(self) -> None:
+        logger.info("unloading_plugin", plugin=self.name)
+
+    # -------------------------------------------------------------------------
+    # RefactorEngineService Protocol Implementation
+    # -------------------------------------------------------------------------
+
+    def find_unused_functions(self, code: str) -> UnusedFunctionsResult:
+        res = find_unused_functions(code=code)
+        return UnusedFunctionsResult(
+            status=res["status"],
+            total_functions=res.get("total_functions", 0),
+            unused_count=res.get("unused_count", 0),
+            unused_functions=res.get("unused_functions", []),
+            error=res.get("error"),
+        )
+
+    def extract_function_preview(
+        self,
+        code: str,
+        start_line: int,
+        end_line: int,
+        new_func_name: str,
+    ) -> FunctionExtractResult:
+        res = extract_function_preview(
+            code=code,
+            start_line=start_line,
+            end_line=end_line,
+            new_func_name=new_func_name,
+        )
+        return FunctionExtractResult(
+            status=res["status"],
+            new_function_name=res.get("new_function_name", new_func_name),
+            extracted_lines_count=res.get("extracted_lines_count", 0),
+            function_definition=res.get("function_definition", ""),
+            refactored_preview=res.get("refactored_preview", ""),
+            error=res.get("error"),
+        )

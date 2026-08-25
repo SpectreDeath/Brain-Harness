@@ -2,11 +2,24 @@
 
 from __future__ import annotations
 
+import subprocess
 from pathlib import Path
-
 import pytest
 
+from harness.kernel.context import ServiceContext
+from harness.services.filesystem_git import (
+    FILESYSTEM_GIT_KEY,
+    DirListResult,
+    FileReadResult,
+    FileWriteResult,
+    FilesystemGitService,
+    GitDiffResult,
+    GitLogResult,
+    GitStatusResult,
+    SearchResult,
+)
 from plugins.software_engineering.filesystem_git.main import (
+    FilesystemGitPlugin,
     fs_list_dir,
     fs_read_file,
     fs_search_text,
@@ -59,8 +72,6 @@ class TestFilesystemGitPlugin:
         assert "my_secret_function" in res["matches"][0]["line_content"]
 
     def test_git_operations(self, tmp_path: Path) -> None:
-        import subprocess
-
         # Initialize isolated git repo
         subprocess.run(["git", "init"], cwd=tmp_path, capture_output=True, check=True)
         subprocess.run(["git", "config", "user.email", "test@example.com"], cwd=tmp_path, capture_output=True, check=True)
@@ -85,3 +96,36 @@ class TestFilesystemGitPlugin:
         log = git_log(str(tmp_path), max_commits=3)
         assert log["status"] == "ok"
         assert len(log["commits"]) >= 1
+
+    @pytest.mark.asyncio
+    async def test_filesystem_git_plugin_ioc_lifecycle(self, tmp_path: Path) -> None:
+        plugin = FilesystemGitPlugin()
+        assert plugin.name == "plugin.filesystem_git"
+        assert FILESYSTEM_GIT_KEY in plugin.provides
+
+        ctx = ServiceContext()
+        await plugin.on_load(ctx)
+        await plugin.on_enable()
+
+        service = ctx.require(FILESYSTEM_GIT_KEY)
+        assert isinstance(service, FilesystemGitService)
+
+        f_path = tmp_path / "ioc_test.txt"
+        w_res = service.write_file(str(f_path), "line 100\nline 200")
+        assert isinstance(w_res, FileWriteResult)
+        assert w_res.status == "ok"
+
+        r_res = service.read_file(str(f_path))
+        assert isinstance(r_res, FileReadResult)
+        assert r_res.total_lines == 2
+
+        l_res = service.list_dir(str(tmp_path))
+        assert isinstance(l_res, DirListResult)
+        assert l_res.count >= 1
+
+        s_res = service.search_text("line 200", search_path=str(tmp_path))
+        assert isinstance(s_res, SearchResult)
+        assert s_res.match_count == 1
+
+        await plugin.on_disable()
+        await plugin.on_unload()

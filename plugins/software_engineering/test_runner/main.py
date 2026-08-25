@@ -12,15 +12,18 @@ import re
 import sys
 import time
 from typing import Any
-
 import structlog
 
 from harness.kernel.context import ServiceContext, ServiceKey
 from harness.plugins.base import HarnessPlugin
+from harness.services.test_runner import (
+    TEST_RUNNER_KEY,
+    TestDiscoverResult,
+    TestRunnerService,
+    TestRunResult,
+)
 
-logger = structlog.get_logger()
-
-TEST_RUNNER_KEY: ServiceKey[TestRunnerService] = ServiceKey("software.test_runner")
+logger = structlog.get_logger(__name__)
 
 
 def discover_tests(root_dir: str = ".") -> dict[str, Any]:
@@ -148,8 +151,10 @@ async def run_tests(
         }
 
 
-class TestRunnerService:
-    """Service facade for autonomous test running."""
+class TestRunnerServiceImpl:
+    """Implementation of TestRunnerService."""
+
+    __test__ = False
 
     def discover(self, root_dir: str = ".") -> dict[str, Any]:
         return discover_tests(root_dir)
@@ -175,17 +180,15 @@ class TestRunnerService:
 class TestRunnerPlugin(HarnessPlugin):
     """Plugin providing test running and TDD capabilities."""
 
-    @property
-    def name(self) -> str:
-        return "plugin.test_runner"
+    __test__ = False
 
-    @property
-    def version(self) -> str:
-        return "1.0.0"
+    name = "plugin.test_runner"
+    version = "1.0.0"
+    description = "Autonomous test discovery, test execution, and structured failure parsing for TDD workflows"
+    trusted = True
 
-    @property
-    def description(self) -> str:
-        return "Autonomous test discovery, test execution, and structured failure parsing for TDD workflows"
+    def __init__(self, service: TestRunnerService | None = None) -> None:
+        self._service = service or TestRunnerServiceImpl()
 
     @property
     def provides(self) -> list[ServiceKey[Any]]:
@@ -196,5 +199,14 @@ class TestRunnerPlugin(HarnessPlugin):
         return []
 
     async def on_load(self, ctx: ServiceContext) -> None:
-        ctx.provide(TEST_RUNNER_KEY, TestRunnerService(), provider=self.name)
+        ctx.provide(TEST_RUNNER_KEY, self._service, provider=self.name)
         logger.info("TestRunnerService provided", plugin=self.name)
+
+    async def on_enable(self) -> None:
+        logger.info("TestRunnerPlugin enabled", plugin=self.name)
+
+    async def on_disable(self) -> None:
+        logger.info("TestRunnerPlugin disabled", plugin=self.name)
+
+    async def on_unload(self) -> None:
+        logger.info("TestRunnerPlugin unloaded", plugin=self.name)

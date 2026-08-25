@@ -1,73 +1,78 @@
 {
   "name": "plugin.web_fetcher",
   "version": "1.0.0",
-  "description": "Safe web fetching, HTML-to-Markdown distillation, and REST API client",
+  "description": "Clean web page fetcher, automated HTML-to-Markdown distillation, and custom HTTP request client",
   "entrypoint": "main.py",
   "isolation": "in_process",
   "trusted": true,
+  "category": "integration_and_io",
+  "author": "Brain Harness Forge Engine",
+  "provides": [
+    "service.web_fetcher"
+  ],
   "entrypoints": [
     {
       "name": "web_fetch_url",
-      "description": "Fetch a web page and return raw response text and headers",
+      "description": "Fetch a remote web page by URL and return status, response headers, and raw text body",
       "parameters": [
         {
           "name": "url",
           "type": "string",
-          "description": "The URL to fetch",
+          "description": "Target HTTP/HTTPS URL",
           "required": true
         },
         {
           "name": "timeout",
           "type": "number",
-          "description": "Timeout in seconds (default: 15.0)",
+          "description": "Request timeout in seconds (default: 15.0)",
           "required": false
         }
       ]
     },
     {
       "name": "web_fetch_markdown",
-      "description": "Fetch web page and convert HTML into clean LLM-friendly Markdown",
+      "description": "Fetch a URL and automatically distill HTML layout and styling into clean Markdown",
       "parameters": [
         {
           "name": "url",
           "type": "string",
-          "description": "The web URL to distill into Markdown",
+          "description": "Target HTTP/HTTPS URL to convert to Markdown",
           "required": true
         },
         {
           "name": "timeout",
           "type": "number",
-          "description": "Timeout in seconds (default: 15.0)",
+          "description": "Request timeout in seconds (default: 15.0)",
           "required": false
         }
       ]
     },
     {
       "name": "web_http_request",
-      "description": "Perform an HTTP request with custom method, headers, or JSON body",
+      "description": "Perform custom HTTP requests (GET, POST, PUT, DELETE, PATCH) with custom headers and JSON payloads",
       "parameters": [
         {
           "name": "url",
           "type": "string",
-          "description": "Target HTTP URL",
+          "description": "Target HTTP/HTTPS endpoint",
           "required": true
         },
         {
           "name": "method",
           "type": "string",
-          "description": "HTTP method (GET, POST, PUT, DELETE, PATCH, default: GET)",
+          "description": "HTTP method (GET, POST, PUT, DELETE, PATCH - default: GET)",
           "required": false
         },
         {
           "name": "headers",
           "type": "object",
-          "description": "Request headers dictionary (optional)",
+          "description": "Optional HTTP request header key-value pairs",
           "required": false
         },
         {
           "name": "json_data",
           "type": "object",
-          "description": "JSON payload body (optional)",
+          "description": "Optional JSON payload object",
           "required": false
         },
         {

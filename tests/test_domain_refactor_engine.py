@@ -1,10 +1,18 @@
-"""Tests for Domain 4: Refactor Engine plugin."""
+"""Tests for Refactor Engine plugin."""
 
 from __future__ import annotations
 
 import pytest
 
+from harness.kernel.context import ServiceContext
+from harness.services.refactor_engine import (
+    REFACTOR_ENGINE_KEY,
+    FunctionExtractResult,
+    RefactorEngineService,
+    UnusedFunctionsResult,
+)
 from plugins.software_engineering.refactor_engine.main import (
+    RefactorEnginePlugin,
     extract_function_preview,
     find_unused_functions,
 )
@@ -37,3 +45,31 @@ class TestRefactorEnginePlugin:
         res = extract_function_preview(code, start_line=2, end_line=3, new_func_name="compute_values")
         assert res["status"] == "ok"
         assert "def compute_values():" in res["refactored_preview"]
+
+    @pytest.mark.asyncio
+    async def test_refactor_engine_plugin_ioc_lifecycle(self) -> None:
+        plugin = RefactorEnginePlugin()
+        assert plugin.name == "plugin.refactor_engine"
+        assert REFACTOR_ENGINE_KEY in plugin.provides
+
+        ctx = ServiceContext()
+        await plugin.on_load(ctx)
+        await plugin.on_enable()
+
+        service = ctx.require(REFACTOR_ENGINE_KEY)
+        assert isinstance(service, RefactorEngineService)
+
+        code = "def alpha(): pass\ndef beta(): alpha()\n"
+        unused_res = service.find_unused_functions(code)
+        assert isinstance(unused_res, UnusedFunctionsResult)
+        assert unused_res.status == "ok"
+        assert len(unused_res.unused_functions) == 1
+        assert unused_res.unused_functions[0]["name"] == "beta"
+
+        extract_res = service.extract_function_preview(code, start_line=1, end_line=1, new_func_name="new_helper")
+        assert isinstance(extract_res, FunctionExtractResult)
+        assert extract_res.status == "ok"
+        assert "def new_helper():" in extract_res.refactored_preview
+
+        await plugin.on_disable()
+        await plugin.on_unload()

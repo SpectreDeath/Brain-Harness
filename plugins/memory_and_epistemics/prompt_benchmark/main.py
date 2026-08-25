@@ -5,6 +5,19 @@ from __future__ import annotations
 import re
 from collections import Counter
 from typing import Any
+import structlog
+
+from harness.kernel.context import ServiceContext, ServiceKey
+from harness.plugins.base import HarnessPlugin
+from harness.services.prompt_benchmark import (
+    PROMPT_BENCHMARK_KEY,
+    ModelOutputEvalResult,
+    PromptBenchmarkService,
+    RegressionMatrixResult,
+    TextSimilarityResult,
+)
+
+logger = structlog.get_logger(__name__)
 
 
 def _tokenize(text: str) -> list[str]:
@@ -21,7 +34,15 @@ def score_text_similarity_bleu_rouge(reference: str, candidate: str) -> dict[str
     cand_toks = _tokenize(candidate)
 
     if not ref_toks or not cand_toks:
-        return {"status": "ok", "bleu_1": 0.0, "bleu_2": 0.0, "rouge_1_f1": 0.0}
+        return {
+            "status": "ok",
+            "reference_tokens": len(ref_toks),
+            "candidate_tokens": len(cand_toks),
+            "bleu_1": 0.0,
+            "bleu_2": 0.0,
+            "rouge_1_recall": 0.0,
+            "rouge_1_f1": 0.0,
+        }
 
     # BLEU-1 (Unigram Precision)
     ref_counts = Counter(ref_toks)
@@ -106,3 +127,81 @@ def generate_regression_matrix(runs: list[dict[str, Any]]) -> dict[str, Any]:
         "top_performer": ranked[0] if ranked else None,
         "ranking": ranked,
     }
+
+
+class PromptBenchmarkPlugin(HarnessPlugin, PromptBenchmarkService):
+    """Harness Plugin providing prompt evaluation, similarity benchmarking, and model regression testing."""
+
+    name = "plugin.prompt_benchmark"
+    version = "1.0.0"
+    description = "Prompt benchmark, BLEU/ROUGE ngram similarity, and model regression testing plugin"
+    trusted = True
+
+    @property
+    def provides(self) -> list[ServiceKey[Any]]:
+        return [PROMPT_BENCHMARK_KEY]
+
+    @property
+    def requires(self) -> list[ServiceKey[Any]]:
+        return []
+
+    async def on_load(self, ctx: ServiceContext) -> None:
+        logger.info("loading_plugin", plugin=self.name)
+        ctx.provide(PROMPT_BENCHMARK_KEY, self, provider=self.name)
+
+    async def on_enable(self) -> None:
+        logger.info("enabling_plugin", plugin=self.name)
+
+    async def on_disable(self) -> None:
+        logger.info("disabling_plugin", plugin=self.name)
+
+    async def on_unload(self) -> None:
+        logger.info("unloading_plugin", plugin=self.name)
+
+    # -------------------------------------------------------------------------
+    # PromptBenchmarkService Protocol Implementation
+    # -------------------------------------------------------------------------
+
+    def score_text_similarity(
+        self,
+        reference: str,
+        candidate: str,
+    ) -> TextSimilarityResult:
+        res = score_text_similarity_bleu_rouge(reference=reference, candidate=candidate)
+        return TextSimilarityResult(
+            status=res["status"],
+            reference_tokens=res.get("reference_tokens", 0),
+            candidate_tokens=res.get("candidate_tokens", 0),
+            bleu_1=res.get("bleu_1", 0.0),
+            bleu_2=res.get("bleu_2", 0.0),
+            rouge_1_recall=res.get("rouge_1_recall", 0.0),
+            rouge_1_f1=res.get("rouge_1_f1", 0.0),
+            error=res.get("error"),
+        )
+
+    def evaluate_model_outputs(
+        self,
+        test_cases: list[dict[str, Any]],
+    ) -> ModelOutputEvalResult:
+        res = evaluate_model_outputs(test_cases=test_cases)
+        return ModelOutputEvalResult(
+            status=res["status"],
+            total_test_cases=res.get("total_test_cases", 0),
+            passed_count=res.get("passed_count", 0),
+            pass_rate=res.get("pass_rate", 1.0),
+            evaluations=res.get("evaluations", []),
+            error=res.get("error"),
+        )
+
+    def generate_regression_matrix(
+        self,
+        runs: list[dict[str, Any]],
+    ) -> RegressionMatrixResult:
+        res = generate_regression_matrix(runs=runs)
+        return RegressionMatrixResult(
+            status=res["status"],
+            total_runs=res.get("total_runs", 0),
+            top_performer=res.get("top_performer"),
+            ranking=res.get("ranking", []),
+            error=res.get("error"),
+        )

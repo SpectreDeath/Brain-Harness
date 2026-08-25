@@ -24,7 +24,7 @@ from plugins.integration_and_io.openrouter_gateway.main import (
     openrouter_jsonrpc_call,
     openrouter_resolve_route,
 )
-from plugins.integration_and_io.openrouter_gateway.service import (
+from harness.services.openrouter_gateway import (
     OPENROUTER_GATEWAY_KEY,
     OpenRouterGatewayService,
     RouteResolution,

@@ -1,10 +1,15 @@
 {
-  "name": "domain.skill_knowledge_graph",
+  "name": "plugin.skill_knowledge_graph",
   "version": "1.0.0",
   "description": "Knowledge graph indexer, semantic router, and visual topology generator for agent skill cards",
   "entrypoint": "main.py",
   "isolation": "in_process",
   "trusted": true,
+  "category": "memory_and_epistemics",
+  "author": "Brain Harness Forge Engine",
+  "provides": [
+    "service.skill_knowledge_graph"
+  ],
   "entrypoints": [
     {
       "name": "index_skill_catalog",

@@ -4,7 +4,16 @@ from __future__ import annotations
 
 import pytest
 
+from harness.kernel.context import ServiceContext
+from harness.services.symbolic_solver import (
+    SYMBOLIC_SOLVER_KEY,
+    ConstraintSolveResult,
+    LogicQueryResult,
+    MathEvalResult,
+    SymbolicSolverService,
+)
 from plugins.integration_and_io.symbolic_solver.main import (
+    SymbolicSolverPlugin,
     evaluate_math_expression,
     solve_constraints,
     verify_logic_query,
@@ -57,3 +66,35 @@ class TestSymbolicSolverPlugin:
         # Unproven query
         res3 = verify_logic_query(facts, rules=rules, query="parent(alice, david)")
         assert res3["proved"] is False
+
+    @pytest.mark.asyncio
+    async def test_plugin_ioc_lifecycle_and_service(self) -> None:
+        plugin = SymbolicSolverPlugin()
+        assert plugin.name == "plugin.symbolic_solver"
+        assert SYMBOLIC_SOLVER_KEY in plugin.provides
+
+        ctx = ServiceContext()
+        await plugin.on_load(ctx)
+        await plugin.on_enable()
+
+        service = ctx.require(SYMBOLIC_SOLVER_KEY)
+        assert isinstance(service, SymbolicSolverService)
+
+        math_res = service.evaluate_math_expression("10 * 10 + 5")
+        assert isinstance(math_res, MathEvalResult)
+        assert math_res.status == "ok"
+        assert math_res.result == 105
+
+        solve_res = service.solve_constraints(
+            [{"name": "a", "min": 1, "max": 5}], ["a == 3"]
+        )
+        assert isinstance(solve_res, ConstraintSolveResult)
+        assert solve_res.satisfiable is True
+        assert solve_res.solutions[0]["a"] == 3
+
+        logic_res = service.verify_logic_query(["bird(robin)"], query="bird(robin)")
+        assert isinstance(logic_res, LogicQueryResult)
+        assert logic_res.proved is True
+
+        await plugin.on_disable()
+        await plugin.on_unload()

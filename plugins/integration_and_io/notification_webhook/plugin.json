@@ -5,6 +5,11 @@
   "entrypoint": "main.py",
   "isolation": "in_process",
   "trusted": true,
+  "category": "integration_and_io",
+  "author": "Brain Harness Forge Engine",
+  "provides": [
+    "service.notification_webhook"
+  ],
   "entrypoints": [
     {
       "name": "notify_webhook",

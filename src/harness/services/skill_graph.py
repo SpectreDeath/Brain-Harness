@@ -1,8 +1,8 @@
-"""Skill Knowledge Graph service protocol, typed models, and ServiceKey."""
+"""Skill Knowledge Graph & Registry service protocol, typed models, and ServiceKey."""
 
 from __future__ import annotations
 
-from typing import Any, Protocol
+from typing import Any, Protocol, runtime_checkable
 from pydantic import BaseModel, Field
 
 from harness.kernel.context import ServiceKey
@@ -48,6 +48,7 @@ class SkillChainResult(BaseModel):
     length: int = Field(default=0, description="Step count")
 
 
+@runtime_checkable
 class SkillGraphService(Protocol):
     """Protocol for the Skill Knowledge Graph service."""
 
@@ -68,5 +69,26 @@ class SkillGraphService(Protocol):
         ...
 
 
-SKILL_GRAPH_KEY: ServiceKey[SkillGraphService] = ServiceKey("service.skill_knowledge_graph")
+@runtime_checkable
+class SkillRegistryService(Protocol):
+    """Protocol for the authoritative workspace Skill Registry."""
 
+    def discover_all(self, root_dir: str = ".") -> list[SkillCardDefinition]:
+        """Discover and parse all skill cards across .agents/skills and skills/."""
+        ...
+
+    def get_skill(self, name: str) -> SkillCardDefinition | None:
+        """Retrieve a skill definition by kebab-case name."""
+        ...
+
+    def route_intent(self, intent: str, top_k: int = 3) -> dict[str, Any]:
+        """Route natural language task intent to candidate skills."""
+        ...
+
+    def get_chain(self, start_skill: str, target_skill: str) -> SkillChainResult:
+        """Calculate execution chain between two skills."""
+        ...
+
+
+SKILL_GRAPH_KEY: ServiceKey[SkillGraphService] = ServiceKey("service.skill_knowledge_graph")
+SKILL_REGISTRY_KEY: ServiceKey[SkillRegistryService] = ServiceKey("service.skill_registry")

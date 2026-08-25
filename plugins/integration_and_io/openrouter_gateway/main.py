@@ -7,25 +7,41 @@ and Context Epoch KV-cache optimization extracted from Kilo Code.
 from __future__ import annotations
 
 import asyncio
-from typing import Any
+from typing import Any, Coroutine, TypeVar
 import structlog
 
 from harness.kernel.context import ServiceContext, ServiceKey
 from harness.plugins.base import HarnessPlugin
-from .service import (
+from harness.services.openrouter_gateway import (
     OPENROUTER_GATEWAY_KEY,
     OpenRouterGatewayService,
     ReasoningConfig,
 )
 
-logger = structlog.get_logger()
+logger = structlog.get_logger(__name__)
 
 # Global default service singleton for tool invocations
 _global_service = OpenRouterGatewayService()
 
+T = TypeVar("T")
+
+
+def _run_async(coro: Coroutine[Any, Any, T]) -> T:
+    """Execute an async coroutine safely whether or not an event loop is already running."""
+    try:
+        asyncio.get_running_loop()
+        import concurrent.futures
+
+        with concurrent.futures.ThreadPoolExecutor(max_workers=1) as pool:
+            return pool.submit(asyncio.run, coro).result()
+    except RuntimeError:
+        return asyncio.run(coro)
+
 
 class OpenRouterGatewayPlugin(HarnessPlugin):
     """Brain Harness plugin for OpenRouter model routing and JSON-RPC 2.0 dispatch."""
+
+    trusted = True
 
     def __init__(self, service: OpenRouterGatewayService | None = None) -> None:
         self._service = service or _global_service
@@ -52,7 +68,7 @@ class OpenRouterGatewayPlugin(HarnessPlugin):
 
     async def on_load(self, ctx: ServiceContext) -> None:
         """Register the typed service instance in the IoC container."""
-        ctx.provide(OPENROUTER_GATEWAY_KEY, self._service)
+        ctx.provide(OPENROUTER_GATEWAY_KEY, self._service, provider=self.name)
         logger.info("Provided OpenRouterGatewayService to context", key=OPENROUTER_GATEWAY_KEY.name)
 
     async def on_enable(self) -> None:
@@ -99,14 +115,7 @@ def openrouter_chat(
             task_id=task_id,
             feature=feature,
         )
-        try:
-            loop = asyncio.get_running_loop()
-            import concurrent.futures
-            with concurrent.futures.ThreadPoolExecutor() as pool:
-                res = pool.submit(lambda: asyncio.run(coro)).result()
-        except RuntimeError:
-            res = asyncio.run(coro)
-
+        res = _run_async(coro)
         return {"status": "ok", "response": res.model_dump()}
     except Exception as e:
         logger.error("openrouter_chat tool error", error=str(e))
@@ -127,14 +136,7 @@ def openrouter_list_models(
             max_price=max_price,
             api_key=api_key,
         )
-        try:
-            loop = asyncio.get_running_loop()
-            import concurrent.futures
-            with concurrent.futures.ThreadPoolExecutor() as pool:
-                models = pool.submit(lambda: asyncio.run(coro)).result()
-        except RuntimeError:
-            models = asyncio.run(coro)
-
+        models = _run_async(coro)
         return {
             "status": "ok",
             "count": len(models),
@@ -153,14 +155,7 @@ def openrouter_resolve_route(
     """Intelligently match task complexity and tier to optimal OpenRouter model routes."""
     try:
         coro = _global_service.resolve_route(task_type, tier=tier, budget=budget)
-        try:
-            loop = asyncio.get_running_loop()
-            import concurrent.futures
-            with concurrent.futures.ThreadPoolExecutor() as pool:
-                route = pool.submit(lambda: asyncio.run(coro)).result()
-        except RuntimeError:
-            route = asyncio.run(coro)
-
+        route = _run_async(coro)
         return {"status": "ok", "route": route.model_dump()}
     except Exception as e:
         logger.error("openrouter_resolve_route tool error", error=str(e))
@@ -174,14 +169,7 @@ def openrouter_jsonrpc_call(
     """Execute direct JSON-RPC 2.0 protocol request against OpenRouter Gateway."""
     try:
         coro = _global_service.jsonrpc_dispatch(request_payload, api_key=api_key)
-        try:
-            loop = asyncio.get_running_loop()
-            import concurrent.futures
-            with concurrent.futures.ThreadPoolExecutor() as pool:
-                res = pool.submit(lambda: asyncio.run(coro)).result()
-        except RuntimeError:
-            res = asyncio.run(coro)
-
+        res = _run_async(coro)
         return {"status": "ok", "jsonrpc_response": res}
     except Exception as e:
         logger.error("openrouter_jsonrpc_call tool error", error=str(e))

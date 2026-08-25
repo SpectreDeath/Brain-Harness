@@ -3,10 +3,18 @@
 from __future__ import annotations
 
 from unittest.mock import MagicMock, patch
-
 import pytest
 
+from harness.kernel.context import ServiceContext
+from harness.services.web_fetcher import (
+    WEB_FETCHER_KEY,
+    WebFetcherService,
+    WebFetchResult,
+    WebHttpResponse,
+    WebMarkdownResult,
+)
 from plugins.integration_and_io.web_fetcher.main import (
+    WebFetcherPlugin,
     _html_to_markdown,
     web_fetch_markdown,
     web_fetch_url,
@@ -74,3 +82,51 @@ class TestWebFetcherPlugin:
             assert res["status"] == "ok"
             assert res["status_code"] == 201
             assert res["json"] == {"created": True, "id": 123}
+
+    @pytest.mark.asyncio
+    async def test_plugin_ioc_lifecycle_and_async_fetch(self) -> None:
+        plugin = WebFetcherPlugin()
+        assert plugin.name == "plugin.web_fetcher"
+        assert WEB_FETCHER_KEY in plugin.provides
+
+        ctx = ServiceContext()
+        await plugin.on_load(ctx)
+        await plugin.on_enable()
+
+        service = ctx.require(WEB_FETCHER_KEY)
+        assert isinstance(service, WebFetcherService)
+
+        mock_response = MagicMock()
+        mock_response.getcode.return_value = 200
+        mock_response.info.return_value.get_content_charset.return_value = "utf-8"
+        mock_response.info.return_value.__iter__.return_value = [("content-type", "text/html")]
+        mock_response.read.return_value = b"<h2>Async Title</h2>"
+
+        with patch("urllib.request.urlopen") as mock_open:
+            mock_open.return_value.__enter__.return_value = mock_response
+
+            async_fetch_res = await service.fetch_url_async("https://async.example.com")
+            assert isinstance(async_fetch_res, WebFetchResult)
+            assert async_fetch_res.status == "ok"
+            assert "Async Title" in (async_fetch_res.body or "")
+
+            async_md_res = await service.fetch_markdown_async("https://async.example.com")
+            assert isinstance(async_md_res, WebMarkdownResult)
+            assert "## Async Title" in async_md_res.markdown
+
+        mock_json_resp = MagicMock()
+        mock_json_resp.getcode.return_value = 200
+        mock_json_resp.info.return_value = {"Content-Type": "application/json"}
+        mock_json_resp.read.return_value = b'{"success": true}'
+
+        with patch("urllib.request.urlopen") as mock_open:
+            mock_open.return_value.__enter__.return_value = mock_json_resp
+
+            http_res = await service.http_request_async(
+                "https://api.async.com", method="GET"
+            )
+            assert isinstance(http_res, WebHttpResponse)
+            assert http_res.json_data == {"success": True}
+
+        await plugin.on_disable()
+        await plugin.on_unload()

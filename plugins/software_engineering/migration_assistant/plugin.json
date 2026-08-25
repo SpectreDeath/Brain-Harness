@@ -1,10 +1,15 @@
 {
-  "name": "domain.migration_assistant",
+  "name": "plugin.migration_assistant",
   "version": "1.0.0",
   "description": "Python framework migration checker (Pydantic v1 to v2, Python 3.10+ union syntax, unittest to pytest)",
   "entrypoint": "main.py",
   "isolation": "in_process",
   "trusted": true,
+  "category": "software_engineering",
+  "author": "Brain Harness Forge Engine",
+  "provides": [
+    "service.migration_assistant"
+  ],
   "entrypoints": [
     {
       "name": "check_pydantic_v2_readiness",

@@ -1,10 +1,15 @@
 {
-  "name": "domain.embedding_cluster",
+  "name": "plugin.embedding_cluster",
   "version": "1.0.0",
   "description": "Unsupervised text chunk clustering, topic keyword extraction, and cluster summary generator",
   "entrypoint": "main.py",
   "isolation": "in_process",
   "trusted": true,
+  "category": "memory_and_epistemics",
+  "author": "Brain Harness Forge Engine",
+  "provides": [
+    "service.embedding_cluster"
+  ],
   "entrypoints": [
     {
       "name": "cluster_text_chunks",

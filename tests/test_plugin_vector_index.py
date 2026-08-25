@@ -3,10 +3,18 @@
 from __future__ import annotations
 
 from pathlib import Path
-
 import pytest
 
+from harness.kernel.context import ServiceContext
+from harness.services.vector_index import (
+    VECTOR_INDEX_KEY,
+    VectorHybridSearchResult,
+    VectorIndexResult,
+    VectorIndexService,
+    VectorSearchResult,
+)
 from plugins.memory_and_epistemics.vector_index.main import (
+    VectorIndexPlugin,
     vector_index_directory,
     vector_search_hybrid,
     vector_search_semantic,
@@ -56,3 +64,37 @@ class TestVectorIndexPlugin:
         assert res_hyb["status"] == "ok"
         assert res_hyb["results_count"] >= 1
         assert res_hyb["results"][0]["keyword_match"] is True
+
+    @pytest.mark.asyncio
+    async def test_vector_index_plugin_ioc_lifecycle(self, tmp_path: Path) -> None:
+        plugin = VectorIndexPlugin()
+        assert plugin.name == "plugin.vector_index"
+        assert VECTOR_INDEX_KEY in plugin.provides
+
+        ctx = ServiceContext()
+        await plugin.on_load(ctx)
+        await plugin.on_enable()
+
+        service = ctx.require(VECTOR_INDEX_KEY)
+        assert isinstance(service, VectorIndexService)
+
+        (tmp_path / "ioc_doc.py").write_text(
+            "def resolve_service():\n    \"\"\"Resolves typed ServiceKey[T] from container.\"\"\"\n    pass\n"
+        )
+
+        idx_res = await service.index_directory_async(str(tmp_path))
+        assert isinstance(idx_res, VectorIndexResult)
+        assert idx_res.status == "ok"
+        assert idx_res.indexed_chunks >= 1
+
+        search_res = await service.search_semantic_async("resolve typed service container")
+        assert isinstance(search_res, VectorSearchResult)
+        assert search_res.status == "ok"
+        assert search_res.results_count >= 1
+
+        hybrid_res = await service.search_hybrid_async("service container", keyword="ServiceKey")
+        assert isinstance(hybrid_res, VectorHybridSearchResult)
+        assert hybrid_res.status == "ok"
+
+        await plugin.on_disable()
+        await plugin.on_unload()

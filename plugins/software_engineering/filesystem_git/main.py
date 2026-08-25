@@ -7,6 +7,23 @@ import re
 import subprocess
 from pathlib import Path
 from typing import Any
+import structlog
+
+from harness.kernel.context import ServiceContext, ServiceKey
+from harness.plugins.base import HarnessPlugin
+from harness.services.filesystem_git import (
+    FILESYSTEM_GIT_KEY,
+    DirListResult,
+    FileReadResult,
+    FileWriteResult,
+    FilesystemGitService,
+    GitDiffResult,
+    GitLogResult,
+    GitStatusResult,
+    SearchResult,
+)
+
+logger = structlog.get_logger(__name__)
 
 
 def fs_read_file(path: str, start_line: int | None = None, end_line: int | None = None) -> dict[str, Any]:
@@ -73,7 +90,6 @@ def fs_list_dir(path: str = ".", max_depth: int = 2) -> dict[str, Any]:
             if depth > max_depth:
                 return
             for item in sorted(current.iterdir()):
-                # skip hidden dot folders like .git, .venv
                 if item.name.startswith(".") and item.name in (".git", ".venv", ".pytest_cache", ".ruff_cache", ".mypy_cache"):
                     continue
                 is_directory = item.is_dir()
@@ -114,7 +130,6 @@ def fs_search_text(pattern: str, search_path: str = ".", case_sensitive: bool = 
         matches: list[dict[str, Any]] = []
 
         for current_root, dirs, files in os.walk(root):
-            # prune ignored directories
             dirs[:] = [d for d in dirs if not d.startswith(".") and d not in ("__pycache__", "node_modules", "venv", ".venv")]
 
             for file_name in files:
@@ -218,3 +233,125 @@ def git_log(repo_path: str = ".", max_commits: int = 10) -> dict[str, Any]:
         return {"status": "ok", "count": len(commits), "commits": commits}
     except Exception as e:
         return {"status": "error", "error": str(e)}
+
+
+class FilesystemGitPlugin(HarnessPlugin, FilesystemGitService):
+    """Harness Plugin providing filesystem operations and Git integration."""
+
+    name = "plugin.filesystem_git"
+    version = "1.0.0"
+    description = "Filesystem & Git tools for Brain Harness autonomous agents"
+    trusted = True
+
+    @property
+    def provides(self) -> list[ServiceKey[Any]]:
+        return [FILESYSTEM_GIT_KEY]
+
+    @property
+    def requires(self) -> list[ServiceKey[Any]]:
+        return []
+
+    async def on_load(self, ctx: ServiceContext) -> None:
+        logger.info("loading_plugin", plugin=self.name)
+        ctx.provide(FILESYSTEM_GIT_KEY, self, provider=self.name)
+
+    async def on_enable(self) -> None:
+        logger.info("enabling_plugin", plugin=self.name)
+
+    async def on_disable(self) -> None:
+        logger.info("disabling_plugin", plugin=self.name)
+
+    async def on_unload(self) -> None:
+        logger.info("unloading_plugin", plugin=self.name)
+
+    # -------------------------------------------------------------------------
+    # FilesystemGitService Protocol Implementation
+    # -------------------------------------------------------------------------
+
+    def read_file(
+        self,
+        path: str,
+        start_line: int | None = None,
+        end_line: int | None = None,
+    ) -> FileReadResult:
+        res = fs_read_file(path=path, start_line=start_line, end_line=end_line)
+        return FileReadResult(
+            status=res["status"],
+            path=res.get("path", path),
+            total_lines=res.get("total_lines", 0),
+            start_line=res.get("start_line", 0),
+            end_line=res.get("end_line", 0),
+            content=res.get("content", ""),
+            error=res.get("error"),
+        )
+
+    def write_file(
+        self,
+        path: str,
+        content: str,
+        overwrite: bool = False,
+    ) -> FileWriteResult:
+        res = fs_write_file(path=path, content=content, overwrite=overwrite)
+        return FileWriteResult(
+            status=res["status"],
+            path=res.get("path", path),
+            bytes_written=res.get("bytes_written", 0),
+            error=res.get("error"),
+        )
+
+    def list_dir(
+        self,
+        path: str = ".",
+        max_depth: int = 2,
+    ) -> DirListResult:
+        res = fs_list_dir(path=path, max_depth=max_depth)
+        return DirListResult(
+            status=res["status"],
+            root=res.get("root", path),
+            count=res.get("count", 0),
+            entries=res.get("entries", []),
+            error=res.get("error"),
+        )
+
+    def search_text(
+        self,
+        pattern: str,
+        search_path: str = ".",
+        case_sensitive: bool = False,
+    ) -> SearchResult:
+        res = fs_search_text(pattern=pattern, search_path=search_path, case_sensitive=case_sensitive)
+        return SearchResult(
+            status=res["status"],
+            pattern=res.get("pattern", pattern),
+            match_count=res.get("match_count", 0),
+            matches=res.get("matches", []),
+            error=res.get("error"),
+        )
+
+    def git_status(self, repo_path: str = ".") -> GitStatusResult:
+        res = git_status(repo_path=repo_path)
+        return GitStatusResult(
+            status=res["status"],
+            branch=res.get("branch", ""),
+            dirty=res.get("dirty", False),
+            changed_files_count=res.get("changed_files_count", 0),
+            changes=res.get("changes", []),
+            error=res.get("error"),
+        )
+
+    def git_diff(self, repo_path: str = ".", target: str | None = None) -> GitDiffResult:
+        res = git_diff(repo_path=repo_path, target=target)
+        return GitDiffResult(
+            status=res["status"],
+            diff=res.get("diff", ""),
+            error=res.get("error"),
+        )
+
+    def git_log(self, repo_path: str = ".", max_commits: int = 10) -> GitLogResult:
+        res = git_log(repo_path=repo_path, max_commits=max_commits)
+        return GitLogResult(
+            status=res["status"],
+            count=res.get("count", 0),
+            commits=res.get("commits", []),
+            error=res.get("error"),
+        )

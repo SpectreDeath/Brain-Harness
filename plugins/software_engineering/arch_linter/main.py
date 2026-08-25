@@ -7,6 +7,19 @@ import os
 from collections import defaultdict
 from pathlib import Path
 from typing import Any
+import structlog
+
+from harness.kernel.context import ServiceContext, ServiceKey
+from harness.plugins.base import HarnessPlugin
+from harness.services.arch_linter import (
+    ARCH_LINTER_KEY,
+    ArchLinterService,
+    BoundaryCheckResult,
+    CircularImportResult,
+    ModuleCouplingResult,
+)
+
+logger = structlog.get_logger(__name__)
 
 
 def _get_module_name(file_path: Path, root: Path) -> str:
@@ -175,3 +188,73 @@ def verify_clean_boundaries(
         "violations_count": len(violations),
         "violations": violations,
     }
+
+
+class ArchLinterPlugin(HarnessPlugin, ArchLinterService):
+    """Harness Plugin providing codebase coupling, cohesion, and boundary linting."""
+
+    name = "plugin.arch_linter"
+    version = "1.0.0"
+    description = "Codebase coupling/cohesion analyzer, circular import detector, and clean architecture boundary verifier"
+    trusted = True
+
+    @property
+    def provides(self) -> list[ServiceKey[Any]]:
+        return [ARCH_LINTER_KEY]
+
+    @property
+    def requires(self) -> list[ServiceKey[Any]]:
+        return []
+
+    async def on_load(self, ctx: ServiceContext) -> None:
+        logger.info("loading_plugin", plugin=self.name)
+        ctx.provide(ARCH_LINTER_KEY, self, provider=self.name)
+
+    async def on_enable(self) -> None:
+        logger.info("enabling_plugin", plugin=self.name)
+
+    async def on_disable(self) -> None:
+        logger.info("disabling_plugin", plugin=self.name)
+
+    async def on_unload(self) -> None:
+        logger.info("unloading_plugin", plugin=self.name)
+
+    # -------------------------------------------------------------------------
+    # ArchLinterService Protocol Implementation
+    # -------------------------------------------------------------------------
+
+    def detect_circular_imports(self, root_path: str = "src") -> CircularImportResult:
+        res = detect_circular_imports(root_path=root_path)
+        return CircularImportResult(
+            status=res["status"],
+            root_path=res.get("root_path", root_path),
+            total_modules=res.get("total_modules", 0),
+            has_circular_imports=res.get("has_circular_imports", False),
+            cycles_count=res.get("cycles_count", 0),
+            cycles=res.get("cycles", []),
+            error=res.get("error"),
+        )
+
+    def compute_module_coupling(self, root_path: str = "src") -> ModuleCouplingResult:
+        res = compute_module_coupling(root_path=root_path)
+        return ModuleCouplingResult(
+            status=res["status"],
+            total_modules=res.get("total_modules", 0),
+            metrics=res.get("metrics", []),
+            error=res.get("error"),
+        )
+
+    def verify_clean_boundaries(
+        self,
+        root_path: str = "src",
+        layer_hierarchy: list[str] | None = None,
+    ) -> BoundaryCheckResult:
+        res = verify_clean_boundaries(root_path=root_path, layer_hierarchy=layer_hierarchy)
+        return BoundaryCheckResult(
+            status=res["status"],
+            layer_hierarchy=res.get("layer_hierarchy", layer_hierarchy or []),
+            clean=res.get("clean", True),
+            violations_count=res.get("violations_count", 0),
+            violations=res.get("violations", []),
+            error=res.get("error"),
+        )

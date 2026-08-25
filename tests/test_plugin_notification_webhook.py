@@ -3,10 +3,17 @@
 from __future__ import annotations
 
 from unittest.mock import MagicMock, patch
-
 import pytest
 
+from harness.kernel.context import ServiceContext
+from harness.services.notification import (
+    NOTIFICATION_SERVICE_KEY,
+    NotificationService,
+    TaskEventResult,
+    WebhookDeliveryResult,
+)
 from plugins.integration_and_io.notification_webhook.main import (
+    NotificationWebhookPlugin,
     notify_chat_channel,
     notify_task_event,
     notify_webhook,
@@ -75,3 +82,51 @@ class TestNotificationWebhookPlugin:
         assert res["event"]["event_type"] == "TASK_COMPLETED"
         assert res["event"]["task_name"] == "Index repository code"
         assert res["event"]["details"]["chunks_indexed"] == 42
+
+    @pytest.mark.asyncio
+    async def test_plugin_ioc_lifecycle_and_async_dispatch(self) -> None:
+        plugin = NotificationWebhookPlugin()
+        assert plugin.name == "plugin.notification_webhook"
+        assert NOTIFICATION_SERVICE_KEY in plugin.provides
+
+        ctx = ServiceContext()
+        await plugin.on_load(ctx)
+        await plugin.on_enable()
+
+        service = ctx.require(NOTIFICATION_SERVICE_KEY)
+        assert isinstance(service, NotificationService)
+
+        mock_response = MagicMock()
+        mock_response.getcode.return_value = 200
+        mock_response.read.return_value = b'{"received": true}'
+
+        with patch("urllib.request.urlopen") as mock_open:
+            mock_open.return_value.__enter__.return_value = mock_response
+
+            async_res = await service.notify_webhook_async(
+                "https://api.test/webhook", {"alert": "high_cpu"}
+            )
+            assert isinstance(async_res, WebhookDeliveryResult)
+            assert async_res.status == "ok"
+            assert async_res.delivered is True
+
+            card_res = await service.notify_chat_channel_async(
+                platform="slack",
+                webhook_url="https://hooks.slack.com/services/x/y/z",
+                title="Async Deploy Success",
+                message="Pipeline green.",
+                status="success",
+            )
+            assert isinstance(card_res, WebhookDeliveryResult)
+            assert card_res.delivered is True
+
+        event_res = await service.notify_task_event_async(
+            event_type="TASK_STARTED",
+            task_name="Async Deep Architecture",
+        )
+        assert isinstance(event_res, TaskEventResult)
+        assert event_res.status == "ok"
+        assert event_res.event["event_type"] == "TASK_STARTED"
+
+        await plugin.on_disable()
+        await plugin.on_unload()

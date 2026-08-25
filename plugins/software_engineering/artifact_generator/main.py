@@ -5,6 +5,19 @@ from __future__ import annotations
 import html
 from pathlib import Path
 from typing import Any
+import structlog
+
+from harness.kernel.context import ServiceContext, ServiceKey
+from harness.plugins.base import HarnessPlugin
+from harness.services.artifact_generator import (
+    ARTIFACT_GENERATOR_KEY,
+    ArtifactGeneratorService,
+    BriefingResult,
+    HtmlReportResult,
+    MermaidResult,
+)
+
+logger = structlog.get_logger(__name__)
 
 
 def diagram_generate_mermaid(
@@ -189,3 +202,92 @@ def report_create_briefing(
         "markdown": doc,
         "output_path": output_path,
     }
+
+
+class ArtifactGeneratorPlugin(HarnessPlugin, ArtifactGeneratorService):
+    """Harness Plugin providing Mermaid diagram synthesis, HTML report generation, and executive briefings."""
+
+    name = "plugin.artifact_generator"
+    version = "1.0.0"
+    description = "Interactive HTML report generation, Mermaid diagram visualization, and executive briefings"
+    trusted = True
+
+    @property
+    def provides(self) -> list[ServiceKey[Any]]:
+        return [ARTIFACT_GENERATOR_KEY]
+
+    @property
+    def requires(self) -> list[ServiceKey[Any]]:
+        return []
+
+    async def on_load(self, ctx: ServiceContext) -> None:
+        logger.info("loading_plugin", plugin=self.name)
+        ctx.provide(ARTIFACT_GENERATOR_KEY, self, provider=self.name)
+
+    async def on_enable(self) -> None:
+        logger.info("enabling_plugin", plugin=self.name)
+
+    async def on_disable(self) -> None:
+        logger.info("disabling_plugin", plugin=self.name)
+
+    async def on_unload(self) -> None:
+        logger.info("unloading_plugin", plugin=self.name)
+
+    # -------------------------------------------------------------------------
+    # ArtifactGeneratorService Protocol Implementation
+    # -------------------------------------------------------------------------
+
+    def generate_mermaid(
+        self,
+        nodes: list[dict[str, Any]],
+        edges: list[dict[str, Any]],
+        direction: str = "TD",
+    ) -> MermaidResult:
+        res = diagram_generate_mermaid(nodes=nodes, edges=edges, direction=direction)
+        return MermaidResult(
+            status=res["status"],
+            mermaid=res.get("mermaid", ""),
+            nodes_count=res.get("nodes_count", len(nodes)),
+            edges_count=res.get("edges_count", len(edges)),
+            error=res.get("error"),
+        )
+
+    def generate_html_report(
+        self,
+        title: str,
+        sections: list[dict[str, Any]],
+        output_path: str | None = None,
+        theme: str = "dark",
+    ) -> HtmlReportResult:
+        res = report_generate_html(title=title, sections=sections, output_path=output_path, theme=theme)
+        return HtmlReportResult(
+            status=res["status"],
+            title=res.get("title", title),
+            sections_count=res.get("sections_count", len(sections)),
+            output_path=res.get("output_path"),
+            html_length=res.get("html_length", 0),
+            error=res.get("error"),
+        )
+
+    def create_briefing(
+        self,
+        title: str,
+        summary: str,
+        metrics: dict[str, Any] | None = None,
+        recommendations: list[str] | None = None,
+        output_path: str | None = None,
+    ) -> BriefingResult:
+        res = report_create_briefing(
+            title=title,
+            summary=summary,
+            metrics=metrics,
+            recommendations=recommendations,
+            output_path=output_path,
+        )
+        return BriefingResult(
+            status=res["status"],
+            title=res.get("title", title),
+            markdown=res.get("markdown", ""),
+            output_path=res.get("output_path"),
+            error=res.get("error"),
+        )

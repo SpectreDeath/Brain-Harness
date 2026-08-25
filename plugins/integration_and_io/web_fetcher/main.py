@@ -2,11 +2,25 @@
 
 from __future__ import annotations
 
+import asyncio
 import json
 import re
 import urllib.error
 import urllib.request
 from typing import Any
+import structlog
+
+from harness.kernel.context import ServiceContext, ServiceKey
+from harness.plugins.base import HarnessPlugin
+from harness.services.web_fetcher import (
+    WEB_FETCHER_KEY,
+    WebFetcherService,
+    WebFetchResult,
+    WebHttpResponse,
+    WebMarkdownResult,
+)
+
+logger = structlog.get_logger(__name__)
 
 
 def _html_to_markdown(html_content: str) -> str:
@@ -169,3 +183,101 @@ def web_http_request(
         return {"status": "error", "status_code": e.code, "error": f"HTTP Error {e.code}: {e.reason}"}
     except Exception as e:
         return {"status": "error", "error": str(e)}
+
+
+class WebFetcherPlugin(HarnessPlugin, WebFetcherService):
+    """Harness Plugin providing web fetching, markdown extraction, and HTTP request capabilities."""
+
+    name = "plugin.web_fetcher"
+    version = "1.0.0"
+    description = "Web fetcher and HTML-to-Markdown distillation tools"
+    trusted = True
+
+    @property
+    def provides(self) -> list[ServiceKey[Any]]:
+        return [WEB_FETCHER_KEY]
+
+    @property
+    def requires(self) -> list[ServiceKey[Any]]:
+        return []
+
+    async def on_load(self, ctx: ServiceContext) -> None:
+        logger.info("loading_plugin", plugin=self.name)
+        ctx.provide(WEB_FETCHER_KEY, self, provider=self.name)
+
+    async def on_enable(self) -> None:
+        logger.info("enabling_plugin", plugin=self.name)
+
+    async def on_disable(self) -> None:
+        logger.info("disabling_plugin", plugin=self.name)
+
+    async def on_unload(self) -> None:
+        logger.info("unloading_plugin", plugin=self.name)
+
+    # -------------------------------------------------------------------------
+    # WebFetcherService Protocol Implementation
+    # -------------------------------------------------------------------------
+
+    def fetch_url(self, url: str, timeout: float = 15.0) -> WebFetchResult:
+        res = web_fetch_url(url=url, timeout=timeout)
+        return WebFetchResult(
+            status=res["status"],
+            status_code=res.get("status_code"),
+            url=res.get("url", url),
+            headers=res.get("headers", {}),
+            body=res.get("body"),
+            error=res.get("error"),
+        )
+
+    async def fetch_url_async(self, url: str, timeout: float = 15.0) -> WebFetchResult:
+        return await asyncio.to_thread(self.fetch_url, url, timeout)
+
+    def fetch_markdown(self, url: str, timeout: float = 15.0) -> WebMarkdownResult:
+        res = web_fetch_markdown(url=url, timeout=timeout)
+        return WebMarkdownResult(
+            status=res["status"],
+            url=res.get("url", url),
+            markdown=res.get("markdown", ""),
+            length_chars=res.get("length_chars", 0),
+            error=res.get("error"),
+        )
+
+    async def fetch_markdown_async(self, url: str, timeout: float = 15.0) -> WebMarkdownResult:
+        return await asyncio.to_thread(self.fetch_markdown, url, timeout)
+
+    def http_request(
+        self,
+        url: str,
+        method: str = "GET",
+        headers: dict[str, str] | None = None,
+        json_data: dict[str, Any] | None = None,
+        timeout: float = 15.0,
+    ) -> WebHttpResponse:
+        res = web_http_request(
+            url=url,
+            method=method,
+            headers=headers,
+            json_data=json_data,
+            timeout=timeout,
+        )
+        return WebHttpResponse(
+            status=res["status"],
+            status_code=res.get("status_code"),
+            url=res.get("url", url),
+            headers=res.get("headers", {}),
+            json_data=res.get("json"),
+            body=res.get("body"),
+            error=res.get("error"),
+        )
+
+    async def http_request_async(
+        self,
+        url: str,
+        method: str = "GET",
+        headers: dict[str, str] | None = None,
+        json_data: dict[str, Any] | None = None,
+        timeout: float = 15.0,
+    ) -> WebHttpResponse:
+        return await asyncio.to_thread(
+            self.http_request, url, method, headers, json_data, timeout
+        )

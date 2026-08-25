@@ -1,10 +1,15 @@
 {
-  "name": "domain.refactor_engine",
+  "name": "plugin.refactor_engine",
   "version": "1.0.0",
   "description": "Python AST refactoring engine, dead/unused code identifier, and function extraction tool",
   "entrypoint": "main.py",
   "isolation": "in_process",
   "trusted": true,
+  "category": "software_engineering",
+  "author": "Brain Harness Forge Engine",
+  "provides": [
+    "service.refactor_engine"
+  ],
   "entrypoints": [
     {
       "name": "find_unused_functions",

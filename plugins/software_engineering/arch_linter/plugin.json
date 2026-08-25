@@ -1,10 +1,15 @@
 {
-  "name": "domain.arch_linter",
+  "name": "plugin.arch_linter",
   "version": "1.0.0",
   "description": "Codebase coupling/cohesion analyzer, circular import detector, and clean architecture boundary verifier",
   "entrypoint": "main.py",
   "isolation": "in_process",
   "trusted": true,
+  "category": "software_engineering",
+  "author": "Brain Harness Forge Engine",
+  "provides": [
+    "service.arch_linter"
+  ],
   "entrypoints": [
     {
       "name": "detect_circular_imports",

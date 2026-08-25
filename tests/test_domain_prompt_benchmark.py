@@ -4,7 +4,16 @@ from __future__ import annotations
 
 import pytest
 
+from harness.kernel.context import ServiceContext
+from harness.services.prompt_benchmark import (
+    PROMPT_BENCHMARK_KEY,
+    ModelOutputEvalResult,
+    PromptBenchmarkService,
+    RegressionMatrixResult,
+    TextSimilarityResult,
+)
 from plugins.memory_and_epistemics.prompt_benchmark.main import (
+    PromptBenchmarkPlugin,
     evaluate_model_outputs,
     generate_regression_matrix,
     score_text_similarity_bleu_rouge,
@@ -40,3 +49,32 @@ class TestPromptBenchmarkPlugin:
         res = generate_regression_matrix(runs)
         assert res["status"] == "ok"
         assert res["top_performer"]["model"] == "v2"
+
+    @pytest.mark.asyncio
+    async def test_prompt_benchmark_plugin_ioc_lifecycle(self) -> None:
+        plugin = PromptBenchmarkPlugin()
+        assert plugin.name == "plugin.prompt_benchmark"
+        assert PROMPT_BENCHMARK_KEY in plugin.provides
+
+        ctx = ServiceContext()
+        await plugin.on_load(ctx)
+        await plugin.on_enable()
+
+        service = ctx.require(PROMPT_BENCHMARK_KEY)
+        assert isinstance(service, PromptBenchmarkService)
+
+        sim_res = service.score_text_similarity("Ground truth answer", "Candidate model answer")
+        assert isinstance(sim_res, TextSimilarityResult)
+        assert sim_res.status == "ok"
+        assert sim_res.reference_tokens > 0
+
+        eval_res = service.evaluate_model_outputs([{"output": "All green", "expected_contains": ["green"]}])
+        assert isinstance(eval_res, ModelOutputEvalResult)
+        assert eval_res.passed_count == 1
+
+        reg_res = service.generate_regression_matrix([{"model": "gpt-4o", "pass_rate": 1.0, "avg_latency": 0.5}])
+        assert isinstance(reg_res, RegressionMatrixResult)
+        assert reg_res.total_runs == 1
+
+        await plugin.on_disable()
+        await plugin.on_unload()

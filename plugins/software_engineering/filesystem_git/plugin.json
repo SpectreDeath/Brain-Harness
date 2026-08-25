@@ -5,6 +5,11 @@
   "entrypoint": "main.py",
   "isolation": "in_process",
   "trusted": true,
+  "category": "software_engineering",
+  "author": "Brain Harness Forge Engine",
+  "provides": [
+    "service.filesystem_git"
+  ],
   "entrypoints": [
     {
       "name": "fs_read_file",

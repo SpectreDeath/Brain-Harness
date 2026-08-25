@@ -105,19 +105,46 @@ async def test_plugin_declarative_persistence(tmp_path: Path) -> None:
     config_file = config_dir / "config.json"
     config_file.write_text(json.dumps({"enabled_plugins": [], "disabled_plugins": []}), encoding="utf-8")
 
+    empty_plugins_dir = tmp_path / "empty_plugins"
+    empty_plugins_dir.mkdir()
+
+    class MockLifecycle:
+        def __init__(self) -> None:
+            self.plugins = {"demo_plugin": None, "other_plugin": None}
+
+    class MockRuntime:
+        def __init__(self) -> None:
+            self.lifecycle = MockLifecycle()
+
+        async def enable_plugin(self, name: str) -> bool:
+            return True
+
+        async def disable_plugin(self, name: str) -> bool:
+            return True
+
+        async def enable_all_plugins(self) -> dict[str, bool]:
+            return {"demo_plugin": True, "other_plugin": True}
+
+        async def disable_all_plugins(self, keep_core: bool = True) -> list[str]:
+            return ["demo_plugin", "other_plugin"]
+
+    mock_rt = MockRuntime()
+
     # Test enable by name
-    await enable_plugin_by_name("non_existent_demo", config_dir=config_dir)
+    await enable_plugin_by_name("demo_plugin", runtime=mock_rt, config_dir=config_dir)
     data = json.loads(config_file.read_text(encoding="utf-8"))
-    assert "enabled_plugins" in data
+    assert "demo_plugin" in data["enabled_plugins"]
 
     # Test enable all / disable all persistence
-    await enable_all_plugins(config_dir=config_dir)
+    await enable_all_plugins(runtime=mock_rt, config_dir=config_dir)
     data = json.loads(config_file.read_text(encoding="utf-8"))
-    assert isinstance(data["enabled_plugins"], list)
+    assert "demo_plugin" in data["enabled_plugins"]
+    assert "other_plugin" in data["enabled_plugins"]
 
-    await disable_all_plugins(config_dir=config_dir)
+    await disable_all_plugins(runtime=mock_rt, config_dir=config_dir)
     data = json.loads(config_file.read_text(encoding="utf-8"))
-    assert isinstance(data["disabled_plugins"], list)
+    assert "demo_plugin" in data["disabled_plugins"]
+    assert "other_plugin" in data["disabled_plugins"]
 
 
 @pytest.mark.unit
