@@ -1,7 +1,7 @@
 """Offline Critical Infrastructure asset store and spatial indexing engine.
 
 Supports submarine fiber optic cables, landing stations, hyperscale datacenters,
-dams, reservoirs, and curated defense installations.
+dams, reservoirs, and curated defense installations indexed via SpatialHashGrid.
 """
 
 from __future__ import annotations
@@ -12,19 +12,7 @@ import os
 from typing import Any
 
 from .models import InfrastructureRecord
-
-EARTH_R_KM = 6371.0
-
-
-def haversine_km(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
-    """Calculate Great-Circle distance between two coordinates in kilometers."""
-    d2r = math.pi / 180.0
-    d_lat = (lat2 - lat1) * d2r
-    d_lon = (lon2 - lon1) * d2r
-    a = math.sin(d_lat / 2.0) ** 2 + math.cos(lat1 * d2r) * math.cos(lat2 * d2r) * math.sin(d_lon / 2.0) ** 2
-    c = 2.0 * math.asin(min(1.0, math.sqrt(a)))
-    return EARTH_R_KM * c
-
+from .spatial_index import SpatialHashGrid, haversine_km
 
 # Curated high-priority global critical infrastructure fallback registry
 BUILTIN_INFRASTRUCTURE: list[InfrastructureRecord] = [
@@ -153,7 +141,7 @@ BUILTIN_INFRASTRUCTURE: list[InfrastructureRecord] = [
         name="Yokosuka Naval Base",
         lat=35.2917,
         lon=139.6667,
-        properties={"branch": "United States Navy / JMSDF", "role": "Commander Fleet Activities Yokosuka (Carrier Strike Group)"},
+        properties={"branch": "United States Navy / JMSDF", "role": "Commander Fleet Activities Yokosuka"},
         country="Japan",
     ),
     InfrastructureRecord(
@@ -168,15 +156,23 @@ BUILTIN_INFRASTRUCTURE: list[InfrastructureRecord] = [
 
 
 class InfrastructureStore:
-    """Indexed catalog of global infrastructure assets."""
+    """Indexed catalog of global infrastructure assets backed by SpatialHashGrid."""
 
     def __init__(self, external_data_dir: str | None = None) -> None:
-        self.records: list[InfrastructureRecord] = list(BUILTIN_INFRASTRUCTURE)
+        self.records: list[InfrastructureRecord] = []
+        self.grid: SpatialHashGrid[InfrastructureRecord] = SpatialHashGrid(
+            cell_size_deg=1.0,
+            lat_extractor=lambda r: r.lat,
+            lon_extractor=lambda r: r.lon,
+        )
         self.external_data_dir = external_data_dir or r"D:\GitHub\cloned\gods-eye-view-main\gods-eye-view-main\src\data\local_data"
-        self._load_local_data_sources()
+        self._load_all_records()
 
-    def _load_local_data_sources(self) -> None:
-        """Scan and ingest local GeoJSON / GeoJSONL files from the cloned repository if present."""
+    def _load_all_records(self) -> None:
+        """Load built-in and external dataset files and populate spatial grid."""
+        for rec in BUILTIN_INFRASTRUCTURE:
+            self._add_record(rec)
+
         if not os.path.exists(self.external_data_dir):
             return
 
@@ -191,16 +187,15 @@ class InfrastructureStore:
                         geom = feat.get("geometry", {})
                         coords = geom.get("coordinates", [])
                         if coords and len(coords) >= 2:
-                            self.records.append(
-                                InfrastructureRecord(
-                                    infra_type="landing_point",
-                                    name=props.get("name", "Landing Point"),
-                                    lon=float(coords[0]),
-                                    lat=float(coords[1]),
-                                    properties=props,
-                                    country=props.get("country"),
-                                )
+                            rec = InfrastructureRecord(
+                                infra_type="landing_point",
+                                name=props.get("name", "Landing Point"),
+                                lon=float(coords[0]),
+                                lat=float(coords[1]),
+                                properties=props,
+                                country=props.get("country"),
                             )
+                            self._add_record(rec)
             except Exception:
                 pass
 
@@ -217,16 +212,15 @@ class InfrastructureStore:
                         geom = feat.get("geometry", {})
                         coords = geom.get("coordinates", [])
                         if coords and len(coords) >= 2:
-                            self.records.append(
-                                InfrastructureRecord(
-                                    infra_type="datacenter",
-                                    name=props.get("name") or props.get("operator") or "Hyperscale Datacenter",
-                                    lon=float(coords[0]),
-                                    lat=float(coords[1]),
-                                    properties=props,
-                                    country=props.get("country"),
-                                )
+                            rec = InfrastructureRecord(
+                                infra_type="datacenter",
+                                name=props.get("name") or props.get("operator") or "Hyperscale Datacenter",
+                                lon=float(coords[0]),
+                                lat=float(coords[1]),
+                                properties=props,
+                                country=props.get("country"),
                             )
+                            self._add_record(rec)
             except Exception:
                 pass
 
@@ -243,18 +237,22 @@ class InfrastructureStore:
                         geom = feat.get("geometry", {})
                         coords = geom.get("coordinates", [])
                         if coords and len(coords) >= 2:
-                            self.records.append(
-                                InfrastructureRecord(
-                                    infra_type="dam",
-                                    name=props.get("name") or "Major Dam",
-                                    lon=float(coords[0]),
-                                    lat=float(coords[1]),
-                                    properties=props,
-                                    country=props.get("country"),
-                                )
+                            rec = InfrastructureRecord(
+                                infra_type="dam",
+                                name=props.get("name") or "Major Dam",
+                                lon=float(coords[0]),
+                                lat=float(coords[1]),
+                                properties=props,
+                                country=props.get("country"),
                             )
+                            self._add_record(rec)
             except Exception:
                 pass
+
+    def _add_record(self, rec: InfrastructureRecord) -> None:
+        self.records.append(rec)
+        if rec.lat is not None and rec.lon is not None:
+            self.grid.insert(rec, rec.lat, rec.lon)
 
     def query(
         self,
@@ -265,18 +263,24 @@ class InfrastructureStore:
         radius_km: float | None = None,
         limit: int = 100,
     ) -> list[InfrastructureRecord]:
-        """Filter infrastructure assets by type, keyword search, or spatial proximity."""
-        results: list[tuple[float | None, InfrastructureRecord]] = []
-
-        q_lower = search_query.lower().strip() if search_query else None
+        """Query infrastructure assets using spatial grid pruning and text filtering."""
         type_norm = infra_type.lower().strip() if infra_type and infra_type != "all" else None
+        q_lower = search_query.lower().strip() if search_query else None
 
-        for rec in self.records:
-            # Filter by infra_type
+        # 1. Fast path: Spatial grid index query
+        if lat is not None and lon is not None and radius_km is not None:
+            spatial_candidates = self.grid.query_radius(lat, lon, radius_km)
+            candidates: list[tuple[float | None, InfrastructureRecord]] = [
+                (dist, item) for dist, item in spatial_candidates
+            ]
+        else:
+            candidates = [(None, r) for r in self.records]
+
+        results: list[tuple[float | None, InfrastructureRecord]] = []
+        for dist, rec in candidates:
             if type_norm and rec.infra_type != type_norm:
                 continue
 
-            # Filter by text search
             if q_lower:
                 text_match = (
                     q_lower in rec.name.lower()
@@ -286,17 +290,14 @@ class InfrastructureStore:
                 if not text_match:
                     continue
 
-            # Spatial filter
-            dist: float | None = None
-            if lat is not None and lon is not None and rec.lat is not None and rec.lon is not None:
-                dist = haversine_km(lat, lon, rec.lat, rec.lon)
-                if radius_km is not None and dist > radius_km:
-                    continue
-
             results.append((dist, rec))
 
-        # Sort by distance if spatial query provided, else keep initial order
-        if lat is not None and lon is not None:
+        if lat is not None and lon is not None and radius_km is None:
+            # Sort by distance if center was provided without explicit radius
+            results = [
+                (haversine_km(lat, lon, r.lat, r.lon) if r.lat is not None and r.lon is not None else None, r)
+                for _, r in results
+            ]
             results.sort(key=lambda x: (x[0] is None, x[0] or 0.0))
 
         return [rec for _, rec in results[:limit]]

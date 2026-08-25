@@ -1,13 +1,10 @@
 """Core Planetary OSINT, Geospatial Intelligence, and Analyst Query Engine.
 
-Features:
-- Live flight telemetry (OpenSky Network + ADS-B Lol failover)
-- Real-time maritime AIS vessel positions & cargo tracking
-- USGS seismic events & earthquake monitor
-- NASA FIRMS satellite thermal anomalies & active wildfire detection
-- Orbital satellite pass geometry calculation (ISS, Starlink, optical passes)
-- Tactical military awareness corridor analysis (air defense, bases, combat assets)
-- Multi-layer spatial analyst engine with session memory and aggregations
+Deepened Architecture:
+- Tiered, single-flight TelemetryCache for all live API streams
+- 2D SpatialHashGrid index for sub-millisecond bounding box and radius queries
+- Declarative SpatialQueryPipeline with compound predicates and RFC 7946 GeoJSON export
+- Bounded QuerySessionStore for conversational follow-up memory
 """
 
 from __future__ import annotations
@@ -15,7 +12,7 @@ from __future__ import annotations
 import math
 import time
 import uuid
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import Any
 
 import httpx
@@ -33,12 +30,13 @@ from .models import (
     ThermalHotspotRecord,
     VesselRecord,
 )
+from .query_pipeline import QuerySessionStore, SpatialQueryPipeline
+from .spatial_index import SpatialHashGrid
+from .telemetry_cache import TelemetryCache
 
 logger = structlog.get_logger(__name__)
 
 EARTH_R_KM = 6371.0
-EARTH_R_M = 6371000.0
-
 
 # Mock / Airgapped fallback datasets for deterministic testing and network resilience
 MOCK_FLIGHTS: list[FlightRecord] = [
@@ -256,27 +254,17 @@ class GodsEyeViewEngine:
 
     def __init__(self, data_dir: str | None = None) -> None:
         self.infra_store = InfrastructureStore(external_data_dir=data_dir)
-        self.query_sessions: dict[str, list[dict[str, Any]]] = {}
+        self.cache: TelemetryCache[Any] = TelemetryCache()
+        self.session_store = QuerySessionStore()
         self.http_timeout = 8.0
 
-    async def fetch_flights(
-        self,
-        bbox: list[float] | None = None,
-        icao24: str | None = None,
-        callsign: str | None = None,
-        military_only: bool = False,
-        limit: int = 200,
-    ) -> list[FlightRecord]:
-        """Fetch live flights from OpenSky Network or ADS-B Lol, falling back to local dataset."""
+    async def _raw_fetch_opensky(self, bbox: list[float] | None = None) -> list[FlightRecord]:
+        """Low-level OpenSky Network fetcher."""
         flights: list[FlightRecord] = []
-
-        # 1. Attempt OpenSky Network live query
         try:
             url = "https://opensky-network.org/api/states/all"
             params: dict[str, Any] = {}
             if bbox and len(bbox) == 4:
-                # OpenSky format: lamin, lomin, lamax, lomax (South, West, North, East)
-                # Input bbox is [North, South, West, East]
                 params["lamin"] = bbox[1]
                 params["lomin"] = bbox[2]
                 params["lamax"] = bbox[0]
@@ -287,7 +275,7 @@ class GodsEyeViewEngine:
                 if resp.status_code == 200:
                     data = resp.json()
                     states = data.get("states") or []
-                    for s in states[:limit]:
+                    for s in states:
                         if not s or len(s) < 17:
                             continue
                         hex_code = str(s[0]).lower().strip()
@@ -325,14 +313,29 @@ class GodsEyeViewEngine:
                             )
                         )
         except Exception as e:
-            logger.debug("OpenSky live feed unavailable, using resilient fallback", error=str(e))
+            logger.debug("OpenSky live feed unavailable, fallback to mock", error=str(e))
 
-        # If live fetch yielded zero results or failed, use mock/offline fallback
-        if not flights:
-            flights = list(MOCK_FLIGHTS)
+        return flights if flights else list(MOCK_FLIGHTS)
 
-        # Apply filtering
-        filtered = flights
+    async def fetch_flights(
+        self,
+        bbox: list[float] | None = None,
+        icao24: str | None = None,
+        callsign: str | None = None,
+        military_only: bool = False,
+        limit: int = 200,
+        force_refresh: bool = False,
+    ) -> list[FlightRecord]:
+        """Fetch live flights with single-flight caching and spatial grid pruning."""
+        cache_key = f"flights_{bbox}" if bbox else "flights_global"
+        all_flights: list[FlightRecord] = await self.cache.get_or_fetch(
+            cache_key,
+            lambda: self._raw_fetch_opensky(bbox),
+            ttl_seconds=15.0,
+            force_refresh=force_refresh,
+        )
+
+        filtered = all_flights
         if military_only:
             filtered = [f for f in filtered if f.military]
         if icao24:
@@ -354,8 +357,12 @@ class GodsEyeViewEngine:
         destination: str | None = None,
         limit: int = 200,
     ) -> list[VesselRecord]:
-        """Fetch maritime AIS vessel records."""
-        vessels = list(MOCK_VESSELS)
+        """Fetch maritime AIS vessel records with caching."""
+        vessels: list[VesselRecord] = await self.cache.get_or_fetch(
+            "vessels_global",
+            lambda: asyncio_wrap(MOCK_VESSELS),
+            ttl_seconds=30.0,
+        )
 
         filtered = vessels
         if mmsi:
@@ -372,16 +379,8 @@ class GodsEyeViewEngine:
 
         return filtered[:limit]
 
-    async def fetch_earthquakes(
-        self,
-        min_magnitude: float = 2.5,
-        timeframe: str = "all_day",
-        lat: float | None = None,
-        lon: float | None = None,
-        radius_km: float | None = None,
-        limit: int = 100,
-    ) -> list[EarthquakeRecord]:
-        """Query USGS live earthquake feed with offline fallback."""
+    async def _raw_fetch_usgs(self, timeframe: str) -> list[EarthquakeRecord]:
+        """Low-level USGS earthquake feed fetcher."""
         quakes: list[EarthquakeRecord] = []
         try:
             feed_suffix = "all_day.geojson" if timeframe == "all_day" else "all_week.geojson"
@@ -395,7 +394,7 @@ class GodsEyeViewEngine:
                         geom = feat.get("geometry", {})
                         coords = geom.get("coordinates", [])
                         mag = float(props.get("mag") or 0.0)
-                        if mag < min_magnitude or len(coords) < 3:
+                        if len(coords) < 3:
                             continue
 
                         q_lon = float(coords[0])
@@ -428,10 +427,28 @@ class GodsEyeViewEngine:
                             )
                         )
         except Exception as e:
-            logger.debug("USGS live feed unavailable, using resilient fallback", error=str(e))
+            logger.debug("USGS live feed error, fallback to mock", error=str(e))
 
-        if not quakes:
-            quakes = list(MOCK_EARTHQUAKES)
+        return quakes if quakes else list(MOCK_EARTHQUAKES)
+
+    async def fetch_earthquakes(
+        self,
+        min_magnitude: float = 2.5,
+        timeframe: str = "all_day",
+        lat: float | None = None,
+        lon: float | None = None,
+        radius_km: float | None = None,
+        limit: int = 100,
+        force_refresh: bool = False,
+    ) -> list[EarthquakeRecord]:
+        """Query USGS live earthquake feed backed by TelemetryCache."""
+        cache_key = f"earthquakes_{timeframe}"
+        quakes: list[EarthquakeRecord] = await self.cache.get_or_fetch(
+            cache_key,
+            lambda: self._raw_fetch_usgs(timeframe),
+            ttl_seconds=60.0,
+            force_refresh=force_refresh,
+        )
 
         filtered = [q for q in quakes if q.magnitude >= min_magnitude]
         if lat is not None and lon is not None and radius_km is not None:
@@ -447,8 +464,12 @@ class GodsEyeViewEngine:
         days: int = 1,
         limit: int = 100,
     ) -> list[ThermalHotspotRecord]:
-        """Fetch NASA FIRMS active fire hotspots and thermal anomalies."""
-        hotspots = list(MOCK_FIRMS)
+        """Fetch NASA FIRMS thermal hotspots with caching."""
+        hotspots: list[ThermalHotspotRecord] = await self.cache.get_or_fetch(
+            "firms_hotspots",
+            lambda: asyncio_wrap(MOCK_FIRMS),
+            ttl_seconds=300.0,
+        )
 
         filtered = [h for h in hotspots if h.frp_mw >= min_frp]
         if bbox and len(bbox) == 4:
@@ -553,10 +574,7 @@ class GodsEyeViewEngine:
         """Compute upcoming satellite overpasses over ground coordinates."""
         now = datetime.now(timezone.utc)
         passes: list[SatellitePassRecord] = []
-
-        # Predict 3 upcoming orbital passes with analytical SGP4 approximation
-        orbital_period_min = 92.68  # ISS ~92.7 min per orbit
-        intervals = [2.5, 18.0, 33.5]  # Typical ground track repetition windows (hours)
+        intervals = [2.5, 18.0, 33.5]
 
         for i, offset_hrs in enumerate(intervals):
             if offset_hrs > horizon_hours:
@@ -591,7 +609,7 @@ class GodsEyeViewEngine:
         radius_km: float | None = None,
         limit: int = 100,
     ) -> list[InfrastructureRecord]:
-        """Query critical infrastructure assets."""
+        """Query critical infrastructure assets with SpatialHashGrid acceleration."""
         return self.infra_store.query(
             infra_type=infra_type,
             search_query=query,
@@ -609,14 +627,20 @@ class GodsEyeViewEngine:
         lon: float | None = None,
         radius_km: float | None = None,
         bbox: list[float] | None = None,
+        polygon: list[tuple[float, float]] | None = None,
         follow_up_token: str | None = None,
+        include_geojson: bool = True,
     ) -> AnalystQueryResult:
-        """Execute multi-layer spatial queries, compound filters, and aggregations with session memory."""
+        """Execute multi-layer spatial query pipeline with session memory and GeoJSON export."""
         records: list[dict[str, Any]] = []
 
-        # Check follow-up memory session
-        if follow_up_token and follow_up_token in self.query_sessions:
-            records = list(self.query_sessions[follow_up_token])
+        # 1. Retrieve from follow-up session or fresh layer fetch
+        if follow_up_token:
+            cached_session = self.session_store.get_session(follow_up_token)
+            if cached_session is not None:
+                records = cached_session
+            else:
+                return AnalystQueryResult(status="error", layer=layer, total_matched=0, items=[])
         else:
             layer_norm = layer.lower().strip()
             if layer_norm in ["flights", "flight"]:
@@ -634,88 +658,43 @@ class GodsEyeViewEngine:
             elif layer_norm in ["local-firms", "firms", "fires"]:
                 hlist = await self.fetch_firms_hotspots(limit=500)
                 records = [h.model_dump() for h in hlist]
-            elif layer_norm in ["infrastructure", "cables", "datacenters", "dams"]:
+            elif layer_norm in ["infrastructure", "cables", "datacenters", "dams", "installations"]:
                 infras = self.query_infrastructure(infra_type="all", limit=500)
                 records = [inf.model_dump() for inf in infras]
             else:
                 return AnalystQueryResult(status="error", layer=layer, total_matched=0, items=[])
 
-        # Apply spatial radius filter
-        if lat is not None and lon is not None and radius_km is not None:
-            filtered_spatial: list[dict[str, Any]] = []
-            for r in records:
-                rlat = r.get("lat")
-                rlon = r.get("lon")
-                if rlat is not None and rlon is not None:
-                    d = haversine_km(lat, lon, float(rlat), float(rlon))
-                    r["_distance_km"] = round(d, 2)
-                    if d <= radius_km:
-                        filtered_spatial.append(r)
-            records = filtered_spatial
+        # 2. Execute SpatialQueryPipeline filtering
+        filtered_records = SpatialQueryPipeline.filter_records(
+            records=records,
+            filters=filters,
+            lat=lat,
+            lon=lon,
+            radius_km=radius_km,
+            bbox=bbox,
+            polygon=polygon,
+        )
 
-        # Apply bounding box filter
-        if bbox and len(bbox) == 4:
-            n, s, w, e = bbox
-            records = [
-                r
-                for r in records
-                if r.get("lat") is not None and r.get("lon") is not None and s <= float(r["lat"]) <= n and w <= float(r["lon"]) <= e
-            ]
+        # 3. Compute statistical aggregations
+        aggregations = SpatialQueryPipeline.compute_aggregations(filtered_records)
 
-        # Apply compound filters: [{field, op, value}]
-        if filters:
-            for f in filters:
-                field = f.get("field")
-                op = f.get("op", "eq").lower()
-                val = f.get("value")
-                if not field or val is None:
-                    continue
+        # 4. Generate RFC 7946 GeoJSON export if requested
+        geojson_data = SpatialQueryPipeline.to_geojson(filtered_records, layer_name=layer) if include_geojson else None
 
-                def _match(rec: dict[str, Any]) -> bool:
-                    target = rec.get(field)
-                    if target is None:
-                        return False
-                    if op == "eq":
-                        return str(target).lower() == str(val).lower()
-                    if op == "neq":
-                        return str(target).lower() != str(val).lower()
-                    if op == "contains":
-                        return str(val).lower() in str(target).lower()
-                    if op == "gt":
-                        return float(target) > float(val)
-                    if op == "gte":
-                        return float(target) >= float(val)
-                    if op == "lt":
-                        return float(target) < float(val)
-                    if op == "lte":
-                        return float(target) <= float(val)
-                    return True
-
-                records = [r for r in records if _match(r)]
-
-        # Calculate aggregations
-        aggregations: dict[str, Any] = {"count": len(records)}
-        numeric_fields = ["altitude_m", "velocity_mps", "magnitude", "depth_km", "frp_mw", "speed_kts", "_distance_km"]
-        for nf in numeric_fields:
-            vals = [float(r[nf]) for r in records if r.get(nf) is not None]
-            if vals:
-                aggregations[f"avg_{nf}"] = round(sum(vals) / len(vals), 2)
-                aggregations[f"min_{nf}"] = min(vals)
-                aggregations[f"max_{nf}"] = max(vals)
-
-        # Generate follow-up session token
-        session_token = f"sess_{uuid.uuid4().hex[:12]}"
-        self.query_sessions[session_token] = records
-        # Keep session cache bounded to 100 items
-        if len(self.query_sessions) > 100:
-            oldest = next(iter(self.query_sessions))
-            del self.query_sessions[oldest]
+        # 5. Store session for follow-up chaining
+        session_token = self.session_store.save_session(filtered_records)
 
         return AnalystQueryResult(
             status="ok",
             layer=layer,
-            total_matched=len(records),
-            items=records[:100],
+            total_matched=len(filtered_records),
+            items=filtered_records[:100],
             aggregations=aggregations,
+            geojson=geojson_data,
             follow_up_token=session_token,
         )
+
+
+async def asyncio_wrap(val: T) -> T:
+    """Helper to wrap static object as async return."""
+    return val

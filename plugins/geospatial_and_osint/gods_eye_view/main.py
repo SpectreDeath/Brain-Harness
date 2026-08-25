@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import asyncio
 from typing import Any
 import structlog
 
@@ -22,6 +21,7 @@ from harness.services.gods_eye_view import (
     VesselRecord,
 )
 
+from .async_runner import run_sync_safe
 from .cli_bridge import NodeCliBridge
 from .engine import GodsEyeViewEngine
 
@@ -51,7 +51,7 @@ def gev_analyst_query(
 ) -> dict[str, Any]:
     """Execute multi-layer spatial queries, compound filters, and aggregations across flights, vessels, fires, and earthquakes."""
     engine = _get_engine()
-    res = asyncio.run(
+    res = run_sync_safe(
         engine.query_analyst(
             layer=layer,
             filters=filters,
@@ -74,7 +74,7 @@ def gev_fetch_live_flights(
 ) -> list[dict[str, Any]]:
     """Fetch live aviation transponder vectors with OpenSky / ADSB-lol fallback."""
     engine = _get_engine()
-    flights = asyncio.run(
+    flights = run_sync_safe(
         engine.fetch_flights(
             bbox=bbox,
             icao24=icao24,
@@ -95,7 +95,7 @@ def gev_fetch_ais_vessels(
 ) -> list[dict[str, Any]]:
     """Retrieve real-time maritime AIS vessel records."""
     engine = _get_engine()
-    vessels = asyncio.run(
+    vessels = run_sync_safe(
         engine.fetch_vessels(
             bbox=bbox,
             mmsi=mmsi,
@@ -116,7 +116,7 @@ def gev_fetch_earthquakes(
 ) -> list[dict[str, Any]]:
     """Query USGS live seismic telemetry."""
     engine = _get_engine()
-    quakes = asyncio.run(
+    quakes = run_sync_safe(
         engine.fetch_earthquakes(
             min_magnitude=min_magnitude,
             timeframe=timeframe,
@@ -136,7 +136,7 @@ def gev_fetch_firms_hotspots(
 ) -> list[dict[str, Any]]:
     """Fetch NASA FIRMS thermal hotspots and active wildfire perimeters."""
     engine = _get_engine()
-    hotspots = asyncio.run(
+    hotspots = run_sync_safe(
         engine.fetch_firms_hotspots(
             bbox=bbox,
             min_frp=min_frp,
@@ -155,7 +155,7 @@ def gev_query_military_awareness(
 ) -> dict[str, Any]:
     """Compute tactical military awareness corridor and air/naval assets."""
     engine = _get_engine()
-    summary = asyncio.run(
+    summary = run_sync_safe(
         engine.query_military_awareness(
             lat=lat,
             lon=lon,
@@ -175,7 +175,7 @@ def gev_calculate_satellite_passes(
 ) -> list[dict[str, Any]]:
     """Predict upcoming orbital overpasses over ground coordinates."""
     engine = _get_engine()
-    passes = asyncio.run(
+    passes = run_sync_safe(
         engine.calculate_satellite_passes(
             lat=lat,
             lon=lon,
@@ -215,7 +215,7 @@ def gev_render_sat_ortho(
 ) -> dict[str, Any]:
     """Stitch high-resolution satellite orthomosaic from 3D Map Tiles."""
     bridge = _get_bridge()
-    res = asyncio.run(
+    res = run_sync_safe(
         bridge.render_sat_ortho(
             lat=lat,
             lon=lon,
@@ -237,7 +237,7 @@ def gev_capture_streetview_headings(
 ) -> dict[str, Any]:
     """Capture 8 compass headings (360 ground view) via Static Street View."""
     bridge = _get_bridge()
-    res = asyncio.run(
+    res = run_sync_safe(
         bridge.capture_streetview_headings(
             lat=lat,
             lon=lon,
@@ -261,7 +261,7 @@ def gev_render_globe_snapshot(
 ) -> dict[str, Any]:
     """Render photorealistic 3D Cesium globe snapshots with post-processing shaders."""
     bridge = _get_bridge()
-    res = asyncio.run(
+    res = run_sync_safe(
         bridge.render_globe_snapshot(
             lat=lat,
             lon=lon,
