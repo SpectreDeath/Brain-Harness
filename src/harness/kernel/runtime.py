@@ -50,6 +50,7 @@ class HarnessRuntime:
         loader: PluginLoader | None = None,
         plugin_dirs: list[Path] | None = None,
         auto_load_user_plugins: bool = True,
+        lazy_external_plugins: bool = True,
     ) -> None:
         from harness.events.bus import EventBus as _EventBus
 
@@ -63,6 +64,7 @@ class HarnessRuntime:
             loader = PluginLoader(plugin_dirs=self._plugin_dirs)
         self._loader = loader
         self._auto_load_user_plugins = auto_load_user_plugins
+        self._lazy_external_plugins = lazy_external_plugins
         self._is_running = False
         self._initial_config_tree: HarnessConfigTree | None = None
         self._reconciler: ConfigurationReconciler | None = None
@@ -79,6 +81,7 @@ class HarnessRuntime:
         fallback_llm: Any | None = None,
         llm_model: str = "gpt-4o-mini",
         auto_load_user_plugins: bool = True,
+        lazy_external_plugins: bool = True,
     ) -> HarnessRuntime:
         """Factory for a standard Harness runtime instance with default plugins.
 
@@ -91,6 +94,7 @@ class HarnessRuntime:
             fallback_llm: Optional fallback LLMService instance (alias/fallback for llm).
             llm_model: Default LLM model identifier if using built-in LLMPlugin.
             auto_load_user_plugins: Whether to scan plugin_dirs on startup.
+            lazy_external_plugins: Whether external sandboxed plugins are enabled on-demand.
 
         Returns:
             Configured HarnessRuntime instance.
@@ -110,6 +114,8 @@ class HarnessRuntime:
             event_bus=bus,
             loader=loader,
             plugin_dirs=pdirs,
+            auto_load_user_plugins=auto_load_user_plugins,
+            lazy_external_plugins=lazy_external_plugins,
         )
 
         active_llm = llm if llm is not None else fallback_llm
@@ -130,8 +136,37 @@ class HarnessRuntime:
             runtime.register_plugin(p)
 
         runtime._auto_load_user_plugins = auto_load_user_plugins
+        runtime._lazy_external_plugins = lazy_external_plugins
         runtime._initial_config_tree = None
         return runtime
+
+    @classmethod
+    def create_diagnostic(
+        cls,
+        *,
+        db_path: str = ":memory:",
+        include_tools: bool = True,
+        include_storage: bool = True,
+    ) -> HarnessRuntime:
+        """Lightweight runtime factory for zero-overhead diagnostics and tests."""
+        from harness.agent.session import AgentSessionPlugin
+        from harness.services.storage import StoragePlugin
+        from harness.services.tools import ToolRegistryPlugin
+
+        builtins: list[HarnessPlugin] = []
+        if include_storage:
+            builtins.append(StoragePlugin(db_path=db_path))
+            builtins.append(AgentSessionPlugin())
+        if include_tools:
+            builtins.append(ToolRegistryPlugin())
+
+        return cls.create(
+            db_path=db_path,
+            builtins=builtins,
+            auto_load_user_plugins=False,
+            lazy_external_plugins=True,
+        )
+
 
     @classmethod
     def from_config(
@@ -395,8 +430,13 @@ class HarnessRuntime:
         if getattr(self, "_initial_config_tree", None) is not None:
             await self.reconcile(self._initial_config_tree)
 
-        # Enable all in topological dependency order
-        results = await self._lifecycle.enable_all()
+        # Enable in topological dependency order (honoring lazy_external_plugins)
+        results = await self._lifecycle.enable_all(
+            trusted_only=False,
+            skip_user_plugins=self._lazy_external_plugins,
+        )
+
+
         enabled_count = sum(results.values())
         total_count = len(results)
 
@@ -463,9 +503,14 @@ class HarnessRuntime:
             return True
         return False
 
-    async def enable_all_plugins(self) -> dict[str, bool]:
+    async def enable_all_plugins(self, *, include_sandboxed: bool = False) -> dict[str, bool]:
         """Enable all discovered and validated plugins."""
-        return await self._lifecycle.enable_all()
+        return await self._lifecycle.enable_all(
+            trusted_only=not include_sandboxed,
+            skip_user_plugins=not include_sandboxed,
+        )
+
+
 
     async def disable_all_plugins(self, *, keep_core: bool = True) -> list[str]:
         """Disable all active plugins.

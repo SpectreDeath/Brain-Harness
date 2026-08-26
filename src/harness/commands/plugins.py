@@ -211,23 +211,29 @@ async def enable_all_plugins(
     runtime: Any | None = None,
     db_path: str = ":memory:",
     config_dir: Path | None = None,
+    include_sandboxed: bool = False,
 ) -> dict[str, bool]:
     """Enable all plugins on a running runtime or new instance."""
     if runtime is not None:
-        results = await runtime.enable_all_plugins()
+        try:
+            results = await runtime.enable_all_plugins(include_sandboxed=include_sandboxed)
+        except TypeError:
+            results = await runtime.enable_all_plugins()
         enabled = [p for p, ok in results.items() if ok]
         if enabled:
             _update_persistent_config(enabled=enabled, config_dir=config_dir)
         return cast(dict[str, bool], results)
+
 
     from harness.kernel.runtime import HarnessRuntime
 
     async with HarnessRuntime.create(db_path=db_path) as rt:
-        results = await rt.enable_all_plugins()
+        results = await rt.enable_all_plugins(include_sandboxed=include_sandboxed)
         enabled = [p for p, ok in results.items() if ok]
         if enabled:
             _update_persistent_config(enabled=enabled, config_dir=config_dir)
         return cast(dict[str, bool], results)
+
 
 
 async def disable_all_plugins(

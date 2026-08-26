@@ -13,7 +13,7 @@ async def list_services(db_path: str = ":memory:") -> dict[str, str | None]:
     """
     from harness.kernel.runtime import HarnessRuntime
 
-    async with HarnessRuntime.create(db_path=db_path) as runtime:
+    async with HarnessRuntime.create(db_path=db_path, auto_load_user_plugins=False) as runtime:
         return runtime.context.list_services()
 
 
@@ -26,7 +26,11 @@ async def run_introspect(db_path: str = ":memory:") -> dict[str, Any]:
     from harness.creator.introspection import RuntimeIntrospector
     from harness.kernel.runtime import HarnessRuntime
 
-    async with HarnessRuntime.create(db_path=db_path) as runtime:
+    async with HarnessRuntime.create(
+        db_path=db_path,
+        auto_load_user_plugins=True,
+        lazy_external_plugins=True,
+    ) as runtime:
         introspector = RuntimeIntrospector(
             runtime.context,
             runtime.lifecycle,
@@ -35,3 +39,4 @@ async def run_introspect(db_path: str = ":memory:") -> dict[str, Any]:
         report = introspector.get_status_report()
         graph = introspector.generate_mermaid_graph()
         return {**report, "graph": graph}
+

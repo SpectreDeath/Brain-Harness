@@ -544,16 +544,30 @@ class PluginLifecycle:
         except GraphCycleError as e:
             raise CyclicDependencyError(e.cycle) from e
 
-    async def enable_all(self) -> dict[str, bool]:
-        """Enable all validated or disabled plugins in dependency order.
+    async def enable_all(
+        self,
+        *,
+        trusted_only: bool = False,
+        skip_user_plugins: bool = False,
+    ) -> dict[str, bool]:
+        """Enable all discovered and validated plugins in topological dependency order.
 
         Automatically advances any DISCOVERED or LOADED plugins through
         load and validate stages before resolving dependency order.
+
+        Args:
+            trusted_only: If True, only enables trusted/in-process plugins.
+            skip_user_plugins: If True, skips external/user plugins prefixed with 'plugin.'.
 
         Returns:
             Dict mapping plugin names to success status.
         """
         for name, entry in list(self._entries.items()):
+            is_user = name.startswith("plugin.")
+            if skip_user_plugins and is_user:
+                continue
+            if trusted_only and not entry.plugin.trusted:
+                continue
             if entry.state == PluginState.DISCOVERED:
                 try:
                     await self.load(name)
@@ -570,7 +584,10 @@ class PluginLifecycle:
             n
             for n, e in self._entries.items()
             if e.state in (PluginState.VALIDATED, PluginState.DISABLED)
+            and (not trusted_only or e.plugin.trusted)
+            and (not skip_user_plugins or not n.startswith("plugin."))
         ]
+
 
         try:
             order = self.resolve_enable_order(to_enable)

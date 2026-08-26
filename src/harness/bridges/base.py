@@ -251,11 +251,13 @@ class EcosystemBridgePlugin(ToolMountMixin, HarnessPlugin, Generic[TSubstrate]):
         ctx.provide(self.service_key, self.provide_instance(), provider=self.name)
         logger.info("Ecosystem bridge loaded", bridge=self.name)
 
+
     async def on_enable(self) -> None:
         await self.get_substrate()
         specs = await self._resolve_tool_specs()
         if specs:
             await self.mount_tools(specs)
+
         else:
             # Check if subclass provided a 0-arg mount_tools override
             try:
@@ -273,6 +275,7 @@ class EcosystemBridgePlugin(ToolMountMixin, HarnessPlugin, Generic[TSubstrate]):
             bridge=self.name,
             resolved_path=str(root) if root else "fallback",
         )
+
 
     async def on_disable(self) -> None:
         await self.unmount_tools()

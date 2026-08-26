@@ -70,10 +70,11 @@ def test_runtime_introspector_diagnostics() -> None:
 @pytest.mark.asyncio
 @pytest.mark.integration
 async def test_ui_runtime_adapter_and_endpoints() -> None:
-    async with HarnessRuntime.create(db_path=":memory:") as runtime:
+    async with HarnessRuntime.create_diagnostic(db_path=":memory:") as runtime:
         adapter = RuntimeAdapter(runtime)
         introspector = adapter.get_introspector()
         assert introspector is not None
+
 
         catalog = adapter.get_catalog()
         assert isinstance(catalog, list)
@@ -210,3 +211,69 @@ async def test_mcp_registry_and_server_extensibility() -> None:
     })
     assert p_get["result"]["description"] == "Run custom audit on target"
     assert "Audit kernel.context" in p_get["result"]["messages"][0]["content"]["text"]
+
+
+@pytest.mark.asyncio
+@pytest.mark.unit
+async def test_lazy_runtime_lifecycle_and_diagnostic_seam() -> None:
+    # 1. Test standard create with lazy external plugins enabled
+    async with HarnessRuntime.create(db_path=":memory:", lazy_external_plugins=True) as runtime:
+        assert runtime.is_running is True
+        summary = runtime.summary()
+        assert "storage.sqlite" in summary
+        assert summary["storage.sqlite"] == "enabled"
+        assert "tools.registry" in summary
+        assert summary["tools.registry"] == "enabled"
+
+    # 2. Test create_diagnostic factory
+    async with HarnessRuntime.create_diagnostic(db_path=":memory:") as diag_rt:
+        assert diag_rt.is_running is True
+        assert diag_rt.tools is not None
+        assert diag_rt.storage is not None
+        summary = diag_rt.summary()
+        assert "storage.sqlite" in summary
+
+
+@pytest.mark.asyncio
+@pytest.mark.unit
+async def test_react_step_engine_transactional_rollback() -> None:
+    from harness.agent.react import StepExecutionEngine
+    from harness.services.llm import LLMService
+
+    class MockLLM(LLMService):
+        @property
+        def name(self) -> str:
+            return "mock.llm"
+
+        async def complete(self, messages: list[Any], tools: list[Any] | None = None) -> Any:
+            raise NotImplementedError
+
+        async def stream(self, messages: list[Any], tools: list[Any] | None = None) -> Any:
+            raise NotImplementedError
+
+
+    ctx = ServiceContext()
+    tools = ToolRegistry()
+    engine = StepExecutionEngine(llm=MockLLM(), tools=tools, context=ctx)
+
+    # 1. Register tool that raises an exception
+    def failing_tool() -> dict[str, Any]:
+        raise RuntimeError("Intentional tool failure")
+
+    tools.register(name="failing_tool", description="test failure", executor=failing_tool)
+
+    obs = await engine._invoke_tool_safely("failing_tool", {})
+    assert obs["status"] == "error"
+    assert "Intentional tool failure" in obs["error"]
+
+    # 2. Register tool that returns nested error status
+    def error_dict_tool() -> dict[str, Any]:
+        return {"status": "error", "message": "Custom error"}
+
+    tools.register(name="error_dict_tool", description="test error dict", executor=error_dict_tool)
+
+    obs_dict = await engine._invoke_tool_safely("error_dict_tool", {})
+    assert obs_dict["status"] == "ok"
+    assert obs_dict["result"]["status"] == "error"
+
+

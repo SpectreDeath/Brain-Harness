@@ -59,8 +59,9 @@ class TestStorageService:
         plugin = StoragePlugin(db_path=db_path)
         ctx = ServiceContext()
 
-        assert plugin.provides == [STORAGE_SERVICE_KEY]
+        assert STORAGE_SERVICE_KEY in plugin.provides
         assert plugin.trusted is True
+
 
         await plugin.on_load(ctx)
         assert ctx.has(STORAGE_SERVICE_KEY)

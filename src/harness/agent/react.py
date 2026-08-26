@@ -63,13 +63,25 @@ class StepExecutionEngine:
                 self.context = tx
                 try:
                     obs = await self.tools.invoke(action_name, action_input)
-                    if isinstance(obs, dict) and obs.get("status") == "error":
-                        # Roll back any intermediate context mutations performed during this failed tool call
-                        await tx.dispose()
+                    if isinstance(obs, dict):
+                        is_error = obs.get("status") == "error" or "error" in obs
+                        res_val = obs.get("result")
+                        if isinstance(res_val, dict) and (res_val.get("status") == "error" or "error" in res_val):
+                            is_error = True
+                        if is_error:
+                            await tx.dispose()
                     return obs
+                except Exception as err:
+                    await tx.dispose()
+                    return {"status": "error", "error": f"Tool execution failed: {err}"}
                 finally:
                     self.context = prev_ctx
-        return await self.tools.invoke(action_name, action_input)
+        try:
+            return await self.tools.invoke(action_name, action_input)
+        except Exception as err:
+            return {"status": "error", "error": f"Tool execution failed: {err}"}
+
+
 
     def build_initial_messages(self, task: str) -> list[LLMMessage]:
         """Construct the standard ReAct system prompt and user task message."""
