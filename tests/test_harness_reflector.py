@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from datetime import datetime, timezone
 import json
 from pathlib import Path
 import pytest
@@ -10,10 +11,19 @@ from click.testing import CliRunner
 
 from harness.cli import main as cli_main
 from harness.creator.reflection import (
+    ArchitectureSeamPatternExtractor,
+    BaseMemoryPatternExtractor,
+    ComputeCalibrationPatternExtractor,
+    DistilledHeuristic,
     EpisodicMemoryReflector,
+    ErrorRecoveryPatternExtractor,
     HarnessHistoryHarvester,
     HarnessReflectorEngine,
+    MemoryPatternPipeline,
+    ReflectionReport,
+    ReflectionScope,
     ReportArtifact,
+    TransactionalStepPatternExtractor,
     TranscriptSession,
 )
 from harness.creator.skills import SkillValidator
@@ -28,7 +38,6 @@ class TestHarnessReflectorCore:
         temp_dir = tmp_path / "temp_reports"
         temp_dir.mkdir()
 
-        # Create simulated architecture review HTML report
         html_file = temp_dir / "architecture-review-20260826.html"
         html_content = """<!DOCTYPE html>
 <html>
@@ -98,9 +107,59 @@ class TestHarnessReflectorCore:
         assert hasattr(ki.isnad, "claims") or "claims" in ki.isnad
 
 
+@pytest.mark.unit
+class TestReflectionScopeAndPipeline:
+    """Test multi-dimensional ReflectionScope and pluggable MemoryPatternPipeline."""
+
+    def test_reflection_scope_filters(self) -> None:
+        scope = ReflectionScope(
+            since=datetime(2026, 8, 25, 0, 0, 0, tzinfo=timezone.utc),
+            conversation_ids=["conv-1", "conv-2"],
+            categories=["architecture"],
+            min_confidence=0.90,
+        )
+
+        assert scope.matches_date("2026-08-26T10:00:00Z") is True
+        assert scope.matches_date("2026-08-24T10:00:00Z") is False
+        assert scope.matches_conversation("conv-1") is True
+        assert scope.matches_conversation("conv-99") is False
+        assert scope.matches_category("architecture") is True
+        assert scope.matches_category("performance") is False
+
+    def test_custom_pattern_extractor_registration(self) -> None:
+        class DummySecurityExtractor(BaseMemoryPatternExtractor):
+            @property
+            def name(self) -> str:
+                return "dummy_security"
+
+            @property
+            def category(self) -> str:
+                return "security"
+
+            def extract(self, reports, transcripts) -> list[DistilledHeuristic]:
+                return [
+                    DistilledHeuristic(
+                        title="Subprocess Isolation Invariant",
+                        category="security",
+                        heuristic="Untrusted plugins must run in isolated subprocesses.",
+                        confidence=0.99,
+                    )
+                ]
+
+        pipeline = MemoryPatternPipeline(extractors=[])
+        assert len(pipeline.list_extractors()) == 0
+
+        pipeline.register(DummySecurityExtractor())
+        assert "dummy_security" in pipeline.list_extractors()
+
+        results = pipeline.distill(reports=[], transcripts=[])
+        assert len(results) == 1
+        assert results[0].title == "Subprocess Isolation Invariant"
+
+
 @pytest.mark.integration
 @pytest.mark.asyncio
-async def test_reflector_engine_end_to_end(tmp_path: Path) -> None:
+async def test_reflector_engine_end_to_end_with_scope(tmp_path: Path) -> None:
     temp_dir = tmp_path / "temp_reports"
     temp_dir.mkdir()
     (temp_dir / "architecture-review-20260826.html").write_text(
@@ -117,7 +176,10 @@ async def test_reflector_engine_end_to_end(tmp_path: Path) -> None:
         app_data_dir=tmp_path / "app_data",
     )
 
+    scope = ReflectionScope(categories=["architecture"], min_confidence=0.85)
+
     report = await engine.reflect(
+        scope=scope,
         commit_to_vault=True,
         generate_html_brief=True,
         vault_dir=vault_dir,
@@ -125,6 +187,7 @@ async def test_reflector_engine_end_to_end(tmp_path: Path) -> None:
 
     assert report.harvested_reports_count == 1
     assert len(report.heuristics) >= 1
+    assert all(h.category == "architecture" for h in report.heuristics)
     assert len(report.knowledge_items) >= 1
     assert report.html_brief_path is not None
     assert report.html_brief_path.exists()
@@ -137,9 +200,9 @@ async def test_reflector_engine_end_to_end(tmp_path: Path) -> None:
 
 
 @pytest.mark.unit
-def test_cli_reflect_command() -> None:
+def test_cli_reflect_command_with_flags() -> None:
     runner = CliRunner()
-    result = runner.invoke(cli_main, ["reflect", "--no-commit"])
+    result = runner.invoke(cli_main, ["reflect", "--category", "architecture", "--no-commit"])
     assert result.exit_code == 0
     assert "Endogenous Memory Reflection Report" in result.output
     assert "Harvested Reports" in result.output

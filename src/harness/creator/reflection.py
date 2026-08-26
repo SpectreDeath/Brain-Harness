@@ -7,6 +7,7 @@ distills actionable, Isnad-grounded Knowledge Items (KIs) into the Knowledge Vau
 
 from __future__ import annotations
 
+from abc import ABC, abstractmethod
 import json
 import os
 import re
@@ -15,7 +16,7 @@ import uuid
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any
+from typing import Any, Sequence
 
 import structlog
 
@@ -26,6 +27,43 @@ from harness.services.storage import (
 )
 
 logger = structlog.get_logger(__name__)
+
+
+@dataclass
+class ReflectionScope:
+    """Multi-dimensional filter scope for history harvesting and reflection."""
+
+    since: datetime | None = None
+    conversation_ids: list[str] | None = None
+    categories: list[str] | None = None
+    min_confidence: float = 0.80
+    limit: int = 50
+
+    def matches_date(self, iso_date_str: str) -> bool:
+        """Check if an ISO date string falls at or after `since`."""
+        if not self.since:
+            return True
+        try:
+            dt = datetime.fromisoformat(iso_date_str)
+            # Ensure timezone awareness comparison
+            if dt.tzinfo is None:
+                dt = dt.replace(tzinfo=timezone.utc)
+            cmp_since = self.since if self.since.tzinfo is not None else self.since.replace(tzinfo=timezone.utc)
+            return dt >= cmp_since
+        except Exception:
+            return True
+
+    def matches_conversation(self, conv_id: str) -> bool:
+        """Check if a conversation ID matches the scope filter."""
+        if not self.conversation_ids:
+            return True
+        return conv_id in self.conversation_ids
+
+    def matches_category(self, category: str) -> bool:
+        """Check if a heuristic category matches the scope filter."""
+        if not self.categories:
+            return True
+        return category.lower() in [c.lower() for c in self.categories]
 
 
 @dataclass
@@ -81,6 +119,312 @@ class ReflectionReport:
     html_brief_path: Path | None = None
 
 
+# --- Base Pattern Extractor & Pipeline ---
+
+
+class BaseMemoryPatternExtractor(ABC):
+    """Abstract base class for modular memory pattern extractors."""
+
+    @property
+    @abstractmethod
+    def name(self) -> str:
+        """Unique identifier for this extractor."""
+
+    @property
+    @abstractmethod
+    def category(self) -> str:
+        """Heuristic category produced by this extractor."""
+
+    @abstractmethod
+    def extract(
+        self,
+        reports: Sequence[ReportArtifact],
+        transcripts: Sequence[TranscriptSession],
+    ) -> list[DistilledHeuristic]:
+        """Extract distilled heuristics from reports and transcripts."""
+
+
+class ArchitectureSeamPatternExtractor(BaseMemoryPatternExtractor):
+    """Extracts lifecycle staging, lazy venv, and CLI group consolidation invariants."""
+
+    @property
+    def name(self) -> str:
+        return "architecture_seams"
+
+    @property
+    def category(self) -> str:
+        return "architecture"
+
+    def extract(
+        self,
+        reports: Sequence[ReportArtifact],
+        transcripts: Sequence[TranscriptSession],
+    ) -> list[DistilledHeuristic]:
+        heuristics: list[DistilledHeuristic] = []
+
+        for rep in reports:
+            if rep.report_type != "architecture_review":
+                continue
+
+            combined_text = (rep.content_text + " " + " ".join(rep.friction_points)).lower()
+
+            # 1. Lazy Subprocess Staging
+            if any(k in combined_text for k in ["lazy", "subprocess", "venv", "cold-start"]):
+                heuristics.append(
+                    DistilledHeuristic(
+                        title="Lazy Subprocess Staging for Sandboxed External Plugins",
+                        category="architecture",
+                        heuristic=(
+                            "External plugins with subprocess/venv isolation must remain in DISCOVERED/VALIDATED state "
+                            "during kernel startup and test execution, provisioning virtual environments lazily on first invocation "
+                            "to eliminate cold-start timeouts."
+                        ),
+                        anti_pattern="Eagerly provisioning virtualenvs for all user plugins in HarnessRuntime.start().",
+                        confidence=0.98,
+                        source_artifacts=[str(rep.file_path)],
+                        isnad_claims=[
+                            {
+                                "source": rep.file_path.name,
+                                "timestamp": rep.created_at,
+                                "assertion": "Eager venv creation on Windows causes 60s pytest timeout; lazy staging resolves startup in <10ms.",
+                                "status": "VERIFIED",
+                            }
+                        ],
+                    )
+                )
+
+            # 2. CLI Single-Source Consolidation
+            if any(k in combined_text for k in ["cli", "bridge", "shadow", "command group"]):
+                heuristics.append(
+                    DistilledHeuristic(
+                        title="Click CLI Group Single-Source Consolidation",
+                        category="architecture",
+                        heuristic=(
+                            "CLI command groups (e.g. '@main.group(\"bridge\")') must be declared exactly once in a single "
+                            "co-located block to prevent later definitions from shadowing subcommands and breaking CLI test assertions."
+                        ),
+                        anti_pattern="Redefining CLI command groups at the bottom of cli.py.",
+                        confidence=0.99,
+                        source_artifacts=[str(rep.file_path)],
+                        isnad_claims=[
+                            {
+                                "source": rep.file_path.name,
+                                "timestamp": rep.created_at,
+                                "assertion": "Duplicate Click group declarations shadow earlier subcommands.",
+                                "status": "VERIFIED",
+                            }
+                        ],
+                    )
+                )
+
+        return heuristics
+
+
+class TransactionalStepPatternExtractor(BaseMemoryPatternExtractor):
+    """Extracts agent step transaction rollback and ACID state boundary invariants."""
+
+    @property
+    def name(self) -> str:
+        return "transactional_steps"
+
+    @property
+    def category(self) -> str:
+        return "architecture"
+
+    def extract(
+        self,
+        reports: Sequence[ReportArtifact],
+        transcripts: Sequence[TranscriptSession],
+    ) -> list[DistilledHeuristic]:
+        heuristics: list[DistilledHeuristic] = []
+
+        for rep in reports:
+            combined_text = (rep.content_text + " " + " ".join(rep.friction_points)).lower()
+            if any(k in combined_text for k in ["transaction", "rollback", "acid", "dispose"]):
+                heuristics.append(
+                    DistilledHeuristic(
+                        title="ReAct Agent Step Transactional Isolation",
+                        category="architecture",
+                        heuristic=(
+                            "Agent tool invocations should execute inside context transactions ('async with context.transaction()') "
+                            "with automatic rollback ('await tx.dispose()') whenever the tool returns an error payload or raises an exception."
+                        ),
+                        anti_pattern="Mutating shared ServiceContext during tool execution without an ACID boundary.",
+                        confidence=0.96,
+                        source_artifacts=[str(rep.file_path)],
+                        isnad_claims=[
+                            {
+                                "source": rep.file_path.name,
+                                "timestamp": rep.created_at,
+                                "assertion": "Step-level transactional boundaries guarantee clean state rollback on tool failures.",
+                                "status": "VERIFIED",
+                            }
+                        ],
+                    )
+                )
+
+        return heuristics
+
+
+class ComputeCalibrationPatternExtractor(BaseMemoryPatternExtractor):
+    """Extracts compute model assessment and reasoning budget routing invariants."""
+
+    @property
+    def name(self) -> str:
+        return "compute_calibration"
+
+    @property
+    def category(self) -> str:
+        return "performance"
+
+    def extract(
+        self,
+        reports: Sequence[ReportArtifact],
+        transcripts: Sequence[TranscriptSession],
+    ) -> list[DistilledHeuristic]:
+        heuristics: list[DistilledHeuristic] = []
+
+        for rep in reports:
+            if rep.report_type == "compute_assessment" or "compute" in rep.title.lower():
+                heuristics.append(
+                    DistilledHeuristic(
+                        title="Multi-Dimensional Compute Assessment Calibration",
+                        category="performance",
+                        heuristic=(
+                            "Route high-reasoning tasks (architectural refactoring, debugging concurrency) to deep reasoning models "
+                            "(gemini-3.7-flash with HIGH thinking or claude-3.7-sonnet with thinking budget), while routing mechanical tasks "
+                            "to fast non-thinking tiers."
+                        ),
+                        anti_pattern="Using one-size-fits-all model tiers across heterogeneous task surfaces.",
+                        confidence=0.95,
+                        source_artifacts=[str(rep.file_path)],
+                        isnad_claims=[
+                            {
+                                "source": rep.file_path.name,
+                                "timestamp": rep.created_at,
+                                "assertion": "5-dimensional scoring vectors optimize reasoning token spend and latency.",
+                                "status": "VERIFIED",
+                            }
+                        ],
+                    )
+                )
+
+        return heuristics
+
+
+class ErrorRecoveryPatternExtractor(BaseMemoryPatternExtractor):
+    """Extracts async timeout, cancellation, and error recovery invariants from transcripts."""
+
+    @property
+    def name(self) -> str:
+        return "error_recovery"
+
+    @property
+    def category(self) -> str:
+        return "error_recovery"
+
+    def extract(
+        self,
+        reports: Sequence[ReportArtifact],
+        transcripts: Sequence[TranscriptSession],
+    ) -> list[DistilledHeuristic]:
+        heuristics: list[DistilledHeuristic] = []
+
+        for tr in transcripts:
+            if not tr.errors_encountered:
+                continue
+
+            for err in tr.errors_encountered:
+                err_lower = err.lower()
+                if "timed out" in err_lower or "timeout" in err_lower:
+                    heuristics.append(
+                        DistilledHeuristic(
+                            title="Async Execution Timeout Isolation",
+                            category="error_recovery",
+                            heuristic=(
+                                "Long-running subagent tasks and test execution pipelines must specify explicit, granular timeouts "
+                                "with thread-safe cancellation to prevent blocking the main asyncio loop."
+                            ),
+                            anti_pattern="Unbounded await calls on external subprocesses.",
+                            confidence=0.92,
+                            source_artifacts=[str(tr.log_path)],
+                            isnad_claims=[
+                                {
+                                    "source": f"transcript:{tr.conversation_id}",
+                                    "timestamp": datetime.now(timezone.utc).isoformat(),
+                                    "assertion": "Transcript records timeout failure recovery.",
+                                    "status": "VERIFIED",
+                                }
+                            ],
+                        )
+                    )
+                    break
+
+        return heuristics
+
+
+class MemoryPatternPipeline:
+    """Pluggable registry and execution pipeline for memory pattern extractors."""
+
+    def __init__(self, extractors: list[BaseMemoryPatternExtractor] | None = None) -> None:
+        if extractors is not None:
+            self._extractors = list(extractors)
+        else:
+            self._extractors = [
+                ArchitectureSeamPatternExtractor(),
+                TransactionalStepPatternExtractor(),
+                ComputeCalibrationPatternExtractor(),
+                ErrorRecoveryPatternExtractor(),
+            ]
+
+    def register(self, extractor: BaseMemoryPatternExtractor) -> None:
+        """Register a custom pattern extractor."""
+        self._extractors.append(extractor)
+
+    def list_extractors(self) -> list[str]:
+        """List registered extractor names."""
+        return [e.name for e in self._extractors]
+
+    def distill(
+        self,
+        reports: Sequence[ReportArtifact],
+        transcripts: Sequence[TranscriptSession],
+        scope: ReflectionScope | None = None,
+    ) -> list[DistilledHeuristic]:
+        """Execute all registered extractors, deduplicate heuristics, and apply scope filters."""
+        raw_heuristics: list[DistilledHeuristic] = []
+
+        for ext in self._extractors:
+            try:
+                results = ext.extract(reports, transcripts)
+                raw_heuristics.extend(results)
+            except Exception as e:
+                logger.warning("Pattern extractor failed", extractor=ext.name, error=str(e))
+
+        # Deduplicate heuristics by title while aggregating provenance claims and sources
+        deduped: dict[str, DistilledHeuristic] = {}
+        for h in raw_heuristics:
+            if scope and not scope.matches_category(h.category):
+                continue
+            if scope and h.confidence < scope.min_confidence:
+                continue
+
+            if h.title not in deduped:
+                deduped[h.title] = h
+            else:
+                for src in h.source_artifacts:
+                    if src not in deduped[h.title].source_artifacts:
+                        deduped[h.title].source_artifacts.append(src)
+                for clm in h.isnad_claims:
+                    if clm not in deduped[h.title].isnad_claims:
+                        deduped[h.title].isnad_claims.append(clm)
+
+        return list(deduped.values())
+
+
+# --- Harvester ---
+
+
 class HarnessHistoryHarvester:
     """Harvester discovering and parsing internal execution residue."""
 
@@ -96,8 +440,12 @@ class HarnessHistoryHarvester:
             user_home = Path.home()
             self.app_data_dir = user_home / ".gemini" / "antigravity-ide"
 
-    def harvest_temp_reports(self, limit: int = 50) -> list[ReportArtifact]:
+    def harvest_temp_reports(
+        self,
+        scope: ReflectionScope | None = None,
+    ) -> list[ReportArtifact]:
         """Discover and parse HTML visual briefs and architecture reviews from %TEMP%."""
+        limit = scope.limit if scope else 50
         reports: list[ReportArtifact] = []
         if not self.temp_dir.exists():
             return reports
@@ -114,13 +462,17 @@ class HarnessHistoryHarvester:
             matched_files.values(),
             key=lambda f: f.stat().st_mtime,
             reverse=True,
-        )[:limit]
+        )[: limit * 2]
 
         for p in sorted_paths:
             try:
                 artifact = self._parse_html_report(p)
                 if artifact:
+                    if scope and not scope.matches_date(artifact.created_at):
+                        continue
                     reports.append(artifact)
+                    if len(reports) >= limit:
+                        break
             except Exception as e:
                 logger.warning("Failed parsing temp report", path=str(p), error=str(e))
 
@@ -151,13 +503,11 @@ class HarnessHistoryHarvester:
             mermaid_diagrams = re.findall(r"```mermaid(.*?)```", text, re.DOTALL)
 
         # Extract text snippets and friction points
-        # Remove script and style blocks
         clean_text = re.sub(r"<style.*?>.*?</style>", "", text, flags=re.DOTALL | re.IGNORECASE)
         clean_text = re.sub(r"<script.*?>.*?</script>", "", clean_text, flags=re.DOTALL | re.IGNORECASE)
         clean_text = re.sub(r"<[^>]+>", " ", clean_text)
         clean_text = re.sub(r"\s+", " ", clean_text).strip()
 
-        # Friction points heuristics
         friction_points: list[str] = []
         for line in text.splitlines():
             if any(k in line.lower() for k in ["friction", "gotcha", "timeout", "bottleneck", "warning", "anti-pattern"]):
@@ -172,14 +522,18 @@ class HarnessHistoryHarvester:
             title=title,
             created_at=mtime,
             report_type=report_type,
-            content_text=clean_text[:5000],  # Token-efficient excerpt
+            content_text=clean_text[:5000],
             friction_points=friction_points[:10],
             mermaid_diagrams=[m.strip() for m in mermaid_diagrams[:3]],
             metadata={"file_size": path.stat().st_size},
         )
 
-    def harvest_transcripts(self, limit: int = 10) -> list[TranscriptSession]:
+    def harvest_transcripts(
+        self,
+        scope: ReflectionScope | None = None,
+    ) -> list[TranscriptSession]:
         """Harvest step trajectories and error logs from local conversation logs."""
+        limit = scope.limit if scope else 10
         sessions: list[TranscriptSession] = []
         brain_dir = self.app_data_dir / "brain"
         if not brain_dir.exists():
@@ -189,6 +543,8 @@ class HarnessHistoryHarvester:
         for conv_dir in brain_dir.iterdir():
             if not conv_dir.is_dir():
                 continue
+            if scope and not scope.matches_conversation(conv_dir.name):
+                continue
             log_file = conv_dir / ".system_generated" / "logs" / "transcript.jsonl"
             if log_file.exists() and log_file.stat().st_size > 0:
                 transcript_files.append(log_file)
@@ -197,13 +553,15 @@ class HarnessHistoryHarvester:
             transcript_files,
             key=lambda f: f.stat().st_mtime,
             reverse=True,
-        )[:limit]
+        )[: limit * 2]
 
         for log_path in sorted_logs:
             try:
                 session = self._parse_transcript_log(log_path)
                 if session:
                     sessions.append(session)
+                    if len(sessions) >= limit:
+                        break
             except Exception as e:
                 logger.warning("Failed parsing transcript log", path=str(log_path), error=str(e))
 
@@ -259,156 +617,22 @@ class HarnessHistoryHarvester:
         )
 
 
+# --- Reflector Engine ---
+
+
 class EpisodicMemoryReflector:
-    """Distillation engine synthesizing heuristics and Knowledge Items from internal memory."""
+    """Helper for converting heuristics into ground-truth KnowledgeItemRecords."""
 
     @classmethod
     def distill(
         cls,
-        reports: list[ReportArtifact],
-        transcripts: list[TranscriptSession],
+        reports: Sequence[ReportArtifact],
+        transcripts: Sequence[TranscriptSession],
+        scope: ReflectionScope | None = None,
     ) -> list[DistilledHeuristic]:
-        """Distill actionable heuristics across reports and execution transcripts."""
-        heuristics: list[DistilledHeuristic] = []
-
-        # 1. Inspect architecture reviews for seam & lifecycle heuristics
-        for rep in reports:
-            if rep.report_type == "architecture_review":
-                # Check for lazy lifecycle / subprocess patterns
-                if any("lazy" in f.lower() or "subprocess" in f.lower() or "venv" in f.lower() for f in rep.friction_points + [rep.content_text]):
-                    heuristics.append(
-                        DistilledHeuristic(
-                            title="Lazy Subprocess Staging for Sandboxed External Plugins",
-                            category="architecture",
-                            heuristic=(
-                                "External plugins with subprocess/venv isolation must remain in DISCOVERED/VALIDATED state "
-                                "during kernel startup and test execution, provisioning virtual environments lazily on first invocation "
-                                "to eliminate cold-start timeouts."
-                            ),
-                            anti_pattern="Eagerly provisioning virtualenvs for all user plugins in HarnessRuntime.start().",
-                            confidence=0.98,
-                            source_artifacts=[str(rep.file_path)],
-                            isnad_claims=[
-                                {
-                                    "source": rep.file_path.name,
-                                    "timestamp": rep.created_at,
-                                    "assertion": "Eager venv creation on Windows causes 60s pytest timeout; lazy staging resolves startup in <10ms.",
-                                    "status": "VERIFIED",
-                                }
-                            ],
-                        )
-                    )
-
-                # Check for CLI group shadowing
-                if any("cli" in f.lower() or "bridge" in f.lower() or "shadow" in f.lower() for f in rep.friction_points + [rep.content_text]):
-                    heuristics.append(
-                        DistilledHeuristic(
-                            title="Click CLI Group Single-Source Consolidation",
-                            category="architecture",
-                            heuristic=(
-                                "CLI command groups (e.g. '@main.group(\"bridge\")') must be declared exactly once in a single "
-                                "co-located block to prevent later definitions from shadowing subcommands and breaking CLI test assertions."
-                            ),
-                            anti_pattern="Redefining CLI command groups at the bottom of cli.py.",
-                            confidence=0.99,
-                            source_artifacts=[str(rep.file_path)],
-                            isnad_claims=[
-                                {
-                                    "source": rep.file_path.name,
-                                    "timestamp": rep.created_at,
-                                    "assertion": "Duplicate Click group declarations shadow earlier subcommands.",
-                                    "status": "VERIFIED",
-                                }
-                            ],
-                        )
-                    )
-
-                # Check for transactional rollback
-                if any("transaction" in f.lower() or "rollback" in f.lower() or "step" in f.lower() for f in rep.friction_points + [rep.content_text]):
-                    heuristics.append(
-                        DistilledHeuristic(
-                            title="ReAct Agent Step Transactional Isolation",
-                            category="architecture",
-                            heuristic=(
-                                "Agent tool invocations should execute inside context transactions ('async with context.transaction()') "
-                                "with automatic rollback ('await tx.dispose()') whenever the tool returns an error payload or raises an exception."
-                            ),
-                            anti_pattern="Mutating shared ServiceContext during tool execution without an ACID boundary.",
-                            confidence=0.96,
-                            source_artifacts=[str(rep.file_path)],
-                            isnad_claims=[
-                                {
-                                    "source": rep.file_path.name,
-                                    "timestamp": rep.created_at,
-                                    "assertion": "Step-level transactional boundaries guarantee clean state rollback on tool failures.",
-                                    "status": "VERIFIED",
-                                }
-                            ],
-                        )
-                    )
-
-            elif rep.report_type == "compute_assessment":
-                heuristics.append(
-                    DistilledHeuristic(
-                        title="Multi-Dimensional Compute Assessment Calibration",
-                        category="performance",
-                        heuristic=(
-                            "Route high-reasoning tasks (architectural refactoring, debugging concurrency) to deep reasoning models "
-                            "(gemini-3.7-flash with HIGH thinking or claude-3.7-sonnet with thinking budget), while routing mechanical tasks "
-                            "to fast non-thinking tiers."
-                        ),
-                        anti_pattern="Using one-size-fits-all model tiers across heterogeneous task surfaces.",
-                        confidence=0.95,
-                        source_artifacts=[str(rep.file_path)],
-                        isnad_claims=[
-                            {
-                                "source": rep.file_path.name,
-                                "timestamp": rep.created_at,
-                                "assertion": "5-dimensional scoring vectors optimize reasoning token spend and latency.",
-                                "status": "VERIFIED",
-                            }
-                        ],
-                    )
-                )
-
-        # 2. Inspect transcript errors for recovery heuristics
-        for tr in transcripts:
-            if tr.errors_encountered:
-                for err in tr.errors_encountered:
-                    if "timed out" in err.lower() or "timeout" in err.lower():
-                        heuristics.append(
-                            DistilledHeuristic(
-                                title="Async Execution Timeout Isolation",
-                                category="error_recovery",
-                                heuristic=(
-                                    "Long-running subagent tasks and test execution pipelines must specify explicit, granular timeouts "
-                                    "with thread-safe cancellation to prevent blocking the main asyncio loop."
-                                ),
-                                anti_pattern="Unbounded await calls on external subprocesses.",
-                                confidence=0.92,
-                                source_artifacts=[str(tr.log_path)],
-                                isnad_claims=[
-                                    {
-                                        "source": f"transcript:{tr.conversation_id}",
-                                        "timestamp": datetime.now(timezone.utc).isoformat(),
-                                        "assertion": "Transcript records timeout failure recovery.",
-                                        "status": "VERIFIED",
-                                    }
-                                ],
-                            )
-                        )
-                        break
-
-        # Deduplicate heuristics by title
-        deduped: dict[str, DistilledHeuristic] = {}
-        for h in heuristics:
-            if h.title not in deduped:
-                deduped[h.title] = h
-            else:
-                deduped[h.title].source_artifacts.extend(h.source_artifacts)
-                deduped[h.title].isnad_claims.extend(h.isnad_claims)
-
-        return list(deduped.values())
+        """Delegate distillation to default MemoryPatternPipeline."""
+        pipeline = MemoryPatternPipeline()
+        return pipeline.distill(reports, transcripts, scope=scope)
 
     @classmethod
     def to_knowledge_item(cls, heuristic: DistilledHeuristic, index: int = 1) -> KnowledgeItemRecord:
@@ -452,13 +676,16 @@ class HarnessReflectorEngine:
         storage: StorageService | None = None,
         temp_dir: Path | str | None = None,
         app_data_dir: Path | str | None = None,
+        pipeline: MemoryPatternPipeline | None = None,
     ) -> None:
         self.storage = storage
         self.harvester = HarnessHistoryHarvester(temp_dir=temp_dir, app_data_dir=app_data_dir)
+        self.pipeline = pipeline or MemoryPatternPipeline()
 
     async def reflect(
         self,
         *,
+        scope: ReflectionScope | None = None,
         commit_to_vault: bool = True,
         generate_html_brief: bool = True,
         vault_dir: Path | str = ".harness/knowledge",
@@ -467,12 +694,12 @@ class HarnessReflectorEngine:
         reflection_id = f"ref_{uuid.uuid4().hex[:8]}"
         now_iso = datetime.now(timezone.utc).isoformat()
 
-        # 1. Harvest
-        reports = self.harvester.harvest_temp_reports()
-        transcripts = self.harvester.harvest_transcripts()
+        # 1. Harvest with scope
+        reports = self.harvester.harvest_temp_reports(scope=scope)
+        transcripts = self.harvester.harvest_transcripts(scope=scope)
 
-        # 2. Distill
-        heuristics = EpisodicMemoryReflector.distill(reports, transcripts)
+        # 2. Distill through pluggable pipeline
+        heuristics = self.pipeline.distill(reports, transcripts, scope=scope)
 
         # 3. Formulate Knowledge Items
         kis: list[KnowledgeItemRecord] = []
@@ -549,7 +776,7 @@ class HarnessReflectorEngine:
             f"    T[\"{len(transcripts)} Conversation Transcripts\"]",
             "  end",
             "  subgraph ReflectionEngine[\"2. Harness Reflector Engine\"]",
-            "    H[\"Episodic Friction & Seam Distillation\"]",
+            "    H[\"MemoryPatternPipeline Distillation\"]",
             "    I[\"Aquinas Isnad Provenance Audit\"]",
             "  end",
             "  subgraph KnowledgeVault[\"3. Persistent Knowledge Vault\"]",

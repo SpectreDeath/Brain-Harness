@@ -1102,14 +1102,33 @@ def knowledge_verify(ki_id: str, vault_dir: str) -> None:
 
 @knowledge_cmd.command("reflect")
 @click.option("--vault", "-v", "vault_dir", default=".harness/knowledge", help="Path to knowledge vault root directory")
+@click.option("--since", "since_iso", default=None, help="Filter memory artifacts created on or after this ISO date/timestamp")
+@click.option("--conv-id", "conv_id", default=None, help="Filter transcript harvesting to a specific conversation ID")
+@click.option("--category", "category", default=None, help="Filter distilled heuristics by category (e.g. architecture, performance)")
+@click.option("--min-confidence", "min_confidence", default=0.80, type=float, help="Minimum confidence threshold (0.0 - 1.0)")
+@click.option("--limit", "limit", default=50, type=int, help="Maximum number of reports/transcripts to harvest")
 @click.option("--no-html", "no_html", is_flag=True, help="Disable generating interactive HTML visual brief")
 @click.option("--no-commit", "no_commit", is_flag=True, help="Do not commit distilled items into the knowledge vault")
-def knowledge_reflect(vault_dir: str, no_html: bool, no_commit: bool) -> None:
+def knowledge_reflect(
+    vault_dir: str,
+    since_iso: str | None,
+    conv_id: str | None,
+    category: str | None,
+    min_confidence: float,
+    limit: int,
+    no_html: bool,
+    no_commit: bool,
+) -> None:
     """Reflect on internal history (HTML reports, transcripts) and distill Knowledge Items."""
     from harness.commands.reflection import run_reflection_cmd
 
     report = _run_async(
         run_reflection_cmd(
+            since_iso=since_iso,
+            conv_id=conv_id,
+            category=category,
+            min_confidence=min_confidence,
+            limit=limit,
             commit_to_vault=not no_commit,
             generate_html=not no_html,
             vault_dir=vault_dir,
@@ -1129,7 +1148,7 @@ def knowledge_reflect(vault_dir: str, no_html: bool, no_commit: bool) -> None:
     click.echo("\nDistilled Heuristics Matrix:")
     click.echo("─" * 70)
     for h in report.heuristics:
-        click.echo(f"• [{h.category.upper()}] {h.title}")
+        click.echo(f"• [{h.category.upper()}] {h.title} (Confidence: {h.confidence * 100:.0f}%)")
         click.echo(f"  Heuristic: {h.heuristic}")
         if h.anti_pattern:
             click.echo(f"  Anti-Pattern: {h.anti_pattern}")
@@ -1138,15 +1157,39 @@ def knowledge_reflect(vault_dir: str, no_html: bool, no_commit: bool) -> None:
 
 @main.command("reflect")
 @click.option("--vault", "-v", "vault_dir", default=".harness/knowledge", help="Path to knowledge vault root directory")
+@click.option("--since", "since_iso", default=None, help="Filter memory artifacts created on or after this ISO date/timestamp")
+@click.option("--conv-id", "conv_id", default=None, help="Filter transcript harvesting to a specific conversation ID")
+@click.option("--category", "category", default=None, help="Filter distilled heuristics by category (e.g. architecture, performance)")
+@click.option("--min-confidence", "min_confidence", default=0.80, type=float, help="Minimum confidence threshold (0.0 - 1.0)")
+@click.option("--limit", "limit", default=50, type=int, help="Maximum number of reports/transcripts to harvest")
 @click.option("--no-html", "no_html", is_flag=True, help="Disable generating interactive HTML visual brief")
 @click.option("--no-commit", "no_commit", is_flag=True, help="Do not commit distilled items into the knowledge vault")
-def main_reflect(vault_dir: str, no_html: bool, no_commit: bool) -> None:
+def main_reflect(
+    vault_dir: str,
+    since_iso: str | None,
+    conv_id: str | None,
+    category: str | None,
+    min_confidence: float,
+    limit: int,
+    no_html: bool,
+    no_commit: bool,
+) -> None:
     """Run endogenous reflection loop across internal reports and transcripts."""
-    knowledge_reflect.callback(vault_dir=vault_dir, no_html=no_html, no_commit=no_commit)
+    knowledge_reflect.callback(
+        vault_dir=vault_dir,
+        since_iso=since_iso,
+        conv_id=conv_id,
+        category=category,
+        min_confidence=min_confidence,
+        limit=limit,
+        no_html=no_html,
+        no_commit=no_commit,
+    )
 
 
 if __name__ == "__main__":
     main()
+
 
 
 
