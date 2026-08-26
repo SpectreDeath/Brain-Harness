@@ -19,6 +19,10 @@ from typing import Any, Callable
 import structlog
 
 from .agent import FallbackLLM, run_agent
+from .bridges import (
+    check_bridge_status_cmd,
+    list_bridges_cmd,
+)
 from .compute import (
     ComputeAssessmentResult,
     assess_compute_cmd,
@@ -188,6 +192,8 @@ _BUILTIN_COMMANDS: list[tuple[str, Callable[..., Any], str, str]] = [
     ("skills.scaffold", scaffold_skill_cmd, "skills", "Scaffold new agent skill package"),
     ("skills.validate", validate_skill_cmd, "skills", "Validate agent skill standards"),
     ("skills.visual", export_skill_graph_visual_cmd, "skills", "Generate skill graph visual brief"),
+    ("bridge.list", list_bridges_cmd, "bridge", "List registered ecosystem bridges"),
+    ("bridge.status", check_bridge_status_cmd, "bridge", "Check ecosystem bridge substrate status"),
     ("system.services", list_services, "system", "List registered service keys"),
     ("system.introspect", run_introspect, "system", "Generate system introspection diagnostics"),
     ("tools.list", list_tools, "tools", "List available tools"),
@@ -215,6 +221,7 @@ __all__ = [
     "apply_config_cmd",
     "assess_compute_cmd",
     "build_plugin_cmd",
+    "check_bridge_status_cmd",
     "disable_all_plugins",
     "disable_plugin",
     "disable_tool",
@@ -229,6 +236,7 @@ __all__ = [
     "init_workspace_cmd",
     "inspect_plugin",
     "list_archetypes_cmd",
+    "list_bridges_cmd",
     "list_plugins",
     "list_services",
     "list_tools",

@@ -191,7 +191,9 @@ class TestSandboxedPluginAdapter:
         """Verify workspace domain plugins invoke successfully through HarnessRuntime."""
         from harness.kernel.runtime import HarnessRuntime
 
-        async with HarnessRuntime.create(plugin_dirs=[Path("plugins")]) as rt:
+        async with HarnessRuntime.create(
+            plugin_dirs=[Path("plugins/security_and_forensics/network_forensics")]
+        ) as rt:
             assert rt.tools is not None
             assert "domain.network_forensics.audit_port_configuration" in rt.tools
 

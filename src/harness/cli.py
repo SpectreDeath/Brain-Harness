@@ -943,6 +943,55 @@ def assess_compute(
 
     click.echo("\n" + res.recommendation_block)
 
+
+@main.group("bridge")
+def bridge_cmd() -> None:
+    """Check and inspect peer ecosystem bridges."""
+    pass
+
+
+@bridge_cmd.command("list")
+def bridge_list() -> None:
+    """List all registered ecosystem bridges and their availability."""
+    from harness.commands.bridges import list_bridges_cmd
+
+    bridges = list_bridges_cmd()
+    click.echo(f"\nEcosystem Bridges ({len(bridges)} registered):\n" + "━" * 70)
+    for b in bridges:
+        mark = "✓" if b["available"] else "✗"
+        path_str = b["path"] or f"Missing (set {b['env_var']})"
+        click.echo(f"  {mark} {b['project_name']:<18} [{b['status']}]")
+        click.echo(f"      Path: {path_str}")
+        if b["capabilities"]:
+            click.echo(f"      Capabilities: {', '.join(b['capabilities'])}")
+    click.echo()
+
+
+@bridge_cmd.command("status")
+@click.argument("name", required=False, default=None)
+def bridge_status(name: str | None) -> None:
+    """Inspect detailed diagnostic health of ecosystem bridges."""
+    from harness.commands.bridges import check_bridge_status_cmd
+
+    res = check_bridge_status_cmd(project_name=name)
+    if "bridge" in res:
+        b = res["bridge"]
+        status_sym = "✓ CONNECTED" if b["available"] else "✗ NOT FOUND"
+        click.echo(f"\nBridge Diagnostic Report: {b['project_name']}")
+        click.echo("━" * 58)
+        click.echo(f"Status:       {status_sym} ({b['status']})")
+        click.echo(f"Substrate:    {b['path'] or 'None'}")
+        click.echo(f"Env Variable: {b['env_var']}")
+        click.echo(f"Capabilities: {', '.join(b['capabilities']) if b['capabilities'] else 'None'}\n")
+    else:
+        click.echo(f"\nEcosystem Bridges Overview: {res['connected_bridges']}/{res['total_bridges']} Connected")
+        click.echo("━" * 58)
+        for b in res["bridges"]:
+            mark = "✓" if b["available"] else "✗"
+            click.echo(f"  {mark} {b['project_name']:<16} [{b['status']}] -> {b['path'] or 'missing'}")
+        click.echo()
+
+
 @main.group("knowledge")
 def knowledge_cmd() -> None:
     """Manage and query the distilled Knowledge Vault and Isnad lineage."""

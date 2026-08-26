@@ -243,7 +243,7 @@ async def test_agent_session_plugin_auto_wiring():
 @pytest.mark.asyncio
 async def test_runtime_sessions_and_export():
     """Verify HarnessRuntime automatically provisions sessions property and export helper."""
-    async with HarnessRuntime.create(db_path=":memory:") as rt:
+    async with HarnessRuntime.create(db_path=":memory:", auto_load_user_plugins=False) as rt:
         assert rt.sessions is not None
         assert isinstance(rt.sessions, AgentSessionManager)
 
@@ -309,7 +309,7 @@ async def test_mcp_server_resources_and_prompts():
 @pytest.mark.asyncio
 async def test_ui_session_endpoints():
     """Verify FastAPI UI server session endpoints."""
-    async with HarnessRuntime.create(db_path=":memory:") as rt:
+    async with HarnessRuntime.create(db_path=":memory:", auto_load_user_plugins=False) as rt:
         app = create_app(rt)
 
         transport = ASGITransport(app=app)

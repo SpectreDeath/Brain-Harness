@@ -1,4 +1,4 @@
-﻿"""End-to-end and unit tests for plugin ingestion from GitHub URLs and ZIP files."""
+"""End-to-end and unit tests for plugin ingestion from GitHub URLs and ZIP files."""
 
 import json
 import zipfile
@@ -125,7 +125,11 @@ def greet(name: str) -> str:
             zf.writestr("greeter/plugin.json", json.dumps(manifest))
             zf.writestr("greeter/main.py", code)
 
-        async with HarnessRuntime.create(db_path=":memory:", plugin_dirs=[tmp_path / "plugins"]) as runtime:
+        async with HarnessRuntime.create(
+            db_path=":memory:",
+            plugin_dirs=[tmp_path / "plugins"],
+            auto_load_user_plugins=False,
+        ) as runtime:
             # Runtime is running; now dynamically ingest the plugin
             plugin = await runtime.add_plugin_from_source(zip_path, auto_enable=True)
             assert plugin.name == "greeter"

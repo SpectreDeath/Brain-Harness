@@ -261,7 +261,10 @@ class VenvExecutor(SandboxExecutor):
             dependencies: pip packages to install in the venv.
         """
         self._plugin_dir = plugin_dir
-        self._venv_dir = venv_dir or plugin_dir / ".venv"
+        if venv_dir is not None:
+            self._venv_dir = venv_dir
+        else:
+            self._venv_dir = Path(".harness") / "venvs" / plugin_dir.name
         self._dependencies = dependencies or []
         self._subprocess: SubprocessExecutor | None = None
         self._setup_done = False
@@ -317,6 +320,7 @@ class VenvExecutor(SandboxExecutor):
         import venv
 
         logger.info("Creating virtualenv", venv_dir=str(self._venv_dir))
+        self._venv_dir.parent.mkdir(parents=True, exist_ok=True)
         venv.create(str(self._venv_dir), with_pip=True, clear=True)
 
         if self._dependencies:

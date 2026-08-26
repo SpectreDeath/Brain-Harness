@@ -13,10 +13,21 @@ from __future__ import annotations
 import os
 from pathlib import Path
 from typing import Any
-
+from pydantic import BaseModel, Field
 import structlog
 
 logger = structlog.get_logger()
+
+
+class BridgeDiagnosticReport(BaseModel):
+    """Structured diagnostic report for an ecosystem bridge."""
+
+    project_name: str = Field(..., description="Ecosystem project name e.g. em-cubed, Memtext")
+    available: bool = Field(default=False, description="Whether the substrate repository exists and is accessible")
+    path: str | None = Field(default=None, description="Resolved absolute filesystem path")
+    env_var: str = Field(default="", description="Environment variable controlling custom path")
+    capabilities: list[str] = Field(default_factory=list, description="Capabilities provided by this bridge")
+    status: str = Field(default="missing_substrate", description="connected | missing_substrate | disabled | error")
 
 
 class EcosystemLocator:
@@ -27,6 +38,13 @@ class EcosystemLocator:
         "Memtext": "MEMTEXT_PATH",
         "Skill Flywheel": "SKILL_FLYWHEEL_PATH",
         "Brain Harness": "BRAIN_HARNESS_PATH",
+    }
+
+    CAPABILITIES_MAP: dict[str, list[str]] = {
+        "em-cubed": ["code_execution", "tool_hosting", "vector_index"],
+        "Memtext": ["memory_graph", "prompt_optimization", "epistemic_audit"],
+        "Skill Flywheel": ["prompt_optimization", "tool_hosting", "reactive_event_store"],
+        "Brain Harness": ["code_execution", "tool_hosting", "memory_graph", "vector_index", "epistemic_audit"],
     }
 
     @classmethod
@@ -130,3 +148,25 @@ class EcosystemLocator:
                 "env_var": cls.ENV_VARS[name],
             }
         return report
+
+    @classmethod
+    def inspect_bridge(cls, project_name: str) -> BridgeDiagnosticReport:
+        """Return detailed diagnostic report for a specific ecosystem bridge."""
+        path = cls.locate(project_name)
+        env_var = cls.ENV_VARS.get(project_name, f"{project_name.upper().replace('-', '_').replace(' ', '_')}_PATH")
+        capabilities = cls.CAPABILITIES_MAP.get(project_name, [])
+        status = "connected" if path is not None else "missing_substrate"
+
+        return BridgeDiagnosticReport(
+            project_name=project_name,
+            available=path is not None,
+            path=str(path) if path else None,
+            env_var=env_var,
+            capabilities=capabilities,
+            status=status,
+        )
+
+    @classmethod
+    def inspect_all(cls) -> list[BridgeDiagnosticReport]:
+        """Return diagnostic reports for all known ecosystem bridges."""
+        return [cls.inspect_bridge(name) for name in cls.ENV_VARS]

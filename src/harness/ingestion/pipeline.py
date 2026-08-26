@@ -144,6 +144,34 @@ class PluginIngestionPipeline:
         )
         return plugin
 
+    async def validate(
+        self,
+        source: str | Path,
+        *,
+        dry_run: bool = False,
+        remediate: bool = False,
+    ) -> Any:
+        """Run the comprehensive pre-flight diagnostic validation pipeline on a plugin.
+
+        Args:
+            source: Local directory path or cached plugin directory name.
+            dry_run: Whether to run sandbox dry-run execution checks.
+            remediate: Whether to automatically fix missing files or schema fields.
+
+        Returns:
+            ValidationReport detailing passed/failed checks and remediation actions.
+        """
+        from harness.creator.validator import PluginValidator
+
+        path = Path(source).resolve()
+        if not path.exists():
+            path = self.fetcher.plugin_dir / source
+
+        if not path.exists():
+            raise FileNotFoundError(f"Plugin directory not found: {source}")
+
+        return await PluginValidator.validate(path, dry_run=dry_run, remediate=remediate)
+
     def inspect(self, source: str | Path) -> PluginManifest:
         """Inspect a local or cached plugin directory without full conversion.
 
