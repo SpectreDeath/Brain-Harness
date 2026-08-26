@@ -1100,7 +1100,53 @@ def knowledge_verify(ki_id: str, vault_dir: str) -> None:
     click.echo()
 
 
+@knowledge_cmd.command("reflect")
+@click.option("--vault", "-v", "vault_dir", default=".harness/knowledge", help="Path to knowledge vault root directory")
+@click.option("--no-html", "no_html", is_flag=True, help="Disable generating interactive HTML visual brief")
+@click.option("--no-commit", "no_commit", is_flag=True, help="Do not commit distilled items into the knowledge vault")
+def knowledge_reflect(vault_dir: str, no_html: bool, no_commit: bool) -> None:
+    """Reflect on internal history (HTML reports, transcripts) and distill Knowledge Items."""
+    from harness.commands.reflection import run_reflection_cmd
+
+    report = _run_async(
+        run_reflection_cmd(
+            commit_to_vault=not no_commit,
+            generate_html=not no_html,
+            vault_dir=vault_dir,
+        )
+    )
+
+    click.echo(f"\n🧠 Endogenous Memory Reflection Report: {report.reflection_id}")
+    click.echo("━" * 70)
+    click.echo(f"Harvested Reports:     {report.harvested_reports_count}")
+    click.echo(f"Harvested Transcripts: {report.harvested_transcripts_count}")
+    click.echo(f"Distilled Heuristics:  {len(report.heuristics)}")
+    click.echo(f"Committed KIs:         {len(report.knowledge_items)}")
+
+    if report.html_brief_path:
+        click.echo(f"\n✓ Generated Visual Reflection Brief: {report.html_brief_path}")
+
+    click.echo("\nDistilled Heuristics Matrix:")
+    click.echo("─" * 70)
+    for h in report.heuristics:
+        click.echo(f"• [{h.category.upper()}] {h.title}")
+        click.echo(f"  Heuristic: {h.heuristic}")
+        if h.anti_pattern:
+            click.echo(f"  Anti-Pattern: {h.anti_pattern}")
+    click.echo()
+
+
+@main.command("reflect")
+@click.option("--vault", "-v", "vault_dir", default=".harness/knowledge", help="Path to knowledge vault root directory")
+@click.option("--no-html", "no_html", is_flag=True, help="Disable generating interactive HTML visual brief")
+@click.option("--no-commit", "no_commit", is_flag=True, help="Do not commit distilled items into the knowledge vault")
+def main_reflect(vault_dir: str, no_html: bool, no_commit: bool) -> None:
+    """Run endogenous reflection loop across internal reports and transcripts."""
+    knowledge_reflect.callback(vault_dir=vault_dir, no_html=no_html, no_commit=no_commit)
+
+
 if __name__ == "__main__":
     main()
+
 
 

@@ -52,7 +52,9 @@ from .plugins import (
     list_plugins,
     remove_plugin,
 )
+from .reflection import run_reflection_cmd
 from .runtime import (
+
     ConfigApplyResult,
     ConfigValidationResult,
     RuntimeRunResult,
@@ -194,6 +196,7 @@ _BUILTIN_COMMANDS: list[tuple[str, Callable[..., Any], str, str]] = [
     ("skills.visual", export_skill_graph_visual_cmd, "skills", "Generate skill graph visual brief"),
     ("bridge.list", list_bridges_cmd, "bridge", "List registered ecosystem bridges"),
     ("bridge.status", check_bridge_status_cmd, "bridge", "Check ecosystem bridge substrate status"),
+    ("memory.reflect", run_reflection_cmd, "memory", "Run endogenous memory reflection and knowledge distillation"),
     ("system.services", list_services, "system", "List registered service keys"),
     ("system.introspect", run_introspect, "system", "Generate system introspection diagnostics"),
     ("tools.list", list_tools, "tools", "List available tools"),
@@ -246,6 +249,7 @@ __all__ = [
     "run_agent",
     "run_harness_cmd",
     "run_introspect",
+    "run_reflection_cmd",
     "scaffold_plugin_cmd",
     "scaffold_skill_cmd",
     "serve_mcp_cmd",
@@ -256,3 +260,4 @@ __all__ = [
     "validate_skill_cmd",
     "watch_workspace_cmd",
 ]
+
