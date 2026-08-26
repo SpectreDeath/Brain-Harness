@@ -1,0 +1,126 @@
+{
+  "name": "plugin.vibe_scanner",
+  "version": "1.0.0",
+  "description": "Static AST security scanner detecting AI-generated code vulnerabilities, secrets, SQL injection, path traversal, weak crypto, and anti-patterns",
+  "entrypoint": "main.py",
+  "isolation": "subprocess",
+  "trusted": true,
+  "category": "security_and_forensics",
+  "tags": [
+    "security",
+    "ast",
+    "vulnerability_scanner",
+    "ai_code_safety",
+    "sarif"
+  ],
+  "entrypoints": [
+    {
+      "name": "scan_code",
+      "description": "Scan in-memory Python source code string for 7 AI security vulnerability classes with line numbers and fix hints",
+      "parameters": [
+        {
+          "name": "code",
+          "type": "string",
+          "description": "Python source code string to analyze",
+          "required": true
+        },
+        {
+          "name": "file_name",
+          "type": "string",
+          "description": "Optional synthetic file name for context reporting",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "scan_file",
+      "description": "Scan a single Python source file on disk for AST security vulnerabilities",
+      "parameters": [
+        {
+          "name": "file_path",
+          "type": "string",
+          "description": "Path to the Python file to analyze",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "scan_project",
+      "description": "Recursively scan a project directory of Python files, skipping virtual environments and caches",
+      "parameters": [
+        {
+          "name": "dir_path",
+          "type": "string",
+          "description": "Root directory path to scan",
+          "required": true
+        },
+        {
+          "name": "ignore_dirs",
+          "type": "array",
+          "description": "Optional list of directory names to ignore during traversal",
+          "required": false
+        },
+        {
+          "name": "fail_on_critical",
+          "type": "boolean",
+          "description": "Whether to mark scan status as failed if any critical severity issues exist",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "compare_benchmark",
+      "description": "Compare vulnerable code against remediated/secure code to verify risk reduction and fix efficacy",
+      "parameters": [
+        {
+          "name": "vulnerable_code",
+          "type": "string",
+          "description": "Source code prior to security remediation",
+          "required": true
+        },
+        {
+          "name": "secure_code",
+          "type": "string",
+          "description": "Remediated source code after applying fix hints",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "generate_sarif_report",
+      "description": "Scan a project directory and export a standard SARIF v2.1.0 security report for GitHub Security integration",
+      "parameters": [
+        {
+          "name": "dir_path",
+          "type": "string",
+          "description": "Root project directory to scan",
+          "required": true
+        },
+        {
+          "name": "output_path",
+          "type": "string",
+          "description": "Target file path to write the SARIF JSON output",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "generate_json_report",
+      "description": "Scan a project directory and export a structured JSON security findings report",
+      "parameters": [
+        {
+          "name": "dir_path",
+          "type": "string",
+          "description": "Root project directory to scan",
+          "required": true
+        },
+        {
+          "name": "output_path",
+          "type": "string",
+          "description": "Target file path to write the JSON output",
+          "required": true
+        }
+      ]
+    }
+  ]
+}

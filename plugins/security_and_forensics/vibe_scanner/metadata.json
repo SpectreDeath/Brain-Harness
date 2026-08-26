@@ -1,0 +1,24 @@
+{
+  "origin": "https://github.com/Emmimal/vibe-scanner",
+  "source_path": "D:\\GitHub\\cloned\\vibe-scanner-main\\vibe-scanner-main",
+  "license": "MIT",
+  "forged_at": "2026-08-26T17:48:00-04:00",
+  "forged_by": "repo-to-plugin-forge",
+  "archetype": "tool_provider",
+  "isolation": "subprocess",
+  "signature": {
+    "total_loc": 1219,
+    "detectors_count": 7,
+    "primary_language": "python",
+    "external_dependencies_count": 0
+  },
+  "detectors": [
+    "SQLInjectionDetector",
+    "UnsafeFileAccessDetector",
+    "HardcodedSecretDetector",
+    "UnsafeDeserialiseDetector",
+    "WeakCryptoDetector",
+    "ExceptionSwallowedDetector",
+    "InputValidationDetector"
+  ]
+}
