@@ -1,0 +1,25 @@
+{
+  "origin": "https://github.com/Emmimal/prompt-pruning-layer",
+  "source_path": "D:\\GitHub\\cloned\\prompt-pruning-layer-main\\prompt-pruning-layer-main",
+  "license": "MIT",
+  "forged_at": "2026-08-27T17:05:00-04:00",
+  "forged_by": "repo-to-plugin-forge",
+  "archetype": "tool_provider",
+  "isolation": "subprocess",
+  "signature": {
+    "primary_language": "python",
+    "external_dependencies_count": 0,
+    "optimization_passes": [
+      "Pass 1: Expired Context Elimination",
+      "Pass 2: Duplicate Context Elimination",
+      "Pass 3: Dependency Restoration (DEFINE/REF)"
+    ]
+  },
+  "tools": [
+    "prune_messages",
+    "build_prompt",
+    "estimate_prompt_reduction",
+    "generate_benchmark_corpus",
+    "benchmark_pruning_workloads"
+  ]
+}

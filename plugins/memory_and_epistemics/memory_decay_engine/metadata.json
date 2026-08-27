@@ -1,0 +1,21 @@
+{
+  "origin": "https://github.com/Emmimal/memory-decay-engine",
+  "source_path": "D:\\GitHub\\cloned\\memory-decay-engine-main\\memory-decay-engine-main",
+  "license": "MIT",
+  "forged_at": "2026-08-27T16:30:00-04:00",
+  "forged_by": "repo-to-plugin-forge",
+  "archetype": "service_provider",
+  "isolation": "subprocess",
+  "signature": {
+    "primary_language": "python",
+    "external_dependencies_count": 0,
+    "formula": "Ret = exp(-t / S), S_new = S_old * (1 + ln(1 + recall_count))"
+  },
+  "tools": [
+    "memory_register",
+    "memory_recall",
+    "memory_step",
+    "memory_query_working_set",
+    "simulate_session_benchmark"
+  ]
+}

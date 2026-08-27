@@ -1,0 +1,217 @@
+{
+  "name": "domain.memory_decay_engine",
+  "version": "1.1.0",
+  "description": "Ebbinghaus forgetting curve memory engine with channel multipliers, snapshot session persistence, and composite ranking",
+  "category": "memory_and_epistemics",
+  "language": "python",
+  "entrypoint": "main.py",
+  "isolation": "subprocess",
+  "trusted": true,
+  "dependencies": [],
+  "entrypoints": [
+    {
+      "name": "memory_register",
+      "description": "Register a new memory item with retention tracking, channel multiplier, and foundational protection",
+      "parameters": [
+        {
+          "name": "key",
+          "type": "string",
+          "description": "Unique identifier for the memory item",
+          "required": true
+        },
+        {
+          "name": "content",
+          "type": "string",
+          "description": "Text content or representation of the memory",
+          "required": true
+        },
+        {
+          "name": "session_id",
+          "type": "string",
+          "description": "Session namespace (default: 'default')",
+          "required": false,
+          "default": "default"
+        },
+        {
+          "name": "stability",
+          "type": "number",
+          "description": "Initial stability parameter in turns (default: 5.0)",
+          "required": false,
+          "default": 5.0
+        },
+        {
+          "name": "is_foundational",
+          "type": "boolean",
+          "description": "If True, item is immune to decay eviction",
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "channel",
+          "type": "string",
+          "description": "Channel profile ('instruction', 'foundational', 'memory', 'evidence', 'tool_output')",
+          "required": false,
+          "default": "memory"
+        }
+      ]
+    },
+    {
+      "name": "memory_recall",
+      "description": "Recall a memory item, reinforcing stability and resetting its elapsed decay clock",
+      "parameters": [
+        {
+          "name": "key",
+          "type": "string",
+          "description": "Memory key to recall",
+          "required": true
+        },
+        {
+          "name": "session_id",
+          "type": "string",
+          "description": "Session namespace",
+          "required": false,
+          "default": "default"
+        }
+      ]
+    },
+    {
+      "name": "memory_step",
+      "description": "Advance session time by one turn, applying decay and evicting items below retention threshold",
+      "parameters": [
+        {
+          "name": "session_id",
+          "type": "string",
+          "description": "Session namespace",
+          "required": false,
+          "default": "default"
+        }
+      ]
+    },
+    {
+      "name": "memory_query_working_set",
+      "description": "Query all active items currently residing in the working memory set",
+      "parameters": [
+        {
+          "name": "session_id",
+          "type": "string",
+          "description": "Session namespace",
+          "required": false,
+          "default": "default"
+        },
+        {
+          "name": "include_evicted",
+          "type": "boolean",
+          "description": "Whether to include evicted items",
+          "required": false,
+          "default": false
+        }
+      ]
+    },
+    {
+      "name": "rank_working_set",
+      "description": "Query working memory set sorted by multi-criteria composite score",
+      "parameters": [
+        {
+          "name": "session_id",
+          "type": "string",
+          "description": "Session namespace",
+          "required": false,
+          "default": "default"
+        },
+        {
+          "name": "w_retention",
+          "type": "number",
+          "description": "Weight for retention score (default: 0.5)",
+          "required": false,
+          "default": 0.5
+        },
+        {
+          "name": "w_stability",
+          "type": "number",
+          "description": "Weight for normalized stability (default: 0.3)",
+          "required": false,
+          "default": 0.3
+        },
+        {
+          "name": "w_foundational",
+          "type": "number",
+          "description": "Weight for foundational bonus (default: 0.2)",
+          "required": false,
+          "default": 0.2
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "description": "Maximum items to return",
+          "required": false,
+          "default": null
+        }
+      ]
+    },
+    {
+      "name": "export_memory_session",
+      "description": "Export snapshot serialization of an active memory session",
+      "parameters": [
+        {
+          "name": "session_id",
+          "type": "string",
+          "description": "Session namespace",
+          "required": false,
+          "default": "default"
+        }
+      ]
+    },
+    {
+      "name": "import_memory_session",
+      "description": "Import snapshot serialization to restore a memory session",
+      "parameters": [
+        {
+          "name": "session_id",
+          "type": "string",
+          "description": "Session namespace",
+          "required": true
+        },
+        {
+          "name": "snapshot",
+          "type": "object",
+          "description": "Snapshot dictionary previously exported",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "simulate_session_benchmark",
+      "description": "Run comparative simulation between Ebbinghaus memory decay and a fixed-window recency baseline",
+      "parameters": [
+        {
+          "name": "num_turns",
+          "type": "integer",
+          "description": "Number of interaction turns to simulate (default: 100)",
+          "required": false,
+          "default": 100
+        },
+        {
+          "name": "total_memories",
+          "type": "integer",
+          "description": "Total memory items registered over the session (default: 30)",
+          "required": false,
+          "default": 30
+        },
+        {
+          "name": "recall_probability",
+          "type": "number",
+          "description": "Per-turn probability of memory access (default: 0.35)",
+          "required": false,
+          "default": 0.35
+        },
+        {
+          "name": "seed",
+          "type": "integer",
+          "description": "Random seed for deterministic simulation (default: 42)",
+          "required": false,
+          "default": 42
+        }
+      ]
+    }
+  ]
+}

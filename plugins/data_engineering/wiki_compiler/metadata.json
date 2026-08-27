@@ -1,0 +1,21 @@
+{
+  "origin": "https://github.com/Emmimal/wiki-compiler",
+  "source_path": "D:\\GitHub\\cloned\\wiki-compiler-main",
+  "license": "MIT",
+  "forged_at": "2026-08-27T16:30:00-04:00",
+  "forged_by": "repo-to-plugin-forge",
+  "archetype": "tool_provider",
+  "isolation": "subprocess",
+  "signature": {
+    "primary_language": "python",
+    "external_dependencies_count": 0,
+    "stages": "Extract -> PhraseIndex Graph -> Section Rewriter -> Linter"
+  },
+  "tools": [
+    "compile_wiki_directory",
+    "extract_entity_metadata",
+    "build_reference_graph",
+    "lint_wiki",
+    "generate_synthetic_notes"
+  ]
+}

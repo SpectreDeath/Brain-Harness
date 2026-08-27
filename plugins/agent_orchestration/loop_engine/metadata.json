@@ -1,0 +1,20 @@
+{
+  "origin": "https://github.com/Emmimal/loop-engine",
+  "source_path": "D:\\GitHub\\cloned\\loop-engine-main\\loop-engine-main",
+  "license": "MIT",
+  "forged_at": "2026-08-27T16:30:00-04:00",
+  "forged_by": "repo-to-plugin-forge",
+  "archetype": "agent_worker",
+  "isolation": "subprocess",
+  "signature": {
+    "primary_language": "python",
+    "external_dependencies_count": 0,
+    "pattern": "Goal-Directed Loop Engineering (Osmani / Huntley Ralph loop)"
+  },
+  "tools": [
+    "run_loop",
+    "validate_task_dag",
+    "benchmark_loop_vs_linear",
+    "create_scenario_graph"
+  ]
+}

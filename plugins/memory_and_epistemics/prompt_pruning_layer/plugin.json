@@ -1,0 +1,103 @@
+{
+  "name": "domain.prompt_pruning_layer",
+  "version": "1.0.0",
+  "description": "Deterministic 3-pass prompt optimization engine (expired context elimination, duplicate passage reduction, and dependency restoration)",
+  "category": "memory_and_epistemics",
+  "language": "python",
+  "entrypoint": "main.py",
+  "isolation": "subprocess",
+  "trusted": true,
+  "dependencies": [],
+  "entrypoints": [
+    {
+      "name": "prune_messages",
+      "description": "Run all 3 deterministic optimization passes over prompt messages before model dispatch",
+      "parameters": [
+        {
+          "name": "messages",
+          "type": "array",
+          "description": "List of message objects (id, role, content, turn, tool_call_key, defines_keys)",
+          "required": true
+        },
+        {
+          "name": "assemble_prompt",
+          "type": "boolean",
+          "description": "Whether to assemble and return formatted prompt string (default: true)",
+          "required": false,
+          "default": true
+        }
+      ]
+    },
+    {
+      "name": "build_prompt",
+      "description": "Format and assemble a list of messages into a single prompt string ordered by turn",
+      "parameters": [
+        {
+          "name": "messages",
+          "type": "array",
+          "description": "List of message objects with role and content",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "estimate_prompt_reduction",
+      "description": "Calculate token counts before vs after 3-pass pruning with pass-by-pass removal diagnostics",
+      "parameters": [
+        {
+          "name": "messages",
+          "type": "array",
+          "description": "List of message objects to analyze",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "generate_benchmark_corpus",
+      "description": "Generate a synthetic multi-turn dialogue corpus with controlled duplicates and tool usage",
+      "parameters": [
+        {
+          "name": "num_turns",
+          "type": "integer",
+          "description": "Total number of conversation turns (default: 100)",
+          "required": false,
+          "default": 100
+        },
+        {
+          "name": "workload",
+          "type": "string",
+          "description": "Workload profile ('chat', 'rag', or 'tool_agent')",
+          "required": false,
+          "default": "tool_agent"
+        },
+        {
+          "name": "seed",
+          "type": "integer",
+          "description": "Random seed for reproducible generation (default: 42)",
+          "required": false,
+          "default": 42
+        }
+      ]
+    },
+    {
+      "name": "benchmark_pruning_workloads",
+      "description": "Run comparative evaluation across chat, rag, and tool_agent workloads",
+      "parameters": [
+        {
+          "name": "num_turns",
+          "type": "integer",
+          "description": "Turns per workload simulation (default: 150)",
+          "required": false,
+          "default": 150
+        },
+        {
+          "name": "seed",
+          "type": "integer",
+          "description": "Base random seed (default: 42)",
+          "required": false,
+          "default": 42
+        }
+      ]
+    }
+  ]
+}

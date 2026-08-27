@@ -1,0 +1,185 @@
+{
+  "name": "domain.wiki_compiler",
+  "version": "1.1.0",
+  "description": "Compiler-style dual in-memory / disk wiki builder with topological graph queries, incremental dirty-diff writing, and notes preservation",
+  "category": "data_engineering",
+  "language": "python",
+  "entrypoint": "main.py",
+  "isolation": "subprocess",
+  "trusted": true,
+  "dependencies": [],
+  "entrypoints": [
+    {
+      "name": "compile_wiki_directory",
+      "description": "Compile an entire raw notes directory into a cross-referenced Markdown wiki preserving notes",
+      "parameters": [
+        {
+          "name": "raw_dir",
+          "type": "string",
+          "description": "Path to directory containing raw notes (.txt or .md)",
+          "required": true
+        },
+        {
+          "name": "output_dir",
+          "type": "string",
+          "description": "Destination path for compiled wiki pages",
+          "required": true
+        },
+        {
+          "name": "run_linter",
+          "type": "boolean",
+          "description": "Whether to run post-compilation link and orphan linter",
+          "required": false,
+          "default": true
+        }
+      ]
+    },
+    {
+      "name": "compile_virtual_wiki",
+      "description": "Compile in-memory notes into a cross-referenced Markdown wiki without disk I/O",
+      "parameters": [
+        {
+          "name": "notes",
+          "type": "object",
+          "description": "Dictionary of note identifier to raw note text content",
+          "required": true
+        },
+        {
+          "name": "preserve_sections",
+          "type": "object",
+          "description": "Optional map of existing page markdown text to preserve ## Notes sections",
+          "required": false,
+          "default": null
+        }
+      ]
+    },
+    {
+      "name": "query_wiki_graph",
+      "description": "Perform topological graph queries over the wiki mention network (neighborhood, backlinks, path, clusters)",
+      "parameters": [
+        {
+          "name": "raw_dir",
+          "type": "string",
+          "description": "Optional path to directory containing raw notes",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "notes",
+          "type": "object",
+          "description": "Optional in-memory notes dictionary",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "query_type",
+          "type": "string",
+          "description": "Query type: 'neighborhood', 'backlinks', 'path', 'clusters', or 'orphans'",
+          "required": false,
+          "default": "neighborhood"
+        },
+        {
+          "name": "root_entity",
+          "type": "string",
+          "description": "Target entity ID for neighborhood/backlinks/path source",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "target_entity",
+          "type": "string",
+          "description": "Target entity ID for path queries",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "max_hops",
+          "type": "integer",
+          "description": "Maximum search distance for neighborhood queries (default: 2)",
+          "required": false,
+          "default": 2
+        }
+      ]
+    },
+    {
+      "name": "compile_wiki_incremental",
+      "description": "Compile wiki pages only writing changed markdown files to disk (dirty-tracking diff writer)",
+      "parameters": [
+        {
+          "name": "raw_dir",
+          "type": "string",
+          "description": "Path to directory containing raw notes",
+          "required": true
+        },
+        {
+          "name": "output_dir",
+          "type": "string",
+          "description": "Destination path for compiled wiki pages",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "extract_entity_metadata",
+      "description": "Extract metadata, name, and aliases from a single note file",
+      "parameters": [
+        {
+          "name": "file_path",
+          "type": "string",
+          "description": "Path to note file",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "build_reference_graph",
+      "description": "Extract all entities and compute the full directional cross-reference graph",
+      "parameters": [
+        {
+          "name": "raw_dir",
+          "type": "string",
+          "description": "Path to directory containing raw notes",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "lint_wiki",
+      "description": "Lint compiled wiki directory for broken [[wikilinks]] and unreferenced orphan pages",
+      "parameters": [
+        {
+          "name": "compiled_dir",
+          "type": "string",
+          "description": "Path to directory containing compiled .md pages",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "generate_synthetic_notes",
+      "description": "Generate a synthetic corpus of raw notes with embedded cross-mentions for benchmarking",
+      "parameters": [
+        {
+          "name": "output_dir",
+          "type": "string",
+          "description": "Target directory to write synthetic .txt note files",
+          "required": true
+        },
+        {
+          "name": "num_files",
+          "type": "integer",
+          "description": "Number of note files to generate (default: 20)",
+          "required": false,
+          "default": 20
+        },
+        {
+          "name": "seed",
+          "type": "integer",
+          "description": "Random seed for deterministic generation (default: 42)",
+          "required": false,
+          "default": 42
+        }
+      ]
+    }
+  ]
+}

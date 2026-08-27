@@ -1,0 +1,100 @@
+{
+  "name": "domain.context_compiler",
+  "version": "1.0.0",
+  "description": "AST-based 3-tier token-efficient context compilation, skeletonization, and reachability resolver for agent workflows",
+  "category": "memory_and_epistemics",
+  "language": "python",
+  "entrypoint": "main.py",
+  "isolation": "subprocess",
+  "trusted": true,
+  "dependencies": [],
+  "entrypoints": [
+    {
+      "name": "compile_context",
+      "description": "Compile a 3-tier token-efficient context window (Full source, Skeletonized dependencies, Excluded files) with prompt string and diagnostics",
+      "parameters": [
+        {
+          "name": "repo_root",
+          "type": "string",
+          "description": "Root directory of the repository",
+          "required": true
+        },
+        {
+          "name": "target_file",
+          "type": "string",
+          "description": "Path to the file actively being targeted or edited",
+          "required": true
+        },
+        {
+          "name": "max_hops",
+          "type": "integer",
+          "description": "Maximum call and import hops outward to include in Tier 2 (default: 2)",
+          "required": false,
+          "default": 2
+        }
+      ]
+    },
+    {
+      "name": "skeletonize_code",
+      "description": "Strip function and method bodies from Python source, preserving signatures and docstrings",
+      "parameters": [
+        {
+          "name": "source_code",
+          "type": "string",
+          "description": "Raw Python code string to skeletonize",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "resolve_reachability",
+      "description": "Perform multi-hop AST symbol and import reachability analysis from a target file",
+      "parameters": [
+        {
+          "name": "repo_root",
+          "type": "string",
+          "description": "Root directory of the repository",
+          "required": true
+        },
+        {
+          "name": "target_file",
+          "type": "string",
+          "description": "Target file to begin reachability traversal from",
+          "required": true
+        },
+        {
+          "name": "max_hops",
+          "type": "integer",
+          "description": "Maximum call and import distance hops outward (default: 2)",
+          "required": false,
+          "default": 2
+        }
+      ]
+    },
+    {
+      "name": "estimate_token_reduction",
+      "description": "Calculate potential token savings of compiled 3-tier context versus a naive repository dump",
+      "parameters": [
+        {
+          "name": "repo_root",
+          "type": "string",
+          "description": "Root directory of the repository",
+          "required": true
+        },
+        {
+          "name": "target_file",
+          "type": "string",
+          "description": "Target file to analyze",
+          "required": true
+        },
+        {
+          "name": "max_hops",
+          "type": "integer",
+          "description": "Maximum call hops outward (default: 2)",
+          "required": false,
+          "default": 2
+        }
+      ]
+    }
+  ]
+}

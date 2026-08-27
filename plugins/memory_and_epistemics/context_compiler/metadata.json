@@ -1,0 +1,20 @@
+{
+  "origin": "https://github.com/Emmimal/context-compiler",
+  "source_path": "D:\\GitHub\\cloned\\context-compiler-main",
+  "license": "MIT",
+  "forged_at": "2026-08-27T16:30:00-04:00",
+  "forged_by": "repo-to-plugin-forge",
+  "archetype": "tool_provider",
+  "isolation": "subprocess",
+  "signature": {
+    "primary_language": "python",
+    "external_dependencies_count": 0,
+    "strategy": "3-tier AST context compilation (full target, skeletonized reachables, excluded)"
+  },
+  "tools": [
+    "compile_context",
+    "skeletonize_code",
+    "resolve_reachability",
+    "estimate_token_reduction"
+  ]
+}

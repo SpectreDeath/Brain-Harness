@@ -1,0 +1,199 @@
+{
+  "name": "domain.loop_engine",
+  "version": "1.1.0",
+  "description": "Goal-directed agent loop state machine with tri-state resource polling, decision fixtures, stepwise control, and checkpoint persistence",
+  "category": "agent_orchestration",
+  "language": "python",
+  "entrypoint": "main.py",
+  "isolation": "subprocess",
+  "trusted": true,
+  "dependencies": [],
+  "entrypoints": [
+    {
+      "name": "run_loop",
+      "description": "Execute a goal-directed task DAG loop with tri-state polling, decision recovery, and branch deadlock isolation",
+      "parameters": [
+        {
+          "name": "tasks",
+          "type": "array",
+          "description": "List of task definitions with task_id, depends_on, requires_resource, and requires_decision",
+          "required": true
+        },
+        {
+          "name": "available_resources",
+          "type": "object",
+          "description": "Dictionary of immediately available resources",
+          "required": false,
+          "default": {}
+        },
+        {
+          "name": "eventually_available_resources",
+          "type": "object",
+          "description": "Dictionary mapping resource keys to polling attempts required before availability",
+          "required": false,
+          "default": {}
+        },
+        {
+          "name": "decision_answers",
+          "type": "object",
+          "description": "Predefined decision answers mapping",
+          "required": false,
+          "default": {}
+        },
+        {
+          "name": "max_iterations",
+          "type": "integer",
+          "description": "Maximum loop iteration budget (default: 100)",
+          "required": false,
+          "default": 100
+        },
+        {
+          "name": "initial_context",
+          "type": "object",
+          "description": "Initial key-value context dictionary",
+          "required": false,
+          "default": {}
+        }
+      ]
+    },
+    {
+      "name": "step_loop",
+      "description": "Execute a single iteration step on an existing loop checkpoint, optionally injecting dynamic tasks",
+      "parameters": [
+        {
+          "name": "checkpoint",
+          "type": "object",
+          "description": "Serialized loop checkpoint dictionary",
+          "required": true
+        },
+        {
+          "name": "context",
+          "type": "object",
+          "description": "Context variables to supply or update",
+          "required": false,
+          "default": {}
+        },
+        {
+          "name": "new_tasks",
+          "type": "array",
+          "description": "Optional list of dynamic tasks to inject before the step",
+          "required": false,
+          "default": []
+        }
+      ]
+    },
+    {
+      "name": "export_loop_checkpoint",
+      "description": "Initialize and export a pristine loop state checkpoint without running it",
+      "parameters": [
+        {
+          "name": "tasks",
+          "type": "array",
+          "description": "List of task definitions",
+          "required": true
+        },
+        {
+          "name": "available_resources",
+          "type": "object",
+          "description": "Dictionary of immediately available resources",
+          "required": false,
+          "default": {}
+        },
+        {
+          "name": "eventually_available_resources",
+          "type": "object",
+          "description": "Dictionary mapping resource keys to polling attempts required",
+          "required": false,
+          "default": {}
+        },
+        {
+          "name": "decision_answers",
+          "type": "object",
+          "description": "Predefined decision answers mapping",
+          "required": false,
+          "default": {}
+        },
+        {
+          "name": "max_iterations",
+          "type": "integer",
+          "description": "Maximum loop iteration budget (default: 100)",
+          "required": false,
+          "default": 100
+        }
+      ]
+    },
+    {
+      "name": "validate_task_dag",
+      "description": "Validate task DAG for cyclic dependencies, missing task IDs, and structural correctness",
+      "parameters": [
+        {
+          "name": "tasks",
+          "type": "array",
+          "description": "List of task definitions to validate",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "benchmark_loop_vs_linear",
+      "description": "Benchmark goal-directed LoopController against one-shot linear baseline across failure topologies",
+      "parameters": [
+        {
+          "name": "num_scenarios",
+          "type": "integer",
+          "description": "Number of seeded scenarios to evaluate (default: 10)",
+          "required": false,
+          "default": 10
+        },
+        {
+          "name": "seed",
+          "type": "integer",
+          "description": "Base random seed (default: 42)",
+          "required": false,
+          "default": 42
+        },
+        {
+          "name": "max_iterations",
+          "type": "integer",
+          "description": "Maximum iteration budget per scenario (default: 100)",
+          "required": false,
+          "default": 100
+        }
+      ]
+    },
+    {
+      "name": "create_scenario_graph",
+      "description": "Generate a synthetic task graph scenario with controlled failure and latency injection",
+      "parameters": [
+        {
+          "name": "num_branches",
+          "type": "integer",
+          "description": "Number of independent workflow branches (default: 4)",
+          "required": false,
+          "default": 4
+        },
+        {
+          "name": "tasks_per_branch",
+          "type": "integer",
+          "description": "Number of sequential tasks per branch (default: 3)",
+          "required": false,
+          "default": 3
+        },
+        {
+          "name": "seed",
+          "type": "integer",
+          "description": "Random seed for deterministic generation (default: 42)",
+          "required": false,
+          "default": 42
+        },
+        {
+          "name": "failure_mix",
+          "type": "object",
+          "description": "Custom probability weights for failure modes",
+          "required": false,
+          "default": null
+        }
+      ]
+    }
+  ]
+}
