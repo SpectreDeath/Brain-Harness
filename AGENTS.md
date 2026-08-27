@@ -10,6 +10,9 @@
 6. **Click CLI Group Single-Source Consolidation.** CLI command groups (e.g. `@main.group("bridge")`) must be declared exactly once in a single co-located block to prevent later definitions from shadowing subcommands and breaking CLI test assertions.
 7. **Lazy Subprocess Staging for Sandboxed External Plugins.** External plugins with subprocess/venv isolation must remain in DISCOVERED/VALIDATED state during kernel startup and test execution, provisioning virtual environments lazily on first invocation to eliminate cold-start timeouts.
 8. **ReAct Agent Step Transactional Isolation.** Agent tool invocations should execute inside context transactions (`async with context.transaction()`) with automatic rollback (`await tx.dispose()`) whenever the tool returns an error payload or raises an exception.
+9. **Deterministic Pre-LLM Context Optimization.** Agent step execution loops (`StepExecutionEngine`) must apply deterministic multi-pass context pruning (whitespace deduplication, tabular/JSON payload truncation, AST code skeletonization) prior to model invocation to prevent context blowout and bound token budgets.
+10. **Headless CLI Introspection Seams.** All runtime execution trees, session transcripts, and context compilation graphs must expose headless Click CLI inspection and export commands (`harness session tree`, `harness session export`) alongside API/MCP access.
+
 
 ## Code Style
 
