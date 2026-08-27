@@ -17,6 +17,12 @@ from harness.agent.base import (
     AgentTaskResult,
     AgentTrajectory,
 )
+from harness.agent.context_optimizer import (
+    AGENT_CONTEXT_OPTIMIZER_KEY,
+    AgentContextOptimizer,
+    ContextOptimizationConfig,
+    DefaultContextOptimizer,
+)
 from harness.agent.session import (
     AGENT_SESSION_MANAGER_KEY,
     AgentSessionManager,
@@ -40,7 +46,7 @@ class StepExecutionEngine:
 
     Encapsulates prompt construction, action extraction (native structured tool
     calls and markdown JSON fallback), tool dispatch with transactional boundaries,
-    and observation synchronization.
+    context budgeting/pruning, and observation synchronization.
     """
 
     def __init__(
@@ -49,11 +55,13 @@ class StepExecutionEngine:
         tools: ToolRegistry,
         event_bus: EventBus | None = None,
         context: ServiceContext | None = None,
+        optimizer: AgentContextOptimizer | None = None,
     ) -> None:
         self.llm = llm
         self.tools = tools
         self.event_bus = event_bus
         self.context = context
+        self.optimizer: AgentContextOptimizer = optimizer or DefaultContextOptimizer(context=context)
 
     async def _invoke_tool_safely(self, action_name: str, action_input: dict[str, Any]) -> Any:
         """Invoke tool inside a transactional boundary if context supports transactions."""
@@ -146,10 +154,13 @@ class StepExecutionEngine:
                 )
             )
 
+        # Apply context optimization / message windowing before LLM completion
+        effective_messages = self.optimizer.optimize_messages(trajectory.messages)
+
         tool_schemas = self.tools.get_schemas()
         try:
             response = await self.llm.complete(
-                trajectory.messages, tools=tool_schemas if tool_schemas else None
+                effective_messages, tools=tool_schemas if tool_schemas else None
             )
         except Exception as e:
             logger.error("LLM call failed during agent loop", error=str(e))
@@ -209,6 +220,7 @@ class StepExecutionEngine:
                     except Exception as err:
                         obs = {"status": "error", "error": f"Tool execution failed: {err}"}
                     step.observation = obs
+                    compact_obs_str = self.optimizer.compact_observation(action_name, obs)
                     trajectory.messages.append(
                         LLMMessage(
                             role="assistant",
@@ -218,13 +230,14 @@ class StepExecutionEngine:
                     trajectory.messages.append(
                         LLMMessage(
                             role="user",
-                            content=f"Observation from {action_name}: {json.dumps(obs)}",
+                            content=f"Observation from {action_name}: {compact_obs_str}",
                             tool_call_id=tc.get("id"),
                         )
                     )
                 else:
                     obs = {"status": "error", "error": f"Tool '{action_name}' not found"}
                     step.observation = obs
+                    compact_obs_str = self.optimizer.compact_observation(action_name, obs)
                     trajectory.messages.append(
                         LLMMessage(
                             role="assistant",
@@ -234,7 +247,7 @@ class StepExecutionEngine:
                     trajectory.messages.append(
                         LLMMessage(
                             role="user",
-                            content=f"Observation: {json.dumps(obs)}",
+                            content=f"Observation: {compact_obs_str}",
                         )
                     )
 
@@ -257,11 +270,12 @@ class StepExecutionEngine:
             except Exception as err:
                 obs = {"status": "error", "error": f"Tool execution failed: {err}"}
             step.observation = obs
+            compact_obs_str = self.optimizer.compact_observation(action_name, obs)
             trajectory.messages.append(LLMMessage(role="assistant", content=thought))
             trajectory.messages.append(
                 LLMMessage(
                     role="user",
-                    content=f"Observation from {action_name}: {json.dumps(obs)}",
+                    content=f"Observation from {action_name}: {compact_obs_str}",
                 )
             )
         else:
@@ -286,6 +300,7 @@ class ReActAgentLoop(AgentLoopService):
         step_engine: StepExecutionEngine | None = None,
         session_manager: AgentSessionManager | None = None,
         context: ServiceContext | None = None,
+        optimizer: AgentContextOptimizer | None = None,
     ) -> None:
         self.llm = llm
         self.tools = tool_registry
@@ -293,7 +308,7 @@ class ReActAgentLoop(AgentLoopService):
         self.session_manager = session_manager
         self.context = context
         self._step_engine = step_engine or StepExecutionEngine(
-            llm=llm, tools=tool_registry, event_bus=event_bus, context=context
+            llm=llm, tools=tool_registry, event_bus=event_bus, context=context, optimizer=optimizer
         )
 
     @property
@@ -476,18 +491,21 @@ class ReActAgentPlugin(HarnessPlugin):
         tools: ToolRegistry = self._ctx.require(TOOL_REGISTRY_KEY)
         event_bus: EventBus | None = self._ctx.optional(EVENT_BUS_KEY)
         session_manager: AgentSessionManager | None = self._ctx.optional(AGENT_SESSION_MANAGER_KEY)
+        optimizer: AgentContextOptimizer | None = self._ctx.optional(AGENT_CONTEXT_OPTIMIZER_KEY)
         self._loop = ReActAgentLoop(
             llm=llm,
             tool_registry=tools,
             event_bus=event_bus,
             session_manager=session_manager,
             context=self._ctx,
+            optimizer=optimizer,
         )
         self._ctx.provide(AGENT_LOOP_KEY, self._loop, provider=self.name, allow_override=True)
         logger.info(
             "ReAct agent loop enabled",
             telemetry=event_bus is not None,
             sessions=session_manager is not None,
+            optimizer=optimizer is not None,
         )
 
     async def on_disable(self) -> None:

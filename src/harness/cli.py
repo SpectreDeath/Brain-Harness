@@ -23,10 +23,12 @@ import json
 import sys
 from pathlib import Path
 
-# Ensure src is in sys.path when executed directly
+# Ensure src and workspace root are in sys.path when executed directly
 _src_dir = Path(__file__).resolve().parent.parent
 if str(_src_dir) not in sys.path:
     sys.path.insert(0, str(_src_dir))
+if str(_src_dir.parent) not in sys.path:
+    sys.path.insert(0, str(_src_dir.parent))
 
 from typing import Any
 
@@ -1185,6 +1187,138 @@ def main_reflect(
         no_html=no_html,
         no_commit=no_commit,
     )
+
+
+# Session Commands Group
+@main.group("session")
+def session_cmd() -> None:
+    """Manage and inspect agent execution sessions and hierarchical trees."""
+
+
+@session_cmd.command("list")
+@click.option("--status", "-s", default=None, help="Filter by session status")
+@click.option("--limit", "-n", default=20, type=int, help="Limit number of sessions")
+@click.option("--root-only", is_flag=True, help="List only root-level sessions")
+def session_list(status: str | None, limit: int, root_only: bool) -> None:
+    """List agent execution sessions."""
+    from harness.commands.session import list_sessions_cmd
+
+    res = _run_async(list_sessions_cmd(status=status, limit=limit, root_only=root_only))
+    click.echo(f"\nFound {res.total_count} session(s):")
+    click.echo("─" * 75)
+    for s in res.sessions:
+        click.echo(f"• ID: {s['session_id']} | Status: {s['status']} | Steps: {len(s.get('steps', []))} | Task: {s['task'][:40]}")
+    click.echo()
+
+
+@session_cmd.command("get")
+@click.argument("session_id")
+def session_get(session_id: str) -> None:
+    """Get details of a specific agent session."""
+    from harness.commands.session import get_session_cmd
+
+    res = _run_async(get_session_cmd(session_id))
+    if not res.found or not res.session:
+        click.echo(f"Error: Session '{session_id}' not found", err=True)
+        return
+    click.echo(json.dumps(res.session, indent=2))
+
+
+@session_cmd.command("tree")
+@click.argument("session_id")
+def session_tree(session_id: str) -> None:
+    """Show hierarchical session execution tree and rollups."""
+    from harness.commands.session import get_session_tree_cmd
+
+    res = _run_async(get_session_tree_cmd(session_id))
+    if not res.found or not res.tree:
+        click.echo(f"Error: Session '{session_id}' not found", err=True)
+        return
+
+    metrics = res.metrics
+    click.echo(f"\nExecution Tree for Session: {session_id}")
+    click.echo("━" * 60)
+    click.echo(f"Total Subtree Sessions: {metrics.get('total_sessions', 1)}")
+    click.echo(f"Total Tokens:           {metrics.get('total_tokens', 0)}")
+    click.echo(f"Total Steps:            {metrics.get('total_steps', 0)}")
+    click.echo(f"Completed / Failed:     {metrics.get('completed_count', 0)} / {metrics.get('failed_count', 0)}")
+    click.echo(f"Duration:               {metrics.get('total_duration', 0.0):.2f}s")
+    click.echo("\nTree Hierarchy:")
+    click.echo("─" * 60)
+
+    def _print_node(node: dict[str, Any], indent: int = 0) -> None:
+        prefix = "  " * indent + "└─ " if indent > 0 else "• "
+        sid = node.get("session_id", "")
+        role = node.get("role") or "agent"
+        status = node.get("status", "")
+        task = (node.get("task") or "")[:40]
+        click.echo(f"{prefix}[{role}] {sid} ({status}) — {task}")
+        for child in node.get("children", []):
+            _print_node(child, indent + 1)
+
+    _print_node(res.tree)
+    click.echo()
+
+
+@session_cmd.command("export")
+@click.argument("session_id")
+@click.option("--format", "-f", "fmt", default="markdown", type=click.Choice(["markdown", "json", "md"], case_sensitive=False))
+@click.option("--output", "-o", "out_file", default=None, help="Output file path")
+def session_export(session_id: str, fmt: str, out_file: str | None) -> None:
+    """Export agent session trajectory to Markdown or JSON."""
+    from harness.commands.session import export_session_cmd
+
+    res = _run_async(export_session_cmd(session_id, format=fmt, output_file=out_file))
+    if out_file:
+        click.echo(f"✓ Exported session trajectory to: {res.written_file}")
+    else:
+        click.echo(res.content)
+
+
+# Context Commands Group
+@main.group("context")
+def context_cmd() -> None:
+    """Manage 3-tier AST reachability compilation and context optimization."""
+
+
+@context_cmd.command("compile")
+@click.argument("target_file", type=click.Path(exists=True))
+@click.option("--repo-root", "-r", default=None, type=click.Path(exists=True), help="Root directory of the repository")
+@click.option("--max-hops", "-h", default=2, type=int, help="Maximum reachability hop depth")
+def context_compile(target_file: str, repo_root: str | None, max_hops: int) -> None:
+    """Compile 3-tier AST reachability context starting from a target file."""
+    from harness.commands.context import compile_context_cmd
+
+    res = _run_async(compile_context_cmd(target_file, repo_root=repo_root, max_hops=max_hops))
+    click.echo(f"\n3-Tier AST Compilation: {res.target_file}")
+    click.echo("━" * 60)
+    click.echo(f"Tier 1 (Target Full Source): {res.tier1_files} file")
+    click.echo(f"Tier 2 (Skeletonized):       {res.tier2_files} file(s)")
+    click.echo(f"Tier 3 (Excluded):           {res.tier3_excluded_files} file(s)")
+    click.echo(f"Naive Token Dump:            {res.naive_dump_tokens} tokens")
+    click.echo(f"Compiled Token Size:         {res.compiled_tokens} tokens")
+    click.echo(f"Token Reduction:             {res.reduction_pct:.1f}%")
+    click.echo(f"Build Duration:              {res.build_ms:.2f} ms")
+    click.echo()
+
+
+@context_cmd.command("skeletonize")
+@click.argument("target_file", type=click.Path(exists=True))
+def context_skeletonize(target_file: str) -> None:
+    """Extract structural interface skeleton from Python source file."""
+    from harness.commands.context import skeletonize_code_cmd
+
+    res = _run_async(skeletonize_code_cmd(target_file))
+    click.echo(f"\nSkeletonized: {target_file}")
+    click.echo("━" * 60)
+    click.echo(f"Functions Stripped: {res.functions_stripped}")
+    click.echo(f"Token Reduction:    {res.reduction_pct:.1f}% ({res.tokens_raw} -> {res.tokens_skeleton} tokens)")
+    click.echo("\nSkeleton Source Preview:")
+    click.echo("─" * 60)
+    click.echo(res.skeleton_code[:1500])
+    if len(res.skeleton_code) > 1500:
+        click.echo("... [truncated preview]")
+    click.echo()
 
 
 if __name__ == "__main__":

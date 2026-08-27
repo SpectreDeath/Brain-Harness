@@ -1,0 +1,151 @@
+{
+  "name": "domain.pyrit_redteaming",
+  "version": "1.0.0",
+  "description": "Microsoft PyRIT AI Red Teaming & Harm Evaluation Engine for multi-turn crescendo attacks, adversarial prompt converters, risk scoring, and jailbreak tree generation",
+  "entrypoint": "main.py",
+  "isolation": "subprocess",
+  "trusted": true,
+  "category": "security_and_forensics",
+  "entrypoints": [
+    {
+      "name": "orchestrate_crescendo_attack",
+      "description": "Execute multi-turn crescendo red-teaming dialogue simulating incremental boundary testing",
+      "parameters": [
+        {
+          "name": "objective",
+          "type": "string",
+          "description": "Red-teaming objective or forbidden goal",
+          "required": true
+        },
+        {
+          "name": "max_turns",
+          "type": "integer",
+          "description": "Maximum conversation turns for crescendo progression",
+          "required": false,
+          "default": 5
+        },
+        {
+          "name": "adversarial_personas",
+          "type": "array",
+          "description": "Optional list of adversarial personas to employ",
+          "required": false,
+          "default": []
+        },
+        {
+          "name": "temperature",
+          "type": "number",
+          "description": "Attack variation temperature",
+          "required": false,
+          "default": 0.7
+        }
+      ]
+    },
+    {
+      "name": "apply_prompt_converters",
+      "description": "Apply adversarial obfuscation, encoding, and character perturbation converters to a prompt",
+      "parameters": [
+        {
+          "name": "prompt",
+          "type": "string",
+          "description": "Raw prompt text to convert",
+          "required": true
+        },
+        {
+          "name": "converters",
+          "type": "array",
+          "description": "List of converter names: base64, rot13, ascii_art, unicode_confusables, leetspeak, string_join, translation",
+          "required": true
+        },
+        {
+          "name": "converter_args",
+          "type": "object",
+          "description": "Optional arguments dictionary for specific converters",
+          "required": false,
+          "default": {}
+        }
+      ]
+    },
+    {
+      "name": "score_risk_and_harm",
+      "description": "Evaluate safety violations, toxicity, hate, violence, PII leak, and jailbreak success probability",
+      "parameters": [
+        {
+          "name": "prompt",
+          "type": "string",
+          "description": "Prompt text evaluated",
+          "required": true
+        },
+        {
+          "name": "response",
+          "type": "string",
+          "description": "Target model response text evaluated",
+          "required": true
+        },
+        {
+          "name": "harm_categories",
+          "type": "array",
+          "description": "List of harm categories to assess (e.g. ['violence', 'hate', 'pii', 'jailbreak', 'self_harm'])",
+          "required": false,
+          "default": ["jailbreak", "toxicity", "pii", "harmful_content"]
+        },
+        {
+          "name": "scorer_type",
+          "type": "string",
+          "description": "Scorer type: 'likert', 'substring', 'self_ask_true_false', 'classifier'",
+          "required": false,
+          "default": "likert"
+        }
+      ]
+    },
+    {
+      "name": "generate_jailbreak_tree",
+      "description": "Construct Tree-of-Attacks-with-Pruning (TAP) exploration graph with Mermaid diagram synthesis",
+      "parameters": [
+        {
+          "name": "target_system",
+          "type": "string",
+          "description": "Identifier or description of target system under red-team test",
+          "required": true
+        },
+        {
+          "name": "attack_goal",
+          "type": "string",
+          "description": "Adversarial goal to reach via tree exploration",
+          "required": true
+        },
+        {
+          "name": "branching_factor",
+          "type": "integer",
+          "description": "Number of attack branches per node",
+          "required": false,
+          "default": 3
+        },
+        {
+          "name": "max_depth",
+          "type": "integer",
+          "description": "Maximum depth of attack search tree",
+          "required": false,
+          "default": 3
+        }
+      ]
+    },
+    {
+      "name": "audit_attack_trajectory",
+      "description": "Audit multi-turn red teaming conversation logs, calculating cumulative risk exposure and policy violations",
+      "parameters": [
+        {
+          "name": "conversation_id",
+          "type": "string",
+          "description": "Unique conversation or session ID",
+          "required": true
+        },
+        {
+          "name": "trace_events",
+          "type": "array",
+          "description": "List of turn event dicts with {'turn': int, 'prompt': str, 'response': str, 'score': float}",
+          "required": true
+        }
+      ]
+    }
+  ]
+}

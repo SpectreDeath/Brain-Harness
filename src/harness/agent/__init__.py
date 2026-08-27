@@ -7,6 +7,17 @@ from harness.agent.base import (
     AgentTaskResult,
     AgentTrajectory,
 )
+from harness.agent.context_optimizer import (
+    AGENT_CONTEXT_OPTIMIZER_KEY,
+    AgentContextOptimizer,
+    ContextOptimizationConfig,
+    DefaultContextOptimizer,
+)
+from harness.agent.react import (
+    ReActAgentLoop,
+    ReActAgentPlugin,
+    StepExecutionEngine,
+)
 from harness.agent.session import (
     AGENT_SESSION_MANAGER_KEY,
     AgentSession,
@@ -28,8 +39,10 @@ from harness.agent.swarm import (
 )
 
 __all__ = [
+    "AGENT_CONTEXT_OPTIMIZER_KEY",
     "AGENT_LOOP_KEY",
     "AGENT_SESSION_MANAGER_KEY",
+    "AgentContextOptimizer",
     "AgentLoopService",
     "AgentSession",
     "AgentSessionManager",
@@ -39,8 +52,13 @@ __all__ = [
     "AgentTaskResult",
     "AgentTrajectory",
     "ConsensusEngine",
+    "ContextOptimizationConfig",
+    "DefaultContextOptimizer",
     "InMemoryAgentSessionStore",
+    "ReActAgentLoop",
+    "ReActAgentPlugin",
     "SWARM_COORDINATOR_KEY",
+    "StepExecutionEngine",
     "StorageBackedSessionStore",
     "SwarmCoordinator",
     "SwarmCoordinatorPlugin",

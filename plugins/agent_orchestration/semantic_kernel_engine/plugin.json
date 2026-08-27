@@ -1,0 +1,157 @@
+{
+  "name": "domain.semantic_kernel_engine",
+  "version": "1.0.0",
+  "description": "Microsoft Semantic Kernel orchestration engine: multi-agent group chats, step-based kernel processes, dynamic prompt template rendering, volatile semantic memory vector search, and OpenAPI connector execution",
+  "entrypoint": "main.py",
+  "isolation": "subprocess",
+  "trusted": true,
+  "category": "agent_orchestration",
+  "entrypoints": [
+    {
+      "name": "orchestrate_group_chat",
+      "description": "Execute multi-agent collaborative discussions with speaker strategy, turn execution, and consensus/termination criteria",
+      "parameters": [
+        {
+          "name": "agents",
+          "type": "array",
+          "description": "List of agent specifications with {'name': str, 'role': str, 'instructions': str}",
+          "required": true
+        },
+        {
+          "name": "task",
+          "type": "string",
+          "description": "Collaborative objective or problem statement",
+          "required": true
+        },
+        {
+          "name": "strategy",
+          "type": "string",
+          "description": "Speaker selection strategy: 'round_robin', 'supervisor_directed', 'random'",
+          "required": false,
+          "default": "round_robin"
+        },
+        {
+          "name": "max_rounds",
+          "type": "integer",
+          "description": "Maximum conversation turns for group chat",
+          "required": false,
+          "default": 6
+        },
+        {
+          "name": "termination_keyword",
+          "type": "string",
+          "description": "Keyword string signaling consensus or completion (e.g. 'APPROVED')",
+          "required": false,
+          "default": "APPROVED"
+        }
+      ]
+    },
+    {
+      "name": "execute_kernel_process",
+      "description": "Execute step DAG and state machine processes with conditional event routing, step transitions, and state propagation",
+      "parameters": [
+        {
+          "name": "process_name",
+          "type": "string",
+          "description": "Name identifier for the process pipeline",
+          "required": true
+        },
+        {
+          "name": "steps",
+          "type": "array",
+          "description": "List of process step definitions with {'step_id': str, 'action': str, 'input_key': str, 'output_key': str}",
+          "required": true
+        },
+        {
+          "name": "initial_state",
+          "type": "object",
+          "description": "Initial key-value dictionary state passed into process",
+          "required": false,
+          "default": {}
+        }
+      ]
+    },
+    {
+      "name": "render_semantic_prompt",
+      "description": "Compile and render Handlebars or Jinja2 dynamic semantic prompt templates with nested variable substitution",
+      "parameters": [
+        {
+          "name": "template",
+          "type": "string",
+          "description": "Prompt template string with {{variable}} or {{#helper}} placeholders",
+          "required": true
+        },
+        {
+          "name": "variables",
+          "type": "object",
+          "description": "Dictionary of variables to interpolate into template",
+          "required": true
+        },
+        {
+          "name": "engine",
+          "type": "string",
+          "description": "Template engine syntax: 'handlebars', 'jinja2', 'fstring'",
+          "required": false,
+          "default": "handlebars"
+        }
+      ]
+    },
+    {
+      "name": "search_semantic_memory",
+      "description": "Run volatile vector similarity search against documents using cosine similarity scoring and relevance thresholding",
+      "parameters": [
+        {
+          "name": "query",
+          "type": "string",
+          "description": "Search query text",
+          "required": true
+        },
+        {
+          "name": "documents",
+          "type": "array",
+          "description": "List of document objects with {'id': str, 'text': str, 'metadata': dict}",
+          "required": true
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "description": "Maximum number of matched documents to return",
+          "required": false,
+          "default": 5
+        },
+        {
+          "name": "min_relevance",
+          "type": "number",
+          "description": "Minimum similarity score threshold (0.0 to 1.0)",
+          "required": false,
+          "default": 0.5
+        }
+      ]
+    },
+    {
+      "name": "execute_openapi_plugin",
+      "description": "Parse OpenAPI 3.0 / Swagger specifications and execute REST operations with JSON Schema parameter validation",
+      "parameters": [
+        {
+          "name": "openapi_spec",
+          "type": "object",
+          "description": "OpenAPI 3.0 dictionary containing 'paths', 'servers', etc.",
+          "required": true
+        },
+        {
+          "name": "operation_id",
+          "type": "string",
+          "description": "Target operationId defined in OpenAPI spec",
+          "required": true
+        },
+        {
+          "name": "arguments",
+          "type": "object",
+          "description": "Input arguments mapped to path/query/body parameters",
+          "required": false,
+          "default": {}
+        }
+      ]
+    }
+  ]
+}
