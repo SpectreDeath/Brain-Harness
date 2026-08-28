@@ -692,7 +692,8 @@ def run() -> None:
 @main.command()
 @click.option("--host", default="127.0.0.1", help="Host interface to bind")
 @click.option("--port", default=8080, help="Port to listen on")
-def ui(host: str, port: int) -> None:
+@click.option("--db", "db_path", default=":memory:", help="SQLite database path (default: :memory:)")
+def ui(host: str, port: int, db_path: str) -> None:
     """Launch the real-time web control room dashboard."""
     import uvicorn
 
@@ -700,12 +701,12 @@ def ui(host: str, port: int) -> None:
     from harness.kernel.runtime import HarnessRuntime
     from harness.ui.server import create_app
 
-    runtime = HarnessRuntime.create(db_path=":memory:", fallback_llm=FallbackLLM())
+    runtime = HarnessRuntime.create(db_path=db_path, fallback_llm=FallbackLLM())
     _run_async(runtime.start())
 
     app = create_app(runtime)
 
-    click.echo(f"🚀 Harness Web Dashboard launching at http://{host}:{port}")
+    click.echo(f"🚀 Harness Web Dashboard launching at http://{host}:{port} (db: {db_path})")
     uvicorn.run(app, host=host, port=port, log_level="warning")
 
 

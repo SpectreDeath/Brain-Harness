@@ -42,6 +42,7 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - [`structured-data-scout`](file:///.agents/skills/structured-data-scout/SKILL.md) — Curated tabular dataset ingestion from authoritative registries (UCI, Kaggle, OpenData).
   - [`survival-analysis`](file:///.agents/skills/survival-analysis/SKILL.md) — Kaplan-Meier estimation, Cox proportional hazards regression, and Schoenfeld diagnostics.
   - [`data-topology-mapper`](file:///.agents/skills/data-topology-mapper/SKILL.md) — Causal DAG lineage mapping, queue architectures, and hybrid data topologies.
+  - [`sql-recursive-graph-traversal`](file:///.agents/skills/sql-recursive-graph-traversal/SKILL.md) — Relational graph traversal, hierarchy trees, cycle detection, and BFS shortest paths in SQL.
 
 ### 4. [Software Engineering](./docs/domains/software-engineering/CONTEXT.md)
 * **Scope**: AST code refactoring, architecture invariant linting, sandbox script execution, git operations, and artifact reporting.
@@ -56,6 +57,9 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - [`crafting-skills`](file:///.agents/skills/crafting-skills/SKILL.md) — High-precision agent skill authoring, refactoring, and companion card generation.
   - [`deepen-architecture`](file:///.agents/skills/deepen-architecture/SKILL.md) — Iterative architecture deepening loop, eliminating shallow modules.
   - [`compute-model-assessor`](file:///.agents/skills/compute-model-assessor/SKILL.md) — Model routing, task complexity assessment, and reasoning compute budgeting.
+  - [`python-dataclass-architect`](file:///.agents/skills/python-dataclass-architect/SKILL.md) — High-performance, memory-efficient data modeling using `slots=True`, `frozen=True`, and post-init invariants.
+  - [`agent-instruction-architect`](file:///.agents/skills/agent-instruction-architect/SKILL.md) — Authoring, auditing, and maintaining `AGENTS.md` / `CLAUDE.md` repository instruction files.
+  - [`adversarial-agent-verifier`](file:///.agents/skills/adversarial-agent-verifier/SKILL.md) — Runtime verification: DAG component seam analysis, inspect-before-edit protocols, and harsh adversarial code reviews.
 
 ### 5. [Security & Forensics](./docs/domains/security-and-forensics/CONTEXT.md)
 * **Scope**: Threat modeling, vulnerability scanning, log forensics, network port auditing, and execution trajectory auditing.

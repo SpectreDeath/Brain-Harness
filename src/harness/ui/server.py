@@ -122,8 +122,11 @@ class RuntimeAdapter:
         disabled: list[str] = []
         for name, entry in list(self.lifecycle.plugins.items()):
             if entry.state == PluginState.ENABLED and name not in core_plugins:
-                await self.lifecycle.disable(name)
-                disabled.append(name)
+                try:
+                    await self.lifecycle.disable(name)
+                    disabled.append(name)
+                except Exception as e:
+                    logger.warning("Failed disabling plugin in UI adapter", plugin=name, error=str(e))
         return disabled
 
     async def add_plugin_from_source(
@@ -649,6 +652,30 @@ def create_app(
             logger.error("Swarm run execution failed from API", error=str(e))
             return {"status": "error", "error": str(e)}
 
+    @app.get("/api/skills")
+    async def get_skills_catalog_endpoint(path: str = ".") -> dict[str, Any]:
+        from harness.commands.skills import index_skills_cmd
+
+        return index_skills_cmd(path)
+
+    @app.get("/api/skills/route")
+    async def route_skills_endpoint(intent: str, top_k: int = 4) -> dict[str, Any]:
+        from harness.commands.skills import route_skills_cmd
+
+        return route_skills_cmd(intent, top_k=top_k)
+
+    @app.get("/api/skills/chain")
+    async def get_skill_chain_endpoint(start: str, target: str) -> dict[str, Any]:
+        from harness.commands.skills import find_skill_chain_cmd
+
+        return find_skill_chain_cmd(start, target)
+
+    @app.get("/api/skills/{skill_name}/topology")
+    async def get_skill_topology_endpoint(skill_name: str) -> dict[str, Any]:
+        from harness.commands.skills import get_skill_topology_cmd
+
+        return get_skill_topology_cmd(skill_name)
+
     @app.websocket("/ws/events")
     async def websocket_events(websocket: WebSocket) -> None:
         await projection_engine.connect_client(websocket)
@@ -659,12 +686,20 @@ def create_app(
         except WebSocketDisconnect:
             projection_engine.disconnect_client(websocket)
 
-    # Static HTML frontend
+    # Static frontend (Dual-mode: React dist bundle with fallback to embedded zero-build index.html)
+    frontend_dist = Path(__file__).parents[3] / "frontend" / "dist"
     static_dir = Path(__file__).parent / "static"
     index_file = static_dir / "index.html"
 
+    if frontend_dist.exists() and (frontend_dist / "assets").exists():
+        from fastapi.staticfiles import StaticFiles
+
+        app.mount("/assets", StaticFiles(directory=str(frontend_dist / "assets")), name="assets")
+
     @app.get("/", response_class=HTMLResponse)
     async def root() -> str:
+        if frontend_dist.exists() and (frontend_dist / "index.html").exists():
+            return (frontend_dist / "index.html").read_text(encoding="utf-8")
         if index_file.exists():
             return index_file.read_text(encoding="utf-8")
         return "<h1>Harness Dashboard</h1><p>Static index.html not found.</p>"

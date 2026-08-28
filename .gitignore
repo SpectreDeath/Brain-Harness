@@ -69,6 +69,11 @@ Thumbs.db
 *.swo
 outputs/
 
+# Frontend artifacts
+frontend/node_modules/
+frontend/dist/
+frontend/.oxlint-cache/
+
 # IDE configs
 .vscode/*
 !.vscode/settings.json

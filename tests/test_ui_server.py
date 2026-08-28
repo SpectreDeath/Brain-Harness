@@ -67,6 +67,19 @@ class TestUIServer:
             assert "catalog" in catalog_res.json()
             assert "total" in catalog_res.json()
 
+            # 7. Skills API
+            skills_res = await client.get("/api/skills")
+            assert skills_res.status_code == 200
+            assert "indexed_skills" in skills_res.json()
+
+            route_res = await client.get("/api/skills/route?intent=test+task")
+            assert route_res.status_code == 200
+            assert "matches" in route_res.json()
+
+            chain_res = await client.get("/api/skills/chain?start=s1&target=s2")
+            assert chain_res.status_code == 200
+            assert "chain" in chain_res.json()
+
     async def test_ui_without_event_bus(self) -> None:
         ctx = ServiceContext()
         lifecycle = PluginLifecycle(ctx)

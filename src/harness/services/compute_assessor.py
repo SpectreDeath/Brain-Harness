@@ -7,7 +7,6 @@ token economics & latency estimation, and interactive visual review brief genera
 
 from __future__ import annotations
 
-import asyncio
 import json
 import os
 import tempfile
@@ -20,7 +19,7 @@ from typing import Any
 import structlog
 
 from harness.events.bus import EVENT_BUS_KEY, EventBus
-from harness.events.types import EventType, HarnessEvent, compute_event
+from harness.events.types import EventType, compute_event
 from harness.kernel.context import ServiceContext, ServiceKey
 from harness.plugins.base import HarnessPlugin
 from pydantic import BaseModel, Field
@@ -496,7 +495,7 @@ class DimensionalScorer:
             active_profile = ScoringProfile.get_preset(ScoringProfileName.BALANCED)
 
         prompt_lower = prompt.lower()
-        
+
         all_high_kw = cls.HIGH_KEYWORDS | active_profile.custom_high_keywords
         all_low_kw = cls.LOW_KEYWORDS | active_profile.custom_low_keywords
 

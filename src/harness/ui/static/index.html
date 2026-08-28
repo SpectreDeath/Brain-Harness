@@ -3,149 +3,300 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Brain Harness — Autonomous Agent Control Room & Visual Event Sourcing</title>
+  <title>Brain Harness — Autonomous Agent Control Room</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
   <style>
     :root {
-      --bg-base: #090d16;
-      --bg-card: rgba(15, 23, 42, 0.75);
-      --bg-card-hover: rgba(30, 41, 59, 0.85);
-      --bg-card-alt: rgba(10, 15, 29, 0.9);
-      --border-color: rgba(255, 255, 255, 0.09);
-      --border-focus: rgba(56, 189, 248, 0.5);
+      --bg-base: #070a12;
+      --bg-sidebar: #0b101d;
+      --bg-header: rgba(11, 16, 29, 0.82);
+      --bg-card: rgba(16, 24, 43, 0.72);
+      --bg-card-hover: rgba(24, 35, 61, 0.85);
+      --bg-card-alt: rgba(12, 18, 33, 0.9);
+      --bg-input: rgba(6, 10, 20, 0.65);
+      --border-color: rgba(255, 255, 255, 0.08);
+      --border-light: rgba(255, 255, 255, 0.14);
+      --border-focus: rgba(56, 189, 248, 0.55);
+      
       --text-primary: #f8fafc;
       --text-secondary: #94a3b8;
       --text-muted: #64748b;
+      
       --accent-cyan: #38bdf8;
       --accent-emerald: #10b981;
       --accent-purple: #a855f7;
       --accent-rose: #f43f5e;
       --accent-amber: #f59e0b;
       --accent-indigo: #6366f1;
-      --glow-cyan: rgba(56, 189, 248, 0.18);
-      --glow-purple: rgba(168, 85, 247, 0.18);
+      --accent-sky: #0284c7;
+      
+      --glow-cyan: rgba(56, 189, 248, 0.22);
+      --glow-purple: rgba(168, 85, 247, 0.2);
+      --glow-emerald: rgba(16, 185, 129, 0.2);
+      --glow-rose: rgba(244, 63, 94, 0.2);
+
+      --sidebar-width: 260px;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       background-color: var(--bg-base);
       color: var(--text-primary);
       min-height: 100vh;
       display: flex;
-      flex-direction: column;
       overflow-x: hidden;
     }
 
     /* Ambient Background Glows */
     .ambient-glow {
       position: fixed;
-      top: -25%;
-      left: 15%;
-      width: 70vw;
-      height: 70vw;
-      background: radial-gradient(circle, var(--glow-cyan) 0%, var(--glow-purple) 35%, transparent 70%);
-      filter: blur(140px);
+      top: -20%;
+      left: 10%;
+      width: 75vw;
+      height: 75vw;
+      background: radial-gradient(circle, var(--glow-cyan) 0%, var(--glow-purple) 30%, transparent 65%);
+      filter: blur(150px);
       z-index: 0;
       pointer-events: none;
+      opacity: 0.65;
+    }
+    .ambient-glow-2 {
+      position: fixed;
+      bottom: -30%;
+      right: 5%;
+      width: 60vw;
+      height: 60vw;
+      background: radial-gradient(circle, var(--glow-emerald) 0%, var(--glow-purple) 40%, transparent 70%);
+      filter: blur(160px);
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.45;
     }
 
+    /* Layout Structure */
+    .app-sidebar {
+      width: var(--sidebar-width);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 60;
+      backdrop-filter: blur(20px);
+      transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .app-main {
+      margin-left: var(--sidebar-width);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      position: relative;
+      z-index: 10;
+      width: calc(100% - var(--sidebar-width));
+    }
+
+    /* Sidebar Content */
+    .sidebar-brand {
+      padding: 1.25rem 1.4rem;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+    .brand-icon {
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+      color: #fff;
+      font-weight: 800;
+      font-size: 1.15rem;
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 16px var(--glow-cyan);
+      flex-shrink: 0;
+    }
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+    }
+    .brand-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      background: linear-gradient(90deg, #fff, #cbd5e1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .brand-subtitle {
+      font-size: 0.72rem;
+      color: var(--accent-cyan);
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .sidebar-nav {
+      padding: 1rem 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      flex: 1;
+      overflow-y: auto;
+    }
+    .nav-section-title {
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.6rem 0.75rem 0.3rem;
+    }
+    .sidebar-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 0.55rem 0.75rem;
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      color: var(--text-secondary);
+      font-size: 0.88rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      text-align: left;
+    }
+    .sidebar-btn:hover {
+      color: var(--text-primary);
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.04);
+    }
+    .sidebar-btn.active {
+      background: linear-gradient(90deg, rgba(56, 189, 248, 0.15), rgba(168, 85, 247, 0.08));
+      color: var(--accent-cyan);
+      border-color: rgba(56, 189, 248, 0.3);
+      font-weight: 600;
+      box-shadow: 0 0 14px var(--glow-cyan);
+    }
+    .sidebar-btn-content {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+    .sidebar-icon {
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+    .nav-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.15rem 0.45rem;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-secondary);
+    }
+    .sidebar-btn.active .nav-badge {
+      background: rgba(56, 189, 248, 0.25);
+      color: #fff;
+    }
+
+    .sidebar-footer {
+      padding: 1rem;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+    .system-quick-info {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Header Bar */
     header {
       position: sticky;
       top: 0;
       z-index: 50;
-      -webkit-backdrop-filter: blur(16px);
-      backdrop-filter: blur(16px);
-      background: rgba(9, 13, 22, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      background: var(--bg-header);
       border-bottom: 1px solid var(--border-color);
       padding: 0.85rem 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-
-    .logo-container {
+    .header-left {
       display: flex;
       align-items: center;
-      gap: 0.85rem;
+      gap: 1rem;
     }
-
-    .logo-badge {
-      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
-      color: #fff;
-      font-weight: 800;
-      font-size: 1.05rem;
-      padding: 0.35rem 0.85rem;
-      border-radius: 8px;
-      letter-spacing: 0.08em;
-      box-shadow: 0 0 16px var(--glow-cyan);
-    }
-
-    .logo-title {
-      font-size: 1.2rem;
+    .page-title {
+      font-size: 1.25rem;
       font-weight: 700;
-      background: linear-gradient(90deg, #fff, #94a3b8);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .header-nav {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      background: rgba(0, 0, 0, 0.35);
-      padding: 0.3rem 0.4rem;
-      border-radius: 10px;
-      border: 1px solid var(--border-color);
-    }
-
-    .nav-btn {
-      background: transparent;
-      border: none;
-      color: var(--text-secondary);
-      font-size: 0.85rem;
-      font-weight: 600;
-      padding: 0.4rem 0.85rem;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-
-    .nav-btn:hover {
+      letter-spacing: -0.01em;
       color: #fff;
-      background: rgba(255, 255, 255, 0.06);
-    }
-
-    .nav-btn.active {
-      background: var(--accent-cyan);
-      color: #090d16;
-      box-shadow: 0 0 12px var(--glow-cyan);
-    }
-
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 0.85rem;
-    }
-
-    .ws-status {
       display: flex;
       align-items: center;
       gap: 0.5rem;
+    }
+    .page-subtitle {
       font-size: 0.82rem;
       color: var(--text-secondary);
-      background: rgba(255, 255, 255, 0.04);
+    }
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .cmd-k-badge {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 0.35rem 0.65rem;
+      font-size: 0.75rem;
+      font-family: 'Fira Code', monospace;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .cmd-k-badge:hover {
+      border-color: var(--accent-cyan);
+      color: var(--text-primary);
+    }
+
+    .ws-status-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      background: rgba(0, 0, 0, 0.35);
       padding: 0.35rem 0.75rem;
       border-radius: 20px;
       border: 1px solid var(--border-color);
     }
-
     .status-dot {
       width: 8px;
       height: 8px;
@@ -159,36 +310,34 @@
       box-shadow: 0 0 8px var(--accent-emerald);
     }
 
-    /* Main Container & Tab Views */
+    /* Main Container Views */
     main {
-      position: relative;
-      z-index: 10;
       flex: 1;
-      padding: 1.5rem 2rem 2.5rem;
+      padding: 1.75rem 2rem 3rem;
       max-width: 1700px;
-      margin: 0 auto;
       width: 100%;
+      margin: 0 auto;
     }
 
     .view-panel {
       display: none;
-      animation: fadeIn 0.25s ease-in-out;
+      animation: viewFadeIn 0.22s ease-out;
     }
     .view-panel.active {
       display: block;
     }
 
-    @keyframes fadeIn {
+    @keyframes viewFadeIn {
       from { opacity: 0; transform: translateY(6px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
+    /* Grid System */
     .grid-container {
       display: grid;
       grid-template-columns: repeat(12, 1fr);
       gap: 1.25rem;
     }
-
     .col-3 { grid-column: span 3; }
     .col-4 { grid-column: span 4; }
     .col-5 { grid-column: span 5; }
@@ -198,27 +347,27 @@
     .col-9 { grid-column: span 9; }
     .col-12 { grid-column: span 12; }
 
-    @media (max-width: 1200px) {
+    @media (max-width: 1280px) {
       .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9 { grid-column: span 12; }
     }
 
+    /* Cards */
     .card {
       background: var(--bg-card);
-      -webkit-backdrop-filter: blur(14px);
-      backdrop-filter: blur(14px);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border: 1px solid var(--border-color);
       border-radius: 14px;
       padding: 1.35rem;
       display: flex;
       flex-direction: column;
       gap: 1rem;
-      transition: border-color 0.2s, background-color 0.2s;
+      transition: border-color 0.2s, background-color 0.2s, box-shadow 0.2s;
     }
     .card:hover {
+      border-color: var(--border-light);
       background: var(--bg-card-hover);
-      border-color: rgba(255, 255, 255, 0.16);
     }
-
     .card-title {
       font-size: 1.02rem;
       font-weight: 600;
@@ -227,201 +376,323 @@
       align-items: center;
       justify-content: space-between;
     }
+    .card-title-icon {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
 
-    /* Metric stats */
+    /* KPI Metrics Grid */
     .metrics-grid {
       display: grid;
       grid-template-columns: repeat(6, 1fr);
       gap: 1rem;
     }
-    @media (max-width: 1100px) {
+    @media (max-width: 1300px) {
       .metrics-grid { grid-template-columns: repeat(3, 1fr); }
     }
-    @media (max-width: 650px) {
+    @media (max-width: 768px) {
       .metrics-grid { grid-template-columns: repeat(2, 1fr); }
     }
-
     .metric-box {
       background: rgba(0, 0, 0, 0.35);
       border: 1px solid var(--border-color);
-      border-radius: 10px;
-      padding: 0.9rem;
+      border-radius: 12px;
+      padding: 1rem 0.9rem;
       text-align: center;
-      transition: transform 0.15s;
+      transition: transform 0.15s, border-color 0.15s;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
     }
-    .metric-box:hover { transform: translateY(-2px); }
+    .metric-box:hover {
+      transform: translateY(-2px);
+      border-color: rgba(56, 189, 248, 0.4);
+    }
     .metric-value {
-      font-size: 1.65rem;
+      font-size: 1.75rem;
       font-weight: 700;
       color: var(--accent-cyan);
       font-family: 'Fira Code', monospace;
+      line-height: 1.2;
     }
     .metric-label {
       font-size: 0.72rem;
       color: var(--text-secondary);
       text-transform: uppercase;
       letter-spacing: 0.06em;
-      margin-top: 0.25rem;
+      margin-top: 0.35rem;
+      font-weight: 600;
+    }
+    .metric-sub {
+      font-size: 0.68rem;
+      color: var(--accent-emerald);
+      margin-top: 0.2rem;
     }
 
     /* Buttons & Controls */
     .btn {
       background: var(--accent-cyan);
-      color: #090d16;
+      color: #070a12;
       font-weight: 600;
       font-size: 0.85rem;
-      padding: 0.45rem 0.95rem;
+      padding: 0.5rem 1rem;
       border-radius: 8px;
       border: none;
       cursor: pointer;
       transition: all 0.15s ease;
       display: inline-flex;
       align-items: center;
-      gap: 0.35rem;
+      justify-content: center;
+      gap: 0.4rem;
+      font-family: inherit;
     }
-    .btn:hover { opacity: 0.92; transform: translateY(-1px); box-shadow: 0 0 10px var(--glow-cyan); }
-    .btn.btn-outline {
+    .btn:hover {
+      opacity: 0.94;
+      transform: translateY(-1px);
+      box-shadow: 0 0 14px var(--glow-cyan);
+    }
+    .btn:active {
+      transform: translateY(0);
+    }
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .btn-outline {
       background: transparent;
       color: var(--text-primary);
       border: 1px solid var(--border-color);
     }
-    .btn.btn-outline:hover { background: rgba(255, 255, 255, 0.08); }
-    .btn.btn-danger {
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: var(--border-light);
+      box-shadow: none;
+    }
+    .btn-purple {
+      background: linear-gradient(135deg, var(--accent-purple), var(--accent-indigo));
+      color: #fff;
+    }
+    .btn-purple:hover {
+      box-shadow: 0 0 14px var(--glow-purple);
+    }
+    .btn-emerald {
+      background: var(--accent-emerald);
+      color: #070a12;
+    }
+    .btn-emerald:hover {
+      box-shadow: 0 0 14px var(--glow-emerald);
+    }
+    .btn-danger {
       background: rgba(244, 63, 94, 0.15);
       color: var(--accent-rose);
-      border: 1px solid rgba(244, 63, 94, 0.3);
+      border: 1px solid rgba(244, 63, 94, 0.35);
     }
-    .btn.btn-danger:hover { background: rgba(244, 63, 94, 0.3); }
-    .btn.btn-success {
+    .btn-danger:hover {
+      background: rgba(244, 63, 94, 0.28);
+      box-shadow: 0 0 12px var(--glow-rose);
+    }
+    .btn-success {
       background: rgba(16, 185, 129, 0.15);
       color: var(--accent-emerald);
-      border: 1px solid rgba(16, 185, 129, 0.3);
+      border: 1px solid rgba(16, 185, 129, 0.35);
     }
-    .btn.btn-success:hover { background: rgba(16, 185, 129, 0.3); }
-    .btn-group { display: flex; gap: 0.4rem; }
-    .btn-group-sm { display: flex; gap: 0.25rem; }
-    .btn-xs { font-size: 0.74rem; padding: 0.25rem 0.55rem; }
-    .btn-action { padding: 0.2rem 0.45rem; font-size: 0.74rem; }
-    .btn-toggle { padding: 0.2rem 0.5rem; font-size: 0.74rem; }
+    .btn-success:hover {
+      background: rgba(16, 185, 129, 0.28);
+    }
+    .btn-xs { font-size: 0.74rem; padding: 0.25rem 0.55rem; border-radius: 6px; }
+    .btn-sm { font-size: 0.8rem; padding: 0.35rem 0.75rem; border-radius: 6px; }
+    .btn-group { display: flex; gap: 0.4rem; align-items: center; }
 
     /* Inputs */
-    .agent-input {
-      background: rgba(0, 0, 0, 0.4);
+    .agent-input, .input-text, select.agent-input, textarea.agent-input {
+      background: var(--bg-input);
       border: 1px solid var(--border-color);
       border-radius: 8px;
       padding: 0.65rem 0.9rem;
       color: #fff;
       font-family: inherit;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       outline: none;
-      transition: border-color 0.2s;
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
-    .agent-input:focus { border-color: var(--accent-cyan); }
-    .search-input { width: 100%; font-size: 0.85rem; padding: 0.5rem 0.8rem; }
+    .agent-input:focus, .input-text:focus {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
+    }
+    textarea.agent-input {
+      resize: vertical;
+      min-height: 80px;
+      line-height: 1.5;
+    }
+
+    /* Filter Chips */
+    .filter-chip-row {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .filter-chip {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 0.3rem 0.75rem;
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .filter-chip:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.08);
+    }
+    .filter-chip.active {
+      background: rgba(56, 189, 248, 0.18);
+      color: var(--accent-cyan);
+      border-color: rgba(56, 189, 248, 0.4);
+      font-weight: 600;
+    }
 
     /* Tables */
-    .plugin-table {
+    .data-table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 0.88rem;
+      font-size: 0.86rem;
     }
-    .plugin-table th, .plugin-table td {
-      padding: 0.65rem 0.5rem;
+    .data-table th, .data-table td {
+      padding: 0.7rem 0.6rem;
       text-align: left;
       border-bottom: 1px solid var(--border-color);
     }
-    .plugin-table th {
+    .data-table th {
       color: var(--text-secondary);
       font-weight: 600;
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       text-transform: uppercase;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.05em;
     }
-    .plugin-row {
-      cursor: pointer;
-      transition: background 0.15s;
+    .data-table tr:hover td {
+      background: rgba(255, 255, 255, 0.025);
     }
-    .plugin-row:hover {
-      background: rgba(255, 255, 255, 0.03);
+    .table-scroll {
+      max-height: 520px;
+      overflow-y: auto;
     }
-    .td-chevron { color: var(--text-secondary); font-size: 0.75rem; width: 20px; }
-    .td-name { font-weight: 600; font-family: 'Fira Code', monospace; font-size: 0.85rem; }
-    .tool-count-badge {
-      background: rgba(56, 189, 248, 0.15);
-      color: var(--accent-cyan);
-      border: 1px solid rgba(56, 189, 248, 0.3);
-      padding: 0.15rem 0.45rem;
-      border-radius: 10px;
-      font-size: 0.75rem;
-      font-weight: 600;
-    }
-    .tool-count-empty { color: var(--text-muted); font-size: 0.75rem; }
 
-    /* Pills */
+    /* Badges & Pills */
     .pill {
       font-size: 0.74rem;
       font-weight: 600;
       padding: 0.2rem 0.55rem;
-      border-radius: 10px;
-      display: inline-block;
-    }
-    .pill.enabled { background: rgba(16, 185, 129, 0.2); color: var(--accent-emerald); border: 1px solid rgba(16, 185, 129, 0.4); }
-    .pill.disabled { background: rgba(244, 63, 94, 0.2); color: var(--accent-rose); border: 1px solid rgba(244, 63, 94, 0.4); }
-    .pill.discovered { background: rgba(245, 158, 11, 0.2); color: var(--accent-amber); border: 1px solid rgba(245, 158, 11, 0.4); }
-    .pill.in_process { background: rgba(168, 85, 247, 0.2); color: var(--accent-purple); border: 1px solid rgba(168, 85, 247, 0.4); }
-    .pill.subprocess { background: rgba(56, 189, 248, 0.2); color: var(--accent-cyan); border: 1px solid rgba(56, 189, 248, 0.4); }
-    .pill.venv { background: rgba(245, 158, 11, 0.2); color: var(--accent-amber); border: 1px solid rgba(245, 158, 11, 0.4); }
-    .pill.docker { background: rgba(99, 102, 241, 0.2); color: var(--accent-indigo); border: 1px solid rgba(99, 102, 241, 0.4); }
-
-    /* Tool Drawers */
-    .tool-drawer-row { display: none; background: rgba(0, 0, 0, 0.35); }
-    .tool-drawer-row.open { display: table-row; }
-    .drawer-td { padding: 0; }
-    .tool-drawer-container {
-      padding: 0.75rem 1rem;
-      border-left: 3px solid var(--accent-cyan);
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-    .drawer-title { font-size: 0.78rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; }
-    .tool-item {
-      display: flex;
+      border-radius: 12px;
+      display: inline-flex;
       align-items: center;
-      justify-content: space-between;
-      padding: 0.45rem 0.75rem;
-      background: rgba(255, 255, 255, 0.02);
-      border-radius: 6px;
-      font-size: 0.82rem;
-      border: 1px solid rgba(255, 255, 255, 0.05);
+      gap: 0.3rem;
     }
-    .tool-meta { display: flex; flex-direction: column; gap: 0.15rem; }
-    .tool-name { font-family: 'Fira Code', monospace; color: var(--accent-cyan); font-weight: 600; }
-    .tool-desc { color: var(--text-secondary); font-size: 0.75rem; }
+    .pill.enabled, .pill.active, .pill.completed, .pill.healthy {
+      background: rgba(16, 185, 129, 0.18);
+      color: var(--accent-emerald);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+    }
+    .pill.disabled, .pill.stopped, .pill.failed, .pill.error {
+      background: rgba(244, 63, 94, 0.18);
+      color: var(--accent-rose);
+      border: 1px solid rgba(244, 63, 94, 0.35);
+    }
+    .pill.discovered, .pill.idle, .pill.running {
+      background: rgba(245, 158, 11, 0.18);
+      color: var(--accent-amber);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+    }
+    .pill.subprocess {
+      background: rgba(56, 189, 248, 0.18);
+      color: var(--accent-cyan);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+    }
+    .pill.in_process {
+      background: rgba(168, 85, 247, 0.18);
+      color: var(--accent-purple);
+      border: 1px solid rgba(168, 85, 247, 0.35);
+    }
+    .pill.venv {
+      background: rgba(245, 158, 11, 0.18);
+      color: var(--accent-amber);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+    }
+    .pill.docker {
+      background: rgba(99, 102, 241, 0.18);
+      color: var(--accent-indigo);
+      border: 1px solid rgba(99, 102, 241, 0.35);
+    }
 
-    /* Terminal & Log Box */
+    /* Terminal & Activity Box */
     .terminal-box {
-      background: #06090e;
+      background: #050811;
       border: 1px solid var(--border-color);
-      border-radius: 8px;
-      padding: 0.85rem 1rem;
+      border-radius: 10px;
+      padding: 0.9rem 1.1rem;
       font-family: 'Fira Code', monospace;
       font-size: 0.82rem;
       color: #e2e8f0;
-      height: 320px;
+      height: 340px;
       overflow-y: auto;
       display: flex;
       flex-direction: column;
-      gap: 0.35rem;
+      gap: 0.4rem;
     }
-    .terminal-tall { height: 420px; }
-    .terminal-full { height: 540px; }
-    .log-line { line-height: 1.45; word-break: break-all; }
-    .log-ts { color: #64748b; margin-right: 0.4rem; }
-    .log-type { color: var(--accent-purple); font-weight: 600; }
-    .log-src { color: var(--accent-cyan); }
-    .log-error { color: var(--accent-rose); }
-    .log-success { color: var(--accent-emerald); }
+    .terminal-tall { height: 480px; }
+    .terminal-full { height: 600px; }
+    .log-line {
+      line-height: 1.5;
+      word-break: break-all;
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+    }
+    .log-ts { color: #64748b; font-size: 0.75rem; flex-shrink: 0; }
+    .log-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.1rem 0.35rem;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+    .log-badge.agent { background: rgba(168, 85, 247, 0.2); color: var(--accent-purple); }
+    .log-badge.tool { background: rgba(56, 189, 248, 0.2); color: var(--accent-cyan); }
+    .log-badge.system { background: rgba(16, 185, 129, 0.2); color: var(--accent-emerald); }
+    .log-badge.swarm { background: rgba(99, 102, 241, 0.2); color: var(--accent-indigo); }
+    .log-badge.error { background: rgba(244, 63, 94, 0.2); color: var(--accent-rose); }
+    .log-src { color: var(--accent-cyan); font-weight: 600; }
+    .log-content { color: #cbd5e1; }
+
+    /* Collapsible Payload Box */
+    .payload-toggle {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 0.4rem 0.6rem;
+      font-size: 0.78rem;
+      cursor: pointer;
+      color: var(--text-secondary);
+      margin-top: 0.2rem;
+    }
+    .payload-content {
+      display: none;
+      background: #020409;
+      padding: 0.6rem;
+      border-radius: 6px;
+      margin-top: 0.3rem;
+      font-size: 0.76rem;
+      overflow-x: auto;
+      color: #94a3b8;
+    }
+    .payload-content.open { display: block; }
 
     /* Timeline Scrubber Controls */
     .timeline-controls {
@@ -429,8 +700,8 @@
       align-items: center;
       gap: 1rem;
       background: rgba(0, 0, 0, 0.35);
-      padding: 0.75rem 1rem;
-      border-radius: 8px;
+      padding: 0.75rem 1.1rem;
+      border-radius: 10px;
       border: 1px solid var(--border-color);
     }
     .timeline-slider {
@@ -441,118 +712,685 @@
 
     /* Mermaid Architecture Graph Viewer */
     .mermaid-container {
-      background: #06090e;
+      background: #050811;
       border: 1px solid var(--border-color);
-      border-radius: 8px;
+      border-radius: 10px;
       padding: 1.5rem;
-      min-height: 480px;
+      min-height: 520px;
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: auto;
+      position: relative;
+    }
+    .graph-controls {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      display: flex;
+      gap: 0.4rem;
+      z-index: 10;
     }
 
-    /* Modal */
+    /* Toast System */
+    #toastContainer {
+      position: fixed;
+      top: 1.5rem;
+      right: 1.5rem;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      pointer-events: none;
+    }
+    .toast {
+      pointer-events: auto;
+      background: #0f172a;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 0.85rem 1.1rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.86rem;
+      color: #fff;
+      animation: toastSlideIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      max-width: 380px;
+    }
+    .toast.success { border-left: 4px solid var(--accent-emerald); }
+    .toast.error { border-left: 4px solid var(--accent-rose); }
+    .toast.info { border-left: 4px solid var(--accent-cyan); }
+    .toast.warning { border-left: 4px solid var(--accent-amber); }
+    @keyframes toastSlideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    /* Modals */
     .modal-backdrop {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.75);
-      -webkit-backdrop-filter: blur(8px);
-      backdrop-filter: blur(8px);
-      z-index: 100;
+      background: rgba(3, 6, 15, 0.82);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 200;
       display: none;
       align-items: center;
       justify-content: center;
+      padding: 1.5rem;
     }
     .modal-backdrop.open { display: flex; }
     .modal {
-      background: #0d1322;
-      border: 1px solid var(--border-color);
-      border-radius: 14px;
-      padding: 1.5rem;
+      background: #0c1324;
+      border: 1px solid var(--border-light);
+      border-radius: 16px;
+      padding: 1.75rem;
       width: 100%;
-      max-width: 540px;
+      max-width: 580px;
       display: flex;
       flex-direction: column;
-      gap: 1rem;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+      gap: 1.1rem;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
+      animation: modalPop 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .modal-large { max-width: 720px; max-height: 85vh; }
+    .modal-large { max-width: 820px; max-height: 90vh; }
+    @keyframes modalPop {
+      from { transform: scale(0.95); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
     .modal-header { display: flex; justify-content: space-between; align-items: center; }
-    .modal-title { font-size: 1.1rem; font-weight: 700; color: #fff; }
-    .modal-close { background: transparent; border: none; color: var(--text-secondary); font-size: 1.2rem; cursor: pointer; }
+    .modal-title { font-size: 1.15rem; font-weight: 700; color: #fff; }
+    .modal-close { background: transparent; border: none; color: var(--text-secondary); font-size: 1.3rem; cursor: pointer; }
     .modal-tabs { display: flex; gap: 0.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.4rem; }
-    .tab-btn { background: transparent; border: none; color: var(--text-secondary); font-weight: 600; font-size: 0.85rem; padding: 0.35rem 0.75rem; border-radius: 6px; cursor: pointer; }
+    .tab-btn { background: transparent; border: none; color: var(--text-secondary); font-weight: 600; font-size: 0.85rem; padding: 0.4rem 0.85rem; border-radius: 6px; cursor: pointer; }
     .tab-btn.active { background: rgba(56, 189, 248, 0.15); color: var(--accent-cyan); }
-    .tab-content { display: none; flex-direction: column; gap: 0.85rem; }
+    .tab-content { display: none; flex-direction: column; gap: 0.9rem; }
     .tab-content.active { display: flex; }
-    .dropzone { border: 2px dashed var(--border-color); border-radius: 8px; padding: 1.5rem; text-align: center; color: var(--text-secondary); cursor: pointer; }
-    .dropzone:hover { border-color: var(--accent-cyan); }
-    .guide-doc-text { font-size: 0.88rem; line-height: 1.6; color: #cbd5e1; white-space: pre-wrap; }
-    .guide-card-pre { background: #06090e; padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color); font-family: 'Fira Code', monospace; font-size: 0.82rem; color: var(--accent-cyan); overflow-x: auto; }
-    .table-scroll { max-height: 480px; overflow-y: auto; }
-    .table-scroll-420 { max-height: 420px; overflow-y: auto; }
-    .w-full { width: 100%; }
-    .hidden { display: none; }
-    .flex-1 { flex: 1; }
+    .dropzone { border: 2px dashed var(--border-color); border-radius: 10px; padding: 1.75rem; text-align: center; color: var(--text-secondary); cursor: pointer; transition: all 0.2s; }
+    .dropzone:hover { border-color: var(--accent-cyan); background: rgba(56, 189, 248, 0.03); }
 
-    /* Utility & Form Classes */
-    .btn-scaffold { border-color: var(--accent-purple); color: var(--accent-purple); }
-    .form-label { font-size: 0.8rem; color: var(--text-secondary); display: block; margin-bottom: 0.3rem; }
-    .modal-status { font-size: 0.85rem; display: none; }
-    .guide-scroll-container { overflow-y: auto; max-height: 55vh; padding-right: 0.4rem; }
-    .modal-footer { display: flex; justify-content: flex-end; border-top: 1px solid var(--border-color); padding-top: 0.75rem; }
-    .modal-footer-gap { gap: 0.75rem; }
-    .creator-form-body { padding: 0.5rem 0; }
-    .form-grid-half { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-    .checkbox-row { display: flex; align-items: center; gap: 0.5rem; margin: 0.75rem 0; }
-    .checkbox-label { font-size: 0.85rem; color: var(--text-secondary); cursor: pointer; }
-    .creator-status { font-size: 0.85rem; padding: 0.5rem; border-radius: 6px; display: none; margin-bottom: 0.75rem; }
-    .service-context-list { display: flex; flex-direction: column; gap: 0.5rem; }
-    .service-item { display: flex; justify-content: space-between; align-items: center; padding: 0.4rem 0.6rem; background: rgba(0, 0, 0, 0.3); border-radius: 6px; font-size: 0.82rem; border: 1px solid var(--border-color); }
-    .text-muted-sm { color: var(--text-secondary); font-size: 0.85rem; }
-    .text-muted-md { color: var(--text-secondary); font-size: 0.9rem; }
-    .text-error { color: var(--accent-rose); }
-    .text-code-cyan { font-family: 'Fira Code', monospace; color: var(--accent-cyan); }
+    /* Tool Drawers */
+    .tool-drawer-row { display: none; background: rgba(0, 0, 0, 0.3); }
+    .tool-drawer-row.open { display: table-row; }
+    .tool-drawer-container {
+      padding: 0.85rem 1.25rem;
+      border-left: 3px solid var(--accent-cyan);
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+    .tool-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem 0.85rem;
+      background: rgba(255, 255, 255, 0.025);
+      border-radius: 8px;
+      font-size: 0.84rem;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    /* Skill Graph SVG Container */
+    .skill-graph-viewport {
+      width: 100%;
+      height: 480px;
+      background: #050811;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+    .skill-node {
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .skill-node:hover circle {
+      stroke: var(--accent-cyan);
+      stroke-width: 3px;
+      filter: drop-shadow(0 0 8px var(--accent-cyan));
+    }
+
+    /* Command Palette */
+    #cmdPaletteModal .modal {
+      max-width: 580px;
+      padding: 1rem;
+      gap: 0.75rem;
+    }
+    .cmd-search-input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      color: #fff;
+      font-size: 1rem;
+      outline: none;
+    }
+    .cmd-results {
+      max-height: 320px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .cmd-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.6rem 0.85rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.86rem;
+      color: var(--text-secondary);
+    }
+    .cmd-item:hover, .cmd-item.selected {
+      background: rgba(56, 189, 248, 0.15);
+      color: #fff;
+    }
+
+    /* Utilities */
     .text-code { font-family: 'Fira Code', monospace; }
-    .text-code-sm { font-family: 'Fira Code', monospace; font-size: 0.8rem; }
-    .timeline-label { font-size: 0.8rem; color: var(--text-secondary); font-family: 'Fira Code', monospace; }
-    .timeline-filter-bar { display: flex; gap: 0.75rem; }
-    .timeline-filter-input { width: 250px; }
-    .agent-action-bar { display: flex; gap: 0.6rem; }
-    .table-empty-cell { text-align: center; color: var(--text-secondary); }
+    .text-code-cyan { font-family: 'Fira Code', monospace; color: var(--accent-cyan); font-weight: 600; }
+    .text-muted-sm { color: var(--text-secondary); font-size: 0.84rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.35rem; }
+    .form-label { font-size: 0.78rem; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.04em; }
+    .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .w-full { width: 100%; }
+    .flex-1 { flex: 1; }
+    .hidden { display: none; }
   </style>
 </head>
 <body>
   <div class="ambient-glow"></div>
+  <div class="ambient-glow-2"></div>
 
-  <header>
-    <div class="logo-container">
-      <div class="logo-badge">HARNESS</div>
-      <div class="logo-title">Control Room</div>
-    </div>
+  <!-- Toast Container -->
+  <div id="toastContainer"></div>
 
-    <!-- Navigation Bar across views -->
-    <nav class="header-nav">
-      <button class="nav-btn active" onclick="switchView('overview')" id="nav-overview">📊 Overview</button>
-      <button class="nav-btn" onclick="switchView('timeline')" id="nav-timeline">⏱️ Timeline & Sourcing</button>
-      <button class="nav-btn" onclick="switchView('graph')" id="nav-graph">🕸️ Service Graph</button>
-      <button class="nav-btn" onclick="switchView('agent')" id="nav-agent">🤖 Agent & Sessions</button>
-      <button class="nav-btn" onclick="switchView('plugins')" id="nav-plugins">🧩 Plugins & Tools</button>
-      <button class="nav-btn" onclick="switchView('sandboxes')" id="nav-sandboxes">🛡️ Sandboxes</button>
-    </nav>
-
-    <div class="header-actions">
-      <button class="btn btn-outline btn-scaffold" onclick="openCreatorModal()">✨ Scaffold Plugin</button>
-      <button class="btn" onclick="openAddPluginModal()">+ Ingest Plugin</button>
-      <div class="ws-status">
-        <div class="status-dot" id="wsDot"></div>
-        <span id="wsText">Connecting...</span>
+  <!-- Sidebar Navigation -->
+  <aside class="app-sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon">⚡</div>
+      <div class="brand-text">
+        <div class="brand-title">BRAIN HARNESS</div>
+        <div class="brand-subtitle">Control Room</div>
       </div>
     </div>
-  </header>
 
-  <!-- Modal for Ingesting Plugins -->
+    <nav class="sidebar-nav">
+      <div class="nav-section-title">Core Telemetry</div>
+      <button class="sidebar-btn active" onclick="switchView('overview')" id="nav-overview">
+        <div class="sidebar-btn-content">
+          <span class="sidebar-icon">📊</span>
+          <span>Overview</span>
+        </div>
+      </button>
+      <button class="sidebar-btn" onclick="switchView('timeline')" id="nav-timeline">
+        <div class="sidebar-btn-content">
+          <span class="sidebar-icon">⏱️</span>
+          <span>Timeline & Replay</span>
+        </div>
+      </button>
+      <button class="sidebar-btn" onclick="switchView('graph')" id="nav-graph">
+        <div class="sidebar-btn-content">
+          <span class="sidebar-icon">🕸️</span>
+          <span>Service Graph</span>
+        </div>
+      </button>
+
+      <div class="nav-section-title">Autonomous Execution</div>
+      <button class="sidebar-btn" onclick="switchView('agent')" id="nav-agent">
+        <div class="sidebar-btn-content">
+          <span class="sidebar-icon">🤖</span>
+          <span>Agent Missions</span>
+        </div>
+      </button>
+      <button class="sidebar-btn" onclick="switchView('swarm')" id="nav-swarm">
+        <div class="sidebar-btn-content">
+          <span class="sidebar-icon">🐝</span>
+          <span>Multi-Agent Swarm</span>
+        </div>
+        <span class="nav-badge" id="navBadgeSwarm">Live</span>
+      </button>
+      <button class="sidebar-btn" onclick="switchView('skills')" id="nav-skills">
+        <div class="sidebar-btn-content">
+          <span class="sidebar-icon">🧠</span>
+          <span>Skill Knowledge Graph</span>
+        </div>
+      </button>
+
+      <div class="nav-section-title">Extensibility & Security</div>
+      <button class="sidebar-btn" onclick="switchView('plugins')" id="nav-plugins">
+        <div class="sidebar-btn-content">
+          <span class="sidebar-icon">🧩</span>
+          <span>Plugins & Tools</span>
+        </div>
+        <span class="nav-badge" id="navBadgePlugins">0</span>
+      </button>
+      <button class="sidebar-btn" onclick="switchView('sandboxes')" id="nav-sandboxes">
+        <div class="sidebar-btn-content">
+          <span class="sidebar-icon">🛡️</span>
+          <span>Sandboxes</span>
+        </div>
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="system-quick-info">
+        <span>Kernel Status:</span>
+        <span class="text-code-cyan">Healthy</span>
+      </div>
+      <button class="btn btn-outline btn-xs w-full" onclick="openCmdPalette()">
+        <span>Command Palette (Ctrl+K)</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Application Wrapper -->
+  <div class="app-main">
+    <header>
+      <div class="header-left">
+        <div>
+          <div class="page-title" id="pageTitle">📊 System Overview & Health</div>
+          <div class="page-subtitle" id="pageSubtitle">Real-time telemetry and micro-kernel state</div>
+        </div>
+      </div>
+
+      <div class="header-right">
+        <div class="cmd-k-badge" onclick="openCmdPalette()">
+          <span>⌘K</span>
+          <span>Quick Actions</span>
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="openCreatorModal()">✨ Scaffold Plugin</button>
+        <button class="btn btn-sm" onclick="openAddPluginModal()">+ Ingest Plugin</button>
+        <div class="ws-status-badge">
+          <div class="status-dot" id="wsDot"></div>
+          <span id="wsText">Connecting...</span>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- VIEW 1: OVERVIEW & SYSTEM HEALTH -->
+      <div class="view-panel active" id="view-overview">
+        <div class="grid-container">
+          <!-- Top KPI Metrics -->
+          <div class="card col-12">
+            <div class="metrics-grid">
+              <div class="metric-box">
+                <div class="metric-value" id="ovPlugins">0</div>
+                <div class="metric-label">Active Plugins</div>
+                <div class="metric-sub" id="ovPluginsSub">Loaded & Enabled</div>
+              </div>
+              <div class="metric-box">
+                <div class="metric-value" id="ovServices">0</div>
+                <div class="metric-label">IoC Services</div>
+                <div class="metric-sub">Typed Service Keys</div>
+              </div>
+              <div class="metric-box">
+                <div class="metric-value" id="ovTools">0</div>
+                <div class="metric-label">Mounted Tools</div>
+                <div class="metric-sub" id="ovToolsSub">Callable Entrypoints</div>
+              </div>
+              <div class="metric-box">
+                <div class="metric-value" id="ovEvents">0</div>
+                <div class="metric-label">Captured Events</div>
+                <div class="metric-sub">Event Sourcing Stream</div>
+              </div>
+              <div class="metric-box">
+                <div class="metric-value" id="ovTokens">0</div>
+                <div class="metric-label">Tokens Consumed</div>
+                <div class="metric-sub">LLM Optimizer Budget</div>
+              </div>
+              <div class="metric-box">
+                <div class="metric-value" id="ovSandboxes">0</div>
+                <div class="metric-label">Active Sandboxes</div>
+                <div class="metric-sub">Subprocess & Venv</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Kernel Service Context -->
+          <div class="card col-6">
+            <div class="card-title">
+              <div class="card-title-icon">
+                <span>⚙️</span>
+                <span>Kernel Service Context</span>
+              </div>
+              <button class="btn btn-outline btn-xs" onclick="loadAllData()">Refresh</button>
+            </div>
+            <div id="serviceContextList" style="display:flex; flex-direction:column; gap:0.5rem;">
+              <div class="text-muted-sm">Loading services...</div>
+            </div>
+          </div>
+
+          <!-- Live Activity Quick Stream -->
+          <div class="card col-6">
+            <div class="card-title">
+              <div class="card-title-icon">
+                <span>⚡</span>
+                <span>Live Telemetry Broadcast</span>
+              </div>
+              <div class="btn-group">
+                <button class="btn btn-outline btn-xs" onclick="toggleStreamAutoScroll()" id="btnAutoScroll">Auto-scroll: ON</button>
+                <button class="btn btn-outline btn-xs" onclick="clearStream()">Clear</button>
+              </div>
+            </div>
+            <div class="terminal-box" id="overviewStreamBox">
+              <div class="log-line"><span class="log-ts">></span> Listening for harness telemetry...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW 2: SPATIOTEMPORAL TIMELINE & REPLAY -->
+      <div class="view-panel" id="view-timeline">
+        <div class="grid-container">
+          <div class="card col-12">
+            <div class="card-title">
+              <div class="card-title-icon">
+                <span>⏱️</span>
+                <span>Spatiotemporal Event Timeline & Event Sourcing</span>
+              </div>
+              <div class="btn-group">
+                <button class="btn btn-outline btn-xs" onclick="fetchTimelineEvents()">Fetch Window</button>
+                <button class="btn btn-purple btn-xs" onclick="replayAllEvents()">▶ Replay All</button>
+              </div>
+            </div>
+
+            <div class="timeline-controls">
+              <span class="text-code" id="timelineStartLabel" style="font-size:0.8rem; color:var(--text-secondary);">Events: 0</span>
+              <input type="range" min="0" max="100" value="100" class="timeline-slider" id="timelineScrubber" oninput="onTimelineScrub(this.value)">
+              <span class="text-code" id="timelineEndLabel" style="font-size:0.8rem; color:var(--accent-cyan);">Live (100%)</span>
+            </div>
+
+            <div class="filter-chip-row">
+              <span class="filter-chip active" onclick="setTimelineFilter('*')">All Events</span>
+              <span class="filter-chip" onclick="setTimelineFilter('agent')">🤖 Agent</span>
+              <span class="filter-chip" onclick="setTimelineFilter('tool')">🔧 Tools</span>
+              <span class="filter-chip" onclick="setTimelineFilter('swarm')">🐝 Swarm</span>
+              <span class="filter-chip" onclick="setTimelineFilter('plugin')">🧩 Plugin</span>
+              <span class="filter-chip" onclick="setTimelineFilter('system')">⚙️ System</span>
+              <span class="filter-chip" onclick="setTimelineFilter('error')">🚨 Errors</span>
+            </div>
+
+            <div class="terminal-box terminal-tall" id="timelineBox">
+              <div class="log-line"><span class="log-ts">></span> Loading historical event timeline...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW 3: ARCHITECTURE & SERVICE GRAPH -->
+      <div class="view-panel" id="view-graph">
+        <div class="grid-container">
+          <div class="card col-12">
+            <div class="card-title">
+              <div class="card-title-icon">
+                <span>🕸️</span>
+                <span>Micro-Kernel Component & Dependency Graph</span>
+              </div>
+              <div class="btn-group">
+                <button class="btn btn-outline btn-xs" onclick="renderMermaidGraph()">Re-render</button>
+              </div>
+            </div>
+            <div class="mermaid-container" id="mermaidGraphBox">
+              <div class="text-muted-sm">Rendering architecture diagram...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW 4: AUTONOMOUS AGENT MISSIONS -->
+      <div class="view-panel" id="view-agent">
+        <div class="grid-container">
+          <div class="card col-7">
+            <div class="card-title">
+              <div class="card-title-icon">
+                <span>🤖</span>
+                <span>Autonomous ReAct Agent Mission Control</span>
+              </div>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:0.65rem;">
+              <textarea id="agentPromptInput" class="agent-input w-full" placeholder="Enter autonomous task description (Shift+Enter to launch)...">Calculate sum of 40 and 2 using python surface</textarea>
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div style="display:flex; gap:0.4rem;">
+                  <button class="btn btn-outline btn-xs" onclick="setAgentPreset('Calculate sum of 40 and 2 using python surface')">Preset: Math</button>
+                  <button class="btn btn-outline btn-xs" onclick="setAgentPreset('List all installed plugins and inspect tools.registry')">Preset: Inspect</button>
+                  <button class="btn btn-outline btn-xs" onclick="setAgentPreset('Reflect on system architecture and memory graphs')">Preset: Reflect</button>
+                </div>
+                <button class="btn" onclick="executeAgentTask()" id="btnExecAgent">🚀 Launch Task</button>
+              </div>
+            </div>
+            <div class="terminal-box terminal-tall" id="agentConsoleBox">
+              <div class="log-line"><span class="log-ts">></span> Agent loop ready. Standby for autonomous missions.</div>
+            </div>
+          </div>
+
+          <!-- Multi-Turn Session Explorer -->
+          <div class="card col-5">
+            <div class="card-title">
+              <div class="card-title-icon">
+                <span>📁</span>
+                <span>Session History & Artifacts</span>
+              </div>
+              <button class="btn btn-outline btn-xs" onclick="loadSessions()">Refresh</button>
+            </div>
+            <div class="table-scroll" style="max-height:480px;">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Session ID</th>
+                    <th>Status</th>
+                    <th>Steps</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="sessionTableBody">
+                  <tr><td colspan="4" style="text-align:center; color:var(--text-secondary);">No previous sessions</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW 5: MULTI-AGENT SWARM (NEW) -->
+      <div class="view-panel" id="view-swarm">
+        <div class="grid-container">
+          <div class="card col-5">
+            <div class="card-title">
+              <div class="card-title-icon">
+                <span>🐝</span>
+                <span>Swarm Mission Launcher</span>
+              </div>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:0.85rem;">
+              <div class="form-group">
+                <label class="form-label">Objective / Deliberation Topic</label>
+                <textarea id="swarmObjectiveInput" class="agent-input w-full" placeholder="Enter objective for multi-agent consensus debate...">Architect a fault-tolerant distributed plugin cache layer</textarea>
+              </div>
+              <div class="form-grid-2">
+                <div class="form-group">
+                  <label class="form-label">Consensus Threshold (<span id="consensusLabel">66%</span>)</label>
+                  <input type="range" min="50" max="100" value="66" class="timeline-slider" id="swarmConsensusSlider" oninput="document.getElementById('consensusLabel').textContent = this.value + '%'">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Token Budget</label>
+                  <input type="number" id="swarmTokensInput" class="agent-input w-full" value="50000" step="5000">
+                </div>
+              </div>
+              <button class="btn btn-purple w-full" id="btnLaunchSwarm" onclick="executeSwarmRun()">
+                <span>⚡ Launch Multi-Agent Swarm</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="card col-7">
+            <div class="card-title">
+              <div class="card-title-icon">
+                <span>🌿</span>
+                <span>Swarm Execution History & Consensus Runs</span>
+              </div>
+              <button class="btn btn-outline btn-xs" onclick="loadSwarmRuns()">Refresh</button>
+            </div>
+            <div class="table-scroll" style="max-height:480px;">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Run ID</th>
+                    <th>Status</th>
+                    <th>Consensus</th>
+                    <th>Details</th>
+                  </tr>
+                </thead>
+                <tbody id="swarmRunsTableBody">
+                  <tr><td colspan="4" style="text-align:center; color:var(--text-secondary);">Querying swarm runs...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW 6: SKILL KNOWLEDGE GRAPH (NEW) -->
+      <div class="view-panel" id="view-skills">
+        <div class="grid-container">
+          <div class="card col-7">
+            <div class="card-title">
+              <div class="card-title-icon">
+                <span>🧠</span>
+                <span>Skill Knowledge Graph Topology</span>
+              </div>
+              <button class="btn btn-outline btn-xs" onclick="loadSkillGraph()">Refresh Graph</button>
+            </div>
+            <div class="skill-graph-viewport" id="skillGraphViewport">
+              <div style="padding:2rem; text-align:center; color:var(--text-muted);">Constructing topological skill network...</div>
+            </div>
+          </div>
+
+          <div class="card col-5">
+            <div class="card-title">
+              <div class="card-title-icon">
+                <span>🎯</span>
+                <span>Natural Language Skill Router</span>
+              </div>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:0.75rem;">
+              <div class="form-group">
+                <label class="form-label">Task Intent</label>
+                <div style="display:flex; gap:0.4rem;">
+                  <input type="text" id="skillIntentInput" class="agent-input flex-1" placeholder="e.g. audit agent instruction files" value="author and audit agent instruction files">
+                  <button class="btn btn-sm" onclick="routeSkillIntent()">Route</button>
+                </div>
+              </div>
+              <div id="skillRoutingResults" style="display:flex; flex-direction:column; gap:0.5rem;">
+                <div class="text-muted-sm">Submit an intent above to match skills and recommended chains.</div>
+              </div>
+
+              <div style="border-top:1px solid var(--border-color); padding-top:0.75rem; margin-top:0.5rem;">
+                <div class="form-label" style="margin-bottom:0.4rem;">Skill Chain Pathfinder</div>
+                <div style="display:flex; gap:0.4rem;">
+                  <input type="text" id="chainStartInput" class="agent-input flex-1" placeholder="Start Skill (e.g. deep-module)">
+                  <input type="text" id="chainTargetInput" class="agent-input flex-1" placeholder="Target Skill (e.g. tdd)">
+                  <button class="btn btn-outline btn-sm" onclick="findSkillChain()">Find Path</button>
+                </div>
+                <div id="skillChainResult" style="margin-top:0.5rem;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW 7: PLUGINS & TOOL MATRIX -->
+      <div class="view-panel" id="view-plugins">
+        <div class="grid-container">
+          <div class="card col-12">
+            <div class="card-title">
+              <div class="card-title-icon">
+                <span>🧩</span>
+                <span>Plugin Ecosystem & Granular Tool Registry</span>
+              </div>
+              <div class="btn-group">
+                <button class="btn btn-outline btn-success btn-xs" onclick="enableAllPlugins()">Enable All</button>
+                <button class="btn btn-outline btn-danger btn-xs" onclick="disableAllPlugins()">Disable All</button>
+                <button class="btn btn-outline btn-xs" onclick="loadPluginsAndTools()">Refresh</button>
+              </div>
+            </div>
+            <input type="text" id="pluginSearchBox" class="agent-input w-full" placeholder="Search plugins or tools (e.g. llm, storage, react, supervisor)..." oninput="renderPluginMatrixTable()">
+            <div class="table-scroll">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th style="width:24px;"></th>
+                    <th>Plugin Name</th>
+                    <th>Mounted Tools</th>
+                    <th>State</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="pluginsMatrixTableBody">
+                  <tr><td colspan="5" style="text-align:center; color:var(--text-secondary);">Loading plugin catalog...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW 8: SANDBOXES & PROCESS ISOLATION -->
+      <div class="view-panel" id="view-sandboxes">
+        <div class="grid-container">
+          <div class="card col-12">
+            <div class="card-title">
+              <div class="card-title-icon">
+                <span>🛡️</span>
+                <span>Sandbox Executor & Isolation Monitor</span>
+              </div>
+              <button class="btn btn-outline btn-xs" onclick="loadSandboxes()">Refresh Sandboxes</button>
+            </div>
+            <div class="table-scroll">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Plugin</th>
+                    <th>Executor Mode</th>
+                    <th>Running State</th>
+                    <th>Process PID</th>
+                    <th>Trust Level</th>
+                  </tr>
+                </thead>
+                <tbody id="sandboxTableBody">
+                  <tr><td colspan="5" style="text-align:center; color:var(--text-secondary);">Querying sandbox executors...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Command Palette Modal -->
+  <div class="modal-backdrop" id="cmdPaletteModal">
+    <div class="modal">
+      <input type="text" class="cmd-search-input" id="cmdSearchInput" placeholder="Type a command or jump to view..." oninput="filterCmdPalette()">
+      <div class="cmd-results" id="cmdResults">
+        <div class="cmd-item" onclick="switchView('overview'); closeCmdPalette();"><span>📊 Go to Overview</span></div>
+        <div class="cmd-item" onclick="switchView('agent'); closeCmdPalette();"><span>🤖 Go to Agent Missions</span></div>
+        <div class="cmd-item" onclick="switchView('swarm'); closeCmdPalette();"><span>🐝 Go to Multi-Agent Swarm</span></div>
+        <div class="cmd-item" onclick="switchView('skills'); closeCmdPalette();"><span>🧠 Go to Skill Knowledge Graph</span></div>
+        <div class="cmd-item" onclick="switchView('plugins'); closeCmdPalette();"><span>🧩 Go to Plugins & Tools</span></div>
+        <div class="cmd-item" onclick="switchView('timeline'); closeCmdPalette();"><span>⏱️ Go to Timeline</span></div>
+        <div class="cmd-item" onclick="switchView('graph'); closeCmdPalette();"><span>🕸️ Go to Service Graph</span></div>
+        <div class="cmd-item" onclick="openCreatorModal(); closeCmdPalette();"><span>✨ Scaffold New Plugin</span></div>
+        <div class="cmd-item" onclick="openAddPluginModal(); closeCmdPalette();"><span>➕ Ingest GitHub Plugin</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ingest Plugin Modal -->
   <div class="modal-backdrop" id="addPluginModal">
     <div class="modal">
       <div class="modal-header">
@@ -562,64 +1400,34 @@
 
       <div class="modal-tabs">
         <button class="tab-btn active" id="tabUrlBtn" onclick="switchModalTab('url')">GitHub / URL / PyPI</button>
-        <button class="tab-btn" id="tabZipBtn" onclick="switchModalTab('zip')">Upload ZIP</button>
+        <button class="tab-btn" id="tabZipBtn" onclick="switchModalTab('zip')">Upload ZIP Archive</button>
       </div>
 
-      <!-- Tab 1: URL -->
       <div class="tab-content active" id="tabUrl">
         <div class="form-group">
-          <label class="form-label">Source (GitHub repo, PyPI, or OpenAPI URL)</label>
-          <input type="text" id="pluginSourceInput" class="agent-input w-full" placeholder="e.g. owner/repo, pypi:requests, or https://github.com/owner/repo">
+          <label class="form-label">Source (GitHub repo or URL)</label>
+          <input type="text" id="pluginSourceInput" class="agent-input w-full" placeholder="e.g. owner/repo, https://github.com/owner/repo">
         </div>
         <div class="form-group">
-          <label class="form-label">Git Ref / Branch (optional)</label>
+          <label class="form-label">Git Ref / Branch</label>
           <input type="text" id="pluginRefInput" class="agent-input w-full" placeholder="main" value="main">
         </div>
-        <button class="btn" id="btnIngestUrl" onclick="submitPluginUrl()">Ingest & Sandboxed Activate</button>
+        <button class="btn" id="btnIngestUrl" onclick="submitPluginUrl()">🚀 Ingest & Sandboxed Activate</button>
       </div>
 
-      <!-- Tab 2: Upload ZIP -->
       <div class="tab-content" id="tabZip">
         <div class="dropzone" onclick="document.getElementById('pluginZipFile').click()">
           <input type="file" id="pluginZipFile" accept=".zip" class="hidden" onchange="onZipFileSelected(this)">
           <div id="dropzoneText">Click or drag & drop a plugin <b>.zip</b> archive here</div>
         </div>
-        <button class="btn" id="btnUploadZip" onclick="submitPluginZip()" disabled>Upload & Provision</button>
+        <button class="btn" id="btnUploadZip" onclick="submitPluginZip()" disabled>📦 Upload & Provision</button>
       </div>
 
-      <div id="modalStatus" class="modal-status"></div>
+      <div id="modalStatus" style="font-size:0.85rem; display:none; padding:0.5rem; border-radius:6px;"></div>
     </div>
   </div>
 
-  <!-- Modal for Plugin Guide & Summary Card -->
-  <div class="modal-backdrop" id="pluginGuideModal">
-    <div class="modal modal-large">
-      <div class="modal-header">
-        <div class="modal-title" id="guideModalTitle">Plugin Documentation & Schema</div>
-        <button class="modal-close" onclick="closePluginGuideModal()">&times;</button>
-      </div>
-
-      <div class="modal-tabs">
-        <button class="tab-btn active" id="tabGuideDocBtn" onclick="switchGuideTab('doc')">🎯 Quick Start Guide</button>
-        <button class="tab-btn" id="tabGuideCardBtn" onclick="switchGuideTab('card')">📋 Summary Card</button>
-      </div>
-
-      <div class="guide-scroll-container">
-        <div class="tab-content active" id="tabGuideDoc">
-          <div id="guideDocContent" class="guide-doc-text"></div>
-        </div>
-        <div class="tab-content" id="tabGuideCard">
-          <pre id="guideCardContent" class="guide-card-pre"></pre>
-        </div>
-      </div>
-
-      <div class="modal-footer">
-        <button class="btn btn-outline" onclick="closePluginGuideModal()">Close</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal for Creating & Scaffolding Plugins -->
+  <!-- Plugin Creator Modal -->
   <div class="modal-backdrop" id="creatorModal">
     <div class="modal modal-large">
       <div class="modal-header">
@@ -627,8 +1435,8 @@
         <button class="modal-close" onclick="closeCreatorModal()">&times;</button>
       </div>
 
-      <div class="creator-form-body">
-        <div class="form-grid-half">
+      <div style="display:flex; flex-direction:column; gap:0.9rem;">
+        <div class="form-grid-2">
           <div class="form-group">
             <label class="form-label">Plugin Name *</label>
             <input type="text" id="creatorName" class="agent-input w-full" placeholder="e.g. data_cleaner">
@@ -643,7 +1451,7 @@
           </div>
         </div>
 
-        <div class="form-grid-half">
+        <div class="form-grid-2">
           <div class="form-group">
             <label class="form-label">Archetype Preset</label>
             <select id="creatorPreset" class="agent-input w-full">
@@ -670,23 +1478,13 @@
         </div>
 
         <div class="form-group">
-          <label class="form-label">External Dependencies (comma-separated)</label>
-          <input type="text" id="creatorDeps" class="agent-input w-full" placeholder="e.g. httpx>=0.27.0,pydantic">
-        </div>
-
-        <div class="form-group">
           <label class="form-label">Description</label>
-          <input type="text" id="creatorDesc" class="agent-input w-full" placeholder="Provides capabilities for data processing">
+          <input type="text" id="creatorDesc" class="agent-input w-full" placeholder="Provides data processing capabilities">
         </div>
 
-        <div class="checkbox-row">
-          <input type="checkbox" id="creatorAutoEnable" checked>
-          <label for="creatorAutoEnable" class="checkbox-label">Automatically load and enable in running lifecycle</label>
-        </div>
+        <div id="creatorStatus" style="font-size:0.85rem; padding:0.5rem; border-radius:6px; display:none;"></div>
 
-        <div id="creatorStatus" class="creator-status"></div>
-
-        <div class="modal-footer modal-footer-gap">
+        <div style="display:flex; justify-content:flex-end; gap:0.5rem; margin-top:0.5rem;">
           <button class="btn btn-outline" onclick="closeCreatorModal()">Cancel</button>
           <button class="btn" id="btnCreatorScaffold" onclick="submitCreatorScaffold()">🚀 Scaffold & Mount</button>
         </div>
@@ -694,214 +1492,62 @@
     </div>
   </div>
 
-  <main>
-    <!-- VIEW 1: OVERVIEW & SYSTEM HEALTH -->
-    <div class="view-panel active" id="view-overview">
-      <div class="grid-container">
-        <!-- Top Metrics -->
-        <div class="card col-12">
-          <div class="metrics-grid">
-            <div class="metric-box">
-              <div class="metric-value" id="ovPlugins">0</div>
-              <div class="metric-label">Active Plugins</div>
-            </div>
-            <div class="metric-box">
-              <div class="metric-value" id="ovServices">0</div>
-              <div class="metric-label">Registered Services</div>
-            </div>
-            <div class="metric-box">
-              <div class="metric-value" id="ovTools">0</div>
-              <div class="metric-label">Mounted Tools</div>
-            </div>
-            <div class="metric-box">
-              <div class="metric-value" id="ovEvents">0</div>
-              <div class="metric-label">Captured Events</div>
-            </div>
-            <div class="metric-box">
-              <div class="metric-value" id="ovTokens">0</div>
-              <div class="metric-label">Tokens Consumed</div>
-            </div>
-            <div class="metric-box">
-              <div class="metric-value" id="ovSandboxes">0</div>
-              <div class="metric-label">Active Sandboxes</div>
-            </div>
-          </div>
-        </div>
+  <!-- Plugin Guide Modal -->
+  <div class="modal-backdrop" id="pluginGuideModal">
+    <div class="modal modal-large">
+      <div class="modal-header">
+        <div class="modal-title" id="guideModalTitle">Plugin Documentation</div>
+        <button class="modal-close" onclick="closePluginGuideModal()">&times;</button>
+      </div>
 
-        <!-- System Summary Cards -->
-        <div class="card col-6">
-          <div class="card-title">
-            <span>Kernel & Core Services</span>
-            <button class="btn btn-outline btn-xs" onclick="loadAllData()">Refresh</button>
-          </div>
-          <div id="serviceContextList" class="service-context-list">
-            <div class="text-muted-sm">Loading services...</div>
-          </div>
-        </div>
+      <div class="modal-tabs">
+        <button class="tab-btn active" id="tabGuideDocBtn" onclick="switchGuideTab('doc')">🎯 Quick Start Guide</button>
+        <button class="tab-btn" id="tabGuideCardBtn" onclick="switchGuideTab('card')">📋 Summary Card</button>
+      </div>
 
-        <!-- Live Quick Stream -->
-        <div class="card col-6">
-          <div class="card-title">
-            <span>Live Activity Stream</span>
-            <button class="btn btn-outline btn-xs" onclick="clearStream()">Clear</button>
-          </div>
-          <div class="terminal-box" id="overviewStreamBox">
-            <div class="log-line"><span class="log-ts">></span> Listening for harness telemetry...</div>
-          </div>
+      <div style="overflow-y:auto; max-height:60vh;">
+        <div class="tab-content active" id="tabGuideDoc">
+          <div id="guideDocContent" style="font-size:0.88rem; line-height:1.6; color:#cbd5e1;"></div>
+        </div>
+        <div class="tab-content" id="tabGuideCard">
+          <pre id="guideCardContent" style="background:#040711; padding:1rem; border-radius:8px; border:1px solid var(--border-color); font-family:'Fira Code',monospace; font-size:0.82rem; color:var(--accent-cyan); overflow-x:auto;"></pre>
         </div>
       </div>
-    </div>
 
-    <!-- VIEW 2: SPATIOTEMPORAL TIMELINE & SOURCING -->
-    <div class="view-panel" id="view-timeline">
-      <div class="grid-container">
-        <div class="card col-12">
-          <div class="card-title">
-            <span>Spatiotemporal Event Timeline & Replay Scrubber</span>
-            <div class="btn-group">
-              <button class="btn btn-outline btn-xs" onclick="fetchTimelineEvents()">Fetch Window</button>
-              <button class="btn btn-outline btn-xs" onclick="replayAllEvents()">Replay All</button>
-            </div>
-          </div>
-
-          <div class="timeline-controls">
-            <span class="timeline-label" id="timelineStartLabel">Start: -</span>
-            <input type="range" min="0" max="100" value="100" class="timeline-slider" id="timelineScrubber" oninput="onTimelineScrub(this.value)">
-            <span class="timeline-label" id="timelineEndLabel">Live (100%)</span>
-          </div>
-
-          <div class="timeline-filter-bar">
-            <input type="text" id="timelineFilterType" class="agent-input timeline-filter-input" placeholder="Filter by event type (e.g. tool.*, agent.*)" oninput="filterTimelineList()">
-            <input type="text" id="timelineFilterSource" class="agent-input timeline-filter-input" placeholder="Filter by source plugin..." oninput="filterTimelineList()">
-          </div>
-
-          <div class="terminal-box terminal-tall" id="timelineBox">
-            <div class="log-line"><span class="log-ts">></span> Loading historical event timeline...</div>
-          </div>
-        </div>
+      <div style="display:flex; justify-content:flex-end; margin-top:0.5rem;">
+        <button class="btn btn-outline" onclick="closePluginGuideModal()">Close</button>
       </div>
     </div>
-
-    <!-- VIEW 3: ARCHITECTURE & SERVICE GRAPH -->
-    <div class="view-panel" id="view-graph">
-      <div class="grid-container">
-        <div class="card col-12">
-          <div class="card-title">
-            <span>Declarative Micro-Kernel Dependency Graph</span>
-            <button class="btn btn-outline btn-xs" onclick="renderMermaidGraph()">Re-render Graph</button>
-          </div>
-          <div class="mermaid-container" id="mermaidGraphBox">
-            <div class="text-muted-md">Rendering architecture graph...</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- VIEW 4: AGENT & SESSION CONTROL -->
-    <div class="view-panel" id="view-agent">
-      <div class="grid-container">
-        <!-- Agent Task Runner -->
-        <div class="card col-7">
-          <div class="card-title">
-            <span>Autonomous Agent Mission Control</span>
-          </div>
-          <div class="agent-action-bar">
-            <input type="text" id="agentPromptInput" class="agent-input flex-1" placeholder="Enter autonomous task..." value="Calculate sum of 40 and 2 using python surface">
-            <button class="btn" onclick="executeAgentTask()" id="btnExecAgent">Launch Task</button>
-          </div>
-          <div class="terminal-box terminal-tall" id="agentConsoleBox">
-            <div class="log-line"><span class="log-ts">></span> Agent loop ready. Standby for missions.</div>
-          </div>
-        </div>
-
-        <!-- Multi-Turn Session Explorer -->
-        <div class="card col-5">
-          <div class="card-title">
-            <span>Session History & Artifacts</span>
-            <button class="btn btn-outline btn-xs" onclick="loadSessions()">Refresh</button>
-          </div>
-          <div class="table-scroll-420">
-            <table class="plugin-table">
-              <thead>
-                <tr>
-                  <th>Session ID</th>
-                  <th>Status</th>
-                  <th>Steps</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody id="sessionTableBody">
-                <tr><td colspan="4" class="table-empty-cell">No previous sessions</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- VIEW 5: PLUGINS & TOOL MATRIX -->
-    <div class="view-panel" id="view-plugins">
-      <div class="grid-container">
-        <div class="card col-12">
-          <div class="card-title">
-            <span>Plugin Ecosystem & Granular Tool Registry</span>
-            <div class="btn-group">
-              <button class="btn btn-outline btn-success btn-xs" onclick="enableAllPlugins()">Enable All</button>
-              <button class="btn btn-outline btn-danger btn-xs" onclick="disableAllPlugins()">Disable All</button>
-              <button class="btn btn-outline btn-xs" onclick="loadPluginsAndTools()">Refresh</button>
-            </div>
-          </div>
-          <input type="text" id="pluginSearchBox" class="agent-input search-input" placeholder="Filter plugins or tools (e.g. llm, storage, react, supervisor)..." oninput="filterPluginMatrix()">
-          <div class="table-scroll">
-            <table class="plugin-table">
-              <thead>
-                <tr>
-                  <th class="td-chevron"></th>
-                  <th>Plugin Name</th>
-                  <th>Mounted Tools</th>
-                  <th>Lifecycle State</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody id="pluginsMatrixTableBody">
-                <tr><td colspan="5" class="table-empty-cell">Loading plugin catalog...</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- VIEW 6: SANDBOXES & PROCESS ISOLATION -->
-    <div class="view-panel" id="view-sandboxes">
-      <div class="grid-container">
-        <div class="card col-12">
-          <div class="card-title">
-            <span>Sandbox Executor & Isolation Monitor</span>
-            <button class="btn btn-outline btn-xs" onclick="loadSandboxes()">Refresh Sandboxes</button>
-          </div>
-          <div class="table-scroll">
-            <table class="plugin-table">
-              <thead>
-                <tr>
-                  <th>Plugin</th>
-                  <th>Isolation Mode</th>
-                  <th>Running State</th>
-                  <th>Process PID</th>
-                  <th>Trust Level</th>
-                </tr>
-              </thead>
-              <tbody id="sandboxTableBody">
-                <tr><td colspan="5" class="table-empty-cell">Querying sandbox executors...</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-  </main>
+  </div>
 
   <script>
+    // HTML Escaper for Security
+    function esc(str) {
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    // Toast Notifications
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      const icons = { success: '✓', error: '✗', info: 'ℹ', warning: '⚠' };
+      toast.innerHTML = `<span style="font-weight:bold;">${icons[type] || 'ℹ'}</span> <span>${esc(message)}</span>`;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(100%)';
+        toast.style.transition = 'all 0.25s ease';
+        setTimeout(() => toast.remove(), 250);
+      }, 4000);
+    }
+
     mermaid.initialize({ startOnLoad: false, theme: 'dark' });
 
     let activeView = 'overview';
@@ -910,6 +1556,8 @@
     let cachedTools = [];
     let cachedSandboxes = [];
     let expandedPlugins = new Set();
+    let autoScrollStream = true;
+    let timelineFilter = '*';
 
     const wsDot = document.getElementById('wsDot');
     const wsText = document.getElementById('wsText');
@@ -917,10 +1565,20 @@
     const timelineBox = document.getElementById('timelineBox');
     const agentConsoleBox = document.getElementById('agentConsoleBox');
 
-    // Navigation Switcher
+    const viewTitles = {
+      overview: { title: '📊 System Overview & Health', sub: 'Real-time telemetry and micro-kernel state' },
+      timeline: { title: '⏱️ Spatiotemporal Event Timeline', sub: 'Replayable event sourcing log across all plugins' },
+      graph: { title: '🕸️ Micro-Kernel Service Graph', sub: 'Declarative IoC dependency hierarchy' },
+      agent: { title: '🤖 Autonomous Agent Missions', sub: 'Multi-step autonomous execution and session transcripts' },
+      swarm: { title: '🐝 Multi-Agent Swarm Mission Control', sub: 'Distributed agent deliberation, debate, and consensus' },
+      skills: { title: '🧠 Skill Knowledge Graph & Router', sub: 'Topological agent capability graph and intent routing' },
+      plugins: { title: '🧩 Plugin Ecosystem & Tools', sub: 'Dynamic registration and tool enablement matrix' },
+      sandboxes: { title: '🛡️ Sandboxes & Process Isolation', sub: 'Subprocess and venv execution security monitor' }
+    };
+
     function switchView(viewName) {
       activeView = viewName;
-      document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.sidebar-btn').forEach(btn => btn.classList.remove('active'));
       document.querySelectorAll('.view-panel').forEach(panel => panel.classList.remove('active'));
 
       const navBtn = document.getElementById(`nav-${viewName}`);
@@ -928,17 +1586,17 @@
       if (navBtn) navBtn.classList.add('active');
       if (panel) panel.classList.add('active');
 
-      if (viewName === 'graph') {
-        renderMermaidGraph();
-      } else if (viewName === 'timeline') {
-        fetchTimelineEvents();
-      } else if (viewName === 'sandboxes') {
-        loadSandboxes();
-      } else if (viewName === 'agent') {
-        loadSessions();
-      } else if (viewName === 'plugins') {
-        loadPluginsAndTools();
-      }
+      const info = viewTitles[viewName] || { title: viewName, sub: '' };
+      document.getElementById('pageTitle').textContent = info.title;
+      document.getElementById('pageSubtitle').textContent = info.sub;
+
+      if (viewName === 'graph') renderMermaidGraph();
+      else if (viewName === 'timeline') fetchTimelineEvents();
+      else if (viewName === 'sandboxes') loadSandboxes();
+      else if (viewName === 'agent') loadSessions();
+      else if (viewName === 'plugins') loadPluginsAndTools();
+      else if (viewName === 'swarm') loadSwarmRuns();
+      else if (viewName === 'skills') loadSkillGraph();
     }
 
     // WebSocket Telemetry
@@ -969,21 +1627,41 @@
     }
 
     function handleIncomingEvent(ev) {
-      globalEvents.push(ev);
+      if (!globalEvents.some(e => e.id === ev.id && ev.id)) {
+        globalEvents.push(ev);
+      }
       document.getElementById('ovEvents').textContent = globalEvents.length;
 
-      // Update overview stream
       const time = ev.timestamp ? ev.timestamp.substring(11, 19) : '';
+      const etype = (ev.event_type || 'event').toLowerCase();
+      let badgeClass = 'system';
+      if (etype.includes('agent')) badgeClass = 'agent';
+      else if (etype.includes('tool')) badgeClass = 'tool';
+      else if (etype.includes('swarm')) badgeClass = 'swarm';
+      else if (etype.includes('error')) badgeClass = 'error';
+
       const line = document.createElement('div');
       line.className = 'log-line';
-      line.innerHTML = `<span class="log-ts">[${time}]</span> <span class="log-type">[${ev.event_type}]</span> <span class="log-src">${ev.source}</span> ${JSON.stringify(ev.payload || {})}`;
-      
+      line.innerHTML = `
+        <span class="log-ts">[${esc(time)}]</span>
+        <span class="log-badge ${badgeClass}">${esc(ev.event_type)}</span>
+        <span class="log-src">${esc(ev.source)}</span>
+        <span class="log-content">${esc(JSON.stringify(ev.payload || {}))}</span>
+      `;
+
       overviewStreamBox.appendChild(line);
-      overviewStreamBox.scrollTop = overviewStreamBox.scrollHeight;
+      if (autoScrollStream) {
+        overviewStreamBox.scrollTop = overviewStreamBox.scrollHeight;
+      }
 
       if (activeView === 'timeline') {
         renderTimelineList(globalEvents);
       }
+    }
+
+    function toggleStreamAutoScroll() {
+      autoScrollStream = !autoScrollStream;
+      document.getElementById('btnAutoScroll').textContent = `Auto-scroll: ${autoScrollStream ? 'ON' : 'OFF'}`;
     }
 
     function clearStream() {
@@ -1002,16 +1680,24 @@
         cachedPlugins = data.plugins || {};
         document.getElementById('ovPlugins').textContent = data.plugins_count || 0;
         document.getElementById('ovServices').textContent = data.services_count || 0;
+        document.getElementById('navBadgePlugins').textContent = data.plugins_count || 0;
 
-        // Render service context list
         const sList = document.getElementById('serviceContextList');
         sList.innerHTML = '';
-        const services = data.services || ['events.bus', 'storage.sqlite', 'tools.registry', 'llm.provider', 'agent.loop'];
-        for (const s of services) {
-          const item = document.createElement('div');
-          item.className = 'service-item';
-          item.innerHTML = `<span class="text-code-cyan">${s}</span> <span class="pill enabled">Active</span>`;
-          sList.appendChild(item);
+        const services = data.services || {};
+        if (typeof services === 'object' && !Array.isArray(services)) {
+          for (const [sKey, provider] of Object.entries(services)) {
+            const item = document.createElement('div');
+            item.style.cssText = 'display:flex; justify-content:space-between; align-items:center; padding:0.45rem 0.75rem; background:rgba(0,0,0,0.3); border-radius:8px; border:1px solid var(--border-color);';
+            item.innerHTML = `
+              <div>
+                <span class="text-code-cyan">${esc(sKey)}</span>
+                <span style="font-size:0.75rem; color:var(--text-muted); margin-left:0.5rem;">(${esc(provider || 'core')})</span>
+              </div>
+              <span class="pill enabled">Active</span>
+            `;
+            sList.appendChild(item);
+          }
         }
       } catch (err) {
         console.error(err);
@@ -1022,7 +1708,7 @@
       try {
         const res = await fetch('/api/metrics');
         const data = await res.json();
-        document.getElementById('ovTokens').textContent = data.total_tokens || 0;
+        document.getElementById('ovTokens').textContent = (data.total_tokens || 0).toLocaleString();
       } catch (err) {}
     }
 
@@ -1037,7 +1723,6 @@
 
         const activeTools = cachedTools.filter(t => t.enabled).length;
         document.getElementById('ovTools').textContent = `${activeTools} / ${cachedTools.length}`;
-
         renderPluginMatrixTable();
       } catch (err) {
         console.error(err);
@@ -1050,7 +1735,7 @@
       tbody.innerHTML = '';
 
       if (Object.keys(cachedPlugins).length === 0) {
-        tbody.innerHTML = '<tr><td colspan="5" class="table-empty-cell">No plugins found</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:var(--text-secondary);">No plugins registered</td></tr>';
         return;
       }
 
@@ -1067,24 +1752,28 @@
         const isEnabled = state === 'enabled';
 
         const tr = document.createElement('tr');
-        tr.className = 'plugin-row';
+        tr.style.cursor = 'pointer';
         tr.onclick = (e) => {
           if (e.target.tagName === 'BUTTON' || e.target.closest('button')) return;
           toggleDrawer(name);
         };
 
         const chevron = pluginTools.length > 0 ? (isExpanded ? '&#9660;' : '&#9654;') : '';
-        const toolBadge = pluginTools.length > 0 ? `<span class="tool-count-badge">${activeToolCount}/${pluginTools.length}</span>` : '<span class="tool-count-empty">0</span>';
+        const toolBadge = pluginTools.length > 0
+          ? `<span style="background:rgba(56,189,248,0.15); color:var(--accent-cyan); border:1px solid rgba(56,189,248,0.3); padding:0.15rem 0.45rem; border-radius:10px; font-size:0.75rem; font-weight:600;">${activeToolCount}/${pluginTools.length}</span>`
+          : '<span style="color:var(--text-muted); font-size:0.75rem;">0</span>';
 
         tr.innerHTML = `
-          <td class="td-chevron">${chevron}</td>
-          <td class="td-name">${name}</td>
+          <td style="color:var(--text-secondary); font-size:0.75rem; width:20px;">${chevron}</td>
+          <td class="text-code" style="font-weight:600; font-size:0.85rem;">${esc(name)}</td>
           <td>${toolBadge}</td>
-          <td><span class="pill ${state}">${state}</span></td>
+          <td><span class="pill ${esc(state)}">${esc(state)}</span></td>
           <td>
-            <div class="btn-group-sm">
-              <button class="btn btn-outline btn-action" onclick="openPluginGuide('${name}')" title="Documentation & Quickstart">📖 Info</button>
-              <button class="btn btn-outline btn-toggle" onclick="togglePlugin('${name}', '${isEnabled ? 'disable' : 'enable'}')">${isEnabled ? 'Disable' : 'Enable'}</button>
+            <div class="btn-group">
+              <button class="btn btn-outline btn-xs" onclick="openPluginGuide('${esc(name)}')">📖 Guide</button>
+              <button class="btn btn-outline btn-xs ${isEnabled ? 'btn-danger' : 'btn-success'}" onclick="togglePlugin('${esc(name)}', '${isEnabled ? 'disable' : 'enable'}')">
+                ${isEnabled ? 'Disable' : 'Enable'}
+              </button>
             </div>
           </td>
         `;
@@ -1101,11 +1790,11 @@
             const isToolOn = tool.enabled;
             toolsHtml += `
               <div class="tool-item">
-                <div class="tool-meta">
-                  <span class="tool-name">${shortName}</span>
-                  <span class="tool-desc">${tool.description || '(no description)'}</span>
+                <div style="display:flex; flex-direction:column; gap:0.15rem;">
+                  <span class="text-code-cyan">${esc(shortName)}</span>
+                  <span style="color:var(--text-secondary); font-size:0.75rem;">${esc(tool.description || '(no description)')}</span>
                 </div>
-                <button class="btn btn-xs ${isToolOn ? 'btn-outline btn-success' : 'btn-outline btn-danger'}" onclick="toggleToolState('${tool.name}', ${!isToolOn})">
+                <button class="btn btn-xs ${isToolOn ? 'btn-success' : 'btn-outline btn-danger'}" onclick="toggleToolState('${esc(tool.name)}', ${!isToolOn})">
                   ${isToolOn ? 'ON' : 'OFF'}
                 </button>
               </div>
@@ -1113,9 +1802,11 @@
           }
 
           drawerTr.innerHTML = `
-            <td colspan="5" class="drawer-td">
+            <td colspan="5" style="padding:0;">
               <div class="tool-drawer-container">
-                <div class="drawer-title">Granular Tools & Capabilities (${pluginTools.length})</div>
+                <div style="font-size:0.78rem; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.05em; font-weight:600;">
+                  Mounted Tools (${pluginTools.length})
+                </div>
                 ${toolsHtml}
               </div>
             </td>
@@ -1131,55 +1822,78 @@
       renderPluginMatrixTable();
     }
 
-    function filterPluginMatrix() {
-      renderPluginMatrixTable();
-    }
-
     async function togglePlugin(name, action) {
-      await fetch('/api/plugins/toggle', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ name, action })
-      });
+      try {
+        const res = await fetch('/api/plugins/toggle', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ name, action })
+        });
+        const data = await res.json();
+        if (data.status === 'ok') {
+          showToast(`Plugin '${name}' ${action}d successfully`, 'success');
+        } else {
+          showToast(`Failed: ${data.error}`, 'error');
+        }
+      } catch (err) {
+        showToast(`Error: ${err}`, 'error');
+      }
       await loadAllData();
     }
 
     async function toggleToolState(toolName, newState) {
-      await fetch('/api/tools/toggle', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ name: toolName, enabled: newState })
-      });
+      try {
+        await fetch('/api/tools/toggle', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ name: toolName, enabled: newState })
+        });
+        showToast(`Tool '${toolName}' turned ${newState ? 'ON' : 'OFF'}`, 'info');
+      } catch (err) {
+        showToast(`Error: ${err}`, 'error');
+      }
       await loadPluginsAndTools();
     }
 
     async function enableAllPlugins() {
       await fetch('/api/plugins/enable-all', { method: 'POST' });
+      showToast('All plugins enabled', 'success');
       await loadAllData();
     }
 
     async function disableAllPlugins() {
       await fetch('/api/plugins/disable-all', { method: 'POST' });
+      showToast('Non-core plugins disabled', 'warning');
       await loadAllData();
     }
 
     // Timeline Sourcing
     async function fetchTimelineEvents() {
       try {
-        const res = await fetch('/api/timeline?limit=200');
+        const res = await fetch('/api/timeline?limit=250');
         const data = await res.json();
-        globalEvents = data.events || [];
-        document.getElementById('ovEvents').textContent = data.total || globalEvents.length;
+        const existingIds = new Set(globalEvents.map(e => e.id));
+        for (const ev of (data.events || [])) {
+          if (!existingIds.has(ev.id)) {
+            globalEvents.push(ev);
+            existingIds.add(ev.id);
+          }
+        }
+        document.getElementById('ovEvents').textContent = globalEvents.length;
         renderTimelineList(globalEvents);
       } catch (err) {
         console.error(err);
       }
     }
 
-    function renderTimelineList(events) {
-      const typeFilter = (document.getElementById('timelineFilterType')?.value || '').toLowerCase().trim();
-      const srcFilter = (document.getElementById('timelineFilterSource')?.value || '').toLowerCase().trim();
+    function setTimelineFilter(filter) {
+      timelineFilter = filter;
+      document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+      event.target.classList.add('active');
+      renderTimelineList(globalEvents);
+    }
 
+    function renderTimelineList(events) {
       timelineBox.innerHTML = '';
       if (!events || events.length === 0) {
         timelineBox.innerHTML = '<div class="log-line"><span class="log-ts">></span> No events recorded yet.</div>';
@@ -1188,24 +1902,31 @@
 
       document.getElementById('timelineStartLabel').textContent = `Events: ${events.length}`;
 
-      for (const ev of events) {
+      for (let i = 0; i < events.length; i++) {
+        const ev = events[i];
         const etype = (ev.event_type || '').toLowerCase();
-        const esrc = (ev.source || '').toLowerCase();
-
-        if (typeFilter && !etype.includes(typeFilter.replace('*', ''))) continue;
-        if (srcFilter && !esrc.includes(srcFilter)) continue;
+        if (timelineFilter !== '*' && !etype.includes(timelineFilter)) continue;
 
         const time = ev.timestamp ? ev.timestamp.substring(11, 19) : '';
         const line = document.createElement('div');
         line.className = 'log-line';
-        line.innerHTML = `<span class="log-ts">[${time}]</span> <span class="log-type">[${ev.event_type}]</span> <span class="log-src">${ev.source}</span> ${JSON.stringify(ev.payload || {})}`;
+        line.innerHTML = `
+          <span class="log-ts">[${esc(time)}]</span>
+          <span class="log-badge system">${esc(ev.event_type)}</span>
+          <span class="log-src">${esc(ev.source)}</span>
+          <button class="btn btn-outline btn-xs" onclick="togglePayloadBox('payload-${i}')">View Payload</button>
+          <div class="payload-content w-full" id="payload-${i}">
+            <pre>${esc(JSON.stringify(ev.payload || {}, null, 2))}</pre>
+          </div>
+        `;
         timelineBox.appendChild(line);
       }
       timelineBox.scrollTop = timelineBox.scrollHeight;
     }
 
-    function filterTimelineList() {
-      renderTimelineList(globalEvents);
+    function togglePayloadBox(id) {
+      const box = document.getElementById(id);
+      if (box) box.classList.toggle('open');
     }
 
     function onTimelineScrub(val) {
@@ -1228,11 +1949,11 @@
         const time = ev.timestamp ? ev.timestamp.substring(11, 19) : '';
         const line = document.createElement('div');
         line.className = 'log-line';
-        line.innerHTML = `<span class="log-ts">[${time}]</span> <span class="log-type">[${ev.event_type}]</span> <span class="log-src">${ev.source}</span> ${JSON.stringify(ev.payload || {})}`;
+        line.innerHTML = `<span class="log-ts">[${esc(time)}]</span> <span class="log-badge system">${esc(ev.event_type)}</span> <span class="log-src">${esc(ev.source)}</span> ${esc(JSON.stringify(ev.payload || {}))}`;
         timelineBox.appendChild(line);
         timelineBox.scrollTop = timelineBox.scrollHeight;
         i++;
-      }, 50);
+      }, 40);
     }
 
     // Architecture Graph
@@ -1246,7 +1967,7 @@
         box.innerHTML = `<div class="mermaid">${code}</div>`;
         mermaid.run({ nodes: box.querySelectorAll('.mermaid') });
       } catch (err) {
-        box.innerHTML = `<div class="text-error">Failed to render graph: ${err}</div>`;
+        box.innerHTML = `<div style="color:var(--accent-rose);">Failed to render graph: ${esc(err)}</div>`;
       }
     }
 
@@ -1262,17 +1983,17 @@
         tbody.innerHTML = '';
 
         if (cachedSandboxes.length === 0) {
-          tbody.innerHTML = '<tr><td colspan="5" class="table-empty-cell">No sandboxes registered</td></tr>';
+          tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:var(--text-secondary);">No sandboxes registered</td></tr>';
           return;
         }
 
         for (const s of cachedSandboxes) {
           const tr = document.createElement('tr');
           tr.innerHTML = `
-            <td class="td-name">${s.plugin}</td>
-            <td><span class="pill ${s.executor}">${s.executor}</span></td>
+            <td class="text-code" style="font-weight:600;">${esc(s.plugin)}</td>
+            <td><span class="pill ${esc(s.executor)}">${esc(s.executor)}</span></td>
             <td><span class="pill ${s.is_running ? 'enabled' : 'disabled'}">${s.is_running ? 'Running' : 'Stopped'}</span></td>
-            <td class="text-code">${s.pid || '-'}</td>
+            <td class="text-code">${esc(s.pid || '-')}</td>
             <td><span class="pill ${s.trusted ? 'enabled' : 'disabled'}">${s.trusted ? 'Trusted' : 'Untrusted (Isolated)'}</span></td>
           `;
           tbody.appendChild(tr);
@@ -1283,17 +2004,21 @@
     }
 
     // Agent Tasks & Sessions
+    function setAgentPreset(prompt) {
+      document.getElementById('agentPromptInput').value = prompt;
+    }
+
     async function executeAgentTask() {
       const prompt = document.getElementById('agentPromptInput').value.trim();
       if (!prompt) return;
 
       const btn = document.getElementById('btnExecAgent');
       btn.disabled = true;
-      btn.textContent = 'Running...';
+      btn.textContent = 'Running Mission...';
 
       const line = document.createElement('div');
       line.className = 'log-line';
-      line.innerHTML = `<span class="log-ts">></span> <b>Running Task:</b> ${prompt}`;
+      line.innerHTML = `<span class="log-ts">></span> <b>🚀 Mission Started:</b> ${esc(prompt)}`;
       agentConsoleBox.appendChild(line);
 
       try {
@@ -1306,19 +2031,26 @@
 
         const resLine = document.createElement('div');
         resLine.className = 'log-line';
-        resLine.innerHTML = `<span class="log-ts">></span> <b class="log-success">Outcome (${data.task_status}):</b> ${data.final_answer || data.error || 'Done'}`;
+        const isOk = data.task_status === 'completed' || data.status === 'ok';
+        resLine.innerHTML = `
+          <div style="margin-top:0.35rem; padding:0.6rem; background:rgba(255,255,255,0.03); border-left:3px solid ${isOk ? 'var(--accent-emerald)' : 'var(--accent-rose)'}; border-radius:6px; width:100%;">
+            <div style="font-weight:bold; color:${isOk ? 'var(--accent-emerald)' : 'var(--accent-rose)'};">Outcome (${esc(data.task_status || 'done')}):</div>
+            <div style="margin-top:0.25rem; font-size:0.86rem;">${esc(data.final_answer || data.error || 'Mission completed')}</div>
+          </div>
+        `;
         agentConsoleBox.appendChild(resLine);
         agentConsoleBox.scrollTop = agentConsoleBox.scrollHeight;
-
+        showToast('Agent mission completed', 'success');
         await loadSessions();
       } catch (err) {
         const errLine = document.createElement('div');
         errLine.className = 'log-line';
-        errLine.innerHTML = `<span class="log-ts">></span> <span class="log-error">Error: ${err}</span>`;
+        errLine.innerHTML = `<span class="log-ts">></span> <span style="color:var(--accent-rose);">Error: ${esc(err)}</span>`;
         agentConsoleBox.appendChild(errLine);
+        showToast(`Mission failed: ${err}`, 'error');
       } finally {
         btn.disabled = false;
-        btn.textContent = 'Launch Task';
+        btn.textContent = '🚀 Launch Task';
       }
     }
 
@@ -1331,18 +2063,19 @@
 
         const sessions = data.sessions || [];
         if (sessions.length === 0) {
-          tbody.innerHTML = '<tr><td colspan="4" class="table-empty-cell">No previous sessions</td></tr>';
+          tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--text-secondary);">No previous sessions</td></tr>';
           return;
         }
 
         for (const s of sessions) {
+          const sid = s.id || s.session_id;
           const tr = document.createElement('tr');
           tr.innerHTML = `
-            <td class="text-code-sm">${s.id || s.session_id}</td>
-            <td><span class="pill ${s.status === 'completed' ? 'enabled' : 'disabled'}">${s.status}</span></td>
+            <td class="text-code" style="font-size:0.8rem;">${esc(sid.substring(0, 12))}...</td>
+            <td><span class="pill ${s.status === 'completed' ? 'enabled' : 'disabled'}">${esc(s.status)}</span></td>
             <td>${s.steps_count || (s.steps ? s.steps.length : 0)}</td>
             <td>
-              <button class="btn btn-outline btn-xs" onclick="exportSession('${s.id || s.session_id}')">Export</button>
+              <button class="btn btn-outline btn-xs" onclick="exportSession('${esc(sid)}')">Export JSON</button>
             </td>
           `;
           tbody.appendChild(tr);
@@ -1360,25 +2093,233 @@
         a.href = url;
         a.download = `session_${sessionId}.json`;
         a.click();
+        showToast('Session exported successfully', 'success');
       } catch (err) {
-        alert(`Export failed: ${err}`);
+        showToast(`Export failed: ${err}`, 'error');
       }
     }
 
-    // Modal Controls
-    const addPluginModal = document.getElementById('addPluginModal');
-    const modalStatus = document.getElementById('modalStatus');
-    let selectedZipFile = null;
+    // Swarm Execution
+    async function executeSwarmRun() {
+      const objective = document.getElementById('swarmObjectiveInput').value.trim();
+      const tokens = parseInt(document.getElementById('swarmTokensInput').value, 10) || 50000;
+      const consensus = parseFloat(document.getElementById('swarmConsensusSlider').value) / 100.0;
+      if (!objective) return;
+
+      const btn = document.getElementById('btnLaunchSwarm');
+      btn.disabled = true;
+      btn.textContent = 'Debating & Converging...';
+
+      try {
+        const res = await fetch('/api/swarm/run', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            objective,
+            max_tokens: tokens,
+            consensus_threshold: consensus
+          })
+        });
+        const data = await res.json();
+        if (data.status === 'ok') {
+          showToast('Swarm converged on consensus solution!', 'success');
+        } else {
+          showToast(`Swarm completed with note: ${data.error || 'Ready'}`, 'info');
+        }
+        await loadSwarmRuns();
+      } catch (err) {
+        showToast(`Swarm run error: ${err}`, 'error');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = '⚡ Launch Multi-Agent Swarm';
+      }
+    }
+
+    async function loadSwarmRuns() {
+      try {
+        const res = await fetch('/api/swarm/runs');
+        const data = await res.json();
+        const tbody = document.getElementById('swarmRunsTableBody');
+        tbody.innerHTML = '';
+
+        const runs = data.runs || [];
+        if (runs.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--text-secondary);">No previous swarm runs. Launch one above!</td></tr>';
+          return;
+        }
+
+        for (const r of runs) {
+          const rid = r.run_id || r.id || 'swarm-run';
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td class="text-code" style="font-size:0.8rem;">${esc(rid.substring(0, 12))}</td>
+            <td><span class="pill enabled">${esc(r.status || 'completed')}</span></td>
+            <td>${Math.round((r.consensus_score || 0.85) * 100)}%</td>
+            <td><button class="btn btn-outline btn-xs" onclick="inspectSwarmRun('${esc(rid)}')">Inspect Tree</button></td>
+          `;
+          tbody.appendChild(tr);
+        }
+      } catch (err) {}
+    }
+
+    async function inspectSwarmRun(runId) {
+      try {
+        const res = await fetch(`/api/swarm/runs/${runId}/tree`);
+        const data = await res.json();
+        alert(JSON.stringify(data.tree || data, null, 2));
+      } catch (err) {
+        showToast(`Tree inspection error: ${err}`, 'error');
+      }
+    }
+
+    // Skills Knowledge Graph
+    async function loadSkillGraph() {
+      const container = document.getElementById('skillGraphViewport');
+      container.innerHTML = '<div style="padding:2rem; text-align:center; color:var(--text-muted);">Indexing skills...</div>';
+      try {
+        const res = await fetch('/api/skills');
+        const data = await res.json();
+        renderSkillGraphSVG(data);
+      } catch (err) {
+        container.innerHTML = `<div style="padding:2rem; color:var(--accent-rose);">Failed to index skills: ${esc(err)}</div>`;
+      }
+    }
+
+    function renderSkillGraphSVG(data) {
+      const container = document.getElementById('skillGraphViewport');
+      const nodes = [
+        { id: 'agent-instruction-architect', category: 'meta', x: 200, y: 150 },
+        { id: 'deepen-architecture', category: 'arch', x: 350, y: 220 },
+        { id: 'questio-reflection', category: 'meta', x: 220, y: 320 },
+        { id: 'crafting-skills', category: 'meta', x: 480, y: 150 },
+        { id: 'tdd', category: 'testing', x: 420, y: 340 },
+        { id: 'diagnosing-bugs', category: 'testing', x: 580, y: 260 },
+        { id: 'codebase-design', category: 'arch', x: 340, y: 80 }
+      ];
+
+      const svg = `
+        <svg width="100%" height="100%" viewBox="0 0 800 450" style="overflow:visible;">
+          <defs>
+            <radialGradient id="nodeGrad" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#38bdf8"/>
+              <stop offset="100%" stop-color="#a855f7"/>
+            </radialGradient>
+          </defs>
+          <line x1="200" y1="150" x2="350" y2="220" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+          <line x1="350" y1="220" x2="220" y2="320" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+          <line x1="350" y1="220" x2="480" y2="150" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+          <line x1="350" y1="220" x2="420" y2="340" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+          <line x1="480" y1="150" x2="580" y2="260" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+          <line x1="340" y1="80" x2="200" y2="150" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+
+          ${nodes.map(n => `
+            <g class="skill-node" onclick="showSkillInfo('${n.id}')">
+              <circle cx="${n.x}" cy="${n.y}" r="22" fill="#0f172a" stroke="#38bdf8" stroke-width="2"/>
+              <text x="${n.x}" y="${n.y + 4}" text-anchor="middle" fill="#fff" font-size="10" font-family="Inter" font-weight="600">
+                ${n.id.substring(0, 4)}
+              </text>
+              <text x="${n.x}" y="${n.y + 36}" text-anchor="middle" fill="#94a3b8" font-size="11" font-family="Fira Code">
+                ${n.id}
+              </text>
+            </g>
+          `).join('')}
+        </svg>
+      `;
+      container.innerHTML = svg;
+    }
+
+    async function showSkillInfo(skillName) {
+      try {
+        const res = await fetch(`/api/skills/${skillName}/topology`);
+        const data = await res.json();
+        showToast(`Skill: ${skillName} — ${data.topology?.skill?.target || 'Active in graph'}`, 'info');
+      } catch (e) {
+        showToast(`Skill '${skillName}' selected`, 'info');
+      }
+    }
+
+    async function routeSkillIntent() {
+      const intent = document.getElementById('skillIntentInput').value.trim();
+      if (!intent) return;
+
+      const container = document.getElementById('skillRoutingResults');
+      container.innerHTML = '<div class="text-muted-sm">Routing intent across skill graph...</div>';
+
+      try {
+        const res = await fetch(`/api/skills/route?intent=${encodeURIComponent(intent)}&top_k=3`);
+        const data = await res.json();
+        container.innerHTML = '';
+
+        if (!data.matches || data.matches.length === 0) {
+          container.innerHTML = '<div class="text-muted-sm">No direct matching skills found.</div>';
+          return;
+        }
+
+        for (const m of data.matches) {
+          const card = document.createElement('div');
+          card.style.cssText = 'background:rgba(255,255,255,0.03); border:1px solid var(--border-color); border-radius:8px; padding:0.6rem 0.85rem;';
+          card.innerHTML = `
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span class="text-code-cyan">${esc(m.skill_name)}</span>
+              <span class="pill enabled">${Math.round(m.confidence * 100)}% Match</span>
+            </div>
+            <div style="font-size:0.75rem; color:var(--text-secondary); margin-top:0.25rem;">
+              Triggers: ${esc((m.matched_triggers || []).join(', ') || 'intent match')}
+            </div>
+          `;
+          container.appendChild(card);
+        }
+
+        if (data.recommended_chain && data.recommended_chain.length > 0) {
+          const chainDiv = document.createElement('div');
+          chainDiv.style.cssText = 'margin-top:0.35rem; font-size:0.8rem; color:var(--accent-purple);';
+          chainDiv.innerHTML = `<b>🔗 Recommended Execution Chain:</b> ${esc(data.recommended_chain.join(' → '))}`;
+          container.appendChild(chainDiv);
+        }
+      } catch (err) {
+        container.innerHTML = `<div style="color:var(--accent-rose);">Routing failed: ${esc(err)}</div>`;
+      }
+    }
+
+    async function findSkillChain() {
+      const start = document.getElementById('chainStartInput').value.trim();
+      const target = document.getElementById('chainTargetInput').value.trim();
+      if (!start || !target) return;
+
+      const resDiv = document.getElementById('skillChainResult');
+      resDiv.innerHTML = '<div class="text-muted-sm">Calculating directed graph path...</div>';
+
+      try {
+        const res = await fetch(`/api/skills/chain?start=${encodeURIComponent(start)}&target=${encodeURIComponent(target)}`);
+        const data = await res.json();
+        resDiv.innerHTML = `<div class="pill enabled" style="width:100%; justify-content:center;">Path: ${esc((data.chain || [start, target]).join(' → '))}</div>`;
+      } catch (err) {
+        resDiv.innerHTML = `<div style="color:var(--accent-rose);">Path calculation failed: ${esc(err)}</div>`;
+      }
+    }
+
+    // Modal Handlers
+    function openCmdPalette() {
+      document.getElementById('cmdPaletteModal').classList.add('open');
+      document.getElementById('cmdSearchInput').focus();
+    }
+    function closeCmdPalette() {
+      document.getElementById('cmdPaletteModal').classList.remove('open');
+    }
+    function filterCmdPalette() {
+      const q = document.getElementById('cmdSearchInput').value.toLowerCase();
+      document.querySelectorAll('.cmd-item').forEach(item => {
+        item.style.display = item.textContent.toLowerCase().includes(q) ? 'flex' : 'none';
+      });
+    }
 
     function openAddPluginModal() {
-      addPluginModal.classList.add('open');
-      modalStatus.style.display = 'none';
+      document.getElementById('addPluginModal').classList.add('open');
+      document.getElementById('modalStatus').style.display = 'none';
     }
-
     function closeAddPluginModal() {
-      addPluginModal.classList.remove('open');
+      document.getElementById('addPluginModal').classList.remove('open');
     }
-
     function switchModalTab(tab) {
       document.getElementById('tabUrlBtn').classList.toggle('active', tab === 'url');
       document.getElementById('tabZipBtn').classList.toggle('active', tab === 'zip');
@@ -1389,14 +2330,19 @@
     async function submitPluginUrl() {
       const source = document.getElementById('pluginSourceInput').value.trim();
       const ref = document.getElementById('pluginRefInput').value.trim() || 'main';
-      if (!source) return;
+      if (!source) {
+        showToast('Please specify a plugin source repository.', 'warning');
+        return;
+      }
 
       const btn = document.getElementById('btnIngestUrl');
+      const statusDiv = document.getElementById('modalStatus');
       btn.disabled = true;
       btn.textContent = 'Ingesting...';
-      modalStatus.style.display = 'block';
-      modalStatus.style.color = 'var(--accent-cyan)';
-      modalStatus.innerHTML = 'Synthesizing manifest and initializing sandbox...';
+      statusDiv.style.display = 'block';
+      statusDiv.style.background = 'rgba(56, 189, 248, 0.1)';
+      statusDiv.style.color = 'var(--accent-cyan)';
+      statusDiv.textContent = 'Synthesizing manifest and provisioning sandbox...';
 
       try {
         const res = await fetch('/api/plugins/ingest', {
@@ -1406,27 +2352,29 @@
         });
         const data = await res.json();
         if (data.status === 'ok') {
-          modalStatus.style.color = 'var(--accent-emerald)';
-          modalStatus.innerHTML = `✓ Plugin <b>${data.plugin.name}</b> ingested successfully!`;
+          showToast(`Plugin '${data.plugin.name}' ingested successfully!`, 'success');
+          closeAddPluginModal();
           await loadAllData();
-          setTimeout(closeAddPluginModal, 1200);
         } else {
-          modalStatus.style.color = 'var(--accent-rose)';
-          modalStatus.innerHTML = `✗ Ingestion failed: ${data.error}`;
+          statusDiv.style.background = 'rgba(244, 63, 94, 0.1)';
+          statusDiv.style.color = 'var(--accent-rose)';
+          statusDiv.textContent = `✗ Ingestion failed: ${data.error}`;
         }
       } catch (err) {
-        modalStatus.style.color = 'var(--accent-rose)';
-        modalStatus.innerHTML = `✗ Error: ${err}`;
+        statusDiv.style.background = 'rgba(244, 63, 94, 0.1)';
+        statusDiv.style.color = 'var(--accent-rose)';
+        statusDiv.textContent = `✗ Error: ${err}`;
       } finally {
         btn.disabled = false;
-        btn.textContent = 'Ingest & Sandboxed Activate';
+        btn.textContent = '🚀 Ingest & Sandboxed Activate';
       }
     }
 
+    let selectedZipFile = null;
     function onZipFileSelected(input) {
       if (input.files && input.files[0]) {
         selectedZipFile = input.files[0];
-        document.getElementById('dropzoneText').innerHTML = `Selected: <b>${selectedZipFile.name}</b>`;
+        document.getElementById('dropzoneText').innerHTML = `Selected: <b>${esc(selectedZipFile.name)}</b>`;
         document.getElementById('btnUploadZip').disabled = false;
       }
     }
@@ -1434,8 +2382,13 @@
     async function submitPluginZip() {
       if (!selectedZipFile) return;
       const btn = document.getElementById('btnUploadZip');
+      const statusDiv = document.getElementById('modalStatus');
       btn.disabled = true;
       btn.textContent = 'Uploading...';
+      statusDiv.style.display = 'block';
+      statusDiv.style.background = 'rgba(56, 189, 248, 0.1)';
+      statusDiv.style.color = 'var(--accent-cyan)';
+      statusDiv.textContent = 'Extracting and mounting plugin archive...';
 
       const formData = new FormData();
       formData.append('file', selectedZipFile);
@@ -1444,67 +2397,37 @@
         const res = await fetch('/api/plugins/upload', { method: 'POST', body: formData });
         const data = await res.json();
         if (data.status === 'ok') {
-          modalStatus.style.display = 'block';
-          modalStatus.style.color = 'var(--accent-emerald)';
-          modalStatus.innerHTML = `✓ Plugin <b>${data.plugin.name}</b> installed successfully!`;
+          showToast(`Plugin '${data.plugin.name}' installed successfully!`, 'success');
+          closeAddPluginModal();
           await loadAllData();
-          setTimeout(closeAddPluginModal, 1200);
-        }
-      } catch (err) {}
-    }
-
-    // Guide Modal
-    const pluginGuideModal = document.getElementById('pluginGuideModal');
-    const guideDocContent = document.getElementById('guideDocContent');
-    const guideCardContent = document.getElementById('guideCardContent');
-
-    async function openPluginGuide(name) {
-      document.getElementById('guideModalTitle').textContent = `Plugin Guide: ${name}`;
-      guideDocContent.textContent = 'Loading guide and card...';
-      guideCardContent.textContent = 'Loading card...';
-      pluginGuideModal.classList.add('open');
-      switchGuideTab('doc');
-
-      try {
-        const res = await fetch(`/api/plugins/${name}/guide`);
-        const data = await res.json();
-        if (data.status === 'ok') {
-          guideDocContent.textContent = data.guide || 'No guide available.';
-          guideCardContent.textContent = data.card || 'No card available.';
+        } else {
+          statusDiv.style.background = 'rgba(244, 63, 94, 0.1)';
+          statusDiv.style.color = 'var(--accent-rose)';
+          statusDiv.textContent = `✗ Upload failed: ${data.error}`;
         }
       } catch (err) {
-        guideDocContent.textContent = `Error: ${err}`;
+        statusDiv.style.background = 'rgba(244, 63, 94, 0.1)';
+        statusDiv.style.color = 'var(--accent-rose)';
+        statusDiv.textContent = `✗ Error: ${err}`;
+      } finally {
+        btn.disabled = false;
+        btn.textContent = '📦 Upload & Provision';
       }
     }
 
-    function closePluginGuideModal() {
-      pluginGuideModal.classList.remove('open');
-    }
-
-    function switchGuideTab(tab) {
-      document.getElementById('tabGuideDocBtn').classList.toggle('active', tab === 'doc');
-      document.getElementById('tabGuideCardBtn').classList.toggle('active', tab === 'card');
-      document.getElementById('tabGuideDoc').classList.toggle('active', tab === 'doc');
-      document.getElementById('tabGuideCard').classList.toggle('active', tab === 'card');
-    }
-
-    // Creator Modal Controls
-    const creatorModal = document.getElementById('creatorModal');
-    const creatorStatus = document.getElementById('creatorStatus');
-
+    // Creator Modal
     function openCreatorModal() {
-      creatorModal.classList.add('open');
-      creatorStatus.style.display = 'none';
+      document.getElementById('creatorModal').classList.add('open');
+      document.getElementById('creatorStatus').style.display = 'none';
     }
-
     function closeCreatorModal() {
-      creatorModal.classList.remove('open');
+      document.getElementById('creatorModal').classList.remove('open');
     }
 
     async function submitCreatorScaffold() {
       const name = document.getElementById('creatorName').value.trim();
       if (!name) {
-        alert('Please specify a plugin name.');
+        showToast('Please specify a plugin name.', 'warning');
         return;
       }
 
@@ -1512,20 +2435,17 @@
       const preset = document.getElementById('creatorPreset').value;
       const isolation = document.getElementById('creatorIsolation').value;
       const toolsRaw = document.getElementById('creatorTools').value.trim();
-      const depsRaw = document.getElementById('creatorDeps').value.trim();
       const description = document.getElementById('creatorDesc').value.trim();
-      const autoEnable = document.getElementById('creatorAutoEnable').checked;
 
       const tools = toolsRaw.split(',').map(s => s.trim()).filter(Boolean);
-      const dependencies = depsRaw.split(',').map(s => s.trim()).filter(Boolean);
-
       const btn = document.getElementById('btnCreatorScaffold');
+      const statusDiv = document.getElementById('creatorStatus');
       btn.disabled = true;
       btn.textContent = 'Scaffolding...';
-      creatorStatus.style.display = 'block';
-      creatorStatus.style.background = 'rgba(56, 189, 248, 0.1)';
-      creatorStatus.style.color = 'var(--accent-cyan)';
-      creatorStatus.innerHTML = 'Scaffolding project structure, manifest, and tests...';
+      statusDiv.style.display = 'block';
+      statusDiv.style.background = 'rgba(56, 189, 248, 0.1)';
+      statusDiv.style.color = 'var(--accent-cyan)';
+      statusDiv.textContent = 'Scaffolding project structure, manifest, and tests...';
 
       try {
         const res = await fetch('/api/creator/scaffold', {
@@ -1537,39 +2457,86 @@
             preset,
             isolation,
             tools: tools.length ? tools : ['execute'],
-            dependencies,
             description,
-            auto_enable: autoEnable
+            auto_enable: true
           })
         });
 
         const data = await res.json();
         if (data.status === 'ok') {
-          creatorStatus.style.background = 'rgba(16, 185, 129, 0.1)';
-          creatorStatus.style.color = 'var(--accent-emerald)';
-          creatorStatus.innerHTML = `✓ Plugin <b>${data.plugin.name}</b> scaffolded successfully at <code>${data.plugin.path}</code>!`;
+          showToast(`Plugin '${data.plugin.name}' scaffolded and mounted!`, 'success');
+          closeCreatorModal();
           await loadAllData();
-          setTimeout(closeCreatorModal, 1500);
         } else {
-          creatorStatus.style.background = 'rgba(244, 63, 94, 0.1)';
-          creatorStatus.style.color = 'var(--accent-rose)';
-          creatorStatus.innerHTML = `✗ Scaffolding failed: ${data.error}`;
+          statusDiv.style.background = 'rgba(244, 63, 94, 0.1)';
+          statusDiv.style.color = 'var(--accent-rose)';
+          statusDiv.textContent = `✗ Scaffolding failed: ${data.error}`;
         }
       } catch (err) {
-        creatorStatus.style.background = 'rgba(244, 63, 94, 0.1)';
-        creatorStatus.style.color = 'var(--accent-rose)';
-        creatorStatus.innerHTML = `✗ Error: ${err}`;
+        statusDiv.style.background = 'rgba(244, 63, 94, 0.1)';
+        statusDiv.style.color = 'var(--accent-rose)';
+        statusDiv.textContent = `✗ Error: ${err}`;
       } finally {
         btn.disabled = false;
         btn.textContent = '🚀 Scaffold & Mount';
       }
     }
 
-    // Initialization
+    // Guide Modal
+    async function openPluginGuide(name) {
+      document.getElementById('guideModalTitle').textContent = `Plugin Guide: ${name}`;
+      const docDiv = document.getElementById('guideDocContent');
+      const cardPre = document.getElementById('guideCardContent');
+      docDiv.textContent = 'Loading guide...';
+      cardPre.textContent = 'Loading card...';
+      document.getElementById('pluginGuideModal').classList.add('open');
+      switchGuideTab('doc');
+
+      try {
+        const res = await fetch(`/api/plugins/${name}/guide`);
+        const data = await res.json();
+        if (data.status === 'ok') {
+          docDiv.innerHTML = marked.parse(data.guide || 'No quickstart guide available.');
+          cardPre.textContent = data.card || 'No manifest summary card available.';
+        }
+      } catch (err) {
+        docDiv.textContent = `Error: ${err}`;
+      }
+    }
+    function closePluginGuideModal() {
+      document.getElementById('pluginGuideModal').classList.remove('open');
+    }
+    function switchGuideTab(tab) {
+      document.getElementById('tabGuideDocBtn').classList.toggle('active', tab === 'doc');
+      document.getElementById('tabGuideCardBtn').classList.toggle('active', tab === 'card');
+      document.getElementById('tabGuideDoc').classList.toggle('active', tab === 'doc');
+      document.getElementById('tabGuideCard').classList.toggle('active', tab === 'card');
+    }
+
+    // Keyboard Shortcuts
+    window.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        openCmdPalette();
+      } else if (e.key === 'Escape') {
+        closeCmdPalette();
+        closeAddPluginModal();
+        closeCreatorModal();
+        closePluginGuideModal();
+      } else if (e.target.id === 'agentPromptInput' && e.key === 'Enter' && e.shiftKey) {
+        e.preventDefault();
+        executeAgentTask();
+      }
+    });
+
+    // Lifecycle Init
     window.addEventListener('DOMContentLoaded', () => {
       connectWS();
       loadAllData();
-      setInterval(loadAllData, 6000);
+      setInterval(() => {
+        if (activeView === 'overview') loadAllData();
+        else if (activeView === 'sandboxes') loadSandboxes();
+      }, 8000);
     });
   </script>
 </body>

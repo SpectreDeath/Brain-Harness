@@ -7,7 +7,7 @@ with transactional context isolation, topological dependency waves, and token go
 from __future__ import annotations
 
 import asyncio
-from collections import defaultdict, deque
+from collections import defaultdict
 from dataclasses import dataclass, field
 import time
 from typing import Any, Callable, cast

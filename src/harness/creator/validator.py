@@ -502,7 +502,7 @@ class DependencyManifestRule(ValidationRule):
             try:
                 content = req_file.read_text(encoding="utf-8")
                 req_lines = [line.strip().lower() for line in content.splitlines() if line.strip() and not line.strip().startswith("#")]
-                
+
                 missing_in_file = []
                 for dep in declared_deps:
                     dep_pkg = dep.split("=")[0].split(">")[0].split("<")[0].strip().lower()

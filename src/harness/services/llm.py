@@ -20,13 +20,8 @@ from harness.plugins.base import HarnessPlugin
 logger = structlog.get_logger()
 
 from harness.services.compute_assessor import (
-    AssessmentTrace,
-    ComplexityDimension,
-    ComplexityVector,
     ComputeAssessment,
     ComputeRouter,
-    ComputeVisualBriefGenerator,
-    DimensionalScorer,
     ModelTier,
     ProviderReasoningAdapter,
     ThinkingBudget,

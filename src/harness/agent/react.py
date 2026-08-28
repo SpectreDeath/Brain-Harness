@@ -20,7 +20,6 @@ from harness.agent.base import (
 from harness.agent.context_optimizer import (
     AGENT_CONTEXT_OPTIMIZER_KEY,
     AgentContextOptimizer,
-    ContextOptimizationConfig,
     DefaultContextOptimizer,
 )
 from harness.agent.session import (

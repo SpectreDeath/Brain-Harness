@@ -14,7 +14,6 @@ import structlog
 
 from harness.agent.session import (
     AGENT_SESSION_MANAGER_KEY,
-    AgentSession,
     AgentSessionManager,
     AgentSessionPlugin,
 )

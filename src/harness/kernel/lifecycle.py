@@ -74,7 +74,6 @@ from harness.kernel.graph import (
     CyclicDependencyError,
     DependencyGraph,
     GraphCycleError,
-    GraphDependencyError,
 )
 
 
