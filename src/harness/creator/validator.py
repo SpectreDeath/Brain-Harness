@@ -13,6 +13,7 @@ Provides composable, rule-based diagnostic validation with auto-remediation:
 from __future__ import annotations
 
 import ast
+import asyncio
 import json
 import re
 from abc import ABC, abstractmethod
@@ -666,6 +667,7 @@ class SandboxDryRunRule(ValidationRule):
                 return True
             finally:
                 await executor.stop()
+                await asyncio.sleep(0.01)
         except Exception as e:
             ctx.add_fail(self.name, f"Sandbox dry-run error: {e}", severity=RuleSeverity.ERROR, category=self.category)
             return False
@@ -674,6 +676,13 @@ class SandboxDryRunRule(ValidationRule):
 def _run_coro_sync(coro: Any) -> Any:
     """Safely run a coroutine synchronously even within existing event loops."""
     import asyncio
+
+    async def _wrapped() -> Any:
+        try:
+            return await coro
+        finally:
+            await asyncio.sleep(0.01)
+
     try:
         loop = asyncio.get_running_loop()
     except RuntimeError:
@@ -683,8 +692,8 @@ def _run_coro_sync(coro: Any) -> Any:
         import concurrent.futures
 
         with concurrent.futures.ThreadPoolExecutor() as pool:
-            return pool.submit(asyncio.run, coro).result()
-    return asyncio.run(coro)
+            return pool.submit(asyncio.run, _wrapped()).result()
+    return asyncio.run(_wrapped())
 
 
 class ValidationFixer:

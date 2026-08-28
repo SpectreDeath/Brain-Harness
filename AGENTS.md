@@ -12,6 +12,10 @@
 8. **ReAct Agent Step Transactional Isolation.** Agent tool invocations should execute inside context transactions (`async with context.transaction()`) with automatic rollback (`await tx.dispose()`) whenever the tool returns an error payload or raises an exception.
 9. **Deterministic Pre-LLM Context Optimization.** Agent step execution loops (`StepExecutionEngine`) must apply deterministic multi-pass context pruning (whitespace deduplication, tabular/JSON payload truncation, AST code skeletonization) prior to model invocation to prevent context blowout and bound token budgets.
 10. **Headless CLI Introspection Seams.** All runtime execution trees, session transcripts, and context compilation graphs must expose headless Click CLI inspection and export commands (`harness session tree`, `harness session export`) alongside API/MCP access.
+11. **Agent Instruction File Hygiene & Negative Boundaries.** Repository agent configuration files (`AGENTS.md`, `CLAUDE.md`) must remain lean (<150 lines), free of generic tutorials or lint leakage, and define explicit execution seams (build/test/lint) along with strict negative boundaries ("what NOT to touch").
+12. **Slotted & Frozen Dataclass Architecture.** High-volume internal entity and AST data structures must use `slots=True` to minimize memory footprint, `frozen=True` for immutable value objects, `__post_init__` construction assertions, and `default_factory` for mutable collections.
+13. **Inspect-Before-Edit & Seam Verification Protocol.** Agents must never prematurely modify code without first mapping DAG component seams, authoring failing test contracts, and validating changes against strict git diffs.
+14. **Subprocess Pipe Transport Disposal Invariant.** All asynchronous subprocess sandbox transports must explicitly drain and close stdin/stdout/stderr pipes inside `finally` blocks to guarantee clean proactor resource disposal across operating systems.
 
 
 ## Code Style

@@ -107,12 +107,15 @@ from harness.services.semantic_cache import (
     SemanticCacheService,
 )
 from harness.services.skill_graph import (
+    BuiltinSkillGraphService,
+    BuiltinSkillRegistryService,
     SKILL_GRAPH_KEY,
     SKILL_REGISTRY_KEY,
     SkillCardDefinition,
     SkillChainResult,
     SkillGraphService,
     SkillInvariantDefinition,
+    SkillRegistryPlugin,
     SkillRegistryService,
 )
 from harness.services.stagehand_browser import (
@@ -233,12 +236,15 @@ __all__ = [
     "CacheSetResult",
     "CacheStatsResult",
     "SemanticCacheService",
+    "BuiltinSkillGraphService",
+    "BuiltinSkillRegistryService",
     "SKILL_GRAPH_KEY",
     "SKILL_REGISTRY_KEY",
     "SkillCardDefinition",
     "SkillChainResult",
     "SkillGraphService",
     "SkillInvariantDefinition",
+    "SkillRegistryPlugin",
     "SkillRegistryService",
     "STAGEHAND_BROWSER_KEY",
     "StagehandBrowserService",

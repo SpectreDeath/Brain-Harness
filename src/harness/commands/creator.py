@@ -1,4 +1,4 @@
-"""Plugin creator commands — pure async functions for plugin scaffolding and validation."""
+"""Plugin creator commands — pure async functions for unified plugin and skill synthesis and validation."""
 
 from __future__ import annotations
 
@@ -6,8 +6,21 @@ from pathlib import Path
 
 from harness.creator.creator import PluginCreator
 from harness.creator.scaffold import ScaffoldOptions, ScaffoldResult
+from harness.creator.synthesis import (
+    PluginSynthesisEngine,
+    SynthesisMode,
+    SynthesisRequest,
+    SynthesisResult,
+)
 from harness.creator.validator import ValidationReport
 from harness.plugins.manifest import IsolationMode
+
+_SYNTHESIS_ENGINE = PluginSynthesisEngine()
+
+
+async def synthesize_plugin_cmd(request: SynthesisRequest) -> SynthesisResult:
+    """Synthesize a new plugin or skill using the unified PluginSynthesisEngine."""
+    return await _SYNTHESIS_ENGINE.synthesize(request)
 
 
 async def scaffold_plugin_cmd(
@@ -51,22 +64,21 @@ async def validate_plugin_cmd(
     remediate: bool = False,
 ) -> ValidationReport:
     """Validate a plugin project directory with optional auto-remediation."""
-    return await PluginCreator.validate(
+    return await _SYNTHESIS_ENGINE.validate(
         path,
         dry_run=dry_run,
-        timeout=timeout,
         remediate=remediate,
     )
 
 
 def list_archetypes_cmd() -> list[dict[str, str]]:
     """List all available plugin archetype presets and descriptions."""
-    return PluginCreator.list_archetypes()
+    return _SYNTHESIS_ENGINE.list_archetypes()
 
 
 async def remediate_plugin_cmd(path: Path | str = ".") -> ValidationReport:
     """Auto-repair missing manifest, boilerplate functions, and dependency files."""
-    return await PluginCreator.remediate(path)
+    return await _SYNTHESIS_ENGINE.validate(path, remediate=True)
 
 
 # Backward-compatible alias
@@ -78,7 +90,6 @@ __all__ = [
     "list_archetypes_cmd",
     "remediate_plugin_cmd",
     "scaffold_plugin_cmd",
+    "synthesize_plugin_cmd",
     "validate_plugin_cmd",
 ]
-
-

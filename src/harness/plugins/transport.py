@@ -89,6 +89,31 @@ class StdioJsonRpcTransport:
                 except ProcessLookupError:
                     pass
 
+        # Explicit stream and subprocess transport disposal to eliminate unclosed transport ResourceWarnings
+        if proc.stdin is not None:
+            try:
+                proc.stdin.close()
+            except Exception:
+                pass
+        if proc.stdout is not None and hasattr(proc.stdout, "_transport") and proc.stdout._transport is not None:
+            try:
+                proc.stdout._transport.close()
+            except Exception:
+                pass
+        if proc.stderr is not None and hasattr(proc.stderr, "_transport") and proc.stderr._transport is not None:
+            try:
+                proc.stderr._transport.close()
+            except Exception:
+                pass
+        if hasattr(proc, "_transport") and proc._transport is not None:
+            try:
+                proc._transport.close()
+            except Exception:
+                pass
+
+        # Allow Windows proactor event loop to cleanly process pipe closures
+        await asyncio.sleep(0.01)
+
         logger.debug("Stdio transport stopped", command=self.command)
 
     async def call(

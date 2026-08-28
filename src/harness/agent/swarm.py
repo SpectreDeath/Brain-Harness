@@ -15,6 +15,10 @@ from typing import Any, Callable, cast
 import structlog
 
 from harness.agent.base import AgentTaskResult
+from harness.agent.context_optimizer import (
+    AGENT_CONTEXT_OPTIMIZER_KEY,
+    AgentContextOptimizer,
+)
 from harness.agent.session import AGENT_SESSION_MANAGER_KEY, AgentSessionManager
 from harness.events.bus import EventBus
 from harness.events.types import EventType, HarnessEvent
@@ -556,11 +560,22 @@ class SwarmCoordinator:
                             await session_mgr.fail_session(child_sid, node.error)
                         return node_id, None, 0, node.error, n_start, n_end
 
-                    # Collect upstream context from dependencies
+                    # Collect upstream context from dependencies with optional compaction
+                    context_optimizer: AgentContextOptimizer | None = (
+                        self.context.optional(AGENT_CONTEXT_OPTIMIZER_KEY)
+                        if hasattr(self.context, "optional")
+                        else None
+                    )
                     upstream_ctx: dict[str, Any] = {}
                     for dep in node.dependencies:
                         if dep in accumulated_results:
-                            upstream_ctx[dep] = accumulated_results[dep]
+                            raw_val = accumulated_results[dep]
+                            if context_optimizer is not None:
+                                upstream_ctx[dep] = context_optimizer.compact_observation(
+                                    f"upstream_{dep}", raw_val
+                                )
+                            else:
+                                upstream_ctx[dep] = raw_val
 
                     # Prepare prompt with upstream context
                     enriched_prompt = node.task

@@ -37,6 +37,15 @@ from harness.creator.skills import (
     SkillScaffoldEngine,
     SkillValidator,
 )
+from harness.creator.synthesis import (
+    CREATOR_SERVICE_KEY,
+    CreatorPlugin,
+    CreatorService,
+    PluginSynthesisEngine,
+    SynthesisMode,
+    SynthesisRequest,
+    SynthesisResult,
+)
 from harness.creator.validator import (
     AstFunctionInspectionRule,
     AstSignatureMatchingRule,
@@ -63,6 +72,9 @@ __all__ = [
     "AstFunctionInspectionRule",
     "AstSignatureMatchingRule",
     "ContainerArchetype",
+    "CREATOR_SERVICE_KEY",
+    "CreatorPlugin",
+    "CreatorService",
     "DependencyManifestRule",
     "DirectoryExistenceRule",
     "DynamicPluginBuilder",
@@ -75,6 +87,7 @@ __all__ = [
     "PluginArchetype",
     "PluginCreator",
     "PluginScaffoldEngine",
+    "PluginSynthesisEngine",
     "PluginValidator",
     "RuleSeverity",
     "RuntimeIntrospector",
@@ -91,6 +104,9 @@ __all__ = [
     "SkillResult",
     "SkillScaffoldEngine",
     "SkillValidator",
+    "SynthesisMode",
+    "SynthesisRequest",
+    "SynthesisResult",
     "ToolArchetype",
     "ValidationCheck",
     "ValidationContext",

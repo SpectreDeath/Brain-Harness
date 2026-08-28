@@ -218,6 +218,7 @@ class SubprocessExecutor(SandboxExecutor):
         if self._transport:
             await self._transport.stop()
             self._transport = None
+        await asyncio.sleep(0.01)
 
         logger.info("Subprocess sandbox stopped", script=str(self._script_path))
 
@@ -336,7 +337,24 @@ class VenvExecutor(SandboxExecutor):
                 stdout=asyncio.subprocess.PIPE,
                 stderr=asyncio.subprocess.PIPE,
             )
-            _, stderr = await proc.communicate()
+            try:
+                _, stderr = await proc.communicate()
+            finally:
+                if proc.stdin:
+                    try:
+                        proc.stdin.close()
+                    except Exception:
+                        pass
+                if proc.stdout and hasattr(proc.stdout, "_transport") and proc.stdout._transport is not None:
+                    try:
+                        proc.stdout._transport.close()
+                    except Exception:
+                        pass
+                if proc.stderr and hasattr(proc.stderr, "_transport") and proc.stderr._transport is not None:
+                    try:
+                        proc.stderr._transport.close()
+                    except Exception:
+                        pass
 
             if proc.returncode != 0:
                 raise SandboxError(
