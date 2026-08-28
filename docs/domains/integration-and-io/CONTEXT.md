@@ -24,3 +24,7 @@ _Avoid_: Math engine, formula calculator
 An autonomous pipeline that translates external repository architectures into Harness plugins with typed services and manifests.
 _Avoid_: Plugin creator, repo converter, wrapper generator
 
+**Book-to-Skill Forge**:
+A structured synthesis engine that converts books, articles, frameworks, and video transcripts into deep-module agent skills and coaching rubrics.
+_Avoid_: Book summarizer, text condenser, reading assistant
+

@@ -87,6 +87,7 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - `symbolic_solver` — Z3 theorem proving and constraint satisfaction.
 * **Member Skills**:
   - [`repo-to-plugin-forge`](file:///.agents/skills/repo-to-plugin-forge/SKILL.md) — Autonomous synthesis and scaffolding of Harness plugins from attached codebases.
+  - [`book-to-skill-forge`](file:///.agents/skills/book-to-skill-forge/SKILL.md) — Synthesis and authoring of deep-module agent skills and coaching rubrics from books, articles, and video transcripts.
 
 ---
 
