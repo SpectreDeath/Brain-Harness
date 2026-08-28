@@ -17,10 +17,10 @@ Without formal domain categorization:
 
 ## Decision
 
-We have mapped all 11 agent skills into the seven bounded domains defined in `CONTEXT-MAP.md` and expanded the ubiquitous language glossaries in `docs/domains/*/CONTEXT.md`:
+We have mapped all 12 agent skills into the seven bounded domains defined in `CONTEXT-MAP.md` and expanded the ubiquitous language glossaries in `docs/domains/*/CONTEXT.md`:
 
 1. **Agent Orchestration**: `questio-reflection` (Aquinas-style adversarial reflection & objection-answering).
-2. **Memory & Epistemics**: `epistemic-isnad-audit` (chain-of-custody lineage), `mind-reader` (brain trajectory reflection), `repo-reader` (codebase pattern introspection).
+2. **Memory & Epistemics**: `epistemic-isnad-audit` (chain-of-custody lineage), `mind-reader` (brain trajectory reflection), `repo-reader` (codebase pattern introspection), `harness-reflector` (autobiographical reflection from internal reports & transcripts).
 3. **Data Engineering**: `structured-data-scout` (curated registry ingestion), `survival-analysis` (time-to-event & Cox PH regression), `data-topology-mapper` (DAG and queue topology modeling).
 4. **Software Engineering**: `crafting-skills` (deep-module skill blueprints), `deepen-architecture` (architecture deepening loop), `compute-model-assessor` (reasoning budget & model tiering).
 5. **Integration & I/O**: `repo-to-plugin-forge` (automated plugin synthesis from attached repositories).

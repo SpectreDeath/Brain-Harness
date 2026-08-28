@@ -32,3 +32,7 @@ _Avoid_: Memory searcher, history parser, log crawler
 An analytical tool that extracts architectural patterns, commit trajectories, and engineering heuristics from Git repositories.
 _Avoid_: Code scanner, repo scraper, git summarizer
 
+**Endogenous Reflector**:
+An autobiographical reflection engine that harvests ephemeral reports, transcripts, and logs to distill verified, Isnad-grounded Knowledge Items.
+_Avoid_: Log summarizer, chat scraper, history exporter
+

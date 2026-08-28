@@ -34,7 +34,13 @@
 
 - `src/harness/kernel/` — IoC container, service registry, lifecycle (the micro-kernel)
 - `src/harness/events/` — Event bus and event type definitions
-- `src/harness/plugins/` — Plugin base class, manifest schema, loader, sandbox
-- `src/harness/ingestion/` — GitHub → Plugin pipeline (fetcher, inspector, converter)
-- `src/harness/services/` — Built-in service plugins (LLM, storage, tools)
+- `src/harness/plugins/` — Plugin base class, manifest schema, loader, sandbox transports
+- `src/harness/ingestion/` — GitHub → Plugin pipeline (fetcher, inspector, converters)
+- `src/harness/services/` — Built-in service plugins (LLM, storage, tools, skill graph)
+- `src/harness/agent/` — Autonomous ReAct agent loop, step execution engine, multi-agent coordination
+- `src/harness/creator/` — Dynamic plugin scaffolding, archetypes, and validation/remediation engine
+- `src/harness/commands/` — Modular CLI command implementations
+- `src/harness/bridges/` — Ecosystem bridges (Em-Cubed, Memtext, Skill Flywheel)
+- `src/harness/mcp/` — Model Context Protocol (MCP) server & client
+- `src/harness/ui/` — Web dashboard server and real-time WebSocket telemetry
 - `plugins/` — Drop-in plugin directory for user-installed plugins

@@ -29,6 +29,7 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - [`epistemic-isnad-audit`](file:///.agents/skills/epistemic-isnad-audit/SKILL.md) — Unbroken chain-of-custody lineage verification for facts and decisions.
   - [`mind-reader`](file:///.agents/skills/mind-reader/SKILL.md) — Introspection and heuristic extraction from attached brain trajectories.
   - [`repo-reader`](file:///.agents/skills/repo-reader/SKILL.md) — Architectural pattern and commit trajectory introspection from Git repositories.
+  - [`harness-reflector`](file:///.agents/skills/harness-reflector/SKILL.md) — Autobiographical reflection and heuristic distillation from internal reports and execution logs.
 
 ### 3. [Data Engineering](./docs/domains/data-engineering/CONTEXT.md)
 * **Scope**: Curated tabular ingestion, out-of-core statistical profiling, schema transformation, and relational database execution.

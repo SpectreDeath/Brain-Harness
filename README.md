@@ -4,7 +4,7 @@
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-emerald.svg)](LICENSE)
-[![Tests](https://img.shields.io/badge/tests-443%20passed-brightgreen.svg)](tests/)
+[![Tests](https://img.shields.io/badge/tests-755%20passed-brightgreen.svg)](tests/)
 
 **Brain Harness** is an unopinionated, high-performance agent runtime engineered on an IoC micro-kernel architecture. Rather than locking you into a static collection of hardcoded tools, Harness is a **blank cognitive canvas** that ingests any GitHub repository, local project, ZIP archive, OpenAPI specification, or custom skill into an isolated, sandboxed plugin.
 
@@ -18,7 +18,8 @@ When you install and configure plugins, **your harness becomes a direct reflecti
 2. **Universal Ingestion Pipeline**: Point Harness at any public/private GitHub repository or local ZIP archive (`harness plugin add <url/zip>`). The engine auto-inspects code, generates schema manifests, and wraps the codebase into a sandboxed plugin.
 3. **Subprocess Isolation by Default**: Ingested plugins run in isolated subprocess sandboxes via line-buffered JSON-RPC over `stdin`/`stdout`, protecting host memory and enforcing strict resource limits.
 4. **Agent Skill Knowledge Graph**: Harness indexes structured agent skills (`SKILL.md` and `CARD.md`) into a directed knowledge graph, enabling autonomous multi-step skill chaining, semantic intent routing, and anti-pattern defense.
-5. **Interactive Web Control Room & CLI**: Full visibility through live terminal commands, an interactive Web dashboard, and an append-only event stream.
+5. **Interactive Web Control Room & Headless CLI**: Full visibility through live terminal commands, an interactive Web dashboard (`harness ui`), live file watching (`harness watch`), and an append-only event stream.
+6. **Autobiographical Memory & Reflection**: Harness introspects its own execution history, logs, and visual reports (`harness reflect`) to distill verified, Isnad-grounded Knowledge Items into a persistent Knowledge Vault.
 
 ---
 
@@ -46,23 +47,34 @@ harness plugin add https://github.com/psf/requests
 # Ingest from a local repository or ZIP archive
 harness plugin add ./path/to/my-custom-tools.zip
 
-# Inspect installed plugins
+# Inspect installed plugins and summary cards
 harness plugin list
+harness plugin card requests
 ```
 
 ### 4. Query Skills & Run Autonomous Agents
 ```bash
-# View the agent skill knowledge graph & visual brief
+# View the agent skill knowledge graph & generate an interactive HTML visual brief
 harness skills graph --visual
 
-# Route an intent to matching skill chains
+# Route natural language intent to matching skill chains
 harness skills route "fetch wine dataset from UCI and profile outliers"
+
+# Assess task complexity and recommend optimal model tiering & thinking budget
+harness assess-compute "Refactor IoC container lifecycle to support async teardown" --arch
 
 # Run an autonomous task using your ingested plugins
 harness agent run "Analyze open ports and generate a security report"
 
+# Inspect hierarchical session execution trees and token rollups
+harness session list
+harness session tree <session_id>
+
+# Run endogenous reflection to distill learnings into the Knowledge Vault
+harness reflect
+
 # Start the interactive web control room
-harness run
+harness ui --port 8080
 ```
 
 ---
@@ -90,6 +102,7 @@ harness run
 │   • SQLite Storage Engine & Session State                                        │
 │   • Autonomous ReAct / Hierarchical Swarm Agent Loops                            │
 │   • Skill Knowledge Graph Service (Chaining & Routing)                           │
+│   • Knowledge Vault & Autobiographical Reflection Service                        │
 ├──────────────────────────────────────────────────────────────────────────────────┤
 │                              Your Ingested Plugins                               │
 │     [Your Repos]   [Your Domain Tools]   [Your APIs]   [Your Knowledge Skills]   │
@@ -100,8 +113,9 @@ harness run
 
 ## 📖 Documentation & Ecosystem
 
-- **[User Manual & Reference Guide](USER_MANUAL.md)**: Comprehensive guide covering CLI commands, custom plugin authoring, sandbox configurations, MCP server/client setup, and Python SDK usage.
+- **[User Manual & Reference Guide](USER_MANUAL.md)**: Comprehensive guide covering all CLI commands, plugin authoring, sandbox configurations, MCP server/client setup, and Python SDK usage.
 - **[Agent Standards (AGENTS.md)](AGENTS.md)**: Architectural invariants, code style conventions, and testing guidelines.
+- **[Domain Context Map (CONTEXT-MAP.md)](CONTEXT-MAP.md)**: Partitioned bounded domains, ubiquitous language, and skill taxonomy.
 - **Ecosystem Integration**: Native protocol bridges for **Memtext** (persistent memory & decision auditing), **Em-Cubed** (neuro-symbolic Prolog/Z3 surfaces), and **Model Context Protocol (MCP)**.
 
 ---

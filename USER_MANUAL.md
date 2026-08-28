@@ -9,7 +9,7 @@
   ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝    ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚══════╝╚══════╝
 ```
 
-> **A modular, autonomous agent harness where *everything* is a plugin.**
+> **A modular, autonomous agent harness where *everything* is a plugin — and the harness becomes a reflection of your brain.**
 
 ---
 
@@ -19,28 +19,36 @@
 2. [Architecture Overview](#2-architecture-overview)
 3. [Installation & Workspace Setup](#3-installation--workspace-setup)
 4. [CLI Operations Manual](#4-cli-operations-manual)
-   - [Workspace Initialization](#workspace-initialization)
-   - [Plugin Ingestion & Management](#plugin-ingestion--management)
-   - [Running Autonomous Agents](#running-autonomous-agents)
-   - [Interactive Web Control Room](#interactive-web-control-room)
-   - [Creator Mode (Dynamic Plugin Scaffolding)](#creator-mode-dynamic-plugin-scaffolding)
-   - [Runtime Introspection & Diagnostics](#runtime-introspection--diagnostics)
-   - [Model Context Protocol (MCP) Server](#model-context-protocol-mcp-server)
-   - [Ecosystem Bridge Status](#ecosystem-bridge-status)
-   - [Immutable Event Stream Auditing](#immutable-event-stream-auditing)
+   - [Workspace Management & Hot-Reload (`init`, `watch`, `apply`, `config`)](#workspace-management--hot-reload)
+   - [Plugin Ingestion & Lifecycle Management (`plugin`)](#plugin-ingestion--lifecycle-management)
+   - [Granular Tool & Skill Enablement (`tool`)](#granular-tool--skill-enablement)
+   - [Autonomous Agent Task Execution (`agent`)](#autonomous-agent-task-execution)
+   - [Hierarchical Session Introspection & Trajectory Export (`session`)](#hierarchical-session-introspection--trajectory-export)
+   - [3-Tier AST Context Compilation & Code Skeletonization (`context`)](#3-tier-ast-context-compilation--code-skeletonization)
+   - [Compute Budget & Model Tier Assessment (`assess-compute`)](#compute-budget--model-tier-assessment)
+   - [Agent Skill Knowledge Graph & Intent Routing (`skills`)](#agent-skill-knowledge-graph--intent-routing)
+   - [Dynamic Plugin Creator & Archetype Scaffolding (`creator`, `scaffold`, `validate`)](#dynamic-plugin-creator--archetype-scaffolding)
+   - [Knowledge Vault & Autobiographical Reflection (`knowledge`, `reflect`)](#knowledge-vault--autobiographical-reflection)
+   - [Model Context Protocol (MCP) Server (`mcp`)](#model-context-protocol-mcp-server)
+   - [Ecosystem Bridge Management (`bridge`)](#ecosystem-bridge-management)
+   - [Runtime Introspection, Telemetry & Web Dashboard (`introspect`, `services`, `events`, `run`, `ui`)](#runtime-introspection-telemetry--web-dashboard)
 5. [Plugin Developer Guide](#5-plugin-developer-guide)
    - [Plugin Structure & Manifest (`plugin.json`)](#plugin-structure--manifest-pluginjson)
+   - [Archetype Presets](#archetype-presets)
+   - [Multi-Language Plugin Support (Python, JavaScript, TypeScript)](#multi-language-plugin-support)
    - [Writing Python In-Process Plugins](#writing-python-in-process-plugins)
    - [Typed Services & `ServiceKey[T]`](#typed-services--servicekeyt)
    - [Registering Tools for Autonomous Agents](#registering-tools-for-autonomous-agents)
+   - [Validation & Auto-Remediation Engine](#validation--auto-remediation-engine)
 6. [Ingestion & Sandbox Security](#6-ingestion--sandbox-security)
-   - [Automatic Ingestion Pipeline](#automatic-ingestion-pipeline)
+   - [Universal Ingestion Pipeline](#universal-ingestion-pipeline)
    - [Subprocess & Virtualenv Sandboxing](#subprocess--virtualenv-sandboxing)
+   - [Lazy Subprocess Staging & Context Transactions](#lazy-subprocess-staging--context-transactions)
 7. [Ecosystem Bridges](#7-ecosystem-bridges)
    - [Em-Cubed (Neuro-Symbolic Surfaces)](#em-cubed-neuro-symbolic-surfaces)
    - [Memtext (Persistent Memory & Decision Audit)](#memtext-persistent-memory--decision-audit)
    - [Skill Flywheel (Domain Skill Catalog)](#skill-flywheel-domain-skill-catalog)
-   - [MCP Client Plugin (External Tool Servers)](#mcp-client-plugin-external-tool-servers)
+   - [MCP Client & Server](#mcp-client--server)
 8. [Python SDK & Programmatic Usage](#8-python-sdk--programmatic-usage)
 9. [Configuration & Troubleshooting](#9-configuration--troubleshooting)
 
@@ -52,13 +60,15 @@
 
 Rather than shipping a rigid, pre-packaged bundle of hardcoded domain tools, **Harness is a blank cognitive canvas**. By ingesting your own repositories, custom tools, ZIP archives, and agent skills, **your harness becomes a direct reflection of your brain**—tailored precisely to your domain, workflows, and thinking.
 
-### Key Tenets
+### Key Architectural Tenets
 - **Everything is a Plugin:** Models, tools, memory, storage engines, execution surfaces, and agent loops are all plugins registered into a unified Inversion of Control (IoC) container. No agent capability is hardcoded into the kernel.
 - **Your Brain, Your Harness:** Harness starts clean. You feed it GitHub URLs, local projects, or ZIP files (`harness plugin add <source>`), and the ingestion pipeline dynamically inspects, sandboxes, and mounts them into your personal runtime.
 - **Typed Service Keys:** All service registration, dependency injection, and resolution use typed `ServiceKey[T]` tokens rather than fragile raw strings.
 - **Transactional Lifecycle Management:** Plugins declare their dependencies (`requires`) and capabilities (`provides`). The lifecycle manager topologically sorts dependencies and ensures zero service leakage on plugin disabling or unloading.
-- **Subprocess Isolation by Default:** Ingested external code or untrusted tools execute in isolated subprocess sandboxes communicating via JSON-RPC over standard input/output (`stdin`/`stdout`).
-- **Agent Skill Knowledge Graph:** Declarative skill cards (`CARD.md` / `SKILL.md`) are automatically indexed into a directed knowledge graph, enabling autonomous multi-step skill chaining, semantic intent routing, and pre-commit failure-mode mitigation.
+- **Subprocess Isolation by Default:** Ingested external code or untrusted tools execute in isolated subprocess sandboxes communicating via line-buffered JSON-RPC 2.0 over standard I/O pipes.
+- **Deterministic Pre-LLM Context Optimization:** Multi-pass pruning, whitespace deduplication, tabular payload compression, and 3-tier AST skeletonization prevent context blowout and enforce bounded token budgets.
+- **Agent Skill Knowledge Graph:** Declarative skill cards (`CARD.md` / `SKILL.md`) are automatically indexed into an in-memory directed graph with shortest-path chaining, intent routing, and anti-pattern defense.
+- **Autobiographical Reflection & Knowledge Vault:** Harness harvests its own transcripts, reports, and execution logs to distill verified, Isnad-grounded Knowledge Items.
 - **Immutable Event Stream:** All system transitions, tool executions, agent reasoning steps, and errors are appended to an immutable audit log.
 
 ---
@@ -67,7 +77,7 @@ Rather than shipping a rigid, pre-packaged bundle of hardcoded domain tools, **H
 
 ```
 ┌──────────────────────────────────────────────────────────────────────────────────┐
-│                                 CLI & Web Dashboard                              │
+│                             CLI & Web Dashboard (UI)                             │
 ├──────────────────────────────────────────────────────────────────────────────────┤
 │                                  Harness Runtime                                 │
 │  ┌──────────────────────┬──────────────────────┬──────────────────────────────┐  │
@@ -75,11 +85,18 @@ Rather than shipping a rigid, pre-packaged bundle of hardcoded domain tools, **H
 │  │  (Typed IoC Kernel)  │  (Topological Graph) │   (Append-Only Telemetry)    │  │
 │  └──────────────────────┴──────────────────────┴──────────────────────────────┘  │
 ├──────────────────────────────────────────────────────────────────────────────────┤
+│                       Universal Ingestion & Sandbox Engine                       │
+│   • GitHub URL Fetcher & Inspector (AST analysis & auto-manifest)                │
+│   • ZIP / Local Codebase / OpenAPI / PyPI Converters                             │
+│   • Subprocess, Virtualenv & In-Process Transports (JSON-RPC 2.0)                │
+├──────────────────────────────────────────────────────────────────────────────────┤
 │                              Core Service Plugins                                │
-│   • LLM Service (LiteLLM / OpenAI / Anthropic / Local)                           │
-│   • Tool Registry & Dynamic Dispatch Table                                       │
-│   • SQLite Key-Value Storage                                                     │
-│   • Autonomous ReAct Agent Loop Service                                          │
+│   • LLM Service (LiteLLM / OpenAI / Anthropic / Local LLMs)                      │
+│   • Dynamic Tool Registry & Dispatch Table                                       │
+│   • SQLite Storage Engine & Session State                                        │
+│   • Autonomous ReAct / Hierarchical Multi-Agent Engine                           │
+│   • Skill Knowledge Graph Service (Chaining & Routing)                           │
+│   • Knowledge Vault & Autobiographical Reflection Service                        │
 ├──────────────────────────────────────────────────────────────────────────────────┤
 │                              Ecosystem Bridges                                   │
 │   • Em-Cubed (Prolog, Z3, Datalog, Hy, SQLite surfaces)                          │
@@ -87,9 +104,8 @@ Rather than shipping a rigid, pre-packaged bundle of hardcoded domain tools, **H
 │   • Skill Flywheel (Catalog of 800+ domain skills)                               │
 │   • MCP Client & Server (Model Context Protocol)                                 │
 ├──────────────────────────────────────────────────────────────────────────────────┤
-│                          Ingestion & Sandbox Engine                              │
-│   • GitHub / ZIP / Local Ingestion Engine                                        │
-│   • StdioJsonRpcTransport & Isolated Subprocess Sandboxes                        │
+│                              Your Ingested Plugins                               │
+│     [Your Repos]   [Your Domain Tools]   [Your APIs]   [Your Knowledge Skills]   │
 └──────────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -98,32 +114,42 @@ Rather than shipping a rigid, pre-packaged bundle of hardcoded domain tools, **H
 ## 3. Installation & Workspace Setup
 
 ### Prerequisites
-- Python **≥ 3.10** (Python 3.11, 3.12, 3.13 fully supported)
-- Git (optional, for fetching GitHub plugins)
+- Python **≥ 3.10** (Python 3.10, 3.11, 3.12, 3.13 fully supported)
+- Git (optional, for fetching GitHub repositories)
 
 ### Installation
 Clone the repository and install with development dependencies:
 
 ```bash
-git clone https://github.com/your-org/brain-harness.git
-cd "brain-harness"
+git clone https://github.com/SpectreDeath/Brain-Harness.git
+cd Brain-Harness
 pip install -e ".[dev]"
 ```
 
-### Initializing a New Workspace
-Create an empty workspace or initialize the current working directory:
-
+Verify installation:
 ```bash
-harness init .
+harness --version
 ```
 
-This scaffolds the standard directory layout:
+### Initializing a Workspace
+Initialize the current directory or create a new workspace:
+
+```bash
+# Initialize current directory
+harness init
+
+# Initialize specific target path
+harness init ./my-agent-workspace
+```
+
+This sets up the standard workspace directory layout:
 ```
 my-workspace/
 ├── plugins/              # Drop-in folder for custom / ingested plugins
 └── .harness/
     ├── config.json       # Workspace configuration
     ├── events.jsonl      # Immutable event stream audit log
+    ├── knowledge/        # Distilled Knowledge Vault items
     └── storage.db        # Persistent SQLite storage
 ```
 
@@ -131,185 +157,476 @@ my-workspace/
 
 ## 4. CLI Operations Manual
 
-Brain Harness includes a comprehensive command-line interface: `harness`.
+Brain Harness provides a single unified CLI binary: `harness`.
 
-### Workspace Initialization
+### Workspace Management & Hot-Reload
+
+#### `harness init [PATH]`
+Scaffolds a new workspace with configuration and drop-in plugin directories.
 ```bash
-harness init [PATH]
+harness init .
 ```
-Initializes a new directory with `plugins/` and `.harness/` configuration.
+
+#### `harness watch`
+Starts the Harness runtime with live filesystem hot-reloading. Watches `plugins/` and immediately recompiles/re-enables modified plugins without downtime.
+```bash
+harness watch
+```
+
+#### `harness apply -f <config-file>`
+Applies and reconciles a declarative configuration tree (`.yaml` or `.json`) against the active Harness instance.
+```bash
+harness apply -f ./harness-config.yaml
+```
+
+#### `harness config validate <config-file>`
+Validates syntax and schema compliance for declarative configuration files.
+```bash
+harness config validate ./harness-config.yaml
+```
 
 ---
 
-### Plugin Ingestion & Management
+### Plugin Ingestion & Lifecycle Management
 
-#### Ingest a Plugin from GitHub or ZIP
+#### `harness plugin add <source> [OPTIONS]`
+Ingests a GitHub repository, owner/repo shorthand, local directory, or ZIP archive into an isolated plugin.
 ```bash
-# Ingest from a remote GitHub repository
-harness plugin add https://github.com/owner/repo-name
+# Ingest public GitHub repository
+harness plugin add https://github.com/psf/requests
 
-# Ingest from a local directory or ZIP file
-harness plugin add ./my-plugin.zip
+# Ingest specific git branch or tag
+harness plugin add https://github.com/psf/requests --ref v2.31.0
+
+# Ingest local ZIP archive
+harness plugin add ./my-tools.zip
+
+# Re-download and force manifest re-synthesis
+harness plugin add https://github.com/psf/requests --force
 ```
-The ingestion engine automatically inspects the repository, synthesizes missing manifests, isolates external dependencies, and registers the plugin in `plugins/`.
 
-#### List Installed Plugins
+#### `harness plugin list`
+Lists all discovered plugins, manifest presence, and local filesystem paths.
 ```bash
 harness plugin list
 ```
-Displays all detected plugins, their versions, current lifecycle state (`ENABLED`, `LOADED`, `DISABLED`), and provided services.
 
-#### Inspect Plugin Details
+#### `harness plugin inspect <path>`
+Inspects any plugin directory and renders its standardized metadata card.
 ```bash
-harness plugin inspect plugins/my-tool
+harness plugin inspect plugins/requests
 ```
-Outputs manifest metadata, security trust level, isolation mode, declared entrypoints, and parameter schemas.
 
-#### Enable / Disable / Remove Plugins
+#### `harness plugin info <name>` & `harness plugin card <name>`
+Displays the standardized summary card, parameters, and entrypoint signatures for an installed plugin.
 ```bash
-harness plugin enable <plugin-name>
-harness plugin disable <plugin-name>
-harness plugin remove <plugin-name>
+harness plugin info requests
+harness plugin card requests
+```
+
+#### `harness plugin guide <name>`
+Prints the auto-generated Quick Start and Agent Usage Guide for the specified plugin.
+```bash
+harness plugin guide requests
+```
+
+#### `harness plugin enable <name>` / `disable <name>`
+Enables or disables an installed plugin by name or pattern.
+```bash
+harness plugin enable requests
+harness plugin disable requests
+```
+
+#### `harness plugin enable-all` / `disable-all [OPTIONS]`
+Batch enables all discovered plugins or disables all non-core plugins.
+```bash
+harness plugin enable-all
+harness plugin disable-all --keep-core
+```
+
+#### `harness plugin remove <name>`
+Safely tears down and deletes a cached plugin package from `plugins/`.
+```bash
+harness plugin remove requests
 ```
 
 ---
 
-### Running Autonomous Agents
+### Granular Tool & Skill Enablement
 
-Harness includes an autonomous **ReAct (Reasoning + Acting)** agent loop service.
+Harness allows fine-grained runtime control over individual tool endpoints:
 
+#### `harness tool list [OPTIONS]`
+Lists all registered tools, their provider plugin, and active enablement state.
 ```bash
-harness agent run "Analyze the project structure and summarize the core modules."
+# List all registered tools
+harness tool list
+
+# Filter tools by provider plugin
+harness tool list --provider requests
+
+# Show only enabled tools
+harness tool list --enabled-only
+```
+
+#### `harness tool enable <name>` / `disable <name>`
+Enables or disables a specific tool endpoint dynamically.
+```bash
+harness tool disable requests.post
+harness tool enable requests.post
+```
+
+---
+
+### Autonomous Agent Task Execution
+
+#### `harness agent run "<task>" [OPTIONS]`
+Executes an autonomous task using the ReAct (Reasoning + Acting) execution engine with transactional tool isolation and multi-pass context optimization.
+```bash
+harness agent run "Analyze repository dependencies and list all outdated packages" --max-steps 15
 ```
 
 #### Options:
-- `--max-steps <N>`: Maximum reasoning steps (default: `10`).
-- `--model <MODEL_NAME>`: LLM model identifier (default: `gpt-4o-mini` or configured environment model).
-
-#### Execution Flow:
-1. Agent initializes the micro-kernel and activates all available tools (built-in, sandboxed, and ecosystem bridges).
-2. Decomposes task into thought $\rightarrow$ action $\rightarrow$ observation iterations.
-3. Invokes tools with strict JSON schema validation.
-4. Returns structured `AgentTaskResult` with complete step-by-step reasoning and final answer.
+- `--max-steps <N>`: Maximum thought/action reasoning steps (default: `10`).
 
 ---
 
-### Interactive Web Control Room
+### Hierarchical Session Introspection & Trajectory Export
 
-Launch the real-time web dashboard to monitor plugins, inspect the IoC container, view live event telemetry over WebSockets, and trigger agent tasks:
+Harness exposes first-class headless CLI seams for inspecting agent execution trees, token metrics, and transcripts.
 
+#### `harness session list [OPTIONS]`
+Lists all stored agent sessions with step counts and execution status.
 ```bash
-harness ui --host 127.0.0.1 --port 8080
+# List recent sessions
+harness session list --limit 10
+
+# Filter by execution status
+harness session list --status COMPLETED
+
+# List only root-level sessions
+harness session list --root-only
 ```
-Open [http://127.0.0.1:8080](http://127.0.0.1:8080) in any modern web browser.
 
----
-
-### Creator Mode (Dynamic Plugin Scaffolding)
-
-Creator Mode allows instant scaffolding and dynamic authoring of new plugin packages:
-
+#### `harness session get <session_id>`
+Retrieves full structured JSON state for a specific session.
 ```bash
-harness creator build data_cleaner --description "CSV and JSON cleaning utilities" --target-dir plugins/data_cleaner
+harness session get sess_20260828_01
 ```
-Generates a complete, ready-to-run plugin template with `plugin.json` and `main.py`.
 
----
-
-### Runtime Introspection & Diagnostics
-
-Inspect the live runtime dependency graph, registered services, active providers, and tool endpoints:
-
+#### `harness session tree <session_id>`
+Renders the hierarchical multi-agent execution tree with aggregated subtree token counts, durations, and child statuses.
 ```bash
-harness introspect
+harness session tree sess_20260828_01
+```
+*Example Output:*
+```
+Execution Tree for Session: sess_20260828_01
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Total Subtree Sessions: 3
+Total Tokens:           4,280
+Total Steps:            7
+Completed / Failed:     3 / 0
+Duration:               4.12s
+
+Tree Hierarchy:
+────────────────────────────────────────────────────────────
+• [supervisor] sess_20260828_01 (COMPLETED) — Coordinate repository audit
+  └─ [worker] sess_20260828_02 (COMPLETED) — Scan dependency security
+  └─ [worker] sess_20260828_03 (COMPLETED) — Generate summary report
 ```
 
-#### Output Example:
-```
-🔍 System Introspection Report
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Active Plugins (6):
-  • core.storage              [enabled]
-  • core.tools                [enabled]
-  • core.llm                  [enabled]
-  • bridge.em_cubed           [enabled]
-  • bridge.memtext            [enabled]
-  • bridge.flywheel           [enabled]
+#### `harness session export <session_id> [OPTIONS]`
+Exports an agent session trajectory into clean GitHub-flavored Markdown or structured JSON.
+```bash
+# Export trajectory to terminal
+harness session export sess_20260828_01 --format markdown
 
-Registered Services (4):
-  • storage.service           (provided by: core.storage)
-  • tools.registry            (provided by: core.tools)
-  • llm.service               (provided by: core.llm)
-  • memory.provider           (provided by: memory.memtext)
-
-Available Tools (14):
-  • surface.python
-  • surface.prolog
-  • surface.sqlite
-  • memory.store
-  • memory.recall
-  ...
-
-📊 Mermaid Dependency Graph:
-graph TD
-  core_tools["core.tools"] --> core_storage["core.storage"]
-  ...
+# Save trajectory to file
+harness session export sess_20260828_01 --format markdown -o ./trajectory.md
 ```
 
 ---
 
-### Skill Knowledge Graph & Autonomous Chaining
+### 3-Tier AST Context Compilation & Code Skeletonization
 
-Harness indexes structured agent skills (`.agents/skills/` and plugin directories) into an in-memory directed knowledge graph with semantic intent routing, shortest-path chain synthesis, and anti-pattern defense:
+Prevent context window blowout by compiling deterministic, AST-reachability-bounded context graphs prior to model invocation:
+
+#### `harness context compile <target_file> [OPTIONS]`
+Compiles a 3-tier reachability context graph starting from a target file:
+- **Tier 1**: Target file in full source.
+- **Tier 2**: Direct dependencies compiled to interface skeletons (docstrings, class/function signatures, `...` bodies).
+- **Tier 3**: Excluded transitive dependencies.
 
 ```bash
-# Display the graph and emit an interactive HTML Visual Brief in %TEMP%
+harness context compile src/harness/kernel/runtime.py --repo-root . --max-hops 2
+```
+
+#### `harness context skeletonize <target_file>`
+Extracts a structural interface skeleton from any Python source file, stripping internal function bodies while preserving type signatures and docstrings.
+```bash
+harness context skeletonize src/harness/agent/engine.py
+```
+
+---
+
+### Compute Budget & Model Tier Assessment
+
+#### `harness assess-compute "<prompt>" [OPTIONS]`
+Assesses task surface complexity and recommends calibrated model tiers and thinking budgets (Gemini 3.7 Flash, Claude 3.7 Sonnet, OpenAI o-series).
+```bash
+# Assess architectural refactoring task
+harness assess-compute "Refactor IoC container lifecycle to support async teardown" --arch --files 4
+
+# Output assessment as JSON
+harness assess-compute "Fix off-by-one bug in token counter" --debug-task --json
+
+# Generate interactive HTML visual brief in %TEMP%
+harness assess-compute "Design multi-agent consensus protocol" --arch --html
+```
+
+#### Options:
+- `--files`, `-f`: Number of files in scope (default: `1`).
+- `--arch`, `-a`: Flag indicating architectural refactoring.
+- `--debug-task`, `-d`: Flag indicating debugging / diagnostic investigation.
+- `--profile`, `-p`: Scoring preset (`balanced`, `reasoning_heavy`, `cost_optimized`, `latency_optimized`).
+- `--override`, `-o`: Force specific tier (`high_reasoning`, `standard_agentic`, `fast_mechanical`).
+- `--json`: Output raw assessment in JSON format.
+- `--html`: Generate an interactive visual HTML brief.
+
+---
+
+### Agent Skill Knowledge Graph & Intent Routing
+
+Harness indexes structured agent skills (`SKILL.md` and companion `CARD.md`) into a directed graph for autonomous multi-step execution:
+
+#### `harness skills graph [OPTIONS]`
+Indexes all skills in the workspace and displays node/edge statistics.
+```bash
+# Display skill statistics
+harness skills graph
+
+# Generate an interactive HTML Visual Brief in %TEMP%
 harness skills graph --visual
+```
 
-# Route natural language intent to matching skills and recommended execution chains
-harness skills route "fetch wine dataset from UCI and profile distribution"
+#### `harness skills route "<intent>" [OPTIONS]`
+Routes natural language intent to matching skills with confidence scores and recommended execution chains.
+```bash
+harness skills route "fetch wine dataset from UCI and profile outliers" --top-k 3
+```
 
-# Compute the directed execution path between two skills
+#### `harness skills chain <start_skill> <target_skill>`
+Computes the shortest directed topological execution path between two skills.
+```bash
 harness skills chain structured-data-scout questio-reflection
+```
 
-# Inspect topological dependencies, handoffs, and mitigated anti-patterns for a skill
+#### `harness skills info <skill_name>`
+Inspects topological dependencies, prerequisites, downstream handoffs, and mitigated anti-patterns for a skill.
+```bash
 harness skills info questio-reflection
+```
+
+#### `harness skills create <name> [OPTIONS]`
+Scaffolds a high-precision agent skill with `SKILL.md` and `CARD.md` blueprints conforming to deep-module craft standards.
+```bash
+harness skills create database-auditor \
+  --description "Audit PostgreSQL connection pools and query performance" \
+  --category "data_engineering" \
+  --trigger "audit database" \
+  --trigger "check connection pool" \
+  --validate
+```
+
+#### `harness skills validate <skill_dir>`
+Validates an agent skill against deep-module craft standards, checking YAML frontmatter, 5-stage progressions, companion card checklists, and anti-pattern boundaries.
+```bash
+harness skills validate .agents/skills/questio-reflection
+```
+
+---
+
+### Dynamic Plugin Creator & Archetype Scaffolding
+
+Creator Mode enables rapid authoring, templating, and pre-flight validation of plugins.
+
+#### `harness creator init`
+Interactive CLI wizard that guides you through plugin name, description, implementation language, preset, tool names, dependencies, and isolation modes.
+```bash
+harness creator init
+```
+
+#### `harness creator build <name>` (or `harness create` / `harness scaffold`)
+Scaffolds a complete plugin package non-interactively from CLI flags.
+```bash
+harness creator build data_cleaner \
+  --description "CSV and JSON cleaning utilities" \
+  --language python \
+  --preset tool \
+  --tools "clean_csv,normalize_json" \
+  --deps "pandas,pydantic" \
+  --isolation subprocess
+```
+
+#### `harness creator archetypes` (or `harness archetypes`)
+Lists all available plugin archetype presets:
+- `general`: Standard multipurpose plugin.
+- `tool`: High-performance utility tool provider.
+- `service`: Background daemon or stateful service provider.
+- `api_wrapper`: External REST / GraphQL API client.
+- `agentic_workflow`: Multi-step reasoning pipeline.
+- `container`: OCI container / Docker wrapper.
+- `mcp_bridge`: Bridge connecting external MCP tool servers.
+
+```bash
+harness creator archetypes
+```
+
+#### `harness creator validate <path>` (or `harness validate`)
+Validates manifest structure, entrypoint syntax, dependency definitions, and optionally executes a dry-run inside a sandboxed subprocess.
+```bash
+# Static validation
+harness creator validate plugins/data_cleaner
+
+# Dynamic sandbox execution test
+harness creator validate plugins/data_cleaner --dry-run --timeout 10.0
+
+# Auto-repair detected issues
+harness creator validate plugins/data_cleaner --fix
+```
+
+#### `harness creator remediate <path>`
+Automatically repairs missing manifests, generates entrypoint stubs, and normalizes configuration files.
+```bash
+harness creator remediate plugins/data_cleaner
+```
+
+---
+
+### Knowledge Vault & Autobiographical Reflection
+
+Harness includes an endogenous memory loop that harvests internal execution history, extracts battle-tested heuristics, and commits verified Knowledge Items (KIs) with complete Isnad provenance.
+
+#### `harness reflect` (or `harness knowledge reflect`)
+Runs an endogenous reflection cycle across temporary HTML reports and conversation transcripts.
+```bash
+# Run reflection across all recent reports and transcripts
+harness reflect
+
+# Filter reflection to a specific category
+harness reflect --category architecture --min-confidence 0.85
+
+# Dry run without committing to knowledge vault
+harness reflect --no-commit
+```
+
+#### `harness knowledge sync`
+Synchronizes on-disk Knowledge Items (`.harness/knowledge/`) into persistent SQLite storage.
+```bash
+harness knowledge sync
+```
+
+#### `harness knowledge list [OPTIONS]`
+Lists all Knowledge Items in storage with titles and category tags.
+```bash
+harness knowledge list
+harness knowledge list --tag architecture
+```
+
+#### `harness knowledge query "<query>" [OPTIONS]`
+Searches the Knowledge Vault by semantic keyword, tag, or Isnad status.
+```bash
+harness knowledge query "subprocess isolation" --status VERIFIED
+```
+
+#### `harness knowledge verify <ki_id>`
+Audits the unbroken Isnad chain of custody for a Knowledge Item, asserting that all primary source URIs, commits, and report files exist.
+```bash
+harness knowledge verify ki_self_20260826_01
 ```
 
 ---
 
 ### Model Context Protocol (MCP) Server
 
-Harness can act as an **MCP Server**, exposing all internal plugins, sandboxes, and ecosystem surfaces to external AI coding agents (Claude Code, Cursor, Windsurf, Gemini, etc.) over standard I/O:
+#### `harness mcp serve`
+Starts the Harness MCP server over standard I/O (`stdin`/`stdout`). Exposes all internal plugins, sandboxed tools, and ecosystem surfaces to external IDEs (Claude Code, Cursor, Windsurf, Gemini, etc.).
 
 ```bash
 harness mcp serve
 ```
 
----
-
-### Ecosystem Bridge Status
-
-Verify connectivity to neighbor ecosystem repositories:
-
-```bash
-harness bridge status
+*Example Cursor / Claude Code `mcp_config.json` entry:*
+```json
+{
+  "mcpServers": {
+    "brain-harness": {
+      "command": "harness",
+      "args": ["mcp", "serve"]
+    }
+  }
+}
 ```
-Checks `Em-Cubed`, `Memtext`, and `Skill Flywheel` directory locations, environment variables, and module availability.
 
 ---
 
-### Immutable Event Stream Auditing
+### Ecosystem Bridge Management
 
-Inspect the chronological append-only event stream:
-
+#### `harness bridge list`
+Lists all registered ecosystem bridges (`Em-Cubed`, `Memtext`, `Skill Flywheel`) and their current availability.
 ```bash
-# View all recent events
+harness bridge list
+```
+
+#### `harness bridge status [name]`
+Runs detailed diagnostics on peer ecosystem bridges.
+```bash
+# Check all ecosystem bridges
+harness bridge status
+
+# Check specific bridge
+harness bridge status em_cubed
+```
+
+---
+
+### Runtime Introspection, Telemetry & Web Dashboard
+
+#### `harness introspect`
+Displays live runtime diagnostics, active plugins, registered services, available tools, and a Mermaid dependency graph.
+```bash
+harness introspect
+```
+
+#### `harness services`
+Lists all registered IoC services and their providing plugins.
+```bash
+harness services
+```
+
+#### `harness events [OPTIONS]`
+Views the chronological, append-only event stream log.
+```bash
+# View last 50 events
 harness events
 
 # Filter by event type
-harness events --type tool.invoked
+harness events --type tool.invoked --limit 20
 ```
+
+#### `harness run`
+Starts the Harness runtime in interactive CLI console mode.
+```bash
+harness run
+```
+
+#### `harness ui [OPTIONS]`
+Launches the real-time Web Control Room dashboard with WebSocket telemetry.
+```bash
+harness ui --host 127.0.0.1 --port 8080
+```
+Open [http://127.0.0.1:8080](http://127.0.0.1:8080) in your browser to inspect live agent execution, telemetry, and IoC container status.
 
 ---
 
@@ -317,7 +634,7 @@ harness events --type tool.invoked
 
 ### Plugin Structure & Manifest (`plugin.json`)
 
-A standard plugin directory contains at least a manifest (`plugin.json`) and an entry script (`main.py` or `plugin.py`):
+A standard plugin directory contains at least a manifest (`plugin.json`) and an entry script:
 
 ```
 plugins/weather_tool/
@@ -325,19 +642,22 @@ plugins/weather_tool/
 └── main.py
 ```
 
-#### Example `plugin.json`:
+#### Complete `plugin.json` Schema:
 ```json
 {
   "name": "weather_tool",
   "version": "1.0.0",
   "description": "Fetch real-time weather reports for autonomous agents",
+  "language": "python",
   "entrypoint": "main.py",
   "isolation": "subprocess",
   "trusted": false,
+  "category": "general",
+  "dependencies": ["requests>=2.31.0"],
   "entrypoints": [
     {
       "name": "get_weather",
-      "description": "Get current weather for a city",
+      "description": "Get current weather conditions for a city",
       "parameters": [
         {
           "name": "city",
@@ -348,7 +668,7 @@ plugins/weather_tool/
         {
           "name": "units",
           "type": "string",
-          "description": "Temperature units (celsius or fahrenheit)",
+          "description": "Temperature units: 'celsius' or 'fahrenheit'",
           "required": false
         }
       ]
@@ -357,18 +677,48 @@ plugins/weather_tool/
 }
 ```
 
-#### Example `main.py`:
+---
+
+### Archetype Presets
+
+When creating plugins with `harness creator build`, choose from seven specialized presets:
+
+| Preset | Description | Default Isolation | Recommended Use Case |
+|---|---|---|---|
+| `general` | Standard multipurpose plugin | `subprocess` | General utilities and scripts |
+| `tool` | High-performance tool provider | `subprocess` | Computational tools, formatting, parsing |
+| `service` | Long-running stateful service | `in_process` | In-memory caches, message routers |
+| `api_wrapper` | HTTP REST / GraphQL client | `subprocess` | SaaS integrations, web APIs |
+| `agentic_workflow` | Multi-step reasoning pipeline | `subprocess` | Complex agent orchestration loops |
+| `container` | OCI / Docker container wrapper | `subprocess` | Heavy binary tools, multi-language runtimes |
+| `mcp_bridge` | Model Context Protocol adapter | `subprocess` | Connecting third-party MCP servers |
+
+---
+
+### Multi-Language Plugin Support
+
+Harness supports sandboxed plugins written in **Python**, **JavaScript**, and **TypeScript**:
+
+#### Python Entrypoint (`main.py`):
 ```python
 def get_weather(city: str, units: str = "celsius") -> str:
-    """Entry function invoked by the sandbox via JSON-RPC."""
+    """Fetch current weather for a city."""
     return f"Weather in {city}: 21° {units.capitalize()}, Clear skies."
+```
+
+#### TypeScript Entrypoint (`index.ts`):
+```typescript
+export function get_weather(params: { city: string; units?: string }): string {
+    const unitStr = params.units || "celsius";
+    return `Weather in ${params.city}: 21° ${unitStr}, Clear skies.`;
+}
 ```
 
 ---
 
 ### Writing Python In-Process Plugins
 
-Trusted in-process plugins inherit directly from [`HarnessPlugin`](file:///d:/GitHub/projects/Brain%20Harness/src/harness/plugins/base.py):
+Trusted in-process plugins inherit directly from [`HarnessPlugin`](file:///d:/GitHub/projects/Brain%20Harness/src/harness/plugins/base.py) and interact with the IoC container via typed `ServiceKey[T]`:
 
 ```python
 from __future__ import annotations
@@ -417,7 +767,7 @@ class CalculatorPlugin(HarnessPlugin):
         )
 
     async def on_disable(self) -> None:
-        # Cleanup happens automatically via ScopedServiceContext
+        # Scoped cleanup occurs automatically
         pass
 
     async def on_unload(self) -> None:
@@ -426,50 +776,76 @@ class CalculatorPlugin(HarnessPlugin):
 
 ---
 
+### Validation & Auto-Remediation Engine
+
+Verify plugin packages prior to runtime execution:
+
+```bash
+# Run structural validation
+harness creator validate plugins/my-plugin
+
+# Perform sandboxed dry-run
+harness creator validate plugins/my-plugin --dry-run
+
+# Automatically repair manifest and boilerplate errors
+harness creator remediate plugins/my-plugin
+```
+
+---
+
 ## 6. Ingestion & Sandbox Security
 
-Brain Harness guarantees process isolation for third-party, GitHub-sourced, and untrusted plugins.
+Brain Harness guarantees strict isolation for external, GitHub-sourced, and untrusted plugins.
 
 ### Isolation Modes
-1. **`subprocess` (Default for untrusted plugins):** Runs in a separate child process. Input and output are exchanged via strict JSON-RPC 2.0 messages over standard I/O pipes managed by [`StdioJsonRpcTransport`](file:///d:/GitHub/projects/Brain%20Harness/src/harness/plugins/transport.py).
-2. **`venv` (Virtual Environment):** Creates an isolated Python virtualenv, installs the repository's dependencies (`requirements.txt` or `pyproject.toml`), and runs the subprocess inside the isolated environment.
-3. **`in_process` (Explicitly trusted plugins only):** Runs within the host Python process for maximum execution speed.
+1. **`subprocess` (Default):** Executes in a separate child process. Input and output are exchanged via strict JSON-RPC 2.0 messages over standard I/O pipes managed by [`StdioJsonRpcTransport`](file:///d:/GitHub/projects/Brain%20Harness/src/harness/plugins/transport.py).
+2. **`venv` (Virtual Environment):** Creates an isolated virtualenv, installs the repository's dependencies (`requirements.txt` or `pyproject.toml`), and runs the subprocess inside the virtualenv.
+3. **`in_process` (Explicitly trusted plugins only):** Executes within the host Python process for microsecond execution speed.
+4. **`docker` (Container Isolation):** Executes within an isolated OCI container sandbox.
+
+### Lazy Subprocess Staging & Context Transactions
+- **Lazy Staging**: External plugins with `subprocess` or `venv` isolation remain in `DISCOVERED`/`VALIDATED` state during startup, provisioning virtualenvs lazily on first invocation to eliminate cold-start delays.
+- **Context Transactions**: ReAct agent tool invocations execute inside scoped context transactions (`async with context.transaction()`) with automatic rollback on error or exception.
 
 ---
 
 ## 7. Ecosystem Bridges
 
-Brain Harness includes first-class connectors to the wider forensic simulation and neuro-symbolic ecosystem:
+Brain Harness includes native connectors to the wider forensic simulation and neuro-symbolic ecosystem:
 
 | Bridge | Description | Key Services & Tools |
 |---|---|---|
 | **Em-Cubed** | Polyglot neuro-symbolic OS | `bridge.em_cubed`, `surface.python`, `surface.prolog`, `surface.z3`, `surface.sqlite` |
 | **Memtext** | Persistent agent memory & audit | `memory.provider`, `memory.store`, `memory.recall` |
 | **Skill Flywheel** | Catalog of 800+ domain skills | `bridge.flywheel`, `skill.<skill_id>` |
-| **MCP Client** | External Model Context Protocol tools | `mcp.<server_name>`, `mcp.<server>.<tool_name>` |
+| **MCP Client & Server** | Model Context Protocol integration | `mcp.<server_name>`, `mcp.<server>.<tool_name>` |
 
 ---
 
 ## 8. Python SDK & Programmatic Usage
 
-Embed Brain Harness into your own Python applications, services, or test pipelines:
+Embed Brain Harness into your own Python applications, backend services, or automated evaluation pipelines:
 
 ```python
 import asyncio
 from harness.kernel.runtime import HarnessRuntime
-from harness.services.llm import LLM_SERVICE_KEY, LiteLLMService
 
 async def main():
-    # Create runtime instance with in-memory storage and standard plugins
+    # Initialize runtime with in-memory storage and standard core services
     async with HarnessRuntime.create(db_path=":memory:") as runtime:
-        # Run an autonomous task
+        # 1. Run an autonomous agent task
         result = await runtime.run_task(
             "Find all python files in the current workspace and count their lines."
         )
 
         print(f"Task Status: {result.status}")
-        print(f"Total Steps: {len(result.steps)}")
+        print(f"Total Steps:  {len(result.steps)}")
         print(f"Final Answer:\n{result.final_answer}")
+
+        # 2. Query the Skill Knowledge Graph
+        skill_matches = await runtime.route_skills("clean dataset and remove outliers")
+        for match in skill_matches:
+            print(f"Matched Skill: {match.skill_name} ({match.confidence:.2f})")
 
 if __name__ == "__main__":
     asyncio.run(main())
@@ -497,13 +873,15 @@ if __name__ == "__main__":
 }
 ```
 
-### Common Diagnostics
+### Common Diagnostics & Troubleshooting
 
 | Issue | Cause | Resolution |
 |---|---|---|
 | `DependencyError: Missing dependencies` | A plugin requires a `ServiceKey` that is not registered. | Ensure the provider plugin is listed in `plugin_dirs` or loaded before the requiring plugin. |
-| `TransportError: Process not running` | A sandboxed subprocess crashed or timed out. | Check the plugin script's syntax or increase timeout with `call(timeout=60.0)`. |
-| `ServiceNotFoundError` | Code attempted to `require()` a service that was revoked. | Check if the providing plugin was disabled or unloaded. |
+| `TransportError: Process not running` | A sandboxed subprocess crashed or timed out. | Check the plugin script's syntax or run `harness creator validate <path> --dry-run`. |
+| `ServiceNotFoundError` | Code attempted to `require()` a service that was revoked. | Check if the providing plugin was disabled (`harness plugin list`). |
+| `Validation failed: missing entrypoint` | Plugin manifest references a function that does not exist in `main.py`. | Run `harness creator remediate <path>` to auto-generate missing entrypoint stubs. |
+| `Isnad Integrity Warning` | Knowledge Item references a primary source file that was moved or deleted. | Run `harness knowledge verify <ki_id>` and update the lineage URI. |
 
 ---
 
