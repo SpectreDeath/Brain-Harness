@@ -16,6 +16,7 @@
 12. **Slotted & Frozen Dataclass Architecture.** High-volume internal entity and AST data structures must use `slots=True` to minimize memory footprint, `frozen=True` for immutable value objects, `__post_init__` construction assertions, and `default_factory` for mutable collections.
 13. **Inspect-Before-Edit & Seam Verification Protocol.** Agents must never prematurely modify code without first mapping DAG component seams, authoring failing test contracts, and validating changes against strict git diffs.
 14. **Subprocess Pipe Transport Disposal Invariant.** All asynchronous subprocess sandbox transports must explicitly drain and close stdin/stdout/stderr pipes inside `finally` blocks to guarantee clean proactor resource disposal across operating systems.
+15. **Secure Credential Injection & Runner Isolation.** When executing authenticated operations (e.g. git push with tokens), never use shell string variable interpolation. Use isolated Python runner scripts or standard input pipes to prevent shell expansion parse errors and credential exposure.
 
 
 ## Code Style
