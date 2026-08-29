@@ -25,8 +25,11 @@ from harness.agent.session import (
     AgentSessionPlugin,
     AgentSessionStore,
     InMemoryAgentSessionStore,
+    SessionTreeNode,
+    SessionTreeSnapshot,
     StorageBackedSessionStore,
 )
+
 from harness.agent.swarm import (
     SWARM_COORDINATOR_KEY,
     ConsensusEngine,
@@ -58,9 +61,12 @@ __all__ = [
     "ReActAgentLoop",
     "ReActAgentPlugin",
     "SWARM_COORDINATOR_KEY",
+    "SessionTreeNode",
+    "SessionTreeSnapshot",
     "StepExecutionEngine",
     "StorageBackedSessionStore",
     "SwarmCoordinator",
+
     "SwarmCoordinatorPlugin",
     "SwarmDAG",
     "SwarmNode",

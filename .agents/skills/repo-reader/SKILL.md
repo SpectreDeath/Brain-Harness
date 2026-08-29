@@ -70,6 +70,19 @@ Execute four structured queries via `brain_query` across the mounted repository 
 
 > **Completion criterion**: 4 query result batches harvested, sorted by cosine relevance, with exact source file and commit hash citations.
 
+### 2.1 Quantitative Scoring & Tiered Prioritization Matrix
+
+When comparing foreign harnesses or evaluating candidate capabilities against Brain Harness, apply the objective scoring formula:
+
+$$\text{Total Score} = \text{Usefulness} + (6 - \text{Difficulty}) + \text{Value} + \text{Architectural Fit}$$
+
+*(Each scored 1–5; Difficulty is inverted so that easier adoptions score higher, Max: 20).*
+
+Structure candidate features into a 3-Tier Roadmap:
+- **Tier 1 (Immediate Quick Wins)**: Python-native, low-medium difficulty, direct service plugin fit (Weeks 1–2).
+- **Tier 2 (Strategic Safety & Observability)**: Structural invariants, DAG execution graphs, permission policies, session replays.
+- **Tier 3 (Horizon Bets)**: Alternative language runtimes, local model inference, peer-to-peer distributed meshes.
+
 ---
 
 ## 3. The Visual Repository Brief

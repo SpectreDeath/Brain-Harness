@@ -1,111 +1,80 @@
-"""Tests for Unified Context Optimization Pipeline (Memory & Epistemics Bridge)."""
+"""Unit tests for the deepened UnifiedContextPipelineService."""
 
 from __future__ import annotations
 
 import tempfile
 from pathlib import Path
-
 import pytest
 
-from plugins.memory_and_epistemics.unified_context_pipeline import (
-    UNIFIED_CONTEXT_PIPELINE_SERVICE_KEY,
-    PipelineMessage,
-    UnifiedContextPipeline,
+from harness.services.unified_context import (
+    UNIFIED_CONTEXT_PIPELINE_KEY,
+    DefaultUnifiedContextPipeline,
+    UnifiedContextPipelineService,
+    UnifiedContextRequest,
 )
 
 
 @pytest.mark.unit
-class TestUnifiedContextPipeline:
-    def test_end_to_end_pipeline_decay_pruning_and_token_savings(self) -> None:
-        pipeline = UnifiedContextPipeline()
-        session_id = "test_unified_session"
+def test_unified_context_pipeline_service_key() -> None:
+    """Verify ServiceKey name for unified context pipeline."""
+    assert UNIFIED_CONTEXT_PIPELINE_KEY.name == "service.unified_context_pipeline"
 
-        # Prepare a complex message sequence:
-        # - msg_0: System instruction (channel='instruction', should decay very slowly)
-        # - msg_1: Expired tool output (will be evicted by Pass 1 pruning)
-        # - msg_2: Current tool output with DEFINE:schema_key
-        # - msg_3: Duplicate doc passage 1
-        # - msg_4: Duplicate doc passage 2 (will be collapsed by Pass 2)
-        # - msg_5: User query referencing REF:schema_key
+
+@pytest.mark.unit
+def test_pipeline_observation_truncation_and_compaction() -> None:
+    """Test full multi-pass pipeline processing."""
+    pipeline = DefaultUnifiedContextPipeline()
+
+    huge_observation = "A" * 8000
+    messages = [
+        {"role": "system", "content": "You are Harness agent."},
+        {"role": "user", "content": "Analyze system."},
+        {"role": "assistant", "content": "Listing dir."},
+        {"role": "observation", "content": f"Observation: {huge_observation}"},
+        {"role": "assistant", "content": "Reading file."},
+        {"role": "observation", "content": "Observation: file content"},
+        {"role": "assistant", "content": "Final step."},
+    ]
+
+    req = UnifiedContextRequest(
+        messages=messages,
+        max_observation_chars=1000,
+        recent_messages_preserve=2,
+    )
+
+    res = pipeline.process_context(req)
+    assert res.status == "ok"
+    assert res.original_message_count == len(messages)
+    assert res.optimized_message_count <= len(messages)
+    # Check that the huge observation was truncated
+    obs_msg = [m for m in res.assembled_messages if "Observation:" in str(m.get("content", ""))]
+    if obs_msg:
+        assert len(str(obs_msg[0].get("content", ""))) < 8000
+
+
+@pytest.mark.unit
+def test_pipeline_repomap_integration() -> None:
+    """Test AST RepoMap injection inside the unified pipeline."""
+    pipeline = DefaultUnifiedContextPipeline()
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        root = Path(tmpdir)
+        (root / "calculator.py").write_text("class Calculator:\n    def add(a, b): pass\n", encoding="utf-8")
+
         messages = [
-            {
-                "id": "msg_0",
-                "role": "system",
-                "content": "You are a code synthesis assistant.",
-                "channel": "instruction",
-                "stability": 20.0,
-            },
-            {
-                "id": "msg_1",
-                "role": "tool_output",
-                "content": "Old search output",
-                "channel": "tool_output",
-                "tool_call_key": "search",
-            },
-            {
-                "id": "msg_2",
-                "role": "tool_output",
-                "content": "Updated search output DEFINE:schema_key",
-                "channel": "tool_output",
-                "tool_call_key": "search",
-            },
-            {
-                "id": "msg_3",
-                "role": "retrieved_doc",
-                "content": "Database migration guide notes.",
-                "channel": "evidence",
-            },
-            {
-                "id": "msg_4",
-                "role": "retrieved_doc",
-                "content": "database MIGRATION guide notes.",
-                "channel": "evidence",
-            },
-            {
-                "id": "msg_5",
-                "role": "user",
-                "content": "Please verify REF:schema_key against the database.",
-                "channel": "memory",
-            },
+            {"role": "system", "content": "You are a coding agent."},
+            {"role": "user", "content": "Fix Calculator.add logic."},
         ]
 
-        result = pipeline.process(
-            session_id=session_id,
+        req = UnifiedContextRequest(
             messages=messages,
-            advance_turn=False,
+            repo_map_root=str(root),
+            repo_map_budget_tokens=500,
+            query_context="Fix Calculator add",
         )
 
-        assert result.session_id == session_id
-        assert result.input_messages_count == 6
-        # Duplicate doc msg_4 should be removed, expired msg_1 should be removed
-        assert "msg_4" in result.pruner_removed_ids
-        assert "msg_1" in result.pruner_removed_ids
-        assert result.final_messages_count == 4
-        assert result.tokens_optimized < result.tokens_raw
-        assert result.token_savings_pct > 0.0
-        assert "[SYSTEM] You are a code synthesis assistant." in result.assembled_prompt
-
-    def test_pipeline_with_code_compilation(self) -> None:
-        pipeline = UnifiedContextPipeline()
-        with tempfile.TemporaryDirectory() as temp_repo:
-            root = Path(temp_repo)
-            mod_a = root / "module_a.py"
-            mod_a.write_text("class Alpha:\n    def run(self):\n        return 42\n")
-
-            messages = [
-                PipelineMessage(id="u1", role="user", content="Inspect module_a"),
-            ]
-
-            result = pipeline.process(
-                session_id="code_sess",
-                messages=messages,
-                target_repo_path=str(root),
-                target_file_path=str(mod_a),
-                advance_turn=False,
-            )
-
-            assert result.final_messages_count == 1
-            assert "class Alpha:" in result.code_context
-
-    def test_service_key_identity(self) -> None:
-        assert UNIFIED_CONTEXT_PIPELINE_SERVICE_KEY.name == "domain.unified_context_pipeline"
+        res = pipeline.process_context(req)
+        assert res.status == "ok"
+        assert res.repo_map_injected is True
+        assert "Repository Map:" in res.assembled_messages[0]["content"]
+        assert "calculator.py:" in res.assembled_messages[0]["content"]

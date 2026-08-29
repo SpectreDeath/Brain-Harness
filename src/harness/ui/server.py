@@ -21,6 +21,7 @@ from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 
 from harness.agent.base import AGENT_LOOP_KEY
+from harness.agent.swarm import SWARM_COORDINATOR_KEY, SwarmCoordinator
 from harness.creator.introspection import RuntimeIntrospector
 from harness.events.bus import EventBus
 from harness.ingestion.pipeline import PluginIngestionPipeline
@@ -547,10 +548,7 @@ def create_app(
 
     @app.get("/api/swarm/status")
     async def get_swarm_status() -> dict[str, Any]:
-        from harness.kernel.context import ServiceKey
-
-        swarm_key: ServiceKey[Any] = ServiceKey("agent.swarm")
-        swarm_coord = adapter.context.optional(swarm_key)
+        swarm_coord = adapter.context.optional(SWARM_COORDINATOR_KEY)
         if swarm_coord is not None and hasattr(swarm_coord, "get_status"):
             return cast(dict[str, Any], await swarm_coord.get_status())
 
@@ -562,10 +560,7 @@ def create_app(
 
     @app.get("/api/swarm/runs")
     async def list_swarm_runs(limit: int = 50) -> dict[str, Any]:
-        from harness.kernel.context import ServiceKey
-
-        swarm_key: ServiceKey[Any] = ServiceKey("agent.swarm")
-        swarm_coord = adapter.context.optional(swarm_key)
+        swarm_coord = adapter.context.optional(SWARM_COORDINATOR_KEY)
         if swarm_coord is None:
             return {"runs": [], "total": 0}
 
@@ -579,10 +574,7 @@ def create_app(
 
     @app.get("/api/swarm/runs/{run_id}")
     async def get_swarm_run_endpoint(run_id: str) -> dict[str, Any]:
-        from harness.kernel.context import ServiceKey
-
-        swarm_key: ServiceKey[Any] = ServiceKey("agent.swarm")
-        swarm_coord = adapter.context.optional(swarm_key)
+        swarm_coord = adapter.context.optional(SWARM_COORDINATOR_KEY)
         if swarm_coord is None:
             return {"status": "error", "error": "SwarmCoordinator service not available"}
 
@@ -599,10 +591,7 @@ def create_app(
 
     @app.get("/api/swarm/runs/{run_id}/tree")
     async def get_swarm_run_tree_endpoint(run_id: str) -> dict[str, Any]:
-        from harness.kernel.context import ServiceKey
-
-        swarm_key: ServiceKey[Any] = ServiceKey("agent.swarm")
-        swarm_coord = adapter.context.optional(swarm_key)
+        swarm_coord = adapter.context.optional(SWARM_COORDINATOR_KEY)
         if swarm_coord is None:
             return {"status": "error", "error": "SwarmCoordinator service not available"}
 
@@ -620,10 +609,7 @@ def create_app(
 
     @app.post("/api/swarm/run")
     async def run_swarm_endpoint(req: SwarmRunRequest) -> dict[str, Any]:
-        from harness.kernel.context import ServiceKey
-
-        swarm_key: ServiceKey[Any] = ServiceKey("agent.swarm")
-        swarm_coord = adapter.context.optional(swarm_key)
+        swarm_coord = adapter.context.optional(SWARM_COORDINATOR_KEY)
         if swarm_coord is None:
             return {"status": "error", "error": "SwarmCoordinator service not available"}
 

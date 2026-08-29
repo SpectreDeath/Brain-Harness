@@ -14,6 +14,12 @@ import structlog
 
 from harness.kernel.context import ServiceContext, ServiceKey
 from harness.services.llm import LLMMessage
+from harness.services.repomap import REPO_MAP_SERVICE_KEY, DefaultRepoMapService, RepoMapService
+from harness.services.unified_context import (
+    UNIFIED_CONTEXT_PIPELINE_KEY,
+    UnifiedContextPipelineService,
+    UnifiedContextRequest,
+)
 
 logger = structlog.get_logger()
 
@@ -30,6 +36,8 @@ class ContextOptimizationConfig:
     compact_json: bool = True
     enable_pruning: bool = True
     token_budget: int = 16000
+    repo_map_root: str | None = None
+    repo_map_budget_tokens: int = 1024
 
 
 @runtime_checkable
@@ -53,6 +61,16 @@ class AgentContextOptimizer(Protocol):
         config: ContextOptimizationConfig | None = None,
     ) -> list[LLMMessage]:
         """Prune and budget messages before sending to the LLM completion endpoint."""
+        ...
+
+    def inject_repo_map(
+        self,
+        messages: list[LLMMessage],
+        *,
+        query_context: str | None = None,
+        config: ContextOptimizationConfig | None = None,
+    ) -> list[LLMMessage]:
+        """Inject ranked AST repo map into the system prompt if repo_map_root is set."""
         ...
 
 
@@ -118,27 +136,26 @@ class DefaultContextOptimizer:
         if not cfg.enable_pruning or len(messages) <= cfg.max_total_messages:
             return list(messages)
 
-        # Check if an external UnifiedContextPipeline or ContextCompactor is registered in context
+        # Check if an authoritative UnifiedContextPipeline is registered in context
         if self.context is not None:
             try:
-                # Try domain.unified_context_pipeline key lookup
-                ucp_key = ServiceKey[Any]("domain.unified_context_pipeline")
-                if hasattr(self.context, "has") and self.context.has(ucp_key):
-                    ucp = self.context.require(ucp_key)
-                    if hasattr(ucp, "process"):
-                        # Format as dict list and process
-                        dict_msgs = [
-                            {"id": f"m_{i}", "role": m.role, "content": m.content}
-                            for i, m in enumerate(messages)
+                if hasattr(self.context, "has") and self.context.has(UNIFIED_CONTEXT_PIPELINE_KEY):
+                    ucp = self.context.require(UNIFIED_CONTEXT_PIPELINE_KEY)
+                    dict_msgs = [{"role": m.role, "content": m.content} for m in messages]
+                    req = UnifiedContextRequest(
+                        messages=dict_msgs,
+                        token_budget=cfg.token_budget,
+                        max_observation_chars=cfg.max_observation_chars,
+                        recent_messages_preserve=cfg.recent_messages_preserve,
+                        repo_map_root=cfg.repo_map_root,
+                        repo_map_budget_tokens=cfg.repo_map_budget_tokens,
+                    )
+                    res = ucp.process_context(req)
+                    if res.status == "ok" and res.assembled_messages:
+                        return [
+                            LLMMessage(role=m.get("role", "user"), content=m.get("content", ""))
+                            for m in res.assembled_messages
                         ]
-                        res = ucp.process("agent_ctx_opt", dict_msgs, advance_turn=False)
-                        # Reconstitute into LLMMessage list
-                        # If assembled prompt available, return anchor system + user prompt
-                        if res.assembled_prompt:
-                            return [
-                                LLMMessage(role="system", content=messages[0].content if messages else ""),
-                                LLMMessage(role="user", content=res.assembled_prompt),
-                            ]
             except Exception as err:
                 logger.debug("unified_pipeline_delegation_fallback", error=str(err))
 
@@ -163,6 +180,52 @@ class DefaultContextOptimizer:
         )
 
         return [*header, summary_msg, *tail]
+
+    def inject_repo_map(
+        self,
+        messages: list[LLMMessage],
+        *,
+        query_context: str | None = None,
+        config: ContextOptimizationConfig | None = None,
+    ) -> list[LLMMessage]:
+        """Inject a PageRanked AST repo map into the system prompt if repo_map_root is set."""
+        cfg = config or self.config
+        if not cfg.repo_map_root or not messages:
+            return messages
+
+        repo_map_svc: RepoMapService
+        if self.context is not None and hasattr(self.context, "has") and self.context.has(REPO_MAP_SERVICE_KEY):
+            repo_map_svc = self.context.require(REPO_MAP_SERVICE_KEY)
+        else:
+            repo_map_svc = DefaultRepoMapService()
+
+        # Extract query context from last user message if not passed
+        eff_query = query_context
+        if not eff_query:
+            for m in reversed(messages):
+                if m.role == "user":
+                    eff_query = m.content
+                    break
+
+        map_res = repo_map_svc.get_repo_map(
+            cfg.repo_map_root,
+            query_context=eff_query,
+            max_tokens=cfg.repo_map_budget_tokens,
+        )
+
+        if map_res.status != "ok" or not map_res.formatted_map or map_res.formatted_map.startswith("No indexed"):
+            return messages
+
+        new_msgs = list(messages)
+        first = new_msgs[0]
+        if first.role == "system":
+            enhanced_sys = (
+                f"{first.content}\n\n"
+                f"### Repository Map:\n"
+                f"```\n{map_res.formatted_map}\n```"
+            )
+            new_msgs[0] = LLMMessage(role="system", content=enhanced_sys)
+        return new_msgs
 
 
 __all__ = [

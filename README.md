@@ -26,6 +26,7 @@ When you install and configure plugins, **your harness becomes a direct reflecti
 ## ⚡ Quick Start
 
 ### 1. Installation
+
 ```bash
 git clone https://github.com/SpectreDeath/Brain-Harness.git
 cd Brain-Harness
@@ -33,11 +34,13 @@ pip install -e ".[dev]"
 ```
 
 ### 2. Initialize Your Workspace
+
 ```bash
 harness init
 ```
 
 ### 3. Ingest Repositories & Shape Your Harness
+
 Ingest any repository or archive to create live agent plugins:
 
 ```bash
@@ -53,6 +56,7 @@ harness plugin card requests
 ```
 
 ### 4. Query Skills & Run Autonomous Agents
+
 ```bash
 # View the agent skill knowledge graph & generate an interactive HTML visual brief
 harness skills graph --visual

@@ -1,0 +1,97 @@
+{
+  "name": "plugin.cellcog",
+  "version": "1.0.0",
+  "description": "Any-to-any multimodal sub-agent delegation via CellCog SDK — research, media, documents, code",
+  "entrypoint": "main.py",
+  "isolation": "subprocess",
+  "trusted": false,
+  "category": "integration_and_io",
+  "author": "Brain Harness Forge Engine",
+  "provides": [
+    "service.cellcog"
+  ],
+  "requires": [],
+  "dependencies": [
+    "cellcog"
+  ],
+  "tags": [
+    "multimodal",
+    "sub-agent",
+    "media-generation",
+    "research",
+    "documents"
+  ],
+  "entrypoints": [
+    {
+      "name": "cellcog_run",
+      "description": "Execute any-to-any multimodal task via CellCog (agent or creative mode)",
+      "parameters": [
+        {
+          "name": "prompt",
+          "type": "string",
+          "description": "Task prompt (may include <SHOW_FILE> and <GENERATE_FILE> tags)",
+          "required": true
+        },
+        {
+          "name": "chat_mode",
+          "type": "string",
+          "description": "CellCog chat mode: 'agent' (default) or 'creative'",
+          "required": false
+        },
+        {
+          "name": "chat_tier",
+          "type": "string",
+          "description": "Quality tier: 'flash' (default), 'core', or 'max'",
+          "required": false
+        },
+        {
+          "name": "timeout",
+          "type": "integer",
+          "description": "Timeout in seconds (default: 1800)",
+          "required": false
+        },
+        {
+          "name": "task_label",
+          "type": "string",
+          "description": "Human-readable label for tracking",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "cellcog_research",
+      "description": "Deep multi-source research synthesis via CellCog team mode",
+      "parameters": [
+        {
+          "name": "topic",
+          "type": "string",
+          "description": "Research topic or question",
+          "required": true
+        },
+        {
+          "name": "attachments",
+          "type": "array",
+          "description": "File paths to include as <SHOW_FILE> references",
+          "required": false
+        },
+        {
+          "name": "chat_tier",
+          "type": "string",
+          "description": "Quality tier: 'flash' (default), 'core', or 'max'",
+          "required": false
+        },
+        {
+          "name": "timeout",
+          "type": "integer",
+          "description": "Timeout in seconds (default: 3600)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "cellcog_list_capabilities",
+      "description": "List available CellCog modality skills and their categories",
+      "parameters": []
+    }
+  ]
+}

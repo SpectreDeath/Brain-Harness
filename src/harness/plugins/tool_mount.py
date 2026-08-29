@@ -28,13 +28,9 @@ from typing import TYPE_CHECKING, Any
 import structlog
 
 from harness.kernel.context import ServiceContext, ServiceKey
-
-if TYPE_CHECKING:
-    from harness.services.tools import ToolRegistry, ToolSpec
+from harness.services.tools import TOOL_REGISTRY_KEY, ToolRegistry, ToolSpec
 
 logger = structlog.get_logger()
-
-TOOL_REGISTRY_KEY: ServiceKey[Any] = ServiceKey("tools.registry")
 
 
 class ToolMountMixin:

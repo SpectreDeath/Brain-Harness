@@ -1,16 +1,18 @@
-"""Plugin watcher — monitors plugin directories for live hot-reloading.
+"""Plugin watcher — monitors plugin directories for live hot-reloading and comment triggers.
 
 Uses watchdog to observe file changes in configured plugin directories.
 Automatically loads newly added plugins, hot-reloads modified plugins,
-and unloads deleted plugins.
+unloads deleted plugins, and scans for autonomous comment markers (# HARNESS: ...).
 """
 
 from __future__ import annotations
 
 import asyncio
 import os
+import re
+from dataclasses import dataclass
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
 import structlog
 from watchdog.events import FileSystemEvent, FileSystemEventHandler
@@ -136,3 +138,98 @@ class PluginWatcher:
             self._observer.join()
             self._observer = None
             logger.info("Plugin watcher stopped")
+
+
+@dataclass(slots=True, frozen=True)
+class CommentTrigger:
+    """Represents a discovered autonomous agent comment marker in code."""
+
+    file_path: str
+    line_number: int
+    marker: str
+    instruction: str
+
+
+_TRIGGER_PATTERNS = [
+    re.compile(r"(?:#|//|/\*)\s*(?:HARNESS|AI):\s*(.+?)(?:\*/)?$", re.IGNORECASE),
+]
+
+
+def scan_file_for_triggers(file_path: Path | str) -> list[CommentTrigger]:
+    """Scan a source file for autonomous comment instruction triggers."""
+    p = Path(file_path)
+    if not p.exists() or not p.is_file():
+        return []
+
+    triggers: list[CommentTrigger] = []
+    try:
+        lines = p.read_text(encoding="utf-8", errors="replace").splitlines()
+        for idx, line in enumerate(lines, start=1):
+            for pat in _TRIGGER_PATTERNS:
+                m = pat.search(line)
+                if m:
+                    instruction = m.group(1).strip()
+                    triggers.append(
+                        CommentTrigger(
+                            file_path=str(p).replace("\\", "/"),
+                            line_number=idx,
+                            marker="HARNESS",
+                            instruction=instruction,
+                        )
+                    )
+    except Exception as err:
+        logger.debug("scan_trigger_failed", path=str(p), error=str(err))
+
+    return triggers
+
+
+class CommentTriggerEventHandler(FileSystemEventHandler):
+    """Watches source directory and notifies on discovered autonomous triggers."""
+
+    def __init__(self, callback: Callable[[CommentTrigger], Any], loop: asyncio.AbstractEventLoop) -> None:
+        self.callback = callback
+        self.loop = loop
+
+    def on_modified(self, event: FileSystemEvent) -> None:
+        if event.is_directory:
+            return
+        p = Path(os.fsdecode(event.src_path))
+        if p.suffix in (".py", ".ts", ".js", ".rs", ".go", ".md"):
+            triggers = scan_file_for_triggers(p)
+            for trig in triggers:
+                if asyncio.iscoroutinefunction(self.callback):
+                    asyncio.run_coroutine_threadsafe(self.callback(trig), self.loop)
+                else:
+                    self.callback(trig)
+
+
+class CommentTriggerWatcher:
+    """Watches workspace files for comment instruction triggers (# HARNESS: ...)."""
+
+    def __init__(self, watch_path: Path | str, callback: Callable[[CommentTrigger], Any]) -> None:
+        self.watch_path = Path(watch_path)
+        self.callback = callback
+        self._observer: Any = None
+
+    def start(self, loop: asyncio.AbstractEventLoop | None = None) -> None:
+        current_loop = loop or asyncio.get_event_loop()
+        handler = CommentTriggerEventHandler(self.callback, current_loop)
+        self._observer = Observer()
+        if self.watch_path.exists():
+            self._observer.schedule(handler, str(self.watch_path), recursive=True)
+            self._observer.start()
+
+    def stop(self) -> None:
+        if self._observer:
+            self._observer.stop()
+            self._observer.join()
+            self._observer = None
+
+
+__all__ = [
+    "CommentTrigger",
+    "CommentTriggerWatcher",
+    "PluginFileEventHandler",
+    "PluginWatcher",
+    "scan_file_for_triggers",
+]

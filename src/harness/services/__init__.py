@@ -1,3 +1,12 @@
+from harness.services.agent_graph import (
+    AGENT_GRAPH_STORE_KEY,
+    AgentExecutionGraphService,
+    DefaultAgentExecutionGraphService,
+    ExecutionGraphEdge,
+    ExecutionGraphExport,
+    ExecutionGraphNode,
+    ThreadSpawnStatus,
+)
 from harness.services.arch_linter import (
     ARCH_LINTER_KEY,
     ArchLinterService,
@@ -19,6 +28,17 @@ from harness.services.brain_bridge import (
     BrainDetachResult,
     BrainListResult,
     BrainQueryResult,
+)
+from harness.services.cellcog import (
+    CELLCOG_SERVICE_KEY,
+    CellCogArtifact,
+    CellCogCapabilitiesResult,
+    CellCogCapabilityItem,
+    CellCogResearchResult,
+    CellCogRunResult,
+    CellCogService,
+    MultimodalCompilationResult,
+    MultimodalProtocolCompiler,
 )
 from harness.services.code_runner import (
     CODE_RUNNER_KEY,
@@ -97,6 +117,13 @@ from harness.services.refactor_engine import (
     RefactorEngineService,
     UnusedFunctionsResult,
 )
+from harness.services.repomap import (
+    REPO_MAP_SERVICE_KEY,
+    DefaultRepoMapService,
+    RepoMapResult,
+    RepoMapService,
+    SymbolTag,
+)
 from harness.services.semantic_cache import (
     SEMANTIC_CACHE_KEY,
     CacheClearResult,
@@ -135,6 +162,13 @@ from harness.services.test_runner import (
     TestRunnerService,
     TestRunResult,
 )
+from harness.services.unified_context import (
+    UNIFIED_CONTEXT_PIPELINE_KEY,
+    DefaultUnifiedContextPipeline,
+    UnifiedContextPipelineService,
+    UnifiedContextRequest,
+    UnifiedContextResult,
+)
 from harness.services.vector_index import (
     VECTOR_INDEX_KEY,
     VectorHybridSearchResult,
@@ -155,6 +189,13 @@ from harness.services.webwright_harness import (
 )
 
 __all__ = [
+    "AGENT_GRAPH_STORE_KEY",
+    "AgentExecutionGraphService",
+    "DefaultAgentExecutionGraphService",
+    "ExecutionGraphEdge",
+    "ExecutionGraphExport",
+    "ExecutionGraphNode",
+    "ThreadSpawnStatus",
     "ARCH_LINTER_KEY",
     "ArchLinterService",
     "BoundaryCheckResult",
@@ -171,6 +212,15 @@ __all__ = [
     "BrainDetachResult",
     "BrainListResult",
     "BrainQueryResult",
+    "CELLCOG_SERVICE_KEY",
+    "CellCogArtifact",
+    "CellCogCapabilitiesResult",
+    "CellCogCapabilityItem",
+    "CellCogResearchResult",
+    "CellCogRunResult",
+    "CellCogService",
+    "MultimodalCompilationResult",
+    "MultimodalProtocolCompiler",
     "CODE_RUNNER_KEY",
     "CodeRunnerService",
     "PythonEvalResult",
@@ -229,6 +279,11 @@ __all__ = [
     "FunctionExtractResult",
     "RefactorEngineService",
     "UnusedFunctionsResult",
+    "REPO_MAP_SERVICE_KEY",
+    "DefaultRepoMapService",
+    "RepoMapResult",
+    "RepoMapService",
+    "SymbolTag",
     "SEMANTIC_CACHE_KEY",
     "CacheClearResult",
     "CacheEntry",
@@ -257,6 +312,11 @@ __all__ = [
     "TestDiscoverResult",
     "TestRunnerService",
     "TestRunResult",
+    "UNIFIED_CONTEXT_PIPELINE_KEY",
+    "DefaultUnifiedContextPipeline",
+    "UnifiedContextPipelineService",
+    "UnifiedContextRequest",
+    "UnifiedContextResult",
     "VECTOR_INDEX_KEY",
     "VectorHybridSearchResult",
     "VectorIndexResult",

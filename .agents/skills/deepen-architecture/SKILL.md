@@ -28,6 +28,11 @@ Inspect the codebase to identify architectural friction points:
 
 > **Completion criterion**: 2 to 4 concrete friction sites identified with specific file paths, line numbers, and callers.
 
+### 1.1 The Typed Seam Elevation Invariant
+When auditing seams during the Analyze stage:
+- **Never tolerate duck-typed string lookups** (e.g. `ServiceKey[Any]("...")` or `hasattr(...)`) in agent orchestration loops.
+- **Consolidate multi-pass chains** into an authoritative, typed `ServiceKey[T]` interface that hides internal execution stages behind a single high-leverage method call.
+
 ---
 
 ## 2. Assess (The Leverage & Locality Lens)

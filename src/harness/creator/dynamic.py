@@ -14,8 +14,10 @@ from __future__ import annotations
 import ast
 import types
 from collections.abc import Callable
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import TYPE_CHECKING, Any
+
 
 import structlog
 
@@ -33,6 +35,155 @@ if TYPE_CHECKING:
     from harness.creator.scaffold import ScaffoldResult
 
 logger = structlog.get_logger()
+
+
+@dataclass
+class FunctionSignatureMetadata:
+    """Extracted AST metadata for a Python function or tool."""
+
+    name: str
+    docstring: str = ""
+    parameters: dict[str, dict[str, Any]] = field(default_factory=dict)
+    required: list[str] = field(default_factory=list)
+    return_type: str | None = None
+    is_async: bool = False
+
+    def to_parameters_schema(self) -> dict[str, Any]:
+        """Convert extracted AST parameter metadata to valid JSONSchema."""
+        return {
+            "type": "object",
+            "properties": self.parameters,
+            "required": self.required,
+        }
+
+
+class ASTFunctionInspector:
+    """Authoritative AST inspector that extracts signatures and tool schemas from Python source code."""
+
+    TYPE_MAPPINGS: dict[str, str] = {
+        "str": "string",
+        "int": "integer",
+        "float": "number",
+        "bool": "boolean",
+        "list": "array",
+        "List": "array",
+        "dict": "object",
+        "Dict": "object",
+        "set": "array",
+        "Set": "array",
+        "tuple": "array",
+        "Tuple": "array",
+        "Any": "string",
+    }
+
+    @classmethod
+    def _ast_type_to_json_type(cls, node: ast.AST | None) -> str:
+        """Map an AST annotation node to a standard JSONSchema type string."""
+        if node is None:
+            return "string"
+        if isinstance(node, ast.Name):
+            return cls.TYPE_MAPPINGS.get(node.id, "string")
+        if isinstance(node, ast.Constant):
+            if isinstance(node.value, str):
+                return cls.TYPE_MAPPINGS.get(node.value, "string")
+            return "string"
+        if isinstance(node, ast.Subscript):
+            base = cls._ast_type_to_json_type(node.value)
+            if base in ("array", "object"):
+                return base
+            # Optional[T] / Union[T, None]
+            if isinstance(node.value, ast.Name) and node.value.id in ("Optional", "Union"):
+                if isinstance(node.slice, ast.Tuple) and node.slice.elts:
+                    return cls._ast_type_to_json_type(node.slice.elts[0])
+                return cls._ast_type_to_json_type(node.slice)
+            return "string"
+        if isinstance(node, ast.BinOp) and isinstance(node.op, ast.BitOr):
+            # T | None
+            return cls._ast_type_to_json_type(node.left)
+        return "string"
+
+    @classmethod
+    def inspect_ast(cls, code: str) -> dict[str, FunctionSignatureMetadata]:
+        """Parse source code and extract function definitions with parameter schemas."""
+        tree = ast.parse(code)
+        results: dict[str, FunctionSignatureMetadata] = {}
+
+        for node in tree.body:
+            if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                if node.name.startswith("_"):
+                    continue
+
+                docstring = ast.get_docstring(node) or ""
+                params: dict[str, dict[str, Any]] = {}
+                required: list[str] = []
+
+                # Position non-default vs default args
+                args = node.args.args
+                defaults = node.args.defaults
+                num_defaults = len(defaults)
+                num_args = len(args)
+                non_default_count = num_args - num_defaults
+
+                for idx, arg in enumerate(args):
+                    if arg.arg == "self":
+                        continue
+
+                    json_type = cls._ast_type_to_json_type(arg.annotation)
+                    param_spec: dict[str, Any] = {"type": json_type}
+
+                    # Determine if it has default value
+                    default_idx = idx - non_default_count
+                    if default_idx >= 0 and default_idx < num_defaults:
+                        default_node = defaults[default_idx]
+                        if isinstance(default_node, ast.Constant):
+                            param_spec["default"] = default_node.value
+                    else:
+                        required.append(arg.arg)
+
+                    params[arg.arg] = param_spec
+
+                ret_type = cls._ast_type_to_json_type(node.returns) if node.returns else None
+
+                results[node.name] = FunctionSignatureMetadata(
+                    name=node.name,
+                    docstring=docstring,
+                    parameters=params,
+                    required=required,
+                    return_type=ret_type,
+                    is_async=isinstance(node, ast.AsyncFunctionDef),
+                )
+
+        return results
+
+    @classmethod
+    def extract_tool_specs(
+        cls,
+        code: str,
+        callables: dict[str, Callable[..., Any]] | None = None,
+        provider: str = "",
+    ) -> list[ToolSpec]:
+        """Extract ToolSpec instances directly from AST source code and matching callables."""
+        metadata_map = cls.inspect_ast(code)
+        active_callables = callables or {}
+        specs: list[ToolSpec] = []
+
+        for name, meta in metadata_map.items():
+            func = active_callables.get(name)
+            if func is not None:
+                # If function has docstring in code or callable, use it
+                desc = meta.docstring or func.__doc__ or f"Tool: {name}"
+                schema = meta.to_parameters_schema()
+                specs.append(
+                    ToolSpec(
+                        name=name,
+                        description=desc,
+                        handler=func,
+                        parameters_schema=schema,
+                        provider=provider,
+                    )
+                )
+
+        return specs
 
 
 def _compile_dynamic_module(
@@ -91,6 +242,18 @@ class DynamicPythonPlugin(ToolMountMixin, HarnessPlugin):
         self._requires = requires or (ToolMountMixin.tool_mount_requires() if self._tools else [])
         self._code = code
         self._ctx: ServiceContext | None = None
+        self._tool_specs: list[ToolSpec] = []
+
+        if self._code and self._tools:
+            try:
+                self._tool_specs = ASTFunctionInspector.extract_tool_specs(
+                    self._code,
+                    self._tools,
+                    provider=self._name,
+                )
+            except Exception:
+                self._tool_specs = []
+
 
     @property
     def name(self) -> str:
@@ -195,7 +358,9 @@ class DynamicPythonPlugin(ToolMountMixin, HarnessPlugin):
         if not self._ctx:
             return
 
-        if self._tools:
+        if self._tool_specs:
+            await self.mount_tools(self._tool_specs)
+        elif self._tools:
             specs = [
                 ToolSpec.from_callable(
                     func,
@@ -211,6 +376,7 @@ class DynamicPythonPlugin(ToolMountMixin, HarnessPlugin):
 
     async def on_unload(self) -> None:
         self._tools = {}
+        self._tool_specs = []
         self.teardown_tool_mount()
         self._ctx = None
 
@@ -321,8 +487,11 @@ class DynamicPluginBuilder:
 
 
 __all__ = [
+    "ASTFunctionInspector",
     "DynamicPluginBuilder",
     "DynamicPythonPlugin",
+    "FunctionSignatureMetadata",
     "RuntimeIntrospector",
     "_compile_dynamic_module",
 ]
+

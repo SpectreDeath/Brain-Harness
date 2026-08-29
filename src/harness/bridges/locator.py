@@ -150,11 +150,40 @@ class EcosystemLocator:
         return report
 
     @classmethod
+    def get_registered_bridge_names(cls) -> list[str]:
+        """Return combined list of standard and dynamically registered bridge names."""
+        names: list[str] = list(cls.ENV_VARS.keys())
+        try:
+            from harness.bridges.base import EcosystemBridgeCatalog
+            catalog_bridges = EcosystemBridgeCatalog.list_bridges()
+            for b in catalog_bridges:
+                pname = getattr(b, "project_name", None)
+                if pname and pname not in names:
+                    names.append(pname)
+        except ImportError:
+            pass
+        return names
+
+    @classmethod
     def inspect_bridge(cls, project_name: str) -> BridgeDiagnosticReport:
         """Return detailed diagnostic report for a specific ecosystem bridge."""
         path = cls.locate(project_name)
         env_var = cls.ENV_VARS.get(project_name, f"{project_name.upper().replace('-', '_').replace(' ', '_')}_PATH")
-        capabilities = cls.CAPABILITIES_MAP.get(project_name, [])
+        capabilities: list[str] = []
+
+        try:
+            from harness.bridges.base import EcosystemBridgeCatalog
+            bridge_cls = EcosystemBridgeCatalog.get_bridge(project_name)
+            if bridge_cls:
+                env_var = getattr(bridge_cls, "env_var", env_var) or env_var
+                raw_caps = getattr(bridge_cls, "capabilities", [])
+                capabilities = [c.value if hasattr(c, "value") else str(c) for c in raw_caps]
+        except ImportError:
+            pass
+
+        if not capabilities:
+            capabilities = list(cls.CAPABILITIES_MAP.get(project_name, []))
+
         status = "connected" if path is not None else "missing_substrate"
 
         return BridgeDiagnosticReport(
@@ -169,4 +198,6 @@ class EcosystemLocator:
     @classmethod
     def inspect_all(cls) -> list[BridgeDiagnosticReport]:
         """Return diagnostic reports for all known ecosystem bridges."""
-        return [cls.inspect_bridge(name) for name in cls.ENV_VARS]
+        all_names = cls.get_registered_bridge_names()
+        return [cls.inspect_bridge(name) for name in all_names]
+

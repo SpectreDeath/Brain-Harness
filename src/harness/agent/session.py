@@ -223,7 +223,80 @@ class AgentSession:
         return "\n".join(lines)
 
 
+@dataclass(slots=True, frozen=True)
+class SessionTreeNode:
+    """Immutable, slotted node in a hierarchical session execution tree."""
+
+    session_id: str
+    task: str
+    status: str
+    created_at: float
+    updated_at: float
+    completed_at: float | None
+    final_answer: str
+    total_tokens: int
+    steps_count: int
+    role: str | None = None
+    node_id: str | None = None
+    parent_session_id: str | None = None
+    children: tuple[SessionTreeNode, ...] = ()
+    depth: int = 0
+    subtree_tokens: int = 0
+    subtree_steps: int = 0
+
+    def to_dict(self) -> dict[str, Any]:
+        """Convert tree node to standard dictionary."""
+        return {
+            "session_id": self.session_id,
+            "task": self.task,
+            "status": self.status,
+            "created_at": self.created_at,
+            "updated_at": self.updated_at,
+            "completed_at": self.completed_at,
+            "final_answer": self.final_answer,
+            "total_tokens": self.total_tokens,
+            "steps_count": self.steps_count,
+            "role": self.role,
+            "node_id": self.node_id,
+            "parent_session_id": self.parent_session_id,
+            "depth": self.depth,
+            "subtree_tokens": self.subtree_tokens,
+            "subtree_steps": self.subtree_steps,
+            "children": [c.to_dict() for c in self.children],
+        }
+
+
+@dataclass(slots=True, frozen=True)
+class SessionTreeSnapshot:
+    """Immutable, slotted snapshot of a hierarchical agent session trajectory."""
+
+    root: SessionTreeNode
+    total_sessions: int
+    total_tokens: int
+    total_steps: int
+    total_duration: float
+    max_depth: int
+    completed_count: int
+    failed_count: int
+    metrics: dict[str, Any] = field(default_factory=dict)
+
+    def to_dict(self) -> dict[str, Any]:
+        """Convert snapshot to hierarchical dictionary."""
+        return {
+            "root": self.root.to_dict(),
+            "total_sessions": self.total_sessions,
+            "total_tokens": self.total_tokens,
+            "total_steps": self.total_steps,
+            "total_duration": self.total_duration,
+            "max_depth": self.max_depth,
+            "completed_count": self.completed_count,
+            "failed_count": self.failed_count,
+            "metrics": dict(self.metrics),
+        }
+
+
 class AgentSessionStore(ABC):
+
     """Abstract interface for agent session storage backends."""
 
     @abstractmethod
@@ -600,6 +673,100 @@ class AgentSessionManager:
             "child_count": len(children),
         }
         return tree
+
+    async def get_tree_snapshot(self, session_id: str) -> SessionTreeSnapshot | None:
+        """Construct an immutable, slotted SessionTreeSnapshot for a session hierarchy."""
+        session = await self.store.get(session_id)
+        if not session:
+            return None
+
+        total_sessions = 0
+        total_tokens = 0
+        total_steps = 0
+        completed_count = 0
+        failed_count = 0
+        min_created = float("inf")
+        max_completed = 0.0
+        max_depth = 0
+
+        async def _build_node(sess: AgentSession, current_depth: int) -> SessionTreeNode:
+            nonlocal total_sessions, total_tokens, total_steps, completed_count, failed_count, min_created, max_completed, max_depth
+            total_sessions += 1
+            if current_depth > max_depth:
+                max_depth = current_depth
+
+            sess_tokens = int(sess.total_tokens or 0)
+            sess_steps = len(sess.steps or [])
+            total_tokens += sess_tokens
+            total_steps += sess_steps
+
+            if sess.status == "completed":
+                completed_count += 1
+            elif sess.status in ("error", "failed", "max_steps_reached"):
+                failed_count += 1
+
+            if sess.created_at and sess.created_at < min_created:
+                min_created = sess.created_at
+            end_t = sess.completed_at or sess.updated_at or sess.created_at
+            if end_t and end_t > max_completed:
+                max_completed = end_t
+
+            children_nodes: list[SessionTreeNode] = []
+            sub_tokens = sess_tokens
+            sub_steps = sess_steps
+
+            for child_id in sess.children_session_ids:
+                child_sess = await self.store.get(child_id)
+                if child_sess:
+                    child_node = await _build_node(child_sess, current_depth + 1)
+                    children_nodes.append(child_node)
+                    sub_tokens += child_node.subtree_tokens
+                    sub_steps += child_node.subtree_steps
+
+            return SessionTreeNode(
+                session_id=sess.session_id,
+                task=sess.task,
+                status=sess.status,
+                created_at=sess.created_at,
+                updated_at=sess.updated_at,
+                completed_at=sess.completed_at,
+                final_answer=sess.final_answer,
+                total_tokens=sess_tokens,
+                steps_count=sess_steps,
+                role=sess.role,
+                node_id=sess.node_id,
+                parent_session_id=sess.parent_session_id,
+                children=tuple(children_nodes),
+                depth=current_depth,
+                subtree_tokens=sub_tokens,
+                subtree_steps=sub_steps,
+            )
+
+        root_node = await _build_node(session, 0)
+        duration = max(0.0, round(max_completed - min_created, 3)) if min_created < float("inf") else 0.0
+
+        metrics = {
+            "total_sessions": total_sessions,
+            "total_tokens": total_tokens,
+            "total_steps": total_steps,
+            "total_duration": duration,
+            "max_depth": max_depth,
+            "completed_count": completed_count,
+            "failed_count": failed_count,
+        }
+
+        return SessionTreeSnapshot(
+            root=root_node,
+            total_sessions=total_sessions,
+            total_tokens=total_tokens,
+            total_steps=total_steps,
+            total_duration=duration,
+            max_depth=max_depth,
+            completed_count=completed_count,
+            failed_count=failed_count,
+            metrics=metrics,
+        )
+
 
     async def list_root_sessions(
         self,

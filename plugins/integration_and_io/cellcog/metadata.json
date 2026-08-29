@@ -1,0 +1,19 @@
+{
+  "source_type": "repository_introspection",
+  "source_repository": "D:\\GitHub\\cloned\\CellCog\\skills-main\\skills-main",
+  "source_alias": "cellcog_skills_monorepo",
+  "forged_at": "2026-08-29T16:50:00Z",
+  "forge_engine": "repo-to-plugin-forge",
+  "craft_engine": "crafting-skills",
+  "archetype": "service_provider",
+  "isolation_mode": "subprocess",
+  "knowledge_items": [
+    "ki_20260829_cellcog_01",
+    "ki_20260829_cellcog_02"
+  ],
+  "exported_tools": [
+    "cellcog_run",
+    "cellcog_research",
+    "cellcog_list_capabilities"
+  ]
+}

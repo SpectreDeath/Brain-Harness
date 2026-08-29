@@ -89,6 +89,12 @@ class EcosystemBridgeCatalog:
         return matrix
 
     @classmethod
+    def get_diagnostic_reports(cls) -> list[Any]:
+        """Return structured diagnostic reports for all registered and discovered bridges."""
+        cls._ensure_builtins_registered()
+        return EcosystemLocator.inspect_all()
+
+    @classmethod
     def status(cls) -> dict[str, dict[str, Any]]:
         """Return discovery status for all registered ecosystem bridges."""
         cls._ensure_builtins_registered()
@@ -103,8 +109,17 @@ class EcosystemBridgeCatalog:
                 "env_var": env_var,
                 "service_key": getattr(bridge_cls, "service_key", None),
                 "capabilities": [c.value if isinstance(c, BridgeCapability) else str(c) for c in caps],
+                "status": "connected" if path is not None else "missing_substrate",
             }
         return report
+
+
+    @classmethod
+    def unregister(cls, project_name: str) -> None:
+        """Unregister an ecosystem bridge plugin class."""
+        cls._registry.pop(project_name, None)
+        if project_name not in ("em-cubed", "Memtext", "Skill Flywheel", "Brain Harness"):
+            EcosystemLocator.ENV_VARS.pop(project_name, None)
 
     @classmethod
     def discover_available_plugins(
@@ -119,15 +134,25 @@ class EcosystemBridgeCatalog:
         overrides = override_paths or {}
 
         for name, bridge_cls in cls._registry.items():
+            if inspect.isabstract(bridge_cls):
+                continue
             explicit = overrides.get(name)
             env_var = getattr(bridge_cls, "env_var", "")
             path = EcosystemLocator.locate(name, explicit_path=explicit, env_var=env_var)
 
             if path is not None or include_unresolved:
-                plugin_instance = bridge_cls(override_path=path or explicit)
-                plugins.append(plugin_instance)
+                try:
+                    plugin_instance = bridge_cls(override_path=path or explicit)
+                    plugins.append(plugin_instance)
+                except Exception as e:
+                    logger.warning(
+                        "Failed to instantiate bridge plugin",
+                        bridge=name,
+                        error=str(e),
+                    )
 
         return plugins
+
 
     @classmethod
     def _ensure_builtins_registered(cls) -> None:

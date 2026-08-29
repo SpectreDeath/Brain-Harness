@@ -15,6 +15,7 @@ from typing import Any
 
 import structlog
 
+from harness.events.bus import EVENT_BUS_KEY
 from harness.kernel.context import ServiceContext, ServiceKey
 from harness.plugins.base import HarnessPlugin
 from harness.plugins.manifest import PluginManifest
@@ -312,12 +313,11 @@ class SandboxedPlugin(ToolMountMixin, HarnessPlugin):
         """Emit a structured failure event to the harness EventBus if available."""
         if not self._ctx:
             return
-        bus_key: ServiceKey[Any] = ServiceKey("events.bus")
-        if self._ctx.has(bus_key):
+        if self._ctx.has(EVENT_BUS_KEY):
             try:
                 from harness.events.types import EventType, HarnessEvent
 
-                bus = self._ctx.require(bus_key)
+                bus = self._ctx.require(EVENT_BUS_KEY)
                 evt = HarnessEvent(
                     event_type=EventType.PLUGIN_ERROR,
                     source=self.name,

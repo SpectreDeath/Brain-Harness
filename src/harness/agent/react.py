@@ -34,6 +34,8 @@ from harness.events.types import (
 )
 from harness.kernel.context import ServiceContext, ServiceKey
 from harness.plugins.base import HarnessPlugin
+from harness.services.arch_linter import ARCH_LINTER_KEY, DefaultArchLinterService
+from harness.services.filesystem_git import FILESYSTEM_GIT_KEY, DefaultFilesystemGitService
 from harness.services.llm import LLM_SERVICE_KEY, LLMMessage, LLMService
 from harness.services.tools import TOOL_REGISTRY_KEY, ToolRegistry
 
@@ -64,6 +66,18 @@ class StepExecutionEngine:
 
     async def _invoke_tool_safely(self, action_name: str, action_input: dict[str, Any]) -> Any:
         """Invoke tool inside a transactional boundary if context supports transactions."""
+        git_svc = None
+        if self.context is not None and hasattr(self.context, "has") and self.context.has(FILESYSTEM_GIT_KEY):
+            git_svc = self.context.require(FILESYSTEM_GIT_KEY)
+
+        linter_svc = None
+        if self.context is not None and hasattr(self.context, "has") and self.context.has(ARCH_LINTER_KEY):
+            linter_svc = self.context.require(ARCH_LINTER_KEY)
+        else:
+            linter_svc = DefaultArchLinterService()
+
+        target_file_path = action_input.get("path") or action_input.get("file_path") or action_input.get("target_file")
+
         if self.context is not None and hasattr(self.context, "transaction"):
             async with self.context.transaction() as tx:
                 prev_ctx = self.context
@@ -75,16 +89,35 @@ class StepExecutionEngine:
                         res_val = obs.get("result")
                         if isinstance(res_val, dict) and (res_val.get("status") == "error" or "error" in res_val):
                             is_error = True
+
+                        # Lint validation on edited file
+                        if not is_error and target_file_path and linter_svc:
+                            lint_res = linter_svc.lint_file(str(target_file_path))
+                            if not lint_res.is_clean:
+                                obs["lint_diagnostics"] = lint_res.formatted_summary
+
                         if is_error:
                             await tx.dispose()
+                            if git_svc:
+                                git_svc.rollback_transaction()
+                        else:
+                            if git_svc:
+                                git_svc.commit_transaction(f"chore(agent): tool {action_name}")
                     return obs
                 except Exception as err:
                     await tx.dispose()
+                    if git_svc:
+                        git_svc.rollback_transaction()
                     return {"status": "error", "error": f"Tool execution failed: {err}"}
                 finally:
                     self.context = prev_ctx
         try:
-            return await self.tools.invoke(action_name, action_input)
+            obs = await self.tools.invoke(action_name, action_input)
+            if isinstance(obs, dict) and target_file_path and linter_svc:
+                lint_res = linter_svc.lint_file(str(target_file_path))
+                if not lint_res.is_clean:
+                    obs["lint_diagnostics"] = lint_res.formatted_summary
+            return obs
         except Exception as err:
             return {"status": "error", "error": f"Tool execution failed: {err}"}
 
