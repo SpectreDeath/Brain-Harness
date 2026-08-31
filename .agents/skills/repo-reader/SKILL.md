@@ -28,9 +28,12 @@ Mount the target repository using the `plugin.brain_bridge` entrypoint:
    - `read_commits`: `true` to extract Git commit history into cognitive trajectory chunks.
    - `max_commits`: `50` to `100` commits.
    - `attach_mode`: `"lens"` (read-only ephemeral introspection).
-2. **Verify Format Signature & Manifests**:
+2. **Handle Boundary & Archive Snapshots**:
+   - **External Workspace Paths**: If the target directory is outside the IDE workspace root and direct file tools return permission errors, use shell inspection commands (`run_command` with PowerShell/bash) anchored in the host workspace.
+   - **Nested Root & Non-Git Snapshots**: Detect if the repository is an unzipped archive snapshot without `.git` or contains a single nested subdirectory root. If `.git` is absent, gracefully pivot Axis 2 from Git commit trajectories to release notes, changelogs, and manifest evolution.
+3. **Verify Format Signature & Manifests**:
    Confirm format signature (`git_repository`, `harness_instance`, `ide_memo`) and note detected languages and packaging manifests (`pyproject.toml`, `package.json`, `Cargo.toml`, `go.mod`, etc.).
-3. **Log Mount Volume**:
+4. **Log Mount Volume**:
    Confirm total chunks, code chunks, git commit trajectory chunks, detected branch, and vocabulary index size.
 
 > **Completion criterion**: Target repository mounted with `status: "ok"`, languages identified, and commit trajectories recorded.
@@ -131,8 +134,8 @@ Present candidate architectural and engineering learnings to the user before com
    - **Context**: Problem space, language/framework context, and trigger conditions.
    - **Distilled Learning**: Positive recommendation, seam choice, or mitigation strategy.
    - **Provenance Link**: Exact file path, line coordinates, and Git commit hash in the source repo.
-2. Set `RequestFeedback: true` in the plan / modal checkpoint.
-3. Pause for user feedback on which items to retain, adjust, or discard.
+2. Present candidate KIs via an interactive multi-select checkpoint (`ask_question`) or `RequestFeedback: true` proposal.
+3. Await user confirmation on which items to retain, adjust, or discard before writing files.
 
 > **Completion criterion**: User review checkpoint completed; approved items selected for commit.
 

@@ -1,7 +1,8 @@
 """Deterministic AST-Level Shell Command Execution Policy & Sandbox Resolution Plugin.
 
-Ported from OpenAI Codex (`codex-rs/execpolicy` and `codex-rs/sandboxing`).
-Provides deterministic AST parsing, prefix rule matching, approval elevation,
+Ported from OpenAI Codex (`codex-rs/execpolicy` and `codex-rs/sandboxing`) and enhanced
+with pure-language recursive Tree-Sitter Bash AST decompilation from Kimi Code.
+Provides deterministic AST parsing, subshell extraction, prefix rule matching, approval elevation,
 and platform-native sandbox requirement analysis for agent loops.
 """
 
@@ -20,13 +21,15 @@ import structlog
 
 from harness.kernel.context import ServiceContext, ServiceKey
 from harness.plugins.base import HarnessPlugin
+from harness.services.kimi_bridge import BashAstNode
 
-logger = structlog.get_logger()
+logger = structlog.get_logger(__name__)
 
 
 @dataclass
 class PrefixRule:
     """Deterministic command prefix rule."""
+
     pattern: list[str]
     action: str  # "allow", "prompt", "deny"
     comment: str = ""
@@ -36,6 +39,7 @@ class PrefixRule:
 @dataclass
 class AstToken:
     """Structured AST token representing parsed shell command elements."""
+
     raw: str
     is_operator: bool = False
     is_redirection: bool = False
@@ -81,8 +85,165 @@ _DEFAULT_DENY_PATTERNS: list[tuple[str, str, str]] = [
 _ACTIVE_RULES: list[PrefixRule] = list(_DEFAULT_ALLOW_PREFIXES)
 
 
+def _extract_nested_constructs(text: str) -> tuple[str, list[dict[str, Any]]]:
+    """Extracts subshells $(cmd), `cmd`, and process substitutions <(cmd), >(cmd)."""
+    subshells: list[dict[str, Any]] = []
+    cleaned = text
+
+    # 1. Match $(...) subshells
+    dollar_sub_pattern = r"\$\((.*?)\)"
+    for m in re.finditer(dollar_sub_pattern, text):
+        raw_match = m.group(0)
+        inner = m.group(1).strip()
+        if inner:
+            subshells.append({
+                "type": "subshell",
+                "raw": raw_match,
+                "command": inner,
+                "span": m.span(),
+            })
+
+    # 2. Match `...` backtick subshells
+    backtick_pattern = r"`(.*?)`"
+    for m in re.finditer(backtick_pattern, text):
+        raw_match = m.group(0)
+        inner = m.group(1).strip()
+        if inner:
+            subshells.append({
+                "type": "subshell",
+                "raw": raw_match,
+                "command": inner,
+                "span": m.span(),
+            })
+
+    # 3. Match <(...) and >(...) process substitutions
+    proc_sub_pattern = r"[<>]\((.*?)\)"
+    for m in re.finditer(proc_sub_pattern, text):
+        raw_match = m.group(0)
+        inner = m.group(1).strip()
+        if inner:
+            subshells.append({
+                "type": "process_substitution",
+                "raw": raw_match,
+                "command": inner,
+                "span": m.span(),
+            })
+
+    return cleaned, subshells
+
+
+def parse_bash_ast(command_str: str) -> BashAstNode:
+    """Recursive pure-language Tree-Sitter style Bash AST parser.
+    
+    Decomposes commands, chained operators (&&, ||, ;, |), redirections,
+    environment variables, subshells, and process substitutions into a hierarchical BashAstNode tree.
+    """
+    clean_cmd = command_str.strip()
+    if not clean_cmd:
+        return BashAstNode(
+            node_type="command",
+            raw="",
+            binary="",
+            arguments=(),
+            verdict="allow",
+            reason="Empty command",
+        )
+
+    # Check for chained operators at current level
+    operator_regex = r"(&&|\|\||;|\|)"
+    raw_segments = re.split(operator_regex, clean_cmd)
+
+    if len(raw_segments) > 1:
+        # Compound / Pipeline AST node
+        child_nodes: list[BashAstNode] = []
+        operators: list[str] = []
+
+        for seg in raw_segments:
+            s = seg.strip()
+            if not s:
+                continue
+            if s in ("&&", "||", ";", "|"):
+                operators.append(s)
+            else:
+                child_nodes.append(parse_bash_ast(s))
+
+        node_type = "pipeline" if all(op == "|" for op in operators) else "compound"
+        return BashAstNode(
+            node_type=node_type,
+            raw=clean_cmd,
+            binary=child_nodes[0].binary if child_nodes else "",
+            arguments=child_nodes[0].arguments if child_nodes else (),
+            operators=tuple(operators),
+            children=tuple(child_nodes),
+            span=(0, len(clean_cmd)),
+        )
+
+    # Single command segment - extract subshells / process substitutions
+    _, nested_constructs = _extract_nested_constructs(clean_cmd)
+
+    # Parse tokens and variable assignments
+    try:
+        tokens = shlex.split(clean_cmd, posix=True)
+    except ValueError:
+        tokens = clean_cmd.split()
+
+    variables: list[tuple[str, str]] = []
+    args: list[str] = []
+    redirs: list[str] = []
+    binary = ""
+
+    # Parse leading env vars: VAR=value
+    idx = 0
+    while idx < len(tokens):
+        tok = tokens[idx]
+        if "=" in tok and not binary and re.match(r"^[A-Za-z_][A-Za-z0-9_]*=", tok):
+            k, v = tok.split("=", 1)
+            variables.append((k, v))
+            idx += 1
+        else:
+            break
+
+    # Extract binary and remaining args
+    if idx < len(tokens):
+        binary = tokens[idx]
+        idx += 1
+
+    while idx < len(tokens):
+        tok = tokens[idx]
+        if tok.startswith(("<", ">", ">>", "2>", "2>&1", "&>")):
+            redirs.append(tok)
+        else:
+            args.append(tok)
+        idx += 1
+
+    nested_nodes: list[BashAstNode] = []
+    for sc in nested_constructs:
+        child_ast = parse_bash_ast(sc["command"])
+        nested_nodes.append(
+            BashAstNode(
+                node_type=sc["type"],
+                raw=sc["raw"],
+                binary=child_ast.binary,
+                arguments=child_ast.arguments,
+                children=child_ast.children,
+                span=sc["span"],
+            )
+        )
+
+    return BashAstNode(
+        node_type="command",
+        raw=clean_cmd,
+        binary=binary,
+        arguments=tuple(args),
+        redirections=tuple(redirs),
+        variables=tuple(variables),
+        children=tuple(nested_nodes),
+        span=(0, len(clean_cmd)),
+    )
+
+
 def _tokenize_command(command_str: str, shell_flavor: str = "bash") -> dict[str, Any]:
-    """Tokenize a shell command into binary, arguments, chained operators, and redirections."""
+    """Tokenize a shell command into binary, arguments, chained operators, redirections, and subshells."""
     clean_cmd = command_str.strip()
     if not clean_cmd:
         return {
@@ -90,62 +251,56 @@ def _tokenize_command(command_str: str, shell_flavor: str = "bash") -> dict[str,
             "arguments": [],
             "operators": [],
             "redirections": [],
+            "variables": [],
+            "subshells": [],
             "is_compound": False,
             "subcommands": [],
         }
 
-    # Split by major shell operators: &&, ||, ;, |
-    operator_regex = r"(&&|\|\||;|\|)"
-    raw_segments = re.split(operator_regex, clean_cmd)
+    ast_tree = parse_bash_ast(clean_cmd)
 
+    # Flatten top-level subcommands for backwards compatibility
     subcommands: list[dict[str, Any]] = []
-    operators: list[str] = []
+    operators: list[str] = list(ast_tree.operators)
 
-    for seg in raw_segments:
-        s = seg.strip()
-        if not s:
-            continue
-        if s in ("&&", "||", ";", "|"):
-            operators.append(s)
-        else:
-            # Parse individual subcommand
-            try:
-                tokens = shlex.split(s, posix=(shell_flavor != "cmd"))
-            except ValueError:
-                tokens = s.split()
-
-            if not tokens:
-                continue
-
-            binary = tokens[0]
-            args = tokens[1:]
-            redirs: list[str] = []
-            clean_args: list[str] = []
-
-            for arg in args:
-                if arg.startswith(("<", ">", ">>", "2>", "2>&1")):
-                    redirs.append(arg)
-                else:
-                    clean_args.append(arg)
-
+    if ast_tree.node_type in ("compound", "pipeline") and ast_tree.children:
+        for child in ast_tree.children:
             subcommands.append({
-                "binary": binary,
-                "arguments": clean_args,
-                "redirections": redirs,
-                "raw_command": s,
+                "binary": child.binary,
+                "arguments": list(child.arguments),
+                "redirections": list(child.redirections),
+                "variables": [list(v) for v in child.variables],
+                "subshells": [c.to_dict() for c in child.children if c.node_type in ("subshell", "process_substitution")],
+                "raw_command": child.raw,
             })
+    else:
+        subcommands.append({
+            "binary": ast_tree.binary,
+            "arguments": list(ast_tree.arguments),
+            "redirections": list(ast_tree.redirections),
+            "variables": [list(v) for v in ast_tree.variables],
+            "subshells": [c.to_dict() for c in ast_tree.children if c.node_type in ("subshell", "process_substitution")],
+            "raw_command": clean_cmd,
+        })
 
     is_compound = len(subcommands) > 1 or len(operators) > 0
     first_bin = subcommands[0]["binary"] if subcommands else ""
     first_args = subcommands[0]["arguments"] if subcommands else []
+
+    all_subshells: list[dict[str, Any]] = []
+    for sc in subcommands:
+        all_subshells.extend(sc.get("subshells", []))
 
     return {
         "binary": first_bin,
         "arguments": first_args,
         "operators": operators,
         "redirections": [r for sc in subcommands for r in sc["redirections"]],
+        "variables": [v for sc in subcommands for v in sc.get("variables", [])],
+        "subshells": all_subshells,
         "is_compound": is_compound,
         "subcommands": subcommands,
+        "ast_tree": ast_tree.to_dict(),
     }
 
 
@@ -160,10 +315,21 @@ def tokenize_shell_ast(command: str, shell_flavor: str = "bash") -> dict[str, An
         "arguments": parsed["arguments"],
         "operators": parsed["operators"],
         "redirections": parsed["redirections"],
+        "variables": parsed.get("variables", []),
+        "subshells": parsed.get("subshells", []),
         "is_compound": parsed["is_compound"],
         "subcommands_count": len(parsed["subcommands"]),
         "subcommands": parsed["subcommands"],
+        "ast_tree": parsed.get("ast_tree", {}),
     }
+
+
+def _check_danger_patterns(command_str: str) -> tuple[str, str, str] | None:
+    """Checks raw text and tokens for catastrophic security patterns."""
+    for pattern, desc, action in _DEFAULT_DENY_PATTERNS:
+        if re.search(pattern, command_str, re.IGNORECASE):
+            return (pattern, desc, action)
+    return None
 
 
 def evaluate_command_policy(
@@ -182,20 +348,22 @@ def evaluate_command_policy(
             "rationale": "Empty command requires no action.",
         }
 
-    # 1. Check for immediate danger patterns (Deny/Prompt overrides)
-    for pattern, desc, action in _DEFAULT_DENY_PATTERNS:
-        if re.search(pattern, clean_cmd, re.IGNORECASE):
-            return {
-                "status": "ok",
-                "decision": action,
-                "matched_rule": f"danger_pattern:{pattern}",
-                "risk_score": 1.0 if action == "deny" else 0.85,
-                "rationale": f"Triggered security rule: {desc}",
-                "requires_elevation": True,
-            }
+    # 1. Check for immediate danger patterns on full raw command string
+    danger = _check_danger_patterns(clean_cmd)
+    if danger:
+        pattern, desc, action = danger
+        return {
+            "status": "ok",
+            "command": clean_cmd,
+            "decision": action,
+            "matched_rule": f"danger_pattern:{pattern}",
+            "risk_score": 1.0 if action == "deny" else 0.85,
+            "rationale": f"Triggered security rule: {desc}",
+            "requires_elevation": True,
+        }
 
-    # 2. Tokenize into AST subcommands
-    ast = _tokenize_command(clean_cmd)
+    # 2. Tokenize and parse recursive AST
+    parsed = _tokenize_command(clean_cmd)
 
     # Check custom rules first if supplied
     active_pool = list(_ACTIVE_RULES)
@@ -205,10 +373,35 @@ def evaluate_command_policy(
             if parts:
                 active_pool.insert(0, PrefixRule(parts, "allow", "Custom override rule"))
 
-    # 3. Evaluate each subcommand in compound chain
+    # 3. Check for danger patterns or rules inside extracted nested subshells
+    for subshell in parsed.get("subshells", []):
+        sub_raw = subshell.get("raw", "")
+        sub_danger = _check_danger_patterns(sub_raw)
+        if sub_danger:
+            pattern, desc, action = sub_danger
+            return {
+                "status": "ok",
+                "command": clean_cmd,
+                "decision": action,
+                "matched_rule": f"danger_pattern_in_subshell:{pattern}",
+                "risk_score": 1.0 if action == "deny" else 0.85,
+                "rationale": f"Subshell triggered security rule: {desc}",
+                "requires_elevation": True,
+            }
+
+    # 4. Evaluate each subcommand in compound chain
     subcommand_decisions: list[dict[str, Any]] = []
 
-    for sc in ast["subcommands"]:
+    for sc in parsed["subcommands"]:
+        # If subcommand binary is empty (e.g. only variable assignments), check if safe
+        if not sc["binary"]:
+            subcommand_decisions.append({
+                "subcommand": sc["raw_command"],
+                "decision": "allow",
+                "matched_rule": "variable_assignment_only",
+            })
+            continue
+
         sc_tokens = [sc["binary"]] + sc["arguments"]
         matched = False
         sc_decision = "prompt"
@@ -236,7 +429,7 @@ def evaluate_command_policy(
             "matched_rule": matched_rule_desc,
         })
 
-    # 4. Synthesize compound decision
+    # 5. Synthesize compound decision
     # If any is deny -> deny
     # If any is prompt -> prompt
     # If all allow -> allow
@@ -257,9 +450,9 @@ def evaluate_command_policy(
         "command": clean_cmd,
         "decision": final_decision,
         "risk_score": highest_risk,
-        "is_compound": ast["is_compound"],
+        "is_compound": parsed["is_compound"],
         "subcommand_evaluations": subcommand_decisions,
-        "rationale": f"Evaluated {len(ast['subcommands'])} subcommand(s); final verdict: {final_decision.upper()}",
+        "rationale": f"Evaluated {len(parsed['subcommands'])} subcommand(s); final verdict: {final_decision.upper()}",
     }
 
 
@@ -371,6 +564,9 @@ class CodexExecPolicyService:
 
     def tokenize(self, command: str) -> dict[str, Any]:
         return tokenize_shell_ast(command)
+
+    def parse_ast(self, command: str) -> BashAstNode:
+        return parse_bash_ast(command)
 
     def check_sandbox(self, command: str) -> dict[str, Any]:
         return check_sandbox_requirements(command)

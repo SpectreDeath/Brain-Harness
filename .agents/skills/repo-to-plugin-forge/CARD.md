@@ -53,6 +53,8 @@
 - **Missing Parameter Schemas**: Registering tools with empty or unconstrained parameter schemas.
 - **In-Process Sandboxing of Untrusted Code**: Setting in-process execution on external repos without security review.
 - **Unverified Tool Executors**: Generating tool handler stubs that fail at runtime when invoked.
+- **Monolithic Multi-Domain Bridges**: Bundling disparate domain tools into a single omnibus plugin.
+- **Tool Duplication over In-Place Deepening**: Spawning redundant parallel plugins rather than deepening existing foundational plugins.
 
 ---
 
@@ -61,6 +63,7 @@
 - [ ] **Mandatory Subprocess Isolation**: Always enforce `IsolationMode.SUBPROCESS` for untrusted or external GitHub repositories.
 - [ ] **Strict Tool Parameter Schemas**: Every exported tool must have typed parameter properties and descriptions (no empty schemas).
 - [ ] **Pre-Commit Plan Checkpoint**: Never scaffold code without explicit user sign-off on `implementation_plan.md`.
+- [ ] **Domain-Partitioned Multi-Plugin Synthesis**: Partition monorepo tools into domain-specific plugins co-located in matching category folders.
 - [ ] **Zero-Error Diagnostic Validation**: The scaffolded plugin must pass 100% of `PluginValidator` rules before completion.
 - [ ] **Cryptographic Lineage**: Plugin metadata must record source repository provenance, commit hash, and file coordinates.
 - [ ] **Visual Brief Delivery**: Always emit an interactive `%TEMP%` HTML report with Before/After Mermaid DAG before code modification.

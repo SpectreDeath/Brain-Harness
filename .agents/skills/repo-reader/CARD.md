@@ -53,6 +53,7 @@
 ## Invariants & Guardrails
 
 - [ ] **Read-Only Lens**: Never mutate, overwrite, or commit files to the external repository.
+- [ ] **External Path & Archive Resilience**: Handle external workspace paths and non-git directory snapshots gracefully without failing the introspection pipeline.
 - [ ] **Commit & Line Grounding**: Every extracted KI must include source file, line range, and Git commit hash.
 - [ ] **Human-in-the-Loop**: Never commit persistent knowledge records without explicit user approval.
 - [ ] **Visual Brief Delivery**: Always emit an interactive `%TEMP%` HTML report with Mermaid before finalizing.

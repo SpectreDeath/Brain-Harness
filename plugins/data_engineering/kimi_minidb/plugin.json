@@ -1,0 +1,64 @@
+{
+  "name": "plugin.kimi_minidb",
+  "version": "1.0.0",
+  "description": "Zero-dependency embedded hybrid KV and document database with CRC32-checksummed write-ahead logging (WAL) and generational snapshot compaction.",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "entrypoints": [
+    {
+      "name": "kimi_minidb_put",
+      "description": "Insert or update a document in an embedded collection with CRC32-checksummed write-ahead log (WAL) persistence.",
+      "parameters": [
+        {
+          "name": "collection",
+          "type": "string",
+          "description": "Target collection or table name",
+          "required": true
+        },
+        {
+          "name": "key",
+          "type": "string",
+          "description": "Unique document key within the collection",
+          "required": true
+        },
+        {
+          "name": "value",
+          "type": "object",
+          "description": "Document payload dictionary to store",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "kimi_minidb_get",
+      "description": "Retrieve a stored document by collection name and key with CRC32 integrity verification.",
+      "parameters": [
+        {
+          "name": "collection",
+          "type": "string",
+          "description": "Target collection name",
+          "required": true
+        },
+        {
+          "name": "key",
+          "type": "string",
+          "description": "Document key to retrieve",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "kimi_minidb_compact",
+      "description": "Triggers generational snapshot compaction, consolidating write-ahead logs into a clean baseline snapshot.",
+      "parameters": [
+        {
+          "name": "target_generation",
+          "type": "integer",
+          "description": "Optional generation number override for the new snapshot baseline",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

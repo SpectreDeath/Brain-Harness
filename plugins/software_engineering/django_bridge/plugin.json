@@ -1,0 +1,172 @@
+{
+  "name": "plugin.django_bridge",
+  "version": "1.0.0",
+  "description": "High-leverage Django ecosystem bridge for deep AST project inspection, safe management command execution, declarative model scaffolding, ORM query simulation, template validation, and background tasks introspection.",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "entrypoints": [
+    {
+      "name": "django_inspect_project",
+      "description": "Deep inspection of a Django project directory: discovers installed apps, models, fields, relations, URL patterns, views, middleware, template loaders, settings, and task queues.",
+      "parameters": [
+        {
+          "name": "project_path",
+          "type": "string",
+          "description": "Path to Django project root directory containing manage.py or settings",
+          "required": true
+        },
+        {
+          "name": "settings_module",
+          "type": "string",
+          "description": "Optional dotted Python settings module name (e.g. myproject.settings)",
+          "required": false
+        },
+        {
+          "name": "include_models",
+          "type": "boolean",
+          "description": "Include detailed model field specifications and relations (default: true)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "django_manage_exec",
+      "description": "Execute safe Django management commands (check, showmigrations, migrate --plan, sqlmigrate, diffsettings, inspectdb, makemigrations --dry-run) in a guarded sandbox.",
+      "parameters": [
+        {
+          "name": "project_path",
+          "type": "string",
+          "description": "Path to Django project root directory containing manage.py",
+          "required": true
+        },
+        {
+          "name": "command",
+          "type": "string",
+          "description": "Safe Django management command to execute",
+          "required": true
+        },
+        {
+          "name": "args",
+          "type": "array",
+          "description": "Command flags and arguments (e.g. ['--database', 'default', '--plan'])",
+          "required": false
+        },
+        {
+          "name": "settings_module",
+          "type": "string",
+          "description": "Optional dotted Python settings module override",
+          "required": false
+        },
+        {
+          "name": "timeout_sec",
+          "type": "number",
+          "description": "Execution timeout in seconds (default: 30.0)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "django_model_generator",
+      "description": "Synthesizes declarative Django model classes and fields from JSON/Pydantic schemas or database table specifications.",
+      "parameters": [
+        {
+          "name": "model_name",
+          "type": "string",
+          "description": "PascalCase name of the Django model class (e.g. Article, UserProfile)",
+          "required": true
+        },
+        {
+          "name": "fields",
+          "type": "array",
+          "description": "List of field definitions with name, type (CharField, ForeignKey, etc.), null, blank, related_model",
+          "required": true
+        },
+        {
+          "name": "app_label",
+          "type": "string",
+          "description": "Target Django app label for the model",
+          "required": false
+        },
+        {
+          "name": "docstring",
+          "type": "string",
+          "description": "Optional model docstring documentation",
+          "required": false
+        },
+        {
+          "name": "meta_options",
+          "type": "object",
+          "description": "Django Meta options (db_table, ordering, verbose_name, unique_together)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "django_query_simulator",
+      "description": "Evaluates and compiles Django ORM query expressions into formatted SQL queries, parameters, and execution plans without executing destructive database mutations.",
+      "parameters": [
+        {
+          "name": "query_expr",
+          "type": "string",
+          "description": "Django ORM query expression (e.g. Article.objects.filter(is_published=True).select_related('author'))",
+          "required": true
+        },
+        {
+          "name": "model_name",
+          "type": "string",
+          "description": "Primary model class name being queried",
+          "required": true
+        },
+        {
+          "name": "project_path",
+          "type": "string",
+          "description": "Optional project path for model schema resolution",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "django_template_validator",
+      "description": "Validates syntax, tags, template partials ({% partialdef %}), and filter pipelines in Django HTML/DQL templates.",
+      "parameters": [
+        {
+          "name": "template_content",
+          "type": "string",
+          "description": "Raw template HTML/text content to parse and validate",
+          "required": true
+        },
+        {
+          "name": "template_path",
+          "type": "string",
+          "description": "Optional file path for origin tracking and error reporting",
+          "required": false
+        },
+        {
+          "name": "enable_partials",
+          "type": "boolean",
+          "description": "Enable Django 6.x template partial parsing (default: true)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "django_task_inspector",
+      "description": "Introspects and verifies Django 6.x background task queues (django.tasks), task signatures, backends, and execution parameters.",
+      "parameters": [
+        {
+          "name": "project_path",
+          "type": "string",
+          "description": "Path to Django project root directory",
+          "required": true
+        },
+        {
+          "name": "backend",
+          "type": "string",
+          "description": "Optional background task backend to filter (immediate, redis, db)",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

@@ -50,6 +50,7 @@ Synthesize the extracted repository structure into Harness plugin contracts:
      - `service_provider`: Implements a typed `ServiceKey[T]` and lifecycle provider.
      - `agent_worker`: Creates specialized debater, supervisor, or evaluator agents.
    - **Mode B: Sandboxed Ingestion (`ingest`)**: Use when encapsulating large, complex, or untrusted external codebases in subprocess sandboxes via `PluginIngestionPipeline`.
+   - **Monorepo / Multi-Capability Partitioning**: For repositories spanning multiple domains, partition tools into focused single-responsibility plugins co-located in their respective category directories (`agent_orchestration`, `data_engineering`, `security_and_forensics`). Deepen existing foundational plugins in-place where applicable.
 2. **Infer Parameter Schemas with `SchemaInferrer`**:
    - Execute AST analysis (`harness.creator.schema.SchemaInferrer.infer_function_signature`) to produce strict JSON Schemas for all exported tool parameters (types, descriptions, defaults, required flags).
 3. **Declare Dependencies & Isolation**:
@@ -168,4 +169,6 @@ Subject the newly scaffolded plugin to comprehensive automated diagnostics befor
 - **Missing Parameter Schemas** — Registering tools with empty or unconstrained parameter schemas (`"type": "object"` with no property definitions).
 - **In-Process Sandboxing of Untrusted Code** — Setting `IsolationMode.IN_PROCESS` on foreign GitHub repositories without strict isolation security reviews.
 - **Unverified Tool Executors** — Generating tool handler stubs that fail at runtime when invoked by the agent.
+- **Monolithic Multi-Domain Bridges** — Bundling tools from disparate functional domains into a single omnibus plugin instead of partitioning into cohesive single-responsibility plugins across standard category folders.
+- **Tool Duplication over In-Place Deepening** — Generating parallel, redundant plugins when foreign code reveals advanced domain patterns that belong in an existing foundational plugin.
 - **Proceeding Without Plan Checkpoint** — Scaffolding plugins into the codebase before the user reviews and approves `implementation_plan.md`.

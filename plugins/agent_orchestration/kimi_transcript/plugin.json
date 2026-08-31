@@ -1,0 +1,58 @@
+{
+  "name": "plugin.kimi_transcript",
+  "version": "1.0.0",
+  "description": "Isomorphic 4-layer transcript data engine with granularity-gated telemetry filtering and 4-tier DI scope hierarchy introspection.",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "entrypoints": [
+    {
+      "name": "kimi_transcript_project",
+      "description": "Projects raw or normalized agent execution event frames at client-requested granularity (off, turn, block, delta) with cursor pagination.",
+      "parameters": [
+        {
+          "name": "frames",
+          "type": "array",
+          "description": "List of raw or normalized event frames to filter and project",
+          "required": true
+        },
+        {
+          "name": "granularity",
+          "type": "string",
+          "description": "Granularity filter level: 'off' (empty), 'turn' (turn boundaries only), 'block' (tool blocks and turns), or 'delta' (full token stream)",
+          "required": false
+        },
+        {
+          "name": "cursor",
+          "type": "integer",
+          "description": "Cursor offset index for pagination (default: 0)",
+          "required": false
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "description": "Maximum number of frames to return in page (default: 100)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "kimi_scope_inspect",
+      "description": "Introspects the active ServiceContext parent-child hierarchy and annotates each context level with 4-tier scope roles (APP, WORKSPACE, SESSION, AGENT).",
+      "parameters": [
+        {
+          "name": "depth_limit",
+          "type": "integer",
+          "description": "Maximum scope hierarchy depth to inspect (default: 10)",
+          "required": false
+        },
+        {
+          "name": "include_services",
+          "type": "boolean",
+          "description": "Include list of registered service key names per scope (default: true)",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

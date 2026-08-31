@@ -5,12 +5,14 @@ from plugins.security_and_forensics.codex_execpolicy.main import (
     evaluate_command_policy,
     amend_prefix_rule,
     tokenize_shell_ast,
+    parse_bash_ast,
     check_sandbox_requirements,
     CodexExecPolicyPlugin,
     CodexExecPolicyService,
     EXEC_POLICY_KEY,
 )
 from harness.kernel.context import ServiceContext
+from harness.services.kimi_bridge import BashAstNode
 
 
 def test_tokenize_simple_command():
@@ -80,6 +82,38 @@ def test_check_sandbox_requirements():
     assert res_win["sandbox_type"] == "windows_restricted_token"
 
 
+def test_bash_ast_subshell_extraction():
+    """Verify that dangerous commands nested inside benign subshells $(...) are flagged."""
+    ast = parse_bash_ast("echo $(rm -rf /)")
+    assert isinstance(ast, BashAstNode)
+    assert ast.binary == "echo"
+    assert len(ast.children) == 1
+    assert ast.children[0].node_type == "subshell"
+    assert ast.children[0].binary == "rm"
+
+    # Policy evaluation must flag the dangerous subshell
+    res = evaluate_command_policy("echo $(rm -rf /)")
+    assert res["decision"] == "deny"
+    assert "danger_pattern" in res["matched_rule"]
+
+
+def test_bash_ast_process_substitution():
+    """Verify process substitution <(...) is decomposed and parsed."""
+    ast = parse_bash_ast("diff <(git status) <(git diff)")
+    assert ast.binary == "diff"
+    assert len(ast.children) == 2
+    assert all(c.node_type == "process_substitution" for c in ast.children)
+
+
+def test_bash_ast_variable_prefix():
+    """Verify leading environment variables are parsed into variables tuple."""
+    ast = parse_bash_ast("PYTHONPATH=. ENV=prod pytest tests/ -v")
+    assert ast.binary == "pytest"
+    assert ("PYTHONPATH", ".") in ast.variables
+    assert ("ENV", "prod") in ast.variables
+    assert "tests/" in ast.arguments
+
+
 @pytest.mark.asyncio
 async def test_plugin_lifecycle_and_service_registration():
     plugin = CodexExecPolicyPlugin()
@@ -93,5 +127,8 @@ async def test_plugin_lifecycle_and_service_registration():
 
     eval_res = service.evaluate("git log -n 5")
     assert eval_res["decision"] == "allow"
+
+    ast_res = service.parse_ast("cat file.txt | grep match")
+    assert ast_res.node_type == "pipeline"
 
     await plugin.on_disable(context)

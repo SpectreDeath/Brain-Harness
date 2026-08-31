@@ -19,6 +19,9 @@
 15. **Secure Credential Injection & Runner Isolation.** When executing authenticated operations (e.g. git push with tokens), never use shell string variable interpolation. Use isolated Python runner scripts or standard input pipes to prevent shell expansion parse errors and credential exposure.
 16. **In-Flight Lint-After-Edit Self-Repair.** File write and edit tool executions must immediately run fast syntax and diagnostic verification (`ArchLinterService.lint_file()`), appending any detected syntax or bracket balance errors directly into the tool observation for in-flight self-repair before transaction finalization.
 17. **Authoritative Thread DAG & Execution Graph Lifecycle.** Multi-agent swarms and hierarchical sub-agent executions must track lifecycle states (`Open`, `Closed`, `Completed`, `Failed`) along directional spawn edges via `AgentExecutionGraphService` (`AGENT_GRAPH_STORE_KEY`), maintaining automated token rollups and deterministic ASCII/JSON tree export seams.
+18. **Domain-Partitioned Plugin Synthesis.** Multi-capability codebase bridges or monorepo ingestions must never bundle disparate tools into a single monolithic plugin. Partition tools across single-responsibility plugins co-located in their respective category directories (`agent_orchestration`, `data_engineering`, `security_and_forensics`).
+19. **Non-Invasive Kernel Extensibility.** When introducing architectural abstractions or scope metadata, use non-invasive adapters, metadata decorators, or read-only inspectors rather than mutating core `ServiceContext` constructor contracts or IoC lifecycle signatures.
+20. **In-Place Deepening over Tool Sprawl.** When foreign codebases or research reveal advanced domain patterns (e.g. recursive AST shell security gates), deepen existing foundational plugins in-place rather than spawning parallel duplicate tool wrappers.
 
 
 ## Code Style
