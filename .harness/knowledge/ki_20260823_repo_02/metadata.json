@@ -1,0 +1,30 @@
+{
+  "id": "ki_20260823_repo_02",
+  "title": "Deterministic AST-Level Command Authorization via execpolicy",
+  "source_target": "D:/GitHub/cloned/codex-main/codex-main",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_20260823_repo_02",
+    "claims": [
+      {
+        "assertion": "Command approval safety engines must tokenize shell syntax into AST prefix rules rather than relying on string matching or regexes",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "codex-rs/execpolicy/src/lib.rs#L1-L33",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "codex-rs/execpolicy/src/rule.rs#L1-L80",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": ["execpolicy", "security", "ast_parsing", "command_authorization", "approval_elevation"],
+  "context": "Prompting users for every trivial shell command creates approval fatigue, while auto-approving based on regexes allows trivial shell injection bypasses.",
+  "distilled_learning": "Parse shell command invocations into structured AST tokens and apply prefix rules (PrefixRule, PrefixPattern) with argument boundaries before execution, preventing shell injection and false-positive permission elevation."
+}

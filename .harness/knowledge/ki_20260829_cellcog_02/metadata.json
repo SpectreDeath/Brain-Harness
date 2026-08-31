@@ -1,0 +1,38 @@
+{
+  "id": "ki_20260829_cellcog_02",
+  "title": "Pure Copy Multi-Channel Skill Distribution & Drift-Proof Catalogs",
+  "source_target": "D:/GitHub/cloned/CellCog/skills-main/skills-main",
+  "detected_format": "raw_docs",
+  "timestamp": "2026-08-29T16:17:00Z",
+  "isnad": {
+    "decision_id": "dec_20260829_cellcog_02",
+    "claims": [
+      {
+        "assertion": "Maintain a monorepo golden copy and distribute skills across multiple channels (npx, ClawHub, IDE plugins) via pure copy validation (sync_skills.py) with strict naming invariants (folder == name == slug) and automated README catalog table injection.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "D:/GitHub/cloned/CellCog/skills-main/skills-main/scripts/sync_skills.py#L1-L160",
+            "verified": true
+          },
+          {
+            "node_type": "visual_brief",
+            "uri": "C:/Users/spectre/AppData/Local/Temp/repo-reader-20260829-160000.html",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "skill_distribution",
+    "catalog_sync",
+    "drift_prevention",
+    "monorepo_sync",
+    "invariants",
+    "repo_introspection"
+  ],
+  "context": "Pure Copy Multi-Channel Skill Distribution & Drift-Proof Catalogs",
+  "distilled_learning": "# KI: Pure Copy Multi-Channel Skill Distribution & Drift-Proof Catalogs\n\n## Operational Summary\nDistributing a large catalog of agent skills across multiple package ecosystems (e.g. `npx skills`, OpenClaw ClawHub, IDE plugins, and manual imports) often leads to documentation drift, channel-specific "
+}

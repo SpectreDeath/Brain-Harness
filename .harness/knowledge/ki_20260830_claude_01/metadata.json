@@ -1,0 +1,24 @@
+{
+  "id": "ki_20260830_claude_01",
+  "title": "Async Rewake in Agent Lifecycle Hooks",
+  "source_target": "D:\\GitHub\\cloned\\claude-code-main\\claude-code-main",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_20260830_claude_01",
+    "claims": [
+      {
+        "assertion": "Background security and diagnostic reviewers can asynchronously rewake the agent session with out-of-band feedback without blocking synchronous user interaction",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "plugins/security-guidance/hooks/hooks.json#L32-L57",
+            "sha256_hash": "N/A",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": ["architecture", "lifecycle_hooks", "async_rewake", "agent_loop"]
+}

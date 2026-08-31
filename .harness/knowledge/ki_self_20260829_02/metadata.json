@@ -1,0 +1,37 @@
+{
+  "id": "ki_self_20260829_02",
+  "title": "Authoritative Thread DAG Lifecycle & Execution Graph Store",
+  "source_target": "C:/Users/spectre/.gemini/antigravity-ide/brain",
+  "detected_format": "antigravity_brain",
+  "timestamp": "2026-08-29T14:08:48Z",
+  "isnad": {
+    "decision_id": "dec_20260829_02",
+    "claims": [
+      {
+        "assertion": "Agent execution threads and swarm topologies must maintain persistent directional spawn edges and rollups via AgentExecutionGraphService",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "src/harness/services/agent_graph.py#L70-L150",
+            "verified": true
+          },
+          {
+            "node_type": "unit_test",
+            "uri": "tests/test_agent_graph_store.py#L22-L75",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "agent_graph",
+    "swarm_dag",
+    "thread_lifecycle",
+    "tree_export",
+    "cli_introspection"
+  ],
+  "context": "Authoritative Thread DAG Lifecycle & Execution Graph Store",
+  "distilled_learning": "# KI: Authoritative Thread DAG Lifecycle & Execution Graph Store\n\n## Operational Summary\nMulti-agent swarms and hierarchical sub-agent executions must not rely on ephemeral in-memory variables or untracked list fields. The `AgentExecutionGraphService` (`AGENT_GRAPH_STORE_KEY`) provides an authoritat"
+}

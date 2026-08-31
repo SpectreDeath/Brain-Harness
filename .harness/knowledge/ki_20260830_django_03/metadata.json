@@ -1,0 +1,39 @@
+{
+  "id": "ki_20260830_django_03",
+  "title": "Declarative Metaclass Field Descriptors & Deferred QuerySet Compilation",
+  "source_target": "D:\\GitHub\\cloned\\Django\\django-main\\django-main\\django\\db\\models\\base.py",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_20260830_django_03",
+    "claims": [
+      {
+        "assertion": "Domain models should bind fields via metaclass descriptor synthesis to defer SQL AST generation until terminal execution methods (iteration, slicing, aggregation) are explicitly invoked",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "django/db/models/base.py#L90-L195",
+            "commit_hash": "6.2.0a0-main",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "django/db/models/query.py#L120-L240",
+            "commit_hash": "6.2.0a0-main",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "django",
+    "orm",
+    "metaclass",
+    "queryset",
+    "lazy_evaluation",
+    "ast_compiler"
+  ],
+  "context": "Eager database evaluation couples business logic tightly to physical I/O boundaries and prevents query optimizations like filter chaining, predicate pushdowns, and deferred column loading.",
+  "distilled_learning": "Model classes use `ModelBase` metaclass to inspect class attributes, contribute fields into an internal `_meta` options registry (`Options`), and replace raw values with descriptor getters/setters. QuerySet instances represent pure immutable ASTs that clone on every chaining method (`.filter()`, `.exclude()`, `.select_related()`). Physical database queries only execute when the QuerySet is evaluated (`__iter__`, `__len__`, `__getitem__`, `count()`, `exists()`), allowing seamless composition across layers."
+}

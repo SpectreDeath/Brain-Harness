@@ -1,0 +1,30 @@
+{
+  "id": "ki_20260823_repo_04",
+  "title": "Storage-Neutral Parent/Child Topology with agent-graph-store",
+  "source_target": "D:/GitHub/cloned/codex-main/codex-main",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_20260823_repo_04",
+    "claims": [
+      {
+        "assertion": "Hierarchical multi-agent topologies must be modeled with storage-neutral graph traits to cleanly support both ephemeral in-memory and persistent cloud backends",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "codex-rs/agent-graph-store/src/lib.rs#L1-L13",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "codex-rs/agent-graph-store/src/store.rs#L1-L50",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": ["agent_graph", "multi_agent", "thread_topology", "dag", "state_management"],
+  "context": "Managing parent-child agent delegations, spawn hierarchies, and edge lifecycle statuses creates tight coupling if tied directly to a concrete database schema.",
+  "distilled_learning": "Implement a storage-neutral graph store abstraction (AgentGraphStore) with explicit thread spawn edge statuses (ThreadSpawnEdgeStatus) and async future boundaries, decoupling in-memory state from remote cloud persistence."
+}

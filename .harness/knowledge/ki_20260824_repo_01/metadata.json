@@ -1,0 +1,39 @@
+{
+  "id": "ki_20260824_repo_01",
+  "title": "Bi-Temporal Edge Invalidation in Dynamic Knowledge Graphs",
+  "source_target": "https://github.com/getzep/graphiti",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_20260824_graphiti_01",
+    "claims": [
+      {
+        "assertion": "Facts in dynamic knowledge graphs must be modeled with bi-temporal valid_at and invalid_at timestamps to support non-destructive updates and historical state reconstruction",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "graphiti_core/edges.py#L190-L245",
+            "commit_hash": "401c59a65bdeb22a44136901ff30231e6998a7fe",
+            "verified": true
+          },
+          {
+            "node_type": "commit_trajectory",
+            "uri": "git:commit:a96309bf0ca8ab522fd1ac78da4d6377d20d905a",
+            "commit_hash": "a96309bf0ca8ab522fd1ac78da4d6377d20d905a",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "knowledge_graph",
+    "bitemporal",
+    "agent_memory",
+    "edge_invalidation",
+    "graphiti",
+    "epistemics"
+  ],
+  "context": "In conversational and agentic systems, real-world facts change over time (e.g. user location, project architecture, preferences). Overwriting graph edges or treating old facts as deletions destroys historical lineage and causes contradictory hallucinations in RAG retrieval.",
+  "distilled_learning": "Represent relationship facts as EntityEdge models possessing both valid_at (when the fact became true) and invalid_at (when superseded or contradicted) timestamps. When an incoming episode provides contradictory assertions, update the existing edge's invalid_at to the episode timestamp rather than executing physical DELETE statements. Current truth queries filter for invalid_at IS NULL, while temporal queries can reconstruct the graph at any historical point in time."
+}

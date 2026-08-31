@@ -1,0 +1,36 @@
+{
+  "id": "ki_20260823_03",
+  "title": "Windows PowerShell Command Delimiter Normalization",
+  "source_target": "d:/GitHub/projects/Brain Harness/src/harness/cli.py",
+  "detected_format": "harness_instance",
+  "isnad": {
+    "decision_id": "dec_20260823_03",
+    "claims": [
+      {
+        "assertion": "Command chaining using POSIX '&&' fails unconditionally in Windows PowerShell environments with ParserError; automated CLI runners and scripts must normalize command chains to semicolons ';' or isolated subprocess arrays",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "file:///src/harness/cli.py#L870-L948",
+            "verified": true
+          },
+          {
+            "node_type": "verification_run",
+            "uri": "file:///transcript.jsonl#L29",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "cli",
+    "powershell",
+    "cross_platform",
+    "command_runner",
+    "windows"
+  ],
+  "context": "Agents generating shell execution plans often default to Unix POSIX conventions (&&, /tmp, export), which crash when dispatched directly to Windows PowerShell runners.",
+  "distilled_learning": "Sanitize all multi-command CLI sequences for Windows hosts: replace '&&' with ';', use platform-agnostic path resolvers (Pathlib or %TEMP%), and prefer Python script runners for complex chained logic."
+}

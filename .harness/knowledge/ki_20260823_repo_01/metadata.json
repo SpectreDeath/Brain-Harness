@@ -1,0 +1,35 @@
+{
+  "id": "ki_20260823_repo_01",
+  "title": "Multi-Tier OS Process Sandboxing & Policy Transforms",
+  "source_target": "D:/GitHub/cloned/codex-main/codex-main",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_20260823_repo_01",
+    "claims": [
+      {
+        "assertion": "Agent execution engines require platform-native sandboxing abstractions to enforce filesystem and network restrictions across Linux, macOS, and Windows",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "codex-rs/sandboxing/src/manager.rs#L36-L76",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "codex-rs/sandboxing/src/bwrap.rs#L1-L60",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "codex-rs/sandboxing/src/windows.rs#L1-L60",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": ["sandboxing", "security", "process_isolation", "landlock", "seatbelt", "windows_tokens"],
+  "context": "Executing arbitrary code or CLI tools in agent loops requires containment to prevent accidental destruction or unauthorized exfiltration.",
+  "distilled_learning": "Abstract high-level permission profiles (PermissionProfile) into platform-specific native sandbox managers: Linux (Bubblewrap namespace unshare + Landlock ABI rules), macOS (Seatbelt SBPL compiled profiles), and Windows (Restricted Token + Job Object Read Grants)."
+}

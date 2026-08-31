@@ -1,0 +1,13 @@
+{
+  "id": "ki_20260821_06",
+  "title": "Verification Standard — Isolated Plugin Sandboxing",
+  "source_brain": "C:/Users/spectre/.gemini/antigravity-ide/brain",
+  "detected_format": "antigravity_brain",
+  "isnad": {
+    "primary_source": "df403b28-75e0-43d6-a678-3d15ad63e3bc.system_generated/logs/transcript_full.jsonl#L49",
+    "verified": true
+  },
+  "tags": ["plugin_system", "sandbox", "isolation", "security", "trust_boundary"],
+  "context": "AGENTS.md and plugin.json consistently enforce subprocess isolation for untrusted plugins and in_process only for trusted ones.",
+  "distilled_learning": "Plugin trust boundaries should be declared in plugin.json isolation and trusted fields, not inferred at runtime; this prevents accidental execution of external code in the kernel process."
+}

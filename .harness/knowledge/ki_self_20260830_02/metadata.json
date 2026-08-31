@@ -1,0 +1,32 @@
+{
+  "id": "ki_self_20260830_02",
+  "title": "In-Place Foundational Deepening over Redundant Plugin Sprawl",
+  "source_target": "plugins\\security_and_forensics\\codex_execpolicy\\main.py",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_self_20260830_02",
+    "claims": [
+      {
+        "assertion": "When foreign repository analysis discovers advanced capabilities in an existing functional domain (e.g. recursive AST shell security parsing), deepen the existing core plugin in-place rather than spawning parallel, shallow tool wrappers",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "plugins/security_and_forensics/codex_execpolicy/main.py#L130-L245",
+            "commit_hash": "harness-0.4.0",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "execpolicy",
+    "bash_ast",
+    "deep_modules",
+    "endogenous_memory",
+    "self_reflection"
+  ],
+  "context": "Creating parallel plugins that perform similar duties (e.g. two separate shell tokenizers) creates maintenance fragmentation and confuses agent tool selection.",
+  "distilled_learning": "Upgrade existing foundational plugins in-place (such as codex_execpolicy) with pure-language recursive AST parsing, subshell extraction, and process substitution awareness. This strengthens existing security guardrails while keeping the tool surface lean and cohesive."
+}

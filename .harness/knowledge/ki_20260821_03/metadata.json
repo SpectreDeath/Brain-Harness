@@ -1,0 +1,13 @@
+{
+  "id": "ki_20260821_03",
+  "title": "PowerShell String Parsing Pitfall Guard",
+  "source_brain": "C:/Users/spectre/.gemini/antigravity-ide/brain",
+  "detected_format": "antigravity_brain",
+  "isnad": {
+    "primary_source": "297ade4b-bce0-4653-a64a-20cbc7d11b3e.system_generated/logs/transcript.jsonl#L51",
+    "verified": true
+  },
+  "tags": ["powershell", "parsing", "cross_platform", "tool_execution"],
+  "context": "Multiple transcript steps show strip('\"\\'') causing Unexpected token syntax errors in PowerShell.",
+  "distilled_learning": "In PowerShell, nested quote escaping in Python-generated commands requires explicit quote-type alternation; avoid strip('\"\\'') on command strings passed to run_command."
+}

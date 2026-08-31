@@ -1,0 +1,30 @@
+{
+  "id": "ki_20260823_repo_03",
+  "title": "Subagent Thread Forking & Safety Auditing with guardian-v2",
+  "source_target": "D:/GitHub/cloned/codex-main/codex-main",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_20260823_repo_03",
+    "claims": [
+      {
+        "assertion": "Complex safety verification, prompt injection screening, and risk scoring should run in forked subagent threads to avoid polluting parent conversational state",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "codex-rs/ext/guardian-v2/src/lib.rs#L22-L79",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "codex-rs/ext/guardian-v2/src/sync_reviewer.rs#L1-L60",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": ["guardian", "safety", "subagent_forking", "adversarial_review", "thread_isolation"],
+  "context": "Executing safety checks within the main conversation loop introduces token bloat, risk of prompt injection leakage into assistant memory, and complex rollback logic.",
+  "distilled_learning": "Use subagent thread forking (spawn_subagent(forked_from_thread_id, ...)) to spawn ephemeral child threads for synchronous and asynchronous safety evaluations, preserving primary thread isolation."
+}

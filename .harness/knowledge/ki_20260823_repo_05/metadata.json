@@ -1,0 +1,35 @@
+{
+  "id": "ki_20260823_repo_05",
+  "title": "App-Server Daemon RPC Gate & Automated Rust-to-TS Schema Synchronization",
+  "source_target": "D:/GitHub/cloned/codex-main/codex-main",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_20260823_repo_05",
+    "claims": [
+      {
+        "assertion": "Agent daemons serving diverse clients (CLI, TUI, IDE) should enforce strict RPC wire protocols with automated cross-language type export to prevent wire drift",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "codex-rs/app-server-protocol/src/lib.rs#L1-L80",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "codex-rs/app-server/src/main.rs#L1-L100",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "AGENTS.md#L100-L160",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": ["app_server", "json_rpc", "ipc", "schema_sync", "typescript_export", "ts_rs"],
+  "context": "Maintaining multiple client interfaces (CLI, Web, VS Code, JetBrains) against a core agent daemon frequently results in silent schema drift and broken deserialization.",
+  "distilled_learning": "Route all client interactions through an IPC daemon using a typed JSON-RPC 2.0 protocol (*Params, *Response, *Notification) with camelCase wire formats, mandatory cursor pagination, and automated TypeScript type generation (ts-rs)."
+}

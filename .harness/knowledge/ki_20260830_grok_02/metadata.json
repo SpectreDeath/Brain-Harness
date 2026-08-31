@@ -1,0 +1,36 @@
+{
+  "id": "ki_20260830_grok_02",
+  "title": "Pure Subagent Configuration Precedence Engine",
+  "source_target": "D:\\GitHub\\cloned\\grok-build-main\\grok-build-main",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_20260830_grok_02",
+    "claims": [
+      {
+        "assertion": "Extracting subagent resolution into a pure-logic, zero-I/O library with strict precedence (explicit override > role > persona > parent) decouples agent spawning from host runtime, session, and coordinator types",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "crates/codegen/xai-grok-subagent-resolution/src/lib.rs#L1-L45",
+            "sha256_hash": "N/A",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "crates/codegen/xai-grok-subagent-resolution/src/overrides.rs#L1-L60",
+            "sha256_hash": "N/A",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "crates/codegen/xai-grok-subagent-resolution/src/definition.rs#L1-L75",
+            "sha256_hash": "N/A",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": ["agent_loop", "subagents", "resolution_engine", "configuration_precedence", "pure_logic"]
+}

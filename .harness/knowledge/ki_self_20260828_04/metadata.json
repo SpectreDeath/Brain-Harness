@@ -1,0 +1,41 @@
+{
+  "id": "ki_self_20260828_04",
+  "title": "Relational Recursive CTE Graph Cycle Brakes",
+  "source_target": "internal://harness/history",
+  "detected_format": "endogenous_reflection",
+  "isnad": {
+    "decision_id": "decision_ki_self_20260828_04",
+    "timestamp": "2026-08-28T18:46:00.000000+00:00",
+    "claims": [
+      {
+        "source": ".agents/skills/sql-recursive-graph-traversal/SKILL.md#L15-L95",
+        "timestamp": "2026-08-28T13:26:02.000000+00:00",
+        "assertion": "Recursive CTE graph traversal without path tracking loops infinitely on cyclic graphs causing execution timeouts and database crashes.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "book-to-skill-forge-20260828.html",
+        "timestamp": "2026-08-28T13:23:56.000000+00:00",
+        "assertion": "String concatenation of visited nodes with instr(path, next) cycle detection provides lightweight cycle braking in standard SQL.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "brain://7b124780-820b-4ccd-a5f8-4bb735fbd5be",
+        "timestamp": "2026-08-28T17:26:05.000000+00:00",
+        "assertion": "Combining cycle detection with hard depth brakes and ROW_NUMBER() window partitioning extracts BFS shortest paths efficiently.",
+        "status": "VERIFIED"
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "data_engineering",
+    "sql",
+    "graph_traversal",
+    "cte",
+    "endogenous_memory",
+    "self_reflection"
+  ],
+  "context": "Knowledge item ki_self_20260828_04: Relational Recursive CTE Graph Cycle Brakes",
+  "distilled_learning": "### Distilled Heuristic\nRecursive Common Table Expressions (CTEs) traversing relational graphs must accumulate visited path identifiers, prune cyclic loops via `instr(visited_path, next_node) = 0` checks, and enforce hard max depth limits to guarantee bounded execution."
+}

@@ -1,0 +1,41 @@
+{
+  "id": "ki_20260823_02",
+  "title": "High-Scale Trajectory Ingestion & Overlapping Token Indexing",
+  "source_target": "d:/GitHub/projects/Brain Harness/plugins/memory_and_epistemics/brain_bridge/main.py",
+  "detected_format": "harness_instance",
+  "isnad": {
+    "decision_id": "dec_20260823_02",
+    "claims": [
+      {
+        "assertion": "Overlapping window chunking (30-line chunks with step size of 25) combined with TF-IDF subword tokenization enables sub-second lexical and semantic search across massive (>80,000) conversational transcript steps",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "file:///plugins/memory_and_epistemics/brain_bridge/main.py#L45-L75",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "file:///plugins/memory_and_epistemics/brain_bridge/main.py#L168-L190",
+            "verified": true
+          },
+          {
+            "node_type": "verification_run",
+            "uri": "file:///.harness/mind-reader-results.json#L9-L27",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "brain_bridge",
+    "indexing",
+    "tf_idf",
+    "search",
+    "trajectory_memory"
+  ],
+  "context": "External agent brains and IDE session archives rapidly grow to tens of thousands of JSONL log lines, overwhelming standard linear scans or heavy LLM context windows.",
+  "distilled_learning": "Use in-memory sliding-window tokenization and precomputed TF-IDF document vectors to provide instant search retrieval across conversational transcripts without external vector database dependencies."
+}

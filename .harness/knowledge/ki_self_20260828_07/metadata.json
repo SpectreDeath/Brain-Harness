@@ -1,0 +1,41 @@
+{
+  "id": "ki_self_20260828_07",
+  "title": "Secure Credential Handling & Shell-Free Git Push Protocol",
+  "source_target": "internal://harness/history",
+  "detected_format": "endogenous_reflection",
+  "isnad": {
+    "decision_id": "decision_ki_self_20260828_07",
+    "timestamp": "2026-08-29T12:00:00.000000+00:00",
+    "claims": [
+      {
+        "source": "terminal://powershell/subshell-expansion-error",
+        "timestamp": "2026-08-28T23:39:15.000000+00:00",
+        "assertion": "Passing credentials via PowerShell string variable interpolation in subagents causes environment variable stripping and parsing failures.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "python://subprocess/git_push_runner",
+        "timestamp": "2026-08-28T23:39:28.000000+00:00",
+        "assertion": "Using in-memory Python subprocess invocation to read token files cleanly executes git push without shell expansion errors or logging tokens.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "AGENTS.md#L19",
+        "timestamp": "2026-08-29T12:00:00.000000+00:00",
+        "assertion": "Rule 15 mandates isolated runner scripts or standard input piping for all authenticated operations.",
+        "status": "VERIFIED"
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "security",
+    "devops",
+    "git_authentication",
+    "runner_isolation",
+    "windows_powershell",
+    "self_reflection"
+  ],
+  "context": "Knowledge item ki_self_20260828_07: Secure Credential Handling & Shell-Free Git Push Protocol",
+  "distilled_learning": "### Distilled Heuristic\nWhen executing authenticated operations (such as git push with access tokens), never use shell string variable interpolation. Use isolated Python runner scripts or standard input pipes to prevent shell expansion parse errors and credential exposure."
+}

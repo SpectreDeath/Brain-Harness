@@ -1,0 +1,40 @@
+{
+  "id": "ki_self_20260828_01",
+  "title": "Agent Instruction File Hygiene & Boundary Control",
+  "source_target": "internal://harness/history",
+  "detected_format": "endogenous_reflection",
+  "isnad": {
+    "decision_id": "decision_ki_self_20260828_01",
+    "timestamp": "2026-08-28T18:46:00.000000+00:00",
+    "claims": [
+      {
+        "source": ".agents/skills/agent-instruction-architect/SKILL.md#L30-L80",
+        "timestamp": "2026-08-28T13:26:02.000000+00:00",
+        "assertion": "Agent instruction files (AGENTS.md, CLAUDE.md) must eliminate generic AI advice, avoid lint leakage, and stay under 150 lines.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "book-to-skill-forge-20260828.html",
+        "timestamp": "2026-08-28T13:23:56.000000+00:00",
+        "assertion": "Explicit negative boundaries ('what NOT to touch') and single-source build/test execution seams prevent rogue modifications.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "brain://7b124780-820b-4ccd-a5f8-4bb735fbd5be",
+        "timestamp": "2026-08-28T17:26:05.000000+00:00",
+        "assertion": "Post-mortem instruction updates when agent mistakes occur harden the developer loop permanently.",
+        "status": "VERIFIED"
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "configuration",
+    "agent_hygiene",
+    "instruction_architecture",
+    "endogenous_memory",
+    "self_reflection"
+  ],
+  "context": "Knowledge item ki_self_20260828_01: Agent Instruction File Hygiene & Boundary Control",
+  "distilled_learning": "### Distilled Heuristic\nRepository agent configuration files (`AGENTS.md`, `CLAUDE.md`) must remain lean (<150 lines), free of generic tutorials or lint leakage, and define explicit execution seams (build/test/lint) along with strict negative boundaries ('what NOT to touch')."
+}

@@ -1,0 +1,30 @@
+{
+  "id": "ki_20260830_grok_05",
+  "title": "Preemptive Interjection Buffer & Prompt Queue",
+  "source_target": "D:\\GitHub\\cloned\\grok-build-main\\grok-build-main",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_20260830_grok_05",
+    "claims": [
+      {
+        "assertion": "Buffering asynchronous user interrupts and out-of-band runtime events in an interjection core allows clean preemption of active LLM token streaming without dropping inflight context or corrupting session event journals",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "crates/common/xai-interjection-core/src/buffer.rs#L1-L70",
+            "sha256_hash": "N/A",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "crates/common/xai-interjection-core/src/events.rs#L1-L80",
+            "sha256_hash": "N/A",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": ["agent_loop", "interjections", "prompt_queue", "preemption", "streaming"]
+}

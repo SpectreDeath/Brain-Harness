@@ -1,0 +1,212 @@
+{
+  "id": "ki_self_20260826_04",
+  "title": "Multi-Dimensional Compute Assessment Calibration",
+  "source_target": "internal://harness/history",
+  "detected_format": "endogenous_reflection",
+  "isnad": {
+    "decision_id": "decision_ki_self_20260826_04",
+    "timestamp": "2026-08-26T21:01:20.758414+00:00",
+    "claims": [
+      {
+        "source": "compute-assessor-1787776419.html",
+        "timestamp": "2026-08-26T20:33:39.080364+00:00",
+        "assertion": "5-dimensional scoring vectors optimize reasoning token spend and latency.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "compute-assessor-1787770669.html",
+        "timestamp": "2026-08-26T18:57:49.613042+00:00",
+        "assertion": "5-dimensional scoring vectors optimize reasoning token spend and latency.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "compute-assessor-1787744443.html",
+        "timestamp": "2026-08-26T11:40:43.248195+00:00",
+        "assertion": "5-dimensional scoring vectors optimize reasoning token spend and latency.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "compute-assessor-1787743006.html",
+        "timestamp": "2026-08-26T11:16:46.934705+00:00",
+        "assertion": "5-dimensional scoring vectors optimize reasoning token spend and latency.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "compute-assessor-1787742897.html",
+        "timestamp": "2026-08-26T11:14:57.073266+00:00",
+        "assertion": "5-dimensional scoring vectors optimize reasoning token spend and latency.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "compute-assessor-1787742827.html",
+        "timestamp": "2026-08-26T11:13:47.352457+00:00",
+        "assertion": "5-dimensional scoring vectors optimize reasoning token spend and latency.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "compute-assessor-1787742798.html",
+        "timestamp": "2026-08-26T11:13:18.373239+00:00",
+        "assertion": "5-dimensional scoring vectors optimize reasoning token spend and latency.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "compute-assessor-1787742309.html",
+        "timestamp": "2026-08-26T11:05:09.374753+00:00",
+        "assertion": "5-dimensional scoring vectors optimize reasoning token spend and latency.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "compute-assessor-1787670070.html",
+        "timestamp": "2026-08-25T15:01:10.557941+00:00",
+        "assertion": "5-dimensional scoring vectors optimize reasoning token spend and latency.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "compute-assessor-1787656017.html",
+        "timestamp": "2026-08-25T11:06:57.120300+00:00",
+        "assertion": "5-dimensional scoring vectors optimize reasoning token spend and latency.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "compute-assessor-1787655917.html",
+        "timestamp": "2026-08-25T11:05:17.083116+00:00",
+        "assertion": "5-dimensional scoring vectors optimize reasoning token spend and latency.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "compute-assessor-1787655916.html",
+        "timestamp": "2026-08-25T11:05:16.994244+00:00",
+        "assertion": "5-dimensional scoring vectors optimize reasoning token spend and latency.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "compute-assessor-1787651117.html",
+        "timestamp": "2026-08-25T09:45:17.840616+00:00",
+        "assertion": "5-dimensional scoring vectors optimize reasoning token spend and latency.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "compute-assessor-1787519652.html",
+        "timestamp": "2026-08-23T21:14:12.831949+00:00",
+        "assertion": "5-dimensional scoring vectors optimize reasoning token spend and latency.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "compute-assessor-1787519640.html",
+        "timestamp": "2026-08-23T21:14:00.646138+00:00",
+        "assertion": "5-dimensional scoring vectors optimize reasoning token spend and latency.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "compute-assessor-1787519610.html",
+        "timestamp": "2026-08-23T21:13:30.558928+00:00",
+        "assertion": "5-dimensional scoring vectors optimize reasoning token spend and latency.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "compute-assessor-1787518504.html",
+        "timestamp": "2026-08-23T20:55:04.184217+00:00",
+        "assertion": "5-dimensional scoring vectors optimize reasoning token spend and latency.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "compute-assessor-1787518503.html",
+        "timestamp": "2026-08-23T20:55:03.697022+00:00",
+        "assertion": "5-dimensional scoring vectors optimize reasoning token spend and latency.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "compute-assessor-1787514963.html",
+        "timestamp": "2026-08-23T19:56:03.999623+00:00",
+        "assertion": "5-dimensional scoring vectors optimize reasoning token spend and latency.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "compute-assessor-1787514960.html",
+        "timestamp": "2026-08-23T19:56:00.220217+00:00",
+        "assertion": "5-dimensional scoring vectors optimize reasoning token spend and latency.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "compute-assessor-1787514941.html",
+        "timestamp": "2026-08-23T19:55:41.084785+00:00",
+        "assertion": "5-dimensional scoring vectors optimize reasoning token spend and latency.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "compute-assessor-1787514925.html",
+        "timestamp": "2026-08-23T19:55:25.462745+00:00",
+        "assertion": "5-dimensional scoring vectors optimize reasoning token spend and latency.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "compute-assessor-1787514874.html",
+        "timestamp": "2026-08-23T19:54:34.259529+00:00",
+        "assertion": "5-dimensional scoring vectors optimize reasoning token spend and latency.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "compute-assessor-1787513776.html",
+        "timestamp": "2026-08-23T19:36:16.329813+00:00",
+        "assertion": "5-dimensional scoring vectors optimize reasoning token spend and latency.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "compute-assessor-1787513772.html",
+        "timestamp": "2026-08-23T19:36:12.399620+00:00",
+        "assertion": "5-dimensional scoring vectors optimize reasoning token spend and latency.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "compute-assessor-1787510906.html",
+        "timestamp": "2026-08-23T18:48:26.326536+00:00",
+        "assertion": "5-dimensional scoring vectors optimize reasoning token spend and latency.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "compute-assessor-1787510902.html",
+        "timestamp": "2026-08-23T18:48:22.443772+00:00",
+        "assertion": "5-dimensional scoring vectors optimize reasoning token spend and latency.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "compute-assessor-1787503182.html",
+        "timestamp": "2026-08-23T16:39:42.781515+00:00",
+        "assertion": "5-dimensional scoring vectors optimize reasoning token spend and latency.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "compute-assessor-1787503178.html",
+        "timestamp": "2026-08-23T16:39:38.708184+00:00",
+        "assertion": "5-dimensional scoring vectors optimize reasoning token spend and latency.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "compute-assessor-1787503165.html",
+        "timestamp": "2026-08-23T16:39:25.179798+00:00",
+        "assertion": "5-dimensional scoring vectors optimize reasoning token spend and latency.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "compute-assessor-1787503160.html",
+        "timestamp": "2026-08-23T16:39:20.935987+00:00",
+        "assertion": "5-dimensional scoring vectors optimize reasoning token spend and latency.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "compute-assessor-1787503150.html",
+        "timestamp": "2026-08-23T16:39:10.001021+00:00",
+        "assertion": "5-dimensional scoring vectors optimize reasoning token spend and latency.",
+        "status": "VERIFIED"
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "performance",
+    "endogenous_memory",
+    "self_reflection"
+  ],
+  "context": "Knowledge item ki_self_20260826_04",
+  "distilled_learning": "### Distilled Heuristic"
+}

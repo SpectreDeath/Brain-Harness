@@ -1,0 +1,24 @@
+{
+  "id": "ki_20260830_grok_04",
+  "title": "Two-Tier Guest Path Virtualization with Traversal Clipping",
+  "source_target": "D:\\GitHub\\cloned\\grok-build-main\\grok-build-main",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_20260830_grok_04",
+    "claims": [
+      {
+        "assertion": "Virtualizing model-facing workspace paths (/workspace) to isolated session directories (/workspace/<session_id>) while automatically clipping parent traversal escapes (..) preserves portable prompt context without allowing directory traversal out of guest mounts",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "crates/codegen/xai-grok-workspace/src/path_virtualization.rs#L1-L60",
+            "sha256_hash": "N/A",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": ["workspace", "path_virtualization", "isolation", "security", "guest_mount"]
+}

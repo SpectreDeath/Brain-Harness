@@ -1,0 +1,13 @@
+{
+  "id": "ki_20260821_01",
+  "title": "Plugin Card + Quickstart Standardization",
+  "source_brain": "C:/Users/spectre/.gemini/antigravity-ide/brain",
+  "detected_format": "antigravity_brain",
+  "isnad": {
+    "primary_source": "d28bb2b5-fda7-4839-a26e-97fbc466c369.system_generated/logs/transcript.jsonl#L470",
+    "verified": true
+  },
+  "tags": ["plugin_system", "documentation", "onboarding", "skill_routing"],
+  "context": "Brain repeatedly scaffolded plugin metadata cards (CARD.md) and quickstart guides to make plugins self-documenting for both users and agents.",
+  "distilled_learning": "Every plugin should ship with a standardized CARD.md summary and QUICKSTART.md usage guide; this reduces onboarding friction and makes skill routing deterministic."
+}

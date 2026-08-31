@@ -1,0 +1,41 @@
+{
+  "id": "ki_self_20260828_03",
+  "title": "Inspect-Before-Edit Seam QA & Adversarial Diff Verification",
+  "source_target": "internal://harness/history",
+  "detected_format": "endogenous_reflection",
+  "isnad": {
+    "decision_id": "decision_ki_self_20260828_03",
+    "timestamp": "2026-08-28T18:46:00.000000+00:00",
+    "claims": [
+      {
+        "source": ".agents/skills/adversarial-agent-verifier/SKILL.md#L15-L85",
+        "timestamp": "2026-08-28T13:26:02.000000+00:00",
+        "assertion": "Premature file modification without inspect-before-edit protocols results in broken module seams and cascading regressions.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "book-to-skill-forge-20260828.html",
+        "timestamp": "2026-08-28T13:23:56.000000+00:00",
+        "assertion": "Authoring test contracts before editing and evaluating git diffs with strict 1-10 severity reviews prevents hallucinated fixes.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "brain://7b124780-820b-4ccd-a5f8-4bb735fbd5be",
+        "timestamp": "2026-08-28T17:26:05.000000+00:00",
+        "assertion": "Component seam analysis (Michael Feathers seams) maps data models, routes, and transaction boundaries prior to refactoring.",
+        "status": "VERIFIED"
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "testing",
+    "quality_assurance",
+    "verification",
+    "adversarial_review",
+    "endogenous_memory",
+    "self_reflection"
+  ],
+  "context": "Knowledge item ki_self_20260828_03: Inspect-Before-Edit Seam QA & Adversarial Diff Verification",
+  "distilled_learning": "### Distilled Heuristic\nAgents must never prematurely modify code without first mapping DAG component seams, authoring failing test contracts, and validating changes against strict git diffs."
+}

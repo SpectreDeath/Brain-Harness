@@ -1,0 +1,33 @@
+{
+  "id": "ki_20260830_kimi_03",
+  "title": "Pure-Language Tree-Sitter Bash AST Parsing for Agent Shell Security Gates",
+  "source_target": "D:\\GitHub\\cloned\\kimi-code-main\\kimi-code-main\\packages\\tree-sitter-bash\\src\\parser.ts",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_20260830_kimi_03",
+    "claims": [
+      {
+        "assertion": "Pre-execution shell command permission policies must parse compound commands (pipes, subshells, redirects, chained operators) into full Tree-Sitter AST nodes using pure managed-language parsers to prevent native C-addon build failures across host environments",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "packages/tree-sitter-bash/src/parser.ts#L1-L150",
+            "commit_hash": "tree-sitter-bash-0.1.0",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "kimi_code",
+    "tree_sitter",
+    "bash_ast",
+    "shell_security",
+    "execpolicy",
+    "command_parsing"
+  ],
+  "context": "Regular expression and simple whitespace splitting fail on complex shell commands involving subshells `$(...)`, environment variable prefixes `FOO=bar rm -rf /`, chained commands `cmd1 && cmd2`, or process substitutions `<(...)`, enabling malicious command injection or bypass of agent safety guardrails. Furthermore, native C bindings for Tree-Sitter fail to compile in minimal Docker/serverless environments.",
+  "distilled_learning": "Implement or adopt a pure-managed language (TypeScript / Python) port of the Tree-Sitter Bash grammar that outputs 1:1 identical AST nodes (`command`, `pipeline`, `subshell`, `redirect`, `declaration_command`). Traverse the AST to decompose compound pipelines into individual executable units and analyze arguments, variables, and flags deterministically against security permission policies (`allow`, `deny`, `ask_user`)."
+}

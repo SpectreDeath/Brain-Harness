@@ -1,0 +1,30 @@
+{
+  "id": "ki_20260830_grok_01",
+  "title": "Hashline Anchoring with Bounded Shift Recovery",
+  "source_target": "D:\\GitHub\\cloned\\grok-build-main\\grok-build-main",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_20260830_grok_01",
+    "claims": [
+      {
+        "assertion": "Hashline-anchored file editing with multi-candidate anchor schemes (ContentOnly, ChunkFingerprint, CheckpointChain) and bounded radius shift recovery eliminates stale-line edit failures during autonomous multi-file refactors",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "crates/codegen/xai-grok-tools/src/implementations/grok_build_hashline/scheme.rs#L1-L85",
+            "sha256_hash": "N/A",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "crates/codegen/xai-grok-tools/src/implementations/grok_build_hashline/anchor.rs#L1-L65",
+            "sha256_hash": "N/A",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": ["tools", "file_editing", "hashline_anchors", "shift_recovery", "robustness"]
+}

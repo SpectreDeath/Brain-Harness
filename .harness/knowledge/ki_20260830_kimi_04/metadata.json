@@ -1,0 +1,33 @@
+{
+  "id": "ki_20260830_kimi_04",
+  "title": "Hybrid In-Memory KV with Durable WAL Snapshot Persistence (MiniDb Pattern)",
+  "source_target": "D:\\GitHub\\cloned\\kimi-code-main\\kimi-code-main\\packages\\minidb\\src\\compaction.ts",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_20260830_kimi_04",
+    "claims": [
+      {
+        "assertion": "Local embedded storage engines for agent sessions should combine in-memory hash index performance with single-file WAL and CRC32-checksummed generational snapshots to guarantee zero native dependencies and multi-process crash consistency",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "packages/minidb/src/compaction.ts#L20-L110",
+            "commit_hash": "minidb-0.2.0",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "kimi_code",
+    "minidb",
+    "wal_persistence",
+    "embedded_database",
+    "snapshot_compaction",
+    "zero_dependency"
+  ],
+  "context": "Agent daemon architectures requiring fast search indices, session checkpointing, and cross-process IPC often suffer from the binary installation friction and file-locking quirks of full SQLite or LevelDB native drivers.",
+  "distilled_learning": "MiniDb implements an embedded document/KV store using pure JavaScript/Python: 1) In-memory hash index with secondary B-Tree/date indexing, 2) Append-only write-ahead log (WAL) for microsecond mutation commits, 3) Generational snapshot compaction that merges the WAL into a clean baseline file under an exclusive file lock, and 4) Multi-reader support where follower processes tail the WAL and replay mutations into their local memory caches without write locks."
+}

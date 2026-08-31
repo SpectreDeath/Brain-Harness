@@ -1,0 +1,41 @@
+{
+  "id": "ki_self_20260828_05",
+  "title": "Dual-Mode UI Serving & Zero-Build SPA Fallback",
+  "source_target": "internal://harness/history",
+  "detected_format": "endogenous_reflection",
+  "isnad": {
+    "decision_id": "decision_ki_self_20260828_05",
+    "timestamp": "2026-08-28T18:46:00.000000+00:00",
+    "claims": [
+      {
+        "source": "src/harness/ui/server.py#L240-L280",
+        "timestamp": "2026-08-28T18:23:29.000000+00:00",
+        "assertion": "The UI server checks for the existence of frontend/dist/index.html and automatically routes static assets to the compiled bundle.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "src/harness/ui/server.py#L275-L290",
+        "timestamp": "2026-08-28T18:23:29.000000+00:00",
+        "assertion": "If frontend/dist does not exist, the server serves the embedded single-file vanilla SPA without raising FileNotFoundError.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "brain://ef3f6b04-788e-4657-9382-154a195f20bf",
+        "timestamp": "2026-08-28T18:37:52.000000+00:00",
+        "assertion": "Tests verify REST endpoints and WebSockets operate consistently under both zero-build and React production modes.",
+        "status": "VERIFIED"
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "ui_architecture",
+    "serving",
+    "web_dashboard",
+    "spa",
+    "endogenous_memory",
+    "self_reflection"
+  ],
+  "context": "Knowledge item ki_self_20260828_05: Dual-Mode UI Serving & Zero-Build SPA Fallback",
+  "distilled_learning": "### Distilled Heuristic\nWeb dashboard servers in developer tooling must support dual-mode static asset serving: auto-detecting and mounting modern compiled SPAs (e.g. React 19 / Vite in `frontend/dist`) while guaranteeing a zero-dependency, zero-build fallback (`static/index.html`) so headless and minimal environments never break."
+}

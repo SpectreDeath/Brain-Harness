@@ -1,0 +1,68 @@
+{
+  "id": "ki_self_20260826_01",
+  "title": "Click CLI Group Single-Source Consolidation",
+  "source_target": "internal://harness/history",
+  "detected_format": "endogenous_reflection",
+  "isnad": {
+    "decision_id": "decision_ki_self_20260826_01",
+    "timestamp": "2026-08-26T21:01:20.758130+00:00",
+    "claims": [
+      {
+        "source": "architecture-review-20260826-harness-reflector.html",
+        "timestamp": "2026-08-26T20:25:22.231168+00:00",
+        "assertion": "Duplicate Click group declarations shadow earlier subcommands.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "architecture-review-20260826.html",
+        "timestamp": "2026-08-26T10:40:14.686347+00:00",
+        "assertion": "Duplicate Click group declarations shadow earlier subcommands.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "architecture-review-20260825-memory-epistemics.html",
+        "timestamp": "2026-08-25T19:03:44.762187+00:00",
+        "assertion": "Duplicate Click group declarations shadow earlier subcommands.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "architecture-review-20260825-integration-io.html",
+        "timestamp": "2026-08-25T18:35:22.716329+00:00",
+        "assertion": "Duplicate Click group declarations shadow earlier subcommands.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "architecture-review-1787664067.html",
+        "timestamp": "2026-08-25T13:21:07.794947+00:00",
+        "assertion": "Duplicate Click group declarations shadow earlier subcommands.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "architecture-review-20260824-172700.html",
+        "timestamp": "2026-08-24T21:27:50.666025+00:00",
+        "assertion": "Duplicate Click group declarations shadow earlier subcommands.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "architecture-review-20260823-165800.html",
+        "timestamp": "2026-08-24T19:43:05.559747+00:00",
+        "assertion": "Duplicate Click group declarations shadow earlier subcommands.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "architecture-review-20260823-154200.html",
+        "timestamp": "2026-08-23T19:44:37.392735+00:00",
+        "assertion": "Duplicate Click group declarations shadow earlier subcommands.",
+        "status": "VERIFIED"
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "architecture",
+    "endogenous_memory",
+    "self_reflection"
+  ],
+  "context": "Knowledge item ki_self_20260826_01",
+  "distilled_learning": "### Distilled Heuristic"
+}

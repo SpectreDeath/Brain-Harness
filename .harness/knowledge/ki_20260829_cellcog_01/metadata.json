@@ -1,0 +1,38 @@
+{
+  "id": "ki_20260829_cellcog_01",
+  "title": "Any-to-Any Sub-Agent Delegation & <SHOW_FILE> Multimodal Protocol",
+  "source_target": "D:/GitHub/cloned/CellCog/skills-main/skills-main",
+  "detected_format": "raw_docs",
+  "timestamp": "2026-08-29T16:17:00Z",
+  "isnad": {
+    "decision_id": "dec_20260829_cellcog_01",
+    "claims": [
+      {
+        "assertion": "Coding agents should offload heavy multimodal tasks (3D GLB modeling, 4K video, audio/music, spreadsheets, slide decks, deep research) to a single any-to-any sub-agent endpoint using embedded <SHOW_FILE>path</SHOW_FILE> tags rather than assembling brittle local multi-tool pipelines.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "D:/GitHub/cloned/CellCog/skills-main/skills-main/skills/cellcog/SKILL.md#L1-L150",
+            "verified": true
+          },
+          {
+            "node_type": "visual_brief",
+            "uri": "C:/Users/spectre/AppData/Local/Temp/repo-reader-20260829-160000.html",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "multimodal_subagent",
+    "delegation",
+    "cloud_tools",
+    "show_file_protocol",
+    "cellcog",
+    "repo_introspection"
+  ],
+  "context": "Any-to-Any Sub-Agent Delegation & <SHOW_FILE> Multimodal Protocol",
+  "distilled_learning": "# KI: Any-to-Any Sub-Agent Delegation & <SHOW_FILE> Multimodal Protocol\n\n## Operational Summary\nLocal coding agents frequently encounter requests requiring generative outputs beyond code\u2014such as 3D asset modeling (.GLB), 4K cinematic video, multi-track audio/music generation, presentation slide deck"
+}

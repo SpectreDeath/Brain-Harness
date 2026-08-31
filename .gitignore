@@ -52,7 +52,10 @@ coverage.xml
 .ruff_cache/
 
 # Harness runtime & local state
-.harness/
+.harness/*
+!.harness/knowledge/
+!.harness/config.json
+!.harness/*.py
 test_ingested_plugins/
 data/
 logs/

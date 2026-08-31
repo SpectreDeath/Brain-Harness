@@ -1,0 +1,33 @@
+{
+  "id": "ki_20260830_django_01",
+  "title": "Thread-Safe Lazy App Registry & Topological Initialization in Multi-Tenant / Plugin Architectures",
+  "source_target": "D:\\GitHub\\cloned\\Django\\django-main\\django-main\\django\\apps\\registry.py",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_20260830_django_01",
+    "claims": [
+      {
+        "assertion": "Plugin and application registries in large ecosystems must decouple discovery from population via reentrant threading locks, explicit state phases (ready, models_ready, apps_ready), and lazy model lookup index caching",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "django/apps/registry.py#L75-L160",
+            "commit_hash": "6.2.0a0-main",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "django",
+    "architecture",
+    "app_registry",
+    "ioc_container",
+    "plugin_lifecycle",
+    "thread_safety"
+  ],
+  "context": "In modular architectures and extensible agent harnesses with dozens of independent plugins and services, naive eager initialization causes circular import deadlocks, race conditions during multi-threaded startup, and uncoordinated model registration.",
+  "distilled_learning": "Implement an Apps/Plugin registry that operates in three distinct topological lifecycle phases: 1) Instantiation & Discovery, 2) Model/Service Registration (setting models_ready=True under threading.RLock), and 3) Post-Ready hook invocation (setting ready=True). Use a two-tiered dictionary cache (app_configs by label, models by (app_label, model_name)) with lazy resolution proxies so plugins can reference foreign dependencies before all sub-modules are fully imported."
+}

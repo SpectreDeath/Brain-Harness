@@ -1,0 +1,19 @@
+{
+  "id": "ki_20260830_repo_02",
+  "title": "Invariant Verification Gates",
+  "source_target": "D:\\GitHub\\cloned\\deepseek-harness-master",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_20260830_repo_02",
+    "claims": [
+      {
+        "assertion": "Implement dedicated scripts to verify specific structural constraints (package invariants, doc fragments) during CI instead of relying solely on linters",
+        "lineage": [
+          {"node_type": "primary_code", "uri": "package.json#L40-L55", "sha256_hash": "N/A", "verified": true}
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": ["testing", "ci", "invariants", "scripts"]
+}

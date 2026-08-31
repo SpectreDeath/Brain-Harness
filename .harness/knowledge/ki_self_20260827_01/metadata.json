@@ -1,0 +1,40 @@
+{
+  "id": "ki_self_20260827_01",
+  "title": "Deterministic Pre-LLM Context Optimization",
+  "source_target": "internal://harness/history",
+  "detected_format": "endogenous_reflection",
+  "isnad": {
+    "decision_id": "decision_ki_self_20260827_01",
+    "timestamp": "2026-08-27T22:51:00.000000+00:00",
+    "claims": [
+      {
+        "source": "architecture-review-20260827-174000.html",
+        "timestamp": "2026-08-27T17:40:41.000000+00:00",
+        "assertion": "Pre-LLM deterministic 3-tier context pruning prevents context blowouts in multi-turn reasoning loops.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "repo-to-plugin-forge-pruner-1787864859.html",
+        "timestamp": "2026-08-27T17:08:01.000000+00:00",
+        "assertion": "AST code skeletonization combined with tabular and whitespace compaction achieves 35-60% token reduction without latency overhead.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "brain://b907f1e3-c943-4717-bff0-eb0f01ded754",
+        "timestamp": "2026-08-27T22:44:11.000000+00:00",
+        "assertion": "Co-located AgentContextOptimizer integrated into StepExecutionEngine without kernel mutation.",
+        "status": "VERIFIED"
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "optimization",
+    "performance",
+    "context_compiler",
+    "endogenous_memory",
+    "self_reflection"
+  ],
+  "context": "Knowledge item ki_self_20260827_01",
+  "distilled_learning": "### Distilled Heuristic\nMulti-turn agent execution loops must apply deterministic 3-pass context optimization (whitespace deduplication, tabular/JSON truncation, AST code skeletonization) prior to model invocation to bound token budgets and eliminate context overflow."
+}

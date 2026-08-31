@@ -1,0 +1,20 @@
+{
+  "id": "ki_20260830_repo_01",
+  "title": "Tool Package Decoupling",
+  "source_target": "D:\\GitHub\\cloned\\deepseek-harness-master",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_20260830_repo_01",
+    "claims": [
+      {
+        "assertion": "Extract distinct agent capabilities (MCP, LSP, Sandbox) into isolated monorepo packages",
+        "lineage": [
+          {"node_type": "primary_code", "uri": "packages/mcp", "sha256_hash": "N/A", "verified": true},
+          {"node_type": "primary_code", "uri": "packages/sandbox", "sha256_hash": "N/A", "verified": true}
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": ["architecture", "monorepo", "tool_isolation"]
+}

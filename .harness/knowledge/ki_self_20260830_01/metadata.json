@@ -1,0 +1,32 @@
+{
+  "id": "ki_self_20260830_01",
+  "title": "Non-Invasive Scoped Metadata Annotations vs. Core Kernel Mutability",
+  "source_target": "src\\harness\\services\\kimi_bridge.py",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_self_20260830_01",
+    "claims": [
+      {
+        "assertion": "When introducing architectural or structural abstractions (such as 4-tier DI scopes), prefer non-invasive inspection adapters and read-only metadata annotators over mutating the core IoC kernel container constructor, preventing cascading breakage across registered plugins",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "plugins/agent_orchestration/kimi_transcript/main.py#L90-L135",
+            "commit_hash": "harness-0.4.0",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "ioc_container",
+    "service_context",
+    "di_scopes",
+    "endogenous_memory",
+    "self_reflection"
+  ],
+  "context": "Grafting new domain concepts directly onto the core ServiceContext constructor breaks backwards compatibility with existing plugins, lifecycle tests, and transaction managers.",
+  "distilled_learning": "Implement structural analysis as a standalone inspector (e.g. ScopeInspector) that traverses the existing parent-child ServiceContext hierarchy without mutating core kernel classes. This provides full introspection capabilities while preserving 100% test and plugin backward compatibility."
+}

@@ -1,0 +1,33 @@
+{
+  "id": "ki_20260830_django_02",
+  "title": "WeakRef Signal Dispatcher Pattern with Dead-Receiver Garbage Collection",
+  "source_target": "D:\\GitHub\\cloned\\Django\\django-main\\django-main\\django\\dispatch\\dispatcher.py",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_20260830_django_02",
+    "claims": [
+      {
+        "assertion": "Event bus subscriber registries must wrap receiver callables in weak references and execute automated dead-reference pruning during dispatch to avoid unbounded memory leaks in long-running agent processes",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "django/dispatch/dispatcher.py#L45-L120",
+            "commit_hash": "6.2.0a0-main",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "django",
+    "signals",
+    "event_bus",
+    "weakref",
+    "memory_management",
+    "pubsub"
+  ],
+  "context": "Long-running daemon processes, agent sessions, and server frameworks that dynamically connect event handlers accumulate stale subscriber references when objects are destroyed, leading to silent memory bloat and ghost invocations.",
+  "distilled_learning": "Store receiver registrations as tuples containing weak reference objects (`weakref.ref(target)` or `weakref.WeakMethod(target)` for bound methods). During `send()` or `send_robust()`, unpack active references and catch `ReferenceError` or `None` dereferences, immediately triggering an internal `_clear_dead_receivers()` sweep under lock. Support both synchronous and asynchronous receiver execution with `send_robust()` to isolate subscriber exceptions."
+}

@@ -1,0 +1,33 @@
+{
+  "id": "ki_20260824_repo_04",
+  "title": "Async Initialization Task Reference Retention & Graceful Cancellation",
+  "source_target": "https://github.com/getzep/graphiti",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_20260824_graphiti_04",
+    "claims": [
+      {
+        "assertion": "Background async initialization tasks spawned by database drivers and plugin singletons must maintain strong instance references and be explicitly canceled during driver close to prevent garbage collection failures and unhandled exceptions",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "graphiti_core/driver/neo4j_driver.py#L40-L75",
+            "commit_hash": "abc001752652229725df029666f2590a2a2e2e9d",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "asyncio",
+    "python",
+    "resource_management",
+    "lifecycle",
+    "driver_architecture",
+    "memory_leaks"
+  ],
+  "context": "Lazy background initialization in async drivers (e.g. verifying constraints, warming connection pools, building schema indices) frequently spawns asyncio.create_task calls without saving the task handle, leading to premature garbage collection or 'Task was destroyed but it is still pending' warnings on teardown.",
+  "distilled_learning": "Always retain a strong instance reference to background initialization coroutines (e.g. self._init_task = asyncio.create_task(...)). In driver/plugin close() methods, verify if the initialization task is still running, explicitly cancel it, and await completion with return_exceptions=True to ensure clean shutdown."
+}

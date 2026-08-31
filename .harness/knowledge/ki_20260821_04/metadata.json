@@ -1,0 +1,13 @@
+{
+  "id": "ki_20260821_04",
+  "title": "Epistemic Habit — Skill SKILL.md as Design Contract",
+  "source_brain": "C:/Users/spectre/.gemini/antigravity-ide/brain",
+  "detected_format": "antigravity_brain",
+  "isnad": {
+    "primary_source": "c5505b1b-eed6-40d3-b07d-0e060e559d5f.system_generated/logs/transcript_full.jsonl#L37",
+    "verified": true
+  },
+  "tags": ["skill_system", "design_contract", "documentation", "architecture"],
+  "context": "The brain consistently reads/writes SKILL.md files to encode architectural decisions, trigger bounds, and anti-patterns.",
+  "distilled_learning": "SKILL.md is not just documentation; it is the executable design contract. Changes to architecture should be reflected as SKILL.md revisions before code changes."
+}

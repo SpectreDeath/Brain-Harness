@@ -1,0 +1,41 @@
+{
+  "id": "ki_self_20260828_06",
+  "title": "Subprocess Pipe Transport Lifecycle & Windows Proactor Guard",
+  "source_target": "internal://harness/history",
+  "detected_format": "endogenous_reflection",
+  "isnad": {
+    "decision_id": "decision_ki_self_20260828_06",
+    "timestamp": "2026-08-28T21:10:00.000000+00:00",
+    "claims": [
+      {
+        "source": "tests/test_deepened_creator.py#L12-L45",
+        "timestamp": "2026-08-28T18:58:21.000000+00:00",
+        "assertion": "Asynchronous subprocesses executed under asyncio ProactorEventLoop on Windows raise unraisable ResourceWarnings during garbage collection if pipe transports remain unclosed.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "src/harness/plugins/sandbox.py#L110-L190",
+        "timestamp": "2026-08-28T18:58:21.000000+00:00",
+        "assertion": "SubprocessExecutor must explicitly drain and close stdin, stdout, and stderr pipe transports inside finally blocks.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "AGENTS.md#L18",
+        "timestamp": "2026-08-28T21:09:00.000000+00:00",
+        "assertion": "Rule 14 mandates clean pipe transport disposal for all sandboxed execution layers.",
+        "status": "VERIFIED"
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "sandboxing",
+    "subprocess_isolation",
+    "proactor_events",
+    "resource_management",
+    "windows_asyncio",
+    "self_reflection"
+  ],
+  "context": "Knowledge item ki_self_20260828_06: Subprocess Pipe Transport Lifecycle & Windows Proactor Guard",
+  "distilled_learning": "### Distilled Heuristic\nAll asynchronous subprocess sandbox transports must explicitly drain and close stdin/stdout/stderr pipes inside finally blocks to guarantee clean proactor resource disposal and eliminate unraisable ResourceWarnings across operating systems."
+}

@@ -1,0 +1,30 @@
+{
+  "id": "ki_20260830_grok_03",
+  "title": "Sandbox Hook Write-Deny Security Boundary",
+  "source_target": "D:\\GitHub\\cloned\\grok-build-main\\grok-build-main",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_20260830_grok_03",
+    "claims": [
+      {
+        "assertion": "Kernel sandbox capability sets that automatically enforce write-deny on global and project lifecycle hook configurations prevent running models or untrusted subprocesses from disabling safety gates or tampering with audit interceptors",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "crates/codegen/xai-grok-sandbox/src/hook_write_deny.rs#L1-L60",
+            "sha256_hash": "N/A",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "crates/codegen/xai-grok-sandbox/src/profiles.rs#L1-L70",
+            "sha256_hash": "N/A",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": ["sandbox", "security", "lifecycle_hooks", "write_deny", "kernel_isolation"]
+}

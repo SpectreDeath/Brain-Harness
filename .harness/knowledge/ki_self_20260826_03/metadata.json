@@ -1,0 +1,80 @@
+{
+  "id": "ki_self_20260826_03",
+  "title": "ReAct Agent Step Transactional Isolation",
+  "source_target": "internal://harness/history",
+  "detected_format": "endogenous_reflection",
+  "isnad": {
+    "decision_id": "decision_ki_self_20260826_03",
+    "timestamp": "2026-08-26T21:01:20.758351+00:00",
+    "claims": [
+      {
+        "source": "harness-reflection-20260826-170011.html",
+        "timestamp": "2026-08-26T21:00:11.007832+00:00",
+        "assertion": "Step-level transactional boundaries guarantee clean state rollback on tool failures.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "harness-reflection-20260826-163347.html",
+        "timestamp": "2026-08-26T20:33:47.943476+00:00",
+        "assertion": "Step-level transactional boundaries guarantee clean state rollback on tool failures.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "harness-reflection-20260826-163323.html",
+        "timestamp": "2026-08-26T20:33:23.725672+00:00",
+        "assertion": "Step-level transactional boundaries guarantee clean state rollback on tool failures.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "harness-reflection-20260826-163040.html",
+        "timestamp": "2026-08-26T20:30:40.032253+00:00",
+        "assertion": "Step-level transactional boundaries guarantee clean state rollback on tool failures.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "architecture-review-20260826-harness-reflector.html",
+        "timestamp": "2026-08-26T20:25:22.231168+00:00",
+        "assertion": "Step-level transactional boundaries guarantee clean state rollback on tool failures.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "harness-reflection-20260826-145800.html",
+        "timestamp": "2026-08-26T18:58:00.920247+00:00",
+        "assertion": "Step-level transactional boundaries guarantee clean state rollback on tool failures.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "harness-reflection-20260826-074052.html",
+        "timestamp": "2026-08-26T11:40:52.184400+00:00",
+        "assertion": "Step-level transactional boundaries guarantee clean state rollback on tool failures.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "harness-reflection-20260826-074028.html",
+        "timestamp": "2026-08-26T11:40:28.921897+00:00",
+        "assertion": "Step-level transactional boundaries guarantee clean state rollback on tool failures.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "harness-reflection-20260826-073315.html",
+        "timestamp": "2026-08-26T11:33:15.855641+00:00",
+        "assertion": "Step-level transactional boundaries guarantee clean state rollback on tool failures.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "architecture-review-20260826.html",
+        "timestamp": "2026-08-26T10:40:14.686347+00:00",
+        "assertion": "Step-level transactional boundaries guarantee clean state rollback on tool failures.",
+        "status": "VERIFIED"
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "architecture",
+    "endogenous_memory",
+    "self_reflection"
+  ],
+  "context": "Knowledge item ki_self_20260826_03",
+  "distilled_learning": "### Distilled Heuristic"
+}

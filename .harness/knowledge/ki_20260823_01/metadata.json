@@ -1,0 +1,36 @@
+{
+  "id": "ki_20260823_01",
+  "title": "Subprocess Sandbox Boundary & Dynamic Plugin Isolation",
+  "source_target": "d:/GitHub/projects/Brain Harness/src/harness/plugins/sandbox.py",
+  "detected_format": "harness_instance",
+  "isnad": {
+    "decision_id": "dec_20260823_01",
+    "claims": [
+      {
+        "assertion": "Untrusted or externally ingested plugins must execute in isolated subprocess sandboxes via JSON-RPC over stdin/stdout, reserving in-process execution strictly for trusted core plugins",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "file:///src/harness/plugins/sandbox.py#L141-L180",
+            "verified": true
+          },
+          {
+            "node_type": "architectural_rule",
+            "uri": "file:///AGENTS.md#L9",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "plugin_system",
+    "sandbox",
+    "subprocess_isolation",
+    "json_rpc",
+    "security"
+  ],
+  "context": "Executing dynamically loaded plugins, third-party GitHub tools, or untrusted code in the primary agent process risks catastrophic kernel crashes, memory leaks, and state pollution.",
+  "distilled_learning": "Enforce SubprocessExecutor as the default sandbox strategy for all dynamic plugins. Communicate with the child process exclusively via line-delimited JSON-RPC over stdin/stdout with strict asyncio timeout guards (30s default) and automated teardown lifecycle management."
+}

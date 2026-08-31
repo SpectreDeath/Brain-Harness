@@ -1,0 +1,35 @@
+{
+  "id": "ki_self_20260827_03",
+  "title": "Headless CLI Session DAG Inspection & Export",
+  "source_target": "internal://harness/history",
+  "detected_format": "endogenous_reflection",
+  "isnad": {
+    "decision_id": "decision_ki_self_20260827_03",
+    "timestamp": "2026-08-27T22:51:00.000000+00:00",
+    "claims": [
+      {
+        "source": "architecture-review-20260827-174000.html",
+        "timestamp": "2026-08-27T17:40:41.000000+00:00",
+        "assertion": "Session trees and context compilation DAGs must provide headless CLI commands for CI/terminal introspection.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "brain://b907f1e3-c943-4717-bff0-eb0f01ded754",
+        "timestamp": "2026-08-27T22:44:11.000000+00:00",
+        "assertion": "Implemented harness session tree and harness session export subcommands with JSON and tree formatting.",
+        "status": "VERIFIED"
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "cli",
+    "architecture",
+    "introspection",
+    "session_tree",
+    "endogenous_memory",
+    "self_reflection"
+  ],
+  "context": "Knowledge item ki_self_20260827_03",
+  "distilled_learning": "### Distilled Heuristic\nAll session trees, execution traces, and context compilation graphs must expose pure headless CLI subcommands (e.g. `harness session tree`, `harness session export`) alongside MCP endpoints for automated tooling."
+}

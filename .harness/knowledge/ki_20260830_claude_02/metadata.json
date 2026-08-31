@@ -1,0 +1,24 @@
+{
+  "id": "ki_20260830_claude_02",
+  "title": "Aspect-Oriented Multi-Agent Review Swarm",
+  "source_target": "D:\\GitHub\\cloned\\claude-code-main\\claude-code-main",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_20260830_claude_02",
+    "claims": [
+      {
+        "assertion": "Decomposing code and PR reviews into single-responsibility sub-agents with fan-out dispatch and fan-in aggregation outperforms monolithic review prompts",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "plugins/pr-review-toolkit/commands/review-pr.md#L15-L85",
+            "sha256_hash": "N/A",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": ["architecture", "multi_agent", "swarm", "code_review"]
+}

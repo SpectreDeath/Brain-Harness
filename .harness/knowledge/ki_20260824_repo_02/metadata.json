@@ -1,0 +1,39 @@
+{
+  "id": "ki_20260824_repo_02",
+  "title": "Tri-brid Search Fusion with Balanced Merge for Knowledge Graphs",
+  "source_target": "https://github.com/getzep/graphiti",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_20260824_graphiti_02",
+    "claims": [
+      {
+        "assertion": "Graph search retrieval requires a three-way candidate pool (dense vectors, sparse BM25, and BFS graph proximity) fused via Balanced Merge to prevent vector score dominance before cross-encoder reranking",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "graphiti_core/search/search.py#L140-L230",
+            "commit_hash": "d40da88f202c0eba5b2c4164d1c912bd663a0159",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "graphiti_core/search/search_config.py#L45-L95",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "search",
+    "hybrid_search",
+    "cross_encoder",
+    "reranking",
+    "balanced_merge",
+    "bm25",
+    "vector_search"
+  ],
+  "context": "Combining dense vector search with keyword and graph traversals frequently fails when raw similarity scores have divergent calibrations. Vector similarity scores cluster near 0.8-0.95, while BM25 outputs unbounded positive floats, causing one channel to starve candidate spots.",
+  "distilled_learning": "Implement a multi-channel retrieval pipeline that collects distinct candidate sets from Dense Embeddings, Sparse Fulltext BM25, and BFS Graph Neighborhood expansion. Use a Balanced Merge interleave algorithm to construct a balanced candidate shortlist that preserves representation from each retrieval modality before executing the final Cross-Encoder scoring pass."
+}

@@ -1,0 +1,41 @@
+{
+  "id": "ki_self_20260828_02",
+  "title": "Slotted Dataclass Memory & Invariant Architecture",
+  "source_target": "internal://harness/history",
+  "detected_format": "endogenous_reflection",
+  "isnad": {
+    "decision_id": "decision_ki_self_20260828_02",
+    "timestamp": "2026-08-28T18:46:00.000000+00:00",
+    "claims": [
+      {
+        "source": ".agents/skills/python-dataclass-architect/SKILL.md#L20-L90",
+        "timestamp": "2026-08-28T13:26:02.000000+00:00",
+        "assertion": "Using slots=True on Python 3.10+ dataclasses eliminates __dict__ memory overhead and reduces per-instance memory footprint by 60-75%.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "book-to-skill-forge-20260828.html",
+        "timestamp": "2026-08-28T13:23:56.000000+00:00",
+        "assertion": "Mutable default arguments in dataclasses cause shared cross-instance reference leaks unless default_factory is used.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "brain://7b124780-820b-4ccd-a5f8-4bb735fbd5be",
+        "timestamp": "2026-08-28T17:26:05.000000+00:00",
+        "assertion": "Value objects must combine frozen=True with deterministic __hash__() and validate construction invariants in __post_init__.",
+        "status": "VERIFIED"
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "performance",
+    "python_craft",
+    "dataclass",
+    "memory_optimization",
+    "endogenous_memory",
+    "self_reflection"
+  ],
+  "context": "Knowledge item ki_self_20260828_02: Slotted Dataclass Memory & Invariant Architecture",
+  "distilled_learning": "### Distilled Heuristic\nHigh-volume internal entity and AST data structures must use `slots=True` to minimize memory footprint, `frozen=True` for immutable value objects, `__post_init__` construction assertions, and `default_factory` for mutable collections."
+}

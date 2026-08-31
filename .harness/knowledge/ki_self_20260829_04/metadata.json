@@ -1,0 +1,59 @@
+{
+  "id": "ki_self_20260829_04",
+  "title": "Typed IoC Context Pipeline & Authoritative Swarm DAG Store",
+  "source_target": "C:/Users/spectre/.gemini/antigravity-ide/brain",
+  "detected_format": "antigravity_brain",
+  "timestamp": "2026-08-29T15:17:00Z",
+  "isnad": {
+    "decision_id": "dec_20260829_04",
+    "claims": [
+      {
+        "assertion": "Pre-LLM context optimizations must be strictly typed via ServiceKey[UnifiedContextPipelineService] and multi-agent swarm execution trees must be tracked via AgentExecutionGraphService with deterministic ASCII/JSON export seams and automated token rollups.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "src/harness/services/unified_context.py#L1-L120",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "src/harness/services/agent_graph.py#L1-L160",
+            "verified": true
+          },
+          {
+            "node_type": "service_seam",
+            "uri": "src/harness/agent/context_optimizer.py#L40-L90",
+            "verified": true
+          },
+          {
+            "node_type": "test_verification",
+            "uri": "tests/test_unified_context_pipeline.py",
+            "verified": true
+          },
+          {
+            "node_type": "test_verification",
+            "uri": "tests/test_agent_graph_store.py",
+            "verified": true
+          },
+          {
+            "node_type": "visual_brief",
+            "uri": "C:/Users/spectre/AppData/Local/Temp/harness-reflection-20260829-151600.html",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "context_pipeline",
+    "agent_graph",
+    "ioc_service",
+    "multi_agent",
+    "token_rollup",
+    "endogenous_memory",
+    "self_reflection"
+  ],
+  "context": "Typed IoC Context Pipeline & Authoritative Swarm DAG Store",
+  "distilled_learning": "# KI: Typed IoC Context Pipeline & Authoritative Swarm DAG Store\n\n## Operational Summary\nPre-LLM context transformations and multi-agent swarm coordinate trees require deep, unified IoC service seams. Context pruning and AST RepoMap injection must be encapsulated behind strongly-typed service protoc"
+}

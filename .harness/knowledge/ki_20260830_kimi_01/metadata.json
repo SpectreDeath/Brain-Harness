@@ -1,0 +1,33 @@
+{
+  "id": "ki_20260830_kimi_01",
+  "title": "4-Tier Hierarchical DI Scopes & Cascade Engine in Agent Frameworks",
+  "source_target": "D:\\GitHub\\cloned\\kimi-code-main\\kimi-code-main\\packages\\agent-core-v2\\src\\_base\\di\\cascadeEngine.ts",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_20260830_kimi_01",
+    "claims": [
+      {
+        "assertion": "Agent architectures must partition dependency injection across four strictly nested lifecycle scopes (App -> Workspace -> Session -> Agent) to enforce resource cleanup, prevent state cross-contamination between concurrent sessions, and isolate tool execution fibers",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "packages/agent-core-v2/src/_base/di/cascadeEngine.ts#L30-L115",
+            "commit_hash": "agent-core-v2-0.4.2",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "kimi_code",
+    "ioc_container",
+    "di_scopes",
+    "cascade_engine",
+    "agent_architecture",
+    "fiber_lifecycle"
+  ],
+  "context": "In multi-session agent runners or complex swarm architectures, flat service registries allow session-specific tokens, file watcher handles, or sub-agent execution state to bleed into global scope, causing race conditions, memory leaks, and broken session resets.",
+  "distilled_learning": "Structure the IoC engine into four immutable parent-child scopes: 1) AppScope (process-wide singletons, telemetry, global models), 2) WorkspaceScope (git index, project configs, file watchers), 3) SessionScope (conversation history, MiniDb storage, transcript coordinator), and 4) AgentScope (prompt compilation, tool registry, step execution fibers). The CascadeEngine allows child scopes to resolve parent services while guaranteeing that destroying a child scope (e.g. on session close or agent completion) immediately disposes all scoped fibers without affecting ancestor scopes."
+}

@@ -1,0 +1,33 @@
+{
+  "id": "ki_20260830_django_04",
+  "title": "Transactional Atomic Savepoint Stacks & Multi-Database Router Isolation",
+  "source_target": "D:\\GitHub\\cloned\\Django\\django-main\\django-main\\django\\db\\transaction.py",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_20260830_django_04",
+    "claims": [
+      {
+        "assertion": "Nested transactional units must use savepoint stacks to support fine-grained rollback without aborting outer transaction blocks, integrated with database router hints for write safety",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "django/db/transaction.py#L140-L220",
+            "commit_hash": "6.2.0a0-main",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "django",
+    "transactions",
+    "savepoints",
+    "acid",
+    "database_router",
+    "rollback"
+  ],
+  "context": "In complex agent workflows, nested tool calls, or multi-tenant database operations, a failure in a subordinate task shouldn't necessarily fail the entire outer batch if the child error can be caught and handled.",
+  "distilled_learning": "The `Atomic` context manager inspects the current database connection state: if no transaction is active, it begins a real database transaction; if already inside a transaction and `savepoint=True`, it creates a named database savepoint (`SAVEPOINT sid`). On normal block exit, it releases the savepoint or commits the transaction. On unhandled exception, it rolls back strictly to the savepoint (`ROLLBACK TO SAVEPOINT sid`) or executes a full transaction rollback, restoring connection clean state."
+}

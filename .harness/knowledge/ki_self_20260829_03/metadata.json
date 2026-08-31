@@ -1,0 +1,42 @@
+{
+  "id": "ki_self_20260829_03",
+  "title": "Transactional Git Checkpoints & In-Flight Syntax Diagnostic Self-Repair",
+  "source_target": "C:/Users/spectre/.gemini/antigravity-ide/brain",
+  "detected_format": "antigravity_brain",
+  "timestamp": "2026-08-29T14:08:55Z",
+  "isnad": {
+    "decision_id": "dec_20260829_03",
+    "claims": [
+      {
+        "assertion": "ReAct agent tool execution must provide transactional git commit/rollback isolation and immediate syntax verification feedback in observations",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "src/harness/agent/react.py#L220-L295",
+            "verified": true
+          },
+          {
+            "node_type": "service_seam",
+            "uri": "src/harness/services/filesystem_git.py#L240-L280",
+            "verified": true
+          },
+          {
+            "node_type": "service_seam",
+            "uri": "src/harness/services/arch_linter.py#L130-L190",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "react_agent",
+    "git_checkpoint",
+    "transactional_isolation",
+    "linter",
+    "self_repair"
+  ],
+  "context": "Transactional Git Checkpoints & In-Flight Syntax Diagnostic Self-Repair",
+  "distilled_learning": "# KI: Transactional Git Checkpoints & In-Flight Syntax Diagnostic Self-Repair\n\n## Operational Summary\nAutonomous agent code modifications require two complementary runtime safety nets: transactional workspace rollbacks to prevent dirty state from failed executions, and immediate in-flight syntax ver"
+}

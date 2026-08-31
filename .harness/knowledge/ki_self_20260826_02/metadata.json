@@ -1,0 +1,32 @@
+{
+  "id": "ki_self_20260826_02",
+  "title": "Lazy Subprocess Staging for Sandboxed External Plugins",
+  "source_target": "internal://harness/history",
+  "detected_format": "endogenous_reflection",
+  "isnad": {
+    "decision_id": "decision_ki_self_20260826_02",
+    "timestamp": "2026-08-26T21:01:20.758313+00:00",
+    "claims": [
+      {
+        "source": "architecture-review-20260826.html",
+        "timestamp": "2026-08-26T10:40:14.686347+00:00",
+        "assertion": "Eager venv creation on Windows causes 60s pytest timeout; lazy staging resolves startup in <10ms.",
+        "status": "VERIFIED"
+      },
+      {
+        "source": "architecture-review-20260824-172700.html",
+        "timestamp": "2026-08-24T21:27:50.666025+00:00",
+        "assertion": "Eager venv creation on Windows causes 60s pytest timeout; lazy staging resolves startup in <10ms.",
+        "status": "VERIFIED"
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "architecture",
+    "endogenous_memory",
+    "self_reflection"
+  ],
+  "context": "Knowledge item ki_self_20260826_02",
+  "distilled_learning": "### Distilled Heuristic"
+}
