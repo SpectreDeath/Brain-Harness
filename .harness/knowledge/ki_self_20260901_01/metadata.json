@@ -1,0 +1,43 @@
+{
+  "id": "ki_self_20260901_01",
+  "title": "Multi-Store Autobiographical Memory Federation",
+  "source_target": "C:\\Users\\spectre\\.gemini\\antigravity-ide\\conversations",
+  "detected_format": "antigravity_ide_autobiographical_store",
+  "timestamp": "2026-09-01T17:35:00Z",
+  "isnad": {
+    "decision_id": "dec_20260901_self_01",
+    "claims": [
+      {
+        "assertion": "Antigravity IDE partitions session state into ACID SQLite WAL databases (.db) and streaming JSONL step logs (transcript.jsonl). Agents querying SQLite databases during active sessions must use explicit read-only URI mode (file:...?mode=ro) to eliminate lock contention with live IDE worker proactors while federating streaming JSONL parsers for multi-turn step transcripts.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "C:/Users/spectre/.gemini/antigravity-ide/conversations/e3aff7ce-7b79-49e4-93c5-030d20470a89.db",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "C:/Users/spectre/.gemini/antigravity-ide/brain/e3aff7ce-7b79-49e4-93c5-030d20470a89/.system_generated/logs/transcript.jsonl",
+            "verified": true
+          },
+          {
+            "node_type": "visual_brief",
+            "uri": "C:/Users/spectre/AppData/Local/Temp/harness-reflection-20260901-173500.html",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "memory_architecture",
+    "autobiographical_reflection",
+    "sqlite_proactor",
+    "wal_isolation",
+    "endogenous_memory",
+    "self_reflection"
+  ],
+  "context": "Multi-Store Autobiographical Memory Federation & Read-Only SQLite WAL Access",
+  "distilled_learning": "# KI: Multi-Store Autobiographical Memory Federation\n\n## Operational Summary\nAntigravity IDE maintains two distinct storage layers for session execution:\n1. **Binary SQLite ACID Stores (`.db`)**: Holds structured tables (`trajectory_meta`, `steps`, `gen_metadata`, `executor_metadata`, `trajectory_metadata_blob`) managed with Write-Ahead Logging (WAL) and shared memory (`.db-shm`, `.db-wal`) by active worker proactors.\n2. **Streaming JSONL Transcripts (`transcript.jsonl`)**: Holds append-only, human-readable line-delimited records in the brain trajectory directory.\n\nWhen extracting endogenous memories or conducting introspective reflection loops across active IDE sessions, attempting direct write or exclusive locking connections against `.db` files can cause SQLite locking contention (`sqlite3.OperationalError: database is locked`). Agents must unconditionally connect using read-only URI mode (`sqlite3.connect('file:' + path + '?mode=ro', uri=True)`) and stream JSONL step lines for large historical trajectory audits.\n\n## Invariant Rule\nAlways federate memory queries across read-only SQLite URIs and streaming JSONL parsers; never execute synchronous blocking writes or acquire write locks on active conversation databases during agent reflection."
+}

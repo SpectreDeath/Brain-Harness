@@ -1,0 +1,37 @@
+{
+  "id": "ki_self_20260901_scratch_03",
+  "title": "PowerShell UTF-16 Stream Redirection Traps & Fixes",
+  "source_target": "C:\\Users\\spectre\\.gemini\\antigravity-ide\\scratch",
+  "detected_format": "windows_powershell_stream_log",
+  "timestamp": "2026-09-01T18:45:00Z",
+  "isnad": {
+    "decision_id": "dec_20260901_scratch_03",
+    "claims": [
+      {
+        "assertion": "PowerShell command redirection (> file.txt 2>&1) writes UTF-16 LE with BOM by default, inserting null bytes between ASCII characters (p y t h o n ...) when read by UTF-8 consumers. Autonomous agent harnesses must use native subprocess standard output captures or explicitly specify UTF-8 encoding in PowerShell pipes (| Out-File -Encoding utf8).",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "C:/Users/spectre/.gemini/antigravity-ide/scratch/test_debug_output.txt",
+            "verified": true
+          },
+          {
+            "node_type": "visual_brief",
+            "uri": "C:/Users/spectre/AppData/Local/Temp/harness-reflection-scratch-20260901-184500.html",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "platform_isolation",
+    "windows_powershell",
+    "stream_codecs",
+    "utf16_bom_trap",
+    "scratch_distillation"
+  ],
+  "context": "PowerShell UTF-16 Stream Redirection Traps & Native Subprocess Piping",
+  "distilled_learning": "# KI: PowerShell UTF-16 Stream Redirection Traps & Fixes\n\n## Operational Summary\nOn Windows PowerShell (5.1 & Core), the default redirection operator (`> file.txt 2>&1`) formats output as UTF-16 Little Endian with Byte Order Mark (BOM). When downstream agents or Python scripts read these files as standard UTF-8 text, each single-byte ASCII character is parsed with an alternating null byte (`\\x00`), resulting in spaced strings:\n`p y t h o n   :   T r a c e b a c k ...`\n\nThis breaks regular expression matching, JSON parsing, and automated traceback extraction in agent loops.\n\nTo permanently avoid UTF-16 redirection corruption:\n1. **Prefer Native Subprocess Capture**: Rely on the agent framework's standard runner / capture mechanisms rather than shell file redirection.\n2. **Explicit Pipe Encoding**: If shell redirection is mandatory, pipe explicitly through `| Out-File -FilePath output.txt -Encoding utf8` or set `$PSDefaultParameterValues['Out-File:Encoding'] = 'utf8'`.\n\n## Invariant Rule\nNever rely on bare PowerShell `>` redirects for machine-parsed logs; always enforce UTF-8 streams (`| Out-File -Encoding utf8`) or native subprocess standard output piping to prevent UTF-16 LE BOM null-byte corruptions."
+}

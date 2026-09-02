@@ -1,0 +1,16 @@
+{
+  "name": "domain.antigravity_policy_gate",
+  "origin_repo": "https://github.com/google/antigravity-sdk-python",
+  "git_commit": "52ea994",
+  "source_paths": [
+    "google/antigravity/hooks/policy.py",
+    "google/antigravity/hooks/hook_runner.py"
+  ],
+  "archetype": "tool_provider",
+  "forged_at": "2026-09-02T19:40:39Z",
+  "author": "Spectre",
+  "invariants": [
+    "Security decisions must resolve strictly to ALLOW, DENY, or ASK_USER.",
+    "Tool invocations matching DENY rules must short-circuit without subprocess execution."
+  ]
+}

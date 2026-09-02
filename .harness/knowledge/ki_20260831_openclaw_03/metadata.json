@@ -1,0 +1,43 @@
+{
+  "id": "ki_20260831_openclaw_03",
+  "title": "A2A (Agent-to-Agent) Multi-Agent Swarm Federation Protocol",
+  "source_target": "D:\\GitHub\\cloned\\openclaw",
+  "detected_format": "typescript_monorepo",
+  "timestamp": "2026-08-31T14:15:00Z",
+  "isnad": {
+    "decision_id": "dec_20260831_openclaw_03",
+    "claims": [
+      {
+        "assertion": "Standardizing agent-to-agent delegation via typed A2A protocol contracts enables cross-host swarm orchestration, recursive task delegation, and distributed telemetry rollups.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "extensions/a2a/index.ts#L1-L30",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "extensions/a2a/channel-plugin-api.ts#L1-L80",
+            "verified": true
+          },
+          {
+            "node_type": "visual_brief",
+            "uri": "C:/Users/spectre/AppData/Local/Temp/data-topology-review-1788199910.html",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "a2a",
+    "multi_agent",
+    "swarm_federation",
+    "task_delegation",
+    "openclaw",
+    "repo_introspection"
+  ],
+  "context": "A2A (Agent-to-Agent) Multi-Agent Swarm Federation Protocol",
+  "distilled_learning": "# KI: A2A (Agent-to-Agent) Multi-Agent Swarm Federation Protocol\n\n## Operational Summary\nMulti-agent coordination across independent runtimes requires a decoupled messaging and capability exchange protocol. A2A (Agent-to-Agent) v1.0 standardizes agent discovery, task handover, progress streaming, and artifact exchange across network boundaries, allowing sovereign agent instances to form ad-hoc hierarchical swarms."
+}

@@ -1,0 +1,43 @@
+{
+  "id": "ki_20260831_strategify_02",
+  "title": "Multi-Commodity Supply Chain Vulnerability & Shock Engine",
+  "source_target": "D:\\GitHub\\projects\\Strategify",
+  "detected_format": "python_simulation_harness",
+  "timestamp": "2026-08-31T23:15:00Z",
+  "isnad": {
+    "decision_id": "dec_20260831_strategify_02",
+    "claims": [
+      {
+        "assertion": "SupplyChainEngine models multi-commodity flows across directed trade graphs, computes maritime chokepoint vulnerability via NetworkX betweenness centrality, and propagates dynamic economic penalties to StateActorAgents upon shock events.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "strategify/economics/supply_chain.py#L1-L409",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "strategify/economics/econometrics.py#L1-L150",
+            "verified": true
+          },
+          {
+            "node_type": "visual_brief",
+            "uri": "C:/Users/spectre/AppData/Local/Temp/repo-reader-20260831-231500.html",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "supply_chain",
+    "betweenness_centrality",
+    "chokepoints",
+    "shocks",
+    "networkx",
+    "strategify"
+  ],
+  "context": "Multi-Commodity Supply Chain Vulnerability & Shock Engine",
+  "distilled_learning": "# KI: Multi-Commodity Supply Chain Vulnerability & Shock Engine\n\n## Operational Summary\nGeopolitical economic modeling requires multi-commodity tracking (oil, gas, semiconductors, grain, rare earths) coupled with structural network topology. Tracking trade flows on a directed NetworkX graph allows computing betweenness centrality to isolate critical maritime chokepoints (Bosphorus, Hormuz, Malacca, Suez). Shock injections (embargoes, port closures, sanctions) dynamically increase commodity stress and apply cumulative economic penalties on target agents with gradual recovery loops."
+}

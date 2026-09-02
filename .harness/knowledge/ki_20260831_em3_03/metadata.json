@@ -1,0 +1,40 @@
+{
+  "id": "ki_20260831_em3_03",
+  "title": "Kit Fine Counterfactual Fault Localization & Truthmaker State Fragment Fusion",
+  "source_target": "D:\\GitHub\\projects\\em-cubed",
+  "detected_format": "git_repository",
+  "timestamp": "2026-08-31T19:00:00Z",
+  "isnad": {
+    "decision_id": "dec_20260831_em3_03",
+    "claims": [
+      {
+        "assertion": "Kit Fine exact truthmaker semantics isolate minimal causal fault sub-states (s ⊩f A) by filtering ontology state triples to wholly relevant predicates and computing join fusions (s ⊔ t) across state fragments.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "D:/GitHub/projects/em-cubed/src/em_cubed/ontology/truthmaker.py#L44-L142",
+            "commit": "5eebcfd6",
+            "verified": true
+          },
+          {
+            "node_type": "visual_brief",
+            "uri": "C:/Users/spectre/AppData/Local/Temp/data-topology-review-20260831-185900.html",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "truthmaker_semantics",
+    "fault_localization",
+    "counterfactual_reasoning",
+    "ontology",
+    "neuro_symbolic",
+    "em_cubed",
+    "repo_introspection"
+  ],
+  "context": "Kit Fine Counterfactual Fault Localization & Truthmaker State Fragment Fusion",
+  "distilled_learning": "# KI: Kit Fine Counterfactual Fault Localization & Truthmaker State Fragment Fusion\n\n## Operational Summary\nClassical binary logic evaluates claims against entire state spaces, obscuring the exact sub-state responsible for a failure. Em-Cubed implements Kit Fine's Truthmaker Semantics (`ExactTruthmakerClassifier`), classifying states into exact truthmakers ($s \\Vdash A$) containing only wholly relevant facts, exact falsemakers ($s \\Vdash_f A$), and identifying the minimal counterfactual fault fragment ($s \\sqcup t$) causing verification breakdown."
+}

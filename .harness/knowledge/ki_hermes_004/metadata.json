@@ -1,0 +1,19 @@
+{
+  "id": "ki_hermes_004",
+  "title": "Unattended Background Cron Scheduler & Incident Classification",
+  "category": "agent_orchestration",
+  "tags": [
+    "cron",
+    "scheduler",
+    "unattended",
+    "incidents",
+    "blueprints"
+  ],
+  "source_repo": "NousResearch/hermes-agent",
+  "provenance": [
+    "cron/scheduler.py",
+    "cron/jobs.py",
+    "cron/lifecycle_guard.py"
+  ],
+  "created_at": "2026-09-02T07:03:35Z"
+}

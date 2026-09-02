@@ -209,6 +209,89 @@ async def delete_session_cmd(
     return SessionDeleteResult(session_id=session_id, deleted=deleted)
 
 
+# --- Click CLI adapters ---
+import json
+import click
+from harness.commands._utils import _run_async
+
+
+@click.group("session")
+def session_group() -> None:
+    """Manage and inspect agent execution sessions and hierarchical trees."""
+
+
+@session_group.command("list")
+@click.option("--status", "-s", default=None, help="Filter by session status")
+@click.option("--limit", "-n", default=20, type=int, help="Limit number of sessions")
+@click.option("--root-only", is_flag=True, help="List only root-level sessions")
+def session_list(status: str | None, limit: int, root_only: bool) -> None:
+    """List agent execution sessions."""
+    res = _run_async(list_sessions_cmd(status=status, limit=limit, root_only=root_only))
+    click.echo(f"\nFound {res.total_count} session(s):")
+    click.echo("─" * 75)
+    for s in res.sessions:
+        click.echo(f"• ID: {s['session_id']} | Status: {s['status']} | Steps: {len(s.get('steps', []))} | Task: {s['task'][:40]}")
+    click.echo()
+
+
+@session_group.command("get")
+@click.argument("session_id")
+def session_get(session_id: str) -> None:
+    """Get details of a specific agent session."""
+    res = _run_async(get_session_cmd(session_id))
+    if not res.found or not res.session:
+        click.echo(f"Error: Session '{session_id}' not found", err=True)
+        return
+    click.echo(json.dumps(res.session, indent=2))
+
+
+@session_group.command("tree")
+@click.argument("session_id")
+def session_tree(session_id: str) -> None:
+    """Show hierarchical session execution tree and rollups."""
+    res = _run_async(get_session_tree_cmd(session_id))
+    if not res.found or not res.tree:
+        click.echo(f"Error: Session '{session_id}' not found", err=True)
+        return
+
+    metrics = res.metrics
+    click.echo(f"\nExecution Tree for Session: {session_id}")
+    click.echo("━" * 60)
+    click.echo(f"Total Subtree Sessions: {metrics.get('total_sessions', 1)}")
+    click.echo(f"Total Tokens:           {metrics.get('total_tokens', 0)}")
+    click.echo(f"Total Steps:            {metrics.get('total_steps', 0)}")
+    click.echo(f"Completed / Failed:     {metrics.get('completed_count', 0)} / {metrics.get('failed_count', 0)}")
+    click.echo(f"Duration:               {metrics.get('total_duration', 0.0):.2f}s")
+    click.echo("\nTree Hierarchy:")
+    click.echo("─" * 60)
+
+    def _print_node(node: dict[str, Any], indent: int = 0) -> None:
+        prefix = "  " * indent + "└─ " if indent > 0 else "• "
+        sid = node.get("session_id", "")
+        role = node.get("role") or "agent"
+        status = node.get("status", "")
+        task = (node.get("task") or "")[:40]
+        click.echo(f"{prefix}[{role}] {sid} ({status}) — {task}")
+        for child in node.get("children", []):
+            _print_node(child, indent + 1)
+
+    _print_node(res.tree)
+    click.echo()
+
+
+@session_group.command("export")
+@click.argument("session_id")
+@click.option("--format", "-f", "fmt", default="markdown", type=click.Choice(["markdown", "json", "md"], case_sensitive=False))
+@click.option("--output", "-o", "out_file", default=None, help="Output file path")
+def session_export(session_id: str, fmt: str, out_file: str | None) -> None:
+    """Export agent session trajectory to Markdown or JSON."""
+    res = _run_async(export_session_cmd(session_id, format=fmt, output_file=out_file))
+    if out_file:
+        click.echo(f"✓ Exported session trajectory to: {res.written_file}")
+    else:
+        click.echo(res.content)
+
+
 __all__ = [
     "SessionDeleteResult",
     "SessionDetailResult",
@@ -220,4 +303,5 @@ __all__ = [
     "get_session_cmd",
     "get_session_tree_cmd",
     "list_sessions_cmd",
+    "session_group",
 ]

@@ -154,6 +154,146 @@ def validate_skill_cmd(skill_dir: str | Path = ".") -> ValidationReport:
     return SkillValidator.validate(target)
 
 
+# --- Click CLI adapters ---
+import sys
+import click
+
+
+@click.group("skills")
+def skills_group() -> None:
+    """Manage and query the agent skill knowledge graph."""
+
+
+@skills_group.command("graph")
+@click.option("--visual", is_flag=True, help="Generate interactive HTML visual brief in %TEMP%")
+@click.option("--path", default=".", help="Root directory to scan for skills")
+def skills_graph(visual: bool, path: str) -> None:
+    """Index and display the workspace skill knowledge graph."""
+    res = index_skills_cmd(path)
+    click.echo(f"📊 Indexed {res['indexed_skills']} skills across {len(res['categories'])} categories.")
+    click.echo(f"   Nodes: {res['total_nodes']} | Relation Edges: {res['total_edges']}")
+    click.echo(f"   Categories: {', '.join(res['categories'])}")
+
+    if visual:
+        vis_res = export_skill_graph_visual_cmd()
+        click.echo(f"\n🌐 Visual Brief generated: {vis_res['html_path']}")
+
+
+@skills_group.command("route")
+@click.argument("intent")
+@click.option("--top-k", default=3, help="Max matches to return")
+def skills_route(intent: str, top_k: int) -> None:
+    """Route natural language task intent to matching skills."""
+    res = route_skills_cmd(intent, top_k=top_k)
+    click.echo(f"🎯 Route matches for: {intent!r}")
+    for idx, match in enumerate(res["matches"], 1):
+        click.echo(f"  {idx}. {match['skill_name']} [{match['category']}] - Confidence: {match['confidence']*100:.1f}%")
+        if match["matched_triggers"]:
+            click.echo(f"     Triggers: {', '.join(match['matched_triggers'])}")
+    if res["recommended_chain"]:
+        click.echo(f"\n🔗 Recommended Execution Chain: {' → '.join(res['recommended_chain'])}")
+
+
+@skills_group.command("chain")
+@click.argument("start_skill")
+@click.argument("target_skill")
+def skills_chain(start_skill: str, target_skill: str) -> None:
+    """Find directed execution path between two skills."""
+    res = find_skill_chain_cmd(start_skill, target_skill)
+    if res["status"] == "ok":
+        click.echo(f"🔗 Execution Path ({res['length']} steps):")
+        click.echo(f"   {' → '.join(res['chain'])}")
+    else:
+        click.echo(f"✗ No path found between '{start_skill}' and '{target_skill}'.")
+
+
+@skills_group.command("info")
+@click.argument("skill_name")
+def skills_info(skill_name: str) -> None:
+    """Inspect topological dependencies and anti-patterns for a skill."""
+    res = get_skill_topology_cmd(skill_name)
+    if res["status"] == "ok":
+        topo = res["topology"]
+        skill = topo["skill"]
+        click.echo(f"🏷️  Skill: {skill['name']} (v{skill['version']})")
+        click.echo(f"   Category: {skill['category']} | Invocation: {skill['invocation']}")
+        click.echo(f"   Target: {skill['target'] or skill['description']}")
+        if topo["prerequisites"]:
+            click.echo(f"   Prerequisites: {', '.join(topo['prerequisites'])}")
+        if topo["downstream_handoffs"]:
+            click.echo(f"   Downstream Handoffs: {', '.join(topo['downstream_handoffs'])}")
+        if topo["mitigated_anti_patterns"]:
+            click.echo(f"   Mitigated Anti-Patterns: {', '.join(topo['mitigated_anti_patterns'])}")
+    else:
+        click.echo(f"✗ {res.get('reason', 'Skill not found')}", err=True)
+
+
+@skills_group.command("create")
+@click.argument("name")
+@click.option("--description", "-d", default="", help="Skill description and trigger bounds")
+@click.option("--category", "-c", default="engineering / meta-skills", help="Skill domain category")
+@click.option("--target-dir", "-t", default=None, help="Destination directory (defaults to .agents/skills/<name>)")
+@click.option("--trigger", "-g", "triggers", multiple=True, help="Trigger phrases for skill routing")
+@click.option("--validate", "auto_validate", is_flag=True, help="Validate skill specifications on creation")
+def skills_create(
+    name: str,
+    description: str,
+    category: str,
+    target_dir: str | None,
+    triggers: tuple[str, ...],
+    auto_validate: bool,
+) -> None:
+    """Scaffold a high-precision agent skill with SKILL.md and CARD.md specifications."""
+    clean_name = name.strip().lower().replace("_", "-")
+    result = scaffold_skill_cmd(
+        name=clean_name,
+        description=description,
+        category=category,
+        target_dir=target_dir,
+        triggers=triggers,
+        auto_validate=auto_validate,
+    )
+    click.echo(f"✨ Scaffolded agent skill '{clean_name}' at: {result.path}")
+    for gen in result.generated_files:
+        click.echo(f"   📄 {gen.name}")
+
+    if result.validation_report:
+        rep = result.validation_report
+        status = "✓ VALID" if rep.valid else "✗ INVALID"
+        click.echo(f"\n🔍 Pre-Flight Validation: {status}")
+        if rep.warnings:
+            for w in rep.warnings:
+                click.echo(f"   ⚠️  {w}")
+        if rep.errors:
+            for e in rep.errors:
+                click.echo(f"   ❌ {e}")
+
+
+@skills_group.command("validate")
+@click.argument("skill_dir", default=".")
+def skills_validate(skill_dir: str) -> None:
+    """Validate an agent skill package against deep-module craft standards."""
+    report = validate_skill_cmd(skill_dir)
+    target = Path(skill_dir).resolve()
+    status = "✓ PASS" if report.valid else "✗ FAIL"
+    click.echo(f"Skill Diagnostic Report: {target}")
+    click.echo("━" * 58)
+    click.echo(f"Overall Status: {status}\n")
+    for c in report.checks:
+        mark = "  ✓" if c.passed else "  ✗"
+        sev = f"[{c.severity.value.upper()}]" if not c.passed else ""
+        click.echo(f"{mark} {c.name:<25} {sev} {c.message}")
+    if report.warnings:
+        click.echo("\nWarnings:")
+        for w in report.warnings:
+            click.echo(f"  • {w}")
+    if report.errors:
+        for err in report.errors:
+            click.echo(f"  • {err}")
+    if not report.valid:
+        sys.exit(1)
+
+
 __all__ = [
     "export_skill_graph_visual_cmd",
     "find_skill_chain_cmd",
@@ -162,5 +302,6 @@ __all__ = [
     "list_skills_cmd",
     "route_skills_cmd",
     "scaffold_skill_cmd",
+    "skills_group",
     "validate_skill_cmd",
 ]

@@ -1,0 +1,39 @@
+{
+  "id": "ki_20260831_em3_05",
+  "title": "Autonomous Self-Healing Feedback Loop with AST Patch Synthesis & Rollback",
+  "source_target": "D:\\GitHub\\projects\\em-cubed",
+  "detected_format": "git_repository",
+  "timestamp": "2026-08-31T19:00:00Z",
+  "isnad": {
+    "decision_id": "dec_20260831_em3_05",
+    "claims": [
+      {
+        "assertion": "Autonomous error interception loops capture execution exceptions (NameError, TypeError, syntax errors), synthesize targeted AST patch code, and apply atomic rollback guarantees if validation fails.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "D:/GitHub/projects/em-cubed/src/em_cubed/loopy/self_healing.py#L15-L74",
+            "commit": "5eebcfd6",
+            "verified": true
+          },
+          {
+            "node_type": "visual_brief",
+            "uri": "C:/Users/spectre/AppData/Local/Temp/data-topology-review-20260831-185900.html",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "self_healing",
+    "autonomous_repair",
+    "patch_synthesis",
+    "error_recovery",
+    "em_cubed",
+    "repo_introspection"
+  ],
+  "context": "Autonomous Self-Healing Feedback Loop with AST Patch Synthesis & Rollback",
+  "distilled_learning": "# KI: Autonomous Self-Healing Feedback Loop with AST Patch Synthesis & Rollback\n\n## Operational Summary\nWhen dynamic code or skill definitions fail during automated execution, failing the entire agent run creates avoidable human friction. Em-Cubed implements `SelfHealingSkillLoop`, a closed-loop repair mechanism that inspects error tracebacks, synthesizes contextual fixes (e.g. missing imports, sanitized type coercion, exception fallbacks), and commits patches with immediate rollback if subsequent validation tests fail."
+}

@@ -1,0 +1,45 @@
+{
+  "id": "ki_20260831_cellcog_01",
+  "title": "Zero-Footprint Asynchronous Daemon & WebSocket-to-Polling State Machine",
+  "source_target": "D:/GitHub/cloned/CellCog/cellcog_python-main/cellcog_python-main",
+  "detected_format": "python_sdk_and_daemon",
+  "timestamp": "2026-08-31T11:00:00Z",
+  "isnad": {
+    "decision_id": "dec_20260831_cellcog_01",
+    "claims": [
+      {
+        "assertion": "SDK clients should launch an isolated background daemon (cellcog-daemon) that monitors asynchronous jobs via WebSockets with fallback polling, auto-terminating cleanly when 0 active chats remain to eliminate idle process footprint.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "D:/GitHub/cloned/CellCog/cellcog_python-main/cellcog_python-main/cellcog/daemon/main.py#L30-L120",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "D:/GitHub/cloned/CellCog/cellcog_python-main/cellcog_python-main/cellcog/client.py#L40-L115",
+            "verified": true
+          },
+          {
+            "node_type": "visual_brief",
+            "uri": "C:/Users/spectre/AppData/Local/Temp/data-topology-review-20260831-110000.html",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "daemon",
+    "asyncio",
+    "websocket",
+    "fallback_polling",
+    "process_lifecycle",
+    "zero_footprint",
+    "cellcog",
+    "repo_introspection"
+  ],
+  "context": "Zero-Footprint Asynchronous Daemon & WebSocket-to-Polling State Machine",
+  "distilled_learning": "# KI: Zero-Footprint Asynchronous Daemon & WebSocket-to-Polling State Machine\n\n## Operational Summary\nAsynchronous sub-agent operations requiring minutes or hours of cloud processing should not hold blocking client SDK sockets or maintain permanent host daemon processes. By separating the client interface from a transient background daemon that auto-terminates on empty queues, agent harnesses achieve non-blocking fire-and-forget concurrency without persistent memory leaks."
+}

@@ -103,3 +103,68 @@ async def disable_tool_by_name(
     """Standalone async command to disable tool(s) matching a name or pattern."""
     return await toggle_tool_by_name(name, enabled=False, db_path=db_path)
 
+
+# --- Click CLI adapters ---
+import click
+from harness.commands._utils import _run_async
+
+
+@click.group("tool")
+def tool_group() -> None:
+    """Inspect and manage granular tool and skill enablement."""
+
+
+@tool_group.command("list")
+@click.option("--provider", help="Filter tools by provider plugin name")
+@click.option("--enabled-only", is_flag=True, help="Only list currently enabled tools")
+def tool_list(provider: str | None, enabled_only: bool) -> None:
+    """List all registered tools with their active status."""
+    tools = _run_async(list_tools_summary(provider=provider, enabled_only=enabled_only))
+    if not tools:
+        click.echo("No tools found.")
+        return
+
+    click.echo(f"{'Tool Name':<38} {'Status':<10} {'Provider'}")
+    click.echo("─" * 75)
+    for t in tools:
+        status_str = "✓ Enabled" if t["enabled"] else "✗ Disabled"
+        click.echo(f"{t['name']:<38} {status_str:<10} {t['provider']}")
+    click.echo(f"\nTotal: {len(tools)} tool(s)")
+
+
+@tool_group.command("enable")
+@click.argument("name")
+def tool_enable(name: str) -> None:
+    """Enable a specific tool by name."""
+    matched = _run_async(enable_tool_by_name(name))
+    if matched:
+        for tname in matched:
+            click.echo(f"✓ Enabled tool '{tname}'")
+    else:
+        click.echo(f"✗ Tool '{name}' not found")
+
+
+@tool_group.command("disable")
+@click.argument("name")
+def tool_disable(name: str) -> None:
+    """Disable a specific tool by name."""
+    matched = _run_async(disable_tool_by_name(name))
+    if matched:
+        for tname in matched:
+            click.echo(f"✓ Disabled tool '{tname}'")
+    else:
+        click.echo(f"✗ Tool '{name}' not found")
+
+
+__all__ = [
+    "disable_tool",
+    "disable_tool_by_name",
+    "enable_tool",
+    "enable_tool_by_name",
+    "list_tools",
+    "list_tools_summary",
+    "toggle_tool",
+    "toggle_tool_by_name",
+    "tool_group",
+]
+

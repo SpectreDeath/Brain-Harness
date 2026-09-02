@@ -1,0 +1,18 @@
+{
+  "id": "ki_antigravity_004",
+  "title": "Reactive Wakeup Triggers & Non-Polling Background Events",
+  "category": "agent_orchestration",
+  "tags": [
+    "antigravity",
+    "triggers",
+    "reactive",
+    "file-watcher",
+    "asyncio"
+  ],
+  "source_repo": "google-antigravity-sdk",
+  "provenance": [
+    "google/antigravity/triggers/trigger_runner.py",
+    "google/antigravity/triggers/helpers.py"
+  ],
+  "created_at": "2026-09-02T19:23:41Z"
+}

@@ -183,12 +183,34 @@ from harness.services.web_fetcher import (
     WebHttpResponse,
     WebMarkdownResult,
 )
+from harness.services.openclaw_bridge import (
+    OPENCLAW_A2A_KEY,
+    OPENCLAW_GATEWAY_KEY,
+    OPENCLAW_TOOL_REPAIR_KEY,
+    OpenClawA2AService,
+    OpenClawA2ATask,
+    OpenClawApprovalRequest,
+    OpenClawGatewayService,
+    OpenClawGatewaySession,
+    OpenClawToolBlock,
+    OpenClawToolRepairService,
+)
 from harness.services.webwright_harness import (
     WEBWRIGHT_HARNESS_KEY,
     WebwrightHarnessService,
 )
 
 __all__ = [
+    "OPENCLAW_A2A_KEY",
+    "OPENCLAW_GATEWAY_KEY",
+    "OPENCLAW_TOOL_REPAIR_KEY",
+    "OpenClawA2AService",
+    "OpenClawA2ATask",
+    "OpenClawApprovalRequest",
+    "OpenClawGatewayService",
+    "OpenClawGatewaySession",
+    "OpenClawToolBlock",
+    "OpenClawToolRepairService",
     "AGENT_GRAPH_STORE_KEY",
     "AgentExecutionGraphService",
     "DefaultAgentExecutionGraphService",

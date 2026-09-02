@@ -101,29 +101,77 @@ async def watch_workspace_cmd(
     from harness.kernel.runtime import HarnessRuntime
     from harness.plugins.watcher import PluginWatcher
 
-    dirs = [Path(d).resolve() for d in (plugin_dirs or [Path("plugins")])]
-    rt = runtime or HarnessRuntime.create(db_path=":memory:")
+    p_dirs = [Path(p) for p in (plugin_dirs or [Path("plugins")])]
+    rt = runtime or HarnessRuntime.create(plugin_dirs=p_dirs)
     if not runtime:
         await rt.start()
 
-    watcher = PluginWatcher(dirs, rt.loader, rt.lifecycle)
+    watcher = PluginWatcher(plugin_dirs=p_dirs, runtime=rt)
     watcher.start()
-    logger.info("Started workspace plugin watcher", directories=[str(d) for d in dirs])
+
+    logger.info("Started workspace watcher", plugin_dirs=[str(p) for p in p_dirs])
 
     if shutdown_event:
-        try:
-            await shutdown_event.wait()
-        finally:
-            watcher.stop()
-            if not runtime:
-                await rt.stop()
-            logger.info("Stopped workspace plugin watcher")
+        await shutdown_event.wait()
+        watcher.stop()
+        if not runtime:
+            await rt.stop()
 
     return watcher
 
 
+# --- Click CLI adapters ---
+import click
+from harness.commands._utils import _run_async
+
+
+@click.command("init")
+@click.argument("path", default=".", type=click.Path())
+def init_cli(path: str) -> None:
+    """Initialize a harness workspace."""
+    res = init_workspace_cmd(path)
+    click.echo(f"✓ Workspace initialized at {res.workspace_path}")
+    click.echo("  plugins/          → Drop-in plugin directory")
+    click.echo("  .harness/         → Configuration and data")
+    click.echo("\nNext: harness plugin add <github-url>")
+
+
+@click.command("watch")
+def watch_cli() -> None:
+    """Run the harness with live filesystem hot-reloading enabled."""
+
+    async def _watch() -> None:
+        from harness.kernel.runtime import HarnessRuntime
+
+        runtime = HarnessRuntime.create(db_path=":memory:")
+        await runtime.start()
+
+        watcher = await watch_workspace_cmd(
+            plugin_dirs=[Path("plugins")],
+            runtime=runtime,
+        )
+
+        click.echo("👁️  Harness Watcher active. Monitoring plugins/ for live hot-reload...")
+        click.echo("Press Ctrl+C to stop.")
+
+        try:
+            while True:
+                await asyncio.sleep(1)
+        except (KeyboardInterrupt, asyncio.CancelledError):
+            watcher.stop()
+            await runtime.stop()
+            click.echo("\n✓ Watcher stopped.")
+
+    try:
+        _run_async(_watch())
+    except KeyboardInterrupt:
+        pass
+
+
 __all__ = [
     "WorkspaceInitResult",
+    "init_cli",
     "init_workspace_cmd",
+    "watch_cli",
     "watch_workspace_cmd",
 ]

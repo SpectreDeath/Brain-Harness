@@ -1,0 +1,43 @@
+{
+  "id": "ki_20260831_strategify_05",
+  "title": "Web API Seam Decoupling via AnalysisRegistry & AgentStateAdapter",
+  "source_target": "D:\\GitHub\\projects\\Strategify",
+  "detected_format": "python_simulation_harness",
+  "timestamp": "2026-08-31T23:15:00Z",
+  "isnad": {
+    "decision_id": "dec_20260831_strategify_05",
+    "claims": [
+      {
+        "assertion": "AnalysisRegistry and AgentStateAdapter decouple FastAPI route handlers from simulation internals, providing O(1) analysis dispatch and zero-latency GeoJSON FeatureCollection serialization for React-Leaflet live visualization.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "strategify/web/analysis_registry.py#L1-L136",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "strategify/web/agent_adapter.py#L1-L102",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "strategify/web/api.py#L1-L250",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "web_api",
+    "fastapi",
+    "geojson",
+    "analysis_registry",
+    "agent_adapter",
+    "strategify"
+  ],
+  "context": "Web API Seam Decoupling via AnalysisRegistry & AgentStateAdapter",
+  "distilled_learning": "# KI: Web API Seam Decoupling via AnalysisRegistry & AgentStateAdapter\n\n## Operational Summary\nCoupling simulation classes directly to web route endpoints produces brittle API contracts and serialization overhead. `AnalysisRegistry` maps query keys to isolated `BaseAnalysisHandler` instances (VAR, Granger causality, Louvain community detection, strategic risk assessment), while `AgentStateAdapter` standardizes agent state extraction and converts Shapely geometries into standard GeoJSON `FeatureCollection` dictionaries for React-Leaflet frontend rendering."
+}

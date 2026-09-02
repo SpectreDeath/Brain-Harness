@@ -105,7 +105,54 @@ def assess_compute_cmd(
     )
 
 
+# --- Click CLI adapters ---
+import json
+import click
+
+
+@click.command("assess-compute")
+@click.argument("prompt")
+@click.option("--files", "-f", "files_count", default=1, type=int, help="Number of files in target task scope")
+@click.option("--arch", "-a", "is_architecture", is_flag=True, help="Mark task as architectural refactoring")
+@click.option("--debug-task", "-d", "is_debugging", is_flag=True, help="Mark task as debugging / diagnostic investigation")
+@click.option("--profile", "-p", "profile", type=click.Choice(["balanced", "reasoning_heavy", "cost_optimized", "latency_optimized"]), default="balanced", help="Scoring profile heuristic preset")
+@click.option("--override", "-o", "override_tier", type=click.Choice(["high_reasoning", "standard_agentic", "fast_mechanical", "high", "medium", "low"]), default=None, help="Force specific model tier override")
+@click.option("--json", "output_json", is_flag=True, help="Output raw assessment in JSON format")
+@click.option("--html", "generate_html", is_flag=True, help="Generate interactive HTML visual review brief in %TEMP%")
+def assess_compute_cli(
+    prompt: str,
+    files_count: int,
+    is_architecture: bool,
+    is_debugging: bool,
+    profile: str,
+    override_tier: str | None,
+    output_json: bool,
+    generate_html: bool,
+) -> None:
+    """Assess task surface complexity and recommend optimal model tier & reasoning budget."""
+    res = assess_compute_cmd(
+        prompt,
+        files_count=files_count,
+        is_architecture=is_architecture,
+        is_debugging=is_debugging,
+        override_tier=override_tier,
+        profile=profile,
+        generate_html=generate_html,
+        task_title="CLI Compute Assessment",
+    )
+
+    if output_json:
+        click.echo(json.dumps(res.assessment.to_dict(), indent=2))
+        return
+
+    if generate_html and res.html_path:
+        click.echo(f"\n✓ Generated Interactive HTML Visual Brief: {res.html_path}")
+
+    click.echo("\n" + res.recommendation_block)
+
+
 __all__ = [
     "ComputeAssessmentResult",
+    "assess_compute_cli",
     "assess_compute_cmd",
 ]

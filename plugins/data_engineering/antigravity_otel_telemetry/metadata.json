@@ -1,0 +1,17 @@
+{
+  "name": "domain.antigravity_otel_telemetry",
+  "origin_repo": "https://github.com/google/antigravity-cli",
+  "git_commit": "bf27ce1",
+  "source_paths": [
+    "examples/statusline/statusline.sh",
+    "examples/title/title.sh",
+    "google/antigravity/utils/otel.py"
+  ],
+  "archetype": "tool_provider",
+  "forged_at": "2026-09-02T19:40:39Z",
+  "author": "Spectre",
+  "invariants": [
+    "Trace spans must maintain parent-child hierarchy across subagent turns.",
+    "Statusline metrics must export non-blocking JSON IPC summaries."
+  ]
+}

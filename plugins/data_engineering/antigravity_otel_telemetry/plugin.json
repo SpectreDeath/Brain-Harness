@@ -1,0 +1,73 @@
+{
+  "name": "domain.antigravity_otel_telemetry",
+  "version": "1.0.0",
+  "description": "Google Antigravity OpenTelemetry distributed trace exporter and dynamic CLI statusline IPC metric generator",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "category": "data_engineering",
+  "provides": [
+    "service.antigravity.telemetry"
+  ],
+  "requires": [],
+  "dependencies": [],
+  "entrypoints": [
+    {
+      "name": "start_telemetry_span",
+      "description": "Start a new hierarchical telemetry span",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "Span name",
+          "required": true
+        },
+        {
+          "name": "span_id",
+          "type": "string",
+          "description": "Span unique ID",
+          "required": true
+        },
+        {
+          "name": "parent_id",
+          "type": "string",
+          "description": "Parent span ID",
+          "required": false,
+          "default": ""
+        }
+      ]
+    },
+    {
+      "name": "end_telemetry_span",
+      "description": "Close an active telemetry span",
+      "parameters": [
+        {
+          "name": "span_id",
+          "type": "string",
+          "description": "Span ID to close",
+          "required": true
+        },
+        {
+          "name": "status",
+          "type": "string",
+          "description": "Final status code",
+          "required": false,
+          "default": "OK"
+        }
+      ]
+    },
+    {
+      "name": "get_statusline_payload",
+      "description": "Generate Antigravity dynamic statusline IPC payload",
+      "parameters": [
+        {
+          "name": "mode",
+          "type": "string",
+          "description": "Current UI state mode",
+          "required": false,
+          "default": "idle"
+        }
+      ]
+    }
+  ]
+}

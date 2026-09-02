@@ -1,0 +1,18 @@
+{
+  "id": "ki_self_20260902_05",
+  "title": "Deterministic Inward Manifest Probing for Nested Project Roots",
+  "category": "repository_auditing",
+  "tags": [
+    "repo-audit",
+    "nested-roots",
+    "boundary-detection",
+    "endogenous_memory",
+    "self_reflection"
+  ],
+  "source_repo": "Brain Harness Execution History",
+  "provenance": [
+    "hermes-agent/hermes-agent/hermes-agent",
+    "deep-repo-auditor/SKILL.md#stage-1"
+  ],
+  "created_at": "2026-09-02T11:58:36Z"
+}

@@ -1,0 +1,43 @@
+{
+  "id": "ki_20260831_sme_05",
+  "title": "Circuit-Breaker Sandboxing & Manifest Schema Verification for Dynamic Plugin Ecosystems",
+  "source_target": "D:\\GitHub\\projects\\SME",
+  "detected_format": "git_repository",
+  "timestamp": "2026-08-31T16:20:00Z",
+  "isnad": {
+    "decision_id": "dec_20260831_sme_05",
+    "claims": [
+      {
+        "assertion": "Validating plugin manifests against strict JSON schemas with permission boundaries combined with automated 3-failure circuit breaker wrapping provides robust sandboxing for untrusted dynamic extensions.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "gateway/extension_manager.py#L38-L120",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "gateway/circuit_breaker.py#L1-L60",
+            "verified": true
+          },
+          {
+            "node_type": "visual_brief",
+            "uri": "C:/Users/spectre/AppData/Local/Temp/repo-reader-20260831-162000.html",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "plugin_sandboxing",
+    "circuit_breaker",
+    "manifest_validation",
+    "permissions_gating",
+    "sme_forensics",
+    "repo_introspection"
+  ],
+  "context": "Circuit-Breaker Sandboxing & Manifest Schema Verification for Dynamic Plugin Ecosystems",
+  "distilled_learning": "# KI: Circuit-Breaker Sandboxing & Manifest Schema Verification for Dynamic Plugin Ecosystems\n\n## Operational Summary\nDynamic extension systems must prevent untrusted or failing plugins from crashing the host gateway. Enforcing manifest JSON Schema validation, explicit permissions gating (network_access, filesystem_read/write, subprocess), path traversal defenses, and wrapping every tool handler in a 3-strike circuit breaker isolates rogue extensions safely."
+}

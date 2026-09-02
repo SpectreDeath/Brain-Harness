@@ -1,0 +1,18 @@
+{
+  "id": "ki_self_20260902_03",
+  "title": "Artifact Boundary Isolation & Workspace Tool Scaffolding",
+  "category": "tooling_and_scaffolding",
+  "tags": [
+    "artifact-metadata",
+    "ide-boundary",
+    "scaffolding",
+    "endogenous_memory",
+    "self_reflection"
+  ],
+  "source_repo": "Brain Harness Execution History",
+  "provenance": [
+    "transcript.jsonl#step-write-to-file",
+    "AGENTS.md#Rule31"
+  ],
+  "created_at": "2026-09-02T11:58:36Z"
+}

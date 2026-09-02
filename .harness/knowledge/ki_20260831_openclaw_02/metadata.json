@@ -1,0 +1,44 @@
+{
+  "id": "ki_20260831_openclaw_02",
+  "title": "Trusted Gateway Control Plane & Deterministic Sandboxed Execution",
+  "source_target": "D:\\GitHub\\cloned\\openclaw",
+  "detected_format": "typescript_monorepo",
+  "timestamp": "2026-08-31T14:15:00Z",
+  "isnad": {
+    "decision_id": "dec_20260831_openclaw_02",
+    "claims": [
+      {
+        "assertion": "A hardened local WebSocket JSON-RPC gateway centralizing auth pairing, session trees, and security approval gates isolates untrusted ingress channels from host runtime execution.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "packages/gateway-protocol/src/index.ts#L1-L80",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "packages/gateway-protocol/src/approval-result-validators.ts#L1-L50",
+            "verified": true
+          },
+          {
+            "node_type": "visual_brief",
+            "uri": "C:/Users/spectre/AppData/Local/Temp/repo-reader-1788199910.html",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "gateway",
+    "security",
+    "websocket",
+    "rpc",
+    "approval_gates",
+    "openclaw",
+    "repo_introspection"
+  ],
+  "context": "Trusted Gateway Control Plane & Deterministic Sandboxed Execution",
+  "distilled_learning": "# KI: Trusted Gateway Control Plane & Deterministic Sandboxed Execution\n\n## Operational Summary\nConnecting external chat channels (Telegram, Discord, Slack, WhatsApp) directly to agent tool executors exposes the host system to arbitrary code execution via untrusted inbound messages. Establishing a unified JSON-RPC WebSocket Gateway with pairing codes, session placement policies, and deterministic execution approval gates enforces a strict boundary between untrusted ingress and sandboxed tool runtimes."
+}

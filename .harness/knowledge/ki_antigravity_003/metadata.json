@@ -1,0 +1,17 @@
+{
+  "id": "ki_antigravity_003",
+  "title": "Hierarchical StateStore Shadowing with Scope Isolation",
+  "category": "agent_orchestration",
+  "tags": [
+    "antigravity",
+    "state",
+    "shadowing",
+    "hierarchical-scope",
+    "subagents"
+  ],
+  "source_repo": "google-antigravity-sdk",
+  "provenance": [
+    "google/antigravity/utils/state.py"
+  ],
+  "created_at": "2026-09-02T19:23:41Z"
+}

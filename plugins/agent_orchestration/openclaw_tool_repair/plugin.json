@@ -1,0 +1,52 @@
+{
+  "name": "plugin.openclaw_tool_repair",
+  "version": "1.0.0",
+  "description": "In-flight stream normalization and plain-text tool-call recovery engine for repairing malformed LLM tool invocations.",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "entrypoints": [
+    {
+      "name": "openclaw_parse_tool_blocks",
+      "description": "Parses plain-text tool call codeblocks, JSON fences, or XML-wrapped calls from raw LLM output.",
+      "parameters": [
+        {
+          "name": "text",
+          "type": "string",
+          "description": "Raw text output from LLM to inspect for embedded tool call blocks",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "openclaw_repair_tool_call",
+      "description": "Repairs malformed tool call JSON payloads (trailing commas, unescaped characters, unclosed brackets).",
+      "parameters": [
+        {
+          "name": "raw_call",
+          "type": "string",
+          "description": "Malformed JSON tool call payload string",
+          "required": true
+        },
+        {
+          "name": "tool_name",
+          "type": "string",
+          "description": "Optional fallback tool name if not embedded in JSON",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "openclaw_normalize_stream_chunk",
+      "description": "Processes a streaming chunk, stripping plain-text tool blocks from the visible stream and yielding promoted tool events.",
+      "parameters": [
+        {
+          "name": "chunk",
+          "type": "string",
+          "description": "Streaming token chunk to filter",
+          "required": true
+        }
+      ]
+    }
+  ]
+}

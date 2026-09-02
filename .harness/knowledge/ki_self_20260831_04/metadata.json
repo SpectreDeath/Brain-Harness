@@ -1,0 +1,38 @@
+{
+  "id": "ki_self_20260831_04",
+  "title": "SubsystemRegistry Orchestration for High-Order Multi-Domain Harnesses",
+  "source_target": "strategify/sim/subsystem_registry.py",
+  "detected_format": "python_simulation_harness",
+  "timestamp": "2026-08-31T19:25:00Z",
+  "isnad": {
+    "decision_id": "dec_self_20260831_04",
+    "claims": [
+      {
+        "assertion": "Complex agent harnesses and simulation engines must encapsulate disparate domain capabilities into a dedicated SubsystemRegistry with deterministic sequential stepping and feature flag dependency injection, preventing god-object coupling in the core model.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "strategify/sim/subsystem_registry.py#L1-L214",
+            "verified": true
+          },
+          {
+            "node_type": "visual_brief",
+            "uri": "C:/Users/spectre/AppData/Local/Temp/data-topology-review-20260831-231500.html",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "architecture",
+    "subsystem_registry",
+    "lifecycle",
+    "dependency_injection",
+    "endogenous_memory",
+    "self_reflection"
+  ],
+  "context": "Embedding dozens of heterogeneous subsystems directly into the core runner or model class creates spaghetti state mutations and untestable execution sequences.",
+  "distilled_learning": "Separate subsystem registration, configuration, and sequential step ordering into a dedicated SubsystemRegistry. Register each subsystem with typed lifecycle hooks (`initialize`, `step`, `teardown`) and feature flags, enabling isolated unit testing, dynamic subsystem enabling/disabling, and deterministic multi-phase execution."
+}

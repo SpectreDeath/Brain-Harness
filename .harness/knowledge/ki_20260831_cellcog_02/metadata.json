@@ -1,0 +1,44 @@
+{
+  "id": "ki_20260831_cellcog_02",
+  "title": "Parent Session Tree Fallback DAG & Interim Rewake Heartbeat Delivery",
+  "source_target": "D:/GitHub/cloned/CellCog/cellcog_python-main/cellcog_python-main",
+  "detected_format": "python_sdk_and_daemon",
+  "timestamp": "2026-08-31T11:00:00Z",
+  "isnad": {
+    "decision_id": "dec_20260831_cellcog_02",
+    "claims": [
+      {
+        "assertion": "Multi-agent notification pipelines must resolve nested session keys (agent:X:subagent:Y:subagent:Z) up their parental DAG tree when delivering webhook completion events, guaranteeing message reception even when ephemeral child sub-agents have already terminated.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "D:/GitHub/cloned/CellCog/cellcog_python-main/cellcog_python-main/cellcog/daemon/delivery.py#L20-L75",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "D:/GitHub/cloned/CellCog/cellcog_python-main/cellcog_python-main/cellcog/daemon/main.py#L80-L115",
+            "verified": true
+          },
+          {
+            "node_type": "visual_brief",
+            "uri": "C:/Users/spectre/AppData/Local/Temp/data-topology-review-20260831-110000.html",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "session_hierarchy",
+    "dag_routing",
+    "gateway_delivery",
+    "webhook_fallback",
+    "subagent_coordination",
+    "cellcog",
+    "repo_introspection"
+  ],
+  "context": "Parent Session Tree Fallback DAG & Interim Rewake Heartbeat Delivery",
+  "distilled_learning": "# KI: Parent Session Tree Fallback DAG & Interim Rewake Heartbeat Delivery\n\n## Operational Summary\nIn nested multi-agent systems, leaf sub-agents frequently spawn asynchronous cloud tasks and then terminate before the cloud task completes. If notifications are tied strictly to the leaf sub-agent session key, results become orphaned. Implementing a deterministic parental DAG fallback router traverses up the session hierarchy to deliver results safely to the parent or root main session."
+}

@@ -1,0 +1,71 @@
+{
+  "name": "domain.hermes_gateway_relay",
+  "version": "1.0.0",
+  "description": "Hermes multi-platform gateway relay, WebSocket telemetry streamer, and scale-to-zero lifecycle manager",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "category": "agent_orchestration",
+  "provides": [
+    "service.hermes_gateway_relay"
+  ],
+  "requires": [],
+  "dependencies": [],
+  "entrypoints": [
+    {
+      "name": "dispatch_platform_message",
+      "description": "Route formatted messages to external communication platforms (Telegram, Discord, Slack, WhatsApp, Signal)",
+      "parameters": [
+        {
+          "name": "platform",
+          "type": "string",
+          "description": "Target platform identifier",
+          "required": true
+        },
+        {
+          "name": "channel_id",
+          "type": "string",
+          "description": "Channel, chat, or user ID",
+          "required": true
+        },
+        {
+          "name": "text",
+          "type": "string",
+          "description": "Message body text",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "stream_ws_telemetry",
+      "description": "Publish real-time event telemetry to GUI/TUI WebSocket clients",
+      "parameters": [
+        {
+          "name": "session_id",
+          "type": "string",
+          "description": "Active session ID",
+          "required": true
+        },
+        {
+          "name": "event_payload",
+          "type": "object",
+          "description": "Telemetry event dictionary",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "manage_scale_to_zero",
+      "description": "Evaluate idle timeout conditions to hibernate cloud containers or VPS compute",
+      "parameters": [
+        {
+          "name": "idle_timeout_seconds",
+          "type": "integer",
+          "description": "Idle duration threshold in seconds",
+          "required": false,
+          "default": 300
+        }
+      ]
+    }
+  ]
+}

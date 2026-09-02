@@ -1,0 +1,18 @@
+{
+  "id": "ki_hermes_002",
+  "title": "FTS5 SQLite WAL Session Persistence & Compression Forking",
+  "category": "memory_and_epistemics",
+  "tags": [
+    "sqlite",
+    "fts5",
+    "wal",
+    "session-dag",
+    "compression"
+  ],
+  "source_repo": "NousResearch/hermes-agent",
+  "provenance": [
+    "hermes_state.py#L30-L150",
+    "agent/context_compressor.py"
+  ],
+  "created_at": "2026-09-02T07:03:35Z"
+}

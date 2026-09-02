@@ -1,4 +1,4 @@
-﻿"""Agent commands — pure async entry points for agent task execution."""
+"""Agent commands — pure async entry points for agent task execution."""
 
 from __future__ import annotations
 
@@ -45,3 +45,33 @@ async def run_agent(
 
     async with HarnessRuntime.create(db_path=":memory:", fallback_llm=llm) as runtime:
         return await runtime.run_task(task, max_steps=max_steps)
+
+
+# --- Click CLI adapters ---
+import click
+from harness.commands._utils import _run_async
+
+
+@click.group("agent")
+def agent_group() -> None:
+    """Run and manage autonomous agent loops."""
+
+
+@agent_group.command("run")
+@click.argument("task")
+@click.option("--max-steps", default=10, help="Maximum thought/action steps")
+def agent_run(task: str, max_steps: int) -> None:
+    """Execute an autonomous task using the active agent loop."""
+    click.echo(f"🤖 Starting agent task: {task}")
+    result = _run_async(run_agent(task, max_steps=max_steps))
+
+    click.echo(f"Status: {result.status}")
+    click.echo(f"Steps:  {len(result.steps)}")
+    click.echo(f"Result: {result.final_answer}")
+
+
+__all__ = [
+    "FallbackLLM",
+    "agent_group",
+    "run_agent",
+]

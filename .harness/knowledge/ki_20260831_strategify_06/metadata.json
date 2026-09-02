@@ -1,0 +1,39 @@
+{
+  "id": "ki_20260831_strategify_06",
+  "title": "Epidemiology MCP Bridge & ODE Parameter Fitting Pipeline",
+  "source_target": "D:\\GitHub\\projects\\Strategify",
+  "detected_format": "python_simulation_harness",
+  "timestamp": "2026-08-31T23:15:00Z",
+  "isnad": {
+    "decision_id": "dec_20260831_strategify_06",
+    "claims": [
+      {
+        "assertion": "EpidemiologyMCPBridge exposes federal data sources (CDC SODA, NIH RePORTER, RxNorm), SEIR ODE parameter estimation, and PettingZoo RL benchmarks through a stateless Model Context Protocol (MCP) server compliant with spec version 2026-07-28.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "strategify/plugins/mcp_bridge.py#L1-L210",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "strategify/osint/pipeline_integration.py#L1-L120",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "mcp",
+    "epidemiology",
+    "cdc_soda",
+    "nih_reporter",
+    "rxnorm",
+    "ode_fitting",
+    "strategify"
+  ],
+  "context": "Epidemiology MCP Bridge & ODE Parameter Fitting Pipeline",
+  "distilled_learning": "# KI: Epidemiology MCP Bridge & ODE Parameter Fitting Pipeline\n\n## Operational Summary\nConnecting external agent loops to scientific domain models requires stateless tool protocols. `EpidemiologyMCPBridge` exposes CDC Socrata dataset querying, NIH grant search, RxNorm drug concept resolution, and dynamic SoQL-to-ODE parameter fitting ($\beta, \\gamma, R_0$) alongside PettingZoo RL environment stepping via MCP 2026-07-28 tool declarations."
+}

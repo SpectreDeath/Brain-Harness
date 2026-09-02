@@ -1,0 +1,50 @@
+{
+  "id": "ki_20260831_cellcog_04",
+  "title": "Monorepo Golden-Copy Multi-Channel Distribution & ClawHub Slug Optimization",
+  "source_target": "D:/GitHub/cloned/CellCog/skills-main/skills-main",
+  "detected_format": "multi_channel_skill_repo",
+  "timestamp": "2026-08-31T11:00:00Z",
+  "isnad": {
+    "decision_id": "dec_20260831_cellcog_04",
+    "claims": [
+      {
+        "assertion": "Agent capability skills distributed across multiple packaging ecosystems (ClawHub, Open Plugins, npx) should maintain single golden copies in a monorepo with automated sync pipelines that optimize keyword slugs (<keyword-phrase>-cellcog) for token-first search discovery.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "D:/GitHub/cloned/CellCog/skills-main/skills-main/scripts/sync_skills.py#L1-L100",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "D:/GitHub/cloned/CellCog/cellcog-plugin-main/cellcog-plugin-main/CHANGELOG.md#L1-L80",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "D:/GitHub/cloned/CellCog/cellcog-plugin-main/cellcog-plugin-main/package.json#L20-L50",
+            "verified": true
+          },
+          {
+            "node_type": "visual_brief",
+            "uri": "C:/Users/spectre/AppData/Local/Temp/repo-reader-20260831-110000.html",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "skill_distribution",
+    "golden_copy",
+    "open_plugins",
+    "clawhub_search",
+    "slug_optimization",
+    "manifest_validation",
+    "cellcog",
+    "repo_introspection"
+  ],
+  "context": "Monorepo Golden-Copy Multi-Channel Distribution & ClawHub Slug Optimization",
+  "distilled_learning": "# KI: Monorepo Golden-Copy Multi-Channel Distribution & ClawHub Slug Optimization\n\n## Operational Summary\nMaintaining dozens of agent skills across diverse packaging standards (ClawHub, Open Plugins for Cursor/Claude Code, npx CLI, and npm packages) causes documentation drift and search friction. Centralizing golden copies in a monorepo and utilizing deterministic keyword slugs (<action-noun>-cellcog) guarantees instant agent discovery and zero-drift releases."
+}

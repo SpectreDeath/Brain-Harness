@@ -1,0 +1,66 @@
+{
+  "name": "domain.antigravity_core_bridge",
+  "version": "1.0.0",
+  "description": "Google Antigravity SDK core bridge providing LocalConnection proactor transport, streaming step ingestion, and subagent orchestration",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "category": "agent_orchestration",
+  "provides": [
+    "service.antigravity.connection"
+  ],
+  "requires": [],
+  "dependencies": [],
+  "entrypoints": [
+    {
+      "name": "connect_proactor",
+      "description": "Establish Antigravity proactor connection",
+      "parameters": [
+        {
+          "name": "host",
+          "type": "string",
+          "description": "Host address",
+          "required": false,
+          "default": "127.0.0.1"
+        },
+        {
+          "name": "port",
+          "type": "integer",
+          "description": "Port number",
+          "required": false,
+          "default": 4242
+        }
+      ]
+    },
+    {
+      "name": "dispatch_local_step",
+      "description": "Dispatch prompt to proactor and return step observation stream",
+      "parameters": [
+        {
+          "name": "session_id",
+          "type": "string",
+          "description": "Session ID",
+          "required": true
+        },
+        {
+          "name": "prompt",
+          "type": "string",
+          "description": "Prompt string",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "get_session_telemetry",
+      "description": "Retrieve telemetry metrics for session",
+      "parameters": [
+        {
+          "name": "session_id",
+          "type": "string",
+          "description": "Session ID",
+          "required": true
+        }
+      ]
+    }
+  ]
+}

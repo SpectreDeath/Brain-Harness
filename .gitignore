@@ -82,3 +82,6 @@ frontend/.oxlint-cache/
 !.vscode/settings.json
 !.vscode/launch.json
 .idea/
+.gemini/
+.agents/scratch/
+

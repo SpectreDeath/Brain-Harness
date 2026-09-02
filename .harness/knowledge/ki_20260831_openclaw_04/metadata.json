@@ -1,0 +1,43 @@
+{
+  "id": "ki_20260831_openclaw_04",
+  "title": "Deterministic Session Tree Branching & Compaction with UUIDv7",
+  "source_target": "D:\\GitHub\\cloned\\openclaw",
+  "detected_format": "typescript_monorepo",
+  "timestamp": "2026-08-31T14:15:00Z",
+  "isnad": {
+    "decision_id": "dec_20260831_openclaw_04",
+    "claims": [
+      {
+        "assertion": "Using time-ordered UUIDv7 identifiers for multi-turn session trees enables lock-free temporal sorting, deterministic branch forks, and progressive historical compaction without losing branch lineage.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "packages/agent-core/src/harness/session/session.ts#L1-L100",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "packages/agent-core/src/harness/session/uuid.ts#L1-L40",
+            "verified": true
+          },
+          {
+            "node_type": "visual_brief",
+            "uri": "C:/Users/spectre/AppData/Local/Temp/compute-assessor-1788199910.html",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "session_trees",
+    "uuidv7",
+    "compaction",
+    "branching",
+    "openclaw",
+    "repo_introspection"
+  ],
+  "context": "Deterministic Session Tree Branching & Compaction with UUIDv7",
+  "distilled_learning": "# KI: Deterministic Session Tree Branching & Compaction with UUIDv7\n\n## Operational Summary\nLinear chat histories fail when agents fork into speculative branches or sub-agent explorations. Organizing sessions as directed acyclic trees keyed by time-ordered UUIDv7 identifiers provides natural temporal index ordering in storage systems, deterministic ancestor traversal, and lossless branch compaction."
+}

@@ -197,11 +197,58 @@ async def skeletonize_code_cmd(source_or_file: str | Path) -> CodeSkeletonResult
     )
 
 
+# --- Click CLI adapters ---
+import click
+from harness.commands._utils import _run_async
+
+
+@click.group("context")
+def context_group() -> None:
+    """Manage 3-tier AST reachability compilation and context optimization."""
+
+
+@context_group.command("compile")
+@click.argument("target_file", type=click.Path(exists=True))
+@click.option("--repo-root", "-r", default=None, type=click.Path(exists=True), help="Root directory of the repository")
+@click.option("--max-hops", "-h", default=2, type=int, help="Maximum reachability hop depth")
+def context_compile(target_file: str, repo_root: str | None, max_hops: int) -> None:
+    """Compile 3-tier AST reachability context starting from a target file."""
+    res = _run_async(compile_context_cmd(target_file, repo_root=repo_root, max_hops=max_hops))
+    click.echo(f"\n3-Tier AST Compilation: {res.target_file}")
+    click.echo("━" * 60)
+    click.echo(f"Tier 1 (Target Full Source): {res.tier1_files} file")
+    click.echo(f"Tier 2 (Skeletonized):       {res.tier2_files} file(s)")
+    click.echo(f"Tier 3 (Excluded):           {res.tier3_excluded_files} file(s)")
+    click.echo(f"Naive Token Dump:            {res.naive_dump_tokens} tokens")
+    click.echo(f"Compiled Token Size:         {res.compiled_tokens} tokens")
+    click.echo(f"Token Reduction:             {res.reduction_pct:.1f}%")
+    click.echo(f"Build Duration:              {res.build_ms:.2f} ms")
+    click.echo()
+
+
+@context_group.command("skeletonize")
+@click.argument("target_file", type=click.Path(exists=True))
+def context_skeletonize(target_file: str) -> None:
+    """Extract structural interface skeleton from Python source file."""
+    res = _run_async(skeletonize_code_cmd(target_file))
+    click.echo(f"\nSkeletonized: {target_file}")
+    click.echo("━" * 60)
+    click.echo(f"Functions Stripped: {res.functions_stripped}")
+    click.echo(f"Token Reduction:    {res.reduction_pct:.1f}% ({res.tokens_raw} -> {res.tokens_skeleton} tokens)")
+    click.echo("\nSkeleton Source Preview:")
+    click.echo("─" * 60)
+    click.echo(res.skeleton_code[:1500])
+    if len(res.skeleton_code) > 1500:
+        click.echo("... [truncated preview]")
+    click.echo()
+
+
 __all__ = [
     "CodeSkeletonResult",
     "ContextCompileResult",
     "ContextOptimizeResult",
     "compile_context_cmd",
+    "context_group",
     "optimize_context_cmd",
     "skeletonize_code_cmd",
 ]

@@ -1,0 +1,18 @@
+{
+  "id": "ki_antigravity_001",
+  "title": "Protobuf Struct Serialization & Wire Normalization",
+  "category": "data_engineering",
+  "tags": [
+    "antigravity",
+    "protobuf",
+    "serialization",
+    "wire-protocol",
+    "google-sdk"
+  ],
+  "source_repo": "google-antigravity-sdk",
+  "provenance": [
+    "google/antigravity/connections/local/struct_converter.py",
+    "google/antigravity/proto/conversation.proto"
+  ],
+  "created_at": "2026-09-02T19:23:41Z"
+}

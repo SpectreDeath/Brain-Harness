@@ -1,0 +1,70 @@
+{
+  "name": "domain.antigravity_trigger_runtime",
+  "version": "1.0.0",
+  "description": "Google Antigravity reactive trigger scheduling engine providing async interval and file watcher wakeup without polling",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "category": "agent_orchestration",
+  "provides": [
+    "service.antigravity.trigger_runtime"
+  ],
+  "requires": [],
+  "dependencies": [],
+  "entrypoints": [
+    {
+      "name": "register_interval_trigger",
+      "description": "Register an asynchronous interval wakeup trigger",
+      "parameters": [
+        {
+          "name": "trigger_id",
+          "type": "string",
+          "description": "Unique trigger ID",
+          "required": true
+        },
+        {
+          "name": "interval_seconds",
+          "type": "number",
+          "description": "Interval duration in seconds",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "register_file_change_trigger",
+      "description": "Register a reactive file-change wakeup trigger",
+      "parameters": [
+        {
+          "name": "trigger_id",
+          "type": "string",
+          "description": "Unique trigger ID",
+          "required": true
+        },
+        {
+          "name": "file_path",
+          "type": "string",
+          "description": "File path to observe",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "fire_reactive_trigger",
+      "description": "Simulate reactive trigger wakeup",
+      "parameters": [
+        {
+          "name": "trigger_id",
+          "type": "string",
+          "description": "Trigger ID to awaken",
+          "required": true
+        },
+        {
+          "name": "payload",
+          "type": "object",
+          "description": "Trigger event payload",
+          "required": true
+        }
+      ]
+    }
+  ]
+}

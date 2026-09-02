@@ -1,0 +1,91 @@
+{
+  "name": "domain.hermes_cron_scheduler",
+  "version": "1.0.0",
+  "description": "Hermes unattended natural language cron scheduler, incident classification, and blueprint catalog manager",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "category": "agent_orchestration",
+  "provides": [
+    "service.hermes_cron_scheduler"
+  ],
+  "requires": [],
+  "dependencies": [],
+  "entrypoints": [
+    {
+      "name": "schedule_natural_cron",
+      "description": "Register a recurring unattended schedule using natural language or cron expression",
+      "parameters": [
+        {
+          "name": "schedule_expr",
+          "type": "string",
+          "description": "Cron expression or natural schedule (e.g. 'every morning at 9am', '0 9 * * *')",
+          "required": true
+        },
+        {
+          "name": "prompt_action",
+          "type": "string",
+          "description": "Instruction or prompt for unattended agent execution",
+          "required": true
+        },
+        {
+          "name": "target_channel",
+          "type": "string",
+          "description": "Notification delivery target (e.g. 'telegram:123', 'cli', 'webhook')",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "list_cron_jobs",
+      "description": "Query active, paused, or completed cron jobs",
+      "parameters": [
+        {
+          "name": "status_filter",
+          "type": "string",
+          "description": "Status filter ('all', 'active', 'paused', 'failed')",
+          "required": false,
+          "default": "all"
+        }
+      ]
+    },
+    {
+      "name": "inspect_cron_incidents",
+      "description": "Retrieve execution incident reports and error diagnostics for cron tasks",
+      "parameters": [
+        {
+          "name": "job_id",
+          "type": "string",
+          "description": "Target job ID or 'all'",
+          "required": true
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "description": "Max incident records to return",
+          "required": false,
+          "default": 10
+        }
+      ]
+    },
+    {
+      "name": "manage_blueprint_catalog",
+      "description": "Query or instantiate curated unattended automation blueprints",
+      "parameters": [
+        {
+          "name": "action",
+          "type": "string",
+          "description": "Action: 'list', 'inspect', 'instantiate'",
+          "required": true
+        },
+        {
+          "name": "blueprint_id",
+          "type": "string",
+          "description": "ID of blueprint to manage",
+          "required": false,
+          "default": ""
+        }
+      ]
+    }
+  ]
+}

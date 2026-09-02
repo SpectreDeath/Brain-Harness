@@ -83,7 +83,24 @@ async def serve_mcp_cmd(
     return result
 
 
+# --- Click CLI adapters ---
+import click
+from harness.commands._utils import _run_async
+
+
+@click.group("mcp")
+def mcp_group() -> None:
+    """Model Context Protocol (MCP) server commands."""
+
+
+@mcp_group.command("serve")
+def mcp_serve() -> None:
+    """Start the MCP STDIO server exposing Harness tools to external agents."""
+    _run_async(serve_mcp_cmd(stdio=True))
+
+
 __all__ = [
     "McpServeResult",
+    "mcp_group",
     "serve_mcp_cmd",
 ]

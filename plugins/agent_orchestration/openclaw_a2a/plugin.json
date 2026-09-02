@@ -1,0 +1,82 @@
+{
+  "name": "plugin.openclaw_a2a",
+  "version": "1.0.0",
+  "description": "A2A v1.0 Agent-to-Agent protocol adapter for cross-host swarm federation, task delegation, and distributed observation streaming.",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "entrypoints": [
+    {
+      "name": "openclaw_a2a_send_task",
+      "description": "Dispatches an asynchronous subtask to a federated remote or local A2A agent runtime.",
+      "parameters": [
+        {
+          "name": "recipient_agent",
+          "type": "string",
+          "description": "Identifier or URL of recipient agent (e.g. 'openclaw_worker_01', 'agent_debater')",
+          "required": true
+        },
+        {
+          "name": "task_payload",
+          "type": "object",
+          "description": "Structured task payload with objective, parameters, and input context",
+          "required": true
+        },
+        {
+          "name": "sender_agent",
+          "type": "string",
+          "description": "Identifier of sending agent (default: 'harness_lead')",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "openclaw_a2a_poll_task",
+      "description": "Polls the status, observation, and token telemetry of an active A2A task.",
+      "parameters": [
+        {
+          "name": "task_id",
+          "type": "string",
+          "description": "Unique A2A task identifier",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "openclaw_a2a_complete_task",
+      "description": "Completes an A2A task and records observation output and token rollups.",
+      "parameters": [
+        {
+          "name": "task_id",
+          "type": "string",
+          "description": "Task identifier to mark as completed",
+          "required": true
+        },
+        {
+          "name": "observation",
+          "type": "object",
+          "description": "Output observation dictionary",
+          "required": true
+        },
+        {
+          "name": "tokens_used",
+          "type": "integer",
+          "description": "Number of tokens consumed during task execution",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "openclaw_a2a_resolve_capabilities",
+      "description": "Queries supported capabilities, tools, and archetype roles for a registered A2A agent.",
+      "parameters": [
+        {
+          "name": "agent_id",
+          "type": "string",
+          "description": "Target agent identifier",
+          "required": true
+        }
+      ]
+    }
+  ]
+}

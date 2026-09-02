@@ -1,0 +1,16 @@
+{
+  "name": "domain.antigravity_core_bridge",
+  "origin_repo": "https://github.com/google/antigravity-sdk-python",
+  "git_commit": "52ea994",
+  "source_paths": [
+    "google/antigravity/connections/local/local_connection.py",
+    "google/antigravity/connections/local/event_processor.py"
+  ],
+  "archetype": "tool_provider",
+  "forged_at": "2026-09-02T19:40:39Z",
+  "author": "Spectre",
+  "invariants": [
+    "WebSocket channel must drain and close cleanly on proactor shutdown.",
+    "Streaming step observations must normalize terminal states."
+  ]
+}

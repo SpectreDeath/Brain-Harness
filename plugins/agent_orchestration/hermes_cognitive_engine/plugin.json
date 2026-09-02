@@ -1,0 +1,107 @@
+{
+  "name": "domain.hermes_cognitive_engine",
+  "version": "1.0.0",
+  "description": "Hermes closed learning loop, autonomous skill formation, verification evidence evaluator, and think stream scrubber",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "category": "agent_orchestration",
+  "provides": [
+    "service.hermes_cognitive_engine"
+  ],
+  "requires": [],
+  "dependencies": [],
+  "entrypoints": [
+    {
+      "name": "create_skill_from_trajectory",
+      "description": "Extract reusable multi-step tool call trajectory into an OpenSkills formatted skill",
+      "parameters": [
+        {
+          "name": "trajectory_id",
+          "type": "string",
+          "description": "Unique trajectory identifier",
+          "required": true
+        },
+        {
+          "name": "skill_name",
+          "type": "string",
+          "description": "Descriptive kebab-case skill name",
+          "required": true
+        },
+        {
+          "name": "domain",
+          "type": "string",
+          "description": "Functional domain category (e.g. software-development, research)",
+          "required": true
+        },
+        {
+          "name": "tool_sequence",
+          "type": "array",
+          "description": "List of tool execution step names in chronological order",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "evaluate_verification_evidence",
+      "description": "Evaluate pre-commit verification evidence (tests run, lint output, file mutations) before allowing completion",
+      "parameters": [
+        {
+          "name": "session_id",
+          "type": "string",
+          "description": "Current agent session ID",
+          "required": true
+        },
+        {
+          "name": "executed_commands",
+          "type": "array",
+          "description": "List of shell commands executed during turn",
+          "required": true
+        },
+        {
+          "name": "file_mutations",
+          "type": "array",
+          "description": "List of files written or edited during turn",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "scrub_think_stream",
+      "description": "Parse streaming tokens to separate thinking blocks from user-visible response text and stream telemetry",
+      "parameters": [
+        {
+          "name": "raw_chunk",
+          "type": "string",
+          "description": "Raw model output stream chunk with potential think tags",
+          "required": true
+        },
+        {
+          "name": "capture_telemetry",
+          "type": "boolean",
+          "description": "Whether to buffer thought text into telemetry channel",
+          "required": false,
+          "default": true
+        }
+      ]
+    },
+    {
+      "name": "nudge_learning_persistence",
+      "description": "Calculate cognitive nudge urgency for persisting extracted learnings based on turn count and complexity",
+      "parameters": [
+        {
+          "name": "turn_count",
+          "type": "integer",
+          "description": "Number of conversational turns elapsed",
+          "required": true
+        },
+        {
+          "name": "complexity_score",
+          "type": "number",
+          "description": "5D composite task complexity score (0.0 to 1.0)",
+          "required": true
+        }
+      ]
+    }
+  ]
+}

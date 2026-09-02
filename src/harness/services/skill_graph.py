@@ -7,6 +7,7 @@ caching, topological BFS chaining, intent routing, and visual brief generation.
 from __future__ import annotations
 
 import collections
+import json
 import os
 import re
 import tempfile
@@ -56,6 +57,7 @@ class SkillCardDefinition(BaseModel):
     anti_patterns: list[SkillAntiPatternDefinition] = Field(default_factory=list, description="Guarded anti-patterns")
     invariants: list[SkillInvariantDefinition] = Field(default_factory=list, description="Guarded invariants")
     dependencies: list[str] = Field(default_factory=list, description="Referenced peer skills")
+    knowledge_items: list[str] = Field(default_factory=list, description="Linked Knowledge Item IDs from Knowledge Vault")
     services: list[str] = Field(default_factory=list, description="Required micro-kernel ServiceKey identifiers")
     tools: list[str] = Field(default_factory=list, description="Required tool names")
     card_path: str = Field(default="", description="Path to companion CARD.md")
@@ -92,6 +94,10 @@ class SkillGraphService(Protocol):
         """Generate and save interactive HTML visual brief."""
         ...
 
+    async def link_knowledge_vault(self, vault_dir: str = ".harness/knowledge") -> int:
+        """Cross-link knowledge vault items to skills."""
+        ...
+
 
 @runtime_checkable
 class SkillRegistryService(Protocol):
@@ -111,6 +117,10 @@ class SkillRegistryService(Protocol):
 
     def get_chain(self, start_skill: str, target_skill: str) -> SkillChainResult:
         """Calculate execution chain between two skills."""
+        ...
+
+    def link_knowledge_vault(self, vault_dir: Path | str = ".harness/knowledge") -> int:
+        """Cross-link knowledge vault items to skills."""
         ...
 
 
@@ -290,17 +300,22 @@ class BuiltinSkillRegistryService(SkillRegistryService):
             p / ".agents" / "skills",
             p / "skills",
             p / "plugins",
-            p,
         ]
 
         discovered: dict[str, SkillCardDefinition] = {}
         categories: set[str] = set()
         adjacency: dict[str, set[str]] = collections.defaultdict(set)
 
+        ignored_parts = {".venv", "venv", "venvs", ".git", "node_modules", "site-packages", "__pycache__"}
+
         for scan_dir in paths_to_scan:
             if not scan_dir.exists():
                 continue
             for skill_file in scan_dir.rglob("SKILL.md"):
+                # Guard against virtualenv and package directories
+                parts = set(skill_file.parts)
+                if any(part.lower() in ignored_parts for part in parts):
+                    continue
                 try:
                     card = self._parse_skill_directory(skill_file.parent)
                     if card and card.name not in discovered:
@@ -308,7 +323,8 @@ class BuiltinSkillRegistryService(SkillRegistryService):
                         categories.add(card.category)
                         for dep in card.dependencies:
                             clean_dep = dep.strip().lower().replace("_", "-").lstrip("/")
-                            adjacency[card.name].add(clean_dep)
+                            if clean_dep != card.name:
+                                adjacency[card.name].add(clean_dep)
                 except Exception:
                     continue
 
@@ -375,14 +391,16 @@ class BuiltinSkillRegistryService(SkillRegistryService):
 
             dep_matches = re.findall(r"`/([a-z0-9\-]+)`", card_content)
             for d in dep_matches:
-                if d != skill_name:
-                    dependencies.append(d)
+                clean_d = d.strip().lower().replace("_", "-").lstrip("/")
+                if clean_d != skill_name and clean_d not in dependencies:
+                    dependencies.append(clean_d)
 
-        # Cross-reference triggers in text
-        if "deepen-architecture" in content:
-            dependencies.append("deepen-architecture")
-        if "crafting-skills" in content:
-            dependencies.append("crafting-skills")
+        # Cross-reference triggers, slash commands, and dependencies from SKILL.md
+        slash_matches = re.findall(r"(?:^|[^\w])/([a-z0-9][a-z0-9\-]+)", content)
+        for d in slash_matches:
+            clean_d = d.strip().lower().replace("_", "-").lstrip("/")
+            if clean_d != skill_name and clean_d not in dependencies:
+                dependencies.append(clean_d)
 
         return SkillCardDefinition(
             name=skill_name,
@@ -394,12 +412,55 @@ class BuiltinSkillRegistryService(SkillRegistryService):
             stages=stages,
             anti_patterns=anti_patterns,
             invariants=invariants,
-            dependencies=list(dict.fromkeys(dependencies)),
+            dependencies=[d for d in list(dict.fromkeys(dependencies)) if d != skill_name],
+            knowledge_items=[],
             services=[],
             tools=[],
             card_path=card_path_str,
             skill_path=str(skill_file),
         )
+
+    def link_knowledge_vault(self, vault_dir: Path | str = ".harness/knowledge") -> int:
+        """Scan dual-file on-disk knowledge vault and link matching KIs to registered skills."""
+        self._ensure_scanned(self._default_root)
+        v_path = Path(vault_dir).resolve()
+        if not v_path.exists() or not v_path.is_dir():
+            return 0
+
+        linked_count = 0
+        for ki_dir in v_path.iterdir():
+            if not ki_dir.is_dir():
+                continue
+            meta_path = ki_dir / "metadata.json"
+            if not meta_path.exists():
+                continue
+            try:
+                meta = json.loads(meta_path.read_text(encoding="utf-8"))
+                ki_id = meta.get("id", ki_dir.name)
+                raw_tags = meta.get("tags") or []
+                tags = [t.lower().replace("_", "-") for t in raw_tags if isinstance(t, str)]
+                title = (meta.get("title") or "").lower()
+
+                for skill_name, skill in self._skills_cache.items():
+                    s_tokens = set(skill_name.split("-"))
+                    matched = False
+
+                    # Exact skill name in tags or id
+                    if skill_name in tags or skill_name in ki_id.lower() or skill_name.replace("-", "_") in ki_id.lower():
+                        matched = True
+                    # Significant tag or token match
+                    elif any(tok in tags for tok in s_tokens if len(tok) > 3):
+                        matched = True
+                    elif any(tok in title for tok in s_tokens if len(tok) > 3):
+                        matched = True
+
+                    if matched and ki_id not in skill.knowledge_items:
+                        skill.knowledge_items.append(ki_id)
+                        linked_count += 1
+            except Exception:
+                continue
+
+        return linked_count
 
 
 # ============================================================================
@@ -422,6 +483,9 @@ class BuiltinSkillGraphService(SkillGraphService):
 
     async def query_router(self, intent: str, top_k: int = 3) -> dict[str, Any]:
         return self._registry.route_intent(intent, top_k=top_k)
+
+    async def link_knowledge_vault(self, vault_dir: str = ".harness/knowledge") -> int:
+        return self._registry.link_knowledge_vault(vault_dir)
 
     async def export_html_brief(self, output_path: str | None = None) -> str:
         skills = self._registry.discover_all()

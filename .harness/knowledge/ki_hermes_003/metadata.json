@@ -1,0 +1,18 @@
+{
+  "id": "ki_hermes_003",
+  "title": "Pre-Commit Verification Evidence Tracking & Stop Interceptors",
+  "category": "agent_orchestration",
+  "tags": [
+    "verification",
+    "tdd",
+    "quality-gates",
+    "stop-hook"
+  ],
+  "source_repo": "NousResearch/hermes-agent",
+  "provenance": [
+    "agent/verification_evidence.py",
+    "agent/verification_stop.py",
+    "agent/verify_hooks.py"
+  ],
+  "created_at": "2026-09-02T07:03:35Z"
+}

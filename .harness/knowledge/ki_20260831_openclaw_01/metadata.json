@@ -1,0 +1,43 @@
+{
+  "id": "ki_20260831_openclaw_01",
+  "title": "In-Flight Plain-Text Tool-Call Stream Normalization & Repair",
+  "source_target": "D:\\GitHub\\cloned\\openclaw",
+  "detected_format": "typescript_monorepo",
+  "timestamp": "2026-08-31T14:15:00Z",
+  "isnad": {
+    "decision_id": "dec_20260831_openclaw_01",
+    "claims": [
+      {
+        "assertion": "Streaming LLM outputs that emit plain-text JSON tool call blocks instead of structured API tool calls can be recovered without re-prompting via deterministic AST regex parsing and stream event promotion.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "packages/tool-call-repair/src/payload.ts#L1-L120",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "packages/tool-call-repair/src/stream-normalizer.ts#L1-L150",
+            "verified": true
+          },
+          {
+            "node_type": "visual_brief",
+            "uri": "C:/Users/spectre/AppData/Local/Temp/data-topology-review-1788199910.html",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "tool_calling",
+    "stream_repair",
+    "ast_parsing",
+    "llm_resilience",
+    "openclaw",
+    "repo_introspection"
+  ],
+  "context": "In-Flight Plain-Text Tool-Call Stream Normalization & Repair",
+  "distilled_learning": "# KI: In-Flight Plain-Text Tool-Call Stream Normalization & Repair\n\n## Operational Summary\nLLMs frequently emit tool calls as plain-text JSON codeblocks (e.g. ```json { \"tool\": ... } ``` or raw function call syntax) instead of native provider tool call events, particularly during streaming or when models experience slight instruction drift. Intercepting these plain-text blocks in-flight and promoting them into validated structured tool events eliminates downstream agent failure loops without requiring expensive LLM re-prompting."
+}

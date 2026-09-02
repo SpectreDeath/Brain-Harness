@@ -1,0 +1,43 @@
+{
+  "id": "ki_20260831_sme_01",
+  "title": "MIMO 6D Dynamic Control Surface for Multi-Objective Agentic Harnesses",
+  "source_target": "D:\\GitHub\\projects\\SME",
+  "detected_format": "git_repository",
+  "timestamp": "2026-08-31T16:20:00Z",
+  "isnad": {
+    "decision_id": "dec_20260831_sme_01",
+    "claims": [
+      {
+        "assertion": "A dynamic 6-Dimensional control surface (Context, Timeout, Temperature, Routing, Persistence, Schema Validation) dynamically synthesized per task type optimizes execution boundaries and prevents resource blowout across multi-agent harnesses.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "gateway/mimo_bridge.py#L20-L85",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "tests/test_mimo_bridge.py#L1-L45",
+            "verified": true
+          },
+          {
+            "node_type": "visual_brief",
+            "uri": "C:/Users/spectre/AppData/Local/Temp/compute-assessor-20260831-162000.html",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "mimo_control",
+    "harness_configuration",
+    "dynamic_routing",
+    "agentic_boundaries",
+    "sme_forensics",
+    "repo_introspection"
+  ],
+  "context": "MIMO 6D Dynamic Control Surface for Multi-Objective Agentic Harnesses",
+  "distilled_learning": "# KI: MIMO 6D Dynamic Control Surface for Multi-Objective Agentic Harnesses\n\n## Operational Summary\nAutonomous agents execute diverse tasks (code generation, long-horizon repair, factual retrieval, security analysis) that require conflicting runtime constraints. Hardcoding a static context window, timeout, or temperature degrades agent performance. A 6-Dimensional MIMO harness tuple (D1: Context Max Triplets, D2: Tool Timeout & Circuit Breaker, D3: Decoding Temperature, D4: Routing Mode Policy, D5: Cross-Call Persistence, D6: Schema / AST Enforcement) dynamically synthesized per task type ensures optimal balance between creativity, strictness, and latency."
+}

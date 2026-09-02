@@ -1,0 +1,43 @@
+{
+  "id": "ki_20260831_strategify_01",
+  "title": "SubsystemRegistry & Modular Simulation Orchestration",
+  "source_target": "D:\\GitHub\\projects\\Strategify",
+  "detected_format": "python_simulation_harness",
+  "timestamp": "2026-08-31T23:15:00Z",
+  "isnad": {
+    "decision_id": "dec_20260831_strategify_01",
+    "claims": [
+      {
+        "assertion": "SubsystemRegistry encapsulates the lifecycle, configuration, and strict deterministic stepping of 17 heterogeneous simulation subsystems, eliminating god-object coupling in agent-based models.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "strategify/sim/subsystem_registry.py#L1-L214",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "strategify/sim/model.py#L1-L350",
+            "verified": true
+          },
+          {
+            "node_type": "visual_brief",
+            "uri": "C:/Users/spectre/AppData/Local/Temp/data-topology-review-20260831-231500.html",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "simulation",
+    "lifecycle",
+    "subsystem_registry",
+    "mesa",
+    "abm",
+    "strategify"
+  ],
+  "context": "SubsystemRegistry & Modular Simulation Orchestration",
+  "distilled_learning": "# KI: SubsystemRegistry & Modular Simulation Orchestration\n\n## Operational Summary\nComplex Agent-Based Models (ABM) tend to accumulate disparate domain subsystems (trade, supply chain, coalitions, epidemiology, escalation, temporal dynamics, propaganda, logic bridges) directly inside the central model class, leading to severe coupling and flaky step sequences. Centralizing subsystem initialization and sequential execution into a dedicated `SubsystemRegistry` provides clean dependency injection, configurable feature flags, and deterministic step ordering without polluting the core simulation state."
+}

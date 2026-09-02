@@ -31,6 +31,7 @@ Assess the complexity and operational boundary of the target codebase before dee
 3. **Boundary & Snapshot Detection**:
    - Inspect whether the target path is outside the IDE workspace sandbox (use shell execution fallbacks with host `Cwd` when direct file access is restricted).
    - Detect nested root directories (e.g. `repo-master/repo-master`) and identify if the directory is a non-Git snapshot without `.git`.
+   - **Nested Root Resolution Algorithm**: Walk from the provided path inward, probing each level for canonical manifest files (`pyproject.toml`, `package.json`, `Cargo.toml`, `go.mod`, `pom.xml`). The deepest directory containing a manifest is the true project root. Log the nesting depth to avoid re-discovering on subsequent stages.
 
 > **Completion criterion**: Task scored across 5 complexity dimensions, model tier declared, and workspace access path verified.
 
@@ -125,3 +126,4 @@ Persist approved learnings and synthesize discovered workflows into production-g
 - **Non-Git Crash** — Failing when inspecting unzipped codebase snapshots lacking `.git` instead of pivoting to changelog/manifest analysis.
 - **Unanchored Claim Extraction** — Recording abstract heuristics without citing concrete source lines and manifests.
 - **Monolithic Tool Bloat** — Coupling multi-agent review roles into a single giant prompt instead of fanning out to single-responsibility sub-agents.
+- **F-String Brace Collision in HTML Generators** — Mixing regular Python dict/set literals with f-string HTML templates causes `{{`/`}}` escaping ambiguity. Separate data construction from template interpolation, or use `str.format()` / `string.Template` for HTML bodies containing JavaScript objects.

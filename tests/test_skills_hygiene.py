@@ -52,10 +52,11 @@ class TestSkillsEcosystemHygiene:
             assert skill_file.exists(), f"SKILL.md missing in {sdir.name}"
             assert card_file.exists(), f"CARD.md missing in {sdir.name}"
 
-    def test_all_skills_validation_pipeline(self, skills_root: Path) -> None:
+    @pytest.mark.asyncio
+    async def test_all_skills_validation_pipeline(self, skills_root: Path) -> None:
         skill_dirs = [d for d in skills_root.iterdir() if d.is_dir() and not d.name.startswith(".")]
         for sdir in skill_dirs:
-            report = SkillValidator.validate(sdir)
+            report = await SkillValidator.validate_async(sdir)
             assert report.valid is True, f"Skill {sdir.name} validation failed: {report.errors}"
 
     def test_all_skills_parser_and_pillars(self, skills_root: Path) -> None:

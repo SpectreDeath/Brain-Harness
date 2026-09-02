@@ -1,0 +1,39 @@
+{
+  "id": "ki_20260831_strategify_07",
+  "title": "Cross-Language Neuro-Symbolic Logic Bridges (SWI-Prolog & Clojure MCTS)",
+  "source_target": "D:\\GitHub\\projects\\Strategify",
+  "detected_format": "python_simulation_harness",
+  "timestamp": "2026-08-31T23:15:00Z",
+  "isnad": {
+    "decision_id": "dec_20260831_strategify_07",
+    "claims": [
+      {
+        "assertion": "StrategicBridge drives SWI-Prolog traits logic for epistemic fact verification and evolutionary fitness, while ClojureBridge executes subprocess-based MCTS counterfactual timeline branching and utility calculations.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "strategify/logic/bridge.py#L1-L322",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "strategify/logic/clj.py#L1-L313",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "prolog",
+    "pyswip",
+    "clojure",
+    "mcts",
+    "neuro_symbolic",
+    "epistemology",
+    "strategify"
+  ],
+  "context": "Cross-Language Neuro-Symbolic Logic Bridges (SWI-Prolog & Clojure MCTS)",
+  "distilled_learning": "# KI: Cross-Language Neuro-Symbolic Logic Bridges (SWI-Prolog & Clojure MCTS)\n\n## Operational Summary\nPairing agent simulations with formal declarative reasoning requires robust cross-language bridges. `StrategicBridge` interfaces SWI-Prolog knowledge bases (`traits.pl`) to assert world states and verify knowledge claims (`knows/believes`), while `ClojureBridge` executes subprocess Leiningen MCTS pipelines to branch counterfactual timelines and evaluate strategic utilities across alternate decision histories."
+}

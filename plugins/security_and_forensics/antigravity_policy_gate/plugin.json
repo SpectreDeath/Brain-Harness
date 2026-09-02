@@ -1,0 +1,59 @@
+{
+  "name": "domain.antigravity_policy_gate",
+  "version": "1.0.0",
+  "description": "Google Antigravity declarative security policy gate enforcing tri-state allow/deny/ask_user tool evaluation",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "category": "security_and_forensics",
+  "provides": [
+    "service.antigravity.policy_gate"
+  ],
+  "requires": [],
+  "dependencies": [],
+  "entrypoints": [
+    {
+      "name": "evaluate_policy",
+      "description": "Evaluate tool call against security baseline",
+      "parameters": [
+        {
+          "name": "tool_name",
+          "type": "string",
+          "description": "Target tool name",
+          "required": true
+        },
+        {
+          "name": "arguments",
+          "type": "object",
+          "description": "Tool argument payload",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "add_policy_rule",
+      "description": "Register a new policy rule",
+      "parameters": [
+        {
+          "name": "tool_pattern",
+          "type": "string",
+          "description": "Regex pattern for tool name",
+          "required": true
+        },
+        {
+          "name": "decision",
+          "type": "string",
+          "description": "ALLOW, DENY, or ASK_USER",
+          "required": true
+        },
+        {
+          "name": "rationale",
+          "type": "string",
+          "description": "Policy rationale",
+          "required": false,
+          "default": ""
+        }
+      ]
+    }
+  ]
+}

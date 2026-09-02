@@ -1,0 +1,43 @@
+{
+  "id": "ki_self_20260831_03",
+  "title": "4-Stage Candidate Block Validation for Textual Backprop Loops",
+  "source_target": "SME/gateway/mimo_bridge.py",
+  "detected_format": "python_agent_framework",
+  "timestamp": "2026-08-31T19:25:00Z",
+  "isnad": {
+    "decision_id": "dec_self_20260831_03",
+    "claims": [
+      {
+        "assertion": "Autonomous agent self-repair and prompt optimization must pass through a strict 4-stage candidate block validation gate (baseline \u2192 AST syntax \u2192 sandbox execution \u2192 invariant contract) with momentum-smoothed gradient updates to eliminate catastrophic prompt regression.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "SME/gateway/mimo_bridge.py#L20-L85",
+            "verified": true
+          },
+          {
+            "node_type": "visual_brief",
+            "uri": "C:/Users/spectre/AppData/Local/Temp/repo-reader-20260831-162000.html",
+            "verified": true
+          },
+          {
+            "node_type": "skill_reference",
+            "uri": ".agents/skills/sme-ann-backprop/SKILL.md",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "optimization",
+    "textual_backprop",
+    "candidate_validation",
+    "gradient_smoothing",
+    "endogenous_memory",
+    "self_reflection"
+  ],
+  "context": "Unconstrained agent self-modification creates destructive feedback loops and syntax regressions. Multi-stage gating ensures only Pareto-optimal prompt revisions are committed.",
+  "distilled_learning": "When executing Agentic Neural Network (ANN) prompt backpropagation, apply Adam-like momentum smoothing to textual updates. Route all proposed system prompt or tool modifications through 4 sequential validation stages: (1) baseline benchmark verification, (2) static AST syntax linting, (3) isolated sandbox execution, and (4) invariant contract adherence before replacing active instructions."
+}

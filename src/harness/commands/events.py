@@ -65,7 +65,36 @@ def get_events_cmd(
     )
 
 
+# --- Click CLI adapters ---
+import click
+
+
+@click.command("events")
+@click.option("--type", "event_type", default=None, help="Filter by event type")
+@click.option("--limit", default=50, help="Max events to show")
+def events_cli(event_type: str | None, limit: int) -> None:
+    """Show the event log."""
+    log_path = Path(".harness") / "events.jsonl"
+    if not log_path.exists():
+        click.echo("No event log found. Initialize with 'harness init' first.")
+        return
+
+    res = get_events_cmd(event_type=event_type, limit=limit, log_path=log_path)
+    if not res.events:
+        click.echo("No events found.")
+        return
+
+    for evt in res.events:
+        ts = evt.timestamp.isoformat()[:19]
+        etype = evt.event_type.value
+        source = evt.source
+        click.echo(f"  {ts}  [{etype}]  {source}")
+
+    click.echo(f"\nShowing {len(res.events)} event(s)")
+
+
 __all__ = [
     "EventQueryResult",
+    "events_cli",
     "get_events_cmd",
 ]

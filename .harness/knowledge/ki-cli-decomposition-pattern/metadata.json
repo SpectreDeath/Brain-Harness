@@ -1,0 +1,12 @@
+{
+  "id": "ki-cli-decomposition-pattern",
+  "title": "CLI Monolith Decomposition Pattern",
+  "created": "2026-09-01T18:56:00-04:00",
+  "updated": "2026-09-01T18:56:00-04:00",
+  "summary": "Pattern for decomposing monolithic Click CLI entry points into domain-specific command modules. The cli.py file (1,331 LOC) contains 17+ Click command groups defined inline. The pattern promotes each @main.group() block to its corresponding commands/*.py module, leaving cli.py as a thin ~100 LOC import router. Key constraint: AGENTS.md Rule 6 mandates CLI command groups are declared exactly once in a single co-located block.",
+  "references": [
+    {"path": "src/harness/cli.py", "description": "Monolithic CLI entry point (1,331 LOC, 17+ command groups)"},
+    {"path": "src/harness/commands/", "description": "Existing command implementation modules (17 files)"},
+    {"path": "AGENTS.md", "description": "Rule 6: Click CLI Group Single-Source Consolidation"}
+  ]
+}

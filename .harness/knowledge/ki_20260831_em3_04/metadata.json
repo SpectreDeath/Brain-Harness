@@ -1,0 +1,45 @@
+{
+  "id": "ki_20260831_em3_04",
+  "title": "Distributed DAG Task Execution with Dynamic Template Value Resolution",
+  "source_target": "D:\\GitHub\\projects\\em-cubed",
+  "detected_format": "git_repository",
+  "timestamp": "2026-08-31T19:00:00Z",
+  "isnad": {
+    "decision_id": "dec_20260831_em3_04",
+    "claims": [
+      {
+        "assertion": "Asynchronous DAG execution pipelines with regex template path walking ({{ tasks.id.result.field }}) allow child task inputs to dynamically resolve completed parent task payloads without blocking the main event loop.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "D:/GitHub/projects/em-cubed/src/em_cubed/workflow/distributed.py#L23-L83",
+            "commit": "4746165c",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "D:/GitHub/projects/em-cubed/src/em_cubed/workflow/distributed.py#L441-L561",
+            "commit": "4746165c",
+            "verified": true
+          },
+          {
+            "node_type": "visual_brief",
+            "uri": "C:/Users/spectre/AppData/Local/Temp/data-topology-review-20260831-185900.html",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "dag_scheduler",
+    "distributed_workflows",
+    "template_resolution",
+    "process_isolation",
+    "em_cubed",
+    "repo_introspection"
+  ],
+  "context": "Distributed DAG Task Execution with Dynamic Template Value Resolution",
+  "distilled_learning": "# KI: Distributed DAG Task Execution with Dynamic Template Value Resolution\n\n## Operational Summary\nChaining complex multi-agent workflows requires passing outputs between independent tasks without hardcoding dependencies in code. Em-Cubed implements an asynchronous `ProcessDistributedExecutor` featuring dot-path template resolution (`{{ tasks.<task_id>.result.<field> }}`) that automatically scans parent results and substitutes parameter values before spawning child worker processes."
+}

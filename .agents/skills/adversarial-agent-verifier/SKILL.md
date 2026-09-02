@@ -57,6 +57,7 @@ Model application workflows as Directed Acyclic Graphs (DAGs) to identify high-r
      - Database transaction boundaries and rollbacks.
      - External network calls and timeout handling.
      - Permission and compliance gates.
+     - Markdown token delimiter boundaries (parsing commands or references wrapped in backticks `` ` `` or brackets `[`).
 3. **Generate Seam Opportunity Table**:
    - Produce a prioritized table of integration test opportunities ranked by risk and blast radius.
 

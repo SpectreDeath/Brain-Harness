@@ -1,0 +1,18 @@
+{
+  "id": "ki_antigravity_002",
+  "title": "4-Stage Hook Lifecycle & Tri-State Policy Evaluation",
+  "category": "security_and_forensics",
+  "tags": [
+    "antigravity",
+    "policy",
+    "security",
+    "hooks",
+    "lifecycle"
+  ],
+  "source_repo": "google-antigravity-sdk",
+  "provenance": [
+    "google/antigravity/hooks/hook_runner.py",
+    "google/antigravity/hooks/policy.py"
+  ],
+  "created_at": "2026-09-02T19:23:41Z"
+}

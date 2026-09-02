@@ -1,0 +1,40 @@
+{
+  "id": "ki_20260831_em3_02",
+  "title": "Zero-Copy Polyglot Memory Substrate via PyArrow IPC Streams",
+  "source_target": "D:\\GitHub\\projects\\em-cubed",
+  "detected_format": "git_repository",
+  "timestamp": "2026-08-31T19:00:00Z",
+  "isnad": {
+    "decision_id": "dec_20260831_em3_02",
+    "claims": [
+      {
+        "assertion": "PyArrow zero-copy IPC streaming eliminates JSON serialization overhead across heterogeneous analytical and relational execution surfaces (Python, DuckDB, Polars, Rust), enabling sub-millisecond dataset sharing.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "D:/GitHub/projects/em-cubed/src/em_cubed/surfaces/shared_substrate_arrow.py#L20-L122",
+            "commit": "5eebcfd6",
+            "verified": true
+          },
+          {
+            "node_type": "visual_brief",
+            "uri": "C:/Users/spectre/AppData/Local/Temp/data-topology-review-20260831-185900.html",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "pyarrow",
+    "zero_copy",
+    "shared_memory",
+    "polyglot_execution",
+    "ipc",
+    "em_cubed",
+    "repo_introspection"
+  ],
+  "context": "Zero-Copy Polyglot Memory Substrate via PyArrow IPC Streams",
+  "distilled_learning": "# KI: Zero-Copy Polyglot Memory Substrate via PyArrow IPC Streams\n\n## Operational Summary\nIn polyglot multi-agent systems where tasks span Python, SQL/DuckDB, Rust, and WASM surfaces, transferring large structured datasets via JSON causes quadratic serialization bottlenecks. Em-Cubed introduces `ArrowSharedSubstrate`, an in-memory dataset manager that holds datasets as `pyarrow.Table` / `RecordBatch` instances and streams them across execution boundaries using PyArrow IPC byte streams (`ipc.new_stream`), with graceful dictionary fallbacks for non-Arrow runtimes."
+}

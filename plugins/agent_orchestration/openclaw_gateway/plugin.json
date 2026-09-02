@@ -1,0 +1,105 @@
+{
+  "name": "plugin.openclaw_gateway",
+  "version": "1.0.0",
+  "description": "WebSocket JSON-RPC gateway bridge connecting Harness agents to OpenClaw control plane, session placement, and channel routing.",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "entrypoints": [
+    {
+      "name": "openclaw_gateway_connect",
+      "description": "Connects to an OpenClaw Gateway instance over WebSocket and verifies pairing credentials.",
+      "parameters": [
+        {
+          "name": "gateway_url",
+          "type": "string",
+          "description": "WebSocket endpoint URL for OpenClaw Gateway (e.g. ws://127.0.0.1:18789)",
+          "required": true
+        },
+        {
+          "name": "token",
+          "type": "string",
+          "description": "Optional authentication or pairing token",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "openclaw_gateway_list_sessions",
+      "description": "Lists active session trees and status from the OpenClaw Gateway session catalog.",
+      "parameters": []
+    },
+    {
+      "name": "openclaw_gateway_create_session",
+      "description": "Creates a new session placement on OpenClaw Gateway with specified channel and permission mode.",
+      "parameters": [
+        {
+          "name": "channel",
+          "type": "string",
+          "description": "Target channel name (cli, slack, telegram, discord, web, a2a)",
+          "required": false
+        },
+        {
+          "name": "permission_mode",
+          "type": "string",
+          "description": "Permission mode: 'auto', 'prompt', 'strict', 'read_only'",
+          "required": false
+        },
+        {
+          "name": "metadata",
+          "type": "object",
+          "description": "Optional metadata dictionary to attach to session",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "openclaw_gateway_call_tool",
+      "description": "Dispatches a tool execution request through the OpenClaw Gateway runtime.",
+      "parameters": [
+        {
+          "name": "session_id",
+          "type": "string",
+          "description": "Active session identifier",
+          "required": true
+        },
+        {
+          "name": "tool_name",
+          "type": "string",
+          "description": "Name of the tool to execute on the gateway",
+          "required": true
+        },
+        {
+          "name": "arguments",
+          "type": "object",
+          "description": "Tool argument parameters",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "openclaw_gateway_send_message",
+      "description": "Routes a message to external messaging channels (Slack, Discord, Telegram, etc.) via OpenClaw Gateway.",
+      "parameters": [
+        {
+          "name": "channel",
+          "type": "string",
+          "description": "Target channel name",
+          "required": true
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "description": "Text message content to dispatch",
+          "required": true
+        },
+        {
+          "name": "recipient_id",
+          "type": "string",
+          "description": "Optional specific user or channel identifier",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

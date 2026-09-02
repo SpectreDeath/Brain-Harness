@@ -259,3 +259,185 @@ async def disable_all_plugins(
         return cast(list[str], disabled)
 
 
+# --- Click CLI adapters ---
+import click
+from harness.commands._utils import _run_async
+
+
+@click.group("plugin")
+def plugin_group() -> None:
+    """Manage plugins."""
+
+
+@plugin_group.command("add")
+@click.argument("source")
+@click.option("--ref", default="main", help="Git ref (branch/tag) to fetch")
+@click.option("--force", is_flag=True, help="Re-download even if cached")
+@click.option("--token", envvar="GITHUB_TOKEN", help="GitHub API token")
+def plugin_add(source: str, ref: str, force: bool, token: str | None) -> None:
+    """Fetch a GitHub repository and register it as a plugin.
+
+    SOURCE can be a GitHub URL, owner/repo shorthand, or local ZIP path.
+    """
+    click.echo(f"⟳ Ingesting plugin from {source}...")
+    plugin, manifest = _run_async(add_plugin(source, ref=ref, force=force, token=token))
+
+    if manifest:
+        click.echo(f"  ✓ Manifest: {manifest.name}@{manifest.version}")
+        click.echo(f"    Language:    {manifest.language}")
+        click.echo(f"    Entrypoint:  {manifest.entrypoint or '(auto-detect)'}")
+        click.echo(f"    Isolation:   {manifest.isolation.value}")
+        click.echo(f"    Entrypoints: {len(manifest.entrypoints)} functions found")
+
+        if manifest.dependencies:
+            click.echo(f"    Dependencies: {', '.join(manifest.dependencies[:5])}")
+            if len(manifest.dependencies) > 5:
+                click.echo(f"      ... and {len(manifest.dependencies) - 5} more")
+
+    click.echo(f"\n✓ Plugin '{plugin.name}' added successfully!")
+    click.echo("  Run 'harness plugin list' to see all plugins")
+
+
+@plugin_group.command("list")
+def plugin_list() -> None:
+    """List all installed plugins."""
+    cached = list_plugins()
+
+    if not cached:
+        click.echo("No plugins installed.")
+        click.echo("Run 'harness plugin add <github-url>' to add one.")
+        return
+
+    click.echo(f"{'Name':<30} {'Manifest':<12} {'Path'}")
+    click.echo("─" * 80)
+    for entry in cached:
+        has_manifest = "✓" if entry["has_manifest"] else "✗"
+        click.echo(f"{entry['name']:<30} {has_manifest:<12} {entry['path']}")
+
+    click.echo(f"\nTotal: {len(cached)} plugin(s)")
+
+
+@plugin_group.command("remove")
+@click.argument("name")
+@click.confirmation_option(prompt="Are you sure you want to remove this plugin?")
+def plugin_remove(name: str) -> None:
+    """Remove a cached plugin."""
+    if remove_plugin(name):
+        click.echo(f"✓ Removed plugin '{name}'")
+    else:
+        click.echo(f"✗ Plugin '{name}' not found")
+
+
+@plugin_group.command("inspect")
+@click.argument("source")
+def plugin_inspect(source: str) -> None:
+    """Inspect a plugin directory and show its manifest card."""
+    try:
+        manifest = inspect_plugin(source)
+    except FileNotFoundError:
+        click.echo(f"✗ Not found: {source}")
+        return
+
+    click.echo(manifest.format_card())
+
+
+@plugin_group.command("info")
+@click.argument("name")
+def plugin_info(name: str) -> None:
+    """Show the standardized summary card for an installed plugin."""
+    manifest = get_plugin_manifest(name)
+    if not manifest:
+        click.echo(f"✗ Plugin '{name}' not found")
+        return
+
+    click.echo(manifest.format_card())
+    if manifest.entrypoints:
+        click.echo("\nSample Skills / Tools:")
+        for ep in manifest.entrypoints[:10]:
+            params = ", ".join(p.name for p in ep.parameters)
+            click.echo(f"  * {ep.name}({params})")
+            if ep.description:
+                click.echo(f"      {ep.description[:80]}")
+    click.echo("\nRun 'harness plugin guide " + name + "' to view the Quick Start Guide")
+
+
+@plugin_group.command("card")
+@click.argument("name")
+def plugin_card(name: str) -> None:
+    """Show the standardized summary card for an installed plugin."""
+    manifest = get_plugin_manifest(name)
+    if not manifest:
+        click.echo(f"✗ Plugin '{name}' not found")
+        return
+    click.echo(manifest.format_card())
+
+
+@plugin_group.command("guide")
+@click.argument("name")
+def plugin_guide(name: str) -> None:
+    """Show the Quick Start and Agent Usage Guide for an installed plugin."""
+    result = get_plugin_guide(name)
+    if not result:
+        click.echo(f"✗ Plugin '{name}' not found")
+        return
+
+    manifest, guide = result
+    click.echo(guide)
+
+
+@plugin_group.command("enable")
+@click.argument("name")
+def plugin_enable(name: str) -> None:
+    """Enable a plugin by name or pattern."""
+    matched = _run_async(enable_plugin_by_name(name))
+    if matched:
+        for pname in matched:
+            click.echo(f"✓ Enabled plugin '{pname}'")
+    else:
+        click.echo(f"✗ Plugin '{name}' not found")
+
+
+@plugin_group.command("disable")
+@click.argument("name")
+def plugin_disable(name: str) -> None:
+    """Disable a plugin by name or pattern."""
+    matched = _run_async(disable_plugin_by_name(name))
+    if matched:
+        for pname in matched:
+            click.echo(f"✓ Disabled plugin '{pname}'")
+    else:
+        click.echo(f"✗ Plugin '{name}' not found")
+
+
+@plugin_group.command("enable-all")
+def plugin_enable_all() -> None:
+    """Enable all discovered plugins."""
+    results = _run_async(enable_all_plugins())
+    click.echo(f"✓ Enabled {sum(results.values())}/{len(results)} plugins")
+
+
+@plugin_group.command("disable-all")
+@click.option("--keep-core/--all", default=True, help="Keep core infrastructure services active")
+def plugin_disable_all(keep_core: bool) -> None:
+    """Disable all active plugins."""
+    disabled = _run_async(disable_all_plugins(keep_core=keep_core))
+    click.echo(f"✓ Disabled {len(disabled)} plugins")
+
+
+__all__ = [
+    "add_plugin",
+    "disable_all_plugins",
+    "disable_plugin",
+    "disable_plugin_by_name",
+    "enable_all_plugins",
+    "enable_plugin",
+    "enable_plugin_by_name",
+    "get_plugin_guide",
+    "get_plugin_manifest",
+    "inspect_plugin",
+    "list_plugins",
+    "plugin_group",
+    "remove_plugin",
+]
+
+

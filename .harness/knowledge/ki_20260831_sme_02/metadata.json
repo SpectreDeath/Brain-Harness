@@ -1,0 +1,43 @@
+{
+  "id": "ki_20260831_sme_02",
+  "title": "Agentic Neural Network (ANN) Textual Backpropagation & Momentum Smoothing",
+  "source_target": "D:\\GitHub\\projects\\SME",
+  "detected_format": "git_repository",
+  "timestamp": "2026-08-31T16:20:00Z",
+  "isnad": {
+    "decision_id": "dec_20260831_sme_02",
+    "claims": [
+      {
+        "assertion": "Computing global loss gradients (G_global) and local layerwise node/edge/prompt gradients (G_local) from execution trajectories enables multi-agent DAGs to self-optimize and self-repair without manual prompt engineering.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "src/logic/textual_gradient.py#L15-L160",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "gateway/momentum_buffer.py#L15-L65",
+            "verified": true
+          },
+          {
+            "node_type": "visual_brief",
+            "uri": "C:/Users/spectre/AppData/Local/Temp/data-topology-review-20260831-162000.html",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "ann_backprop",
+    "textual_gradient",
+    "momentum_smoothing",
+    "self_evolving_agents",
+    "multi_agent_optimization",
+    "repo_introspection"
+  ],
+  "context": "Agentic Neural Network (ANN) Textual Backpropagation & Momentum Smoothing",
+  "distilled_learning": "# KI: Agentic Neural Network (ANN) Textual Backpropagation & Momentum Smoothing\n\n## Operational Summary\nTreating a multi-agent workflow DAG as an Agentic Neural Network allows execution errors to be translated into structured textual loss signals. Global gradients identify failed layers and inter-layer structural updates, while local layerwise gradients generate refined prompt instructions and insert specialized validator nodes. Applying momentum velocity smoothing prevents oscillatory prompt degradation across iterative optimization loops."
+}

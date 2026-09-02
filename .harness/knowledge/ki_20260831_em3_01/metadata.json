@@ -1,0 +1,39 @@
+{
+  "id": "ki_20260831_em3_01",
+  "title": "Pre-Execution AST Security Visitor for Dynamic Code Sandboxing",
+  "source_target": "D:\\GitHub\\projects\\em-cubed",
+  "detected_format": "git_repository",
+  "timestamp": "2026-08-31T19:00:00Z",
+  "isnad": {
+    "decision_id": "dec_20260831_em3_01",
+    "claims": [
+      {
+        "assertion": "Pre-execution static AST analysis via ast.NodeVisitor intercepts forbidden imports, dangerous built-in invocations, and unauthorized OS subprocess execution before dynamic code reaches the interpreter.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "D:/GitHub/projects/em-cubed/src/em_cubed/security/ast_scanner.py#L30-L150",
+            "commit": "3a8fdaeb",
+            "verified": true
+          },
+          {
+            "node_type": "visual_brief",
+            "uri": "C:/Users/spectre/AppData/Local/Temp/repo-reader-20260831-185900.html",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "security",
+    "ast_analysis",
+    "sandboxing",
+    "code_generation",
+    "em_cubed",
+    "repo_introspection"
+  ],
+  "context": "Pre-Execution AST Security Visitor for Dynamic Code Sandboxing",
+  "distilled_learning": "# KI: Pre-Execution AST Security Visitor for Dynamic Code Sandboxing\n\n## Operational Summary\nAutonomous coding harnesses and LLM-generated skill execution environments require static code gating before evaluation. Em-Cubed enforces compile-time AST inspection (`ASTSecurityScanner`) targeting blocked modules (`os`, `sys`, `subprocess`, `ctypes`, `pickle`, `importlib`) and forbidden built-ins (`eval`, `exec`, `__import__`, `open`), returning structured violation reports with line/column coordinates and severity levels prior to interpreter evaluation."
+}

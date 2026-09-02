@@ -1,0 +1,39 @@
+{
+  "id": "ki_20260831_strategify_03",
+  "title": "Multilateral Alliance Hypergraph & Defense Treaty Modeling",
+  "source_target": "D:\\GitHub\\projects\\Strategify",
+  "detected_format": "python_simulation_harness",
+  "timestamp": "2026-08-31T23:15:00Z",
+  "isnad": {
+    "decision_id": "dec_20260831_strategify_03",
+    "claims": [
+      {
+        "assertion": "MultilateralAllianceTracker models complex multi-state defense pacts and security coalitions as high-order N-ary hyperedges via HypergraphStore, computing Jaccard/overlap portfolio metrics and exporting bipartite graphs to GEXF XML.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "strategify/hypergraph/alliance.py#L1-L60",
+            "verified": true
+          },
+          {
+            "node_type": "visual_brief",
+            "uri": "C:/Users/spectre/AppData/Local/Temp/data-topology-review-20260831-231500.html",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "hypergraph",
+    "alliances",
+    "treaties",
+    "jaccard_similarity",
+    "gexf",
+    "em_cubed",
+    "strategify"
+  ],
+  "context": "Multilateral Alliance Hypergraph & Defense Treaty Modeling",
+  "distilled_learning": "# KI: Multilateral Alliance Hypergraph & Defense Treaty Modeling\n\n## Operational Summary\nPairwise relational graphs fail to capture true multilateral defense agreements (e.g. NATO Article 5 or multilateral coalitions) where obligations bind 3+ nations simultaneously. Using N-ary hyperedges via `HypergraphStore` preserves the atomic coalition identity. Jaccard similarity and overlap coefficients across alliance portfolios quantify diplomatic alignment, while GEXF export enables bipartite graph visualization in Gephi."
+}

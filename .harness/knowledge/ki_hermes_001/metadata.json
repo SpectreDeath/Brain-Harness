@@ -1,0 +1,18 @@
+{
+  "id": "ki_hermes_001",
+  "title": "Closed Learning Loop & Autonomous Skill Formation",
+  "category": "agent_orchestration",
+  "tags": [
+    "learning-loop",
+    "skill-formation",
+    "openskills",
+    "trajectory"
+  ],
+  "source_repo": "NousResearch/hermes-agent",
+  "provenance": [
+    "agent/learning_loop.py",
+    "agent/nudges.py",
+    "agent/skill_creation.py"
+  ],
+  "created_at": "2026-09-02T07:03:35Z"
+}

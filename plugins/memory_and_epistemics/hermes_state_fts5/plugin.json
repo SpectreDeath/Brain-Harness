@@ -1,0 +1,91 @@
+{
+  "name": "domain.hermes_state_fts5",
+  "version": "1.0.0",
+  "description": "Hermes SQLite WAL state storage with FTS5 search, parent-child session compression splitting, and cross-session recall",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "category": "memory_and_epistemics",
+  "provides": [
+    "service.hermes_state_fts5"
+  ],
+  "requires": [],
+  "dependencies": [],
+  "entrypoints": [
+    {
+      "name": "fts5_search_messages",
+      "description": "Execute fast full-text search across historical conversation trajectories",
+      "parameters": [
+        {
+          "name": "query",
+          "type": "string",
+          "description": "Search query terms",
+          "required": true
+        },
+        {
+          "name": "session_id",
+          "type": "string",
+          "description": "Optional session filter",
+          "required": false,
+          "default": ""
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "description": "Max results to return",
+          "required": false,
+          "default": 10
+        }
+      ]
+    },
+    {
+      "name": "fork_session_tree",
+      "description": "Fork session history into a child branch with parent_session_id compression linkage",
+      "parameters": [
+        {
+          "name": "parent_session_id",
+          "type": "string",
+          "description": "Parent session identifier",
+          "required": true
+        },
+        {
+          "name": "compression_checkpoint",
+          "type": "string",
+          "description": "Summarized state or checkpoint hash",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "compress_session_slice",
+      "description": "Apply AST/textual compression to a window of messages to bound token context",
+      "parameters": [
+        {
+          "name": "session_id",
+          "type": "string",
+          "description": "Target session ID",
+          "required": true
+        },
+        {
+          "name": "window_size",
+          "type": "integer",
+          "description": "Number of recent turns to retain uncompressed",
+          "required": false,
+          "default": 5
+        }
+      ]
+    },
+    {
+      "name": "query_session_provenance",
+      "description": "Retrieve full lineage and parent DAG coordinates for a given message or checkpoint",
+      "parameters": [
+        {
+          "name": "message_id",
+          "type": "string",
+          "description": "Target message or checkpoint ID",
+          "required": true
+        }
+      ]
+    }
+  ]
+}

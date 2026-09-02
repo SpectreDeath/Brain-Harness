@@ -1,0 +1,16 @@
+{
+  "name": "domain.antigravity_trigger_runtime",
+  "origin_repo": "https://github.com/google/antigravity-sdk-python",
+  "git_commit": "52ea994",
+  "source_paths": [
+    "google/antigravity/triggers/trigger_runner.py",
+    "google/antigravity/triggers/helpers.py"
+  ],
+  "archetype": "tool_provider",
+  "forged_at": "2026-09-02T19:40:39Z",
+  "author": "Spectre",
+  "invariants": [
+    "Triggers must operate asynchronously without thread-sleep or busy loops.",
+    "Trigger activations must notify agent loops via async queues."
+  ]
+}

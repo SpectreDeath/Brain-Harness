@@ -1,0 +1,44 @@
+{
+  "id": "ki_20260831_cellcog_03",
+  "title": "Pre-Flight File Integrity Verification & Transparent Blob Path Translation",
+  "source_target": "D:/GitHub/cloned/CellCog/cellcog_python-main/cellcog_python-main",
+  "detected_format": "python_sdk_and_daemon",
+  "timestamp": "2026-08-31T11:00:00Z",
+  "isnad": {
+    "decision_id": "dec_20260831_cellcog_03",
+    "claims": [
+      {
+        "assertion": "SDK tool invocations that upload files to paid cloud endpoints must perform pre-flight local file existence checks and raise immediate client-side exceptions (FileUploadError) before network calls to prevent billing waste on invalid references.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "D:/GitHub/cloned/CellCog/cellcog_python-main/cellcog_python-main/cellcog/files.py#L30-L120",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "D:/GitHub/cloned/CellCog/cellcog_python-main/cellcog_python-main/cellcog/chat.py#L45-L90",
+            "verified": true
+          },
+          {
+            "node_type": "visual_brief",
+            "uri": "C:/Users/spectre/AppData/Local/Temp/repo-reader-20260831-110000.html",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "file_integrity",
+    "credit_protection",
+    "blob_storage",
+    "path_translation",
+    "fail_early",
+    "cellcog",
+    "repo_introspection"
+  ],
+  "context": "Pre-Flight File Integrity Verification & Transparent Blob Path Translation",
+  "distilled_learning": "# KI: Pre-Flight File Integrity Verification & Transparent Blob Path Translation\n\n## Operational Summary\nWhen AI agents invoke external multimodal or document generation services with referenced local files, referencing missing or non-existent files burns API credits on doomed remote workflows. Performing strict pre-flight existence checks and annotating transformed payload tags with external_local_path metadata prevents billing loss and enables transparent bi-directional path restoration."
+}

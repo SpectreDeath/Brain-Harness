@@ -1,0 +1,44 @@
+{
+  "id": "ki_self_20260901_03",
+  "title": "Stateless MCP Scientific Bridge Isolation",
+  "source_target": "d:\\GitHub\\projects\\Brain Harness\\src\\harness\\mcp",
+  "detected_format": "mcp_server_protocol_2026_07_28",
+  "timestamp": "2026-09-01T17:35:00Z",
+  "isnad": {
+    "decision_id": "dec_20260901_self_03",
+    "claims": [
+      {
+        "assertion": "Heavy scientific and simulation domain capabilities (e.g. SEIR ODE parameter estimation, federal CDC/NIH data querying, SWI-Prolog epistemic validation, Clojure MCTS branching) must be encapsulated behind stateless Model Context Protocol (MCP 2026-07-28) servers with JSONSchema validation to prevent state mutation leaks and bounded token bloat in core agent loops.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "src/harness/mcp/server.py#L1-L150",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "d:/GitHub/projects/Strategify/strategify/plugins/mcp_bridge.py#L1-L210",
+            "verified": true
+          },
+          {
+            "node_type": "visual_brief",
+            "uri": "C:/Users/spectre/AppData/Local/Temp/harness-reflection-20260901-173500.html",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "plugin_seams",
+    "mcp_2026_07_28",
+    "scientific_bridges",
+    "json_schema",
+    "stateless_tools",
+    "endogenous_memory",
+    "self_reflection"
+  ],
+  "context": "Stateless Model Context Protocol (MCP) Scientific Bridge & Simulation Isolation",
+  "distilled_learning": "# KI: Stateless MCP Scientific Bridge Isolation\n\n## Operational Summary\nCoupling heavy scientific packages (SciPy ODE integrators, NetworkX flow algorithms, PySwip Prolog bindings, Leiningen Clojure MCTS subprocesses, CDC/NIH REST clients) directly into the agent kernel or ReAct step loops introduces fatal architectural friction:\n- State mutation across sequential steps leads to unpredictable model observations.\n- Heavy C-extensions or external interpreters can destabilize asynchronous Python runtimes.\n\nExposing these domain subsystems via stateless Model Context Protocol (MCP spec version 2026-07-28) servers provides:\n1. **Stateless Tool Invocations**: Input payloads are strictly validated against typed JSONSchema contracts.\n2. **Subprocess Sandboxing**: Heavy computational solvers execute in dedicated subprocesses, returning serializable observation payloads.\n3. **Cross-Language Interoperability**: Language-agnostic bridges (Prolog, Clojure, TypeScript) integrate seamlessly into Python agent loops without shared memory hazards.\n\n## Invariant Rule\nAll heavy scientific pipelines, foreign language interpreters, and external API gateways must be exposed via stateless MCP 2026-07-28 tool servers with strict JSONSchema validation rather than in-process stateful singleton bindings."
+}
