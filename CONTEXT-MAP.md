@@ -30,6 +30,7 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - [`mind-reader`](file:///.agents/skills/mind-reader/SKILL.md) — Introspection and heuristic extraction from attached brain trajectories.
   - [`repo-reader`](file:///.agents/skills/repo-reader/SKILL.md) — Architectural pattern and commit trajectory introspection from Git repositories.
   - [`harness-reflector`](file:///.agents/skills/harness-reflector/SKILL.md) — Autobiographical reflection and heuristic distillation from internal reports and execution logs.
+  - [`epistemic-memory-lifecycle`](file:///.agents/skills/epistemic-memory-lifecycle/SKILL.md) — Bounded 8-state knowledge item promotion pipeline, 6-class memory partitioning, and Theseus continuity audit.
 
 ### 3. [Data Engineering](./docs/domains/data-engineering/CONTEXT.md)
 * **Scope**: Curated tabular ingestion, out-of-core statistical profiling, schema transformation, and relational database execution.
