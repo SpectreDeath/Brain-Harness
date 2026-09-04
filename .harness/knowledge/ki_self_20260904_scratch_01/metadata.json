@@ -1,0 +1,21 @@
+{
+  "id": "ki_self_20260904_scratch_01",
+  "title": "Headless Git Authentication, Credential Helper Exclamation Invariant & In-Memory Redaction",
+  "category": "security_and_forensics",
+  "tags": [
+    "git",
+    "authentication",
+    "credentials",
+    "headless",
+    "runner-isolation",
+    "redaction",
+    "endogenous_memory"
+  ],
+  "source_repo": "Brain Harness Execution History",
+  "provenance": [
+    "scratch/git_push_with_token.py",
+    "scratch/git_push_noninteractive.py",
+    "AGENTS.md#Rule15"
+  ],
+  "created_at": "2026-09-04T15:04:00Z"
+}
