@@ -22,8 +22,14 @@ from harness.events.bus import EVENT_BUS_KEY, EventBus
 from harness.events.types import EventType, agent_event
 from harness.kernel.context import ServiceContext, ServiceKey
 from harness.plugins.base import HarnessPlugin
+from harness.services.agent_graph import (
+    AGENT_GRAPH_STORE_KEY,
+    AgentExecutionGraphService,
+    ThreadSpawnStatus,
+)
 
 logger = structlog.get_logger()
+
 
 AGENT_SESSION_MANAGER_KEY: ServiceKey[AgentSessionManager] = ServiceKey("agent.session_manager")
 
@@ -459,6 +465,25 @@ class AgentSessionScope:
     async def finalize(self) -> AgentSession:
         """Persist final state and emit terminal telemetry event."""
         await self.manager.store.save(self.session)
+
+        # Update thread graph if available (Rule 17)
+        graph = self.manager.graph_store
+        if graph is not None:
+            st = "completed" if self.session.status in ("completed", "max_steps_reached") else "failed"
+            edge_st = ThreadSpawnStatus.COMPLETED if st == "completed" else ThreadSpawnStatus.FAILED
+            graph.update_thread_status(
+                node_id=self.session.session_id,
+                status=st,
+                tokens_used=self.session.total_tokens,
+                completed=True,
+            )
+            if self.session.parent_session_id:
+                graph.close_spawn_edge(
+                    parent_id=self.session.parent_session_id,
+                    child_id=self.session.session_id,
+                    status=edge_st,
+                )
+
         if self.manager.event_bus:
             evt_type = (
                 EventType.AGENT_TASK_COMPLETED
@@ -486,9 +511,22 @@ class AgentSessionManager:
         self,
         store: AgentSessionStore | None = None,
         event_bus: EventBus | None = None,
+        context: ServiceContext | None = None,
+        graph_store: AgentExecutionGraphService | None = None,
     ) -> None:
         self.store = store or InMemoryAgentSessionStore()
         self.event_bus = event_bus
+        self.context = context
+        self._graph_store = graph_store
+
+    @property
+    def graph_store(self) -> AgentExecutionGraphService | None:
+        """Resolve authoritative AgentExecutionGraphService from store or context."""
+        if self._graph_store is not None:
+            return self._graph_store
+        if self.context is not None:
+            return self.context.optional(AGENT_GRAPH_STORE_KEY)
+        return None
 
     @asynccontextmanager
     async def session_scope(
@@ -550,6 +588,17 @@ class AgentSessionManager:
             if parent:
                 parent.add_child_session(sid)
                 await self.store.save(parent)
+
+        # Wire into authoritative Thread DAG lifecycle (Rule 17)
+        if self.graph_store is not None:
+            self.graph_store.register_thread(
+                node_id=sid,
+                role=role or "agent",
+                task=task,
+                parent_id=parent_session_id,
+                metadata={"node_id": node_id, **(metadata or {})},
+            )
+
 
         logger.info(
             "Agent session created",
@@ -817,6 +866,21 @@ class AgentSessionManager:
         await self.store.save(session)
         logger.info("Agent session completed", session_id=session_id)
 
+        # Wire into authoritative Thread DAG lifecycle (Rule 17)
+        if self.graph_store is not None:
+            self.graph_store.update_thread_status(
+                node_id=session_id,
+                status="completed",
+                tokens_used=total_tokens,
+                completed=True,
+            )
+            if session.parent_session_id:
+                self.graph_store.close_spawn_edge(
+                    parent_id=session.parent_session_id,
+                    child_id=session_id,
+                    status=ThreadSpawnStatus.COMPLETED,
+                )
+
         if self.event_bus:
             await self.event_bus.emit(
                 agent_event(
@@ -839,6 +903,20 @@ class AgentSessionManager:
         session.mark_error(error_message)
         await self.store.save(session)
         logger.warning("Agent session failed", session_id=session_id, error=error_message)
+
+        # Wire into authoritative Thread DAG lifecycle (Rule 17)
+        if self.graph_store is not None:
+            self.graph_store.update_thread_status(
+                node_id=session_id,
+                status="failed",
+                completed=True,
+            )
+            if session.parent_session_id:
+                self.graph_store.close_spawn_edge(
+                    parent_id=session.parent_session_id,
+                    child_id=session_id,
+                    status=ThreadSpawnStatus.FAILED,
+                )
 
         if self.event_bus:
             await self.event_bus.emit(
@@ -920,26 +998,33 @@ class AgentSessionPlugin(HarnessPlugin):
         if not self._ctx:
             return
 
-        event_bus: EventBus | None = self._ctx.optional(EVENT_BUS_KEY) if hasattr(self._ctx, "optional") else None
+        event_bus: EventBus | None = self._ctx.optional(EVENT_BUS_KEY)
         store: AgentSessionStore
         if self._custom_store is not None:
             store = self._custom_store
         else:
             from harness.services.storage import STORAGE_SERVICE_KEY
 
-            storage = self._ctx.optional(STORAGE_SERVICE_KEY) if hasattr(self._ctx, "optional") else None
+            storage = self._ctx.optional(STORAGE_SERVICE_KEY)
             if storage is not None:
                 store = StorageBackedSessionStore(storage)
             else:
                 store = InMemoryAgentSessionStore()
 
-        self._manager = AgentSessionManager(store=store, event_bus=event_bus)
+        graph_store = self._ctx.optional(AGENT_GRAPH_STORE_KEY)
+        self._manager = AgentSessionManager(
+            store=store,
+            event_bus=event_bus,
+            context=self._ctx,
+            graph_store=graph_store,
+        )
         self._ctx.provide(
             AGENT_SESSION_MANAGER_KEY,
             self._manager,
             provider=self.name,
             allow_override=True,
         )
+
         logger.info(
             "Agent session manager enabled",
             store=store.__class__.__name__,

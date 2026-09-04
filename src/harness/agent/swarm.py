@@ -25,10 +25,16 @@ from harness.events.types import EventType, HarnessEvent
 from harness.kernel.context import ServiceContext, ServiceKey
 from harness.kernel.graph import DependencyGraph, GraphCycleError
 from harness.plugins.base import HarnessPlugin
+from harness.services.agent_graph import (
+    AGENT_GRAPH_STORE_KEY,
+    AgentExecutionGraphService,
+    ThreadSpawnStatus,
+)
 
 logger = structlog.get_logger()
 
 SWARM_COORDINATOR_KEY: ServiceKey[SwarmCoordinator] = ServiceKey("agent.swarm")
+
 
 
 @dataclass
@@ -483,16 +489,26 @@ class SwarmCoordinator:
         execution_plan = dag.get_execution_plan()
         accumulated_results: dict[str, Any] = {}
 
-        # Look up optional AgentSessionManager for persistent hierarchical execution tracking
-        session_mgr: AgentSessionManager | None = (
-            self.context.optional(AGENT_SESSION_MANAGER_KEY)
-            if hasattr(self.context, "optional")
-            else None
-        )
+        # Look up optional AgentSessionManager and AgentExecutionGraphService
+        session_mgr: AgentSessionManager | None = self.context.optional(AGENT_SESSION_MANAGER_KEY)
+        graph_svc: AgentExecutionGraphService | None = self.context.optional(AGENT_GRAPH_STORE_KEY)
+
         if session_mgr is not None:
             await session_mgr.create_session(
                 task=objective,
                 session_id=actual_run_id,
+                metadata={
+                    "is_swarm": True,
+                    "nodes_total": len(dag.nodes),
+                    "waves_total": len(execution_plan),
+                    **(context or {}),
+                },
+            )
+        elif graph_svc is not None:
+            graph_svc.register_thread(
+                node_id=actual_run_id,
+                role="swarm_coordinator",
+                task=objective,
                 metadata={
                     "is_swarm": True,
                     "nodes_total": len(dag.nodes),
@@ -537,7 +553,7 @@ class SwarmCoordinator:
                     child_sid = f"{actual_run_id}_{node_id}"
                     n_start = time.time()
 
-                    # Create child session in hierarchical session manager if present
+                    # Create child session in hierarchical session manager or graph service
                     if session_mgr is not None:
                         await session_mgr.create_child_session(
                             parent_session_id=actual_run_id,
@@ -550,6 +566,18 @@ class SwarmCoordinator:
                                 "allocated_tokens": node.allocated_tokens,
                             },
                         )
+                    elif graph_svc is not None:
+                        graph_svc.register_thread(
+                            node_id=child_sid,
+                            role=node.role,
+                            task=node.task,
+                            parent_id=actual_run_id,
+                            metadata={
+                                "node_id": node.id,
+                                "dependencies": list(node.dependencies),
+                                "allocated_tokens": node.allocated_tokens,
+                            },
+                        )
 
                     # Check budget
                     if governor.is_exhausted():
@@ -558,14 +586,22 @@ class SwarmCoordinator:
                         n_end = time.time()
                         if session_mgr is not None:
                             await session_mgr.fail_session(child_sid, node.error)
+                        elif graph_svc is not None:
+                            graph_svc.update_thread_status(
+                                node_id=child_sid,
+                                status="failed",
+                                completed=True,
+                            )
+                            graph_svc.close_spawn_edge(
+                                parent_id=actual_run_id,
+                                child_id=child_sid,
+                                status=ThreadSpawnStatus.FAILED,
+                            )
                         return node_id, None, 0, node.error, n_start, n_end
 
                     # Collect upstream context from dependencies with optional compaction
-                    context_optimizer: AgentContextOptimizer | None = (
-                        self.context.optional(AGENT_CONTEXT_OPTIMIZER_KEY)
-                        if hasattr(self.context, "optional")
-                        else None
-                    )
+                    context_optimizer: AgentContextOptimizer | None = self.context.optional(AGENT_CONTEXT_OPTIMIZER_KEY)
+
                     upstream_ctx: dict[str, Any] = {}
                     for dep in node.dependencies:
                         if dep in accumulated_results:
@@ -615,7 +651,7 @@ class SwarmCoordinator:
                         governor.record_usage(node.id, tokens_used)
                         n_end = time.time()
 
-                        # Update child session in session manager
+                        # Update child session in session manager or graph service
                         if session_mgr is not None:
                             if node.status == "completed":
                                 await session_mgr.complete_session(
@@ -628,6 +664,20 @@ class SwarmCoordinator:
                                     child_sid,
                                     error_message=node.error or "Node execution failed",
                                 )
+                        elif graph_svc is not None:
+                            st = "completed" if node.status == "completed" else "failed"
+                            edge_st = ThreadSpawnStatus.COMPLETED if st == "completed" else ThreadSpawnStatus.FAILED
+                            graph_svc.update_thread_status(
+                                node_id=child_sid,
+                                status=st,
+                                tokens_used=tokens_used,
+                                completed=True,
+                            )
+                            graph_svc.close_spawn_edge(
+                                parent_id=actual_run_id,
+                                child_id=child_sid,
+                                status=edge_st,
+                            )
 
                         return node_id, node.result, tokens_used, None, n_start, n_end
                     except Exception as e:
@@ -637,6 +687,17 @@ class SwarmCoordinator:
                         logger.error("Swarm node execution failed", run_id=actual_run_id, node=node_id, error=str(e))
                         if session_mgr is not None:
                             await session_mgr.fail_session(child_sid, str(e))
+                        elif graph_svc is not None:
+                            graph_svc.update_thread_status(
+                                node_id=child_sid,
+                                status="failed",
+                                completed=True,
+                            )
+                            graph_svc.close_spawn_edge(
+                                parent_id=actual_run_id,
+                                child_id=child_sid,
+                                status=ThreadSpawnStatus.FAILED,
+                            )
                         return node_id, None, tokens_used, str(e), n_start, n_end
 
                 # Execute wave concurrently
@@ -756,6 +817,14 @@ class SwarmCoordinator:
                         actual_run_id,
                         error_message=f"Swarm completed with partial failures: {task_status}",
                     )
+            elif graph_svc is not None:
+                st = "completed" if all_success else "failed"
+                graph_svc.update_thread_status(
+                    node_id=actual_run_id,
+                    status=st,
+                    tokens_used=governor.tokens_consumed,
+                    completed=True,
+                )
 
             self._emit(
                 EventType.AGENT_TASK_COMPLETED if all_success else EventType.AGENT_TASK_FAILED,
@@ -779,11 +848,7 @@ class SwarmCoordinator:
         if run_id in self._run_history:
             return self._run_history[run_id]
 
-        session_mgr: AgentSessionManager | None = (
-            self.context.optional(AGENT_SESSION_MANAGER_KEY)
-            if hasattr(self.context, "optional")
-            else None
-        )
+        session_mgr: AgentSessionManager | None = self.context.optional(AGENT_SESSION_MANAGER_KEY)
         if session_mgr is not None:
             sess = await session_mgr.get_session(run_id)
             if sess and "swarm_run" in sess.metadata:
@@ -803,11 +868,7 @@ class SwarmCoordinator:
 
     async def get_run_session_tree(self, run_id: str) -> dict[str, Any] | None:
         """Retrieve full hierarchical execution session tree for a swarm run."""
-        session_mgr: AgentSessionManager | None = (
-            self.context.optional(AGENT_SESSION_MANAGER_KEY)
-            if hasattr(self.context, "optional")
-            else None
-        )
+        session_mgr: AgentSessionManager | None = self.context.optional(AGENT_SESSION_MANAGER_KEY)
         if session_mgr is not None:
             return await session_mgr.get_session_tree(run_id)
         run = self.get_run(run_id)
@@ -823,11 +884,7 @@ class SwarmCoordinator:
         results: list[dict[str, Any]] = [r.to_dict() for r in self._run_history.values()]
         seen_ids = {r["run_id"] for r in results if "run_id" in r}
 
-        session_mgr: AgentSessionManager | None = (
-            self.context.optional(AGENT_SESSION_MANAGER_KEY)
-            if hasattr(self.context, "optional")
-            else None
-        )
+        session_mgr: AgentSessionManager | None = self.context.optional(AGENT_SESSION_MANAGER_KEY)
         if session_mgr is not None:
             sessions = await session_mgr.list_sessions(limit=limit * 2)
             for s in sessions:
@@ -839,6 +896,7 @@ class SwarmCoordinator:
                     else:
                         results.append(s.to_dict())
                         seen_ids.add(s.session_id)
+
 
         return results[-limit:] if limit > 0 else results
 

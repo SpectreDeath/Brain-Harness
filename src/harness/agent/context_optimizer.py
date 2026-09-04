@@ -83,7 +83,7 @@ class DefaultContextOptimizer:
         context: ServiceContext | None = None,
     ) -> None:
         self.config = config or ContextOptimizationConfig()
-        self.context = context
+        self.context: ServiceContext = context if context is not None else ServiceContext()
 
     def compact_observation(
         self,
@@ -125,37 +125,37 @@ class DefaultContextOptimizer:
 
         return str(observation)
 
+
     def optimize_messages(
         self,
         messages: list[LLMMessage],
         *,
         config: ContextOptimizationConfig | None = None,
     ) -> list[LLMMessage]:
-        """Apply deterministic windowing and pruning while preserving system and task anchors."""
+        """Apply multi-pass progressive context optimization across conversation history."""
         cfg = config or self.config
         if not cfg.enable_pruning or len(messages) <= cfg.max_total_messages:
             return list(messages)
 
         # Check if an authoritative UnifiedContextPipeline is registered in context
-        if self.context is not None:
+        if self.context.has(UNIFIED_CONTEXT_PIPELINE_KEY):
             try:
-                if hasattr(self.context, "has") and self.context.has(UNIFIED_CONTEXT_PIPELINE_KEY):
-                    ucp = self.context.require(UNIFIED_CONTEXT_PIPELINE_KEY)
-                    dict_msgs = [{"role": m.role, "content": m.content} for m in messages]
-                    req = UnifiedContextRequest(
-                        messages=dict_msgs,
-                        token_budget=cfg.token_budget,
-                        max_observation_chars=cfg.max_observation_chars,
-                        recent_messages_preserve=cfg.recent_messages_preserve,
-                        repo_map_root=cfg.repo_map_root,
-                        repo_map_budget_tokens=cfg.repo_map_budget_tokens,
-                    )
-                    res = ucp.process_context(req)
-                    if res.status == "ok" and res.assembled_messages:
-                        return [
-                            LLMMessage(role=m.get("role", "user"), content=m.get("content", ""))
-                            for m in res.assembled_messages
-                        ]
+                ucp = self.context.require(UNIFIED_CONTEXT_PIPELINE_KEY)
+                dict_msgs = [{"role": m.role, "content": m.content} for m in messages]
+                req = UnifiedContextRequest(
+                    messages=dict_msgs,
+                    token_budget=cfg.token_budget,
+                    max_observation_chars=cfg.max_observation_chars,
+                    recent_messages_preserve=cfg.recent_messages_preserve,
+                    repo_map_root=cfg.repo_map_root,
+                    repo_map_budget_tokens=cfg.repo_map_budget_tokens,
+                )
+                res = ucp.process_context(req)
+                if res.status == "ok" and res.assembled_messages:
+                    return [
+                        LLMMessage(role=m.get("role", "user"), content=m.get("content", ""))
+                        for m in res.assembled_messages
+                    ]
             except Exception as err:
                 logger.debug("unified_pipeline_delegation_fallback", error=str(err))
 
@@ -193,11 +193,7 @@ class DefaultContextOptimizer:
         if not cfg.repo_map_root or not messages:
             return messages
 
-        repo_map_svc: RepoMapService
-        if self.context is not None and hasattr(self.context, "has") and self.context.has(REPO_MAP_SERVICE_KEY):
-            repo_map_svc = self.context.require(REPO_MAP_SERVICE_KEY)
-        else:
-            repo_map_svc = DefaultRepoMapService()
+        repo_map_svc: RepoMapService = self.context.optional(REPO_MAP_SERVICE_KEY) or DefaultRepoMapService()
 
         # Extract query context from last user message if not passed
         eff_query = query_context
