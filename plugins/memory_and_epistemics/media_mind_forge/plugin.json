@@ -1,0 +1,166 @@
+{
+  "name": "plugin.media_mind_forge",
+  "version": "1.0.0",
+  "description": "Cognitive analysis, epistemic distillation, and skill forging engine combining book-to-skill-forge and mind-reader",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "category": "memory_and_epistemics",
+  "author": "Brain Harness Forge Engine",
+  "provides": [
+    "service.media_mind_forge"
+  ],
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "media_mind_forge_analyze",
+      "description": "Execute dual-lens cognitive analysis combining mind-reader and book-to-skill-forge on video transcripts",
+      "parameters": [
+        {
+          "name": "transcript",
+          "type": "string",
+          "description": "Raw transcript text or JSON string",
+          "required": false
+        },
+        {
+          "name": "file_path",
+          "type": "string",
+          "description": "Path to local transcript JSON or text file",
+          "required": false
+        },
+        {
+          "name": "video_url",
+          "type": "string",
+          "description": "YouTube video URL to fetch on the fly",
+          "required": false
+        },
+        {
+          "name": "video_id",
+          "type": "string",
+          "description": "YouTube 11-character video ID",
+          "required": false
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "description": "Optional title or lecture topic",
+          "required": false
+        },
+        {
+          "name": "speaker",
+          "type": "string",
+          "description": "Optional speaker name",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "media_mind_forge_distill_kis",
+      "description": "Extract Knowledge Items (KIs) with epistemic isnad chains from video transcripts",
+      "parameters": [
+        {
+          "name": "transcript",
+          "type": "string",
+          "description": "Raw transcript text or JSON string",
+          "required": false
+        },
+        {
+          "name": "file_path",
+          "type": "string",
+          "description": "Path to transcript file",
+          "required": false
+        },
+        {
+          "name": "video_url",
+          "type": "string",
+          "description": "YouTube video URL",
+          "required": false
+        },
+        {
+          "name": "video_id",
+          "type": "string",
+          "description": "YouTube video ID",
+          "required": false
+        },
+        {
+          "name": "persist_to_storage",
+          "type": "boolean",
+          "description": "Whether to persist extracted KIs into Knowledge Vault",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "media_mind_forge_craft_skill",
+      "description": "Synthesize complete, validated agent skill package (SKILL.md + CARD.md) from media transcript",
+      "parameters": [
+        {
+          "name": "transcript",
+          "type": "string",
+          "description": "Raw transcript text or JSON string",
+          "required": false
+        },
+        {
+          "name": "file_path",
+          "type": "string",
+          "description": "Path to transcript file",
+          "required": false
+        },
+        {
+          "name": "video_url",
+          "type": "string",
+          "description": "YouTube video URL",
+          "required": false
+        },
+        {
+          "name": "video_id",
+          "type": "string",
+          "description": "YouTube video ID",
+          "required": false
+        },
+        {
+          "name": "skill_name",
+          "type": "string",
+          "description": "Target skill directory name (default: ontological-engineering-coach)",
+          "required": false
+        },
+        {
+          "name": "output_dir",
+          "type": "string",
+          "description": "Destination root directory (default: .agents/skills)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "media_mind_forge_visual_brief",
+      "description": "Generate self-contained HTML visual brief report in %TEMP% with Mermaid cognitive topology",
+      "parameters": [
+        {
+          "name": "transcript",
+          "type": "string",
+          "description": "Raw transcript text or JSON string",
+          "required": false
+        },
+        {
+          "name": "file_path",
+          "type": "string",
+          "description": "Path to transcript file",
+          "required": false
+        },
+        {
+          "name": "video_url",
+          "type": "string",
+          "description": "YouTube video URL",
+          "required": false
+        },
+        {
+          "name": "video_id",
+          "type": "string",
+          "description": "YouTube video ID",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

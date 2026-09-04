@@ -1,0 +1,102 @@
+{
+  "name": "plugin.youtube_transcript_fetcher",
+  "version": "1.0.0",
+  "description": "Extract transcripts and timed captions from YouTube video URLs or IDs via isolated subprocess JSON-RPC",
+  "entrypoint": "main.py",
+  "isolation": "subprocess",
+  "trusted": false,
+  "category": "integration_and_io",
+  "author": "Brain Harness Forge Engine",
+  "provides": [
+    "service.youtube_transcript_fetcher"
+  ],
+  "requires": [],
+  "dependencies": [
+    "youtube-transcript-api>=0.6.2"
+  ],
+  "entrypoints": [
+    {
+      "name": "fetch_transcript",
+      "description": "Extract full transcript or timed segments from a YouTube video URL or ID",
+      "parameters": [
+        {
+          "name": "video_url",
+          "type": "string",
+          "description": "Target YouTube video URL (watch, youtu.be, shorts, embed, live)",
+          "required": false
+        },
+        {
+          "name": "video_id",
+          "type": "string",
+          "description": "Optional 11-character YouTube video ID",
+          "required": false
+        },
+        {
+          "name": "languages",
+          "type": "array",
+          "description": "Priority list of language codes (default: ['en'])",
+          "required": false
+        },
+        {
+          "name": "format",
+          "type": "string",
+          "description": "Output format: 'json' (timed segments list) or 'text' (concatenated plain text)",
+          "required": false
+        },
+        {
+          "name": "preserve_formatting",
+          "type": "boolean",
+          "description": "Whether to preserve HTML formatting in caption segments",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "get_transcript_text",
+      "description": "Extract plain concatenated text of a YouTube video transcript without timestamp metadata",
+      "parameters": [
+        {
+          "name": "video_url",
+          "type": "string",
+          "description": "Target YouTube video URL",
+          "required": false
+        },
+        {
+          "name": "video_id",
+          "type": "string",
+          "description": "Optional 11-character YouTube video ID",
+          "required": false
+        },
+        {
+          "name": "languages",
+          "type": "array",
+          "description": "Priority list of language codes (default: ['en'])",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "list_transcripts",
+      "description": "List all available transcripts, languages, and translation tracks for a YouTube video",
+      "parameters": [
+        {
+          "name": "video_url",
+          "type": "string",
+          "description": "Target YouTube video URL",
+          "required": false
+        },
+        {
+          "name": "video_id",
+          "type": "string",
+          "description": "Optional 11-character YouTube video ID",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "health",
+      "description": "Check runtime health status and dependencies of the YouTube transcript fetcher plugin",
+      "parameters": []
+    }
+  ]
+}
