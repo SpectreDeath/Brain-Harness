@@ -1,0 +1,19 @@
+# Default Configuration for neural-network-from-scratch
+# Precedence: (1) .agents/skills.config.yaml -> (2) .agents/skills/<skill>/config.yaml -> (3) config.default.yaml
+
+random_seed: 42
+default_learning_rate: 0.1
+default_epochs: 10000
+epsilon: 1.0e-8  # Numerical stability floor for logarithm operations in cross-entropy loss
+loss_display_interval: 1000
+
+# Canonical 2-layer XOR network topology
+default_architecture:
+  input_dim: 2
+  hidden_dim: 4
+  output_dim: 1
+  hidden_activation: "tanh"
+  output_activation: "sigmoid"
+
+loss_function: "binary_cross_entropy"
+loss_convergence_threshold: 0.05

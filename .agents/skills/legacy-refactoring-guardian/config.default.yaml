@@ -1,0 +1,29 @@
+# Modernization & Refactoring Guardian Configuration Defaults
+test_framework: pytest
+max_ast_depth: 10
+max_git_log_commits: 50
+capture_side_effects: true
+quarantine_defects: true
+sandbox_timeout_seconds: 15
+implicit_contract_patterns:
+  - http_response
+  - event_emit
+  - db_write
+  - file_export
+  - queue_publish
+boundary_test_values:
+  numbers:
+    - 0
+    - -1
+    - 1
+    - 100
+    - 999999
+  strings:
+    - ""
+    - " "
+    - "unknown"
+    - "INVALID_CODE"
+    - "\n\t"
+  collections:
+    - []
+    - [null]

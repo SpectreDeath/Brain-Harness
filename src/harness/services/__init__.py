@@ -47,6 +47,15 @@ from harness.services.code_runner import (
     PythonExecResult,
     ScriptRunResult,
 )
+from harness.services.data_management import (
+    DATA_MANAGEMENT_SERVICE_KEY,
+    BuiltinDataManagementService,
+    DataManagementEngine,
+    DataManagementPlugin,
+    DataManagementService,
+    MedallionPipelineConfig,
+    MedallionPipelineResult,
+)
 from harness.services.context_compactor import (
     CONTEXT_COMPACTOR_KEY,
     CompactConversationResult,
@@ -255,6 +264,13 @@ __all__ = [
     "RecallMemoryResult",
     "CONTEXT_TYPE_SYSTEM_KEY",
     "ContextTypeService",
+    "DATA_MANAGEMENT_SERVICE_KEY",
+    "BuiltinDataManagementService",
+    "DataManagementEngine",
+    "DataManagementPlugin",
+    "DataManagementService",
+    "MedallionPipelineConfig",
+    "MedallionPipelineResult",
     "EMBEDDING_CLUSTER_KEY",
     "ClusterKeywordsResult",
     "ClusterTextResult",

@@ -1,0 +1,73 @@
+# Default Configuration for data-management-architect skill
+version: "1.0.0"
+
+governance:
+  default_classification: "Tier 2: Internal"
+  require_steward_signoff_for_gold: true
+  privacy_framework: "GDPR / CCPA"
+  audit_logging_enabled: true
+
+quality_gates:
+  overall_score_pass_threshold: 95.0
+  dimensions:
+    accuracy:
+      min_threshold: 0.95
+      critical: true
+    completeness:
+      min_threshold: 0.98
+      critical: true
+    consistency:
+      min_threshold: 0.95
+      critical: false
+    timeliness:
+      max_latency_hours: 24.0
+      critical: true
+    validity:
+      min_threshold: 0.99
+      critical: true
+    uniqueness:
+      min_threshold: 1.00
+      critical: true
+
+data_contract:
+  standard: "Open Data Contract Standard (ODCS) v3.1"
+  strict_type_checking: true
+  allow_additional_properties: false
+  reject_on_schema_drift: true
+  max_quarantine_ratio: 0.05
+
+medallion_pipeline:
+  bronze:
+    format: "parquet"
+    append_only: true
+    retention_days: 90
+  silver:
+    format: "parquet"
+    cdc_mode: "merge_upsert"
+    mask_pii_columns: true
+  gold:
+    format: "parquet"
+    refresh_mode: "incremental"
+    build_semantic_layer: true
+
+observability:
+  pillars:
+    - "freshness"
+    - "volume"
+    - "schema"
+    - "distribution"
+    - "lineage"
+  freshness_check_interval_minutes: 60
+  volume_anomaly_sigma: 3.0
+  circuit_breaker_action: "quarantine_and_alert"
+
+maturity_assessment:
+  framework: "DAMA-DMM / CMMI"
+  target_maturity_level: 4
+  dimensions:
+    - "data_governance"
+    - "data_architecture"
+    - "data_modeling"
+    - "data_quality"
+    - "data_security_privacy"
+    - "data_engineering_ops"

@@ -1,0 +1,19 @@
+{
+  "id": "ki_agent_skills_runtime_security_middleware",
+  "title": "Agent Skills Runtime Security, Approval Middleware & Dynamic DI",
+  "category": "agent_orchestration",
+  "tags": [
+    "runtime_security",
+    "tool_approval_middleware",
+    "read_only_tools",
+    "script_sandboxing",
+    "dependency_injection",
+    "microsoft_agent_framework",
+    "menshykh"
+  ],
+  "source_repo": "Agent Skills Specification & Microsoft Agent Framework (Sergey Menshykh, Microsoft Learn)",
+  "provenance": [
+    "Microsoft Learn: Agent Skills runtime architecture, tool approval middleware, and DI injection (2026-09-06)"
+  ],
+  "created_at": "2026-09-06T15:10:00Z"
+}

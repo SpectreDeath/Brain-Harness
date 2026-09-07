@@ -43,6 +43,7 @@ from harness.commands.creator import (
     creator_group,
     creator_validate,
 )
+from harness.commands.data import data_group
 from harness.commands.events import events_cli
 from harness.commands.mcp import mcp_group
 from harness.commands.plugins import plugin_group
@@ -103,6 +104,7 @@ main.add_command(knowledge_group, name="knowledge")
 main.add_command(session_group, name="session")
 main.add_command(context_group, name="context")
 main.add_command(antigravity_group, name="antigravity")
+main.add_command(data_group, name="data")
 
 # --- Register Standalone Commands ---
 main.add_command(init_cli, name="init")

@@ -1,0 +1,22 @@
+{
+  "id": "ki_solla_dmbok_governance_decision_rights",
+  "title": "Data Governance, Stewardship Roles, and RACI Decision Rights",
+  "category": "data_engineering",
+  "tags": [
+    "data_governance",
+    "data_stewardship",
+    "data_ownership",
+    "decision_rights",
+    "raci_matrix",
+    "data_classification",
+    "solla",
+    "dmbok"
+  ],
+  "source_repo": "From Data to Value: Understanding Data Management Through a Real World Use Case (Daniel García Solla, freeCodeCamp)",
+  "provenance": [
+    "Section: Data Governance & Data Security and Privacy",
+    "https://www.freecodecamp.org/news/understanding-data-management-with-a-real-world-use-case-book/#heading-data-governance",
+    "DAMA-DMBOK Chapter 3: Data Governance"
+  ],
+  "created_at": "2026-09-06T18:40:00Z"
+}

@@ -1,0 +1,20 @@
+{
+  "id": "ki_solla_six_dimension_quality_observability",
+  "title": "The 6 DAMA Quality Dimensions and 5-Pillar Data Observability",
+  "category": "data_engineering",
+  "tags": [
+    "data_quality",
+    "quality_dimensions",
+    "data_observability",
+    "dama_dmbok",
+    "sli_slo",
+    "solla"
+  ],
+  "source_repo": "From Data to Value: Understanding Data Management Through a Real World Use Case (Daniel García Solla, freeCodeCamp)",
+  "provenance": [
+    "Section: Data Quality & Data Engineering",
+    "https://www.freecodecamp.org/news/understanding-data-management-with-a-real-world-use-case-book/#heading-data-quality",
+    "DAMA-DMBOK Chapter 13: Data Quality Management"
+  ],
+  "created_at": "2026-09-06T18:40:00Z"
+}

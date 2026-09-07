@@ -1,0 +1,21 @@
+{
+  "id": "ki_self_20260905_06",
+  "title": "Multi-Pass Cognitive String Salvage & AST Script Hygiene Inspection",
+  "category": "agent_tooling",
+  "tags": [
+    "salvage_engine",
+    "json_repair",
+    "ast_hygiene",
+    "error_recovery",
+    "endogenous_memory",
+    "self_reflection"
+  ],
+  "source_repo": "Brain Harness Execution History",
+  "provenance": [
+    ".agents/skills/agent-skill-sdlc/scripts/validate_skill.py#L115-L180",
+    "AGENTS.md#Rule42",
+    ".agents/skills/agent-skill-sdlc/references/two-phase-validation-patterns.md",
+    "scratch/test_salvage_deep.py"
+  ],
+  "created_at": "2026-09-05T16:09:00Z"
+}

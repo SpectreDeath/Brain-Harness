@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Google 2x2 Agent Skill Continuous Evaluation Suite",
+  "version": "1.0.0",
+  "skill_name": "agent-skills-architect",
+  "description": "Evaluation test suite measuring Accuracy Uplift and Token/Latency Efficiency Uplift against baseline agent trajectories.",
+  "eval_dimensions": {
+    "accuracy_metrics": [
+      "task_completion_rate",
+      "instruction_following_score",
+      "syntactic_validity_score"
+    ],
+    "efficiency_metrics": [
+      "total_tokens_consumed",
+      "turn_count",
+      "execution_latency_seconds"
+    ]
+  },
+  "passing_thresholds": {
+    "min_accuracy_uplift_pct": 10.0,
+    "min_token_efficiency_uplift_pct": 0.0,
+    "target_quadrant": "DOMINANT_UPLIFT"
+  },
+  "test_cases": [
+    {
+      "id": "eval_001_progressive_disclosure",
+      "category": "architecture",
+      "prompt": "Design an expense report processing skill that handles flight receipts, per diem calculation, and currency conversion.",
+      "baseline_expectation": {
+        "description": "Baseline agent dumps all conversion tables and tax regulations into system prompt, causing context bloating.",
+        "max_expected_tokens": 12500,
+        "expected_accuracy_score": 0.65
+      },
+      "skill_expectation": {
+        "description": "Agent with skill scaffolds a 3-tier progressive disclosure layout, storing conversion tables in resources/ and scripts in scripts/.",
+        "max_expected_tokens": 4200,
+        "expected_accuracy_score": 0.95
+      }
+    },
+    {
+      "id": "eval_002_runtime_security_middleware",
+      "category": "security",
+      "prompt": "Configure tool approval middleware for a database migration skill with schema reader and SQL runner tools.",
+      "baseline_expectation": {
+        "description": "Baseline agent either prompts for all tools (halting flow) or prompts for none (security risk).",
+        "max_expected_tokens": 8000,
+        "expected_accuracy_score": 0.5
+      },
+      "skill_expectation": {
+        "description": "Agent configures read_only_tools_auto_approval_rule for schema read and gated approval/sandbox for migration scripts.",
+        "max_expected_tokens": 3800,
+        "expected_accuracy_score": 0.98
+      }
+    }
+  ]
+}

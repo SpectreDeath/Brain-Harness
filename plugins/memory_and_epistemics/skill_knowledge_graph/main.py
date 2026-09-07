@@ -224,3 +224,9 @@ class SkillGraphPlugin(HarnessPlugin):
             chain=list(res.get("chain", [])),
             length=int(res.get("length", 0)),
         )
+
+    def link_knowledge_vault(self, vault_dir: Path | str = ".harness/knowledge") -> int:
+        from harness.services.skill_graph import BuiltinSkillRegistryService
+        reg = BuiltinSkillRegistryService()
+        return reg.link_knowledge_vault(vault_dir)
+

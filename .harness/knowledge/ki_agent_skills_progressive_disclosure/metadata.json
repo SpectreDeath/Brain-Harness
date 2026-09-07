@@ -1,0 +1,20 @@
+{
+  "id": "ki_agent_skills_progressive_disclosure",
+  "title": "Agent Skills Progressive Disclosure & Loose Constraint Architecture",
+  "category": "agent_orchestration",
+  "tags": [
+    "agent_skills",
+    "progressive_disclosure",
+    "loose_constraints",
+    "portable_plans",
+    "react_vs_graphs",
+    "warfield",
+    "menshykh"
+  ],
+  "source_repo": "Agent Skills \u2014 Intuitively and Exhaustively Explained (Daniel Warfield, IAEE) & Agent Skills Open Specification (Sergey Menshykh, agentskills.io)",
+  "provenance": [
+    "IAEE Article: Agent Skills \u2014 Intuitively and Exhaustively Explained (2026-09-06)",
+    "Microsoft Learn / agentskills.io: Agent Skills Specification (2026-09-06)"
+  ],
+  "created_at": "2026-09-06T15:10:00Z"
+}

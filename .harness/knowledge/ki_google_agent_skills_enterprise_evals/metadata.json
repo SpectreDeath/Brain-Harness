@@ -1,0 +1,20 @@
+{
+  "id": "ki_google_agent_skills_enterprise_evals",
+  "title": "Google Enterprise Agent Skills: Continuous Evals & Product Governance",
+  "category": "agent_orchestration",
+  "tags": [
+    "google_agent_skills",
+    "continuous_evals",
+    "eval_matrix",
+    "accuracy_uplift",
+    "efficiency_uplift",
+    "product_governance",
+    "ci_cd_gates",
+    "samborski"
+  ],
+  "source_repo": "Behind the scenes: How we build, test, and scale Google Agent Skills (Remigiusz Samborski, Google Cloud)",
+  "provenance": [
+    "Google Cloud Blog: Behind the scenes: How we build, test, and scale Google Agent Skills (2026-09-06)"
+  ],
+  "created_at": "2026-09-06T15:10:00Z"
+}

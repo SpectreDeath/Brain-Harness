@@ -1,0 +1,19 @@
+{
+  "id": "ki_njoku_dynamic_model_routing",
+  "title": "Three-Tier Dynamic Model Switching & Resilient Fallbacks",
+  "category": "agent_orchestration",
+  "tags": [
+    "model_routing",
+    "fallbacks",
+    "resilience",
+    "cost_optimization",
+    "circuit_breaker",
+    "njoku"
+  ],
+  "source_repo": "How to Build AI Applications That Switch Models Automatically (Chidiebere Njoku, freeCodeCamp)",
+  "provenance": [
+    "https://www.freecodecamp.org/news/build-ai-applications-that-switch-models-automatically/",
+    "outputs/articles/switch_models_automatically.md"
+  ],
+  "created_at": "2026-09-06T14:15:00Z"
+}

@@ -1,0 +1,18 @@
+{
+  "id": "ki_aslanyan_canonical_failures_antidotes",
+  "title": "The Five Canonical Agent Failure Modes & Architectural Antidotes",
+  "category": "agent_orchestration",
+  "tags": [
+    "failure_modes",
+    "debugging",
+    "architectural_antidotes",
+    "reliability",
+    "aslanyan"
+  ],
+  "source_repo": "The AI Agent Engineer's Guide: 60 Patterns for Building Autonomous Systems (Vahe Aslanyan, LUNARTECH)",
+  "provenance": [
+    "Chapter 1.6: The Five Canonical Failure Modes",
+    "Chapter 15: Patterns of Failure and Their Antidotes"
+  ],
+  "created_at": "2026-09-06T14:15:00Z"
+}

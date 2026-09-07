@@ -1,0 +1,28 @@
+# Default Configuration for ai-file-analysis-agent
+# Precedence: (1) .agents/skills.config.yaml -> (2) .agents/skills/<skill>/config.yaml -> (3) config.default.yaml
+
+allowed_extensions:
+  - ".pdf"
+  - ".docx"
+  - ".csv"
+  - ".txt"
+
+max_direct_file_bytes: 52428800  # 50 MB threshold for direct upload vs RAG triage
+default_model: "gpt-4o"
+grounding_strictness: "strict"   # Options: strict, balanced, relaxed
+purpose: "user_data"             # OpenAI file upload purpose
+
+# Specialized role profiles with tailored instructions
+roles:
+  research:
+    name: "Research Assistant"
+    instructions: "Distinguish strictly between experimental methods, empirical results, and analytical conclusions."
+  legal:
+    name: "Legal Document Assistant"
+    instructions: "Focus on contractual obligations, liability clauses, and precise term definitions without rendering unauthorized legal counsel."
+  resume:
+    name: "Resume Analyzer"
+    instructions: "Extract skills, career trajectories, quantifiable accomplishments, and educational credentials."
+  tabular:
+    name: "Tabular Data Inspector"
+    instructions: "Analyze column schemas, identify missing values, distribution anomalies, and statistical summaries."

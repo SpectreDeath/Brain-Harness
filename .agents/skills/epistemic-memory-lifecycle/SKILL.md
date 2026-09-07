@@ -211,7 +211,7 @@ The harness operates as a **cognitive prosthesis**, externalizing reasoning whil
 
 ---
 
-## Anti-Patterns & Defensive Invariants
+## Anti-Patterns
 
 - **Self-Confirming Reflection Drift** — Letting an agent evaluate its own prior reasoning as "high quality" and rewrite its own instructions without an external baseline or held-out task.
 - **Constitutional Core Poisoning** — Allowing external repository code, documentation, or model reflections to modify system prompts, tool allowlists, or sandbox parameters.

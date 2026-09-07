@@ -100,7 +100,7 @@ Every skill must be paired with a co-located `CARD.md` file:
 - **Vocabulary & Levers Cheat Sheet**: Compact definitions of leading words used in the skill.
 - **Invariants & Guardrails**: Hard rules that apply on every turn.
 
-*(Note: In `SKILL.md`, always format anti-patterns under an exact `## Anti-Patterns` heading with `- **Name** — Description` list items for AST parser extraction).*
+*(Note: In `SKILL.md`, always format anti-patterns under an exact level-2 `Anti-Patterns` heading with `- **Name** — Description` list items for AST parser extraction).*
 
 > **Completion criterion**: `CARD.md` authored, co-located in the skill folder, and referenced from `SKILL.md`.
 
@@ -131,7 +131,7 @@ When asked to refactor an existing skill:
 
 ---
 
-## Anti-Patterns in Skill Authoring
+## Anti-Patterns
 
 - **Conversational Padding** — Opening with pleasantries, meta-commentary ("In this skill we will..."), or conversational filler. Start directly with the specification.
 - **Negation Overrun** — Steering by prohibition ("Don't forget to...", "Never write..."). State the positive target behavior instead.

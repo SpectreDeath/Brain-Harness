@@ -42,6 +42,13 @@ from .creator import (
     scaffold_plugin_cmd,
     validate_plugin_cmd,
 )
+from .data import (
+    assess_maturity_cmd,
+    profile_quality_cmd,
+    resolve_golden_records_cmd,
+    run_medallion_pipeline_cmd,
+    validate_contract_cmd,
+)
 from .events import (
     EventQueryResult,
     get_events_cmd,
@@ -230,6 +237,11 @@ _BUILTIN_COMMANDS: list[tuple[str, Callable[..., Any], str, str]] = [
     ("tools.enable", enable_tool, "tools", "Enable tool"),
     ("tools.disable", disable_tool, "tools", "Disable tool"),
     ("tools.toggle", toggle_tool, "tools", "Toggle tool enablement"),
+    ("data.validate", validate_contract_cmd, "data", "Validate data records against Open Data Contract"),
+    ("data.profile", profile_quality_cmd, "data", "Profile dataset across 6 DAMA quality dimensions"),
+    ("data.resolve", resolve_golden_records_cmd, "data", "Resolve entity records into Golden Records"),
+    ("data.maturity", assess_maturity_cmd, "data", "Evaluate Level 0-5 Data Management Maturity"),
+    ("data.pipeline", run_medallion_pipeline_cmd, "data", "Execute Medallion lakehouse pipeline"),
 ]
 
 for cmd_name, cmd_handler, cmd_cat, cmd_doc in _BUILTIN_COMMANDS:

@@ -1,0 +1,20 @@
+{
+  "id": "ki_aslanyan_four_level_ladder",
+  "title": "The Four-Level Ladder & Pre-Flight Agent Scoping Heuristics",
+  "category": "agent_orchestration",
+  "tags": [
+    "agent_engineering",
+    "scoping",
+    "four_level_ladder",
+    "pre_flight_questions",
+    "architecture_heuristics",
+    "aslanyan"
+  ],
+  "source_repo": "The AI Agent Engineer's Guide: 60 Patterns for Building Autonomous Systems (Vahe Aslanyan, LUNARTECH)",
+  "provenance": [
+    "Chapter 0: Should This Be an Agent at All?",
+    "https://www.freecodecamp.org/news/ai-agent-engineers-handbook/",
+    "outputs/books/ai_agent_engineers_guide.md#ch0"
+  ],
+  "created_at": "2026-09-06T14:15:00Z"
+}

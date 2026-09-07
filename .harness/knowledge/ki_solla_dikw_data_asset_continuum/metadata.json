@@ -1,0 +1,20 @@
+{
+  "id": "ki_solla_dikw_data_asset_continuum",
+  "title": "The DIKW Pyramid & Data Lifecycle Asset Progression",
+  "category": "data_engineering",
+  "tags": [
+    "data_management",
+    "dikw_pyramid",
+    "data_asset",
+    "data_lifecycle",
+    "solla",
+    "dmbok"
+  ],
+  "source_repo": "From Data to Value: Understanding Data Management Through a Real World Use Case (Daniel García Solla, freeCodeCamp)",
+  "provenance": [
+    "Section: Data Management Fundamentals",
+    "https://www.freecodecamp.org/news/understanding-data-management-with-a-real-world-use-case-book/#heading-data-management-fundamentals",
+    "DAMA-DMBOK Chapter 1: Data Management"
+  ],
+  "created_at": "2026-09-06T18:40:00Z"
+}

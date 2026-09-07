@@ -1,0 +1,19 @@
+{
+  "id": "ki_aslanyan_sixty_agent_patterns",
+  "title": "The Eight Capabilities & Sixty Architectural Agent Patterns",
+  "category": "agent_orchestration",
+  "tags": [
+    "agent_patterns",
+    "eight_capabilities",
+    "system_architecture",
+    "composition",
+    "aslanyan"
+  ],
+  "source_repo": "The AI Agent Engineer's Guide: 60 Patterns for Building Autonomous Systems (Vahe Aslanyan, LUNARTECH)",
+  "provenance": [
+    "Part II: The Eight Capabilities (Chapters 5-12)",
+    "Appendix A: Quick Reference: All 60 Patterns",
+    "Appendix B: Composition Decision Cheat Sheet"
+  ],
+  "created_at": "2026-09-06T14:15:00Z"
+}

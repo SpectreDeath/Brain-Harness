@@ -1,0 +1,43 @@
+# Configuration defaults for ai-agent-engineer skill
+
+# Execution & Ladder Step Budgets
+ladder:
+  level_1_max_steps: 1
+  level_2_max_steps: 10
+  level_3_max_steps: 20
+  level_4_max_steps: 40
+  enforce_lowest_viable_level: true
+
+# Tool Use & Blast Radius Thresholds
+tools:
+  max_tools_without_selector: 15
+  require_constitution_for_mutations: true
+  require_side_effect_auditor: true
+  require_off_switch_for_level_4: true
+
+# Memory & Context Bounds
+memory:
+  max_context_window_fraction: 0.60
+  middle_out_tool_truncation_threshold_tokens: 2000
+  head_lines_retained: 50
+  tail_lines_retained: 50
+
+# Dynamic Model Routing Tiers (Njoku 3-Tier Architecture)
+model_routing:
+  tier_1_complexity_analysis:
+    enabled: true
+    token_threshold_low: 500
+    token_threshold_high: 2500
+  tier_2_model_matrix:
+    low: "gemini-2.5-flash"
+    medium: "claude-3-7-sonnet"
+    high: "claude-3-7-sonnet-thinking"
+  tier_3_fallbacks:
+    max_retries: 3
+    exponential_backoff_base_sec: 1.5
+    circuit_breaker_threshold: 3
+    fallback_chain:
+      - primary: "claude-3-7-sonnet"
+        fallback: "gemini-2.5-flash"
+      - primary: "claude-3-7-sonnet-thinking"
+        fallback: "gemini-3.8-flash-high"

@@ -1,0 +1,34 @@
+{
+  "id": "ki_self_20260907_03",
+  "title": "Click CLI Group Single-Source Co-Registration Invariant",
+  "category": "cli_architecture",
+  "tags": [
+    "endogenous_memory",
+    "self_reflection",
+    "click",
+    "cli",
+    "ioc",
+    "commands",
+    "registration"
+  ],
+  "source_repo": "Brain Harness Execution History",
+  "source_target": "Brain Harness Autobiographical Reflection (Sep 3-7, 2026)",
+  "detected_format": "dual_file_vault",
+  "provenance": [
+    "ba193963/walkthrough.md (harness data CLI group \u2014 17/17 green)",
+    "src/harness/cli.py (single-source mount pattern)",
+    "src/harness/commands/__init__.py (_BUILTIN_COMMANDS registry)",
+    "AGENTS.md#Rule6"
+  ],
+  "isnad": {
+    "chain": [
+      "Session ba193963: Implementation and test verification of harness data command group",
+      "Kernel CLI consolidation: Single-source co-located group mount verification",
+      "Session 692e0093: Formalization of dual co-registration requirement"
+    ],
+    "confidence": 0.95,
+    "verification_status": "empirically_verified"
+  },
+  "created_at": "2026-09-07T10:20:00Z",
+  "distilled_learning": "Click CLI Group Single-Source Co-Registration Invariant"
+}

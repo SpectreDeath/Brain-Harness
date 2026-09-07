@@ -289,12 +289,12 @@ class SkillCardParser:
     def _extract_anti_patterns(body: str) -> list[AntiPatternNode]:
         """Extract anti-patterns from '## Anti-Patterns' section."""
         anti_patterns: list[AntiPatternNode] = []
-        ap_idx = body.find("## Anti-Patterns")
-        if ap_idx == -1:
+        match = re.search(r"(?:^|\n)##\s+Anti-Patterns[^\n]*(?:\n|$)", body)
+        if not match:
             return anti_patterns
 
-        sub = body[ap_idx:]
-        next_sec = sub.find("\n## ", len("## Anti-Patterns"))
+        sub = body[match.end():]
+        next_sec = sub.find("\n## ")
         section = sub[:next_sec] if next_sec != -1 else sub
 
         for line in section.splitlines():
