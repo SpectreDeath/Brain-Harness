@@ -1,0 +1,21 @@
+{
+  "id": "ki_self_20260908_01",
+  "title": "SkillPipelineEngine Unification Invariant",
+  "created_at": "2026-09-08T20:07:30Z",
+  "source": "harness-reflector",
+  "isnad": "architecture-review-20260908_063207.html Candidate 1 (STRONG recommendation); 42 skill script ad-hoc implementations audited; harness-reflection-20260908-155800.html Axis 1 distillation; Session b2fe5590 deep-repo-auditor audit run 2026-09-08",
+  "tags": [
+    "architecture",
+    "skill-system",
+    "deep-module",
+    "endogenous_memory",
+    "self_reflection"
+  ],
+  "references": [
+    "src/harness/services/skill_pipeline.py",
+    "src/harness/services/skill_graph.py",
+    ".agents/skills/deep-repo-auditor/SKILL.md"
+  ],
+  "vault_version": "1.0",
+  "reflection_brief": "harness-reflection-20260908-155800.html"
+}

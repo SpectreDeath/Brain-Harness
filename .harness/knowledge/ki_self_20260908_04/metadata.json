@@ -1,0 +1,21 @@
+{
+  "id": "ki_self_20260908_04",
+  "title": "Time-Relative Fixture Anchoring Invariant",
+  "created_at": "2026-09-08T20:07:30Z",
+  "source": "harness-reflector",
+  "isnad": "Session b2fe5590 pytest run 2026-09-08: 1 fail / 1,103 pass; test_data_management_architect.py:122 explicit AssertionError; harness-reflection-20260908-155800.html Axis 2 F3; Extends ki_audit_20260908_01 with positive invariant formulation",
+  "tags": [
+    "testing",
+    "fixtures",
+    "time-sensitive",
+    "invariant",
+    "endogenous_memory",
+    "self_reflection"
+  ],
+  "references": [
+    "tests/test_data_management_architect.py",
+    ".agents/skills/data-management-architect/scripts/data_contract_validator.py"
+  ],
+  "vault_version": "1.0",
+  "reflection_brief": "harness-reflection-20260908-155800.html"
+}

@@ -1,0 +1,21 @@
+{
+  "id": "ki_self_20260908_02",
+  "title": "BuiltinSkillRegistry Dual-Parser Divergence Gap",
+  "created_at": "2026-09-08T20:07:30Z",
+  "source": "harness-reflector",
+  "isnad": "architecture-review-20260908_063207.html Candidate 2 (STRONG recommendation); src/harness/services/skill_graph.py:L342-L422 code inspection; harness-reflection-20260908-155800.html Axis 1 distillation; Session b2fe5590 deep-repo-auditor audit 2026-09-08",
+  "tags": [
+    "skill-system",
+    "parser",
+    "registry",
+    "divergence",
+    "endogenous_memory",
+    "self_reflection"
+  ],
+  "references": [
+    "src/harness/services/skill_graph.py",
+    "src/harness/creator/validator.py"
+  ],
+  "vault_version": "1.0",
+  "reflection_brief": "harness-reflection-20260908-155800.html"
+}
