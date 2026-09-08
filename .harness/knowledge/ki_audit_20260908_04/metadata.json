@@ -1,0 +1,17 @@
+{
+  "id": "ki_audit_20260908_04",
+  "title": "Coverage Threshold Gap \u2014 No CI Assertion",
+  "created_at": "2026-09-08T19:45:00Z",
+  "source": "deep-repo-auditor",
+  "isnad": "deep-repo-auditor axis 3 verification scan 2026-09-08",
+  "tags": [
+    "testing",
+    "coverage",
+    "ci",
+    "quality-gate"
+  ],
+  "references": [
+    "pyproject.toml#L63"
+  ],
+  "vault_version": "1.0"
+}

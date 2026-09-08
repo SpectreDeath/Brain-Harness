@@ -1,0 +1,17 @@
+{
+  "id": "ki_audit_20260908_01",
+  "title": "Clock-Sensitive Test Smell in Data Management Tests",
+  "created_at": "2026-09-08T19:45:00Z",
+  "source": "deep-repo-auditor",
+  "isnad": "deep-repo-auditor audit on 2026-09-08; test run exit code 1 with explicit AssertionError",
+  "tags": [
+    "testing",
+    "data-management",
+    "clock-sensitive",
+    "anti-pattern"
+  ],
+  "references": [
+    "tests/test_data_management_architect.py#L122"
+  ],
+  "vault_version": "1.0"
+}
