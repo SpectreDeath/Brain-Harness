@@ -1,6 +1,6 @@
 ---
 name: book-to-skill-forge
-description: Transform non-fiction books, technical articles, frameworks, and video transcripts into deep-module AI agent skills and interactive coaching rubrics. Use when the user asks to turn a book into a skill, convert an article or lecture into a skill, forge a skill from literature or video transcripts, or operationalize a methodology into an executable agent blueprint.
+description: Transform non-fiction books, technical articles, frameworks, and video transcripts into deep-module AI agent skills and interactive coaching rubrics. Do not use for ad-hoc prompt writing or superficial summaries.
 ---
 
 # Book-to-Skill Forge: Literature & Media Synthesis Engine

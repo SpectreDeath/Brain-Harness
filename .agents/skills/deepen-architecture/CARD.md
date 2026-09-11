@@ -4,7 +4,7 @@
 ┌────────────────────────────────────────────────────────┐
 │               SKILL SUMMARY CARD                       │
 ├────────────────────────────────────────────────────────┤
-│ Name:        deepen-architecture                       │
+│ SKILL:        deepen-architecture                       │
 │ Category:    engineering / architecture                │
 │ Invocation:  /deepen-architecture                      │
 │ Trigger:     "deepen the architecture", "run the loop" │

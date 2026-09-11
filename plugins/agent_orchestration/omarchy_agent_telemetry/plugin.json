@@ -1,0 +1,40 @@
+{
+  "name": "plugin.omarchy_agent_telemetry",
+  "version": "1.0.0",
+  "description": "Omarchy Quattro agent skill catalog navigator and usage telemetry script introspection engine.",
+  "language": "python",
+  "entrypoint": "main.py",
+  "isolation": "subprocess",
+  "trusted": true,
+  "provides": [
+    "service.omarchy_agent_telemetry"
+  ],
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "omarchy_list_agent_skills",
+      "description": "List all agent skills, developer guides, and diagnostic runbooks bundled in Omarchy",
+      "parameters": [],
+      "returns": "array"
+    },
+    {
+      "name": "omarchy_get_agent_skill",
+      "description": "Retrieve full markdown documentation and structured section outline for an Omarchy agent skill",
+      "parameters": [
+        {
+          "name": "skill_name",
+          "type": "string",
+          "description": "Name of the skill (e.g., 'omarchy', 'diagnose-crash', 'acceptance-tests', 'shell-dev', 'migrations')",
+          "required": true
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "omarchy_inspect_agent_usage_scripts",
+      "description": "Introspect Omarchy's agent usage scripts (Claude, Codex, Fireworks) without local Linux execution",
+      "parameters": [],
+      "returns": "array"
+    }
+  ]
+}

@@ -5,6 +5,10 @@
   "entrypoint": "main.py",
   "isolation": "in_process",
   "trusted": true,
+  "provides": [
+    "service.critic_evaluation"
+  ],
+  "requires": [],
   "entrypoints": [
     {
       "name": "conduct_dialectical_debate",

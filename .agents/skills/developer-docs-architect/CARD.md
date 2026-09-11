@@ -5,7 +5,7 @@
 │               SKILL SUMMARY CARD                       │
 ├────────────────────────────────────────────────────────┤
 │ SKILL:       developer-docs-architect                 │
-│ Name:        developer-docs-architect                 │
+│ SKILL:        developer-docs-architect                 │
 │ Category:    integration_and_io / developer-docs       │
 │ Invocation:  /developer-docs-architect                 │
 │ Triggers:    "build API documentation",                │

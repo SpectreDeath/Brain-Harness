@@ -154,6 +154,21 @@ def validate_skill_cmd(skill_dir: str | Path = ".") -> ValidationReport:
     return SkillValidator.validate(target)
 
 
+def run_skill_cmd(
+    skill_name: str,
+    root_path: str | Path = ".",
+    source: str | None = None,
+) -> dict[str, Any]:
+    """Execute an automated skill pipeline driver programmatically via SkillDriverResolver."""
+    from harness.services.skill_pipeline import SkillDriverResolver
+
+    return SkillDriverResolver.execute_driver(
+        skill_name=skill_name,
+        root_path=root_path,
+        source=source,
+    )
+
+
 # --- Click CLI adapters ---
 import sys
 import click
@@ -162,6 +177,48 @@ import click
 @click.group("skills")
 def skills_group() -> None:
     """Manage and query the agent skill knowledge graph."""
+
+
+@skills_group.command("list")
+@click.option("--path", default=".", help="Root directory to scan for skills")
+@click.option("--category", default=None, help="Filter by domain category")
+def skills_list(path: str, category: str | None) -> None:
+    """List all registered agent skills with category, stages, and invariants."""
+    skills = list_skills_cmd(path)
+    if category:
+        skills = [s for s in skills if s.category.lower() == category.lower()]
+
+    click.echo(f"\n📚 Registered Agent Skills ({len(skills)} total)")
+    click.echo("━" * 80)
+    click.echo(f"{'Skill Name':<34} {'Category':<24} {'Stages':<8} {'Invariants':<10}")
+    click.echo("─" * 80)
+    for s in sorted(skills, key=lambda x: x.name):
+        invariants_str = f"{len(s.invariants)} rules" if s.invariants else "None"
+        click.echo(f"{s.name:<34} {s.category:<24} {len(s.stages):<8} {invariants_str:<10}")
+    click.echo("━" * 80)
+
+
+@skills_group.command("run")
+@click.argument("skill_name")
+@click.option("--path", default=".", help="Workspace root")
+@click.option("--source", default=None, help="Source document or target argument for skill execution")
+def skills_run(skill_name: str, path: str, source: str | None) -> None:
+    """Headlessly execute an automated skill pipeline driver (Rule 10)."""
+    clean_name = skill_name.strip().lower().replace("_", "-")
+    click.echo(f"🚀 Executing skill pipeline: {clean_name}")
+    res = run_skill_cmd(skill_name, root_path=path, source=source)
+    if res["status"] != "ok":
+        click.echo(f"✗ {res.get('reason', 'Skill execution failed')}", err=True)
+        sys.exit(1)
+
+    click.echo(f"   Driver: {res['driver']}")
+    click.echo("━" * 60)
+    if res.get("stdout"):
+        click.echo(res["stdout"])
+    if res.get("stderr"):
+        click.echo(res["stderr"], err=True)
+    click.echo("━" * 60)
+    click.echo(f"Pipeline Result: ✓ COMPLETED (exit code {res['returncode']})")
 
 
 @skills_group.command("graph")
@@ -301,6 +358,7 @@ __all__ = [
     "index_skills_cmd",
     "list_skills_cmd",
     "route_skills_cmd",
+    "run_skill_cmd",
     "scaffold_skill_cmd",
     "skills_group",
     "validate_skill_cmd",

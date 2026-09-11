@@ -1,0 +1,13 @@
+# God's Eye View Configuration Defaults (Rule 44 Zero-Fork Config)
+version: "1.0.0"
+
+operational_budgets:
+  query_timeout_seconds: 60.0
+  max_sat_pass_horizon_hours: 72
+  default_search_radius_km: 250.0
+  max_streetview_headings: 8
+
+runtime:
+  tools_dir: "tools"
+  enable_offline_mock_fallback: true
+  default_shader_style: "normal"

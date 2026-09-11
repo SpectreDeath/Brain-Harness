@@ -1,6 +1,6 @@
 ---
 name: media-mind-forge
-description: Analyze, introspect, and distill foundational learnings from video transcripts, lectures, and media into executable agent skills and Knowledge Items (KIs). Combines book-to-skill-forge procedural synthesis with mind-reader epistemic introspection. Use when analyzing video transcripts, distilling mental models from lectures, extracting Knowledge Items with isnad lineage, or forging new skills from recorded media.
+description: Analyze, introspect, and distill foundational learnings from video transcripts, lectures, and media into executable skills and verified Knowledge Items. Do not use for general video editing or entertainment consumption.
 ---
 
 # Media Mind Forge: Cognitive Introspection & Skill Synthesis

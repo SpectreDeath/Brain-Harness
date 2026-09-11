@@ -197,7 +197,37 @@ async def skeletonize_code_cmd(source_or_file: str | Path) -> CodeSkeletonResult
     )
 
 
+# --- Codebase Context Architecture (Headless Seams) ---
+_engine_dir = _ws_root / ".agents" / "skills" / "codebase-context-architect" / "scripts"
+if str(_engine_dir) not in sys.path:
+    sys.path.insert(0, str(_engine_dir))
+
+try:
+    from engine import CodebaseContextEngine, ContextLintReport, SyncResult
+except ImportError:
+    CodebaseContextEngine = None  # type: ignore
+    ContextLintReport = None  # type: ignore
+    SyncResult = None  # type: ignore
+
+
+async def lint_codebase_context_cmd(root: str | Path = ".") -> Any:
+    """Execute 4-check context file linting on the target repository."""
+    if CodebaseContextEngine is None:
+        raise RuntimeError("CodebaseContextEngine could not be imported")
+    engine = CodebaseContextEngine(root=root)
+    return engine.lint()
+
+
+async def sync_codebase_context_cmd(root: str | Path = ".", source: str = "AGENTS.md", dry_run: bool = False) -> Any:
+    """Synchronize downstream context files against canonical source."""
+    if CodebaseContextEngine is None:
+        raise RuntimeError("CodebaseContextEngine could not be imported")
+    engine = CodebaseContextEngine(root=root)
+    return engine.sync(source_rel=source, dry_run=dry_run)
+
+
 # --- Click CLI adapters ---
+import json as _json
 import click
 from harness.commands._utils import _run_async
 
@@ -243,12 +273,55 @@ def context_skeletonize(target_file: str) -> None:
     click.echo()
 
 
+@context_group.command("lint")
+@click.option("--root", "-r", default=".", help="Repository root path")
+@click.option("--json", "as_json", is_flag=True, help="Output as JSON")
+@click.option("--silent", is_flag=True, help="Suppress output on pass")
+def context_lint(root: str, as_json: bool, silent: bool) -> None:
+    """Verify repository context files across 4 quality dimensions."""
+    report = _run_async(lint_codebase_context_cmd(root=root))
+    if as_json:
+        click.echo(_json.dumps(report.to_dict(), indent=2))
+        sys.exit(0 if report.passed else 1)
+
+    if report.passed:
+        if not silent:
+            click.echo(f"[PASS] Context files healthy across {report.checks_count} checks at: {root}")
+        sys.exit(0)
+
+    click.echo(f"[FAIL] Context file linter detected {report.problems_count} problem(s):", err=True)
+    for p in report.problems:
+        d = p.to_dict()
+        click.echo(f"  - [{d['check']}] {p.message}", err=True)
+    sys.exit(1)
+
+
+@context_group.command("sync")
+@click.option("--root", "-r", default=".", help="Repository root path")
+@click.option("--source", "-s", default="AGENTS.md", help="Canonical source filename")
+@click.option("--dry-run", is_flag=True, help="Check for drift without writing changes")
+@click.option("--silent", is_flag=True, help="Suppress output on success")
+def context_sync(root: str, source: str, dry_run: bool, silent: bool) -> None:
+    """Synchronize downstream vendor files against canonical source."""
+    result = _run_async(sync_codebase_context_cmd(root=root, source=source, dry_run=dry_run))
+    if not silent or not result.in_sync:
+        for action in result.actions:
+            click.echo(action, err=(not result.in_sync and dry_run))
+
+    if dry_run and not result.in_sync:
+        sys.exit(1)
+    sys.exit(0)
+
+
 __all__ = [
     "CodeSkeletonResult",
     "ContextCompileResult",
     "ContextOptimizeResult",
     "compile_context_cmd",
     "context_group",
+    "lint_codebase_context_cmd",
     "optimize_context_cmd",
     "skeletonize_code_cmd",
+    "sync_codebase_context_cmd",
 ]
+

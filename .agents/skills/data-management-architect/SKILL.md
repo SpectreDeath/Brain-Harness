@@ -1,6 +1,6 @@
 ---
 name: data-management-architect
-description: Architect, govern, engineer, and evaluate enterprise data lifecycles from raw assets to governed data products using DAMA-DMBOK capabilities, Open Data Contracts (ODCS), Medallion lakehouse pipelines, 6-dimension data quality gating, master data golden records, and Level 0-5 maturity roadmaps. Trigger when designing data governance models, establishing data ownership/stewardship, drafting data contracts, building lakehouse pipelines, resolving master entity identities, profiling data quality dimensions, or assessing organizational data maturity.
+description: Architect, govern, and engineer enterprise data lifecycles from raw assets to governed data products using DAMA-DMBOK capabilities, Open Data Contracts (ODCS), and Medallion lakehouses. Do not use for ad-hoc SQL queries or generic spreadsheet editing.
 ---
 
 # Data Management Architect: Enterprise Data Lifecycle & Governance Engine

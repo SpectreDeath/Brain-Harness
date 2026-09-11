@@ -1,0 +1,9 @@
+# Agent Debater Adapter Configuration Defaults (Rule 44 Zero-Fork Config)
+version: "1.0.0"
+
+operational_budgets:
+  max_debate_rounds: 10
+  cache_ttl_seconds: 300
+
+runtime:
+  default_recommendation: "PROCEED_WITH_MITIGATIONS"

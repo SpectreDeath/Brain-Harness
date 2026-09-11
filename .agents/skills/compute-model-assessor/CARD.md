@@ -4,7 +4,7 @@
 ┌────────────────────────────────────────────────────────┐
 │               SKILL SUMMARY CARD                       │
 ├────────────────────────────────────────────────────────┤
-│ Name:        compute-model-assessor                    │
+│ SKILL:        compute-model-assessor                    │
 │ Category:    routing / compute-optimization            │
 │ Invocation:  /assess-compute / harness assess-compute  │
 │ Trigger:     "assess compute", "route model",          │

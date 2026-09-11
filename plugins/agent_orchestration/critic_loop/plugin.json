@@ -1,10 +1,16 @@
 {
   "name": "plugin.critic_loop",
   "version": "1.0.0",
-  "description": "Autonomous generate-critique-revise loop with rubric scoring and iterative refinement",
+  "description": "Authoritative critic, rubric evaluation, destructive command safety gate, and dialectical debate arbiter.",
+  "language": "python",
   "entrypoint": "main.py",
   "isolation": "in_process",
   "trusted": true,
+  "provides": [
+    "service.critic_evaluation",
+    "agent.critic_loop"
+  ],
+  "requires": [],
   "entrypoints": [
     {
       "name": "evaluate_rubric",
@@ -22,7 +28,8 @@
           "description": "List of criteria assertions to check",
           "required": true
         }
-      ]
+      ],
+      "returns": "object"
     },
     {
       "name": "run_critic_loop",
@@ -44,15 +51,108 @@
           "name": "threshold",
           "type": "number",
           "description": "Minimum passing score (0.0 to 1.0)",
-          "required": false
+          "required": false,
+          "default": 0.85
         },
         {
           "name": "max_iterations",
           "type": "integer",
           "description": "Maximum refinement rounds",
-          "required": false
+          "required": false,
+          "default": 3
         }
-      ]
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "critic_check_safety",
+      "description": "Scan a CLI shell command for dangerous, destructive, or irreversible operations",
+      "parameters": [
+        {
+          "name": "command",
+          "type": "string",
+          "description": "Shell command line to inspect for destructive operations",
+          "required": true
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "critic_evaluate_code",
+      "description": "Statically analyze code syntax, AST complexity, function docstrings, and potential anti-patterns",
+      "parameters": [
+        {
+          "name": "code",
+          "type": "string",
+          "description": "Source code text to analyze",
+          "required": true
+        },
+        {
+          "name": "language",
+          "type": "string",
+          "description": "Programming language ('python' or 'json')",
+          "required": false,
+          "default": "python"
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "critic_review_plan",
+      "description": "Evaluate an execution plan for verification steps, risks, and missing safeguards",
+      "parameters": [
+        {
+          "name": "goal",
+          "type": "string",
+          "description": "The high-level goal statement",
+          "required": true
+        },
+        {
+          "name": "steps",
+          "type": "array",
+          "description": "List of planned action steps as strings",
+          "required": true
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "conduct_dialectical_debate",
+      "description": "Structure dialectical argument rounds between Proposer and Challenger",
+      "parameters": [
+        {
+          "name": "topic",
+          "type": "string",
+          "description": "The subject or proposal under debate",
+          "required": true
+        },
+        {
+          "name": "pro_arguments",
+          "type": "array",
+          "description": "List of supporting arguments",
+          "required": true
+        },
+        {
+          "name": "con_arguments",
+          "type": "array",
+          "description": "List of counter-arguments",
+          "required": true
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "synthesize_debate_verdict",
+      "description": "Synthesize an impartial arbiter decision based on debate rounds",
+      "parameters": [
+        {
+          "name": "debate_summary",
+          "type": "object",
+          "description": "Summary output from conduct_dialectical_debate",
+          "required": true
+        }
+      ],
+      "returns": "object"
     }
   ]
 }

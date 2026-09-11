@@ -4,7 +4,7 @@
 ┌────────────────────────────────────────────────────────┐
 │               SKILL SUMMARY CARD                       │
 ├────────────────────────────────────────────────────────┤
-│ Name:        repo-reader                               │
+│ SKILL:        repo-reader                               │
 │ Category:    memory / epistemics                       │
 │ Invocation:  /repo-reader                              │
 │ Trigger:     "read repository", "connect repo",        │

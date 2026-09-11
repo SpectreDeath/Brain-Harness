@@ -10,36 +10,32 @@ Deepened architecture seam providing an authoritative facade across:
 
 from __future__ import annotations
 
+# Reuse core script implementations
+import sys
+import uuid
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
-import json
 from pathlib import Path
 from typing import Any, Protocol, runtime_checkable
-import uuid
 
 import structlog
+import yaml
 
-from harness.events.bus import EventBus, EVENT_BUS_KEY
-from harness.events.types import HarnessEvent, EventType
+from harness.events.bus import EVENT_BUS_KEY, EventBus
 from harness.kernel.context import ServiceContext, ServiceKey
 from harness.plugins.base import HarnessPlugin
 from harness.plugins.manifest import PluginManifest
-import yaml
 
-# Reuse core script implementations
-import sys
 _skills_dir = Path(__file__).resolve().parent.parent.parent.parent / ".agents" / "skills" / "data-management-architect"
 if str(_skills_dir) not in sys.path:
     sys.path.insert(0, str(_skills_dir))
 
 from scripts.data_contract_validator import (
     ContractValidationReport,
-    ContractViolation,
     DataContractValidator,
 )
 from scripts.data_quality_profiler import (
     DataQualityProfiler,
-    DimensionScore,
     QualityScorecard,
 )
 from scripts.golden_record_resolver import (
@@ -189,10 +185,13 @@ class DataManagementEngine:
         records: list[dict[str, Any]],
         contract_def: dict[str, Any],
         max_quarantine_ratio: float = 0.05,
+        reference_time: datetime | None = None,
     ) -> ContractValidationReport:
         """Validate dataset records against Open Data Contract definition."""
-        validator = DataContractValidator.from_dict(contract_def)
-        report = validator.validate_dataset(records, max_quarantine_ratio=max_quarantine_ratio)
+        validator = DataContractValidator.from_dict(contract_def, reference_time=reference_time)
+        report = validator.validate_dataset(
+            records, max_quarantine_ratio=max_quarantine_ratio, reference_time=reference_time
+        )
         return report
 
     def profile_quality(
@@ -207,6 +206,7 @@ class DataManagementEngine:
         timeliness_field: str | None = None,
         max_latency_hours: float = 24.0,
         pass_threshold: float = 95.0,
+        reference_time: datetime | None = None,
     ) -> QualityScorecard:
         """Profile dataset across the 6 DAMA quality dimensions."""
         profiler = DataQualityProfiler(
@@ -218,8 +218,9 @@ class DataManagementEngine:
             timeliness_field=timeliness_field,
             max_latency_hours=max_latency_hours,
             pass_threshold=pass_threshold,
+            reference_time=reference_time,
         )
-        scorecard = profiler.profile(records, dataset_name=dataset_name)
+        scorecard = profiler.profile(records, dataset_name=dataset_name, reference_time=reference_time)
         return scorecard
 
     def resolve_golden_records(

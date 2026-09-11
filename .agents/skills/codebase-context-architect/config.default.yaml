@@ -1,0 +1,60 @@
+# Baseline configuration for codebase-context-architect
+# Supports 3-tier zero-fork configuration:
+# Precedence: Project Override (.agents/skills.config.yaml) -> Skill Default (config.default.yaml) -> Hardcoded Fallback
+
+version: "1.0.0"
+chars_per_token: 4
+
+budgets:
+  always_loaded_files:
+    - path: "AGENTS.md"
+      budget_tokens: 800
+      required: true
+    - path: "CLAUDE.md"
+      budget_tokens: 300
+      required: false
+    - path: ".github/copilot-instructions.md"
+      budget_tokens: 900
+      required: false
+    - path: "src/AGENTS.md"
+      budget_tokens: 400
+      required: false
+  default_scoped_budget_tokens: 400
+
+linter:
+  enforce_token_ceilings: true
+  enforce_path_existence: true
+  enforce_script_existence: true
+  enforce_sync_drift: true
+  fail_on_warning: false
+  strip_code_fences: true
+  path_detection_patterns:
+    - '^[\w./-]+\.(md|js|mjs|ts|py|json|ya?ml|sh|rs|go)$'
+    - '^src/'
+    - '^docs/'
+    - '^tests?/'
+    - '^\.agents/'
+    - '^\.github/'
+
+sync:
+  canonical_source: "AGENTS.md"
+  banner_template: "<!-- Generated from {source} by `python scripts/sync_context.py`. Edit {source} instead. -->"
+  targets:
+    claude:
+      path: "CLAUDE.md"
+      use_pointer_import: true
+      extras_section: |
+        ## Claude Code specific
+        - Use plan mode for complex multi-file refactors; execute atomic edits directly for small fixes.
+        - Delegate codebase exploration to subagents so results return summarized rather than bloating context.
+    copilot:
+      path: ".github/copilot-instructions.md"
+      use_pointer_import: false
+    cursor:
+      rules_dir: ".cursor/rules"
+      generate_mdc: true
+
+verification_hooks:
+  enable_post_tool_use: true
+  target_tool_matcher: "Edit|Write"
+  linter_command: "python .agents/skills/codebase-context-architect/scripts/context_linter.py --silent"

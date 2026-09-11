@@ -1,6 +1,6 @@
 ---
 name: agent-instruction-architect
-description: Author, audit, and iteratively maintain AGENTS.md, CLAUDE.md, and repository instruction files. Eliminate configuration smells like lint leakage and context bloat, define project execution seams, enforce dependency and permission boundaries, and implement post-incident refinement loops. Trigger when creating or editing AGENTS.md/CLAUDE.md, auditing agent instruction files, or fixing recurring agent behavior bugs.
+description: Author, audit, and maintain AGENTS.md, CLAUDE.md, and agent context files. Eliminate lint leakage and context bloat, define project execution seams, and enforce boundaries. Do not use for generic prose or raw prompt drafting.
 ---
 
 # Agent Instruction Architect
@@ -157,6 +157,12 @@ Transform agent mistakes into permanent architectural invariants in `AGENTS.md`:
 - For API endpoints, follow the structure in `src/api/v1/users.py`.
 - For database transactions, follow the pattern in `src/adapters/db/session.py`.
 ```
+
+---
+
+## The Visual Brief Pillar
+
+Synthesize instruction smell findings and seam boundary diagrams into a self-contained HTML visual brief written to `%TEMP%\instruction-architect-<timestamp>.html` (or `/tmp/instruction-architect-<timestamp>.html` on Unix) loading Tailwind CSS and Mermaid.js via CDN. Present the absolute clickable path to the user for visual review.
 
 ---
 

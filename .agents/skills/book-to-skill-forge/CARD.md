@@ -1,23 +1,23 @@
 # Skill Summary Card: `book-to-skill-forge`
 
 ```
-╔════════════════════════════════════════════════════════╗
-║               SKILL SUMMARY CARD                       ║
-╠════════════════════════════════════════════════════════╣
-║ SKILL:       book-to-skill-forge                       ║
-║ Category:    integration_and_io / skill-synthesis      ║
-║ Invocation:  /book-to-skill-forge                      ║
-║ Trigger:     "turn a book into a skill",               ║
-║              "convert article to skill",               ║
-║              "forge skill from literature",            ║
-║              "video to skill", "book to skill"         ║
-║ Version:     1.0.0                                     ║
-║ Provides:    "literature_skill_synthesis"              ║
-╠════════════════════════════════════════════════════════╣
-║ Target:      Transform books, articles, and video      ║
-║              transcripts into executable deep-module   ║
-║              agent skills with coaching rubrics.       ║
-╚════════════════════════════════════════════════════════╝
+┌────────────────────────────────────────────────────────┐
+│               SKILL SUMMARY CARD                       │
+├────────────────────────────────────────────────────────┤
+│ SKILL:       book-to-skill-forge                       │
+│ Category:    integration_and_io / skill-synthesis      │
+│ Invocation:  /book-to-skill-forge                      │
+│ Trigger:     "turn a book into a skill",               │
+│              "convert article to skill",               │
+│              "forge skill from literature",            │
+│              "video to skill", "book to skill"         │
+│ Version:     1.0.0                                     │
+│ Provides:    "literature_skill_synthesis"              │
+├────────────────────────────────────────────────────────┤
+│ Target:      Transform books, articles, and video      │
+│              transcripts into executable deep-module   │
+│              agent skills with coaching rubrics.       │
+└────────────────────────────────────────────────────────┘
 ```
 
 ---

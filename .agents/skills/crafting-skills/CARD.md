@@ -4,7 +4,7 @@
 ┌────────────────────────────────────────────────────────┐
 │               SKILL SUMMARY CARD                       │
 ├────────────────────────────────────────────────────────┤
-│ Name:        crafting-skills                           │
+│ SKILL:        crafting-skills                           │
 │ Category:    engineering / meta-skills                 │
 │ Invocation:  /crafting-skills                          │
 │ Trigger:     "craft a skill", "refactor this skill",   │

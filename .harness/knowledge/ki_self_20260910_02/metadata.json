@@ -1,0 +1,25 @@
+{
+  "id": "ki_self_20260910_02",
+  "title": "Dual-Tier Skill Prompt Budgeting & Zero-Fork Configuration Governance",
+  "created_at": "2026-09-10T22:15:00Z",
+  "source": "harness-reflector",
+  "isnad": "Session cbb83f6c full-catalog SDLC and architecture pass 2026-09-10; 26 config.default.yaml deployments; 31 description calibrations; eval_uplift_calculator.py continuous evals (DOMINANT_UPLIFT: +39% acc / -59.5% tok); agent-skill-sdlc-20260909-182800.html; Rule 44",
+  "tags": [
+    "prompt_budget",
+    "zero_fork",
+    "config",
+    "token_optimization",
+    "google_evals",
+    "sdlc",
+    "invariant",
+    "endogenous_memory",
+    "self_reflection"
+  ],
+  "references": [
+    "AGENTS.md",
+    "tests/test_agent_skill_sdlc.py",
+    ".agents/skills/agent-skills-architect/resources/eval_matrix_template.json"
+  ],
+  "vault_version": "1.0",
+  "reflection_brief": "harness-reflection-20260910-182500.html"
+}

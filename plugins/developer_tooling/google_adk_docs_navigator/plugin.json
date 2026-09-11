@@ -1,0 +1,83 @@
+{
+  "name": "plugin.google_adk_docs_navigator",
+  "version": "1.0.0",
+  "description": "Google ADK documentation, API reference retriever (Python/TS/Go/Kotlin), and llms.txt index navigator.",
+  "language": "python",
+  "entrypoint": "main.py",
+  "isolation": "subprocess",
+  "trusted": true,
+  "provides": [
+    "service.google_adk_docs_navigator"
+  ],
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "adk_docs_search",
+      "description": "Search ADK documentation, architecture guides, tutorials, and concepts",
+      "parameters": [
+        {
+          "name": "query",
+          "type": "string",
+          "description": "Keywords or search term to look up",
+          "required": true
+        },
+        {
+          "name": "category",
+          "type": "string",
+          "description": "Optional category filter (e.g. 'agents', 'sessions', 'tools', 'mcp')",
+          "required": false,
+          "default": "all"
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "description": "Maximum number of matched sections to return",
+          "required": false,
+          "default": 5
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "adk_get_api_reference",
+      "description": "Retrieve official API references and code signatures for ADK across Python, TypeScript, Go, or Kotlin",
+      "parameters": [
+        {
+          "name": "symbol_name",
+          "type": "string",
+          "description": "Name of class, method, or interface (e.g. 'Agent', 'BaseTool', 'SessionService')",
+          "required": true
+        },
+        {
+          "name": "language",
+          "type": "string",
+          "description": "Target programming language ('python', 'typescript', 'go', 'kotlin')",
+          "required": false,
+          "default": "python"
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "adk_fetch_llms_txt",
+      "description": "Fetch structured plain-text documentation sections optimized for AI agent consumption",
+      "parameters": [
+        {
+          "name": "topic",
+          "type": "string",
+          "description": "Topic or capability identifier",
+          "required": false,
+          "default": "overview"
+        },
+        {
+          "name": "full_content",
+          "type": "boolean",
+          "description": "Whether to return full llms-full.txt content or brief index",
+          "required": false,
+          "default": false
+        }
+      ],
+      "returns": "object"
+    }
+  ]
+}

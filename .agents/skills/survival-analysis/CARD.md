@@ -4,7 +4,7 @@
 ┌────────────────────────────────────────────────────────┐
 │               SKILL SUMMARY CARD                       │
 ├────────────────────────────────────────────────────────┤
-│ Name:        survival-analysis                         │
+│ SKILL:        survival-analysis                         │
 │ Category:    statistics / time-to-event                │
 │ Invocation:  /survival-analysis                        │
 │ Trigger:     "survival analysis", "kaplan meier",      │

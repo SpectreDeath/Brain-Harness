@@ -1,0 +1,43 @@
+# Brain Harness — Google Plugins Suite API Index
+
+> Autonomous integration suite bridging 6 Google codebases into 7 sandboxed Harness plugins.
+
+## Core Services & Tool Entrypoints
+
+### 1. Google ADK Runtime (`service.google_adk_runtime`)
+- `adk_run_agent(agent_name, prompt, session_id, model)`: Run multi-turn agent workflow.
+- `adk_list_sessions(limit)`: List active session checkpoints.
+- `adk_rewind_session(session_id, checkpoint_index)`: Rewind session state.
+- `adk_register_skill(skill_name, description, prompt_template)`: Register dynamic capability.
+
+### 2. Google ADK Optimizer (`service.google_adk_optimizer`)
+- `adk_gepa_optimize_prompt(system_prompt, train_examples, iterations, metric)`: GEPA prompt tuning.
+- `adk_evaluate_agent(agent_name, scenario_ids, judge_model)`: Run scenario evaluations.
+- `adk_score_metrics(trajectory, rubrics)`: Score multi-turn trajectory rubrics.
+
+### 3. Google ADK Docs Navigator (`service.google_adk_docs_navigator`)
+- `adk_docs_search(query, category, limit)`: Search ADK architecture docs.
+- `adk_get_api_reference(symbol_name, language)`: Retrieve multi-lang API signatures.
+- `adk_fetch_llms_txt(topic, full_content)`: Read plain-text llms.txt summaries.
+
+### 4. Google ADK Web Bridge (`service.google_adk_web_bridge`)
+- `adk_web_status(project_dir)`: Inspect Angular ADK web console.
+- `adk_web_export_graph(nodes, edges, format)`: Export DAG to A2UI or ngx-vflow.
+- `adk_web_start_dev_server(port, poll_interval)`: Configure dev server runner.
+
+### 5. Google Style Guide Auditor (`service.google_styleguide_auditor`)
+- `styleguide_audit_file(file_path, language)`: Audit code against Google style guides.
+- `styleguide_get_rule(language, topic)`: Query style guidelines and rationales.
+- `styleguide_generate_linter_config(tool_name, target_dir)`: Emit .pylintrc configs.
+
+### 6. Google Tunix Post-Training (`service.google_tunix_posttraining`)
+- `tunix_inspect_config(pipeline_type, model_name, learning_rate, batch_size)`: Validate JAX config.
+- `tunix_launch_grpo(config_dict, dry_run, num_steps)`: Run GRPO training step.
+- `tunix_launch_peft(config_dict, lora_rank, dry_run)`: Run LoRA fine-tuning.
+- `tunix_compute_math_reward(completion, ground_truth, format_check)`: Calculate math rewards.
+
+### 7. Google Perfetto Trace Processor (`service.perfetto_trace_processor`)
+- `perfetto_load_trace(trace_path, verbose)`: Ingest trace file into schema tables.
+- `perfetto_query_sql(trace_id, sql_query)`: Execute SQL against slice/sched tables.
+- `perfetto_compute_metrics(trace_id, metrics_list)`: Compute scheduling metrics.
+- `perfetto_export_flamegraph(trace_id, focus_thread)`: Generate flame graph tree.

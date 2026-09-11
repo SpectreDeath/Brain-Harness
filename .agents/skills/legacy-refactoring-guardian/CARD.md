@@ -2,7 +2,7 @@
 ┌────────────────────────────────────────────────────────┐
 │             SKILL: legacy-refactoring-guardian         │
 ├────────────────────────────────────────────────────────┤
-│ Name:        legacy-refactoring-guardian               │
+│ SKILL:        legacy-refactoring-guardian               │
 │ Category:    software_engineering                      │
 │ Domain:      Software Engineering / Modernization      │
 │ Invocation:  /legacy-refactoring-guardian              │

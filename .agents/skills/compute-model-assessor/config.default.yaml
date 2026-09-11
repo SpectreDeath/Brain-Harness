@@ -1,0 +1,13 @@
+# Default configuration for compute-model-assessor
+line_budget_limit: 500
+token_budget_limit: 5000
+enforce_two_phase_validation: true
+max_repair_attempts: 3
+security_risk_threshold: 20
+supported_clients:
+  - claude-code
+  - antigravity
+  - vscode
+  - cursor
+  - copilot
+extra_security_patterns: []

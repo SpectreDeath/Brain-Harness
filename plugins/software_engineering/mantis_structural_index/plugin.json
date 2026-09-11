@@ -1,0 +1,62 @@
+{
+  "name": "plugin.mantis_structural_index",
+  "version": "1.0.0",
+  "description": "Google Mantis AST content-addressed semantic-unit indexing and SQLite symbol querying",
+  "language": "python",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "provides": [
+    "service.mantis_structural_index"
+  ],
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "mantis_build_structural_index",
+      "description": "Parse codebase AST into content-addressed semantic units and index into SQLite database",
+      "parameters": [
+        {
+          "name": "repo_path",
+          "type": "string",
+          "description": "Path to target source code repository",
+          "required": true
+        },
+        {
+          "name": "db_path",
+          "type": "string",
+          "description": "Path to output SQLite index database",
+          "required": false,
+          "default": "structural_index.db"
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "mantis_query_symbol",
+      "description": "Query symbol definitions, references, and semantic unit hashes from the structural index",
+      "parameters": [
+        {
+          "name": "symbol_name",
+          "type": "string",
+          "description": "Symbol name (class, function, or method)",
+          "required": true
+        },
+        {
+          "name": "db_path",
+          "type": "string",
+          "description": "Path to SQLite index database",
+          "required": false,
+          "default": "structural_index.db"
+        },
+        {
+          "name": "query_type",
+          "type": "string",
+          "description": "Query type: 'definition', 'references', or 'all'",
+          "required": false,
+          "default": "definition"
+        }
+      ],
+      "returns": "object"
+    }
+  ]
+}

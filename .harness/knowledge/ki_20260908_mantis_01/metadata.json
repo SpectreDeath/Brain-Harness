@@ -1,0 +1,76 @@
+{
+  "id": "ki_20260908_mantis_01",
+  "title": "Google Mantis Decoupled Security Review Pipeline & Sandboxed Crash Verification",
+  "source_target": "D:\\GitHub\\cloned\\Google\\mantis",
+  "detected_format": "git_repository",
+  "timestamp": "2026-09-08T17:30:00Z",
+  "isnad": {
+    "decision_id": "dec_20260908_mantis_01",
+    "claims": [
+      {
+        "assertion": "Decoupled sequential security review skills with isolated verification stages prevent model hallucination cascades and bound LLM reasoning budgets compared to single-prompt audits.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "README_AGENTS.md#L45-L120",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "reference/workflow.json#L1-L60",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "assertion": "Dynamic Proof-of-Concept crash reproduction combined with shadow directory patch bypass re-attacks enforces empirical vulnerability verification before reporting.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "mantis-reproduce/SKILL.md#L1-L80",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "mantis-patch/SKILL.md#L1-L90",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "reference/tools/sandbox_tools.py#L1-L31",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "assertion": "The Open Knowledge Format (OKF v0.2) SQLite database and stable signature hashing provide durable findings deduplication and cross-loop lineage tracking across multi-turn sweeps.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "reference/core/database.py#L1-L200",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "schema.json#L1-L150",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "security_audit",
+    "vulnerability_research",
+    "crash_reproduction",
+    "exploit_chaining",
+    "sandbox_isolation",
+    "okf",
+    "ast_indexing",
+    "google_mantis",
+    "repo_bridge"
+  ],
+  "context": "Google Mantis Decoupled Security Review Pipeline & Sandboxed Crash Verification",
+  "distilled_learning": "# KI: Google Mantis Decoupled Security Review Pipeline & Sandboxed Crash Verification\n\n## Operational Summary\nGoogle Mantis provides a battle-tested architecture for autonomous security review harnesses. Key insights bridged into Brain Harness include:\n1. **Decoupled Sequential Skills:** Rather than asking an LLM to find, verify, and fix bugs in a single prompt, Mantis breaks the review into distinct, verifiable phases (History, Summary, Plan, Research, Dedupe, Review, Critic, Reproduce, Chain, Patch, Calibrate, Report).\n2. **Empirical Crash Reproduction:** Flaws are not accepted as valid until a sandbox reproducer triggers a verifiable crash or sanitizer alert (ASAN/UBSAN).\n3. **Transactional Patch Isolation:** Candidate security fixes are tested in shadow directories against the reproducer; a patch is only certified if re-attack variants fail to bypass it.\n4. **OKF v0.2 & Content-Addressed Signatures:** Stable hashing across filepaths, CWEs, and symbol locations prevents redundant multi-agent reporting."
+}

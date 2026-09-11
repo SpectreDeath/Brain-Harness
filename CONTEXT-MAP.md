@@ -17,6 +17,7 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
 * **Member Skills**:
   - [`questio-reflection`](file:///.agents/skills/questio-reflection/SKILL.md) — Aquinas-style adversarial self-reflection and invariant challenge before execution.
   - [`ai-agent-engineer`](file:///.agents/skills/ai-agent-engineer/SKILL.md) — Production-grade autonomous systems architecture, 4-Level Ladder qualification, 60 canonical patterns, substrate isolation, and session evaluation.
+  - [`swarm-reflection-optimizer`](file:///.agents/skills/swarm-reflection-optimizer/SKILL.md) — Autonomous multi-agent DAG optimization, ANN textual backpropagation, Borda count deliberation, and Aquinas adversarial reflection.
 
 ### 2. [Memory & Epistemics](./docs/domains/memory-and-epistemics/CONTEXT.md)
 * **Scope**: Declarative skill graphs, semantic embeddings, context distillation, prompt benchmarking, and claim lineage.
@@ -47,6 +48,9 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - [`sql-recursive-graph-traversal`](file:///.agents/skills/sql-recursive-graph-traversal/SKILL.md) — Relational graph traversal, hierarchy trees, cycle detection, and BFS shortest paths in SQL.
   - [`neural-network-from-scratch`](file:///.agents/skills/neural-network-from-scratch/SKILL.md) — Feedforward neural network construction, analytical backpropagation calculus, numerical stability floors, and modular PyTorch translation.
   - [`data-management-architect`](file:///.agents/skills/data-management-architect/SKILL.md) — Enterprise data lifecycle governance, DAMA-DMBOK capabilities, Open Data Contracts (ODCS), Medallion lakehouse engineering, 6-dimension data quality gating, and Level 0–5 maturity roadmaps.
+  - [`neo4j-knowledge-graph-architect`](file:///.agents/skills/neo4j-knowledge-graph-architect/SKILL.md) — Production Neo4j labeled property graph architecture, backward schema modeling, idempotent batch ingestion, Cypher traversal safety, index profiling, and epistemic evidence boundaries.
+  - [`knowledge-graph-pipeline`](file:///.agents/skills/knowledge-graph-pipeline/SKILL.md) — End-to-end data scouting, ontological engineering, backward LPG schema design, idempotent UNWIND batching, and dual-engine recursive SQL traversal.
+
 
 ### 4. [Software Engineering](./docs/domains/software-engineering/CONTEXT.md)
 * **Scope**: AST code refactoring, architecture invariant linting, sandbox script execution, git operations, and artifact reporting.
@@ -67,6 +71,9 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - [`agent-skill-sdlc`](file:///.agents/skills/agent-skill-sdlc/SKILL.md) — Autonomous agent skill lifecycle engine covering design, 3-tier config, two-phase validation, testing, and SkillSpector auditing.
   - [`agent-skills-architect`](file:///.agents/skills/agent-skills-architect/SKILL.md) — Enterprise agent skills architecture, 3-tier progressive disclosure, runtime tool approval middleware, CI linters, and Google 2x2 continuous evals.
   - [`legacy-refactoring-guardian`](file:///.agents/skills/legacy-refactoring-guardian/SKILL.md) — AI-assisted codebase archaeology, characterization safety nets, and incremental legacy refactoring.
+  - [`codebase-context-architect`](file:///.agents/skills/codebase-context-architect/SKILL.md) — Multi-layer repository context files (`AGENTS.md`, `CLAUDE.md`, `.cursor/rules/`), single-source synchronization, token budgeting, and CI path/script verification linters.
+  - [`legacy-modernization-pipeline`](file:///.agents/skills/legacy-modernization-pipeline/SKILL.md) — Safe legacy codebase modernization through multi-axis audits, causal DAG topology mapping, characterization test safety nets, and adversarial refactoring loops.
+  - [`codebase-context-governor`](file:///.agents/skills/codebase-context-governor/SKILL.md) — Multi-layer codebase context governance, Three-Layer partitioning, automated CI linter enforcement, and dynamic 5D compute tier calibration.
 
 ### 5. [Security & Forensics](./docs/domains/security-and-forensics/CONTEXT.md)
 * **Scope**: Threat modeling, vulnerability scanning, log forensics, network port auditing, and execution trajectory auditing.
@@ -101,6 +108,10 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - [`book-to-skill-forge`](file:///.agents/skills/book-to-skill-forge/SKILL.md) — Synthesis and authoring of deep-module agent skills and coaching rubrics from books, articles, and video transcripts.
   - [`developer-docs-architect`](file:///.agents/skills/developer-docs-architect/SKILL.md) — Architecture, authoring, and AI-optimization of technical documentation, API reference suites, and C4 architecture blueprints using Diátaxis and Docs-as-Code pipelines.
   - [`ai-file-analysis-agent`](file:///.agents/skills/ai-file-analysis-agent/SKILL.md) — Document-grounded AI file analysis assistants with Direct File API vs RAG triage, prompt grounding constraints, and conversational fault shielding.
+  - [`deep-skill-forge`](file:///.agents/skills/deep-skill-forge/SKILL.md) — Autonomous end-to-end synthesis pipeline uniting literature deconstruction, deep architecture elevation, bounded self-repair, and Knowledge Vault retention.
+  - [`multimedia-intelligence-forge`](file:///.agents/skills/multimedia-intelligence-forge/SKILL.md) — Subprocess multimedia transcription, dual-lens cognitive distillation, isnad claim lineage verification, and canonical dual-file Knowledge Vault retention.
+  - [`external-repo-bridge-forge`](file:///.agents/skills/external-repo-bridge-forge/SKILL.md) — Foreign GitHub repository ingestion, commit trajectory analysis, sandboxed Harness plugin synthesis, and Diátaxis documentation with C4 architecture models.
+
 
 ---
 

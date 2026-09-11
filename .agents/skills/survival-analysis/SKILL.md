@@ -1,6 +1,6 @@
 ---
 name: survival-analysis
-description: Estimate survival curves, evaluate right-censoring, fit Cox proportional hazards regression models, diagnose Schoenfeld residuals, and resolve non-proportional hazards using stratification or time-varying covariates. Use when the user asks to analyze time-to-event data, compute Kaplan-Meier curves, calculate hazard ratios, test proportional hazards assumptions, or run survival diagnostics.
+description: Estimate survival curves, evaluate right-censoring, fit Cox proportional hazards regression models, and diagnose Schoenfeld residuals with stratification. Do not use for non-time-to-event classification or generic regression.
 ---
 
 # Survival Analysis & Cox Proportional Hazards Engine

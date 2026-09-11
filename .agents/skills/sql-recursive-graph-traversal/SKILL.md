@@ -1,6 +1,6 @@
 ---
 name: sql-recursive-graph-traversal
-description: Execute graph pathfinding, hierarchy walking, cycle detection, path cost accumulation, and BFS shortest-path queries inside relational SQL without dedicated graph database infrastructure. Trigger when querying hierarchical trees, organizational charts, bill-of-materials, route planning, cycle-safe network graphs, or computing degrees of separation.
+description: Execute graph pathfinding, hierarchy walking, cycle detection, path cost accumulation, and BFS shortest-path queries inside relational SQL. Do not use for dedicated graph databases (Neo4j) or unstructured property lookups.
 ---
 
 # SQL Recursive Graph Traversal Engine
@@ -202,6 +202,19 @@ shortest AS (
 SELECT current_node AS target_person, degree, path
 FROM shortest WHERE rn = 1;
 ```
+
+---
+
+## The Three Foundational Pillars
+
+### 1. The Visual Brief
+Synthesize findings, structural matrices, and execution DAGs into a self-contained HTML visual brief written to `%TEMP%\sql-recursive-graph-traversal-<timestamp>.html` (or `/tmp/sql-recursive-graph-traversal-<timestamp>.html` on Unix) loading Tailwind CSS and Mermaid.js via CDN. Present the absolute clickable path to the user for visual review.
+
+### 2. The Mandatory Checkpoint
+When proposing structural modifications, refactors, or execution pipelines, always author an `implementation_plan.md` artifact with `RequestFeedback: true`. The agent must **STOP and wait** for explicit human confirmation before executing mutating actions.
+
+### 3. Explicit Anti-Patterns
+Rigid behavioral boundaries must be maintained to prevent catastrophic failure modes.
 
 ---
 

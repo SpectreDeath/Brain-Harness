@@ -83,10 +83,11 @@ class ContractValidationReport:
 class DataContractValidator:
     """Validates record batches against an Open Data Contract definition."""
 
-    def __init__(self, contract: dict[str, Any]) -> None:
+    def __init__(self, contract: dict[str, Any], reference_time: datetime | None = None) -> None:
         self.contract = contract
         self.name = contract.get("name", "unnamed_contract")
         self.version = str(contract.get("version", "1.0.0"))
+        self.reference_time = reference_time
         self.schema = contract.get("schema", {})
         raw_fields = self.schema.get("fields", {})
         if isinstance(raw_fields, list):
@@ -102,19 +103,20 @@ class DataContractValidator:
         self.sla = contract.get("sla", {})
 
     @classmethod
-    def from_dict(cls, contract_dict: dict[str, Any]) -> DataContractValidator:
-        return cls(contract_dict)
+    def from_dict(cls, contract_dict: dict[str, Any], reference_time: datetime | None = None) -> DataContractValidator:
+        return cls(contract_dict, reference_time=reference_time)
 
     @classmethod
-    def from_json(cls, json_path: str | Path) -> DataContractValidator:
+    def from_json(cls, json_path: str | Path, reference_time: datetime | None = None) -> DataContractValidator:
         path = Path(json_path)
         data = json.loads(path.read_text(encoding="utf-8"))
-        return cls(data)
+        return cls(data, reference_time=reference_time)
 
     def validate_dataset(
         self,
         records: list[dict[str, Any]],
         max_quarantine_ratio: float = 0.05,
+        reference_time: datetime | None = None,
     ) -> ContractValidationReport:
         """Validate an iterable collection of dictionary records against contract rules."""
         violations: list[ContractViolation] = []
@@ -133,7 +135,10 @@ class DataContractValidator:
         freshness_field = self.sla.get("freshness_field")
         max_latency_hours = self.sla.get("max_latency_hours")
         if freshness_field and max_latency_hours is not None and records:
-            freshness_violation = self._check_freshness(records, freshness_field, float(max_latency_hours))
+            effective_ref = reference_time or self.reference_time
+            freshness_violation = self._check_freshness(
+                records, freshness_field, float(max_latency_hours), reference_time=effective_ref
+            )
             if freshness_violation:
                 violations.append(freshness_violation)
 
@@ -271,6 +276,7 @@ class DataContractValidator:
         records: list[dict[str, Any]],
         field_name: str,
         max_hours: float,
+        reference_time: datetime | None = None,
     ) -> ContractViolation | None:
         latest_dt: datetime | None = None
 
@@ -294,7 +300,7 @@ class DataContractValidator:
                 actual_value=None,
             )
 
-        now = datetime.now(timezone.utc)
+        now = reference_time or self.reference_time or datetime.now(timezone.utc)
         diff_hours = (now - latest_dt).total_seconds() / 3600.0
         if diff_hours > max_hours:
             return ContractViolation(

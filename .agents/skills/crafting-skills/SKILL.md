@@ -1,6 +1,6 @@
 ---
 name: crafting-skills
-description: Design, author, or refactor agent skills using high-precision craft standards. Use when creating a new skill from scratch, upgrading an existing skill to deep-module standards, or generating companion summary cards (CARD.md) with visual briefs and mandatory checkpoints.
+description: Design, author, or refactor agent skills using high-precision craft standards, deep-module principles, and companion summary cards (CARD.md) with visual briefs. Do not use for one-off markdown notes or raw prompts.
 ---
 
 # Skill Crafting & Refactoring Engine

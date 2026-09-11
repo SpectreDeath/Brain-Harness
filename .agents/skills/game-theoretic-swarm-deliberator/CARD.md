@@ -4,7 +4,7 @@
 ┌────────────────────────────────────────────────────────┐
 │               SKILL SUMMARY CARD                       │
 ├────────────────────────────────────────────────────────┤
-│ Name:        game-theoretic-swarm-deliberator          │
+│ SKILL:        game-theoretic-swarm-deliberator          │
 │ Category:    multi_agent / game_theory / simulation    │
 │ Invocation:  /game-theoretic-swarm-deliberator         │
 │ Trigger:     "deliberate swarm", "swarm voting",       │

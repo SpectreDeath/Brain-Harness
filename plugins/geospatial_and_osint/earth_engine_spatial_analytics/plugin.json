@@ -1,0 +1,202 @@
+{
+  "name": "plugin.earth_engine_spatial_analytics",
+  "version": "1.0.0",
+  "description": "Google Earth Engine vector spatial analytics, zonal reducers, terrain modeling (slope, aspect, hillshade), and dataset catalog governance",
+  "language": "python",
+  "entrypoint": "main.py",
+  "isolation": "subprocess",
+  "trusted": true,
+  "provides": [
+    "service.earth_engine_spatial_analytics"
+  ],
+  "requires": [
+    "service.earth_engine_imagery"
+  ],
+  "entrypoints": [
+    {
+      "name": "ee_zonal_statistics",
+      "description": "Compute spatial statistics (mean, sum, min, max, stdDev, count, histogram) over raster bands within vector polygon regions",
+      "parameters": [
+        {
+          "name": "image_id",
+          "type": "string",
+          "description": "Earth Engine image asset ID or computed raster identifier",
+          "required": true
+        },
+        {
+          "name": "geometry_geojson",
+          "type": "object",
+          "description": "GeoJSON Polygon or MultiPolygon defining the analysis boundary",
+          "required": true
+        },
+        {
+          "name": "reducer",
+          "type": "string",
+          "description": "Spatial reduction operation: 'mean', 'sum', 'min', 'max', 'stdDev', 'median', 'count', or 'histogram'",
+          "required": false,
+          "default": "mean"
+        },
+        {
+          "name": "scale_meters",
+          "type": "number",
+          "description": "Nominal pixel scale in meters for reduction evaluation",
+          "required": false,
+          "default": 30.0
+        },
+        {
+          "name": "bands",
+          "type": "array",
+          "description": "Optional list of band names to reduce (default all bands)",
+          "required": false,
+          "default": []
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "ee_analyze_terrain",
+      "description": "Extract terrain metrics including elevation profile, slope, aspect, and hillshade from digital elevation models",
+      "parameters": [
+        {
+          "name": "dem_asset",
+          "type": "string",
+          "description": "Digital Elevation Model asset ID (e.g. 'USGS/3DEP/10m', 'NASA/NASADEM_HGT/001', 'COPERNICUS/DEM/GLO30')",
+          "required": false,
+          "default": "USGS/3DEP/10m"
+        },
+        {
+          "name": "bbox",
+          "type": "array",
+          "description": "Bounding box coordinates as [min_lon, min_lat, max_lon, max_lat]",
+          "required": false,
+          "default": [-122.5, 37.7, -122.3, 37.9]
+        },
+        {
+          "name": "compute_slope",
+          "type": "boolean",
+          "description": "Whether to calculate terrain slope in degrees",
+          "required": false,
+          "default": true
+        },
+        {
+          "name": "compute_aspect",
+          "type": "boolean",
+          "description": "Whether to calculate terrain aspect in degrees from north",
+          "required": false,
+          "default": true
+        },
+        {
+          "name": "compute_hillshade",
+          "type": "boolean",
+          "description": "Whether to calculate shaded relief illumination",
+          "required": false,
+          "default": true
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "ee_vector_spatial_query",
+      "description": "Query and filter vector FeatureCollections (administrative boundaries, watersheds, parcels) with attribute and geometry filters",
+      "parameters": [
+        {
+          "name": "table_asset",
+          "type": "string",
+          "description": "Earth Engine vector table asset ID (e.g. 'USDOS/LSIB_SIMPLE/2017', 'USGS/WBD/2017/HUC08', 'TIGER/2018/States')",
+          "required": true
+        },
+        {
+          "name": "filter_property",
+          "type": "string",
+          "description": "Feature attribute property name to filter on",
+          "required": false,
+          "default": ""
+        },
+        {
+          "name": "filter_value",
+          "type": "string",
+          "description": "Property value match string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "name": "geometry_filter",
+          "type": "object",
+          "description": "Optional GeoJSON geometry to filter features intersecting boundary",
+          "required": false
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "description": "Maximum number of vector features to return",
+          "required": false,
+          "default": 25
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "ee_query_data_catalog",
+      "description": "Search and discover datasets in the public Earth Engine Data Catalog by keyword, environmental theme, and tag",
+      "parameters": [
+        {
+          "name": "query",
+          "type": "string",
+          "description": "Free text query string (e.g. 'temperature', 'precipitation', 'elevation', 'landcover')",
+          "required": false,
+          "default": ""
+        },
+        {
+          "name": "category",
+          "type": "string",
+          "description": "Dataset category filter: 'climate', 'weather', 'imagery', 'elevation', 'landcover', or 'oceans'",
+          "required": false,
+          "default": ""
+        },
+        {
+          "name": "tags",
+          "type": "array",
+          "description": "Optional keyword tag filters",
+          "required": false,
+          "default": []
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "description": "Maximum number of catalog datasets to return",
+          "required": false,
+          "default": 10
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "ee_manage_batch_task",
+      "description": "Inspect status, list, monitor, or cancel asynchronous Earth Engine export/import batch jobs",
+      "parameters": [
+        {
+          "name": "action",
+          "type": "string",
+          "description": "Task management action: 'list', 'status', or 'cancel'",
+          "required": false,
+          "default": "list"
+        },
+        {
+          "name": "task_id",
+          "type": "string",
+          "description": "Specific task ID when querying status or cancelling",
+          "required": false,
+          "default": ""
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "description": "Maximum number of tasks to list",
+          "required": false,
+          "default": 10
+        }
+      ],
+      "returns": "object"
+    }
+  ]
+}

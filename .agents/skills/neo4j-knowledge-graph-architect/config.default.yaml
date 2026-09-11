@@ -1,0 +1,16 @@
+# Default configuration for neo4j-knowledge-graph-architect
+line_budget_limit: 500
+token_budget_limit: 5000
+chunk_size_default: 1000
+chunk_size_max: 5000
+enforce_double_load_idempotency: true
+enforce_cypher_linting: true
+max_traversal_depth: 4
+supported_databases:
+  - neo4j
+supported_clients:
+  - claude-code
+  - antigravity
+  - vscode
+  - cursor
+  - copilot

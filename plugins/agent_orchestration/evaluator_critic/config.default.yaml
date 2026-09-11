@@ -1,0 +1,10 @@
+# Evaluator Critic Adapter Configuration Defaults (Rule 44 Zero-Fork Config)
+version: "1.0.0"
+
+operational_budgets:
+  max_code_analysis_loc: 5000
+  command_timeout_seconds: 15.0
+  cache_ttl_seconds: 300
+
+runtime:
+  strict_safety_blocking: true

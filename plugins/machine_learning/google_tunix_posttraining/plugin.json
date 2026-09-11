@@ -1,0 +1,129 @@
+{
+  "name": "plugin.google_tunix_posttraining",
+  "version": "1.0.0",
+  "description": "Google Tunix (Tune-in-JAX) post-training bridge: GRPO, PPO, PEFT/LoRA configuration, execution launcher, and math reasoning reward scoring.",
+  "language": "python",
+  "entrypoint": "main.py",
+  "isolation": "subprocess",
+  "trusted": true,
+  "provides": [
+    "service.google_tunix_posttraining"
+  ],
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "tunix_inspect_config",
+      "description": "Generate and validate GRPO, PPO, or PEFT post-training configurations for JAX execution",
+      "parameters": [
+        {
+          "name": "pipeline_type",
+          "type": "string",
+          "description": "Pipeline type ('grpo', 'ppo', 'peft_lora', 'distillation')",
+          "required": true
+        },
+        {
+          "name": "model_name",
+          "type": "string",
+          "description": "Model identifier (e.g. 'gemma-2-2b', 'gemma-2-9b', 'custom')",
+          "required": false,
+          "default": "gemma-2-2b"
+        },
+        {
+          "name": "learning_rate",
+          "type": "number",
+          "description": "Peak learning rate for optimizer",
+          "required": false,
+          "default": 0.0001
+        },
+        {
+          "name": "batch_size",
+          "type": "integer",
+          "description": "Per-device training batch size",
+          "required": false,
+          "default": 4
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "tunix_launch_grpo",
+      "description": "Prepare and simulate or launch a GRPO (Group Relative Policy Optimization) post-training step",
+      "parameters": [
+        {
+          "name": "config_dict",
+          "type": "object",
+          "description": "GRPO configuration parameters (model, reward functions, mesh)",
+          "required": true
+        },
+        {
+          "name": "dry_run",
+          "type": "boolean",
+          "description": "Whether to perform dry-run parameter validation without spawning JAX proactors",
+          "required": false,
+          "default": true
+        },
+        {
+          "name": "num_steps",
+          "type": "integer",
+          "description": "Number of training update steps to execute",
+          "required": false,
+          "default": 10
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "tunix_launch_peft",
+      "description": "Launch or simulate parameter-efficient fine-tuning (PEFT/LoRA) using Tunix SFT trainer",
+      "parameters": [
+        {
+          "name": "config_dict",
+          "type": "object",
+          "description": "LoRA configuration parameters (target modules, rank, alpha)",
+          "required": true
+        },
+        {
+          "name": "lora_rank",
+          "type": "integer",
+          "description": "LoRA adaptation rank (e.g. 8, 16, 32)",
+          "required": false,
+          "default": 16
+        },
+        {
+          "name": "dry_run",
+          "type": "boolean",
+          "description": "Perform validation and tensor shape analysis without hardware allocation",
+          "required": false,
+          "default": true
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "tunix_compute_math_reward",
+      "description": "Compute mathematical reasoning and formatting reward scores on candidate model completions",
+      "parameters": [
+        {
+          "name": "completion",
+          "type": "string",
+          "description": "Candidate generated solution with reasoning steps and \\boxed{} answer",
+          "required": true
+        },
+        {
+          "name": "ground_truth",
+          "type": "string",
+          "description": "Expected ground-truth answer string or scalar",
+          "required": true
+        },
+        {
+          "name": "format_check",
+          "type": "boolean",
+          "description": "Whether to enforce strict <thought>...</thought> and \\boxed{} delimiters",
+          "required": false,
+          "default": true
+        }
+      ],
+      "returns": "object"
+    }
+  ]
+}

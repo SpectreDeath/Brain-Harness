@@ -1,0 +1,24 @@
+# Default zero-fork operational configuration for media-to-vault-pipeline (Rule 44)
+version: "1.0.0"
+
+transcription:
+  max_duration_seconds: 7200
+  rate_limit_requests_per_second: 2
+  retry_transient_attempts: 3
+  timeout_seconds: 60
+
+distillation:
+  min_isnad_confidence: 0.85
+  enforce_dual_lens_seam: true
+  min_claims_count: 3
+  min_procedural_steps: 4
+
+vault:
+  root_dir: ".harness/knowledge"
+  enforce_canonical_dual_file: true
+  schema_version: "2.0.0"
+
+skills_target:
+  root_dir: ".agents/skills"
+  default_category: "engineering / domain-skills"
+  generate_companion_card: true

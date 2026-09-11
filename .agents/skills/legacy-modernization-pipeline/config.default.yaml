@@ -1,0 +1,34 @@
+# Baseline configuration for legacy-modernization-pipeline
+# Supports 3-tier zero-fork configuration:
+# Precedence: Project Override (.agents/skills.config.yaml) -> Skill Default (config.default.yaml) -> Hardcoded Fallback
+
+version: "1.0.0"
+
+audit:
+  complexity_threshold: 15
+  compute_complexity_cutoff: 0.75
+  max_directory_depth: 8
+  scan_file_extensions:
+    - ".py"
+    - ".ts"
+    - ".js"
+    - ".go"
+    - ".rs"
+
+characterization:
+  min_coverage_pct: 90.0
+  verify_synthetic_mutation: true
+  max_mutation_samples: 5
+  timeout_per_suite_seconds: 60
+
+refactoring:
+  max_blast_radius_files: 10
+  enforce_inspect_before_edit: true
+  enforce_slotted_frozen_entities: true
+  enforce_transactional_rollback: true
+  in_flight_linter_enabled: true
+
+knowledge_vault:
+  enabled: true
+  vault_root: ".harness/knowledge"
+  enforce_dual_file_format: true

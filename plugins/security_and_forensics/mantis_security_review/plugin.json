@@ -1,0 +1,247 @@
+{
+  "name": "plugin.mantis_security_review",
+  "version": "1.0.0",
+  "description": "Google Mantis autonomous security review pipeline, VCS history mining, deduplication ladder, and risk calibration",
+  "language": "python",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "provides": [
+    "service.mantis_security_review"
+  ],
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "mantis_history_scan",
+      "description": "Mine VCS repository history for historical vulnerabilities, security fix patterns, and commit trajectories",
+      "parameters": [
+        {
+          "name": "repo_path",
+          "type": "string",
+          "description": "Path to the target Git repository",
+          "required": true
+        },
+        {
+          "name": "max_commits",
+          "type": "integer",
+          "description": "Maximum number of commits to inspect",
+          "required": false,
+          "default": 100
+        },
+        {
+          "name": "pattern_filter",
+          "type": "string",
+          "description": "Optional keyword or regex filter for commit messages",
+          "required": false,
+          "default": ""
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "mantis_directory_summary",
+      "description": "Generate hierarchical security-focused directory map and asset overview",
+      "parameters": [
+        {
+          "name": "dir_path",
+          "type": "string",
+          "description": "Directory path to analyze",
+          "required": true
+        },
+        {
+          "name": "recursive",
+          "type": "boolean",
+          "description": "Whether to recursively analyze subdirectories",
+          "required": false,
+          "default": true
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "mantis_plan_review",
+      "description": "Formulate targeted defensive security review plan from threat model and codebase boundaries",
+      "parameters": [
+        {
+          "name": "threat_model",
+          "type": "object",
+          "description": "Active threat model dictionary containing boundaries and components",
+          "required": true
+        },
+        {
+          "name": "target_paths",
+          "type": "array",
+          "description": "List of prioritized target file or directory paths",
+          "required": true
+        },
+        {
+          "name": "focus_cwe",
+          "type": "array",
+          "description": "Optional list of priority CWE identifiers to focus on",
+          "required": false,
+          "default": []
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "mantis_research_audit",
+      "description": "Deep-dive static analysis audit of target source code for vulnerability patterns",
+      "parameters": [
+        {
+          "name": "target_file",
+          "type": "string",
+          "description": "Relative or absolute path of the target file",
+          "required": true
+        },
+        {
+          "name": "code_content",
+          "type": "string",
+          "description": "Raw source code content to audit",
+          "required": true
+        },
+        {
+          "name": "focus_cwe",
+          "type": "array",
+          "description": "Optional priority CWE list to evaluate",
+          "required": false,
+          "default": []
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "mantis_dedupe_ladder",
+      "description": "Consolidate raw security findings through multi-pass syntactic, AST, and semantic deduplication",
+      "parameters": [
+        {
+          "name": "findings",
+          "type": "array",
+          "description": "List of raw finding dictionaries to deduplicate",
+          "required": true
+        },
+        {
+          "name": "mode",
+          "type": "string",
+          "description": "Deduplication mode: 'syntactic_and_ast', 'signature_only', or 'off'",
+          "required": false,
+          "default": "syntactic_and_ast"
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "mantis_review_gate",
+      "description": "Independent validation gate evaluating findings against source semantics to eliminate false positives",
+      "parameters": [
+        {
+          "name": "finding",
+          "type": "object",
+          "description": "Finding dictionary to evaluate",
+          "required": true
+        },
+        {
+          "name": "source_content",
+          "type": "string",
+          "description": "Actual source code where the vulnerability is alleged",
+          "required": true
+        },
+        {
+          "name": "strictness",
+          "type": "string",
+          "description": "Review strictness: 'high', 'medium', or 'low'",
+          "required": false,
+          "default": "high"
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "mantis_critic_filter",
+      "description": "Assess production viability of findings, filtering out debug-only features and assertion traps",
+      "parameters": [
+        {
+          "name": "finding",
+          "type": "object",
+          "description": "Finding dictionary to evaluate",
+          "required": true
+        },
+        {
+          "name": "check_release_assertions",
+          "type": "boolean",
+          "description": "Whether to verify behavior when assertions are disabled in production builds",
+          "required": false,
+          "default": true
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "mantis_chain_exploits",
+      "description": "Analyze individual security findings to construct multi-stage compound exploit chains",
+      "parameters": [
+        {
+          "name": "findings",
+          "type": "array",
+          "description": "List of confirmed findings to evaluate for chaining",
+          "required": true
+        },
+        {
+          "name": "target_objective",
+          "type": "string",
+          "description": "High-impact adversary objective (e.g. Remote Code Execution, Auth Bypass)",
+          "required": false,
+          "default": ""
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "mantis_calibrate_risk",
+      "description": "Calculate multi-axis risk ratings based on threat intel, impact, criticality, and exploitability",
+      "parameters": [
+        {
+          "name": "findings",
+          "type": "array",
+          "description": "List of findings to calibrate",
+          "required": true
+        },
+        {
+          "name": "asset_criticality",
+          "type": "string",
+          "description": "Criticality level of target asset: 'critical', 'high', 'medium', or 'low'",
+          "required": false,
+          "default": "high"
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "mantis_generate_report",
+      "description": "Compile stakeholder-facing security review packet from confirmed findings and exploit chains",
+      "parameters": [
+        {
+          "name": "findings",
+          "type": "array",
+          "description": "List of confirmed, calibrated findings",
+          "required": true
+        },
+        {
+          "name": "exploit_chains",
+          "type": "array",
+          "description": "Optional list of constructed exploit chains",
+          "required": false,
+          "default": []
+        },
+        {
+          "name": "executive_summary",
+          "type": "string",
+          "description": "High-level executive narrative summary",
+          "required": false,
+          "default": ""
+        }
+      ],
+      "returns": "object"
+    }
+  ]
+}

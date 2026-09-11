@@ -1,0 +1,32 @@
+# Baseline configuration for codebase-context-governor
+# Supports 3-tier zero-fork configuration:
+# Precedence: Project Override (.agents/skills.config.yaml) -> Skill Default (config.default.yaml) -> Hardcoded Fallback
+
+version: "1.0.0"
+
+limits:
+  max_instruction_lines: 150
+  max_instruction_tokens: 4000
+  warn_instruction_lines: 120
+  frontmatter_min_chars: 100
+  frontmatter_max_chars: 350
+
+linting:
+  enforce_negative_boundaries: true
+  enforce_execution_seams: true
+  forbid_lint_leakage: true
+  forbid_generic_tutorials: true
+  verify_file_links: true
+
+synchronization:
+  auto_sync_on_build: false
+  target_clients:
+    - "claude"
+    - "cursor"
+    - "gemini"
+
+compute_assessment:
+  auto_route_reasoning: true
+  high_reasoning_threshold: 0.75
+  default_subprocess_timeout_seconds: 60
+  scaled_subprocess_timeout_seconds: 300

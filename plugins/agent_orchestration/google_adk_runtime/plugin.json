@@ -1,0 +1,106 @@
+{
+  "name": "plugin.google_adk_runtime",
+  "version": "1.0.0",
+  "description": "Google Agent Development Kit (ADK) runtime orchestration, session tracking, checkpoint rewind, and dynamic skill registration engine.",
+  "language": "python",
+  "entrypoint": "main.py",
+  "isolation": "subprocess",
+  "trusted": true,
+  "provides": [
+    "service.google_adk_runtime"
+  ],
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "adk_run_agent",
+      "description": "Execute an ADK agent workflow on a user prompt with session state tracking and multi-turn memory",
+      "parameters": [
+        {
+          "name": "agent_name",
+          "type": "string",
+          "description": "Identifier of the target ADK agent (e.g. 'root_agent', 'research_agent')",
+          "required": true
+        },
+        {
+          "name": "prompt",
+          "type": "string",
+          "description": "User instruction or task input for the agent",
+          "required": true
+        },
+        {
+          "name": "session_id",
+          "type": "string",
+          "description": "Unique session identifier for state persistence",
+          "required": false,
+          "default": "default_session"
+        },
+        {
+          "name": "model",
+          "type": "string",
+          "description": "Model identifier to bind to the ADK agent",
+          "required": false,
+          "default": "gemini-2.5-flash"
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "adk_list_sessions",
+      "description": "List active and historical ADK session states and metadata",
+      "parameters": [
+        {
+          "name": "limit",
+          "type": "integer",
+          "description": "Maximum number of sessions to return",
+          "required": false,
+          "default": 20
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "adk_rewind_session",
+      "description": "Rewind an ADK agent session to a previous event checkpoint",
+      "parameters": [
+        {
+          "name": "session_id",
+          "type": "string",
+          "description": "Target session identifier to rewind",
+          "required": true
+        },
+        {
+          "name": "checkpoint_index",
+          "type": "integer",
+          "description": "Event turn index to restore (0-indexed)",
+          "required": true
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "adk_register_skill",
+      "description": "Register a dynamic capability skill or prompt pattern into the ADK runtime",
+      "parameters": [
+        {
+          "name": "skill_name",
+          "type": "string",
+          "description": "Unique identifier for the dynamic skill",
+          "required": true
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "description": "Semantic description of the skill capability",
+          "required": true
+        },
+        {
+          "name": "prompt_template",
+          "type": "string",
+          "description": "Prompt instructions or tool configuration for the skill",
+          "required": true
+        }
+      ],
+      "returns": "object"
+    }
+  ]
+}

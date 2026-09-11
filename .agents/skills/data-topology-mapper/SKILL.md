@@ -1,6 +1,6 @@
 ---
 name: data-topology-mapper
-description: Map complex problem domains, causal DAG lineages, execution queues, and data structures (graphs, trees, hash maps, sets, priority queues, hybrid topologies) before code modification. Trigger when analyzing architecture, database schemas, execution pipelines, or multi-agent routing.
+description: Map complex problem domains, causal DAG lineages, execution queues, and data structures before code modification to prevent architecture regressions. Do not use for trivial single-file scripts or static UML drawing.
 ---
 
 # Data Topology Mapper

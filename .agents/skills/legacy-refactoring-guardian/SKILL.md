@@ -1,6 +1,6 @@
 ---
 name: legacy-refactoring-guardian
-description: Execute safe legacy codebase modernization using AI-assisted codebase archaeology, characterization testing safety nets, and incremental refactoring loops. Use when inheriting unfamiliar code, planning refactors, untangling complex functions, capturing existing behavior, or introducing seams without breaking production.
+description: Execute safe legacy codebase modernization using AI-assisted codebase archaeology, characterization testing safety nets, and incremental refactoring loops. Do not use for greenfield project scaffolding or hasty rewrites.
 ---
 
 # Legacy Refactoring Guardian: Codebase Archaeology & Characterization Safety Nets

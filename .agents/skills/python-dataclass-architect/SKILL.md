@@ -1,6 +1,6 @@
 ---
 name: python-dataclass-architect
-description: Design high-performance, memory-efficient, type-safe Python data structures utilizing slots=True, frozen=True, __post_init__ invariant validation, derived fields, and slotted inheritance. Trigger when defining Python entity models, optimizing memory in ETL/data pipelines, enforcing immutable value objects, or constructing complex dataclass hierarchies.
+description: Design high-performance, memory-efficient, type-safe Python data structures utilizing slots=True, frozen=True, __post_init__ validation, and slotted inheritance. Do not use for mutable state dictionaries or untyped data objects.
 ---
 
 # Python Dataclass Architect
@@ -173,6 +173,19 @@ class TransactionRecord:
         object.__setattr__(self, "fee_cents", fee)
         object.__setattr__(self, "_audit_hash", f"{self.transaction_id}:{fee}")
 ```
+
+---
+
+## The Three Foundational Pillars
+
+### 1. The Visual Brief
+Synthesize findings, structural matrices, and execution DAGs into a self-contained HTML visual brief written to `%TEMP%\python-dataclass-architect-<timestamp>.html` (or `/tmp/python-dataclass-architect-<timestamp>.html` on Unix) loading Tailwind CSS and Mermaid.js via CDN. Present the absolute clickable path to the user for visual review.
+
+### 2. The Mandatory Checkpoint
+When proposing structural modifications, refactors, or execution pipelines, always author an `implementation_plan.md` artifact with `RequestFeedback: true`. The agent must **STOP and wait** for explicit human confirmation before executing mutating actions.
+
+### 3. Explicit Anti-Patterns
+Rigid behavioral boundaries must be maintained to prevent catastrophic failure modes.
 
 ---
 

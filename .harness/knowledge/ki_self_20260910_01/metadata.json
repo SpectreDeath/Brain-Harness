@@ -1,0 +1,25 @@
+{
+  "id": "ki_self_20260910_01",
+  "title": "Markdown AST Codeblock Stripping & Skill Link Portability Invariant",
+  "created_at": "2026-09-10T22:15:00Z",
+  "source": "harness-reflector",
+  "isnad": "Session cbb83f6c enterprise skills architect cycle 2026-09-10; skill_ci_linter.py in-place deepening (Rule 20); tests/test_agent_skills_architect_deepened.py (6 passed); agent-skills-architect-20260909-185000.html Axis 1; Codified as AGENTS.md Rule 47",
+  "tags": [
+    "markdown",
+    "ast",
+    "linter",
+    "portability",
+    "relative_links",
+    "codeblocks",
+    "invariant",
+    "endogenous_memory",
+    "self_reflection"
+  ],
+  "references": [
+    "AGENTS.md",
+    ".agents/skills/agent-skills-architect/scripts/skill_ci_linter.py",
+    "tests/test_agent_skills_architect_deepened.py"
+  ],
+  "vault_version": "1.0",
+  "reflection_brief": "harness-reflection-20260910-182500.html"
+}

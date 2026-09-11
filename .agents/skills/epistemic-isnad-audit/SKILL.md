@@ -1,6 +1,6 @@
 ---
 name: epistemic-isnad-audit
-description: Verify unbroken chain-of-custody lineage for facts, dependencies, and architectural decisions before writing to persistent state or memory. Use when the user asks for an epistemic audit, to verify claim lineage, to check isnad traceability, or before committing architectural decisions to persistent stores.
+description: Verify unbroken chain-of-custody lineage for facts, dependencies, and architectural decisions before writing to persistent state or memory. Do not use for unverified hearsay or speculative knowledge commits.
 ---
 
 # Epistemic Isnad Audit Engine

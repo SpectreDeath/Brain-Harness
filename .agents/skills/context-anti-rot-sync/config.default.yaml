@@ -1,0 +1,23 @@
+# Default zero-fork operational configuration for context-anti-rot-sync (Rule 44)
+version: "1.0.0"
+
+thresholds:
+  max_instruction_lines: 150
+  warn_instruction_lines: 120
+  min_frontmatter_chars: 100
+  max_frontmatter_chars: 350
+  token_budget_ratio_warn: 0.85
+
+targets:
+  primary_manifest: "AGENTS.md"
+  derived_targets:
+    - "CLAUDE.md"
+    - ".cursorrules"
+  scan_roots:
+    - ".agents/skills"
+    - "rules"
+
+linter:
+  strict_negative_boundaries: true
+  block_lint_leakage: true
+  assert_file_links: true

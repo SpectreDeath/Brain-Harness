@@ -1,6 +1,6 @@
 ---
 name: deepen-architecture
-description: Run the iterative architecture deepening loop (analyze → assess → recommend → plan → execute → verify). Use when reviewing, refining, or deepening codebase architecture, eliminating shallow modules, improving seams, or optimizing module depth.
+description: Run the iterative architecture deepening loop (analyze, assess, recommend, plan, execute, verify) to eliminate shallow modules and improve seams. Do not use for speculative wrappers or trivial utility creation.
 ---
 
 # Architecture Deepening Loop

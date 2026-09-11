@@ -1,0 +1,80 @@
+{
+  "name": "plugin.magika_format_forensics",
+  "version": "1.0.0",
+  "description": "Google Magika format forensics: extension spoofing detection, polyglot binary auditing, and upload quarantine gating",
+  "language": "python",
+  "entrypoint": "main.py",
+  "isolation": "subprocess",
+  "trusted": true,
+  "provides": [
+    "service.magika_format_forensics"
+  ],
+  "requires": [
+    "service.magika_content_detector"
+  ],
+  "entrypoints": [
+    {
+      "name": "magika_audit_extension_mismatch",
+      "description": "Scan files to detect extension spoofing where the deep learning content type contradicts the file extension",
+      "parameters": [
+        {
+          "name": "target_path",
+          "type": "string",
+          "description": "File or directory path to audit for extension-content discrepancies",
+          "required": true
+        },
+        {
+          "name": "recursive",
+          "type": "boolean",
+          "description": "Whether to audit subdirectories recursively",
+          "required": false,
+          "default": true
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "magika_polyglot_check",
+      "description": "Inspect a file for low prediction margins, ambiguous classifications, or composite headers characteristic of polyglots",
+      "parameters": [
+        {
+          "name": "file_path",
+          "type": "string",
+          "description": "Path to the file to inspect for polyglot characteristics",
+          "required": true
+        },
+        {
+          "name": "threshold",
+          "type": "number",
+          "description": "Confidence threshold below which polyglot ambiguity is flagged (default: 0.70)",
+          "required": false,
+          "default": 0.7
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "magika_quarantine_scan",
+      "description": "Evaluate a file against an untrusted upload policy, quarantining files belonging to prohibited content groups",
+      "parameters": [
+        {
+          "name": "file_path",
+          "type": "string",
+          "description": "Path to the uploaded or untrusted file",
+          "required": true
+        },
+        {
+          "name": "blocked_groups",
+          "type": "array",
+          "description": "List of content groups to block (e.g. ['executable', 'code', 'archive'])",
+          "required": false,
+          "default": [
+            "executable",
+            "code"
+          ]
+        }
+      ],
+      "returns": "object"
+    }
+  ]
+}

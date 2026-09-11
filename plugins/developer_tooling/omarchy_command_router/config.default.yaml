@@ -1,0 +1,13 @@
+# Omarchy Command Router Configuration Defaults (Rule 44 Zero-Fork Config)
+version: "1.0.0"
+
+operational_budgets:
+  metadata_scan_limit: 80
+  cache_ttl_seconds: 300
+  max_search_results: 50
+  token_budget_per_command: 256
+
+runtime:
+  source_dir: null  # Optional override; defaults to OMARCHY_PATH env or D:\GitHub\cloned\omarchy-quattro\omarchy-quattro
+  include_hidden_default: false
+  strip_shebang: true

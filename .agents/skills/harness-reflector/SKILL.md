@@ -1,6 +1,6 @@
 ---
 name: harness-reflector
-description: Reflect on, introspect, and extract foundational learnings from the Harness's own history, HTML architecture reports, transcripts, execution logs, and walkthroughs. Use when the user asks to reflect on past work, learn from internal reports or chat logs, distill heuristics from past cycles, run an endogenous memory reflection loop, or update the Knowledge Vault from internal history.
+description: Reflect on, introspect, and extract foundational learnings from the Harness's history, HTML reports, transcripts, execution logs, and walkthroughs. Do not use for real-time streaming telemetry or external web search.
 ---
 
 # Harness Reflector: Endogenous Memory & Metacognitive Distillation Engine

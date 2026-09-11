@@ -1,6 +1,6 @@
 ---
 name: ontological-engineering-coach
-description: Master Ontological Engineering & Knowledge Graph Modeling using principles distilled from Prof. Dr. Harald Sack. Use when designing domain ontologies, auditing knowledge graphs, applying Gruber's criteria, or balancing precision vs coverage.
+description: Master Ontological Engineering & Knowledge Graph Modeling using Gruber criteria to balance precision vs coverage across domain ontologies. Do not use for unstructured document indexing or simple key-value storage.
 ---
 
 # Ontological Engineering Coach

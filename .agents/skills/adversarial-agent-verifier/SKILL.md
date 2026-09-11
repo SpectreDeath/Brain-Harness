@@ -1,6 +1,6 @@
 ---
 name: adversarial-agent-verifier
-description: Execute rigorous runtime verification including DAG-based component seam analysis, inspect-before-edit protocols, test-driven contracts, and harsh adversarial code reviews demanding git diffs. Trigger when reviewing AI-generated code, preparing pull requests, conducting pre-merge audits, stress-testing complex refactors, or running clean-up commits.
+description: Execute rigorous runtime verification including DAG seam analysis, inspect-before-edit protocols, test contracts, and harsh adversarial reviews. Do not use for superficial linting or rubber-stamping code.
 ---
 
 # Adversarial Agent Verifier
@@ -166,6 +166,19 @@ Inspect the current branch for:
 3. Edge cases on non-happy paths that lack unit test coverage.
 Output a clean-up checklist and provide the exact tests for any missing edge cases.
 ```
+
+---
+
+## The Three Foundational Pillars
+
+### 1. The Visual Brief
+Synthesize findings, structural matrices, and execution DAGs into a self-contained HTML visual brief written to `%TEMP%\adversarial-agent-verifier-<timestamp>.html` (or `/tmp/adversarial-agent-verifier-<timestamp>.html` on Unix) loading Tailwind CSS and Mermaid.js via CDN. Present the absolute clickable path to the user for visual review.
+
+### 2. The Mandatory Checkpoint
+When proposing structural modifications, refactors, or execution pipelines, always author an `implementation_plan.md` artifact with `RequestFeedback: true`. The agent must **STOP and wait** for explicit human confirmation before executing mutating actions.
+
+### 3. Explicit Anti-Patterns
+Rigid behavioral boundaries must be maintained to prevent catastrophic failure modes.
 
 ---
 

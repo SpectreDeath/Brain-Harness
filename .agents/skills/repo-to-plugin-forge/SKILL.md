@@ -1,6 +1,6 @@
 ---
 name: repo-to-plugin-forge
-description: Bridge repository introspection via brain bridge and repo reader directly into the plugin creator to autonomously scaffold, synthesize, and validate Harness plugins from attached codebases. Use when the user asks to forge a plugin from a repo, convert a repository into a plugin, scaffold a plugin from an attached repo, or bridge an external codebase to plugin creator.
+description: Bridge repository introspection via brain bridge and repo reader into the plugin creator to autonomously scaffold, synthesize, and validate Harness plugins. Do not use for internal kernel refactoring or manual boilerplate.
 ---
 
 # Repo-to-Plugin Forge Engine

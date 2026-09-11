@@ -1,0 +1,97 @@
+{
+  "name": "plugin.perfetto_trace_processor",
+  "version": "1.0.0",
+  "description": "Google Perfetto Trace Processor plugin: trace file loading, SQL querying against sched/slice tables, performance metric calculation, and flame graph export.",
+  "language": "python",
+  "entrypoint": "main.py",
+  "isolation": "subprocess",
+  "trusted": true,
+  "provides": [
+    "service.perfetto_trace_processor"
+  ],
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "perfetto_load_trace",
+      "description": "Load and parse a system trace file (.perfetto-trace, .pftrace, Chrome/Android trace)",
+      "parameters": [
+        {
+          "name": "trace_path",
+          "type": "string",
+          "description": "File path to the trace file",
+          "required": true
+        },
+        {
+          "name": "verbose",
+          "type": "boolean",
+          "description": "Enable verbose trace descriptor ingestion logs",
+          "required": false,
+          "default": false
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "perfetto_query_sql",
+      "description": "Execute arbitrary SQL queries against trace tables (e.g. 'SELECT name, dur, ts FROM slice')",
+      "parameters": [
+        {
+          "name": "trace_id",
+          "type": "string",
+          "description": "Active trace identifier returned from perfetto_load_trace",
+          "required": true
+        },
+        {
+          "name": "sql_query",
+          "type": "string",
+          "description": "SQL statement targeting Perfetto schema tables",
+          "required": true
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "perfetto_compute_metrics",
+      "description": "Compute standard trace metric summaries (CPU scheduling latency, thread execution times)",
+      "parameters": [
+        {
+          "name": "trace_id",
+          "type": "string",
+          "description": "Active trace identifier",
+          "required": true
+        },
+        {
+          "name": "metrics_list",
+          "type": "array",
+          "description": "Metrics to evaluate (e.g. ['cpu_scheduling', 'thread_states', 'memory_rss'])",
+          "required": false,
+          "default": [
+            "cpu_scheduling",
+            "thread_states"
+          ]
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "perfetto_export_flamegraph",
+      "description": "Produce structured execution stacks and flame graph summaries from trace slices",
+      "parameters": [
+        {
+          "name": "trace_id",
+          "type": "string",
+          "description": "Active trace identifier",
+          "required": true
+        },
+        {
+          "name": "focus_thread",
+          "type": "string",
+          "description": "Optional thread or process name to filter execution stacks",
+          "required": false,
+          "default": ""
+        }
+      ],
+      "returns": "object"
+    }
+  ]
+}

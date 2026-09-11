@@ -4,7 +4,7 @@
 ┌────────────────────────────────────────────────────────┐
 │               SKILL SUMMARY CARD                       │
 ├────────────────────────────────────────────────────────┤
-│ Name:        sme-ann-backprop                          │
+│ SKILL:        sme-ann-backprop                          │
 │ Category:    agentic / self-evolution / backprop       │
 │ Invocation:  /sme-ann-backprop                         │
 │ Trigger:     "ann backprop", "textual gradient",       │

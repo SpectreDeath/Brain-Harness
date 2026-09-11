@@ -1,0 +1,25 @@
+{
+  "id": "ki_self_20260909_01",
+  "title": "Authoritative Critic Seam Consolidation & Adapter Pattern",
+  "created_at": "2026-09-09T21:40:00Z",
+  "source": "harness-reflector",
+  "isnad": "Session 2a0477d5 architecture deepening cycle 2026-09-09; plugins/agent_orchestration audit; architecture-review-20260909-164500.html; harness-reflection-20260909-173500.html Axis 1; Rule 2, Rule 18, Rule 20, Rule 44",
+  "tags": [
+    "architecture",
+    "plugins",
+    "seams",
+    "critic",
+    "evaluation",
+    "adapter_pattern",
+    "endogenous_memory",
+    "self_reflection"
+  ],
+  "references": [
+    "plugins/agent_orchestration/critic_loop/main.py",
+    "plugins/agent_orchestration/evaluator_critic/main.py",
+    "plugins/agent_orchestration/agent_debater/main.py",
+    "plugins/agent_orchestration/critic_loop/config.default.yaml"
+  ],
+  "vault_version": "1.0",
+  "reflection_brief": "harness-reflection-20260909-173500.html"
+}

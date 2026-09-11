@@ -1,6 +1,6 @@
 ---
 name: ai-agent-engineer
-description: Architect, scope, compose, and evaluate production-grade autonomous systems using the 4-Level Ladder, 8 core capabilities, 60 architectural patterns, substrate harness isolation, and session-level evaluation. Trigger when designing new agents, deciding whether to build an agent vs deterministic workflow, selecting architectural patterns, debugging canonical agent failure modes, configuring dynamic model switching tiers, or setting up agent corrigibility and off-switches.
+description: Architect, scope, compose, and evaluate production-grade autonomous systems using the 4-Level Ladder, 60 architectural patterns, and substrate harness isolation. Do not use for simple deterministic scripts or single-turn prompts.
 ---
 
 # AI Agent Engineer: Autonomous Systems Architecture & Design

@@ -1,13 +1,13 @@
 ```
-╔══════════════════════════════════════════════════════════════════════╗
-║ Name:       epistemic-memory-lifecycle                               ║
-║ Category:   memory / epistemics / cognitive-governance               ║
-║ Invocation: /epistemic-memory-lifecycle                              ║
-║ Triggers:   "promote memory", "epistemic lifecycle",                 ║
-║             "classify memory", "knowledge vault promotion",          ║
-║             "theory of mind boundary", "theseus audit"               ║
-║ Target:     candidate observations, reflections, Knowledge Vault KIs ║
-╚══════════════════════════════════════════════════════════════════════╝
+┌──────────────────────────────────────────────────────────────────────┐
+│ SKILL:       epistemic-memory-lifecycle                               │
+│ Category:   memory / epistemics / cognitive-governance               │
+│ Invocation: /epistemic-memory-lifecycle                              │
+│ Triggers:   "promote memory", "epistemic lifecycle",                 │
+│             "classify memory", "knowledge vault promotion",          │
+│             "theory of mind boundary", "theseus audit"               │
+│ Target:     candidate observations, reflections, Knowledge Vault KIs │
+└──────────────────────────────────────────────────────────────────────┘
 ```
 
 # Epistemic Memory Lifecycle — Companion Summary Card

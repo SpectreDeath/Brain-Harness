@@ -1,0 +1,77 @@
+{
+  "name": "plugin.google_adk_web_bridge",
+  "version": "1.0.0",
+  "description": "Google ADK Web UI bridge: Angular visualization status, execution DAG export (A2UI / ngx-vflow format), and dev server manager.",
+  "language": "python",
+  "entrypoint": "main.py",
+  "isolation": "subprocess",
+  "trusted": true,
+  "provides": [
+    "service.google_adk_web_bridge"
+  ],
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "adk_web_status",
+      "description": "Inspect ADK web dashboard build artifacts, Angular configurations, and dependencies",
+      "parameters": [
+        {
+          "name": "project_dir",
+          "type": "string",
+          "description": "Path to cloned adk-web directory or custom dashboard root",
+          "required": false,
+          "default": "D:\\\\GitHub\\\\cloned\\\\Google\\\\adk-web"
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "adk_web_export_graph",
+      "description": "Convert Harness agent execution DAG into A2UI / ngx-vflow interactive node graph JSON",
+      "parameters": [
+        {
+          "name": "nodes",
+          "type": "array",
+          "description": "List of node objects with 'id', 'label', 'type', and optional 'status'",
+          "required": true
+        },
+        {
+          "name": "edges",
+          "type": "array",
+          "description": "List of edge connections with 'source' and 'target' IDs",
+          "required": false,
+          "default": []
+        },
+        {
+          "name": "format",
+          "type": "string",
+          "description": "Export format: 'a2ui', 'ngx_vflow', or 'mermaid'",
+          "required": false,
+          "default": "a2ui"
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "adk_web_start_dev_server",
+      "description": "Generate configuration command and launch specification for ADK Web UI dev server",
+      "parameters": [
+        {
+          "name": "port",
+          "type": "integer",
+          "description": "Local HTTP port to bind the dashboard",
+          "required": false,
+          "default": 4200
+        },
+        {
+          "name": "poll_interval",
+          "type": "integer",
+          "description": "File watcher polling interval in milliseconds",
+          "required": false,
+          "default": 1000
+        }
+      ],
+      "returns": "object"
+    }
+  ]
+}

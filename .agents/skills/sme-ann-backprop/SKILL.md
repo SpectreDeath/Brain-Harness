@@ -1,6 +1,6 @@
 ---
 name: sme-ann-backprop
-description: Formulate and execute Agentic Neural Network (ANN) textual backpropagation, momentum-smoothed gradient updates, and 4-stage candidate team block validation to autonomously optimize multi-agent DAGs and repair failing agent workflows.
+description: Formulate and execute Agentic Neural Network (ANN) textual backpropagation, momentum-smoothed updates, and 4-stage candidate validation to optimize multi-agent DAGs. Do not use for simple linear scripts or deterministic bugs.
 ---
 
 # SME ANN Backprop & Self-Evolving Workflow Engine
@@ -102,6 +102,19 @@ Persist validated candidate team blocks into SQLite WAL candidate pools:
 - **Combined Layer Loss**: $\text{Loss}_{\text{combined}} = \beta \cdot \text{Loss}_{\text{global}} + (1 - \beta) \cdot \text{Loss}_{\text{local}}$
 - **Momentum Smoothing**: $G'_{t} = \alpha G_{t} + (1 - \alpha) G_{t-1}$ where $\alpha = 0.7$
 - **Candidate Pool**: $F_{\ell} = \{ f_{1}, f_{2}, \dots, f_{k} \}$ persisted in SQLite WAL `laboratory.db`
+
+---
+
+## The Three Foundational Pillars
+
+### 1. The Visual Brief
+Synthesize findings, structural matrices, and execution DAGs into a self-contained HTML visual brief written to `%TEMP%\sme-ann-backprop-<timestamp>.html` (or `/tmp/sme-ann-backprop-<timestamp>.html` on Unix) loading Tailwind CSS and Mermaid.js via CDN. Present the absolute clickable path to the user for visual review.
+
+### 2. The Mandatory Checkpoint
+When proposing structural modifications, refactors, or execution pipelines, always author an `implementation_plan.md` artifact with `RequestFeedback: true`. The agent must **STOP and wait** for explicit human confirmation before executing mutating actions.
+
+### 3. Explicit Anti-Patterns
+Rigid behavioral boundaries must be maintained to prevent catastrophic failure modes.
 
 ---
 

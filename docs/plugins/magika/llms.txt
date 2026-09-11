@@ -1,0 +1,28 @@
+# Google Magika — Brain Harness Plugin Suite
+> Machine-readable capability index for AI coding agents.
+
+## Overview
+Google Magika is an AI-powered file content type and MIME identification system. It classifies files across 216 formats using a 3.16 MB ONNX deep learning model in ~5ms.
+
+## Installed Plugins
+1. `plugin.magika_content_detector` (Location: `plugins/security_and_forensics/magika_content_detector`)
+   - ServiceKey: `service.magika_content_detector`
+   - Tools:
+     - `magika_identify_path(path: str, prediction_mode: str = "high_confidence") -> dict`: Identify content type, MIME, group, and score.
+     - `magika_identify_bytes(content_b64: str, prediction_mode: str = "high_confidence") -> dict`: Classify raw base64 bytes in-memory.
+     - `magika_batch_scan(dir_path: str, recursive: bool = True, max_files: int = 500) -> dict`: Catalog directory group distributions.
+     - `magika_list_content_types(filter_group: str = "") -> dict`: Query supported types from the 353-entry KB.
+     - `magika_get_model_info() -> dict`: Return model name, output classes, and runtime features.
+
+2. `plugin.magika_format_forensics` (Location: `plugins/security_and_forensics/magika_format_forensics`)
+   - ServiceKey: `service.magika_format_forensics`
+   - Tools:
+     - `magika_audit_extension_mismatch(target_path: str, recursive: bool = True) -> dict`: Detect extension spoofing (e.g. script disguised as image).
+     - `magika_polyglot_check(file_path: str, threshold: float = 0.70) -> dict`: Check for dual-format signatures (e.g. appended ZIPs).
+     - `magika_quarantine_scan(file_path: str, blocked_groups: list = ["executable", "code"]) -> dict`: Block prohibited content groups.
+
+## When to Use
+- Determining true MIME types of untrusted uploaded files.
+- Detecting malware disguised with misleading filename extensions (e.g., .jpg or .pdf hiding an executable).
+- Scanning file archives or build artifacts for polyglots or corrupted headers.
+- Classifying code vs documentation vs binary in automated repositories.

@@ -1,0 +1,35 @@
+# Baseline configuration for external-repo-bridge-forge
+# Supports 3-tier zero-fork configuration:
+# Precedence: Project Override (.agents/skills.config.yaml) -> Skill Default (config.default.yaml) -> Hardcoded Fallback
+
+version: "1.0.0"
+
+repo_ingestion:
+  max_clone_depth: 50
+  clone_timeout_seconds: 120
+  credential_redaction_enabled: true
+  allowed_manifest_files:
+    - "pyproject.toml"
+    - "setup.py"
+    - "package.json"
+    - "Cargo.toml"
+    - "go.mod"
+
+plugin_synthesis:
+  enforce_subprocess_isolation: true
+  enforce_lazy_staging: true
+  default_category: "integration_and_io"
+  auto_validate: true
+
+documentation:
+  framework: "diataxis"
+  generate_llms_txt: true
+  c4_model_levels:
+    - "context"
+    - "container"
+    - "component"
+
+knowledge_vault:
+  enabled: true
+  vault_root: ".harness/knowledge"
+  enforce_dual_file_format: true

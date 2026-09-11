@@ -1,0 +1,11 @@
+# Filesystem Git Configuration Defaults (Rule 44 Zero-Fork Config)
+version: "1.0.0"
+
+operational_budgets:
+  max_read_file_bytes: 2097152  # 2MB file ceiling
+  git_command_timeout_seconds: 30.0
+  max_diff_lines: 2000
+
+runtime:
+  auto_checkpoint_transactions: true
+  allow_unstaged_inspection: true

@@ -1,0 +1,71 @@
+{
+  "id": "ki_20260908_magika_01",
+  "title": "Google Magika Deep Learning Content Type & MIME Detection Architecture",
+  "source_target": "D:\\GitHub\\cloned\\Google\\magika",
+  "detected_format": "git_repository",
+  "timestamp": "2026-09-08T18:13:00Z",
+  "isnad": {
+    "decision_id": "dec_20260908_magika_01",
+    "claims": [
+      {
+        "assertion": "Deep learning inference over header, center, and footer byte chunks enables content type classification (~5ms) with 216 distinct model labels, overcoming heuristic magic byte collisions in libmagic.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "python/src/magika/magika.py#L35-L120",
+            "verified": true
+          },
+          {
+            "node_type": "model_asset",
+            "uri": "python/src/magika/models/standard_v3_3/model.onnx",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "assertion": "Rule-based overwrite reasoning combined with strict confidence thresholding (High, Medium, Best-Effort) prevents false-positive extension mismatches and accurately flags polyglot archives.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "python/src/magika/types/overwrite_reason.py#L1-L35",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "python/src/magika/types/prediction_mode.py#L1-L25",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "assertion": "Bifurcating file content detection into a core classification engine and a specialized format forensics auditor enforces domain partitioning (Rule 18) and isolated quarantine policy gating.",
+        "lineage": [
+          {
+            "node_type": "architecture_contract",
+            "uri": "plugins/security_and_forensics/magika_content_detector/main.py#L1-L60",
+            "verified": true
+          },
+          {
+            "node_type": "architecture_contract",
+            "uri": "plugins/security_and_forensics/magika_format_forensics/main.py#L1-L60",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "deep_learning",
+    "file_identification",
+    "mime_detection",
+    "format_forensics",
+    "polyglot_detection",
+    "extension_spoofing",
+    "onnx_runtime",
+    "google_magika",
+    "repo_bridge"
+  ],
+  "context": "Google Magika Deep Learning Content Type & MIME Detection Architecture",
+  "distilled_learning": "# KI: Google Magika Deep Learning Content Type & MIME Detection Architecture\\n\\n## Operational Summary\\nGoogle Magika provides an AI-powered alternative to classic `file`/`libmagic` utilities. Key architectural lessons bridged into Brain Harness include:\\n1. **Compact On-Device Neural Networks:** Rather than large generative LLMs, small 3MB CNN/MLP models provide deterministic, sub-10ms classification with high fidelity.\\n2. **Three-Chunk File Slicing:** Extracting 512 bytes from the head, center, and tail of a file reliably captures magic prefixes, structural syntax, and trailer metadata without reading gigabyte-scale files into memory.\\n3. **Domain Partitioning (Rule 18):** Decoupling the raw MIME detector from the defensive format forensics engine prevents monolithic tool sprawl.\\n4. **Empirical Polyglot Auditing:** Inspecting confidence margins and trailing byte blocks catches disguised zip slip and executable injection vectors."
+}

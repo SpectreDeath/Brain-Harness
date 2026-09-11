@@ -1,0 +1,51 @@
+# Omarchy Quattro Bridge for Brain Harness
+> Machine-readable index for LLMs and autonomous agents.
+
+## Overview
+Bridge plugins connecting Brain Harness to Omarchy Quattro (v4.0.0.alpha), DHH's agentic Linux distribution. Exposes CLI command discovery, desktop theme palettes, sed-compatible template rendering, and agent skill catalogs.
+
+## Installed Plugins & Service Keys
+1. `plugins/developer_tooling/omarchy_command_router`
+   - Key: `service.omarchy_command_router`
+   - Tools:
+     - `omarchy_list_commands(group: str | None = None, include_hidden: bool = False) -> list[dict]`
+     - `omarchy_get_command(command_name: str) -> dict`
+     - `omarchy_search_commands(query: str) -> list[dict]`
+     - `omarchy_list_groups() -> list[dict]`
+
+2. `plugins/developer_tooling/omarchy_theming_engine`
+   - Key: `service.omarchy_theming_engine`
+   - Tools:
+     - `omarchy_list_themes() -> list[dict]`
+     - `omarchy_get_theme_palette(theme_name: str) -> dict`
+     - `omarchy_render_theme_template(template_content: str, theme_name: str) -> str`
+     - `omarchy_validate_theme_contrast(theme_name: str) -> dict`
+
+3. `plugins/agent_orchestration/omarchy_agent_telemetry`
+   - Key: `service.omarchy_agent_telemetry`
+   - Tools:
+     - `omarchy_list_agent_skills() -> list[dict]`
+     - `omarchy_get_agent_skill(skill_name: str) -> dict`
+     - `omarchy_inspect_agent_usage_scripts() -> list[dict]`
+
+## Metadata Syntax (bin/omarchy-*)
+Scripts declare `# omarchy:key=value` headers within lines 1-80:
+- `group`: Functional category (e.g., theme, agent, audio, font)
+- `summary`: One-line summary
+- `usage`: Usage syntax
+- `args`: Arguments syntax
+- `examples`: Example invocations
+- `requires_sudo`: Boolean (true/false)
+- `hidden`: Boolean (true/false)
+- `aliases`: Comma-separated alternative names
+
+## Template Placeholders (default/themed/*.tpl)
+- `{{ key }}`: Hex color value
+- `{{ key_strip }}`: Hex color without #
+- `{{ key_rgb }}`: Decimal RGB (e.g. 255,255,255)
+- `{{ mix start end pct }}`: Linear blend of start and end hex colors
+- `{{ mix_strip ... }}`: Mixed hex without #
+- `{{ mix_rgb ... }}`: Mixed color in decimal RGB
+- `{{ hypr_gradient key fallback }}`: Hyprland-formatted gradient
+- `{{ gradient_start key fallback }}`: First color of gradient
+- `{{ shell_gradient key fallback }}`: Space-separated gradient colors

@@ -1,12 +1,12 @@
 ```
-╔══════════════════════════════════════════════════════════════════════╗
-║ SKILL:     harness-reflector                                         ║
-║ CATEGORY:  memory / epistemics / metacognition                       ║
-║ INVOCATION:/harness-reflector or harness reflect                     ║
-║ TRIGGERS:  reflect on past work, learn from internal reports,        ║
-║            distill heuristics from past cycles, self-reflection      ║
-║ TARGET:    %TEMP% HTML reports, transcript logs, walkthroughs        ║
-╚══════════════════════════════════════════════════════════════════════╝
+┌──────────────────────────────────────────────────────────────────────┐
+│ SKILL:     harness-reflector                                         │
+│ CATEGORY:  memory / epistemics / metacognition                       │
+│ INVOCATION:/harness-reflector or harness reflect                     │
+│ TRIGGERS:  reflect on past work, learn from internal reports,        │
+│            distill heuristics from past cycles, self-reflection      │
+│ TARGET:    %TEMP% HTML reports, transcript logs, walkthroughs        │
+└──────────────────────────────────────────────────────────────────────┘
 ```
 
 # Harness Reflector — Companion Summary Card

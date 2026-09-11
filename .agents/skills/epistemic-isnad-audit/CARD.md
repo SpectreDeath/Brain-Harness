@@ -4,7 +4,7 @@
 ┌────────────────────────────────────────────────────────┐
 │               SKILL SUMMARY CARD                       │
 ├────────────────────────────────────────────────────────┤
-│ Name:        epistemic-isnad-audit                     │
+│ SKILL:        epistemic-isnad-audit                     │
 │ Category:    epistemic-governance / memory             │
 │ Invocation:  /epistemic-isnad-audit                    │
 │ Trigger:     "epistemic audit", "verify isnad",        │

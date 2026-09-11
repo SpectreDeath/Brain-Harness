@@ -1,6 +1,6 @@
 ---
 name: neural-network-from-scratch
-description: "Construct, train, diagnose, and translate mathematical feedforward neural networks from NumPy matrix calculus to modular PyTorch architectures. Use when building neural networks from scratch, deriving analytical backpropagation gradients, implementing XOR classification, preventing numerical instability in cross-entropy loss, or migrating mathematical prototypes to torch.nn modules."
+description: Construct, train, diagnose, and translate mathematical feedforward neural networks from NumPy matrix calculus to modular PyTorch architectures. Do not use for pre-trained model fine-tuning or high-level API wrappers.
 ---
 
 # Neural Network from Scratch

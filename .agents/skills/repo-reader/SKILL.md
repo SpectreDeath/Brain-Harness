@@ -1,6 +1,6 @@
 ---
 name: repo-reader
-description: Introspect, reflect on, and extract architectural patterns, commit trajectories, and engineering heuristics from an attached local or remote Git repository. Use when the user asks to read a repository, connect a repo, introspect a codebase, analyze commit evolution, learn from a peer repo, or run the repository introspection loop.
+description: Introspect, reflect on, and extract architectural patterns, commit trajectories, and engineering heuristics from an attached Git repository. Do not use for simple file tree listing or destructive repository mutations.
 ---
 
 # Repo Reader: Codebase Introspection & Repository Distillation Engine

@@ -1,17 +1,17 @@
 # Skill Summary Card — `cellcog-multimodal`
 
 ```
-================================================================================
-SKILL SUMMARY CARD: cellcog-multimodal
-================================================================================
-Category:     integration_and_io / multimodal
-Invocation:   /cellcog-multimodal
-Triggers:     "3d model", "generate video", "podcast", "excel spreadsheet",
-              "presentation slides", "deep research", "cellcog"
-Target:       Cross-modality generative asset & document synthesis
-Plugin:       plugins/integration_and_io/cellcog/ (plugin.cellcog)
-Service Key:  CELLCOG_SERVICE_KEY (service.cellcog)
-================================================================================
+┌────────────────────────────────────────────────────────────────────────┐
+│                        SKILL SUMMARY CARD                              │
+├────────────────────────────────────────────────────────────────────────┤
+│ SKILL:       cellcog-multimodal                                        │
+│ Category:    integration_and_io / multimodal                           │
+│ Invocation:  /cellcog-multimodal                                       │
+│ Triggers:    "3d model", "generate video", "podcast", "deep research"  │
+│ Target:      Cross-modality generative asset & document synthesis      │
+│ Plugin:      plugins/integration_and_io/cellcog/ (plugin.cellcog)      │
+│ Service Key: CELLCOG_SERVICE_KEY (service.cellcog)                     │
+└────────────────────────────────────────────────────────────────────────┘
 ```
 
 ---

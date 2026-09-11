@@ -1,0 +1,14 @@
+{
+  "id": "ki-omarchy-quattro-bridge",
+  "title": "Omarchy Quattro Operating System Bridge & Domain-Partitioned Plugin Synthesis",
+  "created": "2026-09-09T16:29:00-04:00",
+  "updated": "2026-09-09T16:29:00-04:00",
+  "summary": "Synthesized bridge architecture connecting Brain Harness to Omarchy Quattro (v4.0.0.alpha), DHH's agentic Linux distribution. Partitions 1,826 files across 40 functional groups into three domain-specific plugins per Rule 18: (1) omarchy_command_router in developer_tooling introspecting 455+ modular CLI scripts via decentralized # omarchy:key=value header tags; (2) omarchy_theming_engine in developer_tooling providing full ANSI/semantic palette resolution, sed-compatible template rendering with linear RGB mixing and Hyprland gradients, and WCAG 2.1 contrast ratio auditing; (3) omarchy_agent_telemetry in agent_orchestration cataloging 9 developer guides and runtime agent skills with static AST telemetry analysis for non-Linux hosts.",
+  "references": [
+    {"path": "plugins/developer_tooling/omarchy_command_router/", "description": "Command router plugin, lazy in-memory cache, and metadata parser"},
+    {"path": "plugins/developer_tooling/omarchy_theming_engine/", "description": "Theming engine, palette resolver, template renderer, and WCAG auditor"},
+    {"path": "plugins/agent_orchestration/omarchy_agent_telemetry/", "description": "Agent skill catalog navigator and static telemetry inspector"},
+    {"path": "docs/plugins/omarchy_bridge/", "description": "Diátaxis documentation suite (tutorial, how-to, reference, explanation, llms.txt)"},
+    {"path": "D:/GitHub/cloned/omarchy-quattro/omarchy-quattro", "description": "Source Omarchy Quattro codebase (v4.0.0.alpha)"}
+  ]
+}

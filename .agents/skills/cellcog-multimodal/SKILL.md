@@ -1,6 +1,6 @@
 ---
 name: cellcog-multimodal
-description: Orchestrate any-to-any multimodal sub-agent delegation via CellCog. Use when generating 3D models (.GLB), cinematic/social video, multi-track audio/music, executive PDF/XLSX documents, interactive HTML dashboards, or citation-backed deep research.
+description: Orchestrate any-to-any multimodal sub-agent delegation via CellCog to generate 3D models, video, audio, executive documents, or citation-backed deep research. Do not use for basic single-file text editing.
 ---
 
 # CellCog Multimodal Sub-Agent Delegation

@@ -4,7 +4,7 @@
 ┌────────────────────────────────────────────────────────┐
 │               SKILL SUMMARY CARD                       │
 ├────────────────────────────────────────────────────────┤
-│ Name:        structured-data-scout                     │
+│ SKILL:        structured-data-scout                     │
 │ Category:    data-science / ingestion                  │
 │ Invocation:  /structured-data-scout                    │
 │ Trigger:     "scout dataset", "fetch structured data", │

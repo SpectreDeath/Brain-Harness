@@ -1,0 +1,24 @@
+{
+  "id": "ki_self_20260909_03",
+  "title": "Plugin Module Singleton & IoC Container Dynamic Loader Invariant",
+  "created_at": "2026-09-09T21:40:00Z",
+  "source": "harness-reflector",
+  "isnad": "Session 2a0477d5 architecture deepening cycle 2026-09-09; Discovery audit across 11 plugins revealing detached entrypoint functions in evaluator_critic, agent_debater, and missing singletons; Codified as AGENTS.md Rule 45; harness-reflection-20260909-173500.html Axis 4",
+  "tags": [
+    "ioc_container",
+    "plugin_loader",
+    "singleton",
+    "lifecycle",
+    "invariant",
+    "endogenous_memory",
+    "self_reflection"
+  ],
+  "references": [
+    "AGENTS.md",
+    "src/harness/plugins/loader.py",
+    "plugins/agent_orchestration/critic_loop/main.py",
+    "plugins/agent_orchestration/google_adk_runtime/main.py"
+  ],
+  "vault_version": "1.0",
+  "reflection_brief": "harness-reflection-20260909-173500.html"
+}

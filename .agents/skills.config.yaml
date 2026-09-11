@@ -1,0 +1,10 @@
+# Project-level Zero-Fork Configuration Overrides (Rule 44)
+# Calibrates operational budgets and context ceilings for Brain Harness
+
+codebase-context-architect:
+  chars_per_token: 4
+  budgets:
+    AGENTS.md: 5000
+    CLAUDE.md: 300
+    .github/copilot-instructions.md: 5000
+    src/AGENTS.md: 400

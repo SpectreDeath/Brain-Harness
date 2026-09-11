@@ -5,7 +5,7 @@
 │               SKILL SUMMARY CARD                       │
 ├────────────────────────────────────────────────────────┤
 │ SKILL:       ai-file-analysis-agent                    │
-│ Name:        ai-file-analysis-agent                    │
+│ SKILL:        ai-file-analysis-agent                    │
 │ Category:    integration_and_io / file_analysis        │
 │ Invocation:  /ai-file-analysis-agent                   │
 │ Triggers:    "build file analysis agent",              │

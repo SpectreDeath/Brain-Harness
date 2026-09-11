@@ -503,8 +503,9 @@ class HeadingHierarchyRule(BaseValidationRule):
     name = "Heading Hierarchy"
 
     def evaluate(self, ctx: ValidationContext) -> CheckResult:
+        cleaned_text = re.sub(r"```[\s\S]*?```", "", ctx.skill_text)
         levels: list[int] = []
-        for line in ctx.skill_lines:
+        for line in cleaned_text.splitlines():
             h_match = re.match(r"^(#{1,6})\s+", line)
             if h_match:
                 levels.append(len(h_match.group(1)))
@@ -551,9 +552,10 @@ class LifecycleStagesRule(BaseValidationRule):
     name = "Lifecycle Stage Count"
 
     def evaluate(self, ctx: ValidationContext) -> CheckResult:
-        stage_headers = re.findall(r"^(?:##|\#\#\#)?\s*(?:Phase|Stage)\s*(\d+)[\.:\s]+([^\n]+)", ctx.skill_text, re.MULTILINE)
+        cleaned_text = re.sub(r"```[\s\S]*?```", "", ctx.skill_text)
+        stage_headers = re.findall(r"^(?:##|\#\#\#)?\s*(?:Phase|Stage)\s*(\d+)[\.:\s]+([^\n]+)", cleaned_text, re.MULTILINE)
         if not stage_headers:
-            stage_headers = re.findall(r"^##\s*(\d+)[\.:\s]+([^\n]+)", ctx.skill_text, re.MULTILINE)
+            stage_headers = re.findall(r"^##\s*(\d+)[\.:\s]+([^\n]+)", cleaned_text, re.MULTILINE)
         if len(stage_headers) < 3:
             return CheckResult(self.phase, self.name, False, f"Found only {len(stage_headers)} stages (< 3)", "Organize into >= 3 numbered stages.")
         return CheckResult(self.phase, self.name, True, f"Found {len(stage_headers)} defined lifecycle stages.")
@@ -564,12 +566,13 @@ class StageCompletionGatesRule(BaseValidationRule):
     name = "Stage Completion Gates"
 
     def evaluate(self, ctx: ValidationContext) -> CheckResult:
-        stage_headers = re.findall(r"^(?:##|\#\#\#)?\s*(?:Phase|Stage)\s*(\d+)[\.:\s]+([^\n]+)", ctx.skill_text, re.MULTILINE)
+        cleaned_text = re.sub(r"```[\s\S]*?```", "", ctx.skill_text)
+        stage_headers = re.findall(r"^(?:##|\#\#\#)?\s*(?:Phase|Stage)\s*(\d+)[\.:\s]+([^\n]+)", cleaned_text, re.MULTILINE)
         if not stage_headers:
-            stage_headers = re.findall(r"^##\s*(\d+)[\.:\s]+([^\n]+)", ctx.skill_text, re.MULTILINE)
+            stage_headers = re.findall(r"^##\s*(\d+)[\.:\s]+([^\n]+)", cleaned_text, re.MULTILINE)
         gate_matches = re.findall(
             r"(?:\*{1,2})?(?:Completion [Gg]ate|[Cc]ompletion [Cc]riterion|[Gg]ate)(?:\*{1,2})?:\s*`?([^`\n]+)`?",
-            ctx.skill_text,
+            cleaned_text,
         )
         if len(gate_matches) < len(stage_headers):
             return CheckResult(self.phase, self.name, False, f"Stages lack explicit gates ({len(gate_matches)}/{len(stage_headers)})", "Declare completion gates for all stages.")

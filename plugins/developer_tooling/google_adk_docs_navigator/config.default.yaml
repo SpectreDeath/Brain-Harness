@@ -1,0 +1,11 @@
+# Google ADK Documentation Navigator Configuration Defaults (Rule 44 Zero-Fork Config)
+version: "1.0.0"
+
+operational_budgets:
+  max_search_results: 10
+  max_snippet_chars: 2000
+  cache_ttl_seconds: 900
+
+runtime:
+  docs_root: "D:\\GitHub\\cloned\\Google\\adk-docs"
+  default_language: "python"

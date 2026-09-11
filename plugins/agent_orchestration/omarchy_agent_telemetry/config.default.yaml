@@ -1,0 +1,11 @@
+# Omarchy Agent Telemetry Configuration Defaults (Rule 44 Zero-Fork Config)
+version: "1.0.0"
+
+operational_budgets:
+  max_skill_read_bytes: 524288  # 512KB skill markdown content ceiling
+  cache_ttl_seconds: 600
+  token_budget_per_skill_summary: 256
+
+runtime:
+  source_dir: null  # Optional override; defaults to OMARCHY_PATH env or D:\GitHub\cloned\omarchy-quattro\omarchy-quattro
+  allow_remote_telemetry_fetch: false  # Do NOT execute usage scripts outside Linux runtime

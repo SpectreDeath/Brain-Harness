@@ -1,0 +1,29 @@
+# Baseline configuration for knowledge-graph-pipeline
+# Supports 3-tier zero-fork configuration:
+# Precedence: Project Override (.agents/skills.config.yaml) -> Skill Default (config.default.yaml) -> Hardcoded Fallback
+
+version: "1.0.0"
+
+discovery:
+  max_sample_rows: 10000
+  allowed_sources:
+    - "uci"
+    - "kaggle"
+    - "huggingface"
+    - "local_csv"
+
+modeling:
+  enforce_gruber_criteria: true
+  enforce_backward_design: true
+  min_relationship_types: 1
+
+ingestion:
+  batch_size: 1000
+  max_retries: 3
+  enforce_unwind_merge: true
+  commit_transaction_slice_seconds: 30
+
+traversal:
+  max_recursion_depth: 10
+  enforce_cycle_protection: true
+  sql_dialect: "postgres"

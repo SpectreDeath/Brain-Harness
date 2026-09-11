@@ -1,6 +1,6 @@
 ---
 name: developer-docs-architect
-description: "Architect, author, audit, and automate technical documentation suites — including API references, C4 architecture blueprints, and developer guides — using Diátaxis taxonomy and Docs-as-Code Git pipelines. Use when building or auditing API documentation, running Diátaxis gap analysis, authoring C4 Mermaid diagrams, setting up Docs-as-Code CI, or optimizing for AI agents (llms.txt). Do not use for generic prose editing, blog authoring, or non-technical team wikis."
+description: Architect, author, audit, and automate technical documentation suites—including API references, C4 architecture blueprints, and developer guides—using Diátaxis taxonomy. Do not use for generic blog posts or non-technical wikis.
 ---
 
 # Developer Docs Architect

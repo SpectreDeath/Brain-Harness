@@ -1,0 +1,14 @@
+# Google Tunix Post-Training Configuration Defaults (Rule 44 Zero-Fork Config)
+version: "1.0.0"
+
+operational_budgets:
+  max_training_steps: 1000
+  checkpoint_interval_steps: 100
+  learning_rate: 0.0001
+  batch_size: 4
+  max_sequence_length: 2048
+
+runtime:
+  precision: "bfloat16"
+  lora_rank: 16
+  lora_alpha: 32

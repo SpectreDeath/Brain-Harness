@@ -1,6 +1,6 @@
 ---
 name: mind-reader
-description: Reflect on, introspect, and extract foundational learnings from an attached brain, external IDE history, or foreign knowledge library. Use when the user asks to read a brain, introspect agent history, learn from past trajectories, distill knowledge from another harness, or run the mind reader reflection loop.
+description: Reflect on, introspect, and extract foundational learnings from an attached brain, external IDE history, or foreign knowledge library. Do not use for active process debugging or destructive filesystem modifications.
 ---
 
 # Mind Reader: Cognitive Introspection & Knowledge Distillation Engine

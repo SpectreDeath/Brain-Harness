@@ -1,0 +1,20 @@
+{
+  "id": "ki_epistemic_graph_traversal_evidence_boundary",
+  "title": "Epistemic Graph Traversal and the Relation-vs-Inference Boundary",
+  "category": "data_engineering",
+  "tags": [
+    "knowledge_graphs",
+    "epistemic_traversal",
+    "evidence_boundary",
+    "neo4j",
+    "browsing_agents",
+    "temporal_graphs"
+  ],
+  "source_repo": "D:\\markdown from chrome\\perplexity\\KG",
+  "provenance": [
+    "I was just thinking about knowledge graphs (fairly.md",
+    "How to Build a Knowledge Graph with Python and Neo4j [Full Handbook].md",
+    "Perplexity Epistemic Browsing Dialogue"
+  ],
+  "created_at": "2026-09-07T15:20:00Z"
+}

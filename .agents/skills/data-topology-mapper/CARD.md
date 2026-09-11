@@ -4,7 +4,7 @@
 ┌────────────────────────────────────────────────────────┐
 │               SKILL SUMMARY CARD                       │
 ├────────────────────────────────────────────────────────┤
-│ Name:        data-topology-mapper                      │
+│ SKILL:        data-topology-mapper                      │
 │ Category:    architecture / topology-mapping           │
 │ Invocation:  /data-topology-mapper                     │
 │ Trigger:     "map dependencies", "design architecture",│

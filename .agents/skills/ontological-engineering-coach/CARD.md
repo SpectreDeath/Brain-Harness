@@ -2,7 +2,7 @@
 ┌────────────────────────────────────────────────────────┐
 │               SKILL SUMMARY CARD                       │
 ├────────────────────────────────────────────────────────┤
-│ Name:        ontological-engineering-coach              │
+│ SKILL:        ontological-engineering-coach              │
 │ Category:    memory_and_epistemics                    │
 │ Invocation:  /ontological-engineering-coach             │
 │ Triggers:    "ontological engineering", "knowledge graph"│

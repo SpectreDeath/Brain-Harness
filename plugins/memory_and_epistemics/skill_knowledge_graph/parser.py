@@ -156,6 +156,7 @@ class SkillCardParser:
         meta: dict[str, Any] = {}
         triggers: list[str] = []
 
+        last_field: str | None = None
         for line in content.splitlines():
             clean = line.strip().strip("│").strip()
             if not clean:
@@ -163,12 +164,16 @@ class SkillCardParser:
 
             if clean.startswith("Name:"):
                 meta["name"] = clean.split(":", 1)[1].strip()
+                last_field = "name"
             elif clean.startswith("Category:"):
                 meta["category"] = clean.split(":", 1)[1].strip()
+                last_field = "category"
             elif clean.startswith("Invocation:"):
                 meta["invocation"] = clean.split(":", 1)[1].strip()
+                last_field = "invocation"
             elif clean.startswith("Version:"):
                 meta["version"] = clean.split(":", 1)[1].strip()
+                last_field = "version"
             elif clean.startswith("Trigger:") or clean.startswith("Triggers:"):
                 val = clean.split(":", 1)[1].strip()
                 extracted = re.findall(r'"([^"]+)"', val)
@@ -176,6 +181,7 @@ class SkillCardParser:
                     triggers.extend(extracted)
                 else:
                     triggers.append(val.strip('"'))
+                last_field = "triggers"
             elif clean.startswith("Requires:") or clean.startswith("Require:"):
                 val = clean.split(":", 1)[1].strip()
                 extracted = re.findall(r'"([^"]+)"|\'([^\']+)\'', val)
@@ -183,6 +189,7 @@ class SkillCardParser:
                 if not req_list:
                     req_list = [t.strip().strip('"').strip("'") for t in val.split(",") if t.strip()]
                 meta["requires"] = req_list
+                last_field = "requires"
             elif clean.startswith("Provides:") or clean.startswith("Provide:"):
                 val = clean.split(":", 1)[1].strip()
                 extracted = re.findall(r'"([^"]+)"|\'([^\']+)\'', val)
@@ -190,8 +197,19 @@ class SkillCardParser:
                 if not prov_list:
                     prov_list = [t.strip().strip('"').strip("'") for t in val.split(",") if t.strip()]
                 meta["provides"] = prov_list
+                last_field = "provides"
             elif clean.startswith("Target:"):
                 meta["target"] = clean.split(":", 1)[1].strip()
+                last_field = "target"
+            elif last_field == "triggers" and '"' in clean:
+                extracted = re.findall(r'"([^"]+)"', clean)
+                if extracted:
+                    triggers.extend(extracted)
+            elif last_field == "requires" and ('"' in clean or "'" in clean):
+                extracted = re.findall(r'"([^"]+)"|\'([^\']+)\'', clean)
+                req_list = [t[0] or t[1] for t in extracted if (t[0] or t[1])]
+                if req_list:
+                    meta.setdefault("requires", []).extend(req_list)
             else:
                 table_match = re.match(r"^\|\s*\*{0,2}([a-zA-Z]+)\*{0,2}\s*\|\s*(.*?)\s*\|?$", clean)
                 if table_match:

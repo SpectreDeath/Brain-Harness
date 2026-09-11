@@ -1,6 +1,6 @@
 ---
 name: epistemic-memory-lifecycle
-description: Execute the 8-state knowledge item (KI) promotion pipeline, partition memory into 6 discrete classes, protect the constitutional non-learning core, and run multi-model held-out evaluation to prevent self-confirming agentic drift. Use when promoting candidate memories, classifying observations, running endogenous reflection loops, verifying Theory of Mind epistemic boundaries, or conducting the 4-pillar Ship of Theseus authorial continuity audit.
+description: Execute the 8-state knowledge item promotion pipeline, partition memory into 6 classes, and run held-out evaluation to prevent agentic drift. Do not use for ephemeral chat scratchpads or unvalidated agent logs.
 ---
 
 # Epistemic Memory Lifecycle: Bounded Cognitive Promotion Engine

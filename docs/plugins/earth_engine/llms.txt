@@ -1,0 +1,25 @@
+# Earth Engine Plugins for Brain Harness
+> Planetary-scale satellite observation, multi-spectral index calculation, vector spatial analytics, terrain modeling, and catalog governance.
+
+## Category: geospatial_and_osint
+
+### Plugin: plugin.earth_engine_imagery
+- Service Key: service.earth_engine_imagery
+- Isolation: subprocess
+- Tools:
+  - ee_search_image_collection: Filter satellite scenes (Sentinel-2, Landsat, MODIS) by bounding box, date range, and maximum cloud cover.
+  - ee_compute_spectral_index: Calculate NDVI, NDWI, EVI, NBR, or custom multi-spectral index expressions.
+  - ee_composite_timeseries: Generate multi-temporal composite reductions (median, mean, min, max) with cloud masking.
+  - ee_get_image_thumbnail_url: Generate visual thumbnail preview URLs and map tile endpoints for visualization.
+  - ee_describe_image: Extract image properties, band definitions, spatial resolution, and CRS projection.
+
+### Plugin: plugin.earth_engine_spatial_analytics
+- Service Key: service.earth_engine_spatial_analytics
+- Isolation: subprocess
+- Dependencies: service.earth_engine_imagery
+- Tools:
+  - ee_zonal_statistics: Compute spatial reduction statistics (mean, sum, min, max, stdDev) over raster bands within vector polygon regions.
+  - ee_analyze_terrain: Calculate elevation profile, slope, aspect, and hillshade from digital elevation models (DEMs).
+  - ee_vector_spatial_query: Query and filter vector FeatureCollections (admin boundaries, watersheds, parcels) with attributes and geometry.
+  - ee_query_data_catalog: Discover and search datasets in the public Earth Engine Data Catalog by keyword, theme, and tag.
+  - ee_manage_batch_task: Monitor, list, or cancel background asynchronous export/import batch jobs.

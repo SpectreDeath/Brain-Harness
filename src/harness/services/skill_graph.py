@@ -334,8 +334,61 @@ class BuiltinSkillRegistryService(SkillRegistryService):
         self._last_scan_time = now
 
     def _parse_skill_directory(self, skill_dir: Path) -> SkillCardDefinition | None:
-        """Parse SKILL.md and optional companion CARD.md from a skill directory."""
+        """Parse SKILL.md and optional companion CARD.md from a skill directory.
+
+        Delegates to the authoritative SkillCardParser when available, ensuring full
+        ASCII metadata, blocking checklist invariants (Rule 37), and triggers are populated.
+        """
         skill_file = skill_dir / "SKILL.md"
+        if not skill_file.exists() and not (skill_dir / "CARD.md").exists():
+            return None
+
+        # Try authoritative AST parser first
+        try:
+            from plugins.memory_and_epistemics.skill_knowledge_graph.parser import SkillCardParser
+            node = SkillCardParser.parse_directory(skill_dir)
+            if node is not None:
+                return SkillCardDefinition(
+                    name=node.name,
+                    category=node.category,
+                    invocation=node.invocation,
+                    triggers=list(node.triggers),
+                    version=node.version,
+                    target=node.target or node.description,
+                    stages=[
+                        SkillStageDefinition(
+                            stage_num=s.stage_num,
+                            name=s.name,
+                            completion_gate=s.completion_gate or s.objective,
+                        )
+                        for s in node.stages
+                    ],
+                    anti_patterns=[
+                        SkillAntiPatternDefinition(
+                            name=ap.name,
+                            symptom=ap.description,
+                            remedy=ap.mitigation or "Follow standard protocol",
+                        )
+                        for ap in node.anti_patterns
+                    ],
+                    invariants=[
+                        SkillInvariantDefinition(
+                            rule=inv.rule,
+                            is_blocking=inv.is_blocking,
+                        )
+                        for inv in node.invariants
+                    ],
+                    dependencies=[d for d in list(dict.fromkeys(node.references)) if d != node.name],
+                    knowledge_items=[],
+                    services=[],
+                    tools=[],
+                    card_path=node.card_path,
+                    skill_path=node.skill_path,
+                )
+        except Exception:
+            pass
+
+        # Fallback to local regex parsing if SkillCardParser unavailable
         if not skill_file.exists():
             return None
 

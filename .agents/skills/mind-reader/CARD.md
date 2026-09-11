@@ -4,7 +4,7 @@
 ┌────────────────────────────────────────────────────────┐
 │               SKILL SUMMARY CARD                       │
 ├────────────────────────────────────────────────────────┤
-│ Name:        mind-reader                               │
+│ SKILL:        mind-reader                               │
 │ Category:    memory / epistemics                       │
 │ Invocation:  /mind-reader                              │
 │ Trigger:     "read brain", "introspect brain",         │

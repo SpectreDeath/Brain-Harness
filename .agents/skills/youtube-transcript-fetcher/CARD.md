@@ -2,7 +2,7 @@
 ┌────────────────────────────────────────────────────────┐
 │               SKILL SUMMARY CARD                       │
 ├────────────────────────────────────────────────────────┤
-│ Name:        youtube-transcript-fetcher                │
+│ SKILL:        youtube-transcript-fetcher                │
 │ Category:    integration_and_io                        │
 │ Invocation:  /youtube-transcript-fetcher               │
 │ Triggers:    "youtube transcript", "fetch captions",   │

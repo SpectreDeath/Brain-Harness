@@ -2,7 +2,7 @@
 ┌────────────────────────────────────────────────────────┐
 │               SKILL: agent-skill-sdlc                  │
 ├────────────────────────────────────────────────────────┤
-│ Name:        agent-skill-sdlc                          │
+│ SKILL:        agent-skill-sdlc                          │
 │ Category:    engineering_and_sdlc                      │
 │ Domain:      Engineering / Meta-Skills                 │
 │ Invocation:  /agent-skill-sdlc                         │

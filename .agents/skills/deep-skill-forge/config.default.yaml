@@ -1,0 +1,29 @@
+# Baseline configuration for deep-skill-forge
+# Supports 3-tier zero-fork configuration:
+# Precedence: Project Override (.agents/skills.config.yaml) -> Skill Default (config.default.yaml) -> Hardcoded Fallback
+
+version: "1.0.0"
+
+pipeline:
+  max_self_repair_attempts: 3
+  circuit_breaker_enabled: true
+  generate_visual_brief: true
+  visual_brief_theme: "dark"
+  enforce_consolidated_checkpoint: true
+
+architecture_standards:
+  enforce_slotted_dataclasses: true
+  enforce_frozen_immutability: true
+  enforce_polyglot_manifests: true
+  enforce_headless_cli_seams: true
+
+knowledge_vault:
+  enabled: true
+  vault_root: ".harness/knowledge"
+  enforce_dual_file_format: true
+  compute_sha256: true
+
+testing:
+  run_contract_suite: true
+  run_ecosystem_hygiene: true
+  timeout_seconds: 120

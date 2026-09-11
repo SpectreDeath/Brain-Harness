@@ -1,0 +1,12 @@
+# Code Runner Configuration Defaults (Rule 44 Zero-Fork Config)
+version: "1.0.0"
+
+operational_budgets:
+  execution_timeout_seconds: 10.0
+  evaluation_timeout_seconds: 5.0
+  max_stdout_bytes: 524288  # 512KB output ceiling
+  max_concurrent_executions: 4
+
+runtime:
+  isolate_environment: true
+  python_executable: null  # Defaults to sys.executable

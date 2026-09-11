@@ -1,0 +1,67 @@
+{
+  "name": "plugin.omarchy_theming_engine",
+  "version": "1.0.0",
+  "description": "Omarchy Quattro theming engine, palette resolution, sed-compatible template renderer, and WCAG contrast analyzer.",
+  "language": "python",
+  "entrypoint": "main.py",
+  "isolation": "subprocess",
+  "trusted": true,
+  "dependencies": ["tomli"],
+  "provides": [
+    "service.omarchy_theming_engine"
+  ],
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "omarchy_list_themes",
+      "description": "List all bundled Omarchy desktop themes with metadata and color palette preview",
+      "parameters": [],
+      "returns": "array"
+    },
+    {
+      "name": "omarchy_get_theme_palette",
+      "description": "Retrieve fully resolved color palette for a theme, including ANSI and semantic aliases",
+      "parameters": [
+        {
+          "name": "theme_name",
+          "type": "string",
+          "description": "Name of the theme directory (e.g. 'catppuccin', 'tokyo-night', 'rose-pine', 'nord')",
+          "required": true
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "omarchy_render_theme_template",
+      "description": "Render a configuration template string using Omarchy theme tokens, mix functions, and gradient syntax",
+      "parameters": [
+        {
+          "name": "template_content",
+          "type": "string",
+          "description": "Template text containing {{ key }}, {{ key_strip }}, {{ key_rgb }}, or {{ mix ... }} placeholders",
+          "required": true
+        },
+        {
+          "name": "theme_name",
+          "type": "string",
+          "description": "Name of the theme to render the template with",
+          "required": true
+        }
+      ],
+      "returns": "string"
+    },
+    {
+      "name": "omarchy_validate_theme_contrast",
+      "description": "Calculate WCAG 2.1 relative luminance and contrast ratios between text and background colors",
+      "parameters": [
+        {
+          "name": "theme_name",
+          "type": "string",
+          "description": "Name of the theme to evaluate for accessibility and readability",
+          "required": true
+        }
+      ],
+      "returns": "object"
+    }
+  ]
+}

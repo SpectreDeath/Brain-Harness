@@ -4,7 +4,7 @@
 ┌────────────────────────────────────────────────────────┐
 │               SKILL SUMMARY CARD                       │
 ├────────────────────────────────────────────────────────┤
-│ Name:        questio-reflection                        │
+│ SKILL:        questio-reflection                        │
 │ Category:    architecture / epistemic-governance       │
 │ Invocation:  /questio-reflection                       │
 │ Trigger:     "adversarial reflection", "questio check",│

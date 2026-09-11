@@ -5,7 +5,7 @@
 │               SKILL SUMMARY CARD                       │
 ├────────────────────────────────────────────────────────┤
 │ SKILL:       neural-network-from-scratch               │
-│ Name:        neural-network-from-scratch               │
+│ SKILL:        neural-network-from-scratch               │
 │ Category:    data_engineering / deep_learning          │
 │ Invocation:  /neural-network-from-scratch              │
 │ Triggers:    "build neural network from scratch",      │

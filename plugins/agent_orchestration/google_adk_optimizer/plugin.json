@@ -1,0 +1,102 @@
+{
+  "name": "plugin.google_adk_optimizer",
+  "version": "1.0.0",
+  "description": "Google ADK GEPA (Generative Prompt Optimization) and multi-turn scenario evaluation engine.",
+  "language": "python",
+  "entrypoint": "main.py",
+  "isolation": "subprocess",
+  "trusted": true,
+  "provides": [
+    "service.google_adk_optimizer"
+  ],
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "adk_gepa_optimize_prompt",
+      "description": "Run Generative Prompt Optimization (GEPA) to iteratively improve agent prompts against reference metrics",
+      "parameters": [
+        {
+          "name": "system_prompt",
+          "type": "string",
+          "description": "Base candidate system prompt to optimize",
+          "required": true
+        },
+        {
+          "name": "train_examples",
+          "type": "array",
+          "description": "Sample task queries with expected reference outputs or criteria",
+          "required": false,
+          "default": []
+        },
+        {
+          "name": "iterations",
+          "type": "integer",
+          "description": "Number of generative mutation iterations to execute",
+          "required": false,
+          "default": 3
+        },
+        {
+          "name": "metric",
+          "type": "string",
+          "description": "Evaluation metric criterion ('accuracy', 'brevity', 'hallucination_guard')",
+          "required": false,
+          "default": "accuracy"
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "adk_evaluate_agent",
+      "description": "Evaluate agent execution against benchmark conversation scenarios",
+      "parameters": [
+        {
+          "name": "agent_name",
+          "type": "string",
+          "description": "Agent identifier to test",
+          "required": true
+        },
+        {
+          "name": "scenario_ids",
+          "type": "array",
+          "description": "List of scenario benchmarks to evaluate against",
+          "required": false,
+          "default": [
+            "general_tool_calling",
+            "safety_boundary"
+          ]
+        },
+        {
+          "name": "judge_model",
+          "type": "string",
+          "description": "Model used as the trajectory judge",
+          "required": false,
+          "default": "gemini-2.5-flash"
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "adk_score_metrics",
+      "description": "Score agent execution trajectories across multi-dimensional quality rubrics",
+      "parameters": [
+        {
+          "name": "trajectory",
+          "type": "array",
+          "description": "Chronological list of step events (role, content, tool_calls)",
+          "required": true
+        },
+        {
+          "name": "rubrics",
+          "type": "array",
+          "description": "Quality rubrics to assess (e.g. ['coherence', 'tool_accuracy', 'latency'])",
+          "required": false,
+          "default": [
+            "coherence",
+            "tool_accuracy"
+          ]
+        }
+      ],
+      "returns": "object"
+    }
+  ]
+}

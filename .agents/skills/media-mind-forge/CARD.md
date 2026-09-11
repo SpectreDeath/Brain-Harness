@@ -2,7 +2,7 @@
 ┌────────────────────────────────────────────────────────┐
 │               SKILL SUMMARY CARD                       │
 ├────────────────────────────────────────────────────────┤
-│ Name:        media-mind-forge                          │
+│ SKILL:        media-mind-forge                          │
 │ Category:    memory_and_epistemics                     │
 │ Invocation:  /media-mind-forge                         │
 │ Triggers:    "analyze video transcript",               │

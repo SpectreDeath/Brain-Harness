@@ -4,7 +4,7 @@
 ┌────────────────────────────────────────────────────────┐
 │               SKILL SUMMARY CARD                       │
 ├────────────────────────────────────────────────────────┤
-│ Name:        deep-repo-auditor                         │
+│ SKILL:        deep-repo-auditor                         │
 │ Category:    codebase / architecture / epistemics      │
 │ Invocation:  /deep-repo-auditor                        │
 │ Trigger:     "audit repository", "multi-axis audit",   │

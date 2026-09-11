@@ -1,0 +1,102 @@
+{
+  "name": "plugin.magika_content_detector",
+  "version": "1.0.0",
+  "description": "Google Magika deep-learning file content type, MIME detection, and batch directory classification engine",
+  "language": "python",
+  "entrypoint": "main.py",
+  "isolation": "subprocess",
+  "trusted": true,
+  "provides": [
+    "service.magika_content_detector"
+  ],
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "magika_identify_path",
+      "description": "Identify file content type, MIME, group, confidence score, and text/binary flag from a file path",
+      "parameters": [
+        {
+          "name": "path",
+          "type": "string",
+          "description": "Absolute or relative path to the file to inspect",
+          "required": true
+        },
+        {
+          "name": "prediction_mode",
+          "type": "string",
+          "description": "Prediction confidence threshold mode: 'high_confidence', 'medium_confidence', or 'best_effort'",
+          "required": false,
+          "default": "high_confidence"
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "magika_identify_bytes",
+      "description": "Identify content type and MIME metadata from in-memory base64-encoded bytes without disk writes",
+      "parameters": [
+        {
+          "name": "content_b64",
+          "type": "string",
+          "description": "Base64-encoded byte content to analyze",
+          "required": true
+        },
+        {
+          "name": "prediction_mode",
+          "type": "string",
+          "description": "Prediction confidence threshold mode: 'high_confidence', 'medium_confidence', or 'best_effort'",
+          "required": false,
+          "default": "high_confidence"
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "magika_batch_scan",
+      "description": "Scan and classify all files in a directory hierarchy with aggregated group statistics and confidence scoring",
+      "parameters": [
+        {
+          "name": "dir_path",
+          "type": "string",
+          "description": "Directory path to scan recursively or flatly",
+          "required": true
+        },
+        {
+          "name": "recursive",
+          "type": "boolean",
+          "description": "Whether to recursively descend into subdirectories",
+          "required": false,
+          "default": true
+        },
+        {
+          "name": "max_files",
+          "type": "integer",
+          "description": "Maximum number of files to classify",
+          "required": false,
+          "default": 500
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "magika_list_content_types",
+      "description": "Query supported output labels, MIME types, and groups from the Magika knowledge base",
+      "parameters": [
+        {
+          "name": "filter_group",
+          "type": "string",
+          "description": "Optional group filter (e.g. 'code', 'document', 'executable', 'archive', 'media')",
+          "required": false,
+          "default": ""
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "magika_get_model_info",
+      "description": "Retrieve metadata about the active Magika ONNX model, output dimension, and runtime features",
+      "parameters": [],
+      "returns": "object"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 ---
 name: questio-reflection
-description: Mandate Aquinas-style adversarial self-reflection before executing destructive, structural, or irreversible operations. Use when the user asks to stress-test a plan, conduct an adversarial review, run a questio check, self-critique a refactoring proposal, or test architectural invariants before execution.
+description: Mandate Aquinas-style adversarial self-reflection and objection mitigation before executing destructive, structural, or irreversible operations. Do not use for routine read-only inspections or superficial review passes.
 ---
 
 # Questio Adversarial Reflection Engine

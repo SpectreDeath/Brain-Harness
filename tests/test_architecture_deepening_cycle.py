@@ -8,6 +8,8 @@ Tests:
 
 from __future__ import annotations
 
+from typing import Any
+
 import pytest
 from httpx import ASGITransport, AsyncClient
 
@@ -275,5 +277,93 @@ async def test_react_step_engine_transactional_rollback() -> None:
     obs_dict = await engine._invoke_tool_safely("error_dict_tool", {})
     assert obs_dict["status"] == "ok"
     assert obs_dict["result"]["status"] == "error"
+
+
+@pytest.mark.unit
+def test_critic_evaluation_service_unified_seam() -> None:
+    from plugins.agent_orchestration.critic_loop.main import _EVAL_INSTANCE
+
+    # 1. Unified evaluate alias
+    rubric_res = _EVAL_INSTANCE.evaluate("def calculate(x: int) -> int:\n    '''Doc.'''\n    return x * 2", ["types", "docstring"])
+    assert rubric_res["score"] == 1.0
+    assert len(rubric_res["breakdown"]) == 2
+
+    # 2. AST evaluate_code_ast with 100-point score and return type detection
+    code_ok = "def compute(a: int) -> int:\n    '''Compute double.'''\n    return a * 2"
+    ast_ok = _EVAL_INSTANCE.evaluate_code_ast(code_ok, "python")
+    assert ast_ok["valid"] is True
+    assert ast_ok["score"] == 100
+    assert ast_ok["functions"][0]["has_return_type"] is True
+    assert ast_ok["functions"][0]["has_docstring"] is True
+
+    # 3. Code with issues receives calculated penalty
+    code_bad = "def untyped(x): return x"
+    ast_bad = _EVAL_INSTANCE.evaluate_code_ast(code_bad, "python")
+    assert ast_bad["valid"] is True
+    assert ast_bad["score"] < 100
+    assert len(ast_bad["issues"]) >= 2
+
+    # 4. JSON score computation
+    json_ok = _EVAL_INSTANCE.evaluate_code_ast('{"status": "ready"}', "json")
+    assert json_ok["valid"] is True
+    assert json_ok["score"] == 100
+
+    json_bad = _EVAL_INSTANCE.evaluate_code_ast('{not_json}', "json")
+    assert json_bad["valid"] is False
+    assert json_bad["score"] == 0
+
+
+@pytest.mark.unit
+def test_data_contract_and_quality_profiler_temporal_anchoring() -> None:
+    import sys
+    from datetime import datetime
+    from pathlib import Path
+
+    skill_path = str(Path(__file__).parent.parent / ".agents" / "skills" / "data-management-architect")
+    if skill_path not in sys.path:
+        sys.path.insert(0, skill_path)
+
+    from scripts.data_contract_validator import DataContractValidator
+    from scripts.data_quality_profiler import DataQualityProfiler
+
+    ref_dt = datetime.fromisoformat("2026-01-15T12:00:00+00:00")
+    contract = {
+        "name": "historical_events",
+        "version": "1.0.0",
+        "schema": {"fields": {"event_id": {"type": "string", "required": True}, "ts": {"type": "timestamp"}}},
+        "sla": {"freshness_field": "ts", "max_latency_hours": 24.0},
+    }
+
+    records = [{"event_id": "EV-1", "ts": "2026-01-15T10:00:00Z"}]
+
+    # Validate with explicit reference_time anchored to the historical event
+    val = DataContractValidator.from_dict(contract, reference_time=ref_dt)
+    report = val.validate_dataset(records, reference_time=ref_dt)
+    assert report.is_compliant is True
+    assert len(report.violations) == 0
+
+    # Profile quality with explicit reference_time
+    profiler = DataQualityProfiler(
+        key_fields=["event_id"],
+        timeliness_field="ts",
+        max_latency_hours=24.0,
+        reference_time=ref_dt,
+    )
+    scorecard = profiler.profile(records, dataset_name="historical", reference_time=ref_dt)
+    assert scorecard.passed is True
+    assert scorecard.dimensions["timeliness"].score == 100.0
+
+
+@pytest.mark.unit
+def test_react_step_engine_protocol_annotations() -> None:
+    import typing
+
+    from harness.agent.react import StepExecutionEngine
+
+    # Verify that get_type_hints evaluates without raising NameError for protocol annotations
+    hints = typing.get_type_hints(StepExecutionEngine._invoke_tool_safely)
+    assert "action_name" in hints
+    assert "action_input" in hints
+
 
 

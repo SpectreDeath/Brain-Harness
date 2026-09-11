@@ -1,6 +1,6 @@
 ---
 name: game-theoretic-swarm-deliberator
-description: Orchestrate multi-persona LLM agent swarms to deliberate multi-domain strategic actions and resolve game-theoretic payoff matrices using Borda count, weighted majority, and unanimous consensus voting rules. Trigger when coordinating domain ministers (Defense, Epidemiology, Finance, Diplomacy), resolving payoff matrices, running multi-agent wargames, or aggregating strategic proposals.
+description: Orchestrate multi-persona LLM swarms to deliberate multi-domain strategic actions and resolve game-theoretic payoff matrices using Borda, weighted majority, and consensus voting. Do not use for linear single-agent workflows.
 ---
 
 # Game-Theoretic Swarm Deliberator: Multi-Persona Action & Payoff Voting Engine
@@ -85,6 +85,19 @@ Evaluate candidate options using the designated social choice aggregation rule:
 | **Borda Count** | $	ext{Score}(c) = \sum_{p} (N - 	ext{rank}_p(c)) \cdot w_p$ | Multi-criteria trade-offs with conflicting priorities | Max score tie-breaker |
 | **Weighted Majority** | $	ext{Votes}(c) = \sum_{p: 	ext{top}(p)=c} w_p$ | High-tempo tactical decision-making | Highest weight persona |
 | **Unanimous** | $orall p_i, p_j: 	ext{top}(p_i) = 	ext{top}(p_j)$ | High-stakes nuclear/escalation thresholds | Conservative fallback |
+
+---
+
+## The Three Foundational Pillars
+
+### 1. The Visual Brief
+Synthesize findings, structural matrices, and execution DAGs into a self-contained HTML visual brief written to `%TEMP%\game-theoretic-swarm-deliberator-<timestamp>.html` (or `/tmp/game-theoretic-swarm-deliberator-<timestamp>.html` on Unix) loading Tailwind CSS and Mermaid.js via CDN. Present the absolute clickable path to the user for visual review.
+
+### 2. The Mandatory Checkpoint
+When proposing structural modifications, refactors, or execution pipelines, always author an `implementation_plan.md` artifact with `RequestFeedback: true`. The agent must **STOP and wait** for explicit human confirmation before executing mutating actions.
+
+### 3. Explicit Anti-Patterns
+Rigid behavioral boundaries must be maintained to prevent catastrophic failure modes.
 
 ---
 

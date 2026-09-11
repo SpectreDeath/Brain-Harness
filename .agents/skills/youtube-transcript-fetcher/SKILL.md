@@ -1,6 +1,6 @@
 ---
 name: youtube-transcript-fetcher
-description: Extract full transcripts, timed captions, and spoken dialogue from YouTube videos by URL or ID via isolated subprocess JSON-RPC. Use when the user wants to ingest YouTube videos, extract YouTube transcripts, fetch video captions, analyze YouTube spoken content, or summarize video audio.
+description: Extract full transcripts, timed captions, and spoken dialogue from YouTube videos by URL or ID via isolated subprocess JSON-RPC. Do not use for downloading raw video streams or modifying video media files.
 ---
 
 # YouTube Transcript Fetcher

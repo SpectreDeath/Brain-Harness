@@ -1,0 +1,31 @@
+# Google Mantis Security Suite: Agent Capability Index
+# Format: llms.txt (Diátaxis Machine-Readable Index)
+
+> Google Mantis provides autonomous, sequential security review skills, sandboxed crash reproduction, and transactional patch verification for Brain Harness.
+
+## Plugins
+- `plugin.mantis_security_review`: Static analysis, VCS history mining, deduplication ladders, independent validation gates, and risk calibration. Provides `service.mantis_security_review`.
+- `plugin.mantis_sandbox_verifier`: Subprocess-isolated command execution, PoC crash reproduction (ASAN/UBSAN), and transactional patch verification with re-attack bypass testing. Provides `service.mantis_sandbox_verifier`.
+- `plugin.mantis_structural_index`: Content-addressed AST indexing into SQLite for fast symbol definitions and caller reference queries. Provides `service.mantis_structural_index`.
+
+## Primary Tools & Usage Intent
+- `mantis_history_scan`: Use to mine repository commit history for previous security vulnerability fixes and CVE trajectories.
+- `mantis_directory_summary`: Use to generate structural directory maps before planning an audit sweep.
+- `mantis_plan_review`: Use to generate targeted vulnerability roadmaps based on threat boundaries and priority CWEs.
+- `mantis_research_audit`: Use to run deep-dive static AST and heuristic checks for injection, hardcoded secrets, and eval/exec hazards.
+- `mantis_dedupe_ladder`: Use to eliminate redundant findings across multi-agent turns via syntactic and stable signature hashing.
+- `mantis_review_gate`: Use to independently verify findings against source context and weed out false positives.
+- `mantis_critic_filter`: Use to filter out findings that rely on assertion statements (`assert`) or test-only harnesses.
+- `mantis_reproduce_crash`: Use to execute a PoC crash script inside an isolated sandbox to empirically verify flaw validity.
+- `mantis_patch_verify`: Use to apply a fix in shadow isolation and confirm it blocks baseline reproducers and bypass re-attacks.
+- `mantis_chain_exploits`: Use to compound individual low/medium severity bugs into critical multi-stage exploit chains.
+- `mantis_calibrate_risk`: Use to compute asset-calibrated CVSS risk scores.
+- `mantis_generate_report`: Use to compile human-readable markdown security review packets for stakeholders.
+- `mantis_build_structural_index`: Use to index codebase ASTs into content-addressed semantic units.
+- `mantis_query_symbol`: Use to query definitions and caller references without ingesting full source files into context.
+
+## Operational Constraints & Negative Boundaries
+- DO NOT execute untrusted binaries or reproducer scripts in-process; always route through `mantis_reproduce_crash` or `mantis_sandbox_exec`.
+- DO NOT report vulnerabilities that only crash when `assert` is enabled; verify viability via `mantis_critic_filter`.
+- DO NOT report unverified findings to stakeholders without empirical reproducer confirmation.
+- DO NOT write patches directly to production files before shadow sandbox verification via `mantis_patch_verify`.

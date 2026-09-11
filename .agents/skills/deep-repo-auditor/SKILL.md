@@ -1,6 +1,6 @@
 ---
 name: deep-repo-auditor
-description: Execute multi-axis repository audits combining compute model assessment, structural data topology mapping, 4-axis codebase introspection, and knowledge/skill distillation. Trigger when auditing large foreign codebases, evaluating agent harnesses, mapping architecture blast radius, or running multi-agent repository distillation pipelines.
+description: Execute multi-axis repository audits combining compute assessment, data topology mapping, 4-axis codebase introspection, and skill distillation. Do not use for shallow surface linting or small single-file edits.
 ---
 
 # Deep Repo Auditor: Multi-Axis Codebase & Harness Auditing Engine

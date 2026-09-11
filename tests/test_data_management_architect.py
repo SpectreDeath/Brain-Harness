@@ -1,9 +1,12 @@
 """Unit and integration tests for data-management-architect skill, companion scripts, and Knowledge Items."""
 
-from __future__ import annotations
-
 import json
+
+# Import companion scripts
+import sys
+from datetime import datetime
 from pathlib import Path
+
 import pytest
 
 from harness.creator.skills import SkillValidator
@@ -13,8 +16,6 @@ from plugins.memory_and_epistemics.skill_knowledge_graph.main import (
 )
 from plugins.memory_and_epistemics.skill_knowledge_graph.parser import SkillCardParser
 
-# Import companion scripts
-import sys
 sys.path.insert(0, str(Path(__file__).parent.parent / ".agents" / "skills" / "data-management-architect"))
 from scripts.data_contract_validator import DataContractValidator
 from scripts.data_quality_profiler import DataQualityProfiler
@@ -108,7 +109,8 @@ class TestDataContractValidatorScript:
         }
 
     def test_valid_dataset_passes(self, contract_def: dict) -> None:
-        validator = DataContractValidator.from_dict(contract_def)
+        ref_time = datetime.fromisoformat("2026-09-06T12:00:00+00:00")
+        validator = DataContractValidator.from_dict(contract_def, reference_time=ref_time)
         valid_records = [
             {
                 "trip_id": "TRIP-001",
@@ -118,7 +120,7 @@ class TestDataContractValidatorScript:
                 "event_timestamp": "2026-09-06T12:00:00Z",
             }
         ]
-        report = validator.validate_dataset(valid_records)
+        report = validator.validate_dataset(valid_records, reference_time=ref_time)
         assert report.is_compliant is True
         assert report.valid_records == 1
         assert report.quarantine_count == 0
@@ -146,6 +148,7 @@ class TestDataQualityProfilerScript:
     """Test data_quality_profiler.py 6-dimension evaluation."""
 
     def test_profiler_computes_6_dimensions(self) -> None:
+        ref_time = datetime.fromisoformat("2026-09-06T12:00:00+00:00")
         profiler = DataQualityProfiler(
             key_fields=["trip_id"],
             required_fields=["trip_id", "student_id", "fare"],
@@ -153,6 +156,7 @@ class TestDataQualityProfilerScript:
             validation_rules={"student_id": {"pattern": r"^ALU-\d{4}-\d{4}$"}},
             timeliness_field="created_at",
             max_latency_hours=72.0,
+            reference_time=ref_time,
         )
 
         test_records = [
@@ -161,7 +165,7 @@ class TestDataQualityProfilerScript:
             {"trip_id": "T3", "student_id": "ALU-2026-0003", "fare": 35.0, "created_at": "2026-09-06T12:00:00Z"},
         ]
 
-        scorecard = profiler.profile(test_records, dataset_name="mobility_sample")
+        scorecard = profiler.profile(test_records, dataset_name="mobility_sample", reference_time=ref_time)
         assert scorecard.total_rows == 3
         assert scorecard.passed is True
         assert scorecard.overall_score >= 95.0

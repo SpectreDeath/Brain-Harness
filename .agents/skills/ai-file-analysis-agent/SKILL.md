@@ -1,6 +1,6 @@
 ---
 name: ai-file-analysis-agent
-description: "Design, configure, ground, and verify production-grade AI file analysis agents using direct file APIs, negative constraint prompts, and robust conversational loops. Use when building document-analyzing assistants, selecting between direct upload vs RAG, grounding LLM outputs to prevent hallucinations, or hardening file agents against malformed documents and prompt injection."
+description: Design, configure, ground, and verify production-grade AI file analysis agents using direct file APIs, negative constraint prompts, and robust conversational loops. Do not use for generic document generation or unstructured web search.
 ---
 
 # AI File Analysis Agent

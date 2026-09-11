@@ -212,17 +212,40 @@ class SkillCiLinter:
                 errors.append(msg)
 
         # 6. Markdown relative link validation (Link Checker)
-        relative_links = re.findall(r"\[([^\]]+)\]\(([^)]+)\)", skill_text)
+        # Strip code fences and inline backtick blocks to avoid false positives on illustrative code
+        clean_text_for_links = re.sub(r"```[\s\S]*?```", "", skill_text)
+        clean_text_for_links = re.sub(r"`[^`\n]+`", "", clean_text_for_links)
+
+        relative_links = re.findall(r"\[([^\]]+)\]\(([^)]+)\)", clean_text_for_links)
         broken_links: list[str] = []
         for text, link in relative_links:
-            # Skip external web URLs
-            if link.startswith("http://") or link.startswith("https://") or link.startswith("mailto:"):
+            raw_link = link.strip().strip("\"'")
+            # Skip external web URLs and protocols
+            if raw_link.startswith("http://") or raw_link.startswith("https://") or raw_link.startswith("mailto:"):
+                continue
+            # Skip illustrative template placeholders
+            if "path/to/" in raw_link or raw_link in ("...", "#", "/"):
                 continue
             # Strip anchors
-            clean_link = link.split("#")[0]
+            clean_link = raw_link.split("#")[0]
             if not clean_link:
                 continue
-            target_path = (path / clean_link).resolve()
+
+            # Handle file:/// URIs
+            if clean_link.startswith("file:///"):
+                file_subpath = clean_link[len("file:///"):]
+                # Sibling skill links: file:///.agents/skills/<skill>/...
+                if file_subpath.startswith(".agents/skills/"):
+                    target_path = (path.parent.parent / file_subpath).resolve()
+                elif Path(file_subpath).is_absolute():
+                    target_path = Path(file_subpath).resolve()
+                else:
+                    target_path = (path / file_subpath).resolve()
+            elif clean_link.startswith("file://"):
+                target_path = Path(clean_link[len("file://"):]).resolve()
+            else:
+                target_path = (path / clean_link).resolve()
+
             if not target_path.exists():
                 broken_links.append(f"[{text}]({link}) -> {clean_link} not found")
 

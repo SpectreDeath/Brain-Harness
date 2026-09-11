@@ -1,0 +1,13 @@
+# Omarchy Theming Engine Configuration Defaults (Rule 44 Zero-Fork Config)
+version: "1.0.0"
+
+operational_budgets:
+  max_template_render_bytes: 1048576  # 1MB template render ceiling
+  contrast_ratio_target_aa: 4.5
+  contrast_ratio_target_aaa: 7.0
+  cache_ttl_seconds: 600
+
+runtime:
+  source_dir: null  # Optional override; defaults to OMARCHY_PATH env or D:\GitHub\cloned\omarchy-quattro\omarchy-quattro
+  default_theme: "catppuccin"
+  strict_missing_keys: false

@@ -1,0 +1,29 @@
+# Baseline configuration for swarm-reflection-optimizer
+# Supports 3-tier zero-fork configuration:
+# Precedence: Project Override (.agents/skills.config.yaml) -> Skill Default (config.default.yaml) -> Hardcoded Fallback
+
+version: "1.0.0"
+
+backpropagation:
+  learning_rate: 0.3
+  momentum_beta: 0.7
+  max_backprop_depth: 5
+  min_loss_threshold: 0.15
+
+deliberation:
+  voting_rule: "borda_count"
+  min_consensus_threshold: 0.60
+  candidate_personas:
+    - "Architect"
+    - "Security"
+    - "Reliability"
+    - "Performance"
+
+reflection:
+  enforce_aquinas_format: true
+  min_objections_count: 2
+  enforce_sed_contra_invariants: true
+
+execution:
+  max_team_repair_attempts: 3
+  read_only_session_mode: true

@@ -143,6 +143,7 @@ class DataQualityProfiler:
         timeliness_field: str | None = None,
         max_latency_hours: float = 24.0,
         pass_threshold: float = 95.0,
+        reference_time: datetime | None = None,
     ) -> None:
         self.key_fields = key_fields or ["id"]
         self.required_fields = required_fields or []
@@ -152,11 +153,13 @@ class DataQualityProfiler:
         self.timeliness_field = timeliness_field
         self.max_latency_hours = max_latency_hours
         self.pass_threshold = pass_threshold
+        self.reference_time = reference_time
 
     def profile(
         self,
         records: list[dict[str, Any]],
         dataset_name: str = "dataset",
+        reference_time: datetime | None = None,
     ) -> QualityScorecard:
         """Profile dataset records and generate comprehensive QualityScorecard."""
         total_rows = len(records)
@@ -192,7 +195,7 @@ class DataQualityProfiler:
         dim_scores["consistency"] = self._eval_consistency(records)
 
         # Dimension 6: Timeliness
-        dim_scores["timeliness"] = self._eval_timeliness(records)
+        dim_scores["timeliness"] = self._eval_timeliness(records, reference_time=reference_time)
 
         # Overall composite score (unweighted mean of the 6 dimensions)
         overall = sum(d.score for d in dim_scores.values()) / len(dim_scores)
@@ -361,11 +364,15 @@ class DataQualityProfiler:
         score = max(0.0, ((total_checks - failed_checks) / total_checks) * 100.0) if total_checks > 0 else 100.0
         return DimensionScore("consistency", score, score >= 95.0, 95.0, total_checks, failed_checks, details)
 
-    def _eval_timeliness(self, records: list[dict[str, Any]]) -> DimensionScore:
+    def _eval_timeliness(
+        self,
+        records: list[dict[str, Any]],
+        reference_time: datetime | None = None,
+    ) -> DimensionScore:
         if not self.timeliness_field:
             return DimensionScore("timeliness", 100.0, True, 95.0, len(records), 0)
 
-        now = datetime.now(timezone.utc)
+        now = reference_time or self.reference_time or datetime.now(timezone.utc)
         total = len(records)
         stale_count = 0
         details: list[str] = []

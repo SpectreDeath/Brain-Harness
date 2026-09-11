@@ -1,0 +1,29 @@
+# Baseline configuration for multimedia-intelligence-forge
+# Supports 3-tier zero-fork configuration:
+# Precedence: Project Override (.agents/skills.config.yaml) -> Skill Default (config.default.yaml) -> Hardcoded Fallback
+
+version: "1.0.0"
+
+transcription:
+  max_duration_minutes: 180
+  segment_length_seconds: 300
+  compute_sha256: true
+  strip_sponsor_segments: true
+  subprocess_timeout_seconds: 120
+
+distillation:
+  enforce_dual_lens: true
+  min_claim_confidence: 0.85
+  max_claims_per_chapter: 10
+  salvage_attempts: 3
+
+pipeline:
+  max_self_repair_attempts: 3
+  circuit_breaker_enabled: true
+  generate_visual_brief: true
+  visual_brief_theme: "dark"
+
+knowledge_vault:
+  enabled: true
+  vault_root: ".harness/knowledge"
+  enforce_dual_file_format: true

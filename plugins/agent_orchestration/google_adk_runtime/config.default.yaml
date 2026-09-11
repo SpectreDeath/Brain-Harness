@@ -1,0 +1,13 @@
+# Google ADK Runtime Configuration Defaults (Rule 44 Zero-Fork Config)
+version: "1.0.0"
+
+operational_budgets:
+  session_timeout_seconds: 300
+  max_turns_per_session: 50
+  max_concurrent_agents: 8
+  cache_ttl_seconds: 600
+
+runtime:
+  default_adk_path: "D:\\GitHub\\cloned\\Google\\adk-python\\src"
+  default_model: "gemini-2.5-flash"
+  enable_telemetry: true

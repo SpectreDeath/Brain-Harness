@@ -4,7 +4,7 @@
 ┌────────────────────────────────────────────────────────┐
 │               SKILL SUMMARY CARD                       │
 ├────────────────────────────────────────────────────────┤
-│ Name:        repo-to-plugin-forge                      │
+│ SKILL:        repo-to-plugin-forge                      │
 │ Category:    engineering / plugin-generation           │
 │ Invocation:  /repo-to-plugin-forge                     │
 │ Trigger:     "forge plugin from repo",                 │

@@ -1,6 +1,6 @@
 ---
 name: agent-skill-sdlc
-description: Design, configure, validate, test, and audit production-grade AI agent skills across their full lifecycle (v1 to v5). Use when authoring new agent skills, adding YAML configuration layers without forking, writing two-phase validators or salvage loops, hardening agent skills against prompt sprawl, or running pre-flight SkillSpector security audits. Do not use for generic prompt writing or single-turn system prompt edits.
+description: Design, configure, validate, test, and audit production-grade AI agent skills across their full lifecycle (v1-v5). Implement zero-fork config, two-phase validators, and SkillSpector audits. Do not use for generic prompt writing.
 ---
 
 # Agent Skill SDLC: Production Engineering & Lifecycle Architecture

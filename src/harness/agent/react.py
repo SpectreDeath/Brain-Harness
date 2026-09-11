@@ -34,8 +34,15 @@ from harness.events.types import (
 )
 from harness.kernel.context import ServiceContext, ServiceKey
 from harness.plugins.base import HarnessPlugin
-from harness.services.arch_linter import ARCH_LINTER_KEY, DefaultArchLinterService
-from harness.services.filesystem_git import FILESYSTEM_GIT_KEY, DefaultFilesystemGitService
+from harness.services.arch_linter import (
+    ARCH_LINTER_KEY,
+    ArchLinterService,
+    DefaultArchLinterService,
+)
+from harness.services.filesystem_git import (
+    FILESYSTEM_GIT_KEY,
+    FilesystemGitService,
+)
 from harness.services.llm import LLM_SERVICE_KEY, LLMMessage, LLMService
 from harness.services.tools import TOOL_REGISTRY_KEY, ToolRegistry
 

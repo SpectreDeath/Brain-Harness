@@ -1,0 +1,75 @@
+{
+  "name": "plugin.google_styleguide_auditor",
+  "version": "1.0.0",
+  "description": "Google Style Guide auditor and linter config generator for Python, C++, TypeScript, Java, and Shell.",
+  "language": "python",
+  "entrypoint": "main.py",
+  "isolation": "subprocess",
+  "trusted": true,
+  "provides": [
+    "service.google_styleguide_auditor"
+  ],
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "styleguide_audit_file",
+      "description": "Audit a source code file against Google style rules (Python, C++, TypeScript, Java, Shell)",
+      "parameters": [
+        {
+          "name": "file_path",
+          "type": "string",
+          "description": "Path to file to audit",
+          "required": true
+        },
+        {
+          "name": "language",
+          "type": "string",
+          "description": "Language identifier ('python', 'cpp', 'typescript', 'java', 'shell')",
+          "required": false,
+          "default": "python"
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "styleguide_get_rule",
+      "description": "Query specific Google style guidelines and best-practice rationales by language and topic",
+      "parameters": [
+        {
+          "name": "language",
+          "type": "string",
+          "description": "Programming language ('python', 'cpp', 'typescript', 'java', 'shell')",
+          "required": true
+        },
+        {
+          "name": "topic",
+          "type": "string",
+          "description": "Topic or convention (e.g. 'imports', 'exceptions', 'naming', 'globals', 'typing')",
+          "required": true
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "styleguide_generate_linter_config",
+      "description": "Emit Google-compliant configuration files (.pylintrc, .clang-format, or style settings)",
+      "parameters": [
+        {
+          "name": "tool_name",
+          "type": "string",
+          "description": "Target linter or formatter ('pylint', 'clang_format', 'yapf')",
+          "required": false,
+          "default": "pylint"
+        },
+        {
+          "name": "target_dir",
+          "type": "string",
+          "description": "Directory to emit configuration into (default returns text)",
+          "required": false,
+          "default": ""
+        }
+      ],
+      "returns": "object"
+    }
+  ]
+}

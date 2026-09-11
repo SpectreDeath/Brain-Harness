@@ -1,0 +1,59 @@
+{
+  "ki_id": "ki_google_repos_bridge",
+  "title": "Google Multi-Repository Architectural Bridge & Plugin Suite",
+  "created_at": "2026-09-09T17:28:44.517009+00:00",
+  "version": "1.0.0",
+  "sources": [
+    {
+      "repo": "google/adk-python",
+      "path": "D:\\GitHub\\cloned\\Google\\adk-python",
+      "commit": "6762652ac1a7077888568b7f88f5233d36ef6ab1",
+      "license": "Apache-2.0"
+    },
+    {
+      "repo": "google/adk-docs",
+      "path": "D:\\GitHub\\cloned\\Google\\adk-docs",
+      "commit": "4505cb7e1345023d6608b9c34b042d7f15051507",
+      "license": "Apache-2.0"
+    },
+    {
+      "repo": "google/adk-web",
+      "path": "D:\\GitHub\\cloned\\Google\\adk-web",
+      "commit": "3693fda21d2e0a757330da9cbba93be950a3017f",
+      "license": "Apache-2.0"
+    },
+    {
+      "repo": "google/styleguide",
+      "path": "D:\\GitHub\\cloned\\Google\\styleguide",
+      "commit": "1809c769de31ba388c755ad15dd057a9ba8531fd",
+      "license": "CC-By 3.0"
+    },
+    {
+      "repo": "google/tunix",
+      "path": "D:\\GitHub\\cloned\\Google\\tunix-main\\tunix-main",
+      "license": "Apache-2.0"
+    },
+    {
+      "repo": "google/perfetto",
+      "path": "D:\\GitHub\\cloned\\Google\\perfetto",
+      "commit": "fd896b1ad88899807bb128b7255deb5199dde54f",
+      "license": "Apache-2.0"
+    }
+  ],
+  "plugins_scaffolded": [
+    "plugin.google_adk_runtime",
+    "plugin.google_adk_optimizer",
+    "plugin.google_adk_docs_navigator",
+    "plugin.google_adk_web_bridge",
+    "plugin.google_styleguide_auditor",
+    "plugin.google_tunix_posttraining",
+    "plugin.perfetto_trace_processor"
+  ],
+  "invariants_enforced": [
+    "Rule 5 & 7: Subprocess isolation by default with lazy staging",
+    "Rule 14: Subprocess pipe transport disposal in finally blocks",
+    "Rule 18: Domain-partitioned plugin synthesis across 4 categories",
+    "Rule 38: PluginValidator dual-mode / async validation compliance",
+    "Rule 40: Canonical dual-file knowledge item directory format"
+  ]
+}

@@ -1,0 +1,12 @@
+# Google ADK Optimizer Configuration Defaults (Rule 44 Zero-Fork Config)
+version: "1.0.0"
+
+operational_budgets:
+  max_optimization_candidates: 10
+  eval_timeout_seconds: 60
+  convergence_threshold: 0.90
+  cache_ttl_seconds: 600
+
+runtime:
+  enable_parameter_tuning: true
+  surrogate_model: "gaussian_process"

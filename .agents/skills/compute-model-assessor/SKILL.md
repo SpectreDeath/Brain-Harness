@@ -1,6 +1,6 @@
 ---
 name: compute-model-assessor
-description: Assess task complexity and recommend optimal model tiers and thinking budgets (High, Medium, Low, Off) calibrated for Gemini 3.7 Flash, Claude 3.7 Sonnet, and OpenAI o-series. Use when the user asks to assess compute, route models, estimate reasoning budget, or optimize LLM model tiering.
+description: Assess task complexity and recommend optimal model tiers and thinking budgets (High, Medium, Low, Off) calibrated for Gemini, Claude, and OpenAI models. Do not use for mechanical syntax fixes or non-LLM triage.
 ---
 
 # Compute & Model Assessor Engine

@@ -1,6 +1,6 @@
 ---
 name: structured-data-scout
-description: Discover and retrieve pre-cleaned, standardized tabular datasets from curated repositories (UCI, Kaggle, OpenData, HuggingFace Datasets). Use when the user requests dataset acquisition, tabular benchmarks, structured data sourcing, or downloading datasets without web scraping.
+description: Discover and retrieve pre-cleaned, standardized tabular datasets from curated repositories (UCI, Kaggle, OpenData) directly to disk. Do not use for unstructured web scraping or live streaming data ingestion.
 ---
 
 # Structured Data Scout Engine
