@@ -1,0 +1,135 @@
+{
+  "name": "plugin.agentwikis",
+  "version": "1.0.0",
+  "description": "AgentWikis knowledge discovery, boundary triage, and offline documentation slicing",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "category": "integration_and_io",
+  "author": "Brain Harness",
+  "provides": [
+    "service.agentwikis"
+  ],
+  "entrypoints": [
+    {
+      "name": "agentwikis_list",
+      "description": "List wikis filtered by category, tag, or text query",
+      "parameters": [
+        {
+          "name": "category",
+          "type": "string",
+          "description": "Optional category filter",
+          "required": false
+        },
+        {
+          "name": "tag",
+          "type": "string",
+          "description": "Optional tag filter",
+          "required": false
+        },
+        {
+          "name": "query",
+          "type": "string",
+          "description": "Optional text search query",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "agentwikis_scope",
+      "description": "Inspect declared scope boundaries, exclusions, and freshness date for a wiki",
+      "parameters": [
+        {
+          "name": "wiki",
+          "type": "string",
+          "description": "Wiki slug (e.g. vllm, hermes)",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "agentwikis_match",
+      "description": "Match user task prompt to in-scope wikis and skills with calibrated abstention",
+      "parameters": [
+        {
+          "name": "query",
+          "type": "string",
+          "description": "Task description or user prompt",
+          "required": true
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "description": "Maximum candidate matches to return",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "agentwikis_search",
+      "description": "Search documentation corpus across documents and metadata with calibrated confidence",
+      "parameters": [
+        {
+          "name": "query",
+          "type": "string",
+          "description": "Search keywords or question",
+          "required": true
+        },
+        {
+          "name": "wiki",
+          "type": "string",
+          "description": "Optional wiki slug filter",
+          "required": false
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "description": "Max search results",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "agentwikis_read",
+      "description": "Extract exact Markdown document or sub-section slice offline or with remote fallback",
+      "parameters": [
+        {
+          "name": "doc_path",
+          "type": "string",
+          "description": "Relative document path (e.g. hermes/README.md)",
+          "required": true
+        },
+        {
+          "name": "section",
+          "type": "string",
+          "description": "Optional heading to slice",
+          "required": false
+        },
+        {
+          "name": "remote",
+          "type": "boolean",
+          "description": "Force remote fetch from agentwikis.com",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "agentwikis_pack",
+      "description": "Prepare a one-shot token-bounded Markdown context pack ready for LLM injection",
+      "parameters": [
+        {
+          "name": "query",
+          "type": "string",
+          "description": "Task prompt or context request",
+          "required": true
+        },
+        {
+          "name": "max_tokens",
+          "type": "integer",
+          "description": "Maximum token budget bound",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Google 2x2 AgentWikis Continuous Evaluation Suite",
+  "version": "1.1.0",
+  "skill_name": "agentwikis-router",
+  "description": "Continuous evaluation measuring Accuracy Uplift and Token Efficiency Uplift across AgentWikis retrieval and governance tasks.",
+  "eval_dimensions": {
+    "accuracy_metrics": [
+      "task_completion_rate",
+      "boundary_adherence_score",
+      "abstention_accuracy_score"
+    ],
+    "efficiency_metrics": [
+      "total_tokens_consumed",
+      "execution_latency_seconds",
+      "offline_cache_hit_rate"
+    ]
+  },
+  "passing_thresholds": {
+    "min_accuracy_uplift_pct": 15.0,
+    "min_token_efficiency_uplift_pct": 30.0,
+    "target_quadrant": "DOMINANT_UPLIFT"
+  },
+  "test_cases": [
+    {
+      "id": "eval_001_scope_boundary_abstention",
+      "category": "trust_semantics",
+      "prompt": "What is the live exchange rate for Solana on Uniswap v3 right now?",
+      "baseline_expectation": {
+        "description": "Baseline agent searches wikis or fabricates outdated pricing data, failing negative boundary.",
+        "max_expected_tokens": 8500,
+        "expected_accuracy_score": 0.40
+      },
+      "skill_expectation": {
+        "description": "Agent inspects scope.notCovered, flags out-of-scope query with calibrated_confident: false, and cleanly abstains.",
+        "max_expected_tokens": 1800,
+        "expected_accuracy_score": 0.98
+      }
+    },
+    {
+      "id": "eval_002_offline_slice_extraction",
+      "category": "performance",
+      "prompt": "How do I configure continuous batching and chunked prefill in vLLM for high throughput?",
+      "baseline_expectation": {
+        "description": "Baseline agent dumps full documentation or executes multiple web searches, bloating context.",
+        "max_expected_tokens": 12000,
+        "expected_accuracy_score": 0.65
+      },
+      "skill_expectation": {
+        "description": "Agent targets vllm wiki, extracts exact continuous batching section from local llms-full.txt in zero network turns.",
+        "max_expected_tokens": 3200,
+        "expected_accuracy_score": 0.96
+      }
+    },
+    {
+      "id": "eval_003_open_data_contract_validation",
+      "category": "governance",
+      "prompt": "Validate incoming AgentWikis index.json against the production Open Data Contract standard.",
+      "baseline_expectation": {
+        "description": "Baseline agent parses JSON without schema enforcement, missing null fields and scope omissions.",
+        "max_expected_tokens": 6500,
+        "expected_accuracy_score": 0.55
+      },
+      "skill_expectation": {
+        "description": "Agent executes validate-contract against ODCS schema, detecting structural violations and certifying SLAs.",
+        "max_expected_tokens": 2400,
+        "expected_accuracy_score": 0.99
+      }
+    },
+    {
+      "id": "eval_004_dama_quality_profiling",
+      "category": "quality_engineering",
+      "prompt": "Profile the AgentWikis corpus across all 6 DAMA data quality dimensions and report freshness.",
+      "baseline_expectation": {
+        "description": "Baseline agent performs ad-hoc spot checks on a few files without systematic dimensional scoring.",
+        "max_expected_tokens": 9000,
+        "expected_accuracy_score": 0.50
+      },
+      "skill_expectation": {
+        "description": "Agent runs quality-profile computing Accuracy, Completeness, Consistency, Timeliness, Validity, Uniqueness scorecards.",
+        "max_expected_tokens": 2800,
+        "expected_accuracy_score": 0.97
+      }
+    }
+  ]
+}

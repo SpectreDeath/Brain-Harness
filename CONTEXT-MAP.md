@@ -111,6 +111,7 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - [`deep-skill-forge`](file:///.agents/skills/deep-skill-forge/SKILL.md) — Autonomous end-to-end synthesis pipeline uniting literature deconstruction, deep architecture elevation, bounded self-repair, and Knowledge Vault retention.
   - [`multimedia-intelligence-forge`](file:///.agents/skills/multimedia-intelligence-forge/SKILL.md) — Subprocess multimedia transcription, dual-lens cognitive distillation, isnad claim lineage verification, and canonical dual-file Knowledge Vault retention.
   - [`external-repo-bridge-forge`](file:///.agents/skills/external-repo-bridge-forge/SKILL.md) — Foreign GitHub repository ingestion, commit trajectory analysis, sandboxed Harness plugin synthesis, and Diátaxis documentation with C4 architecture models.
+  - [`agentwikis-router`](file:///.agents/skills/agentwikis-router/SKILL.md) — Scope-bounded developer task routing, zero-latency offline documentation extraction, trust-calibrated abstention, and Open Data Contract governance across AgentWikis knowledge bases.
 
 
 ---

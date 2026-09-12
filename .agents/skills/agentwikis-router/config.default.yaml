@@ -1,0 +1,30 @@
+# Default configuration for agentwikis-router (Rule 44 Zero-Fork Config)
+version: "1.1.0"
+
+# Path & Discovery Resolution (overridden via AGENTWIKIS_CORPUS_DIR or .agents/skills.config.yaml)
+corpus_dir: "D:\\AgentWikis"
+base_url: "https://agentwikis.com"
+contract_path: "contracts/agentwikis_contract.yaml"
+
+# Operational Budgets & Limits
+max_search_results: 5
+min_quality_score: 85.0
+confidence_floor: 0.65
+abstention_floor: 0.94
+token_budget_limit: 4000
+line_budget_limit: 500
+timeout_seconds: 10.0
+max_retries: 3
+rate_limit_delay_seconds: 1.0
+
+# Execution Flags
+offline_first: true
+enforce_scope_gate: true
+auto_slice_headings: true
+
+# Supported Client Ecosystems (supports extra_supported_clients in project overrides)
+supported_clients:
+  - antigravity
+  - claude-code
+  - hermes
+  - vscode

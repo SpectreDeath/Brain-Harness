@@ -1,0 +1,119 @@
+version: 3.1.0
+kind: DataContract
+info:
+  title: AgentWikis Knowledge Base Open Data Contract
+  version: 1.0.0
+  description: Machine-readable Open Data Contract standard (ODCS) defining schemas, SLAs, quality rules, and security classifications for the AgentWikis corpus.
+  owner: AgentWikis Data Governance
+  contact:
+    name: AgentWikis Support
+    url: https://agentwikis.com/for-agents
+
+servers:
+  production:
+    type: https
+    url: https://agentwikis.com
+    description: Production AgentWikis raw Markdown and JSON endpoint
+  local_offline:
+    type: filesystem
+    description: High-speed local offline corpus mirror (D:\AgentWikis)
+
+terms:
+  usage: Free for AI agent read-only consumption; Pro XL tier gated by Bearer API Key.
+  rateLimit: 1 request/sec on remote HTTP with exponential backoff on HTTP 429/5xx.
+  sla:
+    freshnessMaxMonths: 24
+    abstentionConfidenceFloor: 0.94
+
+models:
+  wikis:
+    description: Schema definition for individual wiki records in index.json
+    type: object
+    required:
+      - slug
+      - title
+      - description
+      - category
+      - scope
+    properties:
+      slug:
+        type: string
+        pattern: "^[a-z0-9_-]+$"
+        description: Unique kebab-case identifier for the wiki
+      title:
+        type: string
+        description: Human-readable display title
+      description:
+        type: string
+        description: High-level overview of the knowledge base domain
+      category:
+        type: string
+        enum:
+          - agents
+          - devtools
+          - inference
+          - imagegen
+          - blockchain
+          - trading
+          - marketing
+          - uncategorized
+      scope:
+        type: object
+        required:
+          - covers
+          - notCovered
+          - currentAs
+        properties:
+          covers:
+            type: string
+            description: Explicit declaration of in-scope topics, tools, and workflows
+          notCovered:
+            type: string
+            description: Explicit negative boundaries to deflect hallucination
+          currentAs:
+            type: string
+            description: Upstream software version or date the wiki was validated against
+      documentCount:
+        type: integer
+        minimum: 0
+      lastUpdated:
+        type: string
+        description: ISO-8601 date string (YYYY-MM-DD)
+
+  skills:
+    description: Schema definition for curated agent skills
+    type: object
+    required:
+      - name
+      - description
+    properties:
+      name:
+        type: string
+        pattern: "^[a-z0-9_-]+$"
+      description:
+        type: string
+      wiki:
+        type: string
+        description: Associated wiki slug (empty string if standalone skill)
+      standalone:
+        type: boolean
+      pro:
+        type: boolean
+      bundle:
+        type: string
+
+  documents:
+    description: Schema definition for Markdown documents in full text corpus
+    type: object
+    required:
+      - delimiter
+      - title
+      - content
+    properties:
+      delimiter:
+        type: string
+        pattern: "<!-- ===== [a-z0-9_-]+/.+ ===== -->"
+      title:
+        type: string
+      content:
+        type: string
