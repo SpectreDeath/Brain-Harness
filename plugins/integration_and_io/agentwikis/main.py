@@ -2,18 +2,34 @@
 
 from __future__ import annotations
 
-import asyncio
-from pathlib import Path
 import sys
+from pathlib import Path
 from typing import Any
+
 import structlog
 
 # Ensure relocatable path to agentwikis_engine
-_scripts_dir = Path(__file__).resolve().parent.parent.parent.parent / ".agents" / "skills" / "agentwikis-router" / "scripts"
+_scripts_dir = (
+    Path(__file__).resolve().parent.parent.parent.parent
+    / ".agents"
+    / "skills"
+    / "agentwikis-router"
+    / "scripts"
+)
 if _scripts_dir.exists() and str(_scripts_dir) not in sys.path:
     sys.path.insert(0, str(_scripts_dir))
 
-from agentwikis_engine import AgentWikisEngine, DocumentSlice, MatchResult, SearchHit, WikiEntity, WikiScope
+from agentwikis_engine import (
+    AgentWikisEngine,
+    ContractValidationReport,
+    DocumentSlice,
+    MatchResult,
+    QualityScorecard,
+    SearchHit,
+    WikiEntity,
+    WikiScope,
+)
+
 from harness.kernel.context import ServiceContext, ServiceKey
 from harness.plugins.base import HarnessPlugin
 from harness.services.agentwikis import AGENTWIKIS_SERVICE_KEY, AgentWikisService
@@ -35,6 +51,7 @@ def get_engine() -> AgentWikisEngine:
 # ---------------------------------------------------------------------------
 # Standalone Tool Entrypoints (Matching plugin.json)
 # ---------------------------------------------------------------------------
+
 
 def agentwikis_list(
     category: str | None = None,
@@ -91,7 +108,9 @@ def agentwikis_read(
 ) -> dict[str, Any]:
     """Extract exact Markdown document or sub-section slice offline or with remote fallback."""
     engine = get_engine()
-    doc_slice = engine.extract_document(doc_path=doc_path, section_heading=section, force_remote=remote)
+    doc_slice = engine.extract_document(
+        doc_path=doc_path, section_heading=section, force_remote=remote
+    )
     return doc_slice.to_dict()
 
 
@@ -104,6 +123,7 @@ def agentwikis_pack(query: str, max_tokens: int = 4000) -> str:
 # ---------------------------------------------------------------------------
 # Rule 1, 2, 3, 45: HarnessPlugin Provider Class
 # ---------------------------------------------------------------------------
+
 
 class AgentWikisPlugin(HarnessPlugin, AgentWikisService):
     """Harness Plugin providing AgentWikis documentation, triage, and offline slicing capabilities."""
@@ -171,7 +191,11 @@ class AgentWikisPlugin(HarnessPlugin, AgentWikisService):
         force_remote: bool = False,
     ) -> DocumentSlice:
         """Extract exact Markdown document section offline or via remote fallback."""
-        return get_engine().extract_document(doc_path=doc_path, section_heading=section_heading, force_remote=force_remote)
+        return get_engine().extract_document(
+            doc_path=doc_path,
+            section_heading=section_heading,
+            force_remote=force_remote,
+        )
 
     def prepare_context_pack(
         self,
@@ -180,6 +204,35 @@ class AgentWikisPlugin(HarnessPlugin, AgentWikisService):
     ) -> str:
         """One-shot intent triage, document retrieval, and token-bounded context assembly."""
         return get_engine().prepare_context_pack(query=query, max_tokens=max_tokens)
+
+    def validate_contract(
+        self,
+        contract_path: str | Path | None = None,
+    ) -> ContractValidationReport:
+        """Validate corpus against Open Data Contract (ODCS) schema (Stage 2)."""
+        engine = get_engine()
+        c_path = contract_path or (
+            _scripts_dir.parent / "contracts" / "agentwikis_contract.yaml"
+        )
+        return engine.validate_contract(c_path)
+
+    def generate_visual_brief(
+        self,
+        output_path: str | Path | None = None,
+        query: str | None = None,
+        wiki_slug: str | None = None,
+    ) -> Path:
+        """Generate interactive HTML visual brief with Mermaid DAG and blast radius (Stage 3)."""
+        return get_engine().generate_visual_brief(
+            output_path=output_path, query=query, wiki_slug=wiki_slug
+        )
+
+    def profile_data_quality(
+        self,
+        min_passing_score: float = 85.0,
+    ) -> QualityScorecard:
+        """Run DAMA-DMBOK 6-dimension data quality profiling across corpus (Stage 4)."""
+        return get_engine().profile_data_quality(min_passing_score=min_passing_score)
 
 
 # Rule 45: Plugin Module Singleton Export

@@ -1,0 +1,29 @@
+# {module_name} API Reference
+
+Information-oriented technical specification conforming to Diátaxis Reference quadrant.
+
+## Module Overview
+
+- **Source Module**: `{module_path}`
+- **Exported Classes**: `{class_count}`
+- **Exported Functions**: `{function_count}`
+
+{module_docstring}
+
+---
+
+## Classes & Data Structures
+
+{classes_section}
+
+---
+
+## Functions & Callables
+
+{functions_section}
+
+---
+
+## Error Catalog & Exception Handling
+
+{errors_section}

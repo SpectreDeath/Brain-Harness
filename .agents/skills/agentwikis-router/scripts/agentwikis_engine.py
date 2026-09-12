@@ -16,23 +16,30 @@ under DAMA-DMBOK data management and deep-module engineering standards:
 
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass, field
-from datetime import datetime, timezone
-import hashlib
 import json
 import os
-from pathlib import Path
 import re
 import sys
-import time
-from typing import Any
 import urllib.error
 import urllib.request
+from dataclasses import dataclass
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any
 
 try:
     import yaml  # type: ignore
 except ImportError:
     yaml = None  # type: ignore
+
+try:
+    import structlog
+
+    logger = structlog.get_logger(__name__)
+except ImportError:
+    import logging
+
+    logger = logging.getLogger(__name__)
 
 # Rule 23: Windows UTF-8 Stream Codec Entrypoint Invariant
 if sys.platform == "win32":
@@ -45,6 +52,7 @@ if sys.platform == "win32":
 # ---------------------------------------------------------------------------
 # Rule 12: Slotted & Frozen Domain Dataclasses
 # ---------------------------------------------------------------------------
+
 
 @dataclass(slots=True, frozen=True)
 class WikiScope:
@@ -82,7 +90,9 @@ class WikiEntity:
         if not self.slug or not self.slug.strip():
             raise ValueError("WikiEntity slug cannot be empty")
         if self.document_count < 0:
-            raise ValueError(f"document_count cannot be negative: {self.document_count}")
+            raise ValueError(
+                f"document_count cannot be negative: {self.document_count}"
+            )
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -165,6 +175,10 @@ class MatchResult:
     matched_wikis: tuple[WikiEntity, ...]
     matched_skills: tuple[SkillEntity, ...]
     rejection_reason: str | None = None
+
+    @property
+    def fallback_recommendation(self) -> str:
+        return "none" if self.in_scope else "web_search"
 
     def to_dict(self) -> dict[str, Any]:
         local_skills: list[str] = []
@@ -293,7 +307,9 @@ class QualityScorecard:
         ]
         for d in self.dimensions:
             status = "✓ PASS" if d.passed else "✗ FAIL"
-            lines.append(f"| **{d.dimension}** | {d.score:.1f}% | {status} | {d.violations_count} | {d.details} |")
+            lines.append(
+                f"| **{d.dimension}** | {d.score:.1f}% | {status} | {d.violations_count} | {d.details} |"
+            )
         return "\n".join(lines)
 
 
@@ -342,10 +358,15 @@ class ContractValidationReport:
 # Core Engine & Path Resolution
 # ---------------------------------------------------------------------------
 
+
 class AgentWikisEngine:
     """Deep-module engine encapsulating data ingestion, validation, and retrieval."""
 
-    def __init__(self, corpus_dir: Path | str | None = None, base_url: str = "https://agentwikis.com") -> None:
+    def __init__(
+        self,
+        corpus_dir: Path | str | None = None,
+        base_url: str = "https://agentwikis.com",
+    ) -> None:
         self.corpus_dir = self.resolve_corpus_path(corpus_dir)
         self.base_url = base_url.rstrip("/")
         self._raw_index_cache: dict[str, Any] | None = None
@@ -385,11 +406,20 @@ class AgentWikisEngine:
             pass
 
         # 4. Standard relocatable candidates
-        for candidate in [Path("D:/AgentWikis"), Path("./corpus"), Path("./AgentWikis"), Path(".")]:
-            if candidate.exists() and candidate.is_dir() and list(candidate.glob("*index.json")):
+        for candidate in [
+            Path("D:/AgentWikis"),
+            Path("./corpus"),
+            Path("./AgentWikis"),
+            Path("."),
+        ]:
+            if (
+                candidate.exists()
+                and candidate.is_dir()
+                and list(candidate.glob("*index.json"))
+            ):
                 return candidate.resolve()
 
-        return Path(".").resolve()
+        return Path.cwd()
 
     def get_raw_index(self) -> dict[str, Any]:
         """Loads and caches raw index.json data (Bronze Tier)."""
@@ -420,9 +450,13 @@ class AgentWikisEngine:
             scope = WikiScope(
                 covers=str(scope_raw.get("covers") or ""),
                 not_covered=str(scope_raw.get("notCovered") or ""),
-                current_as=str(scope_raw.get("currentAs") or w.get("lastUpdated") or "Unknown"),
+                current_as=str(
+                    scope_raw.get("currentAs") or w.get("lastUpdated") or "Unknown"
+                ),
             )
-            tags = tuple(str(t).strip() for t in (w.get("tags") or []) if str(t).strip())
+            tags = tuple(
+                str(t).strip() for t in (w.get("tags") or []) if str(t).strip()
+            )
             entity = WikiEntity(
                 slug=slug,
                 title=str(w.get("title") or slug),
@@ -460,7 +494,7 @@ class AgentWikisEngine:
         return wikis, skills
 
     def _ensure_offset_table(self) -> DocumentOffsetTable | None:
-        """Lazily indexes byte offsets of document blocks inside llms-full.txt for O(1) seeking."""
+        """Lazily indexes byte offsets of document blocks inside llms-full.txt for O(1) seeking with persistent caching."""
         if self._offset_table is not None:
             return self._offset_table
 
@@ -469,10 +503,37 @@ class AgentWikisEngine:
             return None
 
         full_txt = full_txt_files[0]
-        offset_map: dict[str, tuple[int, int]] = {}
-        delimiter_pat = re.compile(rb"^<!--\s*=====\s*([^=\s]+)\s*=====\s*-->")
+        idx_file = full_txt.with_suffix(".idx.json")
 
         try:
+            stat = full_txt.stat()
+            # Fast Path: Check persistent on-disk index cache (<2ms)
+            if idx_file.exists():
+                try:
+                    with open(idx_file, "r", encoding="utf-8") as f_idx:
+                        cache = json.load(f_idx)
+                    if (
+                        cache.get("mtime") == stat.st_mtime
+                        and cache.get("size") == stat.st_size
+                        and "offsets" in cache
+                    ):
+                        offset_map = {
+                            k: (int(v[0]), int(v[1]))
+                            for k, v in cache["offsets"].items()
+                        }
+                        self._offset_table = DocumentOffsetTable(
+                            corpus_file=str(full_txt),
+                            total_blocks=len(offset_map),
+                            offsets=offset_map,
+                        )
+                        return self._offset_table
+                except Exception:
+                    pass  # Stale or corrupted cache falls through to rebuild
+
+            # Build Path: Scan llms-full.txt once in binary mode
+            offset_map: dict[str, tuple[int, int]] = {}
+            delimiter_pat = re.compile(rb"^<!--\s*=====\s*([^=\s]+)\s*=====\s*-->")
+
             with open(full_txt, "rb") as f:
                 current_key: str | None = None
                 start_pos = 0
@@ -482,7 +543,10 @@ class AgentWikisEngine:
                     line = f.readline()
                     if not line:
                         if current_key is not None:
-                            offset_map[current_key] = (start_pos, current_pos - start_pos)
+                            offset_map[current_key] = (
+                                start_pos,
+                                current_pos - start_pos,
+                            )
                         break
 
                     line_len = len(line)
@@ -490,10 +554,33 @@ class AgentWikisEngine:
                         m = delimiter_pat.match(line.strip())
                         if m:
                             if current_key is not None:
-                                offset_map[current_key] = (start_pos, current_pos - start_pos)
-                            current_key = m.group(1).decode("utf-8", errors="replace").strip().lower()
+                                offset_map[current_key] = (
+                                    start_pos,
+                                    current_pos - start_pos,
+                                )
+                            current_key = (
+                                m.group(1)
+                                .decode("utf-8", errors="replace")
+                                .strip()
+                                .lower()
+                            )
                             start_pos = current_pos + line_len
                     current_pos += line_len
+
+            # Persist index cache atomically if filesystem is writable
+            try:
+                cache_payload = {
+                    "mtime": stat.st_mtime,
+                    "size": stat.st_size,
+                    "total_blocks": len(offset_map),
+                    "offsets": {k: [v[0], v[1]] for k, v in offset_map.items()},
+                }
+                tmp_idx = idx_file.with_suffix(".tmp")
+                with open(tmp_idx, "w", encoding="utf-8") as f_out:
+                    json.dump(cache_payload, f_out)
+                tmp_idx.replace(idx_file)
+            except Exception:
+                pass  # Read-only filesystem fallback
 
             self._offset_table = DocumentOffsetTable(
                 corpus_file=str(full_txt),
@@ -525,7 +612,8 @@ class AgentWikisEngine:
         if query:
             q_lower = query.strip().lower()
             filtered = [
-                w for w in filtered
+                w
+                for w in filtered
                 if q_lower in w.slug.lower()
                 or q_lower in w.title.lower()
                 or q_lower in w.description.lower()
@@ -551,7 +639,9 @@ class AgentWikisEngine:
         now_str = datetime.now(timezone.utc).isoformat()
 
         if total_wikis == 0:
-            empty_rep = QualityDimensionReport("Completeness", 0.0, False, "No wikis discovered in index", 1)
+            empty_rep = QualityDimensionReport(
+                "Completeness", 0.0, False, "No wikis discovered in index", 1
+            )
             return QualityScorecard(0.0, False, now_str, (empty_rep,))
 
         # 1. Completeness: Ensure non-empty description, category, and scope.covers
@@ -587,11 +677,13 @@ class AgentWikisEngine:
         raw = self.get_raw_index()
         raw_slugs = [w.get("slug") for w in (raw.get("wikis") or []) if w.get("slug")]
         uniq_violations = len(raw_slugs) - len(set(raw_slugs))
-        uniq_score = max(0.0, 100.0 - (uniq_violations / max(1, len(raw_slugs)) * 100.0))
+        uniq_score = max(
+            0.0, 100.0 - (uniq_violations / max(1, len(raw_slugs)) * 100.0)
+        )
 
         # 6. Timeliness / Freshness: Check if wikis have been updated within last 24 months
         time_violations = 0
-        current_year = datetime.now().year
+        current_year = datetime.now(timezone.utc).year
         for w in wikis.values():
             m = re.match(r"^(\d{4})", w.last_updated)
             if m:
@@ -603,16 +695,54 @@ class AgentWikisEngine:
         time_score = max(0.0, 100.0 - (time_violations / total_wikis * 100.0))
 
         dimensions = (
-            QualityDimensionReport("Completeness", comp_score, comp_score >= min_passing_score, f"{comp_violations} wikis missing required metadata", comp_violations),
-            QualityDimensionReport("Accuracy", acc_score, acc_score >= min_passing_score, f"{acc_violations} invalid slug formats", acc_violations),
-            QualityDimensionReport("Consistency", cons_score, cons_score >= min_passing_score, f"{cons_violations} skill cross-references unmapped", cons_violations),
-            QualityDimensionReport("Validity", val_score, val_score >= min_passing_score, f"{val_violations} malformed date timestamps", val_violations),
-            QualityDimensionReport("Uniqueness", uniq_score, uniq_score >= min_passing_score, f"{uniq_violations} duplicate slug entries detected", uniq_violations),
-            QualityDimensionReport("Timeliness", time_score, time_score >= min_passing_score, f"{time_violations} stale wikis (>24 months old)", time_violations),
+            QualityDimensionReport(
+                "Completeness",
+                comp_score,
+                comp_score >= min_passing_score,
+                f"{comp_violations} wikis missing required metadata",
+                comp_violations,
+            ),
+            QualityDimensionReport(
+                "Accuracy",
+                acc_score,
+                acc_score >= min_passing_score,
+                f"{acc_violations} invalid slug formats",
+                acc_violations,
+            ),
+            QualityDimensionReport(
+                "Consistency",
+                cons_score,
+                cons_score >= min_passing_score,
+                f"{cons_violations} skill cross-references unmapped",
+                cons_violations,
+            ),
+            QualityDimensionReport(
+                "Validity",
+                val_score,
+                val_score >= min_passing_score,
+                f"{val_violations} malformed date timestamps",
+                val_violations,
+            ),
+            QualityDimensionReport(
+                "Uniqueness",
+                uniq_score,
+                uniq_score >= min_passing_score,
+                f"{uniq_violations} duplicate slug entries detected",
+                uniq_violations,
+            ),
+            QualityDimensionReport(
+                "Timeliness",
+                time_score,
+                time_score >= min_passing_score,
+                f"{time_violations} stale wikis (>24 months old)",
+                time_violations,
+            ),
         )
 
         overall = sum(d.score for d in dimensions) / len(dimensions)
-        passed = overall >= min_passing_score and all(d.score >= 70.0 for d in dimensions)
+        passed = overall >= min_passing_score and all(
+            d.score >= 70.0 for d in dimensions
+        )
 
         return QualityScorecard(overall, passed, now_str, dimensions)
 
@@ -632,7 +762,9 @@ class AgentWikisEngine:
         with open(p, "r", encoding="utf-8") as f:
             contract = yaml.safe_load(f) or {}
 
-        contract_name = contract.get("info", {}).get("title", "AgentWikis Data Contract")
+        contract_name = contract.get("info", {}).get(
+            "title", "AgentWikis Data Contract"
+        )
         version = contract.get("info", {}).get("version", "1.0.0")
 
         violations: list[ContractViolation] = []
@@ -641,15 +773,33 @@ class AgentWikisEngine:
 
         # Validate Wikis against contract schema
         wiki_rules = contract.get("models", {}).get("wikis", {})
-        required_wiki_fields = wiki_rules.get("required", ["slug", "title", "category", "scope"])
+        required_wiki_fields = wiki_rules.get(
+            "required", ["slug", "title", "category", "scope"]
+        )
 
         for slug, w in wikis.items():
             for req in required_wiki_fields:
                 if req == "scope":
                     if not w.scope.covers:
-                        violations.append(ContractViolation("wiki", slug, "scope.covers", "missing_required", "Wiki scope covers is required"))
+                        violations.append(
+                            ContractViolation(
+                                "wiki",
+                                slug,
+                                "scope.covers",
+                                "missing_required",
+                                "Wiki scope covers is required",
+                            )
+                        )
                 elif not getattr(w, req, None):
-                    violations.append(ContractViolation("wiki", slug, req, "missing_required", f"Wiki field {req} is required"))
+                    violations.append(
+                        ContractViolation(
+                            "wiki",
+                            slug,
+                            req,
+                            "missing_required",
+                            f"Wiki field {req} is required",
+                        )
+                    )
 
         # Validate Skills against contract schema
         skill_rules = contract.get("models", {}).get("skills", {})
@@ -657,10 +807,20 @@ class AgentWikisEngine:
         for name, s in skills.items():
             for req in required_skill_fields:
                 if not getattr(s, req, None):
-                    violations.append(ContractViolation("skill", name, req, "missing_required", f"Skill field {req} is required"))
+                    violations.append(
+                        ContractViolation(
+                            "skill",
+                            name,
+                            req,
+                            "missing_required",
+                            f"Skill field {req} is required",
+                        )
+                    )
 
         is_compliant = len(violations) == 0
-        return ContractValidationReport(is_compliant, contract_name, version, total_entities, tuple(violations))
+        return ContractValidationReport(
+            is_compliant, contract_name, version, total_entities, tuple(violations)
+        )
 
     # -----------------------------------------------------------------------
     # Intent Triage, Skill Matching & Calibrated Abstention
@@ -672,11 +832,42 @@ class AgentWikisEngine:
         q_norm = query.strip().lower()
 
         stop_words = {
-            "how", "to", "in", "the", "a", "an", "and", "or", "for", "with", "on", "at",
-            "is", "of", "by", "from", "as", "into", "all", "any", "do", "does", "did",
-            "can", "could", "should", "would", "what", "which", "where", "when", "why",
+            "how",
+            "to",
+            "in",
+            "the",
+            "a",
+            "an",
+            "and",
+            "or",
+            "for",
+            "with",
+            "on",
+            "at",
+            "is",
+            "of",
+            "by",
+            "from",
+            "as",
+            "into",
+            "all",
+            "any",
+            "do",
+            "does",
+            "did",
+            "can",
+            "could",
+            "should",
+            "would",
+            "what",
+            "which",
+            "where",
+            "when",
+            "why",
         }
-        tokens = {t for t in re.findall(r"\b[a-z0-9_-]{2,}\b", q_norm) if t not in stop_words}
+        tokens = {
+            t for t in re.findall(r"\b[a-z0-9_-]{2,}\b", q_norm) if t not in stop_words
+        }
 
         # Match wikis
         scored_wikis: list[tuple[float, WikiEntity]] = []
@@ -748,7 +939,9 @@ class AgentWikisEngine:
 
         # Calibrated abstention: if best wiki score is under confidence floor or falls in negative scope
         if not scored_wikis:
-            return MatchResult(query, False, False, (), (), "No matching wiki found in catalog")
+            return MatchResult(
+                query, False, False, (), (), "No matching wiki found in catalog"
+            )
 
         best_score, top_wiki = scored_wikis[0]
         if best_score < 5.0:
@@ -800,14 +993,18 @@ class AgentWikisEngine:
         if not force_remote:
             full_txt_files = list(self.corpus_dir.glob("*llms-full.txt"))
             if full_txt_files:
-                doc = self._extract_from_full_txt(full_txt_files[0], wiki_slug, rel_path, section_heading)
+                doc = self._extract_from_full_txt(
+                    full_txt_files[0], wiki_slug, rel_path, section_heading
+                )
                 if doc:
                     return doc
 
         # Remote Fallback
         remote_url = f"{self.base_url}/raw/{wiki_slug}/{rel_path}"
         content = self._fetch_remote(remote_url)
-        return self._slice_markdown(content, wiki_slug, rel_path, section_heading, source_isnad=remote_url)
+        return self._slice_markdown(
+            content, wiki_slug, rel_path, section_heading, source_isnad=remote_url
+        )
 
     def _extract_from_full_txt(
         self,
@@ -830,7 +1027,13 @@ class AgentWikisEngine:
                     f.seek(offset)
                     raw_bytes = f.read(length)
                 full_content = raw_bytes.decode("utf-8", errors="replace")
-                return self._slice_markdown(full_content, wiki_slug, rel_path, section_heading, "local_llms_full_txt")
+                return self._slice_markdown(
+                    full_content,
+                    wiki_slug,
+                    rel_path,
+                    section_heading,
+                    "local_llms_full_txt",
+                )
             except Exception:
                 pass
 
@@ -855,7 +1058,13 @@ class AgentWikisEngine:
 
             if captured_lines:
                 full_content = "".join(captured_lines)
-                return self._slice_markdown(full_content, wiki_slug, rel_path, section_heading, "local_llms_full_txt")
+                return self._slice_markdown(
+                    full_content,
+                    wiki_slug,
+                    rel_path,
+                    section_heading,
+                    "local_llms_full_txt",
+                )
 
         return None
 
@@ -883,14 +1092,17 @@ class AgentWikisEngine:
                 with open(full_path, "r", encoding="utf-8", errors="replace") as f:
                     current_doc = "index"
                     current_wiki = ""
-                    current_content: list[str] = []
 
                     for line in f:
                         if line.startswith("<!-- ====="):
-                            parts = line.replace("<!-- =====", "").replace("===== -->", "").strip().split("/")
+                            parts = (
+                                line.replace("<!-- =====", "")
+                                .replace("===== -->", "")
+                                .strip()
+                                .split("/")
+                            )
                             current_wiki = parts[0].strip().lower() if parts else ""
                             current_doc = line.strip()
-                            current_content = []
                         else:
                             if target_wiki and current_wiki != target_wiki:
                                 continue
@@ -917,7 +1129,11 @@ class AgentWikisEngine:
             for slug, w in wikis.items():
                 if target_wiki and slug != target_wiki:
                     continue
-                if q_clean in w.title.lower() or q_clean in w.description.lower() or q_clean in w.scope.covers.lower():
+                if (
+                    q_clean in w.title.lower()
+                    or q_clean in w.description.lower()
+                    or q_clean in w.scope.covers.lower()
+                ):
                     hits.append(
                         SearchHit(
                             wiki_slug=slug,
@@ -939,7 +1155,9 @@ class AgentWikisEngine:
     ) -> list[DocumentSlice]:
         """Extracts multiple document sections in a single batch operation."""
         return [
-            self.extract_document(doc_path=p, section_heading=s, force_remote=force_remote)
+            self.extract_document(
+                doc_path=p, section_heading=s, force_remote=force_remote
+            )
             for p, s in specs
         ]
 
@@ -977,7 +1195,8 @@ class AgentWikisEngine:
                     if doc and len(doc.content) > 10:
                         extracted_docs.append(doc)
                         break
-                except Exception:
+                except Exception as e:
+                    logger.debug("extract_candidate_failed", candidate=c, error=str(e))
                     continue
 
         for doc in extracted_docs:
@@ -986,11 +1205,7 @@ class AgentWikisEngine:
             if content_budget <= 200:
                 break
 
-            doc_body = (
-                doc.content
-                if len(doc.content) <= content_budget
-                else doc.content[:content_budget] + "\n\n... [Content Truncated by Context Budget]"
-            )
+            doc_body = self._truncate_markdown(doc.content, content_budget)
             lines.append(doc_header)
             lines.append(doc_body)
             lines.append("\n---\n")
@@ -998,9 +1213,44 @@ class AgentWikisEngine:
 
         lines.append("## Provenance & Isnad Lineage")
         lines.append(f"- Corpus Base: `{self.corpus_dir}`")
-        lines.append("- Verified Tiers: Bronze (Raw Index) -> Silver (Typed Slotted Entities) -> Gold (Byte-Offset Slices)")
+        lines.append(
+            "- Verified Tiers: Bronze (Raw Index) -> Silver (Typed Slotted Entities) -> Gold (Byte-Offset Slices)"
+        )
         return "\n".join(lines)
 
+    @staticmethod
+    def _truncate_markdown(content: str, max_chars: int) -> str:
+        """Truncates Markdown at logical block boundaries and heals unclosed code fences."""
+        if len(content) <= max_chars:
+            return content
+
+        raw_slice = content[:max_chars]
+
+        # Prefer breaking at paragraph / section boundary (\n\n)
+        last_double_nl = raw_slice.rfind("\n\n")
+        if last_double_nl > max_chars // 2:
+            trimmed = raw_slice[:last_double_nl].rstrip()
+        else:
+            last_nl = raw_slice.rfind("\n")
+            trimmed = (
+                raw_slice[:last_nl].rstrip()
+                if last_nl > max_chars // 3
+                else raw_slice.rstrip()
+            )
+
+        # Check for unclosed code fences (```)
+        code_fences = re.findall(r"(?m)^\s*```", trimmed)
+        if len(code_fences) % 2 != 0:
+            trimmed += "\n```\n\n*... [Codeblock closed & content truncated to fit context budget]*"
+        else:
+            trimmed += "\n\n*... [Content truncated to fit context budget]*"
+
+        return trimmed
+
+    @classmethod
+    def truncate_markdown(cls, content: str, max_chars: int) -> str:
+        """Public seam for block-aware Markdown truncation and code fence self-healing."""
+        return cls._truncate_markdown(content, max_chars)
 
     def _slice_markdown(
         self,
@@ -1022,11 +1272,15 @@ class AgentWikisEngine:
                 title = m_h1.group(1).strip()
 
         if not section_heading:
-            return DocumentSlice(wiki_slug, rel_path, title, content.strip(), None, False, source_isnad)
+            return DocumentSlice(
+                wiki_slug, rel_path, title, content.strip(), None, False, source_isnad
+            )
 
         # Slice section by heading
         sec_clean = section_heading.strip().lstrip("#").strip()
-        pat = re.compile(rf"^(#{{1,6}})\s+{re.escape(sec_clean)}\b.*$", re.MULTILINE | re.IGNORECASE)
+        pat = re.compile(
+            rf"^(#{{1,6}})\s+{re.escape(sec_clean)}\b.*$", re.MULTILINE | re.IGNORECASE
+        )
         match = pat.search(content)
         if not match:
             # Return full content with note if heading not found
@@ -1048,11 +1302,16 @@ class AgentWikisEngine:
         end_idx = next_match.start() if next_match else len(content)
 
         sliced = content[start_idx:end_idx].strip()
-        return DocumentSlice(wiki_slug, rel_path, title, sliced, sec_clean, False, source_isnad)
+        return DocumentSlice(
+            wiki_slug, rel_path, title, sliced, sec_clean, False, source_isnad
+        )
 
     def _fetch_remote(self, url: str, timeout: float = 10.0) -> str:
         """Fetches remote Markdown with rate-limiting backoff."""
-        headers = {"User-Agent": "BrainHarness-AgentWikisEngine/1.0", "Accept": "text/markdown, text/plain"}
+        headers = {
+            "User-Agent": "BrainHarness-AgentWikisEngine/1.0",
+            "Accept": "text/markdown, text/plain",
+        }
         req = urllib.request.Request(url, headers=headers)
         try:
             with urllib.request.urlopen(req, timeout=timeout) as resp:
@@ -1063,3 +1322,199 @@ class AgentWikisEngine:
             raise RuntimeError(f"HTTP {e.code} failed for {url}")
         except Exception as e:
             raise RuntimeError(f"Connection failed for {url}: {e}")
+
+    def generate_visual_brief(
+        self,
+        output_path: Path | str | None = None,
+        query: str | None = None,
+        wiki_slug: str | None = None,
+    ) -> Path:
+        """Generates an interactive, self-contained HTML brief with Mermaid DAG and blast radius table (Stage 3)."""
+        import html
+        import tempfile
+
+        if output_path:
+            out_file = Path(output_path).resolve()
+        else:
+            out_file = Path(tempfile.gettempdir()) / "agentwikis_routing_brief.html"
+
+        out_file.parent.mkdir(parents=True, exist_ok=True)
+
+        wikis, skills = self.load_entities()
+        cats: dict[str, list[WikiEntity]] = {}
+        for w in wikis.values():
+            cats.setdefault(w.category, []).append(w)
+
+        # Evaluate query match if query provided
+        matched_wikis: list[WikiEntity] = []
+        is_in_scope = True
+        calibrated_conf = True
+        if query:
+            match = self.match_intent(query)
+            matched_wikis = list(match.matched_wikis)
+            is_in_scope = match.in_scope
+            calibrated_conf = match.calibrated_confident
+        elif wiki_slug and wiki_slug.lower() in wikis:
+            matched_wikis = [wikis[wiki_slug.lower()]]
+
+        # Build blast radius entries
+        blast_entries = []
+        for w in matched_wikis or list(wikis.values())[:5]:
+            est_tokens = max(500, w.document_count * 250)
+            blast_entries.append(
+                {
+                    "slug": w.slug,
+                    "title": w.title,
+                    "category": w.category,
+                    "doc_count": w.document_count,
+                    "est_tokens": est_tokens,
+                    "current_as": w.scope.current_as,
+                    "covers": w.scope.covers,
+                }
+            )
+
+        # Generate Mermaid DAG
+        mermaid_lines = [
+            "graph TD",
+            '  Hub["AgentWikis Knowledge Substrate<br/>(62 Wikis | 25 Skills | 10.2 MB)"]',
+            '  Queue["O(1) Hash-Indexed Extraction Queue<br/>(llms-full.txt Seek Table)"]',
+            "  Hub --> Queue",
+        ]
+
+        top_cats = sorted(cats.keys(), key=lambda c: len(cats[c]), reverse=True)[:7]
+        for idx, cat_name in enumerate(top_cats):
+            c_id = f"Cat_{idx}"
+            c_label = f"{cat_name.title()} ({len(cats[cat_name])} wikis)"
+            mermaid_lines.append(f'  Hub --> {c_id}["{c_label}"]')
+            for w in cats[cat_name][:3]:
+                w_id = f"W_{re.sub(r'[^a-zA-Z0-9]', '_', w.slug)}"
+                w_label = f"{w.title}<br/>({w.document_count} docs)"
+                mermaid_lines.append(f'  {c_id} --> {w_id}["{w_label}"]')
+                if any(b["slug"] == w.slug for b in blast_entries):
+                    mermaid_lines.append(f"  {w_id} -.-> Queue")
+
+        mermaid_code = "\n".join(mermaid_lines)
+
+        html_content = f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AgentWikis Routing Brief & Topology</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>mermaid.initialize({{ startOnLoad: true, theme: 'dark' }});</script>
+  <style>
+    :root {{
+      --bg: #0d1117;
+      --card-bg: #161b22;
+      --border: #30363d;
+      --accent: #58a6ff;
+      --text: #c9d1d9;
+      --heading: #f0f6fc;
+      --success: #3fb950;
+      --warn: #d29922;
+    }}
+    body {{
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 24px;
+    }}
+    .container {{
+      max-width: 1200px;
+      margin: 0 auto;
+    }}
+    h1, h2, h3 {{ color: var(--heading); }}
+    .badge {{
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+    }}
+    .badge-in-scope {{ background: rgba(63, 185, 80, 0.2); color: var(--success); border: 1px solid var(--success); }}
+    .badge-confident {{ background: rgba(88, 166, 255, 0.2); color: var(--accent); border: 1px solid var(--accent); }}
+    .card {{
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 24px;
+    }}
+    table {{
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+    }}
+    th, td {{
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      text-align: left;
+    }}
+    th {{ background: #21262d; color: var(--heading); }}
+    tr:nth-child(even) {{ background: #1c2128; }}
+    .mermaid {{
+      background: var(--card-bg);
+      padding: 20px;
+      border-radius: 8px;
+      overflow-x: auto;
+    }}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🧭 AgentWikis Hybrid Topology & Routing Brief</h1>
+    <p>Visual brief generated across <strong>{len(wikis)} wikis</strong> and <strong>{len(skills)} curated skills</strong>.</p>
+    
+    <div class="card">
+      <h2>Routing Context</h2>
+      <p><strong>Query:</strong> {html.escape(query or "Global Topology Inspection")}</p>
+      <div>
+        <span class="badge badge-in-scope">{"✓ IN_SCOPE" if is_in_scope else "✗ OUT_OF_SCOPE"}</span>
+        <span class="badge badge-confident">{"✓ CONFIDENT" if calibrated_conf else "⚠ ABSTAIN"}</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Hybrid Data Topology DAG (Graph of Trees)</h2>
+      <div class="mermaid">
+{mermaid_code}
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Interactive Blast Radius Matrix</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Wiki</th>
+            <th>Category</th>
+            <th>Docs</th>
+            <th>Est. Tokens</th>
+            <th>Version</th>
+            <th>Declared Scope</th>
+          </tr>
+        </thead>
+        <tbody>
+"""
+        for b in blast_entries:
+            html_content += f"""          <tr>
+            <td><strong>{html.escape(b["title"])}</strong> (<code>{html.escape(b["slug"])}</code>)</td>
+            <td><code>{html.escape(b["category"])}</code></td>
+            <td>{b["doc_count"]}</td>
+            <td>~{b["est_tokens"]:,} tok</td>
+            <td>{html.escape(b["current_as"])}</td>
+            <td>{html.escape(b["covers"])}</td>
+          </tr>\n"""
+
+        html_content += """        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>
+"""
+        with open(out_file, "w", encoding="utf-8") as f:
+            f.write(html_content)
+
+        return out_file

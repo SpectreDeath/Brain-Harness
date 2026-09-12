@@ -1,0 +1,34 @@
+# How-To: {guide_title}
+
+Problem-oriented recipe solving a specific engineering goal conforming to Diátaxis How-To quadrant.
+
+## Problem Context & Goal
+
+{problem_statement}
+
+## Prerequisites
+
+- Python >= 3.10
+- Dependencies: `{dependencies}`
+
+## Step-by-Step Recipe
+
+### 1. {step_1_title}
+
+{step_1_body}
+
+```python
+{step_1_code}
+```
+
+### 2. {step_2_title}
+
+{step_2_body}
+
+```python
+{step_2_code}
+```
+
+## Verification & Expected Output
+
+{verification_instructions}

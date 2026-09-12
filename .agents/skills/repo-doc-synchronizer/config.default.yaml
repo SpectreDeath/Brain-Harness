@@ -1,0 +1,35 @@
+# repo-doc-synchronizer Default Operational Configuration
+# Tier 3 Zero-Fork Configuration Budget
+
+audit:
+  min_coverage_pct: 80.0
+  check_docstrings: true
+  check_markdown_files: true
+  exclude_patterns:
+    - ".git"
+    - ".pytest_cache"
+    - ".venv"
+    - "venv"
+    - "__pycache__"
+    - "build"
+    - "dist"
+    - "vendor"
+    - "node_modules"
+    - "site-packages"
+    - ".system_generated"
+    - "scratch"
+    - ".harness"
+    - "test_ingested_plugins"
+  target_roots:
+    - "src"
+    - "plugins"
+
+drift:
+  check_broken_links: true
+  check_missing_symbols: true
+  ignore_external_urls: true
+
+scaffold:
+  default_taxonomy: "reference"
+  author: "Brain Harness Agent"
+  license: "MIT"

@@ -1,0 +1,26 @@
+# {package_name}
+
+{package_summary}
+
+## Overview
+
+`{package_name}` provides {package_purpose}.
+
+## Architecture & Design
+
+{architecture_notes}
+
+## Key Modules & Symbols
+
+{symbol_table}
+
+## Installation & Quick Start
+
+```python
+{quickstart_example}
+```
+
+## Related Documentation & References
+
+- [Diátaxis Architecture Guides](docs/architecture.md)
+- [API Reference](docs/api.md)

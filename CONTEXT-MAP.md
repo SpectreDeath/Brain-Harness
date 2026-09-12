@@ -15,9 +15,9 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - `task_planner` — Hierarchical DAG task decomposition and dependency sequencing.
   - `human_in_the_loop` — Interactive checkpoints, approval gates, and escalation modals.
 * **Member Skills**:
-  - [`questio-reflection`](file:///.agents/skills/questio-reflection/SKILL.md) — Aquinas-style adversarial self-reflection and invariant challenge before execution.
-  - [`ai-agent-engineer`](file:///.agents/skills/ai-agent-engineer/SKILL.md) — Production-grade autonomous systems architecture, 4-Level Ladder qualification, 60 canonical patterns, substrate isolation, and session evaluation.
-  - [`swarm-reflection-optimizer`](file:///.agents/skills/swarm-reflection-optimizer/SKILL.md) — Autonomous multi-agent DAG optimization, ANN textual backpropagation, Borda count deliberation, and Aquinas adversarial reflection.
+  - [`questio-reflection`](.agents/skills/questio-reflection/SKILL.md) — Aquinas-style adversarial self-reflection and invariant challenge before execution.
+  - [`ai-agent-engineer`](.agents/skills/ai-agent-engineer/SKILL.md) — Production-grade autonomous systems architecture, 4-Level Ladder qualification, 60 canonical patterns, substrate isolation, and session evaluation.
+  - [`swarm-reflection-optimizer`](.agents/skills/swarm-reflection-optimizer/SKILL.md) — Autonomous multi-agent DAG optimization, ANN textual backpropagation, Borda count deliberation, and Aquinas adversarial reflection.
 
 ### 2. [Memory & Epistemics](./docs/domains/memory-and-epistemics/CONTEXT.md)
 * **Scope**: Declarative skill graphs, semantic embeddings, context distillation, prompt benchmarking, and claim lineage.
@@ -28,11 +28,11 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - `context_compactor` — Context window distillation and token-budget compression.
   - `prompt_benchmark` — Prompt efficacy benchmarking and token telemetry.
 * **Member Skills**:
-  - [`epistemic-isnad-audit`](file:///.agents/skills/epistemic-isnad-audit/SKILL.md) — Unbroken chain-of-custody lineage verification for facts and decisions.
-  - [`mind-reader`](file:///.agents/skills/mind-reader/SKILL.md) — Introspection and heuristic extraction from attached brain trajectories.
-  - [`repo-reader`](file:///.agents/skills/repo-reader/SKILL.md) — Architectural pattern and commit trajectory introspection from Git repositories.
-  - [`harness-reflector`](file:///.agents/skills/harness-reflector/SKILL.md) — Autobiographical reflection and heuristic distillation from internal reports and execution logs.
-  - [`epistemic-memory-lifecycle`](file:///.agents/skills/epistemic-memory-lifecycle/SKILL.md) — Bounded 8-state knowledge item promotion pipeline, 6-class memory partitioning, and Theseus continuity audit.
+  - [`epistemic-isnad-audit`](.agents/skills/epistemic-isnad-audit/SKILL.md) — Unbroken chain-of-custody lineage verification for facts and decisions.
+  - [`mind-reader`](.agents/skills/mind-reader/SKILL.md) — Introspection and heuristic extraction from attached brain trajectories.
+  - [`repo-reader`](.agents/skills/repo-reader/SKILL.md) — Architectural pattern and commit trajectory introspection from Git repositories.
+  - [`harness-reflector`](.agents/skills/harness-reflector/SKILL.md) — Autobiographical reflection and heuristic distillation from internal reports and execution logs.
+  - [`epistemic-memory-lifecycle`](.agents/skills/epistemic-memory-lifecycle/SKILL.md) — Bounded 8-state knowledge item promotion pipeline, 6-class memory partitioning, and Theseus continuity audit.
 
 ### 3. [Data Engineering](./docs/domains/data-engineering/CONTEXT.md)
 * **Scope**: Curated tabular ingestion, out-of-core statistical profiling, schema transformation, and relational database execution.
@@ -42,14 +42,14 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - `database_sql` — SQL query execution, transaction handling, and schema reflection.
   - `synthetic_generator` — Synthetic tabular matrix and mock data generation.
 * **Member Skills**:
-  - [`structured-data-scout`](file:///.agents/skills/structured-data-scout/SKILL.md) — Curated tabular dataset ingestion from authoritative registries (UCI, Kaggle, OpenData).
-  - [`survival-analysis`](file:///.agents/skills/survival-analysis/SKILL.md) — Kaplan-Meier estimation, Cox proportional hazards regression, and Schoenfeld diagnostics.
-  - [`data-topology-mapper`](file:///.agents/skills/data-topology-mapper/SKILL.md) — Causal DAG lineage mapping, queue architectures, and hybrid data topologies.
-  - [`sql-recursive-graph-traversal`](file:///.agents/skills/sql-recursive-graph-traversal/SKILL.md) — Relational graph traversal, hierarchy trees, cycle detection, and BFS shortest paths in SQL.
-  - [`neural-network-from-scratch`](file:///.agents/skills/neural-network-from-scratch/SKILL.md) — Feedforward neural network construction, analytical backpropagation calculus, numerical stability floors, and modular PyTorch translation.
-  - [`data-management-architect`](file:///.agents/skills/data-management-architect/SKILL.md) — Enterprise data lifecycle governance, DAMA-DMBOK capabilities, Open Data Contracts (ODCS), Medallion lakehouse engineering, 6-dimension data quality gating, and Level 0–5 maturity roadmaps.
-  - [`neo4j-knowledge-graph-architect`](file:///.agents/skills/neo4j-knowledge-graph-architect/SKILL.md) — Production Neo4j labeled property graph architecture, backward schema modeling, idempotent batch ingestion, Cypher traversal safety, index profiling, and epistemic evidence boundaries.
-  - [`knowledge-graph-pipeline`](file:///.agents/skills/knowledge-graph-pipeline/SKILL.md) — End-to-end data scouting, ontological engineering, backward LPG schema design, idempotent UNWIND batching, and dual-engine recursive SQL traversal.
+  - [`structured-data-scout`](.agents/skills/structured-data-scout/SKILL.md) — Curated tabular dataset ingestion from authoritative registries (UCI, Kaggle, OpenData).
+  - [`survival-analysis`](.agents/skills/survival-analysis/SKILL.md) — Kaplan-Meier estimation, Cox proportional hazards regression, and Schoenfeld diagnostics.
+  - [`data-topology-mapper`](.agents/skills/data-topology-mapper/SKILL.md) — Causal DAG lineage mapping, queue architectures, and hybrid data topologies.
+  - [`sql-recursive-graph-traversal`](.agents/skills/sql-recursive-graph-traversal/SKILL.md) — Relational graph traversal, hierarchy trees, cycle detection, and BFS shortest paths in SQL.
+  - [`neural-network-from-scratch`](.agents/skills/neural-network-from-scratch/SKILL.md) — Feedforward neural network construction, analytical backpropagation calculus, numerical stability floors, and modular PyTorch translation.
+  - [`data-management-architect`](.agents/skills/data-management-architect/SKILL.md) — Enterprise data lifecycle governance, DAMA-DMBOK capabilities, Open Data Contracts (ODCS), Medallion lakehouse engineering, 6-dimension data quality gating, and Level 0–5 maturity roadmaps.
+  - [`neo4j-knowledge-graph-architect`](.agents/skills/neo4j-knowledge-graph-architect/SKILL.md) — Production Neo4j labeled property graph architecture, backward schema modeling, idempotent batch ingestion, Cypher traversal safety, index profiling, and epistemic evidence boundaries.
+  - [`knowledge-graph-pipeline`](.agents/skills/knowledge-graph-pipeline/SKILL.md) — End-to-end data scouting, ontological engineering, backward LPG schema design, idempotent UNWIND batching, and dual-engine recursive SQL traversal.
 
 
 ### 4. [Software Engineering](./docs/domains/software-engineering/CONTEXT.md)
@@ -62,18 +62,18 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - `migration_assistant` — Version migrations and compatibility cutovers.
   - `artifact_generator` — Markdown summaries, visual brief generation, and diff reports.
 * **Member Skills**:
-  - [`crafting-skills`](file:///.agents/skills/crafting-skills/SKILL.md) — High-precision agent skill authoring, refactoring, and companion card generation.
-  - [`deepen-architecture`](file:///.agents/skills/deepen-architecture/SKILL.md) — Iterative architecture deepening loop, eliminating shallow modules.
-  - [`compute-model-assessor`](file:///.agents/skills/compute-model-assessor/SKILL.md) — Model routing, task complexity assessment, and reasoning compute budgeting.
-  - [`python-dataclass-architect`](file:///.agents/skills/python-dataclass-architect/SKILL.md) — High-performance, memory-efficient data modeling using `slots=True`, `frozen=True`, and post-init invariants.
-  - [`agent-instruction-architect`](file:///.agents/skills/agent-instruction-architect/SKILL.md) — Authoring, auditing, and maintaining `AGENTS.md` / `CLAUDE.md` repository instruction files.
-  - [`adversarial-agent-verifier`](file:///.agents/skills/adversarial-agent-verifier/SKILL.md) — Runtime verification: DAG component seam analysis, inspect-before-edit protocols, and harsh adversarial code reviews.
-  - [`agent-skill-sdlc`](file:///.agents/skills/agent-skill-sdlc/SKILL.md) — Autonomous agent skill lifecycle engine covering design, 3-tier config, two-phase validation, testing, and SkillSpector auditing.
-  - [`agent-skills-architect`](file:///.agents/skills/agent-skills-architect/SKILL.md) — Enterprise agent skills architecture, 3-tier progressive disclosure, runtime tool approval middleware, CI linters, and Google 2x2 continuous evals.
-  - [`legacy-refactoring-guardian`](file:///.agents/skills/legacy-refactoring-guardian/SKILL.md) — AI-assisted codebase archaeology, characterization safety nets, and incremental legacy refactoring.
-  - [`codebase-context-architect`](file:///.agents/skills/codebase-context-architect/SKILL.md) — Multi-layer repository context files (`AGENTS.md`, `CLAUDE.md`, `.cursor/rules/`), single-source synchronization, token budgeting, and CI path/script verification linters.
-  - [`legacy-modernization-pipeline`](file:///.agents/skills/legacy-modernization-pipeline/SKILL.md) — Safe legacy codebase modernization through multi-axis audits, causal DAG topology mapping, characterization test safety nets, and adversarial refactoring loops.
-  - [`codebase-context-governor`](file:///.agents/skills/codebase-context-governor/SKILL.md) — Multi-layer codebase context governance, Three-Layer partitioning, automated CI linter enforcement, and dynamic 5D compute tier calibration.
+  - [`crafting-skills`](.agents/skills/crafting-skills/SKILL.md) — High-precision agent skill authoring, refactoring, and companion card generation.
+  - [`deepen-architecture`](.agents/skills/deepen-architecture/SKILL.md) — Iterative architecture deepening loop, eliminating shallow modules.
+  - [`compute-model-assessor`](.agents/skills/compute-model-assessor/SKILL.md) — Model routing, task complexity assessment, and reasoning compute budgeting.
+  - [`python-dataclass-architect`](.agents/skills/python-dataclass-architect/SKILL.md) — High-performance, memory-efficient data modeling using `slots=True`, `frozen=True`, and post-init invariants.
+  - [`agent-instruction-architect`](.agents/skills/agent-instruction-architect/SKILL.md) — Authoring, auditing, and maintaining `AGENTS.md` / `CLAUDE.md` repository instruction files.
+  - [`adversarial-agent-verifier`](.agents/skills/adversarial-agent-verifier/SKILL.md) — Runtime verification: DAG component seam analysis, inspect-before-edit protocols, and harsh adversarial code reviews.
+  - [`agent-skill-sdlc`](.agents/skills/agent-skill-sdlc/SKILL.md) — Autonomous agent skill lifecycle engine covering design, 3-tier config, two-phase validation, testing, and SkillSpector auditing.
+  - [`agent-skills-architect`](.agents/skills/agent-skills-architect/SKILL.md) — Enterprise agent skills architecture, 3-tier progressive disclosure, runtime tool approval middleware, CI linters, and Google 2x2 continuous evals.
+  - [`legacy-refactoring-guardian`](.agents/skills/legacy-refactoring-guardian/SKILL.md) — AI-assisted codebase archaeology, characterization safety nets, and incremental legacy refactoring.
+  - [`codebase-context-architect`](.agents/skills/codebase-context-architect/SKILL.md) — Multi-layer repository context files (`AGENTS.md`, `CLAUDE.md`, `.cursor/rules/`), single-source synchronization, token budgeting, and CI path/script verification linters.
+  - [`legacy-modernization-pipeline`](.agents/skills/legacy-modernization-pipeline/SKILL.md) — Safe legacy codebase modernization through multi-axis audits, causal DAG topology mapping, characterization test safety nets, and adversarial refactoring loops.
+  - [`codebase-context-governor`](.agents/skills/codebase-context-governor/SKILL.md) — Multi-layer codebase context governance, Three-Layer partitioning, automated CI linter enforcement, and dynamic 5D compute tier calibration.
 
 ### 5. [Security & Forensics](./docs/domains/security-and-forensics/CONTEXT.md)
 * **Scope**: Threat modeling, vulnerability scanning, log forensics, network port auditing, and execution trajectory auditing.
@@ -104,14 +104,14 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - `notification_webhook` — Webhook broadcasting and alert dispatch.
   - `symbolic_solver` — Z3 theorem proving and constraint satisfaction.
 * **Member Skills**:
-  - [`repo-to-plugin-forge`](file:///.agents/skills/repo-to-plugin-forge/SKILL.md) — Autonomous synthesis and scaffolding of Harness plugins from attached codebases.
-  - [`book-to-skill-forge`](file:///.agents/skills/book-to-skill-forge/SKILL.md) — Synthesis and authoring of deep-module agent skills and coaching rubrics from books, articles, and video transcripts.
-  - [`developer-docs-architect`](file:///.agents/skills/developer-docs-architect/SKILL.md) — Architecture, authoring, and AI-optimization of technical documentation, API reference suites, and C4 architecture blueprints using Diátaxis and Docs-as-Code pipelines.
-  - [`ai-file-analysis-agent`](file:///.agents/skills/ai-file-analysis-agent/SKILL.md) — Document-grounded AI file analysis assistants with Direct File API vs RAG triage, prompt grounding constraints, and conversational fault shielding.
-  - [`deep-skill-forge`](file:///.agents/skills/deep-skill-forge/SKILL.md) — Autonomous end-to-end synthesis pipeline uniting literature deconstruction, deep architecture elevation, bounded self-repair, and Knowledge Vault retention.
-  - [`multimedia-intelligence-forge`](file:///.agents/skills/multimedia-intelligence-forge/SKILL.md) — Subprocess multimedia transcription, dual-lens cognitive distillation, isnad claim lineage verification, and canonical dual-file Knowledge Vault retention.
-  - [`external-repo-bridge-forge`](file:///.agents/skills/external-repo-bridge-forge/SKILL.md) — Foreign GitHub repository ingestion, commit trajectory analysis, sandboxed Harness plugin synthesis, and Diátaxis documentation with C4 architecture models.
-  - [`agentwikis-router`](file:///.agents/skills/agentwikis-router/SKILL.md) — Scope-bounded developer task routing, zero-latency offline documentation extraction, trust-calibrated abstention, and Open Data Contract governance across AgentWikis knowledge bases.
+  - [`repo-to-plugin-forge`](.agents/skills/repo-to-plugin-forge/SKILL.md) — Autonomous synthesis and scaffolding of Harness plugins from attached codebases.
+  - [`book-to-skill-forge`](.agents/skills/book-to-skill-forge/SKILL.md) — Synthesis and authoring of deep-module agent skills and coaching rubrics from books, articles, and video transcripts.
+  - [`developer-docs-architect`](.agents/skills/developer-docs-architect/SKILL.md) — Architecture, authoring, and AI-optimization of technical documentation, API reference suites, and C4 architecture blueprints using Diátaxis and Docs-as-Code pipelines.
+  - [`ai-file-analysis-agent`](.agents/skills/ai-file-analysis-agent/SKILL.md) — Document-grounded AI file analysis assistants with Direct File API vs RAG triage, prompt grounding constraints, and conversational fault shielding.
+  - [`deep-skill-forge`](.agents/skills/deep-skill-forge/SKILL.md) — Autonomous end-to-end synthesis pipeline uniting literature deconstruction, deep architecture elevation, bounded self-repair, and Knowledge Vault retention.
+  - [`multimedia-intelligence-forge`](.agents/skills/multimedia-intelligence-forge/SKILL.md) — Subprocess multimedia transcription, dual-lens cognitive distillation, isnad claim lineage verification, and canonical dual-file Knowledge Vault retention.
+  - [`external-repo-bridge-forge`](.agents/skills/external-repo-bridge-forge/SKILL.md) — Foreign GitHub repository ingestion, commit trajectory analysis, sandboxed Harness plugin synthesis, and Diátaxis documentation with C4 architecture models.
+  - [`agentwikis-router`](.agents/skills/agentwikis-router/SKILL.md) — Scope-bounded developer task routing, zero-latency offline documentation extraction, trust-calibrated abstention, and Open Data Contract governance across AgentWikis knowledge bases.
 
 
 ---

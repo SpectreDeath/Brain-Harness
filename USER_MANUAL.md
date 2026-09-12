@@ -718,7 +718,7 @@ export function get_weather(params: { city: string; units?: string }): string {
 
 ### Writing Python In-Process Plugins
 
-Trusted in-process plugins inherit directly from [`HarnessPlugin`](file:///d:/GitHub/projects/Brain%20Harness/src/harness/plugins/base.py) and interact with the IoC container via typed `ServiceKey[T]`:
+Trusted in-process plugins inherit directly from [`HarnessPlugin`](src/harness/plugins/base.py) and interact with the IoC container via typed `ServiceKey[T]`:
 
 ```python
 from __future__ import annotations
@@ -798,7 +798,7 @@ harness creator remediate plugins/my-plugin
 Brain Harness guarantees strict isolation for external, GitHub-sourced, and untrusted plugins.
 
 ### Isolation Modes
-1. **`subprocess` (Default):** Executes in a separate child process. Input and output are exchanged via strict JSON-RPC 2.0 messages over standard I/O pipes managed by [`StdioJsonRpcTransport`](file:///d:/GitHub/projects/Brain%20Harness/src/harness/plugins/transport.py).
+1. **`subprocess` (Default):** Executes in a separate child process. Input and output are exchanged via strict JSON-RPC 2.0 messages over standard I/O pipes managed by [`StdioJsonRpcTransport`](src/harness/plugins/transport.py).
 2. **`venv` (Virtual Environment):** Creates an isolated virtualenv, installs the repository's dependencies (`requirements.txt` or `pyproject.toml`), and runs the subprocess inside the virtualenv.
 3. **`in_process` (Explicitly trusted plugins only):** Executes within the host Python process for microsecond execution speed.
 4. **`docker` (Container Isolation):** Executes within an isolated OCI container sandbox.

@@ -1,0 +1,101 @@
+{
+  "name": "plugin.doc_synchronizer",
+  "version": "1.0.0",
+  "description": "Repository documentation coverage auditing, AST code-to-doc symbol drift verification, Diataxis scaffolding, and interactive visual brief generation",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "category": "developer_tooling",
+  "author": "Brain Harness",
+  "provides": [
+    "service.doc_synchronizer"
+  ],
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "doc_audit",
+      "description": "Audit Python codebase and calculate documentation coverage metrics with AST symbol depth",
+      "parameters": [
+        {
+          "name": "target",
+          "type": "string",
+          "description": "Target directory or package path to audit",
+          "required": false
+        },
+        {
+          "name": "min_coverage",
+          "type": "number",
+          "description": "Minimum acceptable documentation coverage threshold",
+          "required": false,
+          "default": 80.0
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "doc_drift_check",
+      "description": "Verify markdown documentation for broken relative file links and stale AST code symbols",
+      "parameters": [
+        {
+          "name": "docs_dir",
+          "type": "string",
+          "description": "Directory containing documentation to check",
+          "required": false
+        },
+        {
+          "name": "check_symbols",
+          "type": "boolean",
+          "description": "Whether to verify code symbol references against AST",
+          "required": false,
+          "default": true
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "doc_scaffold",
+      "description": "Scaffold standardized Diataxis documentation using live Python module AST symbols",
+      "parameters": [
+        {
+          "name": "module_path",
+          "type": "string",
+          "description": "Path to Python source file to generate documentation for",
+          "required": true
+        },
+        {
+          "name": "doc_type",
+          "type": "string",
+          "description": "Diataxis documentation style: 'api', 'readme', or 'howto'",
+          "required": false,
+          "default": "api"
+        },
+        {
+          "name": "output_path",
+          "type": "string",
+          "description": "Destination file path for generated markdown",
+          "required": false
+        }
+      ],
+      "returns": "string"
+    },
+    {
+      "name": "doc_visual_brief",
+      "description": "Generate interactive HTML coverage brief and scorecard with Mermaid topology diagram",
+      "parameters": [
+        {
+          "name": "target_dir",
+          "type": "string",
+          "description": "Directory or package to profile",
+          "required": false
+        },
+        {
+          "name": "output_path",
+          "type": "string",
+          "description": "Target path for HTML brief output",
+          "required": false
+        }
+      ],
+      "returns": "string"
+    }
+  ]
+}

@@ -18,4 +18,4 @@ Supported output modalities include:
 
 - [`SKILL.md`](SKILL.md) — The 5-stage authoritative operational specification.
 - [`CARD.md`](CARD.md) — Companion summary card, stage progression table, and invariants.
-- [`plugin.cellcog`](../../plugins/integration_and_io/cellcog/plugin.json) — Underlying Brain Harness plugin.
+- [`plugin.cellcog`](../../../plugins/integration_and_io/cellcog/plugin.json) — Underlying Brain Harness plugin.
