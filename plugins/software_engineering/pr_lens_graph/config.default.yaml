@@ -1,0 +1,15 @@
+# PR Lens Graph Plugin Configuration
+version: "1.0.0"
+isolation: "subprocess"
+default_theme: "auto"
+pulse_animation: true
+budgets:
+  timeout_seconds: 30
+  max_diff_bytes: 1048576  # 1MB
+  max_nodes: 30
+  max_edges: 60
+layout:
+  default_width: 800
+  default_height: 600
+  node_width: 140
+  node_height: 48

@@ -1,0 +1,15 @@
+# PR Lens Visualizer Default Configuration
+version: "1.0.0"
+theme: "auto"  # auto | light | dark
+pulse_animation: true
+max_nodes: 30
+max_edges: 60
+lane_layout: "horizontal"
+budgets:
+  timeout_seconds: 30
+  max_diff_bytes: 1048576  # 1MB
+  max_walkthrough_steps: 10
+node_defaults:
+  width: 140
+  height: 48
+  stroke_width: 2

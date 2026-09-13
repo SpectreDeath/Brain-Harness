@@ -1,0 +1,15 @@
+# Repo-Triad Forge Default Configuration
+version: "1.0.0"
+isolation_mode: "subprocess"
+default_briefs_theme: "dark"
+budgets:
+  timeout_seconds: 300
+  max_repair_attempts: 3
+  ki_confidence_threshold: 0.85
+  max_ast_scan_depth: 8
+briefs:
+  render_mermaid: true
+  use_cdn: true
+verification:
+  strict_hygiene: true
+  run_context_linter: true

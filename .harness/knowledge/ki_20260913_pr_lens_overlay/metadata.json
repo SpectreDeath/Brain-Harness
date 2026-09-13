@@ -1,0 +1,36 @@
+{
+  "id": "ki_20260913_pr_lens_overlay",
+  "title": "Idempotent Human Architectural Overlay Invariant",
+  "source_target": "D:\\GitHub\\cloned\\Google\\pr-lens",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_20260913_pr_lens_overlay_01",
+    "claims": [
+      {
+        "assertion": "Applying curated architectural map overlays (.pr-lens/map.json) to diff-extracted graph documents must preserve human-curated subsystem boundaries and labels while idempotently patching diff delta nodes without overwriting canonical metadata.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "packages/schema/src/patch.ts",
+            "sha256_hash": "N/A",
+            "verified": true
+          },
+          {
+            "node_type": "primary_doc",
+            "uri": "skills/pr-lens/references/config.md",
+            "sha256_hash": "N/A",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "architecture",
+    "graph_overlay",
+    "human_in_the_loop",
+    "idempotent_patch",
+    "pr_lens"
+  ]
+}

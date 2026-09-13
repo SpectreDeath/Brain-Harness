@@ -383,4 +383,54 @@ __all__ = [
     "WebMarkdownResult",
     "WebhookDeliveryResult",
     "WebwrightHarnessService",
+    # OKF Memory
+    "OKF_MEMORY_SERVICE_KEY",
+    "OKFMemoryService",
+    "OKFSearchResult",
+    "OKFConceptRecord",
+    "OKFValidationReport",
+    "OKFGovernanceScope",
+    # PR Lens Graph
+    "PR_LENS_GRAPH_SERVICE_KEY",
+    "PrLensAnalysisData",
+    "PrLensCommentData",
+    "PrLensDiffData",
+    "PrLensGraphService",
+    "PrLensRenderData",
+    "PrLensValidationData",
+    # Repo Triad Forge
+    "REPO_TRIAD_FORGE_SERVICE_KEY",
+    "KiCandidateData",
+    "RepoInspectionData",
+    "RepoTriadForgeService",
+    "TriadBriefData",
+    "TriadPlanData",
+    "TriadRunData",
 ]
+
+from harness.services.okf_memory import (
+    OKF_MEMORY_SERVICE_KEY,
+    OKFConceptRecord,
+    OKFGovernanceScope,
+    OKFMemoryService,
+    OKFSearchResult,
+    OKFValidationReport,
+)
+from harness.services.pr_lens import (
+    PR_LENS_GRAPH_SERVICE_KEY,
+    PrLensAnalysisData,
+    PrLensCommentData,
+    PrLensDiffData,
+    PrLensGraphService,
+    PrLensRenderData,
+    PrLensValidationData,
+)
+from harness.services.repo_triad_forge import (
+    REPO_TRIAD_FORGE_SERVICE_KEY,
+    KiCandidateData,
+    RepoInspectionData,
+    RepoTriadForgeService,
+    TriadBriefData,
+    TriadPlanData,
+    TriadRunData,
+)

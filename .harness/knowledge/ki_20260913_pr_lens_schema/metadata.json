@@ -1,0 +1,37 @@
+{
+  "id": "ki_20260913_pr_lens_schema",
+  "title": "Strict Dual-Engine Schema Validation & Integrity Invariants",
+  "source_target": "D:\\GitHub\\cloned\\Google\\pr-lens",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_20260913_pr_lens_schema_01",
+    "claims": [
+      {
+        "assertion": "Graph document validity requires runtime structural typing via Zod schemas paired with cross-entity semantic integrity checks (lane membership, edge terminal existence, walkthrough step references) to prevent layout engine crashes.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "packages/schema/src/graph.ts#L1-L150",
+            "sha256_hash": "N/A",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "packages/schema/src/integrity.ts#L1-L90",
+            "sha256_hash": "N/A",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "architecture",
+    "schema_validation",
+    "zod",
+    "ajv",
+    "graph_integrity",
+    "pr_lens"
+  ]
+}

@@ -1,0 +1,10 @@
+# Repo-Triad Forge Plugin Configuration
+version: "1.0.0"
+isolation: "subprocess"
+budgets:
+  timeout_seconds: 300
+  max_repair_attempts: 3
+  ki_confidence_threshold: 0.85
+briefs:
+  theme: "dark"
+  use_cdn: true

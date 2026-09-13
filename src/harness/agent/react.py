@@ -68,15 +68,27 @@ class StepExecutionEngine:
         self.llm = llm
         self.tools = tools
         self.event_bus = event_bus
-        self.context: ServiceContext = context if context is not None else ServiceContext()
-        self.optimizer: AgentContextOptimizer = optimizer or DefaultContextOptimizer(context=self.context)
+        self.context: ServiceContext = (
+            context if context is not None else ServiceContext()
+        )
+        self.optimizer: AgentContextOptimizer = optimizer or DefaultContextOptimizer(
+            context=self.context
+        )
 
-    async def _invoke_tool_safely(self, action_name: str, action_input: dict[str, Any]) -> Any:
+    async def _invoke_tool_safely(
+        self, action_name: str, action_input: dict[str, Any]
+    ) -> Any:
         """Invoke tool inside a transactional boundary if context supports transactions."""
         git_svc: FilesystemGitService | None = self.context.optional(FILESYSTEM_GIT_KEY)
-        linter_svc: ArchLinterService = self.context.optional(ARCH_LINTER_KEY) or DefaultArchLinterService()
+        linter_svc: ArchLinterService = (
+            self.context.optional(ARCH_LINTER_KEY) or DefaultArchLinterService()
+        )
 
-        target_file_path = action_input.get("path") or action_input.get("file_path") or action_input.get("target_file")
+        target_file_path = (
+            action_input.get("path")
+            or action_input.get("file_path")
+            or action_input.get("target_file")
+        )
 
         async with self.context.transaction() as tx:
             prev_ctx = self.context
@@ -86,7 +98,9 @@ class StepExecutionEngine:
                 if isinstance(obs, dict):
                     is_error = obs.get("status") == "error" or "error" in obs
                     res_val = obs.get("result")
-                    if isinstance(res_val, dict) and (res_val.get("status") == "error" or "error" in res_val):
+                    if isinstance(res_val, dict) and (
+                        res_val.get("status") == "error" or "error" in res_val
+                    ):
                         is_error = True
 
                     # Lint validation on edited file
@@ -101,7 +115,9 @@ class StepExecutionEngine:
                             git_svc.rollback_transaction()
                     else:
                         if git_svc:
-                            git_svc.commit_transaction(f"chore(agent): tool {action_name}")
+                            git_svc.commit_transaction(
+                                f"chore(agent): tool {action_name}"
+                            )
                 return obs
             except Exception as err:
                 await tx.dispose()
@@ -111,13 +127,10 @@ class StepExecutionEngine:
             finally:
                 self.context = prev_ctx
 
-
-
-
     def build_initial_messages(self, task: str) -> list[LLMMessage]:
         """Construct the standard ReAct system prompt and user task message."""
         schemas = self.tools.get_schemas()
-        return [
+        messages = [
             LLMMessage(
                 role="system",
                 content=(
@@ -131,6 +144,13 @@ class StepExecutionEngine:
             ),
             LLMMessage(role="user", content=f"Task: {task}"),
         ]
+        # Rule 9: Deterministic AST RepoMap injection if configured
+        cfg = getattr(self.optimizer, "config", None)
+        if cfg and cfg.repo_map_root:
+            messages = self.optimizer.inject_repo_map(
+                messages, query_context=task, config=cfg
+            )
+        return messages
 
     def extract_action(self, thought: str) -> tuple[str | None, dict[str, Any]]:
         """Extract action name and input parameters from thought text."""
@@ -179,6 +199,14 @@ class StepExecutionEngine:
 
         # Apply context optimization / message windowing before LLM completion
         effective_messages = self.optimizer.optimize_messages(trajectory.messages)
+        # Rule 9: Dynamic AST RepoMap injection prior to model invocation
+        cfg = getattr(self.optimizer, "config", None)
+        if cfg and cfg.repo_map_root:
+            effective_messages = self.optimizer.inject_repo_map(
+                effective_messages,
+                query_context=trajectory.task,
+                config=cfg,
+            )
 
         tool_schemas = self.tools.get_schemas()
         try:
@@ -241,9 +269,14 @@ class StepExecutionEngine:
                     try:
                         obs = await self._invoke_tool_safely(action_name, action_input)
                     except Exception as err:
-                        obs = {"status": "error", "error": f"Tool execution failed: {err}"}
+                        obs = {
+                            "status": "error",
+                            "error": f"Tool execution failed: {err}",
+                        }
                     step.observation = obs
-                    compact_obs_str = self.optimizer.compact_observation(action_name, obs)
+                    compact_obs_str = self.optimizer.compact_observation(
+                        action_name, obs
+                    )
                     trajectory.messages.append(
                         LLMMessage(
                             role="assistant",
@@ -258,9 +291,14 @@ class StepExecutionEngine:
                         )
                     )
                 else:
-                    obs = {"status": "error", "error": f"Tool '{action_name}' not found"}
+                    obs = {
+                        "status": "error",
+                        "error": f"Tool '{action_name}' not found",
+                    }
                     step.observation = obs
-                    compact_obs_str = self.optimizer.compact_observation(action_name, obs)
+                    compact_obs_str = self.optimizer.compact_observation(
+                        action_name, obs
+                    )
                     trajectory.messages.append(
                         LLMMessage(
                             role="assistant",
@@ -331,7 +369,11 @@ class ReActAgentLoop(AgentLoopService):
         self.session_manager = session_manager
         self.context = context
         self._step_engine = step_engine or StepExecutionEngine(
-            llm=llm, tools=tool_registry, event_bus=event_bus, context=context, optimizer=optimizer
+            llm=llm,
+            tools=tool_registry,
+            event_bus=event_bus,
+            context=context,
+            optimizer=optimizer,
         )
 
     @property
@@ -381,11 +423,19 @@ class ReActAgentLoop(AgentLoopService):
                 parent_session_id=parent_session_id,
             ) as scope:
                 return await self._execute_task_loop(
-                    task, max_steps=max_steps, context=context, session_id=scope.session_id, scope=scope
+                    task,
+                    max_steps=max_steps,
+                    context=context,
+                    session_id=scope.session_id,
+                    scope=scope,
                 )
 
         return await self._execute_task_loop(
-            task, max_steps=max_steps, context=context, session_id=actual_session_id, scope=None
+            task,
+            max_steps=max_steps,
+            context=context,
+            session_id=actual_session_id,
+            scope=None,
         )
 
     async def _execute_task_loop(
@@ -397,7 +447,9 @@ class ReActAgentLoop(AgentLoopService):
         session_id: str | None,
         scope: Any | None,
     ) -> AgentTaskResult:
-        trajectory = self.create_trajectory(task, context=context, session_id=session_id)
+        trajectory = self.create_trajectory(
+            task, context=context, session_id=session_id
+        )
 
         if not scope and self.event_bus:
             await self.event_bus.emit(
@@ -448,7 +500,9 @@ class ReActAgentLoop(AgentLoopService):
 
         if scope:
             if trajectory.status == "completed":
-                scope.mark_completed(trajectory.final_answer, total_tokens=trajectory.total_tokens)
+                scope.mark_completed(
+                    trajectory.final_answer, total_tokens=trajectory.total_tokens
+                )
             elif trajectory.status == "max_steps_reached":
                 scope.mark_max_steps(trajectory.final_answer)
             else:
@@ -513,8 +567,12 @@ class ReActAgentPlugin(HarnessPlugin):
         llm: LLMService = self._ctx.require(LLM_SERVICE_KEY)
         tools: ToolRegistry = self._ctx.require(TOOL_REGISTRY_KEY)
         event_bus: EventBus | None = self._ctx.optional(EVENT_BUS_KEY)
-        session_manager: AgentSessionManager | None = self._ctx.optional(AGENT_SESSION_MANAGER_KEY)
-        optimizer: AgentContextOptimizer | None = self._ctx.optional(AGENT_CONTEXT_OPTIMIZER_KEY)
+        session_manager: AgentSessionManager | None = self._ctx.optional(
+            AGENT_SESSION_MANAGER_KEY
+        )
+        optimizer: AgentContextOptimizer | None = self._ctx.optional(
+            AGENT_CONTEXT_OPTIMIZER_KEY
+        )
         self._loop = ReActAgentLoop(
             llm=llm,
             tool_registry=tools,
@@ -523,7 +581,9 @@ class ReActAgentPlugin(HarnessPlugin):
             context=self._ctx,
             optimizer=optimizer,
         )
-        self._ctx.provide(AGENT_LOOP_KEY, self._loop, provider=self.name, allow_override=True)
+        self._ctx.provide(
+            AGENT_LOOP_KEY, self._loop, provider=self.name, allow_override=True
+        )
         logger.info(
             "ReAct agent loop enabled",
             telemetry=event_bus is not None,

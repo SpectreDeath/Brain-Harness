@@ -1,0 +1,75 @@
+{
+  "name": "plugin.repo_triad_forge",
+  "version": "1.0.0",
+  "description": "Authoritative Repo-Triad Forge plugin: 5-stage repository cognitive audit, visual brief generation, Knowledge Vault commits, and verification orchestration",
+  "entrypoint": "main.py",
+  "isolation": "subprocess",
+  "trusted": false,
+  "category": "software_engineering",
+  "author": "Brain Harness Forge Engine",
+  "provides": [
+    "service.repo_triad_forge"
+  ],
+  "entrypoints": [
+    {
+      "name": "triad_inspect",
+      "description": "Inspect repository structure, language manifests, and evaluate 5D compute complexity",
+      "parameters": [
+        {
+          "name": "repo_path",
+          "type": "string",
+          "description": "Path to target repository",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "triad_briefs",
+      "description": "Scaffold 5 interactive dark-mode HTML visual briefs with Mermaid diagrams in %TEMP%",
+      "parameters": [
+        {
+          "name": "repo_path",
+          "type": "string",
+          "description": "Path to target repository",
+          "required": true
+        },
+        {
+          "name": "output_dir",
+          "type": "string",
+          "description": "Optional output directory for HTML briefs",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "triad_ki_candidates",
+      "description": "Extract candidate Knowledge Items with isnad citations from repository scan",
+      "parameters": [
+        {
+          "name": "repo_path",
+          "type": "string",
+          "description": "Path to target repository",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "triad_run",
+      "description": "Execute full 5-stage triad pipeline with bounded in-flight self-repair",
+      "parameters": [
+        {
+          "name": "repo_path",
+          "type": "string",
+          "description": "Path to target repository",
+          "required": true
+        },
+        {
+          "name": "options",
+          "type": "object",
+          "description": "Optional pipeline configuration options",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

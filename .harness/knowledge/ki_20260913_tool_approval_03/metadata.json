@@ -1,0 +1,36 @@
+{
+  "id": "ki_20260913_tool_approval_03",
+  "title": "Interactive Tool Approval Middleware & Security Sandboxing",
+  "source_target": "D:\\GitHub\\cloned\\claude-code",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_20260913_tool_approval_03",
+    "claims": [
+      {
+        "assertion": "Executing untrusted shell commands and filesystem mutations requires fine-grained tool approval middleware with command pattern matching, risk scoring, and interactive user prompts.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "src/tools.ts#L30-L115",
+            "sha256_hash": "N/A",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "src/hooks/costHook.ts#L1-L50",
+            "sha256_hash": "N/A",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "security",
+    "tool_approval",
+    "sandbox",
+    "safety_gates",
+    "bash_hooks"
+  ]
+}

@@ -1,0 +1,105 @@
+{
+  "name": "plugin.pr_lens_graph",
+  "version": "1.0.0",
+  "description": "PR Lens standalone animated SVG architecture diagrams, graph validation, and diff visualization",
+  "entrypoint": "main.py",
+  "isolation": "subprocess",
+  "trusted": false,
+  "category": "software_engineering",
+  "author": "Brain Harness Forge Engine",
+  "provides": [
+    "service.pr_lens_graph"
+  ],
+  "entrypoints": [
+    {
+      "name": "pr_lens_validate",
+      "description": "Validate structural typing and cross-entity semantic integrity of a graph document",
+      "parameters": [
+        {
+          "name": "graph_doc",
+          "type": "object",
+          "description": "Graph document dictionary containing nodes, edges, lanes, and walkthrough",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "pr_lens_render",
+      "description": "Render a validated graph document into a standalone animated SVG with inline keyframes",
+      "parameters": [
+        {
+          "name": "graph_doc",
+          "type": "object",
+          "description": "Graph document dictionary",
+          "required": true
+        },
+        {
+          "name": "config",
+          "type": "object",
+          "description": "Optional render configuration (width, height, theme, pulse_animation)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "pr_lens_diff",
+      "description": "Extract unified git diff between two commit references via safe subprocess transport",
+      "parameters": [
+        {
+          "name": "base_ref",
+          "type": "string",
+          "description": "Base commit reference (default: 'HEAD~1')",
+          "required": false
+        },
+        {
+          "name": "head_ref",
+          "type": "string",
+          "description": "Head commit reference (default: 'HEAD')",
+          "required": false
+        },
+        {
+          "name": "repo_path",
+          "type": "string",
+          "description": "Optional repository path",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "pr_lens_analyze",
+      "description": "Synthesize a structured GraphDocument and progressive walkthrough from unified diff text",
+      "parameters": [
+        {
+          "name": "diff_text",
+          "type": "string",
+          "description": "Unified git diff text",
+          "required": true
+        },
+        {
+          "name": "overlay_map",
+          "type": "object",
+          "description": "Optional human-curated architectural map overlay",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "pr_lens_comment",
+      "description": "Compose GitHub PR markdown comment enclosing standalone diagram and progressive walkthrough",
+      "parameters": [
+        {
+          "name": "analysis",
+          "type": "object",
+          "description": "Analysis dictionary or GraphDocument structure",
+          "required": true
+        },
+        {
+          "name": "svg_content",
+          "type": "string",
+          "description": "Rendered SVG string to embed in comment",
+          "required": true
+        }
+      ]
+    }
+  ]
+}

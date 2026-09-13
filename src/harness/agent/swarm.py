@@ -36,8 +36,7 @@ logger = structlog.get_logger()
 SWARM_COORDINATOR_KEY: ServiceKey[SwarmCoordinator] = ServiceKey("agent.swarm")
 
 
-
-@dataclass
+@dataclass(slots=True)
 class SwarmNode:
     """A discrete unit of work in a multi-agent swarm DAG."""
 
@@ -51,6 +50,12 @@ class SwarmNode:
     result: Any = None
     error: str | None = None
     tokens_used: int = 0
+
+    def __post_init__(self) -> None:
+        if self.allocated_tokens < 0:
+            raise ValueError(
+                f"allocated_tokens must be non-negative, got {self.allocated_tokens}"
+            )
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -95,7 +100,9 @@ class SwarmDAG:
         for node_id, node in self.nodes.items():
             for dep in node.dependencies:
                 if dep not in self.nodes:
-                    raise ValueError(f"Node '{node_id}' references non-existent dependency '{dep}'")
+                    raise ValueError(
+                        f"Node '{node_id}' references non-existent dependency '{dep}'"
+                    )
                 graph.add_edge(from_node=dep, to_node=node_id)
 
         return graph
@@ -110,7 +117,9 @@ class SwarmDAG:
         try:
             return graph.execution_waves()
         except GraphCycleError as e:
-            raise ValueError(f"Cycle detected in SwarmDAG task dependencies: {e}") from e
+            raise ValueError(
+                f"Cycle detected in SwarmDAG task dependencies: {e}"
+            ) from e
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -335,13 +344,15 @@ class SwarmExecutionTree:
                 reasons.append(f"node_failure: {node.error}")
 
             if reasons:
-                bottlenecks.append({
-                    "node_id": nid,
-                    "role": node.role,
-                    "duration": round(node.duration, 4),
-                    "tokens_used": node.tokens_used,
-                    "reasons": reasons,
-                })
+                bottlenecks.append(
+                    {
+                        "node_id": nid,
+                        "role": node.role,
+                        "duration": round(node.duration, 4),
+                        "tokens_used": node.tokens_used,
+                        "reasons": reasons,
+                    }
+                )
         self.bottlenecks = bottlenecks
         return bottlenecks
 
@@ -420,7 +431,9 @@ class SwarmCoordinator:
     def _emit(self, event_type: EventType | str, payload: dict[str, Any]) -> None:
         if self.event_bus is not None:
             evt = HarnessEvent(
-                event_type=event_type if isinstance(event_type, EventType) else EventType.CUSTOM,
+                event_type=event_type
+                if isinstance(event_type, EventType)
+                else EventType.CUSTOM,
                 source="agent.swarm",
                 payload=payload,
             )
@@ -436,10 +449,29 @@ class SwarmCoordinator:
 
         if not agents:
             agents = [
-                {"id": "researcher", "role": "researcher", "task": f"Research and gather facts for: {objective}"},
-                {"id": "developer", "role": "developer", "task": f"Implement solution based on research for: {objective}", "dependencies": ["researcher"]},
-                {"id": "critic", "role": "critic", "task": f"Review and validate developer output for: {objective}", "dependencies": ["developer"]},
-                {"id": "synthesizer", "role": "synthesizer", "task": f"Synthesize final deliverable for: {objective}", "dependencies": ["critic"]},
+                {
+                    "id": "researcher",
+                    "role": "researcher",
+                    "task": f"Research and gather facts for: {objective}",
+                },
+                {
+                    "id": "developer",
+                    "role": "developer",
+                    "task": f"Implement solution based on research for: {objective}",
+                    "dependencies": ["researcher"],
+                },
+                {
+                    "id": "critic",
+                    "role": "critic",
+                    "task": f"Review and validate developer output for: {objective}",
+                    "dependencies": ["developer"],
+                },
+                {
+                    "id": "synthesizer",
+                    "role": "synthesizer",
+                    "task": f"Synthesize final deliverable for: {objective}",
+                    "dependencies": ["critic"],
+                },
             ]
 
         for a in agents:
@@ -471,11 +503,17 @@ class SwarmCoordinator:
         """Execute all nodes in the Swarm DAG in topological dependency waves."""
         import uuid
 
-        target = dag_or_objective if dag_or_objective is not None else (dag if dag is not None else objective)
+        target = (
+            dag_or_objective
+            if dag_or_objective is not None
+            else (dag if dag is not None else objective)
+        )
         if target is None:
             raise ValueError("Either dag or objective must be provided to run_swarm")
 
-        effective_max_tokens = max_tokens if max_tokens is not None else max_total_tokens
+        effective_max_tokens = (
+            max_tokens if max_tokens is not None else max_total_tokens
+        )
         actual_run_id = run_id or f"swarm_{uuid.uuid4().hex[:8]}"
 
         if isinstance(target, str):
@@ -490,8 +528,12 @@ class SwarmCoordinator:
         accumulated_results: dict[str, Any] = {}
 
         # Look up optional AgentSessionManager and AgentExecutionGraphService
-        session_mgr: AgentSessionManager | None = self.context.optional(AGENT_SESSION_MANAGER_KEY)
-        graph_svc: AgentExecutionGraphService | None = self.context.optional(AGENT_GRAPH_STORE_KEY)
+        session_mgr: AgentSessionManager | None = self.context.optional(
+            AGENT_SESSION_MANAGER_KEY
+        )
+        graph_svc: AgentExecutionGraphService | None = self.context.optional(
+            AGENT_GRAPH_STORE_KEY
+        )
 
         if session_mgr is not None:
             await session_mgr.create_session(
@@ -543,11 +585,18 @@ class SwarmCoordinator:
 
         try:
             for wave_idx, wave_node_ids in enumerate(execution_plan, start=1):
-                logger.info("Executing swarm wave", run_id=actual_run_id, wave=wave_idx, nodes=wave_node_ids)
+                logger.info(
+                    "Executing swarm wave",
+                    run_id=actual_run_id,
+                    wave=wave_idx,
+                    nodes=wave_node_ids,
+                )
                 wave_start_time = time.time()
                 wave_tokens_before = governor.tokens_consumed
 
-                async def _execute_single_node(node_id: str) -> tuple[str, Any, int, str | None, float, float]:
+                async def _execute_single_node(
+                    node_id: str,
+                ) -> tuple[str, Any, int, str | None, float, float]:
                     node = dag.nodes[node_id]
                     node.status = "running"
                     child_sid = f"{actual_run_id}_{node_id}"
@@ -600,15 +649,19 @@ class SwarmCoordinator:
                         return node_id, None, 0, node.error, n_start, n_end
 
                     # Collect upstream context from dependencies with optional compaction
-                    context_optimizer: AgentContextOptimizer | None = self.context.optional(AGENT_CONTEXT_OPTIMIZER_KEY)
+                    context_optimizer: AgentContextOptimizer | None = (
+                        self.context.optional(AGENT_CONTEXT_OPTIMIZER_KEY)
+                    )
 
                     upstream_ctx: dict[str, Any] = {}
                     for dep in node.dependencies:
                         if dep in accumulated_results:
                             raw_val = accumulated_results[dep]
                             if context_optimizer is not None:
-                                upstream_ctx[dep] = context_optimizer.compact_observation(
-                                    f"upstream_{dep}", raw_val
+                                upstream_ctx[dep] = (
+                                    context_optimizer.compact_observation(
+                                        f"upstream_{dep}", raw_val
+                                    )
                                 )
                             else:
                                 upstream_ctx[dep] = raw_val
@@ -616,7 +669,9 @@ class SwarmCoordinator:
                     # Prepare prompt with upstream context
                     enriched_prompt = node.task
                     if upstream_ctx:
-                        upstream_summary = "\n".join(f"- Upstream {k}: {v}" for k, v in upstream_ctx.items())
+                        upstream_summary = "\n".join(
+                            f"- Upstream {k}: {v}" for k, v in upstream_ctx.items()
+                        )
                         enriched_prompt = f"{node.task}\n\n[Prerequisite Context]:\n{upstream_summary}"
 
                     # Execute node via custom executor or agent loop service
@@ -642,7 +697,11 @@ class SwarmCoordinator:
                                 )
                                 node.result = agent_res.final_answer or agent_res.status
                                 tokens_used = agent_res.total_tokens or 150
-                                node.status = "completed" if agent_res.status == "completed" else "failed"
+                                node.status = (
+                                    "completed"
+                                    if agent_res.status == "completed"
+                                    else "failed"
+                                )
                             else:
                                 node.result = f"Completed {node.role} task: {node.task}"
                                 node.status = "completed"
@@ -666,7 +725,11 @@ class SwarmCoordinator:
                                 )
                         elif graph_svc is not None:
                             st = "completed" if node.status == "completed" else "failed"
-                            edge_st = ThreadSpawnStatus.COMPLETED if st == "completed" else ThreadSpawnStatus.FAILED
+                            edge_st = (
+                                ThreadSpawnStatus.COMPLETED
+                                if st == "completed"
+                                else ThreadSpawnStatus.FAILED
+                            )
                             graph_svc.update_thread_status(
                                 node_id=child_sid,
                                 status=st,
@@ -684,7 +747,12 @@ class SwarmCoordinator:
                         node.status = "failed"
                         node.error = str(e)
                         n_end = time.time()
-                        logger.error("Swarm node execution failed", run_id=actual_run_id, node=node_id, error=str(e))
+                        logger.error(
+                            "Swarm node execution failed",
+                            run_id=actual_run_id,
+                            node=node_id,
+                            error=str(e),
+                        )
                         if session_mgr is not None:
                             await session_mgr.fail_session(child_sid, str(e))
                         elif graph_svc is not None:
@@ -701,7 +769,9 @@ class SwarmCoordinator:
                         return node_id, None, tokens_used, str(e), n_start, n_end
 
                 # Execute wave concurrently
-                results = await asyncio.gather(*(_execute_single_node(nid) for nid in wave_node_ids))
+                results = await asyncio.gather(
+                    *(_execute_single_node(nid) for nid in wave_node_ids)
+                )
                 wave_end_time = time.time()
                 wave_duration = max(0.0, wave_end_time - wave_start_time)
                 wave_tokens = governor.tokens_consumed - wave_tokens_before
@@ -827,7 +897,9 @@ class SwarmCoordinator:
                 )
 
             self._emit(
-                EventType.AGENT_TASK_COMPLETED if all_success else EventType.AGENT_TASK_FAILED,
+                EventType.AGENT_TASK_COMPLETED
+                if all_success
+                else EventType.AGENT_TASK_FAILED,
                 task_result.to_dict(),
             )
 
@@ -843,12 +915,16 @@ class SwarmCoordinator:
         """Fetch a completed or archived swarm run by ID from in-memory cache."""
         return self._run_history.get(run_id)
 
-    async def get_run_async(self, run_id: str) -> SwarmTaskResult | dict[str, Any] | None:
+    async def get_run_async(
+        self, run_id: str
+    ) -> SwarmTaskResult | dict[str, Any] | None:
         """Fetch a completed swarm run by ID, falling back to persistent session store."""
         if run_id in self._run_history:
             return self._run_history[run_id]
 
-        session_mgr: AgentSessionManager | None = self.context.optional(AGENT_SESSION_MANAGER_KEY)
+        session_mgr: AgentSessionManager | None = self.context.optional(
+            AGENT_SESSION_MANAGER_KEY
+        )
         if session_mgr is not None:
             sess = await session_mgr.get_session(run_id)
             if sess and "swarm_run" in sess.metadata:
@@ -868,7 +944,9 @@ class SwarmCoordinator:
 
     async def get_run_session_tree(self, run_id: str) -> dict[str, Any] | None:
         """Retrieve full hierarchical execution session tree for a swarm run."""
-        session_mgr: AgentSessionManager | None = self.context.optional(AGENT_SESSION_MANAGER_KEY)
+        session_mgr: AgentSessionManager | None = self.context.optional(
+            AGENT_SESSION_MANAGER_KEY
+        )
         if session_mgr is not None:
             return await session_mgr.get_session_tree(run_id)
         run = self.get_run(run_id)
@@ -881,10 +959,14 @@ class SwarmCoordinator:
 
     async def list_runs_async(self, limit: int = 50) -> list[dict[str, Any]]:
         """List historical swarm execution outcomes from memory and persistent session store."""
-        results: list[dict[str, Any]] = [r.to_dict() for r in self._run_history.values()]
+        results: list[dict[str, Any]] = [
+            r.to_dict() for r in self._run_history.values()
+        ]
         seen_ids = {r["run_id"] for r in results if "run_id" in r}
 
-        session_mgr: AgentSessionManager | None = self.context.optional(AGENT_SESSION_MANAGER_KEY)
+        session_mgr: AgentSessionManager | None = self.context.optional(
+            AGENT_SESSION_MANAGER_KEY
+        )
         if session_mgr is not None:
             sessions = await session_mgr.list_sessions(limit=limit * 2)
             for s in sessions:
@@ -897,12 +979,15 @@ class SwarmCoordinator:
                         results.append(s.to_dict())
                         seen_ids.add(s.session_id)
 
-
         return results[-limit:] if limit > 0 else results
 
     async def get_status(self) -> dict[str, Any]:
         """Return status report of the swarm coordinator."""
-        last_run = list(self._run_history.values())[-1].to_dict() if self._run_history else None
+        last_run = (
+            list(self._run_history.values())[-1].to_dict()
+            if self._run_history
+            else None
+        )
         return {
             "status": "ready",
             "active_swarms": len(self._active_runs),
@@ -910,7 +995,6 @@ class SwarmCoordinator:
             "last_run": last_run,
             "coordinator_available": True,
         }
-
 
 
 class SwarmCoordinatorPlugin(HarnessPlugin):

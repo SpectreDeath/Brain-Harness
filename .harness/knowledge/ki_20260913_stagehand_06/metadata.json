@@ -1,0 +1,36 @@
+{
+  "id": "ki_20260913_stagehand_06",
+  "title": "Semantic DOM Extraction & Self-Healing Web Action Primitives",
+  "source_target": "D:\\GitHub\\cloned\\stagehand-main\\stagehand-main",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_20260913_stagehand_06",
+    "claims": [
+      {
+        "assertion": "Robust browser automation requires translating noisy raw DOM trees into semantic accessibility trees with high-level action primitives (act, extract, observe) and LLM-guided selector repair.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "packages/sdk-ts/src/stagehand.ts#L25-L110",
+            "sha256_hash": "N/A",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "packages/extension/services/actService.ts#L15-L80",
+            "sha256_hash": "N/A",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "automation",
+    "browser",
+    "stagehand",
+    "dom_extraction",
+    "self_healing"
+  ]
+}

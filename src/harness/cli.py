@@ -17,6 +17,7 @@ Commands:
 """
 
 from __future__ import annotations
+# ruff: noqa: E402
 
 import sys
 from pathlib import Path
@@ -44,8 +45,10 @@ from harness.commands.creator import (
     creator_validate,
 )
 from harness.commands.data import data_group
+from harness.commands.doc import doc_group
 from harness.commands.events import events_cli
 from harness.commands.mcp import mcp_group
+from harness.commands.okf import okf_group
 from harness.commands.plugins import plugin_group
 from harness.commands.reflection import knowledge_group, reflect_cli
 from harness.commands.runtime import (
@@ -100,11 +103,13 @@ main.add_command(creator_group, name="creator")
 main.add_command(mcp_group, name="mcp")
 main.add_command(config_group, name="config")
 main.add_command(skills_group, name="skills")
+main.add_command(okf_group, name="okf")
 main.add_command(knowledge_group, name="knowledge")
 main.add_command(session_group, name="session")
 main.add_command(context_group, name="context")
 main.add_command(antigravity_group, name="antigravity")
 main.add_command(data_group, name="data")
+main.add_command(doc_group, name="doc")
 
 # --- Register Standalone Commands ---
 main.add_command(init_cli, name="init")

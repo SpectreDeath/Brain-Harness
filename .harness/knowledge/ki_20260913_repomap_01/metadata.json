@@ -1,0 +1,30 @@
+{
+  "id": "ki_20260913_repomap_01",
+  "title": "PageRanked AST Context Prioritization & Token Budget Pruning",
+  "source_target": "D:\\GitHub\\cloned\\aider-main\\aider-main",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_20260913_repomap_01",
+    "claims": [
+      {
+        "assertion": "PageRank algorithms applied across Tree-Sitter AST symbol definition and reference graphs dynamically select and rank repository symbols to fit strict LLM token budgets without context blowout.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "aider/repomap.py#L40-L150",
+            "sha256_hash": "N/A",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "architecture",
+    "context_pruning",
+    "ast_repomap",
+    "pagerank",
+    "token_budget"
+  ]
+}

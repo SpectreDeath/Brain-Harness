@@ -1,0 +1,36 @@
+{
+  "id": "ki_20260913_context_types_04",
+  "title": "Context Item Typing & Evidence Boundary Invariants",
+  "source_target": "D:\\GitHub\\cloned\\context-type-system-main\\context-type-system-main",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_20260913_context_types_04",
+    "claims": [
+      {
+        "assertion": "Partitioning agent context into typed context items (Instruction, Evidence, Constraint, ToolResult) with runtime validation eliminates semantic drift and prompt injection.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "context_types.py#L1-L90",
+            "sha256_hash": "N/A",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "assembler.py#L20-L80",
+            "sha256_hash": "N/A",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "architecture",
+    "context_system",
+    "type_safety",
+    "prompt_engineering",
+    "invariants"
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "id": "ki_20260913_pr_lens_svg_animation",
+  "title": "Zero-Dependency Standalone Animated SVG Embedding Pattern",
+  "source_target": "D:\\GitHub\\cloned\\Google\\pr-lens",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_20260913_pr_lens_svg_01",
+    "claims": [
+      {
+        "assertion": "Standalone SVGs containing inline CSS @keyframes animations and media queries render animated data-flow pulses and dark-mode themes directly inside GitHub PR markdown comments without external CDNs, client-side JavaScript, or iframe sandboxes.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "packages/renderer/src/svg/pulse.ts#L1-L80",
+            "sha256_hash": "N/A",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "packages/renderer/src/svg/styles.ts",
+            "sha256_hash": "N/A",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "svg",
+    "animation",
+    "css_keyframes",
+    "github_pr",
+    "zero_dependency",
+    "pr_lens"
+  ]
+}

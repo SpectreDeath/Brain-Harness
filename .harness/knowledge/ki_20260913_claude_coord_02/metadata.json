@@ -1,0 +1,36 @@
+{
+  "id": "ki_20260913_claude_coord_02",
+  "title": "Hierarchical Sub-Agent Task Coordination & Lifecycle States",
+  "source_target": "D:\\GitHub\\cloned\\claude-code",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_20260913_claude_coord_02",
+    "claims": [
+      {
+        "assertion": "Autonomous multi-agent execution requires formal hierarchical coordinators with explicit task lifecycle state machines (pending, running, completed, failed) and isolated progress streaming.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "src/coordinator/index.ts#L1-L120",
+            "sha256_hash": "N/A",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "src/Task.ts#L15-L85",
+            "sha256_hash": "N/A",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "architecture",
+    "agent_coordination",
+    "task_lifecycle",
+    "multi_agent",
+    "swarm"
+  ]
+}

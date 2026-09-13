@@ -15,7 +15,7 @@ from harness.kernel.context import ServiceKey
 AGENT_LOOP_KEY: ServiceKey[AgentLoopService] = ServiceKey("agent.loop")
 
 
-@dataclass
+@dataclass(slots=True)
 class AgentStep:
     """A single thought/action/observation step in the agent trajectory."""
 
@@ -24,6 +24,12 @@ class AgentStep:
     action: str | None = None
     action_input: dict[str, Any] = field(default_factory=dict)
     observation: Any = None
+
+    def __post_init__(self) -> None:
+        if self.step_number < 0:
+            raise ValueError(
+                f"step_number must be non-negative, got {self.step_number}"
+            )
 
     def to_dict(self) -> dict[str, Any]:
         """Convert AgentStep to standard dictionary representation."""
@@ -36,7 +42,7 @@ class AgentStep:
         }
 
 
-@dataclass
+@dataclass(slots=True)
 class AgentTaskResult:
     """Outcome of an autonomous agent task run."""
 
@@ -63,7 +69,7 @@ class AgentTaskResult:
         return res
 
 
-@dataclass
+@dataclass(slots=True)
 class AgentTrajectory:
     """Stateful execution record for an agent task run.
 

@@ -1,0 +1,213 @@
+{
+  "name": "plugin.okf_memory",
+  "version": "1.0.0",
+  "description": "Git-native agent memory governor providing BM25 search, pre-edit governance scoping, concept mutations, and trust ordering validation",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "category": "memory_and_epistemics",
+  "author": "Brain Harness Forge Engine",
+  "provides": [
+    "service.okf_memory"
+  ],
+  "entrypoints": [
+    {
+      "name": "okf_search",
+      "description": "Search knowledge bundle using BM25 lexical ranking or evaluate for-path governance constraints before modifying code",
+      "parameters": [
+        {
+          "name": "query",
+          "type": "string",
+          "description": "Search query terms to match against concept headers and bodies",
+          "required": false
+        },
+        {
+          "name": "for_path",
+          "type": "string",
+          "description": "Target source code path to retrieve governing concepts before editing",
+          "required": false
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "description": "Maximum number of matching concepts to return (default: 3)",
+          "required": false
+        },
+        {
+          "name": "bundle_dir",
+          "type": "string",
+          "description": "Custom root directory of the knowledge bundle (default: 'knowledge')",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "okf_show",
+      "description": "Retrieve full markdown content, frontmatter metadata, and governance rules for a specific concept",
+      "parameters": [
+        {
+          "name": "concept_id",
+          "type": "string",
+          "description": "Unique concept identifier (e.g. auth-middleware)",
+          "required": true
+        },
+        {
+          "name": "bundle_dir",
+          "type": "string",
+          "description": "Custom root directory of the knowledge bundle (default: 'knowledge')",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "okf_create",
+      "description": "Create a new concept document with frontmatter sanitization and automatic parent index and log updating",
+      "parameters": [
+        {
+          "name": "concept_id",
+          "type": "string",
+          "description": "Unique identifier for the new concept",
+          "required": true
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "description": "Human-readable concept title",
+          "required": true
+        },
+        {
+          "name": "concept_type",
+          "type": "string",
+          "description": "Type of concept: 'decision', 'architecture', 'operational', or 'concept'",
+          "required": true
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "description": "High-density 1-2 sentence description",
+          "required": true
+        },
+        {
+          "name": "body",
+          "type": "string",
+          "description": "Markdown body content",
+          "required": false
+        },
+        {
+          "name": "governance",
+          "type": "array",
+          "description": "List of governance constraints or architectural invariants",
+          "required": false
+        },
+        {
+          "name": "code_refs",
+          "type": "array",
+          "description": "List of codebase file or directory paths related to this concept",
+          "required": false
+        },
+        {
+          "name": "bundle_dir",
+          "type": "string",
+          "description": "Custom root directory of the knowledge bundle (default: 'knowledge')",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "okf_update",
+      "description": "Update an existing concept document with automatic parent index and audit log synchronization",
+      "parameters": [
+        {
+          "name": "concept_id",
+          "type": "string",
+          "description": "Identifier of the concept to update",
+          "required": true
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "description": "Updated concept title",
+          "required": false
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "description": "Updated high-density 1-2 sentence summary",
+          "required": false
+        },
+        {
+          "name": "body",
+          "type": "string",
+          "description": "Updated markdown body content",
+          "required": false
+        },
+        {
+          "name": "governance",
+          "type": "array",
+          "description": "Updated governance rules or invariants",
+          "required": false
+        },
+        {
+          "name": "code_refs",
+          "type": "array",
+          "description": "Updated list of codebase file or directory paths",
+          "required": false
+        },
+        {
+          "name": "bundle_dir",
+          "type": "string",
+          "description": "Custom root directory of the knowledge bundle (default: 'knowledge')",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "okf_relate",
+      "description": "Link two concepts together bidirectionally in frontmatter relations",
+      "parameters": [
+        {
+          "name": "source_id",
+          "type": "string",
+          "description": "Source concept identifier",
+          "required": true
+        },
+        {
+          "name": "target_id",
+          "type": "string",
+          "description": "Target concept identifier",
+          "required": true
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "description": "Relationship rationale or dependency nature",
+          "required": false
+        },
+        {
+          "name": "bundle_dir",
+          "type": "string",
+          "description": "Custom root directory of the knowledge bundle (default: 'knowledge')",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "okf_validate",
+      "description": "Validate knowledge bundle against OKF normative schema, link consistency, and actor trust ordering",
+      "parameters": [
+        {
+          "name": "strict",
+          "type": "boolean",
+          "description": "Whether to fail validation on non-critical hygiene warnings (default: false)",
+          "required": false
+        },
+        {
+          "name": "bundle_dir",
+          "type": "string",
+          "description": "Custom root directory of the knowledge bundle (default: 'knowledge')",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

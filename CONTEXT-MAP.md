@@ -27,12 +27,14 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - `embedding_cluster` — Vector clustering and dimensionality reduction.
   - `context_compactor` — Context window distillation and token-budget compression.
   - `prompt_benchmark` — Prompt efficacy benchmarking and token telemetry.
+  - `okf_memory` — Git-native agent memory governor, in-memory BM25 lexical ranking, pre-edit governance scoping, and trust validation.
 * **Member Skills**:
   - [`epistemic-isnad-audit`](.agents/skills/epistemic-isnad-audit/SKILL.md) — Unbroken chain-of-custody lineage verification for facts and decisions.
   - [`mind-reader`](.agents/skills/mind-reader/SKILL.md) — Introspection and heuristic extraction from attached brain trajectories.
   - [`repo-reader`](.agents/skills/repo-reader/SKILL.md) — Architectural pattern and commit trajectory introspection from Git repositories.
   - [`harness-reflector`](.agents/skills/harness-reflector/SKILL.md) — Autobiographical reflection and heuristic distillation from internal reports and execution logs.
   - [`epistemic-memory-lifecycle`](.agents/skills/epistemic-memory-lifecycle/SKILL.md) — Bounded 8-state knowledge item promotion pipeline, 6-class memory partitioning, and Theseus continuity audit.
+  - [`okf-memory-governor`](.agents/skills/okf-memory-governor/SKILL.md) — Git-native OKF v0.2 agent memory governance, pre-edit path scoping, atomic mutations, and normative validation.
 
 ### 3. [Data Engineering](./docs/domains/data-engineering/CONTEXT.md)
 * **Scope**: Curated tabular ingestion, out-of-core statistical profiling, schema transformation, and relational database execution.
@@ -61,6 +63,8 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - `filesystem_git` — Git version control, branching, diffs, and staging.
   - `migration_assistant` — Version migrations and compatibility cutovers.
   - `artifact_generator` — Markdown summaries, visual brief generation, and diff reports.
+  - `pr_lens_graph` — Standalone animated SVG architecture diagrams, graph validation, and diff visualization.
+  - `repo_triad_forge` — Authoritative repository triad pipeline: 5-stage cognitive audit, visual brief generation, Knowledge Vault commits, and verification orchestration.
 * **Member Skills**:
   - [`crafting-skills`](.agents/skills/crafting-skills/SKILL.md) — High-precision agent skill authoring, refactoring, and companion card generation.
   - [`deepen-architecture`](.agents/skills/deepen-architecture/SKILL.md) — Iterative architecture deepening loop, eliminating shallow modules.
@@ -74,6 +78,8 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - [`codebase-context-architect`](.agents/skills/codebase-context-architect/SKILL.md) — Multi-layer repository context files (`AGENTS.md`, `CLAUDE.md`, `.cursor/rules/`), single-source synchronization, token budgeting, and CI path/script verification linters.
   - [`legacy-modernization-pipeline`](.agents/skills/legacy-modernization-pipeline/SKILL.md) — Safe legacy codebase modernization through multi-axis audits, causal DAG topology mapping, characterization test safety nets, and adversarial refactoring loops.
   - [`codebase-context-governor`](.agents/skills/codebase-context-governor/SKILL.md) — Multi-layer codebase context governance, Three-Layer partitioning, automated CI linter enforcement, and dynamic 5D compute tier calibration.
+  - [`pr-lens-visualizer`](.agents/skills/pr-lens-visualizer/SKILL.md) — Standalone animated SVG architecture and data-flow diagrams from PR diffs, graph validation, and progressive disclosure walkthroughs.
+  - [`repo-triad-forge`](.agents/skills/repo-triad-forge/SKILL.md) — Unified repository cognitive audit, dual-file Knowledge Vault retention, slotted skill synthesis, and sandboxed plugin forging.
 
 ### 5. [Security & Forensics](./docs/domains/security-and-forensics/CONTEXT.md)
 * **Scope**: Threat modeling, vulnerability scanning, log forensics, network port auditing, and execution trajectory auditing.

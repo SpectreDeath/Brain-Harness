@@ -1,0 +1,84 @@
+{
+  "id": "ki_okf_agent_memory_v02",
+  "title": "Open Knowledge Framework (OKF v0.2): Git-Native Agent Memory, BM25 Scoping, and Trust Ordering",
+  "source_target": "D:\\GitHub\\cloned\\Google\\okf-agent-memory",
+  "detected_format": "go_module",
+  "timestamp": "2026-09-13T14:30:00Z",
+  "isnad": {
+    "decision_id": "dec_20260913_okf_01",
+    "claims": [
+      {
+        "assertion": "Pre-edit governance scoping via SearchForPath() matches file prefixes in code_refs before code modification to prevent architectural drift and negative boundary violations.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "pkg/okf/search.go#L262-L310",
+            "verified": true
+          },
+          {
+            "node_type": "git_commit",
+            "uri": "commit:3366569",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "assertion": "In-memory BM25 lexical ranking achieves sub-300µs retrieval with governance weight boosting, eliminating external vector database hosting and recurring embedding API costs.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "pkg/okf/search.go#L55-L160",
+            "verified": true
+          },
+          {
+            "node_type": "git_commit",
+            "uri": "commit:eed06c8",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "assertion": "Actor trust ordering invariants enforce that automated agents cannot verify their own outputs or self-attest as human authorities in knowledge frontmatter.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "pkg/okf/validator.go#L63-L125",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "assertion": "Concept mutations execute atomically, auto-synchronizing parent index.md tables and appending immutable entries to log.md.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "pkg/okf/mutate.go#L130-L210",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "assertion": "Upstream Windows MCP test failures in cmd/okf/mcp_test.go stem from raw backslash path concatenation in test JSON strings rather than core library parser defects.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "cmd/okf/mcp_test.go#L272-L315",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "architecture",
+    "memory",
+    "okf",
+    "governance",
+    "bm25",
+    "mcp",
+    "git-native"
+  ],
+  "context": "Google OKF Agent Memory v0.2 Protocol & Architecture",
+  "distilled_learning": "# KI: Open Knowledge Framework (OKF v0.2)\n\n## Operational Summary\nOKF v0.2 establishes a Git-native agent memory specification using plain-text Markdown files with YAML frontmatter. It replaces heavy vector databases and recurring embedding API calls with in-memory BM25 lexical ranking and pre-edit governance scoping (`SearchForPath`). Autonomous agents check target file paths against concept `code_refs` prior to proposing edits, preventing architectural regressions and enforcing invariants. Mutations automatically maintain parent `index.md` tables and immutable `log.md` audit ledgers while strictly prohibiting AI self-attestation as human verified."
+}

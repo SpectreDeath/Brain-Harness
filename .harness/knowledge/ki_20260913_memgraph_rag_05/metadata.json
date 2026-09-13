@@ -1,0 +1,36 @@
+{
+  "id": "ki_20260913_memgraph_rag_05",
+  "title": "Multi-Agent Memory Graph RAG with Temporal Decay",
+  "source_target": "D:\\GitHub\\cloned\\MemGraphRAG-main\\MemGraphRAG-main",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_20260913_memgraph_rag_05",
+    "claims": [
+      {
+        "assertion": "Memory-based Graph RAG combines entity-relation knowledge triples with temporal decay functions to balance recent session facts with foundational architectural invariants.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "code/src/prompts/linking.py#L1-L60",
+            "sha256_hash": "N/A",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "code/src/utils/typing.py#L10-L75",
+            "sha256_hash": "N/A",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "memory",
+    "graph_rag",
+    "knowledge_graph",
+    "temporal_decay",
+    "epistemics"
+  ]
+}

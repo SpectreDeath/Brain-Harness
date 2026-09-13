@@ -1,0 +1,36 @@
+{
+  "id": "ki_20260913_pr_lens_eli5_pedagogy",
+  "title": "Progressive Disclosure Diagram Generation Pedagogy (ELI5)",
+  "source_target": "D:\\GitHub\\cloned\\Google\\pr-lens",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_20260913_pr_lens_eli5_01",
+    "claims": [
+      {
+        "assertion": "Presenting complex PR architectures through progressive disclosure (growing from a 2-node minimal mental model to full system complexity via ordered walkthrough steps) maximizes reviewer comprehension and reduces cognitive fatigue.",
+        "lineage": [
+          {
+            "node_type": "primary_doc",
+            "uri": "skills/eli5/SKILL.md",
+            "sha256_hash": "N/A",
+            "verified": true
+          },
+          {
+            "node_type": "primary_doc",
+            "uri": "skills/pr-lens/SKILL.md",
+            "sha256_hash": "N/A",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "pedagogy",
+    "diagram_generation",
+    "progressive_disclosure",
+    "eli5",
+    "agent_skills"
+  ]
+}

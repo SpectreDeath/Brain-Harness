@@ -1,0 +1,37 @@
+{
+  "id": "ki_20260913_pr_lens_byok_provider",
+  "title": "Normalized BYOK Multi-LLM Provider Architecture",
+  "source_target": "D:\\GitHub\\cloned\\Google\\pr-lens",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_20260913_pr_lens_byok_01",
+    "claims": [
+      {
+        "assertion": "A standardized provider adapter contract (generateContent / streamText) decouples high-level graph analysis logic from proprietary model APIs (Gemini, OpenAI, Anthropic, Custom HTTP), enabling zero-dependency runtime provider substitution.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "packages/cli/src/providers/index.ts",
+            "sha256_hash": "N/A",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "packages/cli/src/providers/gemini.ts",
+            "sha256_hash": "N/A",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "llm_provider",
+    "byok",
+    "gemini",
+    "openai",
+    "abstraction_seam",
+    "pr_lens"
+  ]
+}
