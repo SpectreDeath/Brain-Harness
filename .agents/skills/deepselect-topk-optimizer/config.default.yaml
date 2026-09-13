@@ -1,0 +1,10 @@
+# Baseline Operational Budgets for DeepSelect TopK Optimizer
+max_topk: 4096
+default_block_size_b: 1024
+default_compact_threshold_b2: 1024
+max_vocab_size: 8388608 # 2^23
+denormal_addition_limit: 4194304 # 2^22
+input_stride_alignment_bytes: 1024
+output_stride_alignment_bytes: 32
+cluster_sm_threshold: 32
+default_timeout_seconds: 300

@@ -78,6 +78,15 @@ class RepoTriadForgeService(Protocol):
         """Extract candidate Knowledge Items with isnad citations from repository."""
         ...
 
+    def plan(
+        self,
+        repo_path: str,
+        skill_name: str = "custom-skill",
+        plugin_name: str = "custom_plugin",
+    ) -> TriadPlanData:
+        """Synthesize 5-stage triad pipeline implementation plan with operational budgets."""
+        ...
+
     def commit_kis(
         self, kis_data: list[dict[str, Any]], vault_dir: str | None = None
     ) -> list[str]:

@@ -1,0 +1,41 @@
+{
+  "id": "ki_deepselect_bitmask_filtering",
+  "title": "Single-Pass PTX Bitmask Accumulation & Warp-Level Traversal",
+  "source_target": "D:\\GitHub\\cloned\\Google\\DeepSelect",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_ki_deepselect_bitmask_filtering",
+    "claims": [
+      {
+        "assertion": "Traditional filtering requires two scans: one to count qualifying elements for shared memory slot allocation and a second to write them. DeepSelect eliminates the second scan by generating a 32-bit bitmask during the count phase using PTX instructions (set.s32.bf16x2, prmt.b32, dp4a.s32.s32), and subsequent placement traverses candidate indices via hardware __ffs(mask) and bit clearing mask &= mask - 1u.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "D:\\GitHub\\cloned\\Google\\DeepSelect/docs/DeepSelect-deep-dive.md#L110-L135",
+            "sha256_hash": "N/A",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "D:\\GitHub\\cloned\\Google\\DeepSelect/csrc/cuda_kernels/bit_utils.cuh#L1-L80",
+            "sha256_hash": "N/A",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "D:\\GitHub\\cloned\\Google\\DeepSelect/csrc/cuda_kernels/common_parts.cuh#L1430-L1470",
+            "sha256_hash": "N/A",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "cuda",
+    "ptx",
+    "bitmask",
+    "warp_primitives"
+  ]
+}

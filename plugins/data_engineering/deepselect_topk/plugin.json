@@ -1,0 +1,165 @@
+{
+  "name": "plugin.deepselect_topk",
+  "version": "1.0.0",
+  "description": "DeepSelect High-Performance TopK Selection & DSA Routing Plugin with Monotonic Threshold Compaction and Hardware Contention Mitigation",
+  "language": "python",
+  "entrypoint": "main.py",
+  "isolation": "subprocess",
+  "trusted": true,
+  "provides": [
+    "deepselect.topk.service"
+  ],
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "deepselect_analyze_workload",
+      "description": "Analyze TopK workload dimensions and determine kernel variant dispatch with alignment constraints",
+      "parameters": [
+        {
+          "name": "batch_size",
+          "type": "integer",
+          "description": "Number of sequences in batch",
+          "required": true
+        },
+        {
+          "name": "vocab_size",
+          "type": "integer",
+          "description": "Sequence length or vocabulary dimension",
+          "required": true
+        },
+        {
+          "name": "topk",
+          "type": "integer",
+          "description": "Number of top elements to extract (<= 4096)",
+          "required": true
+        },
+        {
+          "name": "dtype",
+          "type": "string",
+          "description": "Data type ('bfloat16' or 'float32')",
+          "required": false,
+          "default": "bfloat16"
+        },
+        {
+          "name": "scenario",
+          "type": "string",
+          "description": "Target scenario ('lightning_indexer' or 'sampling')",
+          "required": false,
+          "default": "lightning_indexer"
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "deepselect_estimate_bounds",
+      "description": "Compute theoretical upper bounds on candidate elements E[W] and speedup relative to vanilla torch.topk",
+      "parameters": [
+        {
+          "name": "batch_size",
+          "type": "integer",
+          "description": "Number of sequences in batch",
+          "required": true
+        },
+        {
+          "name": "vocab_size",
+          "type": "integer",
+          "description": "Sequence length or vocabulary dimension",
+          "required": true
+        },
+        {
+          "name": "topk",
+          "type": "integer",
+          "description": "Number of top elements to extract (<= 4096)",
+          "required": true
+        },
+        {
+          "name": "block_size",
+          "type": "integer",
+          "description": "Contiguous memory block scan size B",
+          "required": false,
+          "default": 1024
+        },
+        {
+          "name": "compact_threshold",
+          "type": "integer",
+          "description": "Candidate buffer compaction threshold B2",
+          "required": false,
+          "default": 1024
+        },
+        {
+          "name": "dtype",
+          "type": "string",
+          "description": "Data type ('bfloat16' or 'float32')",
+          "required": false,
+          "default": "bfloat16"
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "deepselect_recommend_config",
+      "description": "Recommend optimal block sizes, compaction threshold, and Threadblock Cluster size for workload",
+      "parameters": [
+        {
+          "name": "batch_size",
+          "type": "integer",
+          "description": "Number of sequences in batch",
+          "required": true
+        },
+        {
+          "name": "vocab_size",
+          "type": "integer",
+          "description": "Sequence length or vocabulary dimension",
+          "required": true
+        },
+        {
+          "name": "topk",
+          "type": "integer",
+          "description": "Number of top elements to extract (<= 4096)",
+          "required": true
+        },
+        {
+          "name": "dtype",
+          "type": "string",
+          "description": "Data type ('bfloat16' or 'float32')",
+          "required": false,
+          "default": "bfloat16"
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "deepselect_simulate_selection",
+      "description": "Simulate randomized block scanning and monotonic threshold compaction on a 2D matrix of numbers",
+      "parameters": [
+        {
+          "name": "input_matrix",
+          "type": "array",
+          "description": "List of lists containing numbers (rows of input sequences)",
+          "required": true
+        },
+        {
+          "name": "topk",
+          "type": "integer",
+          "description": "Number of top elements to extract (<= 4096)",
+          "required": true
+        },
+        {
+          "name": "block_size",
+          "type": "integer",
+          "description": "Contiguous memory block scan size B",
+          "required": false,
+          "default": 1024
+        },
+        {
+          "name": "compact_threshold",
+          "type": "integer",
+          "description": "Candidate buffer compaction threshold B2",
+          "required": false,
+          "default": 1024
+        }
+      ],
+      "returns": "object"
+    }
+  ]
+}

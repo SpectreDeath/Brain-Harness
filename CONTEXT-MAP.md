@@ -43,12 +43,14 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - `data_transformer` — Schema reshaping, column normalization, and type casting.
   - `database_sql` — SQL query execution, transaction handling, and schema reflection.
   - `synthetic_generator` — Synthetic tabular matrix and mock data generation.
+  - `deepselect_topk` — High-performance TopK kernel selection, harmonic bound estimation, and DeepSeek Sparse Attention (DSA) routing.
 * **Member Skills**:
   - [`structured-data-scout`](.agents/skills/structured-data-scout/SKILL.md) — Curated tabular dataset ingestion from authoritative registries (UCI, Kaggle, OpenData).
   - [`survival-analysis`](.agents/skills/survival-analysis/SKILL.md) — Kaplan-Meier estimation, Cox proportional hazards regression, and Schoenfeld diagnostics.
   - [`data-topology-mapper`](.agents/skills/data-topology-mapper/SKILL.md) — Causal DAG lineage mapping, queue architectures, and hybrid data topologies.
   - [`sql-recursive-graph-traversal`](.agents/skills/sql-recursive-graph-traversal/SKILL.md) — Relational graph traversal, hierarchy trees, cycle detection, and BFS shortest paths in SQL.
   - [`neural-network-from-scratch`](.agents/skills/neural-network-from-scratch/SKILL.md) — Feedforward neural network construction, analytical backpropagation calculus, numerical stability floors, and modular PyTorch translation.
+  - [`deepselect-topk-optimizer`](.agents/skills/deepselect-topk-optimizer/SKILL.md) — High-throughput TopK selection and DeepSeek Sparse Attention (DSA) kernel optimization, randomized block scanning, and denormal FP32 simulation.
   - [`data-management-architect`](.agents/skills/data-management-architect/SKILL.md) — Enterprise data lifecycle governance, DAMA-DMBOK capabilities, Open Data Contracts (ODCS), Medallion lakehouse engineering, 6-dimension data quality gating, and Level 0–5 maturity roadmaps.
   - [`neo4j-knowledge-graph-architect`](.agents/skills/neo4j-knowledge-graph-architect/SKILL.md) — Production Neo4j labeled property graph architecture, backward schema modeling, idempotent batch ingestion, Cypher traversal safety, index profiling, and epistemic evidence boundaries.
   - [`knowledge-graph-pipeline`](.agents/skills/knowledge-graph-pipeline/SKILL.md) — End-to-end data scouting, ontological engineering, backward LPG schema design, idempotent UNWIND batching, and dual-engine recursive SQL traversal.

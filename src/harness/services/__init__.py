@@ -406,6 +406,9 @@ __all__ = [
     "TriadBriefData",
     "TriadPlanData",
     "TriadRunData",
+    # DeepSelect TopK
+    "DEEPSELECT_TOPK_SERVICE_KEY",
+    "DeepSelectTopkProtocol",
 ]
 
 from harness.services.okf_memory import (
@@ -433,4 +436,8 @@ from harness.services.repo_triad_forge import (
     TriadBriefData,
     TriadPlanData,
     TriadRunData,
+)
+from harness.services.deepselect_topk import (
+    DEEPSELECT_TOPK_SERVICE_KEY,
+    DeepSelectTopkProtocol,
 )

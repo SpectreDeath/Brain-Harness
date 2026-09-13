@@ -1,0 +1,41 @@
+{
+  "id": "ki_deepselect_cluster_partitioning",
+  "title": "Threadblock Cluster Multi-SM Sequence Partitioning for Wave-Quantization Resilience",
+  "source_target": "D:\\GitHub\\cloned\\Google\\DeepSelect",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_ki_deepselect_cluster_partitioning",
+    "claims": [
+      {
+        "assertion": "For workloads with small batch sizes or where total CTAs do not evenly divide the number of active SMs on high-end GPUs, wave quantization leads to severe tail SM idle cycles. DeepSelect groups CTAs into Threadblock Clusters (cluster_size up to 16), divides each sequence into segments across cluster CTAs, and streams local top-k candidates directly into CTA0 in shared cluster memory for final reduction.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "D:\\GitHub\\cloned\\Google\\DeepSelect/docs/DeepSelect-deep-dive.md#L140-L155",
+            "sha256_hash": "N/A",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "D:\\GitHub\\cloned\\Google\\DeepSelect/csrc/cuda_kernels/config.h#L15-L25",
+            "sha256_hash": "N/A",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "D:\\GitHub\\cloned\\Google\\DeepSelect/csrc/cuda_kernels/v3_cluster/topk_select.cuh#L1-L100",
+            "sha256_hash": "N/A",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "cuda",
+    "cluster",
+    "sm_occupancy",
+    "wave_quantization"
+  ]
+}

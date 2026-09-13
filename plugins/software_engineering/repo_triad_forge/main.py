@@ -21,6 +21,7 @@ from harness.services.repo_triad_forge import (
     RepoInspectionData,
     RepoTriadForgeService,
     TriadBriefData,
+    TriadPlanData,
     TriadRunData,
 )
 
@@ -82,6 +83,14 @@ class RepoTriadForgePlugin(HarnessPlugin, RepoTriadForgeService):
     def extract_kis(self, repo_path: str) -> list[KiCandidateData]:
         return self._impl.extract_kis(repo_path)
 
+    def plan(
+        self,
+        repo_path: str,
+        skill_name: str = "custom-skill",
+        plugin_name: str = "custom_plugin",
+    ) -> TriadPlanData:
+        return self._impl.plan(repo_path, skill_name, plugin_name)
+
     def commit_kis(
         self, kis_data: list[dict[str, Any]], vault_dir: str | None = None
     ) -> list[str]:
@@ -113,6 +122,16 @@ def triad_briefs(
 def triad_ki_candidates(repo_path: str, **kwargs: Any) -> list[dict[str, Any]]:
     res = plugin.extract_kis(repo_path)
     return [k.model_dump() for k in res]
+
+
+def triad_plan(
+    repo_path: str,
+    skill_name: str = "custom-skill",
+    plugin_name: str = "custom_plugin",
+    **kwargs: Any,
+) -> dict[str, Any]:
+    res = plugin.plan(repo_path, skill_name, plugin_name)
+    return res.model_dump()
 
 
 def triad_run(

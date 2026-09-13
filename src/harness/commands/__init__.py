@@ -47,6 +47,9 @@ from .data import (
     profile_quality_cmd,
     resolve_golden_records_cmd,
     run_medallion_pipeline_cmd,
+    topk_analyze_cmd,
+    topk_bounds_cmd,
+    topk_recommend_cmd,
     validate_contract_cmd,
 )
 from .events import (
@@ -242,6 +245,9 @@ _BUILTIN_COMMANDS: list[tuple[str, Callable[..., Any], str, str]] = [
     ("data.resolve", resolve_golden_records_cmd, "data", "Resolve entity records into Golden Records"),
     ("data.maturity", assess_maturity_cmd, "data", "Evaluate Level 0-5 Data Management Maturity"),
     ("data.pipeline", run_medallion_pipeline_cmd, "data", "Execute Medallion lakehouse pipeline"),
+    ("data.topk_analyze", topk_analyze_cmd, "data", "Analyze TopK workload feasibility and kernel variant dispatch"),
+    ("data.topk_bounds", topk_bounds_cmd, "data", "Compute mathematical bounds on TopK candidate volume and speedup"),
+    ("data.topk_recommend", topk_recommend_cmd, "data", "Recommend optimal DeepSelect kernel configurations"),
 ]
 
 for cmd_name, cmd_handler, cmd_cat, cmd_doc in _BUILTIN_COMMANDS:
@@ -310,6 +316,9 @@ __all__ = [
     "skeletonize_code_cmd",
     "start_harness",
     "toggle_tool",
+    "topk_analyze_cmd",
+    "topk_bounds_cmd",
+    "topk_recommend_cmd",
     "validate_config_cmd",
     "validate_plugin_cmd",
     "validate_skill_cmd",

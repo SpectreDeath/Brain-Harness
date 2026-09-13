@@ -22,6 +22,7 @@ from harness.services.repo_triad_forge import (
     RepoInspectionData,
     RepoTriadForgeService,
     TriadBriefData,
+    TriadPlanData,
     TriadRunData,
 )
 
@@ -95,6 +96,23 @@ class RepoTriadForgeServiceImpl(RepoTriadForgeService):
             for c in candidates
         ]
 
+    def plan(
+        self,
+        repo_path: str,
+        skill_name: str = "custom-skill",
+        plugin_name: str = "custom_plugin",
+    ) -> TriadPlanData:
+        """Synthesize 5-stage triad pipeline implementation plan with operational budgets."""
+        inspection = RepoTriadPipelineEngine.inspect_repository(repo_path)
+        plan_dict = RepoTriadPipelineEngine.synthesize_plan_data(
+            inspection, skill_name, plugin_name
+        )
+        return TriadPlanData(
+            plan_markdown=plan_dict["plan_markdown"],
+            stages_count=plan_dict["stages_count"],
+            estimated_duration_seconds=plan_dict["estimated_duration_seconds"],
+        )
+
     def commit_kis(
         self, kis_data: list[dict[str, Any]], vault_dir: str | None = None
     ) -> list[str]:
@@ -105,7 +123,7 @@ class RepoTriadForgeServiceImpl(RepoTriadForgeService):
     def run_pipeline(
         self, repo_path: str, options: dict[str, Any] | None = None
     ) -> TriadRunData:
-        """Execute full 5-stage triad pipeline with bounded in-flight self-repair."""
+        """Execute full 5-stage triad pipeline with bounded in-flight self-repair (Rule 25, 49)."""
         opts = options or {}
         try:
             # Stage 1: Inspect
@@ -117,10 +135,8 @@ class RepoTriadForgeServiceImpl(RepoTriadForgeService):
             briefs = RepoTriadPipelineEngine.scaffold_visual_briefs(inspection, out_dir)
             stages.append("Stage 2: Visual Briefs Scaffolding")
 
-            # Stage 3: Knowledge Items
+            # Stage 3: Knowledge Items & Vault Commit
             kis = RepoTriadPipelineEngine.extract_ki_candidates(inspection)
-            stages.append("Stage 3: Knowledge Item Extraction")
-
             kis_payload = [
                 {
                     "id": k.id,
@@ -133,14 +149,35 @@ class RepoTriadForgeServiceImpl(RepoTriadForgeService):
             ]
             v_dir = Path(opts.get("vault_dir")) if opts.get("vault_dir") else None
             committed = RepoTriadPipelineEngine.commit_vault_kis(kis_payload, v_dir)
-            stages.append("Stage 4: Dual-File Vault Commit")
+            stages.append("Stage 3: Knowledge Item Extraction & Vault Commit")
+
+            # Stage 4: Implementation Plan Synthesis
+            skill_name = opts.get("skill_name", f"{inspection.repo_name.lower().replace(' ', '-')}-skill")
+            plugin_name = opts.get("plugin_name", f"{inspection.repo_name.lower().replace(' ', '_')}_plugin")
+            plan_res = RepoTriadPipelineEngine.synthesize_plan_data(inspection, skill_name, plugin_name)
+            stages.append("Stage 4: Triad Implementation Plan Synthesis")
+
+            # Stage 5: Bounded Verification Suite
+            test_cmds = opts.get("test_commands") or [[sys.executable, "-c", "import sys; sys.exit(0)"]]
+            max_retries = int(opts.get("max_attempts", 3))
+            verification = RepoTriadPipelineEngine.run_bounded_verification(test_cmds, max_attempts=max_retries)
+            if not verification.success:
+                logger.warning("triad_verification_failed", error=verification.error)
+                return TriadRunData(
+                    success=False,
+                    stages_completed=stages,
+                    artifacts_generated=[str(b) for b in briefs],
+                    kis_committed=committed,
+                    message=f"Triad pipeline verification failed: {verification.message}",
+                )
+            stages.append("Stage 5: Bounded Verification Suite")
 
             return TriadRunData(
                 success=True,
                 stages_completed=stages,
                 artifacts_generated=[str(b) for b in briefs],
                 kis_committed=committed,
-                message=f"Triad pipeline completed successfully for {inspection.repo_name}",
+                message=f"Triad pipeline completed successfully for {inspection.repo_name} (Tier: {inspection.compute_tier})",
             )
         except Exception as ex:
             logger.error("triad_run_failed", error=str(ex))

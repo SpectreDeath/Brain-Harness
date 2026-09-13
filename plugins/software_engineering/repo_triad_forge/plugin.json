@@ -54,6 +54,30 @@
       ]
     },
     {
+      "name": "triad_plan",
+      "description": "Synthesize 5-stage triad pipeline implementation plan with operational budgets",
+      "parameters": [
+        {
+          "name": "repo_path",
+          "type": "string",
+          "description": "Path to target repository",
+          "required": true
+        },
+        {
+          "name": "skill_name",
+          "type": "string",
+          "description": "Target skill name",
+          "required": false
+        },
+        {
+          "name": "plugin_name",
+          "type": "string",
+          "description": "Target plugin name",
+          "required": false
+        }
+      ]
+    },
+    {
       "name": "triad_run",
       "description": "Execute full 5-stage triad pipeline with bounded in-flight self-repair",
       "parameters": [

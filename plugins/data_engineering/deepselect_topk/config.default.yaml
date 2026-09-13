@@ -1,0 +1,9 @@
+# Zero-fork Operational Configuration for DeepSelect TopK Plugin
+max_topk: 4096
+default_block_size: 1024
+default_compact_threshold: 1024
+max_vocab_size: 8388608
+denormal_limit: 4194304
+input_alignment_bytes: 1024
+output_alignment_bytes: 32
+default_timeout_seconds: 300

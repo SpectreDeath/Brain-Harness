@@ -24,6 +24,7 @@ from plugins.software_engineering.repo_triad_forge.main import (
     triad_briefs,
     triad_inspect,
     triad_ki_candidates,
+    triad_plan,
     triad_run,
 )
 
@@ -82,6 +83,15 @@ class TestRepoTriadForgePlugin:
             assert len(k.citations) >= 1
             assert k.confidence >= 0.85
 
+    def test_triad_plan_tool(self) -> None:
+        """Verify triad_plan tool generates structured 5-stage plan data."""
+        workspace_root = Path(__file__).resolve().parents[3]
+        plan_data = plugin.plan(str(workspace_root), "test-skill", "test_plugin")
+        assert plan_data.stages_count == 5
+        assert plan_data.estimated_duration_seconds > 0
+        assert "test-skill" in plan_data.plan_markdown
+        assert "test_plugin" in plan_data.plan_markdown
+
     def test_triad_run_pipeline_tool(self, tmp_path: Path) -> None:
         """Verify end-to-end triad pipeline tool execution."""
         workspace_root = Path(__file__).resolve().parents[3]
@@ -91,7 +101,8 @@ class TestRepoTriadForgePlugin:
         }
         res = plugin.run_pipeline(str(workspace_root), options)
         assert res.success is True
-        assert len(res.stages_completed) == 4
+        assert len(res.stages_completed) == 5
+        assert "Stage 5: Bounded Verification Suite" in res.stages_completed
         assert len(res.artifacts_generated) == 5
         assert len(res.kis_committed) >= 3
 
@@ -108,5 +119,10 @@ class TestRepoTriadForgePlugin:
         kis_res = triad_ki_candidates(workspace_root)
         assert len(kis_res) >= 3
 
+        plan_res = triad_plan(workspace_root, "test-skill", "test_plugin")
+        assert plan_res["stages_count"] == 5
+        assert "test-skill" in plan_res["plan_markdown"]
+
         run_res = triad_run(workspace_root, {"briefs_dir": str(tmp_path / "b"), "vault_dir": str(tmp_path / "v")})
         assert run_res["success"] is True
+        assert len(run_res["stages_completed"]) == 5

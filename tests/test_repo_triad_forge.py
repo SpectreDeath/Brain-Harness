@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import subprocess
 import sys
 from pathlib import Path
 
@@ -157,4 +158,61 @@ class TestRepoTriadForgeEngine:
         assert res.success is True
         assert len(res.artifacts) == 1
         assert "PASSED" in res.artifacts[0]
+
+    def test_synthesize_plan_data_and_structure(self) -> None:
+        """Verify structured plan data synthesis with operational budgets."""
+        inspection = RepoInspectionResult(
+            repo_path="/path/to/repo",
+            repo_name="demo-repo",
+            languages=("Python",),
+            packages=(),
+            has_git=True,
+            compute_tier="High",
+            composite_complexity=0.85,
+            total_files=250,
+        )
+        data = RepoTriadPipelineEngine.synthesize_plan_data(inspection, "demo-skill", "demo_plugin")
+        assert data["stages_count"] == 5
+        assert data["estimated_duration_seconds"] == 300
+        assert "Implementation Plan" in data["plan_markdown"]
+
+    def test_extract_ki_candidates_authentic_citations(self) -> None:
+        """Verify candidate Knowledge Items generate verifiable line-coordinate isnad citations."""
+        inspection = RepoInspectionResult(
+            repo_path="/path/to/repo",
+            repo_name="sample-repo",
+            languages=("Python",),
+            packages=("pkg-core",),
+            has_git=True,
+            compute_tier="Medium",
+            composite_complexity=0.6,
+            total_files=40,
+            blast_radius_roots=("src/models.py", "src/service.py", "main.py"),
+        )
+        candidates = RepoTriadPipelineEngine.extract_ki_candidates(inspection)
+        assert len(candidates) >= 3
+        for c in candidates:
+            assert len(c.citations) >= 1
+            assert any("#L" in cite for cite in c.citations)
+
+    def test_cli_subcommands_execution(self) -> None:
+        """Verify CLI subcommands (inspect, plan, ki-candidates) execute cleanly via subprocess."""
+        script_path = _SKILL_SCRIPTS / "triad_pipeline.py"
+        workspace_root = str(Path(__file__).parent.parent)
+
+        p_ins = subprocess.run(
+            [sys.executable, str(script_path), "inspect", "--repo", workspace_root],
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+        assert "Brain Harness" in p_ins.stdout
+
+        p_plan = subprocess.run(
+            [sys.executable, str(script_path), "plan", "--repo", workspace_root],
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+        assert "stages_count" in p_plan.stdout
 

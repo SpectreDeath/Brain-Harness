@@ -1,0 +1,35 @@
+{
+  "id": "ki_deepselect_adaptive_scan",
+  "title": "Adaptive Randomized Block Scan with Monotonic Threshold Filtering",
+  "source_target": "D:\\GitHub\\cloned\\Google\\DeepSelect",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_ki_deepselect_adaptive_scan",
+    "claims": [
+      {
+        "assertion": "DeepSelect decouples TopK compaction complexity from vocabulary length N by processing contiguous blocks B in uniform random permutation order, maintaining a monotonic non-decreasing threshold T initialized to -inf. Expected elements processed by in-loop Radix compactions is bounded by E[W] <= (1 + k/B2) * (k + B + B2) * H_m = O(k log(N/k)) when B, B2 = Theta(k).",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "D:\\GitHub\\cloned\\Google\\DeepSelect/docs/DeepSelect-deep-dive.md#L15-L95",
+            "sha256_hash": "N/A",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "D:\\GitHub\\cloned\\Google\\DeepSelect/csrc/cuda_kernels/common_parts.cuh#L1400-L1460",
+            "sha256_hash": "N/A",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "algorithm",
+    "topk",
+    "deepseek_sparse_attention",
+    "complexity_bound"
+  ]
+}
