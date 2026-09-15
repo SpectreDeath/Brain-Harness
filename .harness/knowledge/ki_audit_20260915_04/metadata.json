@@ -1,0 +1,19 @@
+{
+  "id": "ki_audit_20260915_04",
+  "title": "Multi-Store Autobiographical Memory & System Protection Boundary Fallback",
+  "created_at": "2026-09-15T17:30:00Z",
+  "source": "deep-repo-auditor",
+  "isnad": "deep-repo-auditor multi-axis audit on 2026-09-15; verified during session history extraction across conversations/*.db and .system_generated/logs/transcript.jsonl.",
+  "tags": [
+    "autobiographical-memory",
+    "protection-boundary",
+    "sqlite-uri",
+    "transcript-federation",
+    "fallback"
+  ],
+  "references": [
+    "AGENTS.md#L24",
+    "AGENTS.md#L48"
+  ],
+  "vault_version": "1.0"
+}

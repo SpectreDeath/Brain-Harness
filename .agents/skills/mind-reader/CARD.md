@@ -14,7 +14,7 @@
 │ Provides:    "brain_introspection"                     │
 ├────────────────────────────────────────────────────────┤
 │ Target:      Attach to external brain / IDE session    │
-│              to distill trajectories into grounded KIs.│
+│              or conversations/ to distill grounded KIs.│
 └────────────────────────────────────────────────────────┘
 ```
 

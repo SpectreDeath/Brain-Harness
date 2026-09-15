@@ -40,6 +40,12 @@ from harness.services.cellcog import (
     MultimodalCompilationResult,
     MultimodalProtocolCompiler,
 )
+from harness.services.claude_code import (
+    CLAUDE_CODE_BRIDGE_KEY,
+    BashGuardrailResult,
+    ClaudeCodeBridgeService,
+    PromptCompactionResult,
+)
 from harness.services.code_runner import (
     CODE_RUNNER_KEY,
     CodeRunnerService,
@@ -127,6 +133,13 @@ from harness.services.openclaw_bridge import (
     OpenClawToolBlock,
     OpenClawToolRepairService,
 )
+from harness.services.openhands_bridge import (
+    OPENHANDS_BRIDGE_KEY,
+    OpenHandsAction,
+    OpenHandsBridgeService,
+    OpenHandsEventStream,
+    OpenHandsObservation,
+)
 from harness.services.openrouter_gateway import (
     OPENROUTER_GATEWAY_KEY,
     OpenRouterChatResponse,
@@ -143,6 +156,7 @@ from harness.services.prompt_benchmark import (
 )
 from harness.services.refactor_engine import (
     REFACTOR_ENGINE_KEY,
+    CodeTransformResult,
     FunctionExtractResult,
     RefactorEngineService,
     UnusedFunctionsResult,
@@ -224,6 +238,7 @@ __all__ = [
     "ARTIFACT_GENERATOR_KEY",
     "BRAIN_BRIDGE_KEY",
     "CELLCOG_SERVICE_KEY",
+    "CLAUDE_CODE_BRIDGE_KEY",
     "CODE_RUNNER_KEY",
     "CONTEXT_COMPACTOR_KEY",
     "CONTEXT_TYPE_SYSTEM_KEY",
@@ -240,6 +255,7 @@ __all__ = [
     "OPENCLAW_A2A_KEY",
     "OPENCLAW_GATEWAY_KEY",
     "OPENCLAW_TOOL_REPAIR_KEY",
+    "OPENHANDS_BRIDGE_KEY",
     "OPENROUTER_GATEWAY_KEY",
     "PROMPT_BENCHMARK_KEY",
     "REFACTOR_ENGINE_KEY",
@@ -280,9 +296,11 @@ __all__ = [
     "CellCogRunResult",
     "CellCogService",
     "CircularImportResult",
+    "ClaudeCodeBridgeService",
     "ClusterKeywordsResult",
     "ClusterTextResult",
     "CodeRunnerService",
+    "CodeTransformResult",
     "CompactConversationResult",
     "ConstraintSolveResult",
     "ContextCompactorService",
@@ -336,6 +354,10 @@ __all__ = [
     "OpenClawGatewaySession",
     "OpenClawToolBlock",
     "OpenClawToolRepairService",
+    "OpenHandsAction",
+    "OpenHandsBridgeService",
+    "OpenHandsEventStream",
+    "OpenHandsObservation",
     "OpenRouterChatResponse",
     "OpenRouterGatewayService",
     "OpenRouterModelInfo",

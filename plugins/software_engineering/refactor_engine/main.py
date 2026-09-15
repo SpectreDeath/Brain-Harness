@@ -4,12 +4,14 @@ from __future__ import annotations
 
 import ast
 from typing import Any
+
 import structlog
 
 from harness.kernel.context import ServiceContext, ServiceKey
 from harness.plugins.base import HarnessPlugin
 from harness.services.refactor_engine import (
     REFACTOR_ENGINE_KEY,
+    CodeTransformResult,
     FunctionExtractResult,
     RefactorEngineService,
     UnusedFunctionsResult,
@@ -88,6 +90,165 @@ def extract_function_preview(
     }
 
 
+class NestedIfFlattener(ast.NodeTransformer):
+    """Collapses nested single-body if statements into compound and expressions (SIM102)."""
+
+    def __init__(self) -> None:
+        self.transforms_count = 0
+
+    def visit_If(self, node: ast.If) -> ast.AST:
+        self.generic_visit(node)
+        if (
+            not node.orelse
+            and len(node.body) == 1
+            and isinstance(node.body[0], ast.If)
+            and not node.body[0].orelse
+        ):
+            inner_if = node.body[0]
+            if isinstance(inner_if.test, ast.BoolOp) and isinstance(inner_if.test.op, ast.And):
+                combined_values = [node.test, *inner_if.test.values]
+            else:
+                combined_values = [node.test, inner_if.test]
+
+            compound_test = ast.BoolOp(
+                op=ast.And(),
+                values=combined_values,
+            )
+            ast.copy_location(compound_test, node.test)
+            new_node = ast.If(
+                test=compound_test,
+                body=inner_if.body,
+                orelse=[],
+            )
+            ast.copy_location(new_node, node)
+            self.transforms_count += 1
+            return self.visit_If(new_node)
+        return node
+
+
+class SlottedDataclassTransformer(ast.NodeTransformer):
+    """Transforms standard class definitions into slotted, frozen dataclasses conforming to Rule 12."""
+
+    def __init__(self, target_class: str) -> None:
+        self.target_class = target_class
+        self.transforms_count = 0
+
+    def visit_ClassDef(self, node: ast.ClassDef) -> ast.AST:
+        self.generic_visit(node)
+        if node.name == self.target_class:
+            has_dataclass = any(
+                (isinstance(d, ast.Name) and d.id == "dataclass")
+                or (
+                    isinstance(d, ast.Call)
+                    and isinstance(d.func, ast.Name)
+                    and d.func.id == "dataclass"
+                )
+                for d in node.decorator_list
+            )
+            if not has_dataclass:
+                decorator = ast.Call(
+                    func=ast.Name(id="dataclass", ctx=ast.Load()),
+                    args=[],
+                    keywords=[
+                        ast.keyword(arg="slots", value=ast.Constant(value=True)),
+                        ast.keyword(arg="frozen", value=ast.Constant(value=True)),
+                    ],
+                )
+                ast.copy_location(decorator, node)
+                node.decorator_list.insert(0, decorator)
+                self.transforms_count += 1
+        return node
+
+
+def flatten_nested_ifs(code: str) -> CodeTransformResult:
+    """Transform nested single-clause if statements into unified compound conditionals."""
+    try:
+        tree = ast.parse(code)
+    except SyntaxError as e:
+        return CodeTransformResult(
+            status="error",
+            original_code=code,
+            refactored_code=code,
+            transforms_applied=0,
+            error=f"SyntaxError: {e}",
+        )
+
+    transformer = NestedIfFlattener()
+    new_tree = transformer.visit(tree)
+    ast.fix_missing_locations(new_tree)
+
+    if transformer.transforms_count == 0:
+        return CodeTransformResult(
+            status="noop",
+            original_code=code,
+            refactored_code=code,
+            transforms_applied=0,
+            description="No nested if statements required flattening",
+        )
+
+    refactored = ast.unparse(new_tree)
+    return CodeTransformResult(
+        status="ok",
+        original_code=code,
+        refactored_code=refactored,
+        transforms_applied=transformer.transforms_count,
+        description=f"Flattened {transformer.transforms_count} nested if statements (SIM102)",
+    )
+
+
+def convert_to_slotted_dataclass(code: str, class_name: str) -> CodeTransformResult:
+    """Transform a class definition into a slotted, frozen dataclass conforming to Rule 12."""
+    try:
+        tree = ast.parse(code)
+    except SyntaxError as e:
+        return CodeTransformResult(
+            status="error",
+            original_code=code,
+            refactored_code=code,
+            transforms_applied=0,
+            error=f"SyntaxError: {e}",
+        )
+
+    # Check for dataclass import
+    has_dataclass_import = any(
+        isinstance(n, ast.ImportFrom)
+        and n.module == "dataclasses"
+        and any(alias.name == "dataclass" for alias in n.names)
+        for n in tree.body
+    )
+
+    transformer = SlottedDataclassTransformer(target_class=class_name)
+    new_tree = transformer.visit(tree)
+
+    if transformer.transforms_count == 0:
+        return CodeTransformResult(
+            status="noop",
+            original_code=code,
+            refactored_code=code,
+            transforms_applied=0,
+            description=f"Class '{class_name}' already a dataclass or not found",
+        )
+
+    if not has_dataclass_import:
+        import_node = ast.ImportFrom(
+            module="dataclasses",
+            names=[ast.alias(name="dataclass", asname=None)],
+            level=0,
+        )
+        new_tree.body.insert(0, import_node)
+
+    ast.fix_missing_locations(new_tree)
+    refactored = ast.unparse(new_tree)
+
+    return CodeTransformResult(
+        status="ok",
+        original_code=code,
+        refactored_code=refactored,
+        transforms_applied=transformer.transforms_count,
+        description=f"Converted class '{class_name}' to slotted, frozen dataclass",
+    )
+
+
 class RefactorEnginePlugin(HarnessPlugin, RefactorEngineService):
     """Harness Plugin providing AST-based unused function detection and function extraction."""
 
@@ -152,3 +313,48 @@ class RefactorEnginePlugin(HarnessPlugin, RefactorEngineService):
             refactored_preview=res.get("refactored_preview", ""),
             error=res.get("error"),
         )
+
+    def flatten_nested_ifs(self, code: str) -> CodeTransformResult:
+        return flatten_nested_ifs(code)
+
+    def convert_to_slotted_dataclass(self, code: str, class_name: str) -> CodeTransformResult:
+        return convert_to_slotted_dataclass(code, class_name)
+
+    def auto_remediate_diagnostics(
+        self,
+        code: str,
+        diagnostics: list[dict[str, Any]],
+    ) -> CodeTransformResult:
+        current_code = code
+        total_transforms = 0
+        descriptions: list[str] = []
+
+        rules = {d.get("rule", "").upper() or d.get("source", "").upper() for d in diagnostics}
+
+        if any("SIM102" in r or "NESTED_IF" in r for r in rules):
+            res = flatten_nested_ifs(current_code)
+            if res.status == "ok":
+                current_code = res.refactored_code
+                total_transforms += res.transforms_applied
+                descriptions.append(res.description)
+
+        if total_transforms == 0:
+            return CodeTransformResult(
+                status="noop",
+                original_code=code,
+                refactored_code=code,
+                transforms_applied=0,
+                description="No supported automated remediations matched diagnostics",
+            )
+
+        return CodeTransformResult(
+            status="ok",
+            original_code=code,
+            refactored_code=current_code,
+            transforms_applied=total_transforms,
+            description="; ".join(descriptions),
+        )
+
+
+# Export authoritative module-level singleton (Rule 45)
+plugin = RefactorEnginePlugin()

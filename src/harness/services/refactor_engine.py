@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from typing import Any, Protocol, runtime_checkable
+
 from pydantic import BaseModel, Field
 
 from harness.kernel.context import ServiceKey
@@ -29,9 +30,20 @@ class FunctionExtractResult(BaseModel):
     error: str | None = Field(default=None, description="Error details if extraction preview failed")
 
 
+class CodeTransformResult(BaseModel):
+    """Result of an AST code transformation (Rule 12)."""
+
+    status: str = Field(default="ok", description="Status indicator (ok, noop, error)")
+    original_code: str = Field(..., description="Source code before transformation")
+    refactored_code: str = Field(..., description="Synthesized code after transformation")
+    transforms_applied: int = Field(default=0, description="Count of discrete AST transformations executed")
+    description: str = Field(default="", description="Summary of applied refactoring")
+    error: str | None = Field(default=None, description="Error details if transformation failed")
+
+
 @runtime_checkable
 class RefactorEngineService(Protocol):
-    """Protocol for AST-based refactoring, dead code identification, and function extraction."""
+    """Protocol for AST-based refactoring, dead code identification, and automated code repair."""
 
     def find_unused_functions(self, code: str) -> UnusedFunctionsResult:
         """Find declared top-level functions in a module that are never invoked within that module."""
@@ -47,5 +59,22 @@ class RefactorEngineService(Protocol):
         """Generate a refactored preview extracting lines into a new function."""
         ...
 
+    def flatten_nested_ifs(self, code: str) -> CodeTransformResult:
+        """Automatically merge SIM102 nested if statements into single compound conditionals."""
+        ...
+
+    def convert_to_slotted_dataclass(self, code: str, class_name: str) -> CodeTransformResult:
+        """Transform a standard class into a slotted, frozen dataclass conforming to Rule 12."""
+        ...
+
+    def auto_remediate_diagnostics(
+        self,
+        code: str,
+        diagnostics: list[dict[str, Any]],
+    ) -> CodeTransformResult:
+        """Automatically repair code based on diagnostic findings from linters."""
+        ...
+
 
 REFACTOR_ENGINE_KEY: ServiceKey[RefactorEngineService] = ServiceKey("service.refactor_engine")
+

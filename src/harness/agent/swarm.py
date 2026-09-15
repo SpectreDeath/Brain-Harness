@@ -7,10 +7,11 @@ with transactional context isolation, topological dependency waves, and token go
 from __future__ import annotations
 
 import asyncio
-from collections import defaultdict
-from dataclasses import dataclass, field
 import time
-from typing import Any, Callable, cast
+from collections import defaultdict
+from collections.abc import Callable
+from dataclasses import dataclass, field
+from typing import Any, cast
 
 import structlog
 
@@ -486,6 +487,125 @@ class SwarmCoordinator:
             dag.add_node(node)
 
         return dag
+
+    def decompose_with_skills(
+        self,
+        objective: str,
+        skill_names: list[str] | None = None,
+        top_k: int = 3,
+        include_verifier: bool = True,
+    ) -> SwarmDAG:
+        """Decompose a high-level objective into a structured SwarmDAG derived from agent skills."""
+        try:
+            from harness.services.skill_graph import (
+                SKILL_REGISTRY_KEY,
+            )
+
+            registry = self.context.optional(SKILL_REGISTRY_KEY)
+        except Exception:
+            registry = None
+
+        if registry is None:
+            return self.decompose(objective)
+
+        target_skills: list[str] = []
+        if skill_names:
+            target_skills = list(skill_names)
+        else:
+            routing = registry.route_intent(objective, top_k=top_k)
+            target_skills = [
+                m.get("skill_name") or m.get("name")
+                for m in (routing.get("matches") or [])
+                if (m.get("skill_name") or m.get("name"))
+            ]
+            if not target_skills:
+                return self.decompose(objective)
+
+        dag = SwarmDAG()
+        prev_node_id: str | None = None
+
+        for skill_name in target_skills:
+            skill = registry.get_skill(skill_name)
+            if not skill:
+                continue
+
+            if skill.stages:
+                for stage in skill.stages:
+                    node_id = f"{skill.name}_stage_{stage.stage_num}"
+                    deps = [prev_node_id] if prev_node_id else []
+                    task_desc = (
+                        f"Execute [{skill.name}] Stage {stage.stage_num} ({stage.name}) "
+                        f"for objective: {objective}. Gate: {stage.completion_gate}"
+                    )
+                    node = SwarmNode(
+                        id=node_id,
+                        role=f"{skill.name}:{stage.name}",
+                        task=task_desc,
+                        dependencies=deps,
+                        tools=list(skill.tools) if skill.tools else [],
+                        allocated_tokens=15_000,
+                    )
+                    dag.add_node(node)
+                    prev_node_id = node_id
+            else:
+                node_id = f"skill_{skill.name}"
+                deps = [prev_node_id] if prev_node_id else []
+                node = SwarmNode(
+                    id=node_id,
+                    role=f"specialist:{skill.name}",
+                    task=f"Apply skill [{skill.name}] target: {skill.target} on objective: {objective}",
+                    dependencies=deps,
+                    tools=list(skill.tools) if skill.tools else [],
+                    allocated_tokens=20_000,
+                )
+                dag.add_node(node)
+                prev_node_id = node_id
+
+        if include_verifier and prev_node_id:
+            verifier_id = "adversarial_verifier"
+            dag.add_node(
+                SwarmNode(
+                    id=verifier_id,
+                    role="adversarial_verifier",
+                    task=f"Rigorously verify outputs and assert invariants for objective: {objective}",
+                    dependencies=[prev_node_id],
+                    tools=["verify_contract", "arch_lint"],
+                    allocated_tokens=10_000,
+                )
+            )
+
+        if not dag.nodes:
+            return self.decompose(objective)
+
+        return dag
+
+    async def dispatch_skill_swarm(
+        self,
+        objective: str,
+        skill_names: list[str] | None = None,
+        *,
+        max_total_tokens: int = 100_000,
+        context: dict[str, Any] | None = None,
+        custom_executor: Callable[[SwarmNode, dict[str, Any]], Any] | None = None,
+        run_id: str | None = None,
+        consensus_threshold: float = 0.66,
+        include_verifier: bool = True,
+    ) -> SwarmTaskResult:
+        """Decompose objective into a skill-driven SwarmDAG and execute with token governance."""
+        dag = self.decompose_with_skills(
+            objective,
+            skill_names=skill_names,
+            include_verifier=include_verifier,
+        )
+        return await self.run_swarm(
+            dag=dag,
+            objective=objective,
+            max_total_tokens=max_total_tokens,
+            context=context,
+            custom_executor=custom_executor,
+            run_id=run_id,
+            consensus_threshold=consensus_threshold,
+        )
 
     async def run_swarm(
         self,

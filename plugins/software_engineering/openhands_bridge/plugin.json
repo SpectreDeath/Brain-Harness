@@ -1,0 +1,12 @@
+{
+  "name": "plugin.openhands_bridge",
+  "version": "1.0.0",
+  "description": "OpenHands Bridge plugin for action-observation streaming and sandboxed proactor execution",
+  "entrypoint": "main.py",
+  "trusted": true,
+  "author": "Brain Harness Authors",
+  "provides": [
+    "service.openhands_bridge"
+  ],
+  "requires": []
+}

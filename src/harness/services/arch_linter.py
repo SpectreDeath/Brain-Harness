@@ -68,6 +68,7 @@ class FileLintResult(BaseModel):
     error_count: int = Field(default=0, description="Number of error-level diagnostics found")
     diagnostics: list[FileDiagnostic] = Field(default_factory=list, description="List of diagnostics")
     formatted_summary: str = Field(default="", description="Rendered summary for agent observation injection")
+    remediated_code: str | None = Field(default=None, description="Auto-remediated code preview if available")
 
 
 @runtime_checkable

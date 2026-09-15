@@ -1,0 +1,21 @@
+{
+  "id": "ki_audit_20260915_01",
+  "title": "Micro-Kernel IoC Topo-Sort & Domain-Partitioned Plugin Synthesis",
+  "created_at": "2026-09-15T17:30:00Z",
+  "source": "deep-repo-auditor",
+  "isnad": "deep-repo-auditor multi-axis audit on 2026-09-15; verified in src/harness/kernel/lifecycle.py, src/harness/kernel/context.py, and 11 plugin domain directories.",
+  "tags": [
+    "architecture",
+    "ioc-container",
+    "plugin-lifecycle",
+    "domain-partitioning",
+    "topological-sort"
+  ],
+  "references": [
+    "src/harness/kernel/lifecycle.py#L45-L110",
+    "src/harness/kernel/context.py#L25-L95",
+    "AGENTS.md#L3-L7",
+    "AGENTS.md#L20"
+  ],
+  "vault_version": "1.0"
+}

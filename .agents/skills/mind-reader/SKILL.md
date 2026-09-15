@@ -28,7 +28,7 @@ Mount the target brain folder using the `plugin.brain_bridge` entrypoint:
    - `read_transcripts`: `true` to ingest execution steps, tool invocations, and error recoveries.
    - `attach_mode`: `"lens"` (read-only ephemeral introspection).
 2. **Verify Format Signature**:
-   Confirm whether the detected signature is `antigravity_brain`, `harness_instance`, `ide_memo`, `obsidian_vault`, `git_repository`, or `raw_docs`. (For in-depth Git repository code and commit trajectory distillation, see `/repo-reader`).
+   Confirm whether the detected signature is `antigravity_brain`, `antigravity_conversations`, `harness_instance`, `ide_memo`, `obsidian_vault`, `git_repository`, or `raw_docs`. (For in-depth Git repository code and commit trajectory distillation, see `/repo-reader`). When `antigravity_conversations` is detected (indicated by `*.db` files containing `trajectory_meta`), attach via read-only SQLite URI (`file:...?mode=ro`), query `steps` and `trajectory_metadata_blob` to filter by workspace URI, and extract trajectory step payloads and tool invocations.
 3. **Log Mount Volume**:
    Confirm chunk count, transcript count, and unique vocabulary index size.
 

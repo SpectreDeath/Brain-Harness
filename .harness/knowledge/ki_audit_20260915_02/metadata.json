@@ -1,0 +1,20 @@
+{
+  "id": "ki_audit_20260915_02",
+  "title": "Dynamic 5D Compute Complexity & Reasoning Budget Escalation",
+  "created_at": "2026-09-15T17:30:00Z",
+  "source": "deep-repo-auditor",
+  "isnad": "deep-repo-auditor multi-axis audit on 2026-09-15; verified via compute-assessor-20260915-172943.html, src/harness/services/compute_assessor.py, and tests/test_compute_assessor.py.",
+  "tags": [
+    "compute-budget",
+    "5d-complexity",
+    "reasoning-escalation",
+    "model-routing",
+    "timeout-scaling"
+  ],
+  "references": [
+    "src/harness/services/compute_assessor.py",
+    "tests/test_compute_assessor.py",
+    "AGENTS.md#L27"
+  ],
+  "vault_version": "1.0"
+}

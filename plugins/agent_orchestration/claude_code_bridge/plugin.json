@@ -1,0 +1,12 @@
+{
+  "name": "plugin.claude_code_bridge",
+  "version": "1.0.0",
+  "description": "Claude Code Bridge plugin providing pre-tool bash command safety guardrails and prompt compaction",
+  "entrypoint": "main.py",
+  "trusted": true,
+  "author": "Brain Harness Authors",
+  "provides": [
+    "service.claude_code_bridge"
+  ],
+  "requires": []
+}
