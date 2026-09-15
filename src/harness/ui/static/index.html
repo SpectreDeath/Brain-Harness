@@ -732,6 +732,129 @@
       z-index: 10;
     }
 
+    /* Swarm DAG Canvas Styles */
+    .swarm-canvas-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      padding-bottom: 0.85rem;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 1rem;
+    }
+    .metric-chip {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 6px;
+      padding: 0.25rem 0.6rem;
+      font-size: 0.8rem;
+      font-family: var(--font-mono);
+      color: var(--text-secondary);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .metric-chip.active {
+      border-color: rgba(99, 102, 241, 0.4);
+      color: var(--accent-indigo);
+      background: rgba(99, 102, 241, 0.08);
+    }
+    .swarm-alert-banner {
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      margin-bottom: 1rem;
+      font-size: 0.85rem;
+      color: #fbbf24;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .wave-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 0.85rem;
+      margin-top: 0.75rem;
+    }
+    .wave-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 0.85rem;
+      transition: all 0.2s ease;
+    }
+    .wave-card:hover {
+      border-color: var(--accent-indigo);
+      background: rgba(99, 102, 241, 0.04);
+    }
+    .wave-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+    .wave-node-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      padding: 0.15rem 0.4rem;
+      margin: 0.2rem 0.2rem 0 0;
+      color: var(--text-secondary);
+    }
+    .wave-node-tag.critical {
+      border-color: rgba(245, 158, 11, 0.6);
+      color: #fbbf24;
+      background: rgba(245, 158, 11, 0.1);
+    }
+    .tab-nav {
+      display: flex;
+      gap: 0.4rem;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 0.85rem;
+      padding-bottom: 0.4rem;
+    }
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      padding: 0.4rem 0.75rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+    .tab-btn.active {
+      background: rgba(99, 102, 241, 0.15);
+      color: var(--accent-indigo);
+      font-weight: 600;
+    }
+    .skill-chip-pill {
+      font-size: 0.72rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .skill-chip-pill:hover {
+      border-color: var(--accent-indigo);
+      color: var(--text-primary);
+      background: rgba(99, 102, 241, 0.1);
+    }
+
     /* Toast System */
     #toastContainer {
       position: fixed;
@@ -1196,7 +1319,7 @@
         </div>
       </div>
 
-      <!-- VIEW 5: MULTI-AGENT SWARM (NEW) -->
+      <!-- VIEW 5: MULTI-AGENT SWARM & LIVE DAG CANVAS -->
       <div class="view-panel" id="view-swarm">
         <div class="grid-container">
           <div class="card col-5">
@@ -1206,10 +1329,49 @@
                 <span>Swarm Mission Launcher</span>
               </div>
             </div>
-            <div style="display:flex; flex-direction:column; gap:0.85rem;">
+            <div class="tab-nav">
+              <button class="tab-btn active" id="tabLauncherSkill" onclick="setSwarmLauncherTab('skill')">Dynamic Skill Swarm</button>
+              <button class="tab-btn" id="tabLauncherConsensus" onclick="setSwarmLauncherTab('consensus')">Consensus Debate</button>
+            </div>
+
+            <!-- Dynamic Skill Swarm Launcher Form -->
+            <div id="formSkillSwarm" style="display:flex; flex-direction:column; gap:0.85rem;">
+              <div class="form-group">
+                <label class="form-label">Objective / Autonomous Goal</label>
+                <textarea id="swarmSkillObjectiveInput" class="agent-input w-full" rows="3" placeholder="Enter objective for dynamic skill-driven swarm...">Audit and optimize deep-module seams across repository</textarea>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Skills (Optional auto-routing if blank)</label>
+                <input type="text" id="swarmSkillsInput" class="agent-input w-full" placeholder="e.g. codebase-design, tdd, adversarial-agent-verifier">
+                <div style="display:flex; gap:0.3rem; flex-wrap:wrap; margin-top:0.35rem;">
+                  <span class="skill-chip-pill" onclick="appendSkillTag('codebase-design')">+ codebase-design</span>
+                  <span class="skill-chip-pill" onclick="appendSkillTag('tdd')">+ tdd</span>
+                  <span class="skill-chip-pill" onclick="appendSkillTag('deep-repo-auditor')">+ deep-repo-auditor</span>
+                  <span class="skill-chip-pill" onclick="appendSkillTag('adversarial-agent-verifier')">+ adversarial-verifier</span>
+                </div>
+              </div>
+              <div class="form-grid-2">
+                <div class="form-group">
+                  <label class="form-label">Token Budget</label>
+                  <input type="number" id="swarmSkillTokensInput" class="agent-input w-full" value="100000" step="10000">
+                </div>
+                <div class="form-group" style="display:flex; flex-direction:column; justify-content:center;">
+                  <label class="form-label" style="display:flex; align-items:center; gap:0.45rem; cursor:pointer; margin-top:0.75rem;">
+                    <input type="checkbox" id="swarmIncludeVerifierCheckbox" checked style="accent-color:var(--accent-indigo);">
+                    <span style="font-size:0.82rem;">Adversarial Verifier</span>
+                  </label>
+                </div>
+              </div>
+              <button class="btn btn-purple w-full" id="btnDispatchSkillSwarm" onclick="dispatchSkillSwarm()">
+                <span>⚡ Dispatch Skill Swarm</span>
+              </button>
+            </div>
+
+            <!-- Consensus Debate Launcher Form (Hidden by default) -->
+            <div id="formConsensusSwarm" style="display:none; flex-direction:column; gap:0.85rem;">
               <div class="form-group">
                 <label class="form-label">Objective / Deliberation Topic</label>
-                <textarea id="swarmObjectiveInput" class="agent-input w-full" placeholder="Enter objective for multi-agent consensus debate...">Architect a fault-tolerant distributed plugin cache layer</textarea>
+                <textarea id="swarmObjectiveInput" class="agent-input w-full" rows="3" placeholder="Enter objective for multi-agent consensus debate...">Architect a fault-tolerant distributed plugin cache layer</textarea>
               </div>
               <div class="form-grid-2">
                 <div class="form-group">
@@ -1222,7 +1384,7 @@
                 </div>
               </div>
               <button class="btn btn-purple w-full" id="btnLaunchSwarm" onclick="executeSwarmRun()">
-                <span>⚡ Launch Multi-Agent Swarm</span>
+                <span>⚡ Launch Consensus Swarm</span>
               </button>
             </div>
           </div>
@@ -1231,24 +1393,70 @@
             <div class="card-title">
               <div class="card-title-icon">
                 <span>🌿</span>
-                <span>Swarm Execution History & Consensus Runs</span>
+                <span>Swarm Execution History & Runs</span>
               </div>
               <button class="btn btn-outline btn-xs" onclick="loadSwarmRuns()">Refresh</button>
             </div>
-            <div class="table-scroll" style="max-height:480px;">
+            <div class="table-scroll" style="max-height:360px;">
               <table class="data-table">
                 <thead>
                   <tr>
                     <th>Run ID</th>
                     <th>Status</th>
-                    <th>Consensus</th>
-                    <th>Details</th>
+                    <th>Tokens / Latency</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody id="swarmRunsTableBody">
                   <tr><td colspan="4" style="text-align:center; color:var(--text-secondary);">Querying swarm runs...</td></tr>
                 </tbody>
               </table>
+            </div>
+          </div>
+
+          <!-- FULL-WIDTH LIVE SWARM DAG CANVAS CARD -->
+          <div class="card col-12" id="swarmCanvasCard">
+            <div class="swarm-canvas-header">
+              <div style="display:flex; align-items:center; gap:0.65rem; flex-wrap:wrap;">
+                <span style="font-size:1.25rem;">🕸️</span>
+                <span style="font-weight:700; font-size:1.05rem;">Live Swarm Execution DAG Canvas</span>
+                <span class="pill enabled" id="canvasRunIdBadge" style="font-size:0.75rem;">No active run selected</span>
+                <span class="pill" id="canvasStatusBadge" style="display:none; font-size:0.75rem;">completed</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:0.4rem; flex-wrap:wrap;">
+                <span class="metric-chip" id="canvasDurationChip">⏱️ 0.00s</span>
+                <span class="metric-chip" id="canvasCritPathChip">⚡ Crit Path: —</span>
+                <span class="metric-chip" id="canvasTokensChip">🪙 0t</span>
+                <span class="metric-chip" id="canvasWavesChip">🌊 0 waves</span>
+                <button class="btn btn-outline btn-xs" onclick="reRenderSwarmCanvas()">Re-render</button>
+                <button class="btn btn-outline btn-xs" onclick="toggleSwarmJsonView()">Raw JSON</button>
+              </div>
+            </div>
+
+            <!-- Alert banner for critical path and bottlenecks -->
+            <div id="swarmAlertBanner" class="swarm-alert-banner" style="display:none;">
+              <div id="swarmAlertText">🎯 Critical Path: -</div>
+              <div id="swarmBottleneckText" style="color:#f87171; font-weight:600;"></div>
+            </div>
+
+            <!-- Mermaid DAG Viewport -->
+            <div class="mermaid-container" id="swarmMermaidContainer" style="min-height:380px;">
+              <div class="mermaid" id="swarmMermaidBox">graph TD
+  Start[Select a swarm run from above or launch a mission to view the live DAG]</div>
+            </div>
+
+            <!-- Wave breakdown -->
+            <div id="swarmWavesSection" style="margin-top:1.25rem; display:none;">
+              <div style="font-weight:600; font-size:0.9rem; color:var(--text-primary); margin-bottom:0.4rem; display:flex; justify-content:space-between;">
+                <span>🌊 Execution Wave Timeline</span>
+                <span id="waveCountSummary" style="font-size:0.8rem; color:var(--text-secondary);"></span>
+              </div>
+              <div class="wave-grid" id="swarmWaveGrid"></div>
+            </div>
+
+            <!-- Raw JSON Inspector (collapsible) -->
+            <div id="swarmJsonTreeBox" style="display:none; margin-top:1rem;">
+              <pre class="terminal terminal-scroll" id="swarmJsonTreeContent" style="max-height:260px; font-size:0.78rem;"></pre>
             </div>
           </div>
         </div>
@@ -1615,6 +1823,15 @@
           const msg = JSON.parse(event.data);
           if (msg.type === 'event' && msg.data) {
             handleIncomingEvent(msg.data);
+          } else if (msg.channel === 'agent' || msg.type === 'swarm_task_completed') {
+            if (activeView === 'swarm') {
+              loadSwarmRuns();
+              const payload = msg.message || msg.data || {};
+              const targetRid = payload.run_id || (payload.data && payload.data.run_id);
+              if (targetRid) {
+                inspectSwarmRun(targetRid);
+              }
+            }
           }
         } catch(e) {}
       };
@@ -1656,6 +1873,16 @@
 
       if (activeView === 'timeline') {
         renderTimelineList(globalEvents);
+      }
+
+      if (etype.includes('swarm') || etype === 'agent_task_completed') {
+        if (activeView === 'swarm') {
+          loadSwarmRuns();
+          const targetRid = (ev.payload && (ev.payload.run_id || (ev.payload.data && ev.payload.data.run_id))) || currentSwarmRunId;
+          if (targetRid) {
+            inspectSwarmRun(targetRid);
+          }
+        }
       }
     }
 
@@ -2099,7 +2326,92 @@
       }
     }
 
-    // Swarm Execution
+    // Swarm Execution & Live DAG Canvas State
+    let currentSwarmRunId = null;
+    let currentSwarmTreeData = null;
+
+    function setSwarmLauncherTab(tab) {
+      const btnSkill = document.getElementById('tabLauncherSkill');
+      const btnConsensus = document.getElementById('tabLauncherConsensus');
+      const formSkill = document.getElementById('formSkillSwarm');
+      const formConsensus = document.getElementById('formConsensusSwarm');
+
+      if (tab === 'skill') {
+        btnSkill.classList.add('active');
+        btnConsensus.classList.remove('active');
+        formSkill.style.display = 'flex';
+        formConsensus.style.display = 'none';
+      } else {
+        btnSkill.classList.remove('active');
+        btnConsensus.classList.add('active');
+        formSkill.style.display = 'none';
+        formConsensus.style.display = 'flex';
+      }
+    }
+
+    function appendSkillTag(skillName) {
+      const input = document.getElementById('swarmSkillsInput');
+      const current = input.value.trim();
+      if (!current) {
+        input.value = skillName;
+      } else {
+        const parts = current.split(',').map(s => s.trim());
+        if (!parts.includes(skillName)) {
+          parts.push(skillName);
+          input.value = parts.join(', ');
+        }
+      }
+    }
+
+    async function dispatchSkillSwarm() {
+      const objective = document.getElementById('swarmSkillObjectiveInput').value.trim();
+      const rawSkills = document.getElementById('swarmSkillsInput').value.trim();
+      const tokens = parseInt(document.getElementById('swarmSkillTokensInput').value, 10) || 100000;
+      const includeVerifier = document.getElementById('swarmIncludeVerifierCheckbox').checked;
+
+      if (!objective) {
+        showToast('Please enter an objective for the skill swarm', 'error');
+        return;
+      }
+
+      const skills = rawSkills ? rawSkills.split(',').map(s => s.trim()).filter(Boolean) : null;
+      const btn = document.getElementById('btnDispatchSkillSwarm');
+      btn.disabled = true;
+      btn.innerHTML = '<span>⚡ Routing Skills & Decomposing...</span>';
+
+      document.getElementById('canvasRunIdBadge').textContent = 'Dispatching Swarm...';
+      document.getElementById('canvasRunIdBadge').className = 'pill enabled';
+
+      try {
+        const res = await fetch('/api/swarm/dispatch-skill', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            objective,
+            skills,
+            max_tokens: tokens,
+            include_verifier: includeVerifier
+          })
+        });
+        const data = await res.json();
+        if (data.status === 'ok') {
+          showToast('Skill swarm completed successfully!', 'success');
+          const runId = data.result.run_id || (data.result.execution_tree && data.result.execution_tree.run_id);
+          await loadSwarmRuns();
+          if (runId) {
+            await inspectSwarmRun(runId);
+          }
+        } else {
+          showToast(`Skill swarm error: ${data.error || 'Unknown'}`, 'error');
+        }
+      } catch (err) {
+        showToast(`Skill swarm dispatch failed: ${err}`, 'error');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<span>⚡ Dispatch Skill Swarm</span>';
+      }
+    }
+
     async function executeSwarmRun() {
       const objective = document.getElementById('swarmObjectiveInput').value.trim();
       const tokens = parseInt(document.getElementById('swarmTokensInput').value, 10) || 50000;
@@ -2123,15 +2435,19 @@
         const data = await res.json();
         if (data.status === 'ok') {
           showToast('Swarm converged on consensus solution!', 'success');
+          const runId = data.result.run_id;
+          await loadSwarmRuns();
+          if (runId) {
+            await inspectSwarmRun(runId);
+          }
         } else {
           showToast(`Swarm completed with note: ${data.error || 'Ready'}`, 'info');
         }
-        await loadSwarmRuns();
       } catch (err) {
         showToast(`Swarm run error: ${err}`, 'error');
       } finally {
         btn.disabled = false;
-        btn.textContent = '⚡ Launch Multi-Agent Swarm';
+        btn.textContent = '⚡ Launch Consensus Swarm';
       }
     }
 
@@ -2150,26 +2466,156 @@
 
         for (const r of runs) {
           const rid = r.run_id || r.id || 'swarm-run';
+          const dur = r.duration ? r.duration.toFixed(2) + 's' : (r.execution_tree && r.execution_tree.duration ? r.execution_tree.duration.toFixed(2) + 's' : '—');
+          const tok = r.total_tokens || (r.execution_tree ? r.execution_tree.total_tokens : 0);
           const tr = document.createElement('tr');
           tr.innerHTML = `
-            <td class="text-code" style="font-size:0.8rem;">${esc(rid.substring(0, 12))}</td>
+            <td class="text-code" style="font-size:0.8rem; font-weight:600; color:var(--accent-indigo);">${esc(rid.substring(0, 16))}</td>
             <td><span class="pill enabled">${esc(r.status || 'completed')}</span></td>
-            <td>${Math.round((r.consensus_score || 0.85) * 100)}%</td>
-            <td><button class="btn btn-outline btn-xs" onclick="inspectSwarmRun('${esc(rid)}')">Inspect Tree</button></td>
+            <td style="font-size:0.8rem; color:var(--text-secondary);">${esc(dur)} | ${tok}t</td>
+            <td><button class="btn btn-purple btn-xs" onclick="inspectSwarmRun('${esc(rid)}')">View Canvas ➔</button></td>
           `;
           tbody.appendChild(tr);
+        }
+
+        if (!currentSwarmRunId && runs.length > 0) {
+          const latestRid = runs[runs.length - 1].run_id || runs[runs.length - 1].id;
+          if (latestRid) {
+            inspectSwarmRun(latestRid);
+          }
         }
       } catch (err) {}
     }
 
     async function inspectSwarmRun(runId) {
+      if (!runId) return;
+      currentSwarmRunId = runId;
+      const runBadge = document.getElementById('canvasRunIdBadge');
+      runBadge.textContent = runId;
+      runBadge.className = 'pill enabled';
+
+      const container = document.getElementById('swarmMermaidContainer');
+      container.innerHTML = '<div style="color:var(--text-muted); font-size:0.88rem;">Synthesizing execution DAG topology...</div>';
+
       try {
-        const res = await fetch(`/api/swarm/runs/${runId}/tree`);
+        const res = await fetch(`/api/swarm/runs/${runId}/mermaid`);
         const data = await res.json();
-        alert(JSON.stringify(data.tree || data, null, 2));
+        if (data.status === 'ok') {
+          renderSwarmCanvasWithData(data);
+          const card = document.getElementById('swarmCanvasCard');
+          if (card) {
+            card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }
+        } else {
+          container.innerHTML = `<div style="color:var(--accent-rose); font-size:0.88rem;">Error loading run DAG: ${esc(data.error || 'Unknown error')}</div>`;
+        }
       } catch (err) {
-        showToast(`Tree inspection error: ${err}`, 'error');
+        container.innerHTML = `<div style="color:var(--accent-rose); font-size:0.88rem;">Network error fetching run: ${esc(err)}</div>`;
       }
+    }
+
+    function renderSwarmCanvasWithData(data) {
+      const tree = data.tree || {};
+      currentSwarmTreeData = tree;
+
+      // Update Header Badges
+      const runBadge = document.getElementById('canvasRunIdBadge');
+      runBadge.textContent = data.run_id || tree.run_id || 'Active Swarm';
+
+      const statusBadge = document.getElementById('canvasStatusBadge');
+      statusBadge.style.display = 'inline-block';
+      const st = tree.status || 'completed';
+      statusBadge.textContent = st;
+      statusBadge.className = `pill ${st === 'completed' ? 'enabled' : (st === 'running' ? 'running' : 'disabled')}`;
+
+      // Metrics Chips
+      const dur = tree.duration ? tree.duration.toFixed(2) + 's' : '0.00s';
+      document.getElementById('canvasDurationChip').textContent = `⏱️ ${dur}`;
+      const critDur = tree.critical_path_duration ? `${tree.critical_path_duration.toFixed(2)}s` : (tree.critical_path ? `${tree.critical_path.length} nodes` : '—');
+      document.getElementById('canvasCritPathChip').textContent = `⚡ Crit Path: ${critDur}`;
+      document.getElementById('canvasTokensChip').textContent = `🪙 ${tree.total_tokens || 0}t`;
+      const wavesCount = tree.waves ? tree.waves.length : (tree.nodes_total || 0);
+      document.getElementById('canvasWavesChip').textContent = `🌊 ${wavesCount} waves`;
+
+      // Critical Path & Bottlenecks Banner
+      const alertBanner = document.getElementById('swarmAlertBanner');
+      const alertText = document.getElementById('swarmAlertText');
+      const bText = document.getElementById('swarmBottleneckText');
+
+      if (tree.critical_path && tree.critical_path.length > 0) {
+        alertBanner.style.display = 'flex';
+        alertText.innerHTML = `<b>🎯 Critical Path:</b> ${tree.critical_path.map(esc).join(' ➔ ')}${tree.critical_path_duration ? ` (${tree.critical_path_duration}s)` : ''}`;
+      } else {
+        alertBanner.style.display = 'none';
+      }
+
+      if (tree.bottlenecks && tree.bottlenecks.length > 0) {
+        bText.innerHTML = '⚠️ Bottlenecks: ' + tree.bottlenecks.map(b => `${esc(b.node_id)} (${(b.reasons || []).join(', ')})`).join(' | ');
+      } else {
+        bText.innerHTML = '';
+      }
+
+      // Render Mermaid Diagram
+      const container = document.getElementById('swarmMermaidContainer');
+      const mermaidCode = data.mermaid || 'graph TD\n  Start[No DAG Data]';
+      container.innerHTML = `<div class="mermaid" id="swarmMermaidBox">${mermaidCode}</div>`;
+      try {
+        mermaid.run({ nodes: container.querySelectorAll('.mermaid') });
+      } catch (err) {
+        console.warn('Mermaid rendering warning', err);
+      }
+
+      // Render Waves Section
+      const wavesSec = document.getElementById('swarmWavesSection');
+      const waveGrid = document.getElementById('swarmWaveGrid');
+      const waves = tree.waves || [];
+
+      if (waves.length > 0) {
+        wavesSec.style.display = 'block';
+        document.getElementById('waveCountSummary').textContent = `${waves.length} waves executed`;
+        waveGrid.innerHTML = '';
+
+        const critSet = new Set(tree.critical_path || []);
+        waves.forEach((w, idx) => {
+          const wCard = document.createElement('div');
+          wCard.className = 'wave-card';
+          const wDur = w.duration ? w.duration.toFixed(2) + 's' : '0.00s';
+          const wTok = w.total_tokens || 0;
+          const nodeTags = (w.node_ids || []).map(nid => {
+            const isCrit = critSet.has(nid);
+            return `<span class="wave-node-tag ${isCrit ? 'critical' : ''}">${esc(nid)}${isCrit ? ' ★' : ''}</span>`;
+          }).join('');
+
+          wCard.innerHTML = `
+            <div class="wave-title">
+              <span>Wave ${w.wave_index !== undefined ? w.wave_index + 1 : idx + 1}</span>
+              <span style="font-size:0.75rem; color:var(--accent-cyan); font-family:var(--font-mono);">${wDur} | ${wTok}t</span>
+            </div>
+            <div style="font-size:0.78rem; color:var(--text-secondary); margin-bottom:0.35rem;">Nodes (${(w.node_ids || []).length}):</div>
+            <div>${nodeTags}</div>
+            ${w.bottleneck_node_id ? `<div style="font-size:0.72rem; color:#f87171; margin-top:0.4rem;">Bottleneck: <b>${esc(w.bottleneck_node_id)}</b></div>` : ''}
+          `;
+          waveGrid.appendChild(wCard);
+        });
+      } else {
+        wavesSec.style.display = 'none';
+      }
+
+      // Populate JSON inspector
+      document.getElementById('swarmJsonTreeContent').textContent = JSON.stringify(tree, null, 2);
+    }
+
+    function reRenderSwarmCanvas() {
+      if (currentSwarmRunId) {
+        inspectSwarmRun(currentSwarmRunId);
+      } else {
+        showToast('No active swarm run selected', 'info');
+      }
+    }
+
+    function toggleSwarmJsonView() {
+      const box = document.getElementById('swarmJsonTreeBox');
+      box.style.display = box.style.display === 'none' ? 'block' : 'none';
     }
 
     // Skills Knowledge Graph

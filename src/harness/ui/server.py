@@ -10,6 +10,7 @@ Provides:
 
 from __future__ import annotations
 
+import re
 import shutil
 import tempfile
 from pathlib import Path
@@ -21,7 +22,7 @@ from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 
 from harness.agent.base import AGENT_LOOP_KEY
-from harness.agent.swarm import SWARM_COORDINATOR_KEY, SwarmCoordinator
+from harness.agent.swarm import SWARM_COORDINATOR_KEY
 from harness.creator.introspection import RuntimeIntrospector
 from harness.events.bus import EventBus
 from harness.ingestion.pipeline import PluginIngestionPipeline
@@ -29,6 +30,7 @@ from harness.kernel.context import ServiceContext
 from harness.kernel.lifecycle import PluginLifecycle, PluginState
 from harness.kernel.runtime import HarnessRuntime
 from harness.plugins.base import HarnessPlugin
+from harness.services.agent_graph import AGENT_GRAPH_STORE_KEY
 from harness.services.tools import TOOL_REGISTRY_KEY
 
 logger = structlog.get_logger()
@@ -80,6 +82,75 @@ class SwarmRunRequest(BaseModel):
     max_tokens: int = 100_000
     consensus_threshold: float = 0.66
     run_id: str | None = None
+
+
+class SwarmSkillDispatchRequest(BaseModel):
+    objective: str
+    skills: list[str] | None = None
+    max_tokens: int = 100_000
+    include_verifier: bool = True
+    consensus_threshold: float = 0.66
+    run_id: str | None = None
+
+
+def build_swarm_mermaid_graph(run_id: str, tree_data: dict[str, Any]) -> str:
+    """Render high-fidelity dark-mode Mermaid DAG with stateful classes and critical path highlighting."""
+    nodes = tree_data.get("nodes") or {}
+    critical_path = set(tree_data.get("critical_path") or [])
+
+    lines = [
+        "graph TD",
+        "    classDef completed fill:#064e3b,stroke:#10b981,stroke-width:2px,color:#ecfdf5;",
+        "    classDef completedCritical fill:#064e3b,stroke:#f59e0b,stroke-width:3px,color:#ecfdf5;",
+        "    classDef running fill:#1e3a8a,stroke:#3b82f6,stroke-width:2px,color:#eff6ff;",
+        "    classDef runningCritical fill:#1e3a8a,stroke:#f59e0b,stroke-width:3px,color:#eff6ff;",
+        "    classDef failed fill:#7f1d1d,stroke:#ef4444,stroke-width:2px,color:#fef2f2;",
+        "    classDef pending fill:#1e293b,stroke:#475569,stroke-width:1px,color:#94a3b8;",
+    ]
+
+    if not nodes:
+        lines.append(f'    root["Swarm Run: {run_id}<br/>No active nodes"]')
+        return "\n".join(lines)
+
+    node_styles: list[str] = []
+    edges: list[str] = []
+
+    for nid, raw_node in nodes.items():
+        node = (
+            raw_node
+            if isinstance(raw_node, dict)
+            else (raw_node.to_dict() if hasattr(raw_node, "to_dict") else {})
+        )
+        role = node.get("role", "specialist")
+        st = node.get("status", "pending")
+        dur = round(float(node.get("duration", 0.0)), 2)
+        tok = node.get("tokens_used", 0)
+        clean_nid = re.sub(r"[^a-zA-Z0-9_]", "_", nid)
+        is_critical = nid in critical_path
+
+        label = f"<b>{nid}</b><br/>{role}<br/>{st} | {dur}s | {tok}t"
+        escaped_label = label.replace('"', "'")
+        lines.append(f'    {clean_nid}["{escaped_label}"]')
+
+        if st == "completed":
+            cls_name = "completedCritical" if is_critical else "completed"
+        elif st == "running":
+            cls_name = "runningCritical" if is_critical else "running"
+        elif st == "failed":
+            cls_name = "failed"
+        else:
+            cls_name = "pending"
+        node_styles.append(f"    class {clean_nid} {cls_name};")
+
+        deps = node.get("dependencies") or []
+        for dep in deps:
+            clean_dep = re.sub(r"[^a-zA-Z0-9_]", "_", dep)
+            edges.append(f"    {clean_dep} --> {clean_nid}")
+
+    lines.extend(edges)
+    lines.extend(node_styles)
+
+    return "\n".join(lines)
 
 
 class RuntimeAdapter:
@@ -595,17 +666,121 @@ def create_app(
         if swarm_coord is None:
             return {"status": "error", "error": "SwarmCoordinator service not available"}
 
-        if hasattr(swarm_coord, "get_run_session_tree"):
-            tree = await swarm_coord.get_run_session_tree(run_id)
-            if tree is not None:
-                return {"status": "ok", "tree": tree}
+        # 1. Direct run lookup
+        run_data = None
+        if hasattr(swarm_coord, "get_run"):
+            run_data = swarm_coord.get_run(run_id)
+        if run_data is None and hasattr(swarm_coord, "get_run_async"):
+            run_data = await swarm_coord.get_run_async(run_id)
 
+        if run_data is not None:
+            if hasattr(run_data, "execution_tree") and run_data.execution_tree is not None:
+                return {"status": "ok", "tree": run_data.execution_tree.to_dict()}
+            if isinstance(run_data, dict) and run_data.get("execution_tree"):
+                return {"status": "ok", "tree": run_data["execution_tree"]}
+
+        # 2. analyze_run
         if hasattr(swarm_coord, "analyze_run"):
             analytics = swarm_coord.analyze_run(run_id)
             if analytics is not None:
                 return {"status": "ok", "tree": analytics}
 
+        # 3. get_run_session_tree
+        if hasattr(swarm_coord, "get_run_session_tree"):
+            tree = await swarm_coord.get_run_session_tree(run_id)
+            if tree is not None:
+                return {"status": "ok", "tree": tree}
+
+        # 4. AgentExecutionGraphService fallback
+        graph_svc = adapter.context.optional(AGENT_GRAPH_STORE_KEY)
+        if graph_svc is not None:
+            export = graph_svc.export_graph(run_id)
+            if export and export.nodes:
+                nodes_map = {}
+                for nid, n in export.nodes.items():
+                    nodes_map[nid] = {
+                        "id": nid,
+                        "role": n.role,
+                        "status": n.status,
+                        "tokens_used": n.tokens_used,
+                        "duration": 0.0,
+                        "dependencies": [n.parent_id] if n.parent_id else [],
+                    }
+                fallback_tree = {
+                    "run_id": run_id,
+                    "objective": f"Execution DAG {run_id}",
+                    "status": "completed",
+                    "total_tokens": export.total_tokens_rollup,
+                    "nodes": nodes_map,
+                    "critical_path": list(nodes_map.keys()),
+                    "bottlenecks": [],
+                }
+                return {"status": "ok", "tree": fallback_tree}
+
         return {"status": "error", "error": f"Execution tree for '{run_id}' not found"}
+
+    @app.get("/api/swarm/runs/{run_id}/mermaid")
+    async def get_swarm_run_mermaid_endpoint(run_id: str) -> dict[str, Any]:
+        swarm_coord = adapter.context.optional(SWARM_COORDINATOR_KEY)
+        tree_dict: dict[str, Any] | None = None
+
+        if swarm_coord is not None:
+            run_data = None
+            if hasattr(swarm_coord, "get_run"):
+                run_data = swarm_coord.get_run(run_id)
+            if run_data is None and hasattr(swarm_coord, "get_run_async"):
+                run_data = await swarm_coord.get_run_async(run_id)
+
+            if run_data is not None:
+                if hasattr(run_data, "execution_tree") and run_data.execution_tree is not None:
+                    tree_dict = run_data.execution_tree.to_dict()
+                elif isinstance(run_data, dict) and run_data.get("execution_tree"):
+                    tree_dict = run_data["execution_tree"]
+
+            if tree_dict is None and hasattr(swarm_coord, "analyze_run"):
+                tree_dict = swarm_coord.analyze_run(run_id)
+
+            if tree_dict is None and hasattr(swarm_coord, "get_run_session_tree"):
+                sess_tree = await swarm_coord.get_run_session_tree(run_id)
+                if isinstance(sess_tree, dict):
+                    tree_dict = sess_tree
+
+        # Fallback to AgentExecutionGraphService
+        if tree_dict is None:
+            graph_svc = adapter.context.optional(AGENT_GRAPH_STORE_KEY)
+            if graph_svc is not None:
+                export = graph_svc.export_graph(run_id)
+                if export and export.nodes:
+                    nodes_map = {}
+                    for nid, n in export.nodes.items():
+                        nodes_map[nid] = {
+                            "id": nid,
+                            "role": n.role,
+                            "status": n.status,
+                            "tokens_used": n.tokens_used,
+                            "duration": 0.0,
+                            "dependencies": [n.parent_id] if n.parent_id else [],
+                        }
+                    tree_dict = {
+                        "run_id": run_id,
+                        "objective": f"Execution DAG {run_id}",
+                        "status": "completed",
+                        "total_tokens": export.total_tokens_rollup,
+                        "nodes": nodes_map,
+                        "critical_path": list(nodes_map.keys()),
+                        "bottlenecks": [],
+                    }
+
+        if tree_dict is None:
+            return {"status": "error", "error": f"Execution data for run '{run_id}' not found"}
+
+        mermaid_code = build_swarm_mermaid_graph(run_id, tree_dict)
+        return {
+            "status": "ok",
+            "run_id": run_id,
+            "mermaid": mermaid_code,
+            "tree": tree_dict,
+        }
 
     @app.post("/api/swarm/run")
     async def run_swarm_endpoint(req: SwarmRunRequest) -> dict[str, Any]:
@@ -636,6 +811,42 @@ def create_app(
             return {"status": "ok", "result": payload}
         except Exception as e:
             logger.error("Swarm run execution failed from API", error=str(e))
+            return {"status": "error", "error": str(e)}
+
+    @app.post("/api/swarm/dispatch-skill")
+    async def dispatch_skill_swarm_endpoint(req: SwarmSkillDispatchRequest) -> dict[str, Any]:
+        swarm_coord = adapter.context.optional(SWARM_COORDINATOR_KEY)
+        if swarm_coord is None:
+            return {"status": "error", "error": "SwarmCoordinator service not available"}
+
+        try:
+            if hasattr(swarm_coord, "dispatch_skill_swarm"):
+                res = await swarm_coord.dispatch_skill_swarm(
+                    objective=req.objective,
+                    skill_names=req.skills,
+                    max_total_tokens=req.max_tokens,
+                    include_verifier=req.include_verifier,
+                    consensus_threshold=req.consensus_threshold,
+                    run_id=req.run_id,
+                )
+            else:
+                return {
+                    "status": "error",
+                    "error": "dispatch_skill_swarm execution method not supported on coordinator",
+                }
+
+            payload = res.to_dict() if hasattr(res, "to_dict") else res
+            if adapter.event_bus is not None:
+                await projection_engine.broadcast(
+                    channel="agent",
+                    message={
+                        "type": "swarm_task_completed",
+                        "data": payload,
+                    },
+                )
+            return {"status": "ok", "result": payload}
+        except Exception as e:
+            logger.error("Skill-driven swarm dispatch failed from API", error=str(e))
             return {"status": "error", "error": str(e)}
 
     @app.get("/api/skills")
