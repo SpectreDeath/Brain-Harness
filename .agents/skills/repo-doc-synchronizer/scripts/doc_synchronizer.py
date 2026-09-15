@@ -314,6 +314,26 @@ class DocSynchronizerEngine:
                     dedicated_doc = str(sibling_doc.relative_to(scan_dir)).replace(
                         "\\", "/"
                     )
+            elif f.parent.name in ("scripts", "examples", "bin") and (f.parent.parent / "SKILL.md").exists():
+                parent_skill = f.parent.parent / "SKILL.md"
+                try:
+                    dedicated_doc = str(
+                        parent_skill.relative_to(self.root_dir)
+                    ).replace("\\", "/")
+                except ValueError:
+                    dedicated_doc = str(
+                        parent_skill.relative_to(scan_dir)
+                    ).replace("\\", "/")
+            elif f.parent.name in ("scripts", "commands", "examples", "bin") and (f.parent.parent / "README.md").exists():
+                parent_pkg = f.parent.parent / "README.md"
+                try:
+                    dedicated_doc = str(
+                        parent_pkg.relative_to(self.root_dir)
+                    ).replace("\\", "/")
+                except ValueError:
+                    dedicated_doc = str(
+                        parent_pkg.relative_to(scan_dir)
+                    ).replace("\\", "/")
             elif mod_stem in md_names:
                 try:
                     dedicated_doc = str(

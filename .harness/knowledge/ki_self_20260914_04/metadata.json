@@ -1,0 +1,36 @@
+{
+  "id": "ki_self_20260914_04",
+  "title": "Slotted Triad Pipeline & Dual-Mode Visual Brief Synthesis Invariant",
+  "category": "software_engineering",
+  "created_at": "2026-09-14T22:20:00Z",
+  "author": "deep-repo-auditor",
+  "tags": [
+    "endogenous_memory",
+    "slotted_domain_models",
+    "visual_brief_synthesis",
+    "rule_12",
+    "rule_51"
+  ],
+  "isnad": {
+    "claims": [
+      {
+        "assertion": "RepoTriadPipelineEngine provides slotted/frozen RepoInspectionResult, KiCandidate, and TriadExecutionResult data structures guaranteeing zero dynamic attribute mutations.",
+        "evidence_type": "codebase_seam",
+        "source": ".agents/skills/repo-triad-forge/scripts/triad_pipeline.py#L19-L67 + plugins/software_engineering/repo_triad_forge/service.py#L32-L82",
+        "verified": true
+      },
+      {
+        "assertion": "Pre-flight inspection scans package manifests while excluding build/vendored artifacts, evaluating 5D composite complexity without recursive directory scan cliffs.",
+        "evidence_type": "codebase_seam",
+        "source": ".agents/skills/repo-triad-forge/scripts/triad_pipeline.py#L88-L156",
+        "verified": true
+      },
+      {
+        "assertion": "Visual brief generation isolates template string constants or escapes literal CSS/Mermaid braces to comply with Rule 51, preventing runtime f-string syntax errors.",
+        "evidence_type": "codebase_seam",
+        "source": ".agents/skills/repo-triad-forge/scripts/triad_pipeline.py#L231-L280 + AGENTS.md#Rule_51",
+        "verified": true
+      }
+    ]
+  }
+}

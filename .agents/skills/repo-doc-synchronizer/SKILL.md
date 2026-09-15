@@ -83,9 +83,9 @@ The skill provides `scripts/doc_synchronizer.py` with four deterministic subcomm
 1. Execute `drift-check` across documentation directories (`docs/`, `plugins/`).
 2. Identify broken relative links or stale symbol names resulting from code refactoring.
 
-### Stage 3: Visual Brief & Human-in-the-Loop Review
+### Stage 3: Visual Brief & Mandatory Checkpoint
 1. Render an interactive HTML visual brief using `visual-brief`.
-2. Present findings and planned additions to the user via `implementation_plan.md`.
+2. Present findings and planned additions to the user via `implementation_plan.md` with explicit Mandatory Checkpoint review gates (`RequestFeedback: true`).
 3. Halt and await explicit user approval before writing or updating documentation files.
 
 ### Stage 4: Synthesis, Scaffolding & Verification

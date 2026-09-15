@@ -1,0 +1,38 @@
+{
+  "id": "ki_self_20260914_06",
+  "title": "Micro-Kernel ServiceContext Typed Key Provider Contract & Singleton Export",
+  "category": "kernel",
+  "created_at": "2026-09-14T22:20:00Z",
+  "author": "deep-repo-auditor",
+  "tags": [
+    "endogenous_memory",
+    "ioc_kernel",
+    "service_key",
+    "plugin_singleton",
+    "rule_1",
+    "rule_2",
+    "rule_45"
+  ],
+  "isnad": {
+    "claims": [
+      {
+        "assertion": "Every plugin implementation entrypoint (plugins/<category>/<name>/main.py) must explicitly export an instantiated module-level singleton `plugin = MyPlugin()`.",
+        "evidence_type": "codebase_seam",
+        "source": "plugins/agent_orchestration/agent_debater/main.py#L30-L50 + AGENTS.md#Rule_45",
+        "verified": true
+      },
+      {
+        "assertion": "Service registration requires context.provide(ServiceKey[T], instance) and resolution requires context.require(ServiceKey[T]), strictly prohibiting raw strings.",
+        "evidence_type": "type_system_contract",
+        "source": "src/harness/kernel/context.py#L20-L85 + AGENTS.md#Rule_2",
+        "verified": true
+      },
+      {
+        "assertion": "The lifecycle manager topologically sorts plugin dependencies based on declared provides and requires properties prior to staging sandboxes or activation.",
+        "evidence_type": "lifecycle_contract",
+        "source": "src/harness/plugins/loader.py#L60-L140 + AGENTS.md#Rule_3",
+        "verified": true
+      }
+    ]
+  }
+}

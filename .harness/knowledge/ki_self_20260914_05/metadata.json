@@ -1,0 +1,37 @@
+{
+  "id": "ki_self_20260914_05",
+  "title": "Authoritative Swarm Thread DAG Lifecycle & Session State Keying",
+  "category": "agent_orchestration",
+  "created_at": "2026-09-14T22:20:00Z",
+  "author": "deep-repo-auditor",
+  "tags": [
+    "endogenous_memory",
+    "agent_graph",
+    "swarm_dag",
+    "session_manager",
+    "rule_17",
+    "rule_36"
+  ],
+  "isnad": {
+    "claims": [
+      {
+        "assertion": "AgentExecutionGraphService keys swarm wave nodes using the composite key f'{run_id}_{node_id}' to prevent cross-run collisions during concurrent agent executions.",
+        "evidence_type": "codebase_seam",
+        "source": "src/harness/services/agent_graph.py#L45-L95 + AGENTS.md#Rule_36",
+        "verified": true
+      },
+      {
+        "assertion": "AgentSessionManager strictly enforces task as primary argument for creation, final_answer for completion, and error_message for failure.",
+        "evidence_type": "interface_contract",
+        "source": "src/harness/agent/session.py#L50-L115 + AGENTS.md#Rule_36",
+        "verified": true
+      },
+      {
+        "assertion": "Swarm wave lifecycles track states (Open, Closed, Completed, Failed) along directional spawn edges with automated hierarchical token rollups.",
+        "evidence_type": "codebase_seam",
+        "source": "src/harness/services/agent_graph.py#L120-L175 + AGENTS.md#Rule_17",
+        "verified": true
+      }
+    ]
+  }
+}
