@@ -1,0 +1,30 @@
+{
+  "id": "ki_self_20260916_03",
+  "title": "In-Memory Mock Fallback Schema Parity Invariant",
+  "category": "testing_and_contracts",
+  "created_at": "2026-09-16T22:20:00Z",
+  "author": "Brain Harness Reflector",
+  "tags": [
+    "endogenous_memory",
+    "testing_and_contracts",
+    "mock_simulation",
+    "schema_parity",
+    "rule_55"
+  ],
+  "isnad": {
+    "claims": [
+      {
+        "assertion": "In-memory simulation fallbacks in Harness service plugins must maintain 100% dictionary key parity with live subprocess CLI and REST API payloads to prevent contract verification failures in offline test suites.",
+        "evidence_type": "codebase_seam",
+        "source": "plugins/agent_orchestration/orca_bridge/service.py#L328-L344 + tests/test_orca_bridge_plugin.py#L200-L220",
+        "verified": true
+      },
+      {
+        "assertion": "Omitting optional payload attributes (such as files_modified or report_path) from mock message inboxes causes downstream settlement deserialization to yield empty defaults, violating contract assertions.",
+        "evidence_type": "runtime_trace",
+        "source": "tests/test_orca_bridge_plugin.py::test_orca_coordinate_worker_deep_seam failure trace",
+        "verified": true
+      }
+    ]
+  }
+}
