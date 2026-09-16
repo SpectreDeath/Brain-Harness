@@ -1,0 +1,38 @@
+{
+  "id": "ki_chatbotx_dynamic_mcp_orpc",
+  "title": "Dynamic oRPC-to-OpenAPI Schema Pipeline with First-Class MCP Tool Annotations",
+  "created": "2026-09-16T16:42:00-04:00",
+  "updated": "2026-09-16T16:42:00-04:00",
+  "summary": "Architectural pattern in ChatbotX where 52 modular oRPC sub-routers are dynamically compiled into an OpenAPI 3.1 specification via OpenAPIGenerator and Zod schema converters, enriched with x-mcp operation metadata (destructiveHint, idempotentHint, readOnlyHint, scope), and ingested into an MCP server that automatically exposes public API endpoints as typed agent tools.",
+  "references": [
+    {
+      "path": "D:/GitHub/cloned/ChatbotX/apps/builder/src/app/api/public-spec.json/route.ts",
+      "description": "Dynamic OpenAPI document generator route with ETag caching and tenant scoping"
+    },
+    {
+      "path": "D:/GitHub/cloned/ChatbotX/apps/builder/src/routers/public.ts",
+      "description": "Consolidated public router exporting 52 feature routers"
+    },
+    {
+      "path": "D:/GitHub/cloned/ChatbotX/apps/mcp-server/src/openapi-loader.ts",
+      "description": "OpenAPI loader transforming operations into MCP tools with token security filtering"
+    }
+  ],
+  "claims": [
+    {
+      "claim": "oRPC public routers are translated into OpenAPI specifications on demand using @orpc/openapi OpenAPIGenerator and ZodToJsonSchemaConverter, cached in-process by tenant and origin for 300 seconds.",
+      "source": "apps/builder/src/app/api/public-spec.json/route.ts",
+      "line_range": "15-60"
+    },
+    {
+      "claim": "OpenAPI operations are decorated with x-mcp metadata tags (readOnlyHint, destructiveHint, idempotentHint, scope, visibility) to signal agent safety boundaries directly in the tool schema.",
+      "source": "apps/mcp-server/src/openapi-loader.ts",
+      "line_range": "10-25"
+    },
+    {
+      "claim": "Security schemes are filtered to workspace-token operations only (bearerAuth, developerAccessToken, tokenInSearchParams), preventing tools with unavailable channel credentials from generating 401 errors.",
+      "source": "apps/mcp-server/src/openapi-loader.ts",
+      "line_range": "40-65"
+    }
+  ]
+}

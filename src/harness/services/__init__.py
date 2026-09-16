@@ -431,8 +431,56 @@ __all__ = [
     # DeepSelect TopK
     "DEEPSELECT_TOPK_SERVICE_KEY",
     "DeepSelectTopkProtocol",
+    # Paperless-NGX
+    "PAPERLESS_NGX_SERVICE_KEY",
+    "PaperlessNgxService",
+    "PaperlessConfig",
+    "DocumentSummary",
+    "GroundedRAGAnswer",
+    "IngestionReceipt",
+    "RAGAnswer",
+    "TaskProgress",
+    "DefaultPaperlessNgxService",
+    # ChatbotX
+    "CHATBOTX_SERVICE_KEY",
+    "ChatbotXService",
+    "ChatbotXConfig",
+    "ContactRecord",
+    "MessageRecord",
+    "FlowExecution",
+    "ConversationSummary",
+    "ToolResult",
+    "DefaultChatbotXService",
+    # Orca Bridge
+    "ORCA_BRIDGE_KEY",
+    "OrcaBridgeService",
+    "OrcaWorktreeConfig",
+    "OrcaWorktreeInfo",
+    "OrcaRunConfig",
+    "OrcaRunInfo",
+    "OrcaWorkerConfig",
+    "OrcaWorkerDispatchReceipt",
+    "OrcaMessageConfig",
+    "OrcaDeliveryBatch",
+    "OrcaMailboxMessage",
+    "OrcaTaskSettlement",
 ]
 
+from harness.services.chatbotx import (
+    CHATBOTX_SERVICE_KEY,
+    ChatbotXConfig,
+    ChatbotXService,
+    ContactRecord,
+    ConversationSummary,
+    DefaultChatbotXService,
+    FlowExecution,
+    MessageRecord,
+    ToolResult,
+)
+from harness.services.deepselect_topk import (
+    DEEPSELECT_TOPK_SERVICE_KEY,
+    DeepSelectTopkProtocol,
+)
 from harness.services.okf_memory import (
     OKF_MEMORY_SERVICE_KEY,
     OKFConceptRecord,
@@ -440,6 +488,31 @@ from harness.services.okf_memory import (
     OKFMemoryService,
     OKFSearchResult,
     OKFValidationReport,
+)
+from harness.services.orca_bridge import (
+    ORCA_BRIDGE_KEY,
+    OrcaBridgeService,
+    OrcaDeliveryBatch,
+    OrcaMailboxMessage,
+    OrcaMessageConfig,
+    OrcaRunConfig,
+    OrcaRunInfo,
+    OrcaTaskSettlement,
+    OrcaWorkerConfig,
+    OrcaWorkerDispatchReceipt,
+    OrcaWorktreeConfig,
+    OrcaWorktreeInfo,
+)
+from harness.services.paperless_ngx import (
+    PAPERLESS_NGX_SERVICE_KEY,
+    DefaultPaperlessNgxService,
+    DocumentSummary,
+    GroundedRAGAnswer,
+    IngestionReceipt,
+    PaperlessConfig,
+    PaperlessNgxService,
+    RAGAnswer,
+    TaskProgress,
 )
 from harness.services.pr_lens import (
     PR_LENS_GRAPH_SERVICE_KEY,
@@ -459,7 +532,5 @@ from harness.services.repo_triad_forge import (
     TriadPlanData,
     TriadRunData,
 )
-from harness.services.deepselect_topk import (
-    DEEPSELECT_TOPK_SERVICE_KEY,
-    DeepSelectTopkProtocol,
-)
+
+

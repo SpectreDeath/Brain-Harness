@@ -1,0 +1,31 @@
+{
+  "id": "ki-paperless-ai-rag-sqlite-vec",
+  "title": "In-Database Vector RAG with SQLite-Vec, LlamaIndex, and Hybrid Tantivy BM25 Dispatch",
+  "created": "2026-09-16T15:27:00-04:00",
+  "updated": "2026-09-16T15:27:00-04:00",
+  "summary": "Architectural distillation of paperless_ai in Paperless-NGX (v3.1.3). Documents zero-external-dependency vector retrieval using the sqlite-vec extension (llmindex.db), LlamaIndex node chunking (512 output / 200 overlap), dual-layer hybrid search combining Tantivy lexical BM25 with dense semantic vector embeddings, and streaming chat reference citation protocols.",
+  "references": [
+    {"path": "D:/GitHub/cloned/paperless-ngx/src/paperless_ai/vector_store.py", "description": "PaperlessSqliteVecVectorStore implementation wrapping sqlite-vec"},
+    {"path": "D:/GitHub/cloned/paperless-ngx/src/paperless_ai/indexing.py", "description": "Chunking, embedding, and index building pipelines"},
+    {"path": "D:/GitHub/cloned/paperless-ngx/src/paperless_ai/chat.py", "description": "Streaming RAG chat engine and reference resolution"},
+    {"path": "D:/GitHub/cloned/paperless-ngx/src/paperless_ai/tables.py", "description": "DocumentChunksTable, DocumentMetaTable, IndexMetaTable"},
+    {"path": "D:/GitHub/cloned/paperless-ngx/src/documents/search/_backend.py", "description": "Tantivy full-text search backend via whoosh-compat"}
+  ],
+  "claims": [
+    {
+      "claim": "paperless_ai embeds documents into a dedicated SQLite database (llmindex.db) using the sqlite-vec C extension, eliminating the need for standalone vector database microservices.",
+      "source": "src/paperless_ai/vector_store.py",
+      "line_range": "20-65"
+    },
+    {
+      "claim": "Documents are split into overlapping chunks with RAG_NUM_OUTPUT=512 and RAG_CHUNK_OVERLAP=200, streaming through QuerySetStream with _INDEX_STREAM_CHUNK_SIZE=1000 to bound memory.",
+      "source": "src/paperless_ai/indexing.py",
+      "line_range": "40-60"
+    },
+    {
+      "claim": "The streaming chat endpoint (/api/documents/chat/) yields Server-Sent Events with delimited metadata (__PAPERLESS_CHAT_METADATA__) containing exact document citations and confidence bounds.",
+      "source": "src/paperless_ai/chat.py",
+      "line_range": "20-55"
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "id": "ki_chatbotx_omnichannel_messaging_bus",
+  "title": "Omnichannel Unified Messaging & Graph Flow Execution Pipeline",
+  "created": "2026-09-16T16:42:00-04:00",
+  "updated": "2026-09-16T16:42:00-04:00",
+  "summary": "ChatbotX omnichannel abstraction layer unifying 26 third-party messaging networks (WhatsApp, Messenger, Telegram, Zalo, Instagram, Webchat, TikTok) into a normalized message schema, contact identity graph, and DAG flow execution engine backed by Kafka and BullMQ.",
+  "references": [
+    {
+      "path": "D:/GitHub/cloned/ChatbotX/packages/flow-config/src/index.ts",
+      "description": "Visual flow node definitions, trigger models, and compiler contracts"
+    },
+    {
+      "path": "D:/GitHub/cloned/ChatbotX/packages/sdk/src/index.ts",
+      "description": "SDK interfaces for channel normalization, message actions, and errors"
+    },
+    {
+      "path": "D:/GitHub/cloned/ChatbotX/packages/event-bus/src/index.ts",
+      "description": "Kafka and Redis event dispatch schemas"
+    }
+  ],
+  "claims": [
+    {
+      "claim": "Flow definitions are compiled into deterministic DAG structures (CompiledFlow) composed of typed nodes (Message, Condition, Delay, Action, Subflow, AI Agent, Webhook).",
+      "source": "packages/flow-config/src/index.ts",
+      "line_range": "1-167"
+    },
+    {
+      "claim": "Channel adapters normalize provider-specific messaging payloads into unified Message, ProfileField, and ChannelError structures with standardized error codes.",
+      "source": "packages/sdk/src/index.ts",
+      "line_range": "1-13"
+    }
+  ]
+}

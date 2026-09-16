@@ -1,0 +1,33 @@
+# ChatbotX Agent Skill Default Configuration
+version: "1.0.0"
+isolation_mode: "subprocess"
+connection:
+  api_url: "https://app.chatbotx.io/api"
+  timeout_seconds: 30
+  allow_self_signed_cert: false
+
+budgets:
+  max_contacts_per_query: 50
+  max_message_length: 4096
+  max_retry_attempts: 3
+  flow_enqueue_timeout_seconds: 15
+
+channels:
+  default_channel: "whatsapp"
+  supported_channels:
+    - "whatsapp"
+    - "telegram"
+    - "messenger"
+    - "zalo"
+    - "instagram"
+    - "webchat"
+    - "tiktok"
+  extra_supported_channels: []
+
+security:
+  enforce_workspace_token: true
+  block_destructive_tools_by_default: true
+  allowed_auth_schemes:
+    - "bearerAuth"
+    - "developerAccessToken"
+    - "tokenInSearchParams"

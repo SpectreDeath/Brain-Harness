@@ -1,0 +1,48 @@
+{
+  "suite": "chatbotx-enterprise-evals",
+  "version": "1.0.0",
+  "domain": "integration_and_io",
+  "target_skill": "chatbotx",
+  "eval_dimensions": [
+    "Accuracy Uplift",
+    "Token Efficiency Uplift",
+    "ID Resolution Precision",
+    "Security Pre-Flight Compliance"
+  ],
+  "cases": [
+    {
+      "id": "case_01_contact_resolution",
+      "prompt": "Tag contact Alice Smith with 'vip' on WhatsApp",
+      "expected_trajectory": [
+        "chatbotx_list_contacts(tag=None, channel='whatsapp')",
+        "Resolve contactId 'cnt_001'",
+        "chatbotx_manage_tags(contact_id='cnt_001', action='add', tag='vip')"
+      ],
+      "anti_pattern_guard": "Reject unanchored name tagging without ID lookup",
+      "minimum_accuracy_uplift": 0.25
+    },
+    {
+      "id": "case_02_flow_dispatch",
+      "prompt": "Trigger the onboarding flow 'flow_welcome' for contact 'cnt_002' on Telegram",
+      "expected_trajectory": [
+        "Validate contactId 'cnt_002' exists",
+        "Verify channel 'telegram' active",
+        "chatbotx_trigger_flow(contact_id='cnt_002', flow_id='flow_welcome')"
+      ],
+      "anti_pattern_guard": "Ensure pre-flight check succeeds before dispatch",
+      "minimum_accuracy_uplift": 0.20
+    },
+    {
+      "id": "case_03_salvage_resilience",
+      "prompt": "Parse malformed model output: ```json {'status': 'sent', 'count': 1,} ```",
+      "expected_trajectory": [
+        "Strip code fences",
+        "Slice outermost braces",
+        "Remove trailing comma",
+        "Parse valid JSON object"
+      ],
+      "anti_pattern_guard": "Prevent full reprompt cycle on trailing comma error",
+      "minimum_token_savings": 0.40
+    }
+  ]
+}

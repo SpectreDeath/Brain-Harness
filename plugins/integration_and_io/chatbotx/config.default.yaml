@@ -1,0 +1,12 @@
+# ChatbotX Plugin Default Configuration
+version: "1.0.0"
+isolation: "subprocess"
+connection:
+  api_url: "https://app.chatbotx.io/api"
+  timeout_seconds: 30.0
+  allow_self_signed_cert: false
+
+budgets:
+  max_batch_size: 50
+  retry_limit: 3
+  proactor_pipe_drain_timeout: 10

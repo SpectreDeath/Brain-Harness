@@ -1,0 +1,29 @@
+{
+  "id": "ki_chatbotx_isolated_vm_execution",
+  "title": "Multi-Tenant Microservice Sandbox Execution via isolated-vm",
+  "created": "2026-09-16T16:42:00-04:00",
+  "updated": "2026-09-16T16:42:00-04:00",
+  "summary": "ChatbotX architectural pattern isolating user-authored dynamic JavaScript flow step logic inside a decoupled HTTP microservice (apps/javascript-executor) utilizing isolated-vm for V8 heap boundary confinement, CPU execution bounds, and memory isolation.",
+  "references": [
+    {
+      "path": "D:/GitHub/cloned/ChatbotX/apps/javascript-executor/src/index.ts",
+      "description": "Microservice HTTP entrypoint executing isolated V8 contexts"
+    },
+    {
+      "path": "D:/GitHub/cloned/ChatbotX/packages/javascript-sandbox/src/index.ts",
+      "description": "Client SDK and contract types for communicating with the executor"
+    }
+  ],
+  "claims": [
+    {
+      "claim": "Flow script execution is offloaded from main Next.js and BullMQ processes into a standalone microservice using isolated-vm to prevent prototype pollution and CPU thread locking.",
+      "source": "apps/javascript-executor/src/index.ts",
+      "line_range": "1-28"
+    },
+    {
+      "claim": "Client communication with the sandbox enforces strict timeout budgets, payload size limits, and sanitized global variable injection.",
+      "source": "packages/javascript-sandbox/src/index.ts",
+      "line_range": "1-3"
+    }
+  ]
+}

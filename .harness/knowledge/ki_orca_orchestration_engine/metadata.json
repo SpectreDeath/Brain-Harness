@@ -1,0 +1,60 @@
+{
+  "id": "ki_orca_orchestration_engine",
+  "title": "Orca Multi-Agent Orchestration Engine & Worktree Sandboxing",
+  "source_target": "D:\\GitHub\\cloned\\orca",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_orca_orchestration_engine",
+    "claims": [
+      {
+        "assertion": "Autonomous coding agents operating concurrently require isolated Git worktrees addressed strictly via composite keys (<repoId>::<worktreePath>) to prevent file locking and branch collision.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "src/shared/rpc-contract/worktree-params.ts#L1-L60",
+            "sha256_hash": "N/A",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "skill-guides/orca-cli.md#L66-L100",
+            "sha256_hash": "N/A",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "assertion": "Lifecycle authority must be derived strictly from active Dispatch IDs injected via preambles, and coordinator inboxes require FIFO batching with keepalive streams and explicit worker_done settlement.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "src/cli/specs/orchestration.ts#L46-L120",
+            "sha256_hash": "N/A",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "src/cli/specs/orchestration-worker-specs.ts#L1-L50",
+            "sha256_hash": "N/A",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "skill-guides/orchestration.md#L20-L97",
+            "sha256_hash": "N/A",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "architecture",
+    "agent_orchestration",
+    "git_worktree",
+    "multi_agent",
+    "injected_preamble",
+    "fifo_mailbox"
+  ]
+}

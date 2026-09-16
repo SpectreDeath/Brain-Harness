@@ -1,0 +1,13 @@
+# Default operational configuration for orca_bridge plugin (Rule 44)
+version: "1.0.0"
+cli:
+  executable_path: null
+  timeout_seconds: 60
+  auto_fallback_mock: true
+isolation:
+  mode: "subprocess"
+  sandbox_env: {}
+budgets:
+  check_timeout_ms: 15000
+  keepalive_interval_s: 15
+  max_retries: 3

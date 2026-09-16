@@ -1,0 +1,20 @@
+# Default operational configuration for orca-orchestrator skill (Rule 44)
+version: "1.0.0"
+operational_budgets:
+  coordinator_check_timeout_ms: 60000
+  keepalive_cadence_seconds: 15
+  max_repair_attempts: 3
+  subprocess_timeout_seconds: 300
+worktree_policy:
+  auto_cleanup_on_success: true
+  retain_on_failure: true
+  default_branch_prefix: "orca"
+supported_agents:
+  - codex
+  - claude
+  - opencode
+  - pi
+  - copilot
+retry_limits:
+  max_dispatch_retries: 2
+  ask_reply_timeout_ms: 120000

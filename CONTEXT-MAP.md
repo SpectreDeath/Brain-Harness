@@ -14,10 +14,12 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - `evaluator_critic` — Structured criteria evaluation and quality scoring.
   - `task_planner` — Hierarchical DAG task decomposition and dependency sequencing.
   - `human_in_the_loop` — Interactive checkpoints, approval gates, and escalation modals.
+  - `orca_bridge` — Multi-agent Git worktree isolation, FIFO coordinator inboxes, injected preambles, and worker settlement.
 * **Member Skills**:
   - [`questio-reflection`](.agents/skills/questio-reflection/SKILL.md) — Aquinas-style adversarial self-reflection and invariant challenge before execution.
   - [`ai-agent-engineer`](.agents/skills/ai-agent-engineer/SKILL.md) — Production-grade autonomous systems architecture, 4-Level Ladder qualification, 60 canonical patterns, substrate isolation, and session evaluation.
   - [`swarm-reflection-optimizer`](.agents/skills/swarm-reflection-optimizer/SKILL.md) — Autonomous multi-agent DAG optimization, ANN textual backpropagation, Borda count deliberation, and Aquinas adversarial reflection.
+  - [`orca-orchestrator`](.agents/skills/orca-orchestrator/SKILL.md) — Supervise multi-agent coding swarms in isolated Git worktrees using FIFO inboxes and authoritative injected preambles.
 
 ### 2. [Memory & Epistemics](./docs/domains/memory-and-epistemics/CONTEXT.md)
 * **Scope**: Declarative skill graphs, semantic embeddings, context distillation, prompt benchmarking, and claim lineage.
@@ -44,8 +46,10 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - `database_sql` — SQL query execution, transaction handling, and schema reflection.
   - `synthetic_generator` — Synthetic tabular matrix and mock data generation.
   - `deepselect_topk` — High-performance TopK kernel selection, harmonic bound estimation, and DeepSeek Sparse Attention (DSA) routing.
+  - `paperless_ngx` — Paperless-NGX document ingestion, hybrid Tantivy full-text search, and SQLite-Vec RAG integration bridge.
 * **Member Skills**:
   - [`structured-data-scout`](.agents/skills/structured-data-scout/SKILL.md) — Curated tabular dataset ingestion from authoritative registries (UCI, Kaggle, OpenData).
+  - [`paperless-document-pipeline`](.agents/skills/paperless-document-pipeline/SKILL.md) — Ingest, classify, parse, and query documents across Paperless-NGX using hybrid Tantivy lexical and SQLite-Vec semantic search.
   - [`survival-analysis`](.agents/skills/survival-analysis/SKILL.md) — Kaplan-Meier estimation, Cox proportional hazards regression, and Schoenfeld diagnostics.
   - [`data-topology-mapper`](.agents/skills/data-topology-mapper/SKILL.md) — Causal DAG lineage mapping, queue architectures, and hybrid data topologies.
   - [`sql-recursive-graph-traversal`](.agents/skills/sql-recursive-graph-traversal/SKILL.md) — Relational graph traversal, hierarchy trees, cycle detection, and BFS shortest paths in SQL.
@@ -111,6 +115,7 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - `api_openapi` — OpenAPI spec ingestion and client tool synthesis.
   - `notification_webhook` — Webhook broadcasting and alert dispatch.
   - `symbolic_solver` — Z3 theorem proving and constraint satisfaction.
+  - `chatbotx` — Omnichannel messaging, contact management, visual flow DAG execution, and dynamic OpenAPI/MCP tool dispatch across WhatsApp, Telegram, Messenger, and Zalo.
 * **Member Skills**:
   - [`repo-to-plugin-forge`](.agents/skills/repo-to-plugin-forge/SKILL.md) — Autonomous synthesis and scaffolding of Harness plugins from attached codebases.
   - [`book-to-skill-forge`](.agents/skills/book-to-skill-forge/SKILL.md) — Synthesis and authoring of deep-module agent skills and coaching rubrics from books, articles, and video transcripts.
@@ -120,6 +125,8 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - [`multimedia-intelligence-forge`](.agents/skills/multimedia-intelligence-forge/SKILL.md) — Subprocess multimedia transcription, dual-lens cognitive distillation, isnad claim lineage verification, and canonical dual-file Knowledge Vault retention.
   - [`external-repo-bridge-forge`](.agents/skills/external-repo-bridge-forge/SKILL.md) — Foreign GitHub repository ingestion, commit trajectory analysis, sandboxed Harness plugin synthesis, and Diátaxis documentation with C4 architecture models.
   - [`agentwikis-router`](.agents/skills/agentwikis-router/SKILL.md) — Scope-bounded developer task routing, zero-latency offline documentation extraction, trust-calibrated abstention, and Open Data Contract governance across AgentWikis knowledge bases.
+  - [`chatbotx`](.agents/skills/chatbotx/SKILL.md) — Omnichannel chatbot automation, contact identity tagging, DAG flows, and dynamic OpenAPI tool execution across messaging networks.
+
 
 
 ---

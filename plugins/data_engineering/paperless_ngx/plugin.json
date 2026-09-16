@@ -1,0 +1,182 @@
+{
+  "name": "plugin.paperless_ngx",
+  "version": "1.0.0",
+  "description": "Paperless-NGX document ingestion, hybrid search, and RAG integration bridge",
+  "language": "python",
+  "entrypoint": "main.py",
+  "isolation": "subprocess",
+  "trusted": true,
+  "provides": [
+    "data_engineering.paperless_ngx"
+  ],
+  "entrypoints": [
+    {
+      "name": "paperless_ingest_and_await",
+      "description": "Upload document, await background consumption, and return verified IngestionReceipt with hydrated document metadata",
+      "parameters": [
+        {
+          "name": "file_path",
+          "type": "string",
+          "description": "Local path to document file to ingest",
+          "required": true
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "description": "Optional override document title",
+          "required": false
+        },
+        {
+          "name": "tags",
+          "type": "array",
+          "description": "Optional list of tags to assign",
+          "required": false
+        },
+        {
+          "name": "correspondent",
+          "type": "string",
+          "description": "Optional correspondent to assign",
+          "required": false
+        },
+        {
+          "name": "document_type",
+          "type": "string",
+          "description": "Optional document type to assign",
+          "required": false
+        },
+        {
+          "name": "timeout_seconds",
+          "type": "number",
+          "description": "Maximum seconds to wait for consumption completion (default: 30.0)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "paperless_ask_grounded_rag",
+      "description": "Query paperless_ai RAG chat endpoint and return answer with fully hydrated cited document records for provenance verification",
+      "parameters": [
+        {
+          "name": "query",
+          "type": "string",
+          "description": "Question to answer from document corpus",
+          "required": true
+        },
+        {
+          "name": "document_ids",
+          "type": "array",
+          "description": "Optional list of document IDs to restrict search scope to",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "paperless_search_documents",
+      "description": "Search documents across Paperless-NGX using Tantivy full-text search with metadata filters",
+      "parameters": [
+        {
+          "name": "query",
+          "type": "string",
+          "description": "Full-text search query string",
+          "required": true
+        },
+        {
+          "name": "tags",
+          "type": "array",
+          "description": "Optional list of tag names to filter by",
+          "required": false
+        },
+        {
+          "name": "correspondent",
+          "type": "string",
+          "description": "Optional correspondent name to filter by",
+          "required": false
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "description": "Maximum number of documents to return (default: 10)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "paperless_get_document",
+      "description": "Retrieve detailed metadata and OCR content snippet for a document ID",
+      "parameters": [
+        {
+          "name": "document_id",
+          "type": "integer",
+          "description": "Numeric ID of the document in Paperless-NGX",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "paperless_post_document",
+      "description": "Upload a document file to Paperless-NGX for background asynchronous consumption",
+      "parameters": [
+        {
+          "name": "file_path",
+          "type": "string",
+          "description": "Local path to document file to ingest",
+          "required": true
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "description": "Optional override document title",
+          "required": false
+        },
+        {
+          "name": "tags",
+          "type": "array",
+          "description": "Optional list of tags to assign",
+          "required": false
+        },
+        {
+          "name": "correspondent",
+          "type": "string",
+          "description": "Optional correspondent to assign",
+          "required": false
+        },
+        {
+          "name": "document_type",
+          "type": "string",
+          "description": "Optional document type to assign",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "paperless_ask_rag",
+      "description": "Query paperless_ai RAG chat endpoint to answer questions with document citations",
+      "parameters": [
+        {
+          "name": "query",
+          "type": "string",
+          "description": "Question to answer from document corpus",
+          "required": true
+        },
+        {
+          "name": "document_ids",
+          "type": "array",
+          "description": "Optional list of document IDs to restrict search scope to",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "paperless_get_task_status",
+      "description": "Check status, progress, and result of an asynchronous consumption task",
+      "parameters": [
+        {
+          "name": "task_id",
+          "type": "string",
+          "description": "UUID string of the Celery consumption task",
+          "required": true
+        }
+      ]
+    }
+  ]
+}

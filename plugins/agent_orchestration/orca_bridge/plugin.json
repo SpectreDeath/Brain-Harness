@@ -1,0 +1,196 @@
+{
+  "name": "plugin.orca_bridge",
+  "version": "1.0.0",
+  "description": "Orca Bridge plugin providing worktree management, multi-agent dispatching, and FIFO coordinator inboxes",
+  "language": "python",
+  "entrypoint": "main.py",
+  "isolation": "subprocess",
+  "trusted": true,
+  "author": "Brain Harness Authors",
+  "provides": [
+    "service.orca_bridge"
+  ],
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "orca_coordinate_task",
+      "description": "High-leverage swarm execution: provisions an isolated Git worktree, dispatches a supervised worker with authority preamble, monitors the FIFO coordinator mailbox, and returns structured task settlement",
+      "parameters": [
+        {
+          "name": "task_spec",
+          "type": "string",
+          "description": "Detailed task specification to execute",
+          "required": true
+        },
+        {
+          "name": "agent",
+          "type": "string",
+          "description": "Worker agent type ('codex', 'claude', 'opencode', 'pi')",
+          "required": false
+        },
+        {
+          "name": "worktree_name",
+          "type": "string",
+          "description": "Optional worktree branch/folder name",
+          "required": false
+        },
+        {
+          "name": "model",
+          "type": "string",
+          "description": "Model override (e.g. 'gpt-6-astra', 'claude-3-7-sonnet')",
+          "required": false
+        },
+        {
+          "name": "effort",
+          "type": "string",
+          "description": "Reasoning effort level ('low', 'medium', 'high', 'xhigh')",
+          "required": false
+        },
+        {
+          "name": "timeout_seconds",
+          "type": "number",
+          "description": "Maximum seconds to wait for worker completion (default: 60)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "orca_create_worktree",
+      "description": "Create an isolated Git worktree sandbox for an autonomous agent worker",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "Worktree branch and directory name",
+          "required": true
+        },
+        {
+          "name": "repo_id",
+          "type": "string",
+          "description": "Target repository identifier",
+          "required": false
+        },
+        {
+          "name": "agent",
+          "type": "string",
+          "description": "Assigned agent handle",
+          "required": false
+        },
+        {
+          "name": "prompt",
+          "type": "string",
+          "description": "Initial task prompt for the worktree",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "orca_start_worker",
+      "description": "Start a supervised agent worker in a dedicated worktree with injected authority preamble",
+      "parameters": [
+        {
+          "name": "task_id",
+          "type": "string",
+          "description": "Unique task identifier",
+          "required": true
+        },
+        {
+          "name": "spec",
+          "type": "string",
+          "description": "Task specification instructions",
+          "required": true
+        },
+        {
+          "name": "agent",
+          "type": "string",
+          "description": "Worker agent CLI ('codex', 'claude', 'opencode', 'pi')",
+          "required": false
+        },
+        {
+          "name": "worktree",
+          "type": "string",
+          "description": "Worktree identifier or selector",
+          "required": false
+        },
+        {
+          "name": "model",
+          "type": "string",
+          "description": "Model override",
+          "required": false
+        },
+        {
+          "name": "effort",
+          "type": "string",
+          "description": "Reasoning effort ('low', 'medium', 'high', 'xhigh')",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "orca_check_mailbox",
+      "description": "Inspect the coordinator FIFO mailbox for incoming agent reports and settlement signals",
+      "parameters": [
+        {
+          "name": "terminal",
+          "type": "string",
+          "description": "Terminal mailbox address (default: coordinator)",
+          "required": false
+        },
+        {
+          "name": "wait",
+          "type": "boolean",
+          "description": "Whether to wait for messages to arrive",
+          "required": false
+        },
+        {
+          "name": "timeout_ms",
+          "type": "integer",
+          "description": "Wait timeout in milliseconds (default: 15000)",
+          "required": false
+        },
+        {
+          "name": "ack_delivery_id",
+          "type": "string",
+          "description": "Delivery batch ID to acknowledge and release from queue",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "orca_send_message",
+      "description": "Deliver an inter-agent message or post a worker settlement signal",
+      "parameters": [
+        {
+          "name": "subject",
+          "type": "string",
+          "description": "Message subject",
+          "required": true
+        },
+        {
+          "name": "to",
+          "type": "string",
+          "description": "Recipient address or mailbox (e.g. 'run:<id>', '@all')",
+          "required": false
+        },
+        {
+          "name": "body",
+          "type": "string",
+          "description": "Message body text",
+          "required": false
+        },
+        {
+          "name": "message_type",
+          "type": "string",
+          "description": "Message type ('status', 'worker_done', 'question')",
+          "required": false
+        },
+        {
+          "name": "outcome",
+          "type": "string",
+          "description": "Settlement outcome ('succeeded' or 'failed', required for worker_done)",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

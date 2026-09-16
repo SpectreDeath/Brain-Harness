@@ -1,0 +1,164 @@
+{
+  "name": "plugin.chatbotx",
+  "version": "1.0.0",
+  "description": "ChatbotX omnichannel messaging, contact management, and visual flow automation bridge",
+  "language": "python",
+  "entrypoint": "main.py",
+  "isolation": "subprocess",
+  "trusted": true,
+  "provides": [
+    "integration_and_io.chatbotx"
+  ],
+  "entrypoints": [
+    {
+      "name": "chatbotx_list_contacts",
+      "description": "Search and filter contacts across WhatsApp, Telegram, Messenger, and other channels",
+      "parameters": [
+        {
+          "name": "limit",
+          "type": "integer",
+          "description": "Maximum number of contacts to return (default: 20)",
+          "required": false
+        },
+        {
+          "name": "tag",
+          "type": "string",
+          "description": "Filter contacts by assigned tag",
+          "required": false
+        },
+        {
+          "name": "channel",
+          "type": "string",
+          "description": "Filter contacts by channel (e.g. whatsapp, telegram, messenger)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "chatbotx_send_message",
+      "description": "Send an outbound text message to a contact on their active channel",
+      "parameters": [
+        {
+          "name": "contact_id",
+          "type": "string",
+          "description": "Target contact identifier (e.g. cnt_001)",
+          "required": true
+        },
+        {
+          "name": "text",
+          "type": "string",
+          "description": "Message text content to deliver",
+          "required": true
+        },
+        {
+          "name": "channel",
+          "type": "string",
+          "description": "Optional channel override",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "chatbotx_trigger_flow",
+      "description": "Trigger an automated visual flow DAG for a contact",
+      "parameters": [
+        {
+          "name": "contact_id",
+          "type": "string",
+          "description": "Target contact identifier",
+          "required": true
+        },
+        {
+          "name": "flow_id",
+          "type": "string",
+          "description": "Unique identifier of the compiled flow to trigger",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "chatbotx_manage_tags",
+      "description": "Add or remove a tag from a contact profile",
+      "parameters": [
+        {
+          "name": "contact_id",
+          "type": "string",
+          "description": "Target contact identifier",
+          "required": true
+        },
+        {
+          "name": "action",
+          "type": "string",
+          "description": "Action to perform ('add' or 'remove')",
+          "required": true
+        },
+        {
+          "name": "tag",
+          "type": "string",
+          "description": "Tag name to attach or detach",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "chatbotx_query_conversations",
+      "description": "List open chat conversations and unread queue counts across channels",
+      "parameters": [
+        {
+          "name": "limit",
+          "type": "integer",
+          "description": "Maximum conversations to return",
+          "required": false
+        },
+        {
+          "name": "status",
+          "type": "string",
+          "description": "Conversation status filter ('open' or 'closed')",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "chatbotx_broadcast",
+      "description": "Dispatch a broadcast message to contacts matching an audience tag",
+      "parameters": [
+        {
+          "name": "audience_tag",
+          "type": "string",
+          "description": "Tag defining the recipient audience segment",
+          "required": true
+        },
+        {
+          "name": "message_text",
+          "type": "string",
+          "description": "Broadcast message copy to transmit",
+          "required": true
+        },
+        {
+          "name": "channel",
+          "type": "string",
+          "description": "Optional channel filter for broadcast recipients",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "chatbotx_execute_tool",
+      "description": "Execute a dynamic OpenAPI / MCP tool operation against the ChatbotX API surface",
+      "parameters": [
+        {
+          "name": "operation_id",
+          "type": "string",
+          "description": "OpenAPI operationId or MCP tool name (e.g. list_tags, block_contact)",
+          "required": true
+        },
+        {
+          "name": "parameters",
+          "type": "object",
+          "description": "Dictionary of operation arguments",
+          "required": false
+        }
+      ]
+    }
+  ]
+}
