@@ -1,0 +1,88 @@
+{
+  "name": "plugin.pre_commit_security_guard",
+  "version": "1.0.0",
+  "description": "Shift-left SAST linter, Shannon entropy secret scanner, deliberate synthetic failure smoke gate, and SARIF dual-gate CI defense plugin",
+  "language": "python",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "provides": [
+    "service.pre_commit_security_guard"
+  ],
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "scan_staged_files",
+      "description": "Scan staged files or designated paths for SAST vulnerabilities and secret leaks",
+      "parameters": [
+        {
+          "name": "files",
+          "type": "array",
+          "description": "List of file paths to scan",
+          "required": false
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "run_synthetic_smoke_tests",
+      "description": "Execute deliberate synthetic failure tests verifying that guardrails actively block commits",
+      "parameters": [],
+      "returns": "object"
+    },
+    {
+      "name": "audit_suppression_hygiene",
+      "description": "Audit repository for unjustified comment suppressions and blanket folder exclusions",
+      "parameters": [
+        {
+          "name": "root_dir",
+          "type": "string",
+          "description": "Root directory to scan",
+          "required": false,
+          "default": "."
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "audit_dual_gate_ci",
+      "description": "Audit GitHub Actions workflow configuration to guarantee dual-gate CI parity",
+      "parameters": [
+        {
+          "name": "workflow_path",
+          "type": "string",
+          "description": "Path to security workflow YAML",
+          "required": false,
+          "default": ".github/workflows/security.yml"
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "export_sarif",
+      "description": "Format scan report findings into standard SARIF v2.1.0 schema",
+      "parameters": [
+        {
+          "name": "report",
+          "type": "object",
+          "description": "ScanReportData dictionary",
+          "required": true
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "generate_visual_brief",
+      "description": "Generate interactive HTML visual brief with Mermaid diagrams",
+      "parameters": [
+        {
+          "name": "output_path",
+          "type": "string",
+          "description": "Optional destination HTML path",
+          "required": false
+        }
+      ],
+      "returns": "string"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+# Baseline Operational Budgets for Uncertainty-Aware AI Pipeline (Rule 44)
+# Grounded in Chidiebere Njoku (2026) - ki_njoku_uncertainty_aware_systems
+
+version: "1.0.0"
+
+# Layer 1: Input Domain Boundary Gating
+boundary:
+  similarity_threshold: 0.45
+  timeout_ms: 10.0
+  target_domains:
+    - "company VPN configuration"
+    - "employee payroll schedules"
+    - "internal IT software deployment"
+    - "benefits enrollment and health insurance"
+    - "enterprise single sign-on authentication"
+
+# Layer 2: Retrieval Quality & Semantic Distance Scoring
+retrieval:
+  minimum_relevance: 0.60
+  max_chunks_to_score: 20
+  timeout_ms: 25.0
+
+# Layer 3: Output Logprob & Perplexity Validation
+logprob:
+  logprob_threshold: -0.35
+  max_perplexity: 1.42
+
+# Operational Queues & Telemetry
+telemetry:
+  escalation_queue_max_size: 1000
+  cluster_min_size_for_debt: 2

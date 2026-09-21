@@ -1,0 +1,80 @@
+{
+  "name": "plugin.dynamic_model_router",
+  "version": "1.0.0",
+  "description": "3-tier dynamic model switching & resilient failover engine with sub-5ms profiling and provider diversity enforcement (Njoku 2026)",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "category": "agent_orchestration",
+  "author": "Brain Harness",
+  "provides": [
+    "service.dynamic_model_router"
+  ],
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "profile_prompt",
+      "description": "Deterministic syntax and keyword complexity profiling (<5ms, zero-LLM)",
+      "parameters": [
+        {
+          "name": "prompt",
+          "type": "string",
+          "description": "Prompt text to evaluate",
+          "required": true
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "resolve_routing",
+      "description": "Resolve primary and fallback model configuration asserting provider diversity",
+      "parameters": [
+        {
+          "name": "complexity",
+          "type": "string",
+          "description": "Complexity tier (simple, medium, complex)",
+          "required": true
+        },
+        {
+          "name": "cost_ceiling",
+          "type": "number",
+          "description": "Optional cost ceiling per 1k tokens",
+          "required": false
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "route_and_execute",
+      "description": "Execute prompt with automated fallback rollover and circuit breaker protection",
+      "parameters": [
+        {
+          "name": "prompt",
+          "type": "string",
+          "description": "Input prompt to route and execute",
+          "required": true
+        },
+        {
+          "name": "override_complexity",
+          "type": "string",
+          "description": "Optional complexity override",
+          "required": false
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "model_router_visual_brief",
+      "description": "Generate interactive HTML visual brief with telemetry and routing distribution",
+      "parameters": [
+        {
+          "name": "output_path",
+          "type": "string",
+          "description": "Optional destination path for HTML report",
+          "required": false
+        }
+      ],
+      "returns": "string"
+    }
+  ]
+}

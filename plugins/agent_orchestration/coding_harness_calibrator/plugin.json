@@ -1,0 +1,122 @@
+{
+  "name": "plugin.coding_harness_calibrator",
+  "version": "1.0.0",
+  "description": "Empirical component-level coding harness calibration across context staging, action spaces, and planning scaffolds",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "category": "agent_orchestration",
+  "author": "Brain Harness",
+  "provides": [
+    "service.coding_harness_calibrator"
+  ],
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "calibrate_harness",
+      "description": "Derive optimal empirical harness configuration across model capability tiers and workload types",
+      "parameters": [
+        {
+          "name": "model_name",
+          "type": "string",
+          "description": "Target model name (e.g. Claude-3.7, Nemotron-30B)",
+          "required": true
+        },
+        {
+          "name": "parameter_billions",
+          "type": "number",
+          "description": "Model parameter count in billions",
+          "required": true
+        },
+        {
+          "name": "workload",
+          "type": "string",
+          "description": "terminal_cli | codebase_repo | mixed",
+          "required": false
+        },
+        {
+          "name": "context_budget",
+          "type": "integer",
+          "description": "Context window budget (default 131072)",
+          "required": false
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "simulate_staging",
+      "description": "Simulate Two-Tier Context Staging ($T_4$) elision and 7-heading summarization over turn events",
+      "parameters": [
+        {
+          "name": "events",
+          "type": "array",
+          "description": "List of turn events with role, content, turn, and token_count",
+          "required": true
+        },
+        {
+          "name": "usable_window",
+          "type": "integer",
+          "description": "Usable token budget window",
+          "required": false
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "predict_repatch",
+      "description": "Predict mean re-patches per task and cost reductions using Fan et al. empirical laws",
+      "parameters": [
+        {
+          "name": "model_capability",
+          "type": "string",
+          "description": "Model scale or parameter size in billions",
+          "required": true
+        },
+        {
+          "name": "action_space",
+          "type": "string",
+          "description": "predefined_tools | bash_only",
+          "required": true
+        },
+        {
+          "name": "workload",
+          "type": "string",
+          "description": "terminal_cli | codebase_repo | mixed",
+          "required": false
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "calibrator_visual_brief",
+      "description": "Render interactive HTML visual brief with Mermaid topology and empirical scorecard",
+      "parameters": [
+        {
+          "name": "model_name",
+          "type": "string",
+          "description": "Target model name",
+          "required": false
+        },
+        {
+          "name": "parameter_billions",
+          "type": "number",
+          "description": "Model parameter count in billions",
+          "required": false
+        },
+        {
+          "name": "workload",
+          "type": "string",
+          "description": "terminal_cli | codebase_repo | mixed",
+          "required": false
+        },
+        {
+          "name": "output_path",
+          "type": "string",
+          "description": "Destination file path for generated HTML brief",
+          "required": false
+        }
+      ],
+      "returns": "string"
+    }
+  ]
+}

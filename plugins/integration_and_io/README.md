@@ -12,7 +12,7 @@ Plugins within `integration_and_io` adhere to the single-responsibility domain p
 flowchart TD
     subgraph CategoryDomain ["Integration, External APIs & Multi-Modal I/O"]
         CategoryHub["plugins/integration_and_io/"]
-        PluginsList["10 Domain Plugins"]
+        PluginsList["11 Domain Plugins"]
     end
     KernelCore[Brain Harness Kernel] -->|Topological Discovery| CategoryHub
     CategoryHub -->|Instantiates| PluginsList
@@ -34,6 +34,8 @@ flowchart TD
 | [web_fetcher](web_fetcher/README.md) | `in_process` | `service.web_fetcher` | Clean web page fetcher, automated HTML-to-Markdown distillation, and custom HTTP request client |
 | [webwright_harness](webwright_harness/README.md) | `subprocess` | None | SWE-style browser agent harness with trajectory skill learning, semantic retrieval, parameterized routing, persistent... |
 | [youtube_transcript_fetcher](youtube_transcript_fetcher/README.md) | `subprocess` | `service.youtube_transcript_fetcher` | Extract transcripts and timed captions from YouTube video URLs or IDs via isolated subprocess JSON-RPC |
+| [gradio_app_architect](gradio_app_architect/README.md) | `in_process` | `service.gradio_app_architect` | Production AI interface engineering, AST diagnostic inspection, and decoupled 3-tier scaffolding for Gradio (Eva J Patel 2026) |
+| [gemini_vercel_streaming_chatbot](gemini_vercel_streaming_chatbot/README.md) | `in_process` | `service.gemini_vercel_streaming` | Production AI chatbot engineering with Google Gemini & Vercel Serverless plain-text chunk streaming (Johnson Samuel 2026) |
 
 ---
 

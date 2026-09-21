@@ -12,7 +12,7 @@ Plugins within `security_and_forensics` adhere to the single-responsibility doma
 flowchart TD
     subgraph CategoryDomain ["Security, Forensics & Execution Policy Gates"]
         CategoryHub["plugins/security_and_forensics/"]
-        PluginsList["14 Domain Plugins"]
+        PluginsList["15 Domain Plugins"]
     end
     KernelCore[Brain Harness Kernel] -->|Topological Discovery| CategoryHub
     CategoryHub -->|Instantiates| PluginsList
@@ -32,6 +32,7 @@ flowchart TD
 | [mantis_sandbox_verifier](mantis_sandbox_verifier/README.md) | `subprocess` | `service.mantis_sandbox_verifier` | Google Mantis sandboxed crash reproduction, vulnerability PoC execution, and transactional patch verification |
 | [mantis_security_review](mantis_security_review/README.md) | `in_process` | `service.mantis_security_review` | Google Mantis autonomous security review pipeline, VCS history mining, deduplication ladder, and risk calibration |
 | [network_forensics](network_forensics/README.md) | `in_process` | None | Network traffic metadata analyzer, TLS cert inspector, and port security auditor |
+| [pre_commit_security_guard](pre_commit_security_guard/README.md) | `in_process` | `service.pre_commit_security_guard` | Shift-left SAST, Shannon entropy secret interception, deliberate synthetic smoke tests, and SARIF dual-gate CI defense |
 | [pyrit_redteaming](pyrit_redteaming/README.md) | `subprocess` | None | Microsoft PyRIT AI Red Teaming & Harm Evaluation Engine for multi-turn crescendo attacks, adversarial prompt converte... |
 | [secret_scanner](secret_scanner/README.md) | `in_process` | None | Pre-ingestion and on-demand credential & API key scanner with Shannon entropy analysis |
 | [security_scanner](security_scanner/README.md) | `in_process` | None | Static code vulnerability scanner, secret detection, and dependency audit plugin |

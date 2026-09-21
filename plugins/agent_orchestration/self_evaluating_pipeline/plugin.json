@@ -1,0 +1,86 @@
+{
+  "name": "plugin.self_evaluating_pipeline",
+  "version": "1.0.0",
+  "description": "3-layer LLM quality evaluation, golden regressions, and paired t-test statistical significance release gating (Otine 2026)",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "category": "agent_orchestration",
+  "author": "Brain Harness",
+  "provides": [
+    "service.self_evaluating_pipeline"
+  ],
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "evaluate_layer1",
+      "description": "Sub-millisecond zero-cost deterministic guardrails (schema, bounds, URLs, refusals, AST)",
+      "parameters": [
+        {
+          "name": "output_text",
+          "type": "string",
+          "description": "Raw text output to evaluate",
+          "required": true
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "evaluate_layer2_judge",
+      "description": "Semantic LLM-as-judge evaluation with anchored 1-to-5 rubric and median consensus",
+      "parameters": [
+        {
+          "name": "prompt",
+          "type": "string",
+          "description": "User prompt",
+          "required": true
+        },
+        {
+          "name": "response",
+          "type": "string",
+          "description": "Model response",
+          "required": true
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "calculate_cohens_kappa",
+      "description": "Calculate Cohen's Kappa inter-annotator agreement corrected for chance",
+      "parameters": [
+        {
+          "name": "annotations_a",
+          "type": "array",
+          "description": "List of rater A annotations",
+          "required": true
+        },
+        {
+          "name": "annotations_b",
+          "type": "array",
+          "description": "List of rater B annotations",
+          "required": true
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "evaluate_statistical_significance_gate",
+      "description": "Paired Student's t-test release gate (p < 0.05 AND mean diff > 0)",
+      "parameters": [
+        {
+          "name": "scores_before",
+          "type": "array",
+          "description": "Pre-change scores on golden dataset",
+          "required": true
+        },
+        {
+          "name": "scores_after",
+          "type": "array",
+          "description": "Post-change scores on golden dataset",
+          "required": true
+        }
+      ],
+      "returns": "object"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+# Default operational configuration for agent-harness-architect skill (Rule 44)
+version: "1.0.0"
+operational_budgets:
+  max_turns: 25
+  cost_budget_usd: 5.00
+  subprocess_timeout_seconds: 120
+  token_budget_bound: 64000
+harness_evaluation:
+  default_bet: "modularity"
+  enforce_planning_gate: true
+  enforce_sandbox_jail: true
+  observability_backend: "langfuse"
+sandbox_policy:
+  restrict_cwd: true
+  default_sandbox_path: "./sandbox"
+  allow_host_shell: false

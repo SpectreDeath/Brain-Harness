@@ -17,7 +17,6 @@ Commands:
 """
 
 from __future__ import annotations
-# ruff: noqa: E402
 
 import sys
 from pathlib import Path
@@ -35,7 +34,10 @@ import structlog
 from harness.commands._utils import _run_async
 from harness.commands.agent import agent_group
 from harness.commands.antigravity import antigravity_group
+from harness.commands.bigquery import bigquery_group
 from harness.commands.bridges import bridge_group
+from harness.commands.calibrator import calibrator_group
+from harness.commands.compass import compass_group
 from harness.commands.compute import assess_compute_cli
 from harness.commands.context import context_group
 from harness.commands.creator import (
@@ -47,10 +49,18 @@ from harness.commands.creator import (
 from harness.commands.data import data_group
 from harness.commands.doc import doc_group
 from harness.commands.events import events_cli
+from harness.commands.gate import gate_group
+from harness.commands.gemini_vercel import gemini_vercel_group
+from harness.commands.gradio_app import gradio_group
+from harness.commands.harness_architect import architect_group
 from harness.commands.mcp import mcp_group
+from harness.commands.model_router import model_router_group
 from harness.commands.okf import okf_group
 from harness.commands.plugins import plugin_group
+from harness.commands.pre_commit_security import pre_commit_security_group
 from harness.commands.reflection import knowledge_group, reflect_cli
+from harness.commands.self_eval import eval_group
+from harness.commands.uncertainty import uncertainty_group
 from harness.commands.runtime import (
     apply_cli,
     config_group,
@@ -61,6 +71,7 @@ from harness.commands.session import session_group
 from harness.commands.skills import skills_group
 from harness.commands.system import introspect_cli, services_cli
 from harness.commands.tools import tool_group
+from harness.commands.validation_loop import validation_loop_group
 from harness.commands.workspace import init_cli, watch_cli
 
 logger = structlog.get_logger()
@@ -110,6 +121,32 @@ main.add_command(context_group, name="context")
 main.add_command(antigravity_group, name="antigravity")
 main.add_command(data_group, name="data")
 main.add_command(doc_group, name="doc")
+main.add_command(architect_group, name="architect")
+main.add_command(architect_group, name="harness-architect")
+main.add_command(gate_group, name="gate")
+main.add_command(gate_group, name="ai-native-harness")
+main.add_command(bigquery_group, name="bigquery")
+main.add_command(bigquery_group, name="bq")
+main.add_command(calibrator_group, name="calibrate")
+main.add_command(calibrator_group, name="calibrator")
+main.add_command(validation_loop_group, name="validation-loop")
+main.add_command(validation_loop_group, name="validate-loop")
+main.add_command(model_router_group, name="router")
+main.add_command(model_router_group, name="model-router")
+main.add_command(compass_group, name="compass")
+main.add_command(compass_group, name="harness-compass")
+main.add_command(gradio_group, name="gradio")
+main.add_command(gradio_group, name="gradio-app")
+main.add_command(gemini_vercel_group, name="gemini-vercel")
+main.add_command(gemini_vercel_group, name="streaming-chatbot")
+main.add_command(gemini_vercel_group, name="gemini-chat")
+main.add_command(pre_commit_security_group, name="pre-commit-security")
+main.add_command(pre_commit_security_group, name="security-guard")
+main.add_command(pre_commit_security_group, name="shift-left")
+main.add_command(eval_group, name="eval")
+main.add_command(eval_group, name="self-eval")
+main.add_command(uncertainty_group, name="uncertainty")
+main.add_command(uncertainty_group, name="uncertainty-guard")
 
 # --- Register Standalone Commands ---
 main.add_command(init_cli, name="init")

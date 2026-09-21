@@ -1,0 +1,21 @@
+version: "1.0.0"
+operational_budgets:
+  ast_inspection_timeout_sec: 10
+  scaffolding_timeout_sec: 15
+  default_concurrency_limit: 5
+  max_queue_size: 50
+  max_upload_size_mb: 25
+  whitelisted_file_types:
+    - ".pdf"
+    - ".docx"
+    - ".txt"
+    - ".csv"
+    - ".json"
+    - ".png"
+    - ".jpg"
+
+diagnostic_thresholds:
+  strict_arity_checking: true
+  disallow_global_mutations: true
+  require_queue_for_generators: true
+  warn_heavy_loaders_in_callbacks: true

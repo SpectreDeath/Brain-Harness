@@ -1,0 +1,20 @@
+{
+  "id": "ki_njoku_uncertainty_aware_systems",
+  "title": "Deterministic 3-Layer Uncertainty Interception & Overconfidence Mitigation",
+  "category": "agent_orchestration",
+  "tags": [
+    "uncertainty",
+    "rag",
+    "logit_analysis",
+    "boundary_detection",
+    "hallucination_prevention",
+    "hitl",
+    "njoku"
+  ],
+  "source_repo": "How to Build AI Systems That Know When They Don't Know: A Practical Guide (Chidiebere Njoku, freeCodeCamp)",
+  "provenance": [
+    "https://www.freecodecamp.org/news/how-to-build-ai-systems-that-know-when-they-dont-know-a-practical-guide/",
+    "D:/markdown from chrome/freeCodeCamp/How to Build AI Systems That Know When They Don't Know A Practical Guide.md"
+  ],
+  "created_at": "2026-09-17T17:10:00Z"
+}

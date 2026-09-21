@@ -16,10 +16,18 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - `human_in_the_loop` — Interactive checkpoints, approval gates, and escalation modals.
   - `orca_bridge` — Multi-agent Git worktree isolation, FIFO coordinator inboxes, injected preambles, and worker settlement.
 * **Member Skills**:
+  - [`agent-harness-architect`](.agents/skills/agent-harness-architect/SKILL.md) — Architect, evaluate, select, and sandbox production-grade AI agent harnesses and runtime loops using 5-part harness architecture, 4-mechanism validation, and 4-layer stack partitioning.
+  - [`ai-native-harness-engineer`](.agents/skills/ai-native-harness-engineer/SKILL.md) — Architect, construct, and govern production AI coding harnesses using 4-gate behavioral pipelines, credential-free MCP security, and continuous drift telemetry.
   - [`questio-reflection`](.agents/skills/questio-reflection/SKILL.md) — Aquinas-style adversarial self-reflection and invariant challenge before execution.
   - [`ai-agent-engineer`](.agents/skills/ai-agent-engineer/SKILL.md) — Production-grade autonomous systems architecture, 4-Level Ladder qualification, 60 canonical patterns, substrate isolation, and session evaluation.
   - [`swarm-reflection-optimizer`](.agents/skills/swarm-reflection-optimizer/SKILL.md) — Autonomous multi-agent DAG optimization, ANN textual backpropagation, Borda count deliberation, and Aquinas adversarial reflection.
   - [`orca-orchestrator`](.agents/skills/orca-orchestrator/SKILL.md) — Supervise multi-agent coding swarms in isolated Git worktrees using FIFO inboxes and authoritative injected preambles.
+  - [`uncertainty-aware-ai-architect`](.agents/skills/uncertainty-aware-ai-architect/SKILL.md) — Architect, implement, and audit uncertainty-aware AI and RAG architectures using 3-layer deterministic boundaries, logit entropy analysis, and HITL escalation.
+  - [`self-evaluating-ai-pipeline`](.agents/skills/self-evaluating-ai-pipeline/SKILL.md) — Architect, implement, and automate 3-layer LLM evaluation pipelines (deterministic checks, anchored LLM-as-judge scoring, and human calibration) with golden regression suites and paired t-test statistical significance gating.
+  - [`deterministic-validation-loop`](.agents/skills/deterministic-validation-loop/SKILL.md) — Architect, implement, and operate spec-first deterministic validation loops (3-tier validation, exact error injection, and bounded retries) for LLM structured outputs.
+  - [`dynamic-model-router`](.agents/skills/dynamic-model-router/SKILL.md) — Architect, configure, and operate multi-provider dynamic LLM routing pipelines with sub-5ms heuristic complexity classification, declarative model matrices, and automated failover.
+  - [`harness-compass`](.agents/skills/harness-compass/SKILL.md) — Evolve, calibrate, and benchmark autonomous AI agent harnesses using constrained evolution, 4-stage proactive feedback, dual-track optimization, and R3 integration.
+  - [`coding-harness-calibrator`](.agents/skills/coding-harness-calibrator/SKILL.md) — Empirically calibrate and optimize autonomous coding agent harnesses across context management (T0-T4 staging), action spaces (tools vs bash), and planning scaffolds.
 
 ### 2. [Memory & Epistemics](./docs/domains/memory-and-epistemics/CONTEXT.md)
 * **Scope**: Declarative skill graphs, semantic embeddings, context distillation, prompt benchmarking, and claim lineage.
@@ -47,6 +55,7 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - `synthetic_generator` — Synthetic tabular matrix and mock data generation.
   - `deepselect_topk` — High-performance TopK kernel selection, harmonic bound estimation, and DeepSeek Sparse Attention (DSA) routing.
   - `paperless_ngx` — Paperless-NGX document ingestion, hybrid Tantivy full-text search, and SQLite-Vec RAG integration bridge.
+  - `bigquery_augmented_analytics` — In-database BigQuery TVF execution for anomaly detection, change point isolation, Apriori attribution, and ARIMA_PLUS causal lift.
 * **Member Skills**:
   - [`structured-data-scout`](.agents/skills/structured-data-scout/SKILL.md) — Curated tabular dataset ingestion from authoritative registries (UCI, Kaggle, OpenData).
   - [`paperless-document-pipeline`](.agents/skills/paperless-document-pipeline/SKILL.md) — Ingest, classify, parse, and query documents across Paperless-NGX using hybrid Tantivy lexical and SQLite-Vec semantic search.
@@ -58,6 +67,7 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - [`data-management-architect`](.agents/skills/data-management-architect/SKILL.md) — Enterprise data lifecycle governance, DAMA-DMBOK capabilities, Open Data Contracts (ODCS), Medallion lakehouse engineering, 6-dimension data quality gating, and Level 0–5 maturity roadmaps.
   - [`neo4j-knowledge-graph-architect`](.agents/skills/neo4j-knowledge-graph-architect/SKILL.md) — Production Neo4j labeled property graph architecture, backward schema modeling, idempotent batch ingestion, Cypher traversal safety, index profiling, and epistemic evidence boundaries.
   - [`knowledge-graph-pipeline`](.agents/skills/knowledge-graph-pipeline/SKILL.md) — End-to-end data scouting, ontological engineering, backward LPG schema design, idempotent UNWIND batching, and dual-engine recursive SQL traversal.
+  - [`bigquery-augmented-analytics`](.agents/skills/bigquery-augmented-analytics/SKILL.md) — In-database augmented analytics via Google BigQuery TVFs for automated change-point detection, multi-dimensional driver attribution, and ARIMA_PLUS counterfactual causal lift.
 
 
 ### 4. [Software Engineering](./docs/domains/software-engineering/CONTEXT.md)
@@ -86,17 +96,20 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - [`codebase-context-governor`](.agents/skills/codebase-context-governor/SKILL.md) — Multi-layer codebase context governance, Three-Layer partitioning, automated CI linter enforcement, and dynamic 5D compute tier calibration.
   - [`pr-lens-visualizer`](.agents/skills/pr-lens-visualizer/SKILL.md) — Standalone animated SVG architecture and data-flow diagrams from PR diffs, graph validation, and progressive disclosure walkthroughs.
   - [`repo-triad-forge`](.agents/skills/repo-triad-forge/SKILL.md) — Unified repository cognitive audit, dual-file Knowledge Vault retention, slotted skill synthesis, and sandboxed plugin forging.
+  - [`responsible-ai-prototyping`](.agents/skills/responsible-ai-prototyping/SKILL.md) — Build, audit, and harden web applications generated by AI builders (Lovable, v0, Bolt) using data minimization, security-first prompt templates, bipartite auth/authz testing, dependency pruning, and honest stage-gate classification.
+
 
 ### 5. [Security & Forensics](./docs/domains/security-and-forensics/CONTEXT.md)
 * **Scope**: Threat modeling, vulnerability scanning, log forensics, network port auditing, and execution trajectory auditing.
 * **Member Plugins**:
   - `security_scanner` — Vulnerability detection and secret leakage analysis.
+  - `pre_commit_security_guard` — Shift-left SAST analysis, Shannon entropy secret interception, deliberate synthetic smoke tests, and SARIF dual-gate CI defense.
   - `threat_modeler` — STRIDE threat modeling and attack tree formulation.
   - `log_forensics` — Structured log pattern extraction and anomaly hunting.
   - `network_forensics` — Port security audit and network connectivity verification.
   - `trajectory_auditor` — Execution step replay and invariant trajectory verification.
 * **Member Skills**:
-  - *(Inherits platform audit workflows; domain skills scaffolded on demand)*
+  - [`pre-commit-security-guard`](.agents/skills/pre-commit-security-guard/SKILL.md) — Shift security left by intercepting vulnerabilities and secrets before pull requests using Git pre-commit hooks, multi-file DevSkim SAST, Gitleaks, deliberate failure injection, and dual-gate CI enforcement.
 
 ### 6. [Infrastructure & Cloud Operations](./docs/domains/infra-and-cloud/CONTEXT.md)
 * **Scope**: Container management, Kubernetes manifest validation, Infrastructure-as-Code (IaC), and CI/CD pipelines.
@@ -116,6 +129,8 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - `notification_webhook` — Webhook broadcasting and alert dispatch.
   - `symbolic_solver` — Z3 theorem proving and constraint satisfaction.
   - `chatbotx` — Omnichannel messaging, contact management, visual flow DAG execution, and dynamic OpenAPI/MCP tool dispatch across WhatsApp, Telegram, Messenger, and Zalo.
+  - `gradio_app_architect` — Production AI interface engineering, AST diagnostic inspection, and decoupled 3-tier scaffolding for Gradio applications (Eva J Patel 2026).
+  - `gemini_vercel_streaming_chatbot` — Production AI chatbot engineering with Google Gemini & Vercel Serverless plain-text chunk streaming, CORS preflight gates, and reactive stream consumers (Johnson Samuel 2026).
 * **Member Skills**:
   - [`repo-to-plugin-forge`](.agents/skills/repo-to-plugin-forge/SKILL.md) — Autonomous synthesis and scaffolding of Harness plugins from attached codebases.
   - [`book-to-skill-forge`](.agents/skills/book-to-skill-forge/SKILL.md) — Synthesis and authoring of deep-module agent skills and coaching rubrics from books, articles, and video transcripts.
@@ -126,6 +141,8 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - [`external-repo-bridge-forge`](.agents/skills/external-repo-bridge-forge/SKILL.md) — Foreign GitHub repository ingestion, commit trajectory analysis, sandboxed Harness plugin synthesis, and Diátaxis documentation with C4 architecture models.
   - [`agentwikis-router`](.agents/skills/agentwikis-router/SKILL.md) — Scope-bounded developer task routing, zero-latency offline documentation extraction, trust-calibrated abstention, and Open Data Contract governance across AgentWikis knowledge bases.
   - [`chatbotx`](.agents/skills/chatbotx/SKILL.md) — Omnichannel chatbot automation, contact identity tagging, DAG flows, and dynamic OpenAPI tool execution across messaging networks.
+  - [`gradio-app-architect`](.agents/skills/gradio-app-architect/SKILL.md) — Production-grade Gradio web applications and AI interfaces with decoupled logic, reactive Blocks event graphs, session state isolation, multimodal pipelines, and queued streaming.
+  - [`gemini-vercel-streaming-chatbot`](.agents/skills/gemini-vercel-streaming-chatbot/SKILL.md) — Production-grade AI chatbots and embed widgets with Google Gemini and Vercel Serverless Functions using plain-text chunk streaming, CORS preflight guards, and React stream consumers.
 
 
 

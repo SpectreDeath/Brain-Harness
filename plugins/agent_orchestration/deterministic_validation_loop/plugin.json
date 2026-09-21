@@ -1,0 +1,86 @@
+{
+  "name": "plugin.deterministic_validation_loop",
+  "version": "1.0.0",
+  "description": "Spec-first 3-tier deterministic validation loops with delta feedback injection and bounded retries",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "category": "agent_orchestration",
+  "author": "Brain Harness",
+  "provides": [
+    "service.deterministic_validation"
+  ],
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "validate_payload",
+      "description": "Validate structured JSON payload against a preset or schema specification",
+      "parameters": [
+        {
+          "name": "payload",
+          "type": "object",
+          "description": "The payload dictionary to validate",
+          "required": true
+        },
+        {
+          "name": "spec",
+          "type": "string",
+          "description": "Preset name (e.g. deployment_config, plugin_manifest) or JSON schema string",
+          "required": false
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "run_validation_loop",
+      "description": "Execute cyclic state machine loop with delta feedback injection and retry budget",
+      "parameters": [
+        {
+          "name": "request",
+          "type": "string",
+          "description": "Original generation objective/request",
+          "required": true
+        },
+        {
+          "name": "spec",
+          "type": "string",
+          "description": "Preset name or schema specification",
+          "required": false
+        },
+        {
+          "name": "max_attempts",
+          "type": "integer",
+          "description": "Maximum retry ceiling (default 3)",
+          "required": false
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "get_preset_spec",
+      "description": "Retrieve schema dictionary for a built-in preset specification",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "Preset name (deployment_config, plugin_manifest)",
+          "required": true
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "validation_visual_brief",
+      "description": "Generate an interactive HTML visual brief for a validation run",
+      "parameters": [
+        {
+          "name": "output_path",
+          "type": "string",
+          "description": "Optional destination path for HTML report",
+          "required": false
+        }
+      ],
+      "returns": "string"
+    }
+  ]
+}

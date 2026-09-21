@@ -1,0 +1,11 @@
+# Baseline operational budgets for bigquery-augmented-analytics
+min_apriori_support: 0.01
+change_point_min_probability: 0.95
+default_top_k: 20
+max_bytes_scanned: 10737418240  # 10 GB limit before warning
+timeout_seconds: 300
+default_seasonalities:
+  - WEEKLY
+  - MONTHLY
+output_time_series_default: true
+dry_run_by_default: false

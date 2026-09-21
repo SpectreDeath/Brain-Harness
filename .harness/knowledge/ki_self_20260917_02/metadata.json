@@ -1,0 +1,41 @@
+{
+  "id": "ki_self_20260917_02",
+  "title": "Three-Layer LLM Evaluation Architecture, Golden Regression Suites, and Paired T-Test Significance Gating",
+  "category": "agent_orchestration",
+  "created_at": "2026-09-17T22:50:00Z",
+  "author": "Brain Harness Reflector",
+  "tags": [
+    "llm_evaluation",
+    "deterministic_guardrails",
+    "llm_as_judge",
+    "rubric_anchoring",
+    "human_in_the_loop",
+    "cohens_kappa",
+    "regression_testing",
+    "golden_datasets",
+    "paired_t_test",
+    "statistical_significance"
+  ],
+  "isnad": {
+    "claims": [
+      {
+        "assertion": "Traditional deterministic unit testing fails for non-deterministic LLM applications because variable text generation cannot be asserted via exact equality.",
+        "evidence_type": "literature_extraction",
+        "source": "freeCodeCamp: 'How to Build a Self-Evaluating AI System' by Jude Otine (2026-09-17)",
+        "verified": true
+      },
+      {
+        "assertion": "A production LLM evaluation pipeline requires three tiered layers: Layer 1 deterministic checks (<1ms, $0 cost, catching ~30% of failures), Layer 2 semantic LLM-as-judge evaluation (anchored 1-5 scales, JSON response, 3-judge median consensus), and Layer 3 human evaluation loops (lightweight JSONL annotation, Cohen's Kappa > 0.6).",
+        "evidence_type": "architectural_seam",
+        "source": "freeCodeCamp: 'How to Build a Self-Evaluating AI System' by Jude Otine (2026-09-17)",
+        "verified": true
+      },
+      {
+        "assertion": "Model and prompt changes in CI/CD must be evaluated against a golden dataset (50-100 edge-case examples) using paired Student's t-test (p < 0.05) to eliminate random noise and prevent regressions before production deployment.",
+        "evidence_type": "statistical_methodology",
+        "source": "Otine (2026) + Student's Paired t-Test (scipy.stats.ttest_rel)",
+        "verified": true
+      }
+    ]
+  }
+}

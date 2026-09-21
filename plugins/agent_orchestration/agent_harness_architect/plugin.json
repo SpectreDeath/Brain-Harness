@@ -1,0 +1,74 @@
+{
+  "name": "plugin.agent_harness_architect",
+  "version": "1.0.0",
+  "description": "5-part harness auditing, 4-mechanism reliability scoring, 4-layer stack decoupling, and architectural bet matching",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "category": "agent_orchestration",
+  "author": "Brain Harness",
+  "provides": [
+    "service.agent_harness_architect"
+  ],
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "harness_audit",
+      "description": "Execute comprehensive 5-part architecture and 4-layer boundary audit for a target directory",
+      "parameters": [
+        {
+          "name": "target",
+          "type": "string",
+          "description": "Target directory to audit",
+          "required": false
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "harness_score",
+      "description": "Evaluate planning, sandbox, subagent, compression, and observability across Level 0 to Level 2",
+      "parameters": [
+        {
+          "name": "config_path",
+          "type": "string",
+          "description": "Optional path to harness configuration YAML/JSON",
+          "required": false
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "harness_classify_bet",
+      "description": "Classify team operational bottleneck into one of four architectural harness bets",
+      "parameters": [
+        {
+          "name": "bottleneck",
+          "type": "string",
+          "description": "Description of operational bottleneck (lock-in, amnesia, minimal, etc.)",
+          "required": false
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "harness_visual_brief",
+      "description": "Render interactive HTML visual brief with Mermaid topology and reliability scorecard",
+      "parameters": [
+        {
+          "name": "target",
+          "type": "string",
+          "description": "Target directory to audit",
+          "required": false
+        },
+        {
+          "name": "output_path",
+          "type": "string",
+          "description": "Destination file path for generated HTML brief",
+          "required": false
+        }
+      ],
+      "returns": "string"
+    }
+  ]
+}

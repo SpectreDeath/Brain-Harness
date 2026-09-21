@@ -1,0 +1,21 @@
+# Zero-fork configuration for pre_commit_security_guard plugin (Rule 44)
+version: "1.0.0"
+operational_budgets:
+  max_turns: 25
+  cost_budget_usd: 2.50
+  subprocess_timeout_seconds: 60
+  token_budget_bound: 32000
+  max_staged_files: 100
+  local_hook_timeout_seconds: 30
+  ci_workflow_timeout_seconds: 300
+scanner_policy:
+  fail_fast: true
+  entropy_threshold: 4.5
+  disallow_blanket_directory_exclusions: true
+  enforce_dual_gate_ci: true
+  devskim_severity:
+    - "critical"
+    - "high"
+  allowed_suppression_tags:
+    - "devskim: ignore"
+    - "gitleaks:allow"

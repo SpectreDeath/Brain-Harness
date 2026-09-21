@@ -1,0 +1,37 @@
+{
+  "id": "ki_20260918_gemini_vercel_streaming",
+  "title": "Plain-Text Chunk Streaming Architecture for Gemini on Vercel Serverless",
+  "category": "integration_and_io",
+  "created_at": "2026-09-18T05:50:00Z",
+  "author": "Johnson Samuel / Book-to-Skill Forge",
+  "tags": [
+    "gemini",
+    "vercel_serverless",
+    "streaming",
+    "react_stream_reader",
+    "cors_preflight",
+    "plain_text_chunks"
+  ],
+  "isnad": {
+    "claims": [
+      {
+        "assertion": "Streaming Plain-Text HTTP chunks via Node.js res.write() and generateContentStream bypasses token completion wait times and provides immediate perceived responsiveness in serverless runtimes.",
+        "evidence_type": "empirical_benchmark",
+        "source": "https://www.freecodecamp.org/news/how-to-build-an-ai-chatbot-with-gemini-and-vercel-serverless-functions/",
+        "verified": true
+      },
+      {
+        "assertion": "Cross-domain embedded chat widgets require serverless handlers to explicitly intercept OPTIONS preflight requests and return 200 OK before the browser allows streaming POST requests.",
+        "evidence_type": "runtime_trace",
+        "source": "https://www.freecodecamp.org/news/how-to-build-an-ai-chatbot-with-gemini-and-vercel-serverless-functions/#heading-a-note-on-cors-for-embedded-widgets",
+        "verified": true
+      },
+      {
+        "assertion": "Consuming streamed HTTP chunks in web frontends requires ReadableStreamDefaultReader with TextDecoder running an incremental state accumulation loop rather than awaiting res.text() or res.json().",
+        "evidence_type": "code_implementation",
+        "source": "https://www.freecodecamp.org/news/how-to-build-an-ai-chatbot-with-gemini-and-vercel-serverless-functions/#heading-frontend-reading-the-response-stream",
+        "verified": true
+      }
+    ]
+  }
+}

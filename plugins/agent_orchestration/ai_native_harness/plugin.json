@@ -1,0 +1,87 @@
+{
+  "name": "plugin.ai_native_harness",
+  "version": "1.0.0",
+  "description": "4-gate behavioral pipeline verification, credential-free MCP security audit, code-to-doc drift calculus, and negative query demand mining",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "category": "agent_orchestration",
+  "author": "Brain Harness",
+  "provides": [
+    "service.ai_native_harness"
+  ],
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "four_gates_evaluate",
+      "description": "Evaluate the 4 Behavioral Verification Gates (Typecheck, 100% Coverage, E2E Simulation, Live Demo)",
+      "parameters": [
+        {
+          "name": "target",
+          "type": "string",
+          "description": "Target workspace directory",
+          "required": false
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "doc_drift_audit",
+      "description": "Calculate Git code-to-doc commit drift count and status badges",
+      "parameters": [
+        {
+          "name": "target",
+          "type": "string",
+          "description": "Target workspace directory",
+          "required": false
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "mcp_security_audit",
+      "description": "Audit MCP server posture for zero credentials, PAT forwarding, and uniform leak defense",
+      "parameters": [
+        {
+          "name": "config_path",
+          "type": "string",
+          "description": "Optional path to MCP configuration",
+          "required": false
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "negative_backlog_mine",
+      "description": "Mine unanswered assistant queries and cluster into a demand-ranked documentation backlog",
+      "parameters": [
+        {
+          "name": "logs_path",
+          "type": "string",
+          "description": "Optional path to assistant query logs",
+          "required": false
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "ai_native_harness_brief",
+      "description": "Render interactive HTML visual brief with Mermaid topology and telemetry tables",
+      "parameters": [
+        {
+          "name": "target",
+          "type": "string",
+          "description": "Target workspace directory",
+          "required": false
+        },
+        {
+          "name": "output_path",
+          "type": "string",
+          "description": "Destination file path for generated HTML brief",
+          "required": false
+        }
+      ],
+      "returns": "string"
+    }
+  ]
+}

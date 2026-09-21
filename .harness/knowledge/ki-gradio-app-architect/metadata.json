@@ -1,0 +1,21 @@
+{
+  "id": "ki-gradio-app-architect",
+  "title": "Gradio Production AI Interface Engineering (Eva J Patel / freeCodeCamp 2026)",
+  "created": "2026-09-20T15:43:00-04:00",
+  "updated": "2026-09-20T15:43:00-04:00",
+  "summary": "Authoritative engineering heuristics, mental models, and production guardrails for building interactive AI web applications and agent interfaces with Gradio. Distills Eva J Patel's 2026 comprehensive literature into a 3-layer decoupled architecture, isolated per-session gr.State management, positional arity contracts, module-scope singleton warm-loading, queued websocket concurrency (demo.queue), generator token streaming, and Hugging Face Spaces deployment manifests.",
+  "references": [
+    {
+      "path": "D:/markdown from chrome/freeCodeCamp/AI Agent Engineering/How to Use Gradio with Python A Complete Beginner-to-Advanced Book.md",
+      "description": "Original book by Eva J Patel published on freeCodeCamp (2026)"
+    },
+    {
+      "path": ".agents/skills/gradio-app-architect/SKILL.md",
+      "description": "Executable deep-module agent skill for Gradio application architecture"
+    },
+    {
+      "path": ".agents/skills/gradio-app-architect/CARD.md",
+      "description": "Companion summary card, stage matrix, and verification checklist"
+    }
+  ]
+}

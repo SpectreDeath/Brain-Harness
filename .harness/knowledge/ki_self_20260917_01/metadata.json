@@ -1,0 +1,38 @@
+{
+  "id": "ki_self_20260917_01",
+  "title": "Five-Part Agent Harness Architecture and Four-Mechanism Reliability Invariant",
+  "category": "agent_orchestration",
+  "created_at": "2026-09-17T22:30:00Z",
+  "author": "Brain Harness Reflector",
+  "tags": [
+    "agent_harness",
+    "runtime_shell",
+    "react_loop",
+    "sandboxing",
+    "subagent_delegation",
+    "context_compression",
+    "mcp"
+  ],
+  "isnad": {
+    "claims": [
+      {
+        "assertion": "An agent harness is the opinionated runtime shell wrapped around an LLM prediction core, providing the ReAct loop, tool router, memory management, planning gate, and sandbox boundary.",
+        "evidence_type": "literature_extraction",
+        "source": "freeCodeCamp: 'What Is an Agent Harness' by Rudrendu Paul (2026-09-17) + Yao et al. ReAct (2022)",
+        "verified": true
+      },
+      {
+        "assertion": "Reliable multi-turn agent execution requires four load-bearing mechanisms: a pre-execution planning tool, virtual filesystem and sandbox isolation, subagent delegation with isolated context windows, and context compression middleware.",
+        "evidence_type": "architectural_seam",
+        "source": "Claude Code Architecture + LangChain Deep Agents (2026) + deepseek-ai/deepseek-harness",
+        "verified": true
+      },
+      {
+        "assertion": "Production agent architectures partition into four distinct decoupled layers: Protocol Layer (MCP), Harness Loop, Orchestration Frameworks (LangGraph, CrewAI, AG2, Mastra), and Observability/Sandboxing (Langfuse, E2B, Modal).",
+        "evidence_type": "specification_standard",
+        "source": "Model Context Protocol (Linux Foundation / Anthropic 2024-2026) + E2B + Langfuse Tracing",
+        "verified": true
+      }
+    ]
+  }
+}

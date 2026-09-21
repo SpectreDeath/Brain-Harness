@@ -1,0 +1,16 @@
+# Default operational configuration for gemini-vercel-streaming-chatbot skill (Rule 44)
+version: "1.0.0"
+operational_budgets:
+  max_turns: 20
+  cost_budget_usd: 2.50
+  subprocess_timeout_seconds: 60
+  token_budget_bound: 32000
+streaming_config:
+  max_text_length: 2000
+  max_array_length: 50
+  default_model: "gemini-2.5-flash"
+  enable_terminal_verification: true
+  enforce_cors_preflight_gate: true
+deployment_policy:
+  enforce_env_key_isolation: true
+  restrict_cors_origin_in_production: true

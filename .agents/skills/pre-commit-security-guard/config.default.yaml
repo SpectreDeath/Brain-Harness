@@ -1,0 +1,24 @@
+# Default operational configuration for pre-commit-security-guard skill (Rule 44)
+version: "1.0.0"
+operational_budgets:
+  max_turns: 25
+  cost_budget_usd: 2.50
+  subprocess_timeout_seconds: 60
+  token_budget_bound: 32000
+  max_staged_files: 100
+  local_hook_timeout_seconds: 30
+  ci_workflow_timeout_seconds: 300
+scanner_policy:
+  fail_fast: true
+  devskim_severity:
+    - "critical"
+    - "important"
+  devskim_file_types:
+    - "python"
+    - "javascript"
+    - "typescript"
+    - "json"
+    - "yaml"
+  gitleaks_redact: true
+  enforce_dual_gate_ci: true
+  disallow_blanket_directory_exclusions: true

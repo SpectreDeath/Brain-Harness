@@ -1,0 +1,54 @@
+# HarnessCompass Baseline Operational Budgets (Rule 44 Zero-Fork Configuration)
+version: 1.0.0
+plugin_name: "plugin.harness_compass"
+category: "agent_orchestration"
+
+evolution_budget:
+  max_iterations: 5
+  sample_task_count: 50
+  rollouts_per_task: 2
+  pass_at_1_target: 0.65
+  early_stop_plateau_turns: 2
+
+generalization_gate:
+  enforce_content_invariant: true
+  enforce_placement_invariant: true
+  ban_task_ids: true
+  ban_private_symbols: true
+  ban_test_file_patterns: true
+  ban_keyword_branching: true
+  memory_deduplication: true
+
+proactive_feedback:
+  enable_blind_report: true
+  enable_hindsight_report: true
+  allowed_failure_attributions:
+    - "harness"
+  discard_failure_attributions:
+    - "agent_reasoning"
+    - "task_ambiguity"
+    - "environment"
+  min_trace_grounding_confidence: 0.70
+  group_recurrence_threshold: 2
+
+component_optimization:
+  parallel_tracks:
+    structural:
+      surfaces:
+        - "middleware"
+        - "tool_impl"
+        - "sub_agent"
+      timeout_seconds: 300
+    guidance:
+      surfaces:
+        - "systemprompt"
+        - "skills"
+        - "tool_desc"
+        - "memory"
+      timeout_seconds: 180
+
+r3_integration:
+  revision_mode: "conservative" # drop doubtful or ungrounded loser edits
+  winner_precedence: true
+  hunt_redundancy: true # Occam's Razor: delete advisory prompt text duplicated by code
+  purge_advisory_when_code_enforced: true

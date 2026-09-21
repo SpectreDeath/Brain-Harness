@@ -1,0 +1,77 @@
+{
+  "id": "ki_umairmirza_precommit_security",
+  "title": "Shift-Left Pre-Commit Security: Multi-Engine Division of Labor, Synthetic Failure Smoke Gates, and Dual-Gate CI Parity",
+  "category": "security_and_forensics",
+  "created_at": "2026-09-19T15:50:00Z",
+  "author": "Umair Mirza (synthesized by Brain Harness)",
+  "source_url": "https://www.freecodecamp.org/news/catch-security-vulnerabilities-code-pull-requests/",
+  "tags": [
+    "shift_left",
+    "pre_commit",
+    "sast",
+    "devskim",
+    "gitleaks",
+    "secret_scanning",
+    "dual_gate_ci",
+    "synthetic_smoke_testing",
+    "suppression_hygiene"
+  ],
+  "references": [
+    {
+      "path": "D:/markdown from chrome/freeCodeCamp/How to Catch Security Vulnerabilities in Code Before They Reach Your Pull Requests.md",
+      "description": "Original article by Umair Mirza published on freeCodeCamp.org (2026-09-18)"
+    },
+    {
+      "path": ".agents/skills/pre-commit-security-guard/SKILL.md",
+      "description": "Executable deep-module agent skill for shift-left pre-commit security"
+    },
+    {
+      "path": ".agents/skills/pre-commit-security-guard/CARD.md",
+      "description": "Companion summary card, 5-stage matrix, and diagnostic scorecards"
+    },
+    {
+      "path": ".agents/skills/pre-commit-security-guard/config.default.yaml",
+      "description": "Zero-fork operational budget configuration (Rule 44)"
+    },
+    {
+      "path": ".agents/skills/pre-commit-security-guard/scripts/pre_commit_security_engine.py",
+      "description": "Slotted domain engine implementing dual-scanner SAST and Shannon entropy secret detection (Rule 12)"
+    },
+    {
+      "path": "src/harness/services/pre_commit_security_guard.py",
+      "description": "Micro-kernel IoC service seam and typed ServiceKey (Rule 49)"
+    },
+    {
+      "path": "plugins/security_and_forensics/pre_commit_security_guard/main.py",
+      "description": "Domain-partitioned plugin exporting singleton and providing service (Rule 18, 45)"
+    }
+  ],
+  "isnad": {
+    "claims": [
+      {
+        "assertion": "Static application security testing (SAST) linters and high-entropy secret scanners fulfill mutually exclusive security boundaries; linters detect dangerous AST API patterns and insecure cryptography, while secret scanners calculate Shannon entropy and regex token shapes.",
+        "evidence_type": "literature_extraction",
+        "source": "Umair Mirza: 'How to Catch Security Vulnerabilities in Code Before They Reach Your Pull Requests' (freeCodeCamp, Sept 2026)",
+        "verified": true
+      },
+      {
+        "assertion": "Pre-commit passes all staged files as trailing arguments, whereas Microsoft CST DevSkim CLI only accepts a single target path via -I; multi-file commits break unless mediated by an execution loop dispatcher.",
+        "evidence_type": "architectural_seam",
+        "source": "Umair Mirza: 'Create a Pre-Commit Configuration' (2026) + DevSkim CLI Specification",
+        "verified": true
+      },
+      {
+        "assertion": "Security guardrails cannot be trusted based on successful installations alone; hooks must be empirically verified via deliberate synthetic failure smoke tests (MD5 weak hash and high-entropy dummy key) asserting non-zero exit codes (Exit 1).",
+        "evidence_type": "empirical_verification",
+        "source": "Umair Mirza: 'Verify the Setup With a Deliberate Failure' (2026)",
+        "verified": true
+      },
+      {
+        "assertion": "Developer workstations cannot provide authoritative security guarantees because pre-commit hooks can be bypassed using git commit --no-verify; remote CI must enforce identical checks with full git history depth (fetch-depth: 0) and upload SARIF reports to the repository security tab.",
+        "evidence_type": "security_standard",
+        "source": "Umair Mirza: 'Add Security Checks to CI Too' (2026) + GitHub SARIF Security Governance",
+        "verified": true
+      }
+    ]
+  }
+}

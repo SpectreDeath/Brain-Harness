@@ -1,0 +1,250 @@
+{
+  "name": "plugin.bigquery_augmented_analytics",
+  "version": "1.0.0",
+  "description": "BigQuery in-database augmented analytics TVF execution for anomaly detection, change point isolation, Apriori attribution, and ARIMA_PLUS causal lift",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "category": "data_engineering",
+  "author": "Brain Harness",
+  "provides": [
+    "service.bigquery_augmented_analytics"
+  ],
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "bigquery_temporal_profile",
+      "description": "Execute Stage 1 Temporal Profiling via ML.TREND and ML.SEASONALITY BigQuery TVFs",
+      "parameters": [
+        {
+          "name": "table",
+          "type": "string",
+          "description": "Target BigQuery table identifier",
+          "required": true
+        },
+        {
+          "name": "data_col",
+          "type": "string",
+          "description": "Target metric column name",
+          "required": true
+        },
+        {
+          "name": "timestamp_col",
+          "type": "string",
+          "description": "Timestamp column name",
+          "required": true
+        },
+        {
+          "name": "seasonalities",
+          "type": "array",
+          "description": "Optional list of seasonality periods (e.g. WEEKLY, MONTHLY)",
+          "required": false
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "bigquery_detect_change_points",
+      "description": "Execute Stage 2 Structural Shift Isolation via ML.DETECT_CHANGE_POINTS BigQuery TVF",
+      "parameters": [
+        {
+          "name": "table",
+          "type": "string",
+          "description": "Target BigQuery table identifier",
+          "required": true
+        },
+        {
+          "name": "data_col",
+          "type": "string",
+          "description": "Target metric column name",
+          "required": true
+        },
+        {
+          "name": "timestamp_col",
+          "type": "string",
+          "description": "Timestamp column name",
+          "required": true
+        },
+        {
+          "name": "min_probability",
+          "type": "number",
+          "description": "Minimum Bayesian change point probability threshold (default: 0.95)",
+          "required": false
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "bigquery_attribute_drivers",
+      "description": "Execute Stage 3 Combinatorial Attribution via AI.KEY_DRIVERS Apriori BigQuery TVF",
+      "parameters": [
+        {
+          "name": "table",
+          "type": "string",
+          "description": "Target BigQuery table identifier",
+          "required": true
+        },
+        {
+          "name": "metric_col",
+          "type": "string",
+          "description": "Target metric column name",
+          "required": true
+        },
+        {
+          "name": "dimension_cols",
+          "type": "array",
+          "description": "List of categorical dimension columns to evaluate",
+          "required": true
+        },
+        {
+          "name": "interest_condition",
+          "type": "string",
+          "description": "SQL boolean filter defining the interest period cohort",
+          "required": true
+        },
+        {
+          "name": "min_apriori_support",
+          "type": "number",
+          "description": "Minimum Apriori support threshold (default: 0.01)",
+          "required": false
+        },
+        {
+          "name": "top_k",
+          "type": "integer",
+          "description": "Top K driver segments to return (default: 20)",
+          "required": false
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "bigquery_causal_lift",
+      "description": "Execute Stage 4 Counterfactual Impact Modeling via AI.CAUSAL_EFFECT ARIMA_PLUS BigQuery TVF",
+      "parameters": [
+        {
+          "name": "table",
+          "type": "string",
+          "description": "Target BigQuery table identifier",
+          "required": true
+        },
+        {
+          "name": "data_col",
+          "type": "string",
+          "description": "Target metric column name",
+          "required": true
+        },
+        {
+          "name": "timestamp_col",
+          "type": "string",
+          "description": "Timestamp column name",
+          "required": true
+        },
+        {
+          "name": "intervention_timestamp",
+          "type": "string",
+          "description": "Intervention timestamp t0 (e.g. 2026-02-15)",
+          "required": true
+        },
+        {
+          "name": "output_time_series",
+          "type": "boolean",
+          "description": "Whether to return daily trajectory points with confidence bounds",
+          "required": false
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "bigquery_augmented_pipeline",
+      "description": "Execute complete 5-Stage BigQuery Augmented Analytics pipeline end-to-end",
+      "parameters": [
+        {
+          "name": "table",
+          "type": "string",
+          "description": "Target BigQuery table identifier",
+          "required": true
+        },
+        {
+          "name": "metric_col",
+          "type": "string",
+          "description": "Target metric column name",
+          "required": true
+        },
+        {
+          "name": "timestamp_col",
+          "type": "string",
+          "description": "Timestamp column name",
+          "required": true
+        },
+        {
+          "name": "dimension_cols",
+          "type": "array",
+          "description": "List of categorical dimension columns to evaluate",
+          "required": true
+        },
+        {
+          "name": "intervention_timestamp",
+          "type": "string",
+          "description": "Optional intervention timestamp (if omitted, isolated dynamically from change points)",
+          "required": false
+        },
+        {
+          "name": "min_apriori_support",
+          "type": "number",
+          "description": "Minimum Apriori support threshold",
+          "required": false
+        },
+        {
+          "name": "top_k",
+          "type": "integer",
+          "description": "Top K driver segments to return",
+          "required": false
+        },
+        {
+          "name": "dry_run",
+          "type": "boolean",
+          "description": "Whether to execute in mock dry-run mode without live BigQuery connection",
+          "required": false
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "bigquery_visual_brief",
+      "description": "Generate interactive HTML visual brief with Tailwind and Mermaid TVF DAG",
+      "parameters": [
+        {
+          "name": "table",
+          "type": "string",
+          "description": "Target table identifier",
+          "required": false
+        },
+        {
+          "name": "metric_col",
+          "type": "string",
+          "description": "Target metric column name",
+          "required": false
+        },
+        {
+          "name": "timestamp_col",
+          "type": "string",
+          "description": "Timestamp column name",
+          "required": false
+        },
+        {
+          "name": "dimension_cols",
+          "type": "array",
+          "description": "List of dimension columns",
+          "required": false
+        },
+        {
+          "name": "output_path",
+          "type": "string",
+          "description": "Optional path to save HTML visual brief",
+          "required": false
+        }
+      ],
+      "returns": "string"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+# Default operational configuration for ai-native-harness-engineer skill (Rule 44)
+version: "1.0.0"
+operational_budgets:
+  max_turns: 30
+  cost_budget_usd: 5.00
+  subprocess_timeout_seconds: 120
+  token_budget_bound: 64000
+harness_policy:
+  enforce_four_gates: true
+  require_100_percent_logic_coverage: true
+  require_feature_demo_page: true
+  disallow_linter_gate_budget: true
+mcp_security:
+  zero_credentials_mode: true
+  forward_user_tokens: true
+  sanitize_forbidden_and_not_found: true
+drift_telemetry:
+  track_code_path_drift: true
+  amber_badge_on_drift: true
+  log_unanswered_queries_as_backlog: true

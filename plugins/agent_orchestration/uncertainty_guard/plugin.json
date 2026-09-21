@@ -1,0 +1,74 @@
+{
+  "name": "plugin.uncertainty_guard",
+  "version": "1.0.0",
+  "description": "3-layer deterministic uncertainty interception, semantic distance gating, token logprob validation, and HITL escalation (Njoku 2026)",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "category": "agent_orchestration",
+  "author": "Brain Harness",
+  "provides": [
+    "service.uncertainty_guard"
+  ],
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "verify_boundary",
+      "description": "Layer 1 input domain boundary gating with normalized cosine centroid similarity",
+      "parameters": [
+        {
+          "name": "query",
+          "type": "string",
+          "description": "Incoming user query to evaluate",
+          "required": true
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "score_retrieval",
+      "description": "Layer 2 context sufficiency and semantic distance scoring across retrieved chunks",
+      "parameters": [
+        {
+          "name": "user_query",
+          "type": "string",
+          "description": "User query string",
+          "required": true
+        },
+        {
+          "name": "retrieved_chunks",
+          "type": "array",
+          "description": "List of retrieved document chunk strings or dicts",
+          "required": true
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "validate_logprobs",
+      "description": "Layer 3 token generation log probability and text perplexity analysis",
+      "parameters": [
+        {
+          "name": "token_logprobs",
+          "type": "array",
+          "description": "List of token log probabilities from model API",
+          "required": true
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "intercept_request",
+      "description": "Unified 3-layer sequential request interception lifecycle with deterministic routing",
+      "parameters": [
+        {
+          "name": "query",
+          "type": "string",
+          "description": "User query string",
+          "required": true
+        }
+      ],
+      "returns": "object"
+    }
+  ]
+}

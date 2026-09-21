@@ -1,0 +1,80 @@
+{
+  "name": "plugin.gemini_vercel_streaming_chatbot",
+  "version": "1.0.0",
+  "description": "Production AI chatbot engineering with Google Gemini & Vercel Serverless plain-text chunk streaming (Johnson Samuel 2026)",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "category": "integration_and_io",
+  "author": "Brain Harness",
+  "provides": [
+    "service.gemini_vercel_streaming"
+  ],
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "audit_code",
+      "description": "Run static analysis against the 5 production streaming rubrics",
+      "parameters": [
+        {
+          "name": "source_code",
+          "type": "string",
+          "description": "Source code of the serverless function or client widget",
+          "required": true
+        },
+        {
+          "name": "file_path",
+          "type": "string",
+          "description": "Optional file path label for diagnostic reporting",
+          "required": false
+        }
+      ],
+      "returns": "AuditReportData"
+    },
+    {
+      "name": "scaffold_app",
+      "description": "Generate a production 3-tier Gemini & Vercel streaming application",
+      "parameters": [
+        {
+          "name": "config",
+          "type": "object",
+          "description": "ScaffoldConfigData configuration object",
+          "required": true
+        }
+      ],
+      "returns": "ScaffoldResultData"
+    },
+    {
+      "name": "simulate_stream",
+      "description": "Simulate unbuffered plain-text chunk streaming",
+      "parameters": [
+        {
+          "name": "prompt",
+          "type": "string",
+          "description": "Input prompt string to simulate streaming for",
+          "required": true
+        },
+        {
+          "name": "chunks_count",
+          "type": "integer",
+          "description": "Number of simulated chunk emissions",
+          "required": false
+        }
+      ],
+      "returns": "StreamSimulationData"
+    },
+    {
+      "name": "generate_visual_brief",
+      "description": "Generate standalone HTML visual brief with telemetry and topology diagram",
+      "parameters": [
+        {
+          "name": "output_path",
+          "type": "string",
+          "description": "Optional destination path for HTML brief",
+          "required": false
+        }
+      ],
+      "returns": "string"
+    }
+  ]
+}

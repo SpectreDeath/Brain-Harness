@@ -1,0 +1,61 @@
+{
+  "name": "plugin.gradio_app_architect",
+  "version": "1.0.0",
+  "description": "Production AI interface engineering, AST diagnostic inspection, and scaffolding engine for Gradio (Eva J Patel 2026)",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "category": "integration_and_io",
+  "author": "Brain Harness",
+  "provides": [
+    "service.gradio_app_architect"
+  ],
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "audit_code",
+      "description": "Run AST static analysis against the 5 production Gradio rubrics",
+      "parameters": [
+        {
+          "name": "source_code",
+          "type": "string",
+          "description": "Python source code of the Gradio application or module",
+          "required": true
+        },
+        {
+          "name": "file_path",
+          "type": "string",
+          "description": "Optional file path label for diagnostic reporting",
+          "required": false
+        }
+      ],
+      "returns": "DiagnosticReportData"
+    },
+    {
+      "name": "scaffold_app",
+      "description": "Generate a decoupled production Gradio application",
+      "parameters": [
+        {
+          "name": "config",
+          "type": "object",
+          "description": "AppScaffoldConfigData configuration object",
+          "required": true
+        }
+      ],
+      "returns": "AppScaffoldResultData"
+    },
+    {
+      "name": "generate_visual_brief",
+      "description": "Generate standalone HTML visual brief with telemetry and topology diagram",
+      "parameters": [
+        {
+          "name": "output_path",
+          "type": "string",
+          "description": "Optional destination path for HTML brief",
+          "required": false
+        }
+      ],
+      "returns": "string"
+    }
+  ]
+}

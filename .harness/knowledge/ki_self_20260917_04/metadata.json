@@ -1,0 +1,47 @@
+{
+  "id": "ki_self_20260917_04",
+  "title": "Gradio Production Architecture: Decoupled Logic, Session State Isolation, Multimodal Pipelines, and Hugging Face Deployment",
+  "category": "user_interface_and_interaction",
+  "created_at": "2026-09-17T23:40:00Z",
+  "author": "Brain Harness Reflector",
+  "tags": [
+    "gradio",
+    "web_interfaces",
+    "ai_applications",
+    "state_management",
+    "blocks_layout",
+    "chatinterface",
+    "multimodal_pipelines",
+    "streaming_inference",
+    "production_deployment",
+    "huggingface_spaces"
+  ],
+  "isnad": {
+    "claims": [
+      {
+        "assertion": "Gradio applications require strict architectural decoupling between the Python logic layer (stateless, pure functions testable via headless pytest) and the interface layer (Gradio components and event triggers).",
+        "evidence_type": "literature_extraction",
+        "source": "freeCodeCamp: 'How to Use Gradio with Python: A Complete Beginner-to-Advanced Book' by Eva J Patel (2026)",
+        "verified": true
+      },
+      {
+        "assertion": "Managing user state in Gradio via module-level Python global variables causes catastrophic multi-user session pollution and concurrency race conditions; per-session state must be managed via gr.State passed explicitly into event handlers.",
+        "evidence_type": "architectural_seam",
+        "source": "freeCodeCamp: 'How to Use Gradio with Python: A Complete Beginner-to-Advanced Book' by Eva J Patel (2026)",
+        "verified": true
+      },
+      {
+        "assertion": "Production AI interfaces must warm-load models and pipeline resources at module initialization rather than inside callback handlers to eliminate multi-second latency spikes and GPU VRAM exhaustion.",
+        "evidence_type": "operational_invariant",
+        "source": "freeCodeCamp: 'How to Use Gradio with Python: A Complete Beginner-to-Advanced Book' by Eva J Patel (2026)",
+        "verified": true
+      },
+      {
+        "assertion": "High-throughput and streaming Gradio workflows must enable demo.queue() to protect worker concurrency, provide progress telemetry via gr.Progress, and shed excess request load gracefully.",
+        "evidence_type": "operational_invariant",
+        "source": "freeCodeCamp: 'How to Use Gradio with Python: A Complete Beginner-to-Advanced Book' by Eva J Patel (2026)",
+        "verified": true
+      }
+    ]
+  }
+}

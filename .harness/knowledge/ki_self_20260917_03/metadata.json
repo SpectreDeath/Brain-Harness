@@ -1,0 +1,46 @@
+{
+  "id": "ki_self_20260917_03",
+  "title": "Deterministic Validation Loops, 3-Tier Spec Validation, and Exact Error Feedback in AI Agent Architectures",
+  "category": "agent_orchestration",
+  "created_at": "2026-09-17T23:35:00Z",
+  "author": "Brain Harness Reflector",
+  "tags": [
+    "deterministic_validation",
+    "llm_reflection_failure",
+    "structured_output",
+    "json_schema",
+    "langgraph",
+    "cross_field_rules",
+    "error_feedback_injection",
+    "bounded_retries",
+    "spec_first_design"
+  ],
+  "isnad": {
+    "claims": [
+      {
+        "assertion": "Reflection fails for structured outputs because models suffer from blind spot symmetry ('asking someone bad at math to grade someone bad at math'), producing invisible false-positive approvals where broken outputs are passed downstream to cause production outages.",
+        "evidence_type": "literature_extraction",
+        "source": "freeCodeCamp: 'What to Do When Reflection Won't Fix Your AI Agent's Output' by Manish Ramavat (2026-09-17)",
+        "verified": true
+      },
+      {
+        "assertion": "High reliability in structured LLM generation requires bifurcating error detection (outsourced to deterministic validators executing in microseconds with zero hallucinations) from error correction (delegated to LLMs receiving exact machine-readable error strings).",
+        "evidence_type": "architectural_seam",
+        "source": "freeCodeCamp: 'What to Do When Reflection Won't Fix Your AI Agent's Output' by Manish Ramavat (2026-09-17)",
+        "verified": true
+      },
+      {
+        "assertion": "Deterministic validators must enforce a 3-tier hierarchy: Tier 1 structural syntax (schema), Tier 2 boundary constraints (ranges/regex), and Tier 3 cross-field business logic invariants (which models cannot infer from pretraining priors).",
+        "evidence_type": "architectural_seam",
+        "source": "freeCodeCamp: 'What to Do When Reflection Won't Fix Your AI Agent's Output' by Manish Ramavat (2026-09-17)",
+        "verified": true
+      },
+      {
+        "assertion": "Retries must be strictly bounded (<= 3 attempts); failures persisting past 3 attempts indicate prompt or spec ambiguity or contradictory constraints, requiring structured error telemetry, typed rejections (HTTP 422), or human escalation rather than infinite token burn.",
+        "evidence_type": "operational_invariant",
+        "source": "freeCodeCamp: 'What to Do When Reflection Won't Fix Your AI Agent's Output' by Manish Ramavat (2026-09-17)",
+        "verified": true
+      }
+    ]
+  }
+}

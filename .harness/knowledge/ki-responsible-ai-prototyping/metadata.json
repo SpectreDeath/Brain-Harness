@@ -1,0 +1,12 @@
+{
+  "id": "ki-responsible-ai-prototyping",
+  "title": "Responsible AI Prototyping & Web App Governance (Eva J Patel / Lovable)",
+  "created": "2026-09-19T13:24:00-04:00",
+  "updated": "2026-09-19T13:24:00-04:00",
+  "summary": "Engineering heuristics and governance framework for prompt-driven AI web application generators (Lovable, v0, Bolt). Establishes data minimization filters, structured security-first prompt templates, bipartite authentication vs authorization testing (5 negative test cases including IDOR and privilege escalation), dependency pruning to eliminate digital souvenirs, WCAG AA accessibility, honest prototype labeling, and the Golden Rule of AI App Building.",
+  "references": [
+    {"path": "D:/markdown from chrome/freeCodeCamp/How to Use Lovable Responsibly.md", "description": "Original article by Eva J Patel published on freeCodeCamp.org (2026-09-18)"},
+    {"path": ".agents/skills/responsible-ai-prototyping/SKILL.md", "description": "Executable deep-module agent skill for responsible AI prototyping"},
+    {"path": ".agents/skills/responsible-ai-prototyping/CARD.md", "description": "Companion summary card and diagnostic scorecards"}
+  ]
+}

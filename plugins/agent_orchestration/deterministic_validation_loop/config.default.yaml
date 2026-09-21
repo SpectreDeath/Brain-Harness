@@ -1,0 +1,25 @@
+# Default operational budgets and parameters for deterministic-validation-loop
+version: "1.0.0"
+
+validation:
+  # Hard retry ceiling before escalating to triage (Ramavat 2026)
+  max_attempts: 3
+  
+  # Fail-closed policy: reject with HTTP 422 if retries exhausted
+  fail_closed: true
+  
+  # Default specification preset to apply when unspecified
+  default_preset: "deployment_config"
+  
+  # Bail early on Tier 1 structural syntax failure before checking domain invariants
+  bail_early_on_tier_1: true
+  
+  # Execution timeout per validation pass in milliseconds
+  validation_timeout_ms: 100
+
+telemetry:
+  # Whether to log exhausted failure states to structured telemetry sink
+  log_triage_records: true
+  
+  # Retention limit for recent triage records in memory
+  max_triage_history: 100

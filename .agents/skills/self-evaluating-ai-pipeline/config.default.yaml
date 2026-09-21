@@ -1,0 +1,22 @@
+# Default operational configuration for self-evaluating-ai-pipeline skill (Rule 44)
+version: "1.0.0"
+operational_budgets:
+  max_turns: 20
+  cost_budget_usd: 5.00
+  subprocess_timeout_seconds: 120
+  token_budget_bound: 32000
+evaluation_thresholds:
+  layer1_deterministic_pass_rate: 1.0
+  layer2_judge_min_score: 3.5
+  layer3_min_cohens_kappa: 0.6
+  max_judge_drift_points: 0.5
+  statistical_significance_alpha: 0.05
+judge_settings:
+  default_model: "gpt-4o-mini"
+  temperature: 0.0
+  consensus_judges: 3
+  response_format: "json_object"
+golden_dataset:
+  default_path: "golden_dataset.json"
+  min_examples: 50
+  max_examples: 100

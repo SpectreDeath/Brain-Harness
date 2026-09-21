@@ -1,0 +1,37 @@
+# Default operational configuration for dynamic_model_router plugin (Rule 44)
+version: "1.0.0"
+operational_budgets:
+  max_turns: 10
+  cost_budget_usd: 5.00
+  subprocess_timeout_seconds: 60
+  token_budget_bound: 32000
+
+routing_budgets:
+  primary_timeout_seconds: 10.0
+  fallback_timeout_seconds: 15.0
+  classifier_max_latency_ms: 5.0
+  min_cheap_model_traffic_ratio: 0.60
+  max_fallback_rate_threshold: 0.05
+
+model_matrix:
+  simple:
+    primary:
+      provider: "openai"
+      model: "gpt-4o-mini"
+    fallback:
+      provider: "anthropic"
+      model: "claude-3-5-haiku-20241022"
+  medium:
+    primary:
+      provider: "openai"
+      model: "gpt-4o-mini"
+    fallback:
+      provider: "anthropic"
+      model: "claude-3-5-haiku-20241022"
+  complex:
+    primary:
+      provider: "anthropic"
+      model: "claude-3-5-sonnet-20241022"
+    fallback:
+      provider: "openai"
+      model: "gpt-4o"

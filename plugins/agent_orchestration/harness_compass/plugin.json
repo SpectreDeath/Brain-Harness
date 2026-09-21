@@ -1,0 +1,213 @@
+{
+  "name": "plugin.harness_compass",
+  "version": "1.0.0",
+  "description": "Automatic harness discovery, calibration & R3 integration engine (Zhang et al. 2026)",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "category": "agent_orchestration",
+  "author": "Brain Harness",
+  "provides": [
+    "service.harness_compass"
+  ],
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "validate_gate",
+      "description": "Validate candidate harness edit against Content and Placement invariants",
+      "parameters": [
+        {
+          "name": "id",
+          "type": "string",
+          "description": "Unique edit identifier",
+          "required": true
+        },
+        {
+          "name": "surface",
+          "type": "string",
+          "description": "Target component surface (middleware, tool_impl, systemprompt, memory, etc.)",
+          "required": true
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "description": "Semantic purpose of the edit",
+          "required": true
+        },
+        {
+          "name": "target_file",
+          "type": "string",
+          "description": "Target file path",
+          "required": true
+        },
+        {
+          "name": "content",
+          "type": "string",
+          "description": "Code or guidance text content",
+          "required": true
+        },
+        {
+          "name": "is_advisory",
+          "type": "boolean",
+          "description": "Whether the edit is behavioral advice",
+          "required": false
+        },
+        {
+          "name": "is_code_executable",
+          "type": "boolean",
+          "description": "Whether the edit is deterministic executable code",
+          "required": false
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "ground_feedback",
+      "description": "Ground agent usability feedback and check trace citations",
+      "parameters": [
+        {
+          "name": "kind",
+          "type": "string",
+          "description": "Feedback kind (improve_existing or new_capability)",
+          "required": true
+        },
+        {
+          "name": "component",
+          "type": "string",
+          "description": "Component surface associated with friction",
+          "required": true
+        },
+        {
+          "name": "friction",
+          "type": "string",
+          "description": "Description of experienced friction",
+          "required": true
+        },
+        {
+          "name": "desired_change",
+          "type": "string",
+          "description": "Desired improvement or tool capability",
+          "required": true
+        },
+        {
+          "name": "trace_refs",
+          "type": "array",
+          "description": "Turn identifiers from raw trace",
+          "required": false
+        },
+        {
+          "name": "attribution",
+          "type": "string",
+          "description": "Attribution: harness, agent_reasoning, task_ambiguity, environment",
+          "required": false
+        },
+        {
+          "name": "trajectory_turns",
+          "type": "array",
+          "description": "Raw trajectory turns with turn_id objects",
+          "required": false
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "merge_r3",
+      "description": "Execute R3 integration: Revision, Recombination, and Occam's Razor Refinement",
+      "parameters": [
+        {
+          "name": "winner_name",
+          "type": "string",
+          "description": "Winning track name",
+          "required": true
+        },
+        {
+          "name": "winner_score",
+          "type": "number",
+          "description": "Winning track score",
+          "required": true
+        },
+        {
+          "name": "winner_edits",
+          "type": "array",
+          "description": "List of winner edits",
+          "required": true
+        },
+        {
+          "name": "loser_name",
+          "type": "string",
+          "description": "Losing track name",
+          "required": true
+        },
+        {
+          "name": "loser_score",
+          "type": "number",
+          "description": "Losing track score",
+          "required": true
+        },
+        {
+          "name": "loser_edits",
+          "type": "array",
+          "description": "List of loser edits",
+          "required": true
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "run_evolution_round",
+      "description": "Simulate a complete 5-stage closed loop evolution and acceptance round",
+      "parameters": [
+        {
+          "name": "round_num",
+          "type": "integer",
+          "description": "Round number",
+          "required": true
+        },
+        {
+          "name": "baseline_score",
+          "type": "number",
+          "description": "Baseline Pass@1 score",
+          "required": true
+        },
+        {
+          "name": "structural_edits",
+          "type": "array",
+          "description": "Candidate structural edits",
+          "required": true
+        },
+        {
+          "name": "guidance_edits",
+          "type": "array",
+          "description": "Candidate guidance edits",
+          "required": true
+        },
+        {
+          "name": "structural_score",
+          "type": "number",
+          "description": "Evaluated structural score",
+          "required": true
+        },
+        {
+          "name": "guidance_score",
+          "type": "number",
+          "description": "Evaluated guidance score",
+          "required": true
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "harness_compass_visual_brief",
+      "description": "Generate interactive HTML visual brief with telemetry and Mermaid DAG",
+      "parameters": [
+        {
+          "name": "output_path",
+          "type": "string",
+          "description": "Optional destination path for HTML brief",
+          "required": false
+        }
+      ],
+      "returns": "string"
+    }
+  ]
+}
