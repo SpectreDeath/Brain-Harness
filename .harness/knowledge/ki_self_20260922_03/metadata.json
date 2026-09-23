@@ -1,0 +1,55 @@
+{
+  "id": "ki_self_20260922_03",
+  "title": "Strict Directed Graph Reachability & YAML Frontmatter Precedence in Skill Knowledge Graphs",
+  "category": "skill_graph_and_routing",
+  "created_at": "2026-09-22T18:20:00Z",
+  "author": "Brain Harness Autobiographical Reflection Engine (harness-reflector & harness-compass)",
+  "tags": [
+    "skill_graph_and_routing",
+    "skill_graph",
+    "knowledge_graph",
+    "reachability",
+    "frontmatter_dependencies",
+    "routing",
+    "endogenous_memory",
+    "self_reflection"
+  ],
+  "context": "Skill knowledge graph pathfinding that hallucinates 2-hop edges when BFS finds no path blinds calling agents to missing prerequisites. Static skill dependency declaration must take precedence over dynamic inference.",
+  "distilled_learning": "Graph routing engines must return explicit status: 'no_path' and empty chain collections when disconnected unless callers explicitly request fallback_direct=True. Skill card parsers must parse explicit YAML frontmatter dependencies: [...] to seed canonical topological precedence.",
+  "isnad": {
+    "decision_id": "dec_20260922_self_03",
+    "status": "VERIFIED",
+    "claims": [
+      {
+        "assertion": "Synthesizing direct edges when BFS pathfinding finds no directed path blinds multi-agent swarms and planners to missing capability prerequisites.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "src/harness/services/skill_graph.py#L230-L270",
+            "verified": true
+          },
+          {
+            "node_type": "test_contract",
+            "uri": "tests/test_architecture_hardening.py#L155-L180",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "assertion": "Parsing explicit YAML frontmatter dependencies: [...] during skill card discovery guarantees deterministic dependency graph seeding before intent routing.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "plugins/memory_and_epistemics/skill_knowledge_graph/parser.py#L140-L180",
+            "verified": true
+          },
+          {
+            "node_type": "rule_invariant",
+            "uri": "AGENTS.md#Rule-55",
+            "verified": true
+          }
+        ]
+      }
+    ]
+  }
+}

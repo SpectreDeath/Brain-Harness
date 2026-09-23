@@ -1,0 +1,55 @@
+{
+  "id": "ki_self_20260922_01",
+  "title": "Subprocess Stderr Drainage, Ring Buffers, and Crash Visibility in Sandboxed Transports",
+  "category": "security_and_sandboxing",
+  "created_at": "2026-09-22T18:20:00Z",
+  "author": "Brain Harness Autobiographical Reflection Engine (harness-reflector & harness-compass)",
+  "tags": [
+    "security_and_sandboxing",
+    "subprocess",
+    "json_rpc",
+    "transport",
+    "stderr_drain",
+    "ring_buffer",
+    "endogenous_memory",
+    "self_reflection"
+  ],
+  "context": "Asynchronous subprocess IPC transports piping stderr will deadlock when the OS pipe buffer fills unless actively drained. Startup crashes are masked if exit codes are checked without reading stderr.",
+  "distilled_learning": "All asynchronous subprocess IPC transports with piped standard streams must spawn a dedicated asynchronous drain task reading stderr into a bounded ring buffer (deque(maxlen=50)). On non-zero exit or call timeout, transports must surface trailing stderr lines directly in the raised TransportError or diagnostic payload.",
+  "isnad": {
+    "decision_id": "dec_20260922_self_01",
+    "status": "VERIFIED",
+    "claims": [
+      {
+        "assertion": "Piping subprocess stderr without an asynchronous consumer loop causes OS pipe buffer exhaustion and unrecoverable deadlocks during extensive logging.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "src/harness/plugins/transport.py#L35-L65",
+            "verified": true
+          },
+          {
+            "node_type": "test_contract",
+            "uri": "tests/test_architecture_hardening.py#L85-L120",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "assertion": "Subprocess crash tracebacks (e.g. missing venv dependencies or syntax errors) are silently masked unless stderr lines are captured and injected into TransportError exceptions.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "src/harness/plugins/transport.py#L75-L110",
+            "verified": true
+          },
+          {
+            "node_type": "rule_invariant",
+            "uri": "AGENTS.md#Rule-53",
+            "verified": true
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -10,11 +10,11 @@ Each function here is a plain ``async def`` (or sync where pure data mapping) an
 
 from __future__ import annotations
 
-import asyncio
-from dataclasses import dataclass, field
 import inspect
 import time
-from typing import Any, Callable
+from collections.abc import Callable
+from dataclasses import dataclass
+from typing import Any
 
 import structlog
 
@@ -52,9 +52,39 @@ from .data import (
     topk_recommend_cmd,
     validate_contract_cmd,
 )
+from .datasets import (
+    commit_vault_cmd,
+    convert_dataset_cmd,
+    datasets_group,
+    evaluate_strategy_cmd,
+    inspect_dataset_cmd,
+    profile_schema_cmd,
+    sample_dataset_cmd,
+    transform_dataset_cmd,
+)
+from .doc_builder import (
+    chunk_markdown_cmd,
+    convert_format_cmd,
+    doc_builder_group,
+    inspect_autodoc_cmd,
+    lint_style_cmd,
+    verify_links_cmd,
+)
 from .events import (
     EventQueryResult,
     get_events_cmd,
+)
+from .garf import (
+    garf_export_cmd,
+    garf_group,
+    garf_parse_cmd,
+    garf_simulate_cmd,
+    garf_workflow_cmd,
+    get_garf_reporting_service,
+)
+from .gis import (
+    get_open_source_gis_service,
+    gis_group,
 )
 from .mcp import (
     McpServeResult,
@@ -102,6 +132,14 @@ from .skills import (
     validate_skill_cmd,
 )
 from .system import list_services, run_introspect
+from .tau import (
+    append_journal_entry_cmd,
+    evaluate_project_trust_cmd,
+    render_session_tree_cmd,
+    repair_tool_history_cmd,
+    resolve_session_path_cmd,
+    tau_group,
+)
 from .tools import disable_tool, enable_tool, list_tools, toggle_tool
 from .workspace import (
     WorkspaceInitResult,
@@ -189,25 +227,60 @@ class CommandRegistry:
             return result
         except Exception as e:
             duration = time.perf_counter() - start
-            logger.error("Command failed", command=name, error=str(e), duration=round(duration, 4))
+            logger.error(
+                "Command failed",
+                command=name,
+                error=str(e),
+                duration=round(duration, 4),
+            )
             raise
 
 
 # Auto-populate the CommandRegistry with standard Harness operations
 _BUILTIN_COMMANDS: list[tuple[str, Callable[..., Any], str, str]] = [
-    ("workspace.init", init_workspace_cmd, "workspace", "Initialize workspace directory and config"),
-    ("workspace.watch", watch_workspace_cmd, "workspace", "Start live hot-reloading watcher"),
+    (
+        "workspace.init",
+        init_workspace_cmd,
+        "workspace",
+        "Initialize workspace directory and config",
+    ),
+    (
+        "workspace.watch",
+        watch_workspace_cmd,
+        "workspace",
+        "Start live hot-reloading watcher",
+    ),
     ("runtime.run", run_harness_cmd, "runtime", "Start the Harness runtime"),
     ("runtime.apply", apply_config_cmd, "runtime", "Apply declarative config tree"),
-    ("runtime.validate_config", validate_config_cmd, "runtime", "Validate declarative config schema"),
+    (
+        "runtime.validate_config",
+        validate_config_cmd,
+        "runtime",
+        "Validate declarative config schema",
+    ),
     ("mcp.serve", serve_mcp_cmd, "mcp", "Start the MCP STDIO server"),
-    ("compute.assess", assess_compute_cmd, "compute", "Assess task complexity and model tiering"),
+    (
+        "compute.assess",
+        assess_compute_cmd,
+        "compute",
+        "Assess task complexity and model tiering",
+    ),
     ("events.get", get_events_cmd, "events", "Query append-only event stream"),
     ("agent.run", run_agent, "agent", "Execute autonomous agent task"),
     ("creator.scaffold", scaffold_plugin_cmd, "creator", "Scaffold plugin project"),
     ("creator.validate", validate_plugin_cmd, "creator", "Validate plugin project"),
-    ("creator.remediate", remediate_plugin_cmd, "creator", "Auto-remediate plugin project"),
-    ("creator.archetypes", list_archetypes_cmd, "creator", "List plugin archetype presets"),
+    (
+        "creator.remediate",
+        remediate_plugin_cmd,
+        "creator",
+        "Auto-remediate plugin project",
+    ),
+    (
+        "creator.archetypes",
+        list_archetypes_cmd,
+        "creator",
+        "List plugin archetype presets",
+    ),
     ("plugin.add", add_plugin, "plugin", "Add and ingest plugin"),
     ("plugin.list", list_plugins, "plugin", "List installed plugins"),
     ("plugin.enable", enable_plugin, "plugin", "Enable plugin"),
@@ -218,40 +291,171 @@ _BUILTIN_COMMANDS: list[tuple[str, Callable[..., Any], str, str]] = [
     ("plugin.remove", remove_plugin, "plugin", "Remove plugin"),
     ("session.list", list_sessions_cmd, "session", "List agent execution sessions"),
     ("session.get", get_session_cmd, "session", "Get agent execution session details"),
-    ("session.tree", get_session_tree_cmd, "session", "Get hierarchical session execution tree"),
-    ("session.export", export_session_cmd, "session", "Export agent session trajectory"),
+    (
+        "session.tree",
+        get_session_tree_cmd,
+        "session",
+        "Get hierarchical session execution tree",
+    ),
+    (
+        "session.export",
+        export_session_cmd,
+        "session",
+        "Export agent session trajectory",
+    ),
     ("session.delete", delete_session_cmd, "session", "Delete agent execution session"),
-    ("context.compile", compile_context_cmd, "context", "Compile 3-tier AST reachability context"),
-    ("context.optimize", optimize_context_cmd, "context", "Run unified context optimization pipeline"),
-    ("context.skeletonize", skeletonize_code_cmd, "context", "Skeletonize Python source code interface"),
-    ("skills.index", index_skills_cmd, "skills", "Index workspace skill knowledge graph"),
+    (
+        "context.compile",
+        compile_context_cmd,
+        "context",
+        "Compile 3-tier AST reachability context",
+    ),
+    (
+        "context.optimize",
+        optimize_context_cmd,
+        "context",
+        "Run unified context optimization pipeline",
+    ),
+    (
+        "context.skeletonize",
+        skeletonize_code_cmd,
+        "context",
+        "Skeletonize Python source code interface",
+    ),
+    (
+        "skills.index",
+        index_skills_cmd,
+        "skills",
+        "Index workspace skill knowledge graph",
+    ),
     ("skills.route", route_skills_cmd, "skills", "Route intent to matching skills"),
-    ("skills.chain", find_skill_chain_cmd, "skills", "Find execution chain between skills"),
-    ("skills.info", get_skill_topology_cmd, "skills", "Get skill topological dependencies"),
-    ("skills.scaffold", scaffold_skill_cmd, "skills", "Scaffold new agent skill package"),
+    (
+        "skills.chain",
+        find_skill_chain_cmd,
+        "skills",
+        "Find execution chain between skills",
+    ),
+    (
+        "skills.info",
+        get_skill_topology_cmd,
+        "skills",
+        "Get skill topological dependencies",
+    ),
+    (
+        "skills.scaffold",
+        scaffold_skill_cmd,
+        "skills",
+        "Scaffold new agent skill package",
+    ),
     ("skills.validate", validate_skill_cmd, "skills", "Validate agent skill standards"),
-    ("skills.visual", export_skill_graph_visual_cmd, "skills", "Generate skill graph visual brief"),
+    (
+        "skills.visual",
+        export_skill_graph_visual_cmd,
+        "skills",
+        "Generate skill graph visual brief",
+    ),
     ("bridge.list", list_bridges_cmd, "bridge", "List registered ecosystem bridges"),
-    ("bridge.status", check_bridge_status_cmd, "bridge", "Check ecosystem bridge substrate status"),
-    ("memory.reflect", run_reflection_cmd, "memory", "Run endogenous memory reflection and knowledge distillation"),
+    (
+        "bridge.status",
+        check_bridge_status_cmd,
+        "bridge",
+        "Check ecosystem bridge substrate status",
+    ),
+    (
+        "memory.reflect",
+        run_reflection_cmd,
+        "memory",
+        "Run endogenous memory reflection and knowledge distillation",
+    ),
     ("system.services", list_services, "system", "List registered service keys"),
-    ("system.introspect", run_introspect, "system", "Generate system introspection diagnostics"),
+    (
+        "system.introspect",
+        run_introspect,
+        "system",
+        "Generate system introspection diagnostics",
+    ),
     ("tools.list", list_tools, "tools", "List available tools"),
     ("tools.enable", enable_tool, "tools", "Enable tool"),
     ("tools.disable", disable_tool, "tools", "Disable tool"),
     ("tools.toggle", toggle_tool, "tools", "Toggle tool enablement"),
-    ("data.validate", validate_contract_cmd, "data", "Validate data records against Open Data Contract"),
-    ("data.profile", profile_quality_cmd, "data", "Profile dataset across 6 DAMA quality dimensions"),
-    ("data.resolve", resolve_golden_records_cmd, "data", "Resolve entity records into Golden Records"),
-    ("data.maturity", assess_maturity_cmd, "data", "Evaluate Level 0-5 Data Management Maturity"),
-    ("data.pipeline", run_medallion_pipeline_cmd, "data", "Execute Medallion lakehouse pipeline"),
-    ("data.topk_analyze", topk_analyze_cmd, "data", "Analyze TopK workload feasibility and kernel variant dispatch"),
-    ("data.topk_bounds", topk_bounds_cmd, "data", "Compute mathematical bounds on TopK candidate volume and speedup"),
-    ("data.topk_recommend", topk_recommend_cmd, "data", "Recommend optimal DeepSelect kernel configurations"),
+    (
+        "data.validate",
+        validate_contract_cmd,
+        "data",
+        "Validate data records against Open Data Contract",
+    ),
+    (
+        "data.profile",
+        profile_quality_cmd,
+        "data",
+        "Profile dataset across 6 DAMA quality dimensions",
+    ),
+    (
+        "data.resolve",
+        resolve_golden_records_cmd,
+        "data",
+        "Resolve entity records into Golden Records",
+    ),
+    (
+        "data.maturity",
+        assess_maturity_cmd,
+        "data",
+        "Evaluate Level 0-5 Data Management Maturity",
+    ),
+    (
+        "data.pipeline",
+        run_medallion_pipeline_cmd,
+        "data",
+        "Execute Medallion lakehouse pipeline",
+    ),
+    (
+        "data.topk_analyze",
+        topk_analyze_cmd,
+        "data",
+        "Analyze TopK workload feasibility and kernel variant dispatch",
+    ),
+    (
+        "data.topk_bounds",
+        topk_bounds_cmd,
+        "data",
+        "Compute mathematical bounds on TopK candidate volume and speedup",
+    ),
+    (
+        "data.topk_recommend",
+        topk_recommend_cmd,
+        "data",
+        "Recommend optimal DeepSelect kernel configurations",
+    ),
+    (
+        "garf.parse",
+        garf_parse_cmd,
+        "garf",
+        "Parse declarative SQL reporting query",
+    ),
+    (
+        "garf.simulate",
+        garf_simulate_cmd,
+        "garf",
+        "Simulate synthetic tabular report",
+    ),
+    (
+        "garf.export",
+        garf_export_cmd,
+        "garf",
+        "Export simulated report to storage destination",
+    ),
+    (
+        "garf.workflow",
+        garf_workflow_cmd,
+        "garf",
+        "Execute analytical reporting workflow DAG",
+    ),
 ]
 
 for cmd_name, cmd_handler, cmd_cat, cmd_doc in _BUILTIN_COMMANDS:
-    CommandRegistry.register(cmd_name, cmd_handler, category=cmd_cat, description=cmd_doc)
+    CommandRegistry.register(
+        cmd_name, cmd_handler, category=cmd_cat, description=cmd_doc
+    )
 
 
 __all__ = [
@@ -274,28 +478,48 @@ __all__ = [
     "SessionTreeResult",
     "WorkspaceInitResult",
     "add_plugin",
+    "append_journal_entry_cmd",
     "apply_config_cmd",
     "assess_compute_cmd",
     "build_plugin_cmd",
     "check_bridge_status_cmd",
+    "chunk_markdown_cmd",
+    "commit_vault_cmd",
     "compile_context_cmd",
+    "convert_dataset_cmd",
+    "convert_format_cmd",
+    "datasets_group",
     "delete_session_cmd",
     "disable_all_plugins",
     "disable_plugin",
     "disable_tool",
+    "doc_builder_group",
     "enable_all_plugins",
     "enable_plugin",
     "enable_tool",
+    "evaluate_project_trust_cmd",
+    "evaluate_strategy_cmd",
     "export_session_cmd",
     "export_skill_graph_visual_cmd",
     "find_skill_chain_cmd",
+    "garf_export_cmd",
+    "garf_group",
+    "garf_parse_cmd",
+    "garf_simulate_cmd",
+    "garf_workflow_cmd",
     "get_events_cmd",
+    "get_garf_reporting_service",
+    "get_open_source_gis_service",
     "get_session_cmd",
     "get_session_tree_cmd",
     "get_skill_topology_cmd",
+    "gis_group",
     "index_skills_cmd",
     "init_workspace_cmd",
+    "inspect_autodoc_cmd",
+    "inspect_dataset_cmd",
     "inspect_plugin",
+    "lint_style_cmd",
     "list_archetypes_cmd",
     "list_bridges_cmd",
     "list_plugins",
@@ -303,25 +527,32 @@ __all__ = [
     "list_sessions_cmd",
     "list_tools",
     "optimize_context_cmd",
+    "profile_schema_cmd",
     "remediate_plugin_cmd",
     "remove_plugin",
+    "render_session_tree_cmd",
+    "repair_tool_history_cmd",
+    "resolve_session_path_cmd",
     "route_skills_cmd",
     "run_agent",
     "run_harness_cmd",
     "run_introspect",
     "run_reflection_cmd",
+    "sample_dataset_cmd",
     "scaffold_plugin_cmd",
     "scaffold_skill_cmd",
     "serve_mcp_cmd",
     "skeletonize_code_cmd",
     "start_harness",
+    "tau_group",
     "toggle_tool",
     "topk_analyze_cmd",
     "topk_bounds_cmd",
     "topk_recommend_cmd",
+    "transform_dataset_cmd",
     "validate_config_cmd",
     "validate_plugin_cmd",
     "validate_skill_cmd",
+    "verify_links_cmd",
     "watch_workspace_cmd",
 ]
-

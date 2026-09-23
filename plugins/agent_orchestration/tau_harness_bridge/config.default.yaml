@@ -1,0 +1,31 @@
+# Baseline Operational Configuration for Tau Harness Bridge Plugin (Rule 44)
+plugin:
+  name: "plugin.tau_harness_bridge"
+  version: "1.0.0"
+
+session_tree:
+  max_ancestry_depth: 1000
+  cycle_detection_enabled: true
+  allow_empty_tool_calls: false
+
+history_repair:
+  auto_drop_orphans: true
+  auto_synthesize_placeholders: true
+  placeholder_notice: "[Notice: Tool execution was interrupted or missing in transcript]"
+
+project_trust:
+  strict_mode: true
+  require_git_root: true
+  protected_files:
+    - ".env"
+    - ".env.local"
+    - "credentials.json"
+    - "service_account.json"
+    - "id_rsa"
+    - "id_ed25519"
+    - ".git/config"
+  trusted_directories: []
+
+rpc:
+  version: "2.0"
+  timeout_seconds: 300

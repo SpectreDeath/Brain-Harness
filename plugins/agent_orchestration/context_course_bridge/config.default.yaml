@@ -1,0 +1,9 @@
+# Default configuration for Context Course Bridge Plugin
+schema_version: "1.0.0"
+plugin_name: "plugin.context_course_bridge"
+
+defaults:
+  max_react_steps: 20
+  subagent_threshold: 10
+  default_token_budget: 4000
+  strict_safe_path: true

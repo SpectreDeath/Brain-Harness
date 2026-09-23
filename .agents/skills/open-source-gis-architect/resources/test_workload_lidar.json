@@ -1,0 +1,12 @@
+{
+  "geometry_type": "point_cloud",
+  "domain": "lidar_hydrology",
+  "data_formats": ["LAS", "LAZ"],
+  "sector": "civilian",
+  "output_type": "analytical_report",
+  "scale_gb": 14.5,
+  "has_lidar": true,
+  "has_time_series": false,
+  "needs_mobile": false,
+  "needs_statistics": false
+}

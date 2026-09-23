@@ -1,0 +1,34 @@
+# Zero-Fork Default Operational Budgets & Thresholds for open-source-gis-architect
+# 3-Tier Precedence: .agents/skills.config.yaml -> config.default.yaml -> hardcoded fallback
+
+operational_budgets:
+  max_raster_memory_mb: 4096
+  max_point_cloud_pts: 20000000
+  sliver_area_threshold_m2: 0.05
+  subprocess_timeout_sec: 180
+  engine_score_floor: 0.60
+
+coordinate_reference_systems:
+  default_geographic: "EPSG:4326"
+  default_projected_web: "EPSG:3857"
+  auto_utm_reprojection: true
+
+engine_priorities:
+  prefer_python_bindings: true
+  fallback_to_subprocess: true
+
+scoring_weights:
+  analytical_depth: 0.35
+  cartography: 0.20
+  specialized_tooling: 0.25
+  automation_scripting: 0.20
+
+domain_gates:
+  defense_restricted_engines:
+    - "FalconView"
+  freemium_engines:
+    - "Birdi"
+  alpha_engines:
+    - "OrbisGIS"
+  research_only_engines:
+    - "Diva GIS"

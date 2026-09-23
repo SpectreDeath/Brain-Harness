@@ -1,0 +1,43 @@
+{
+  "id": "ki_hf_mdx_component_pipeline",
+  "title": "Multi-Dialect Unified MDX Transpilation & Hierarchical Search Chunking",
+  "source_target": "D:\\GitHub\\cloned\\doc-builder",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_ki_hf_mdx_component_pipeline",
+    "claims": [
+      {
+        "assertion": "Transpiling heterogeneous documentation sources (standard Markdown, reStructuredText, and Jupyter Notebooks) into a unified Svelte-enhanced MDX dialect paired with heading-bounded AST chunking provides optimal semantic boundaries for hybrid vector and full-text search indexing.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "src/doc_builder/convert_md_to_mdx.py#L20-L100",
+            "sha256_hash": "N/A",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "src/doc_builder/build_embeddings.py#L50-L180",
+            "sha256_hash": "N/A",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "src/doc_builder/meilisearch_helper.py#L30-L90",
+            "sha256_hash": "N/A",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "documentation",
+    "mdx",
+    "transpilation",
+    "chunking",
+    "search",
+    "embeddings"
+  ]
+}

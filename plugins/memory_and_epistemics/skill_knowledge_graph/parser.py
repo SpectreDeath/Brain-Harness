@@ -42,6 +42,18 @@ class SkillCardParser:
                 name = frontmatter["name"]
             if "description" in frontmatter:
                 description = frontmatter["description"]
+            if "dependencies" in frontmatter:
+                deps = frontmatter["dependencies"]
+                if isinstance(deps, list):
+                    for d in deps:
+                        clean_d = str(d).strip().lower().replace("_", "-").lstrip("/")
+                        if clean_d and clean_d != name and clean_d not in references:
+                            references.append(clean_d)
+                elif isinstance(deps, str):
+                    for d in deps.split(","):
+                        clean_d = d.strip().lower().replace("_", "-").lstrip("/")
+                        if clean_d and clean_d != name and clean_d not in references:
+                            references.append(clean_d)
 
             # Parse stages from SKILL.md
             stages.extend(cls._extract_stages_from_skill_md(body))
@@ -119,14 +131,13 @@ class SkillCardParser:
         # 1. Direct skills directories (e.g. .agents/skills/*)
         candidates = list(root_path.glob("**/*"))
         for candidate in candidates:
-            if candidate.is_dir():
-                if (candidate / "SKILL.md").exists() or (candidate / "CARD.md").exists():
-                    try:
-                        node = cls.parse_directory(candidate)
-                        if node:
-                            skills[node.name] = node
-                    except Exception:
-                        pass
+            if candidate.is_dir() and ((candidate / "SKILL.md").exists() or (candidate / "CARD.md").exists()):
+                try:
+                    node = cls.parse_directory(candidate)
+                    if node:
+                        skills[node.name] = node
+                except Exception:
+                    pass
 
         return skills
 
@@ -143,10 +154,17 @@ class SkillCardParser:
             if len(parts) >= 3:
                 yaml_text = parts[1]
                 body = parts[2]
-                for line in yaml_text.splitlines():
-                    if ":" in line:
-                        k, v = line.split(":", 1)
-                        frontmatter[k.strip()] = v.strip().strip('"').strip("'")
+                try:
+                    import yaml
+
+                    parsed = yaml.safe_load(yaml_text)
+                    if isinstance(parsed, dict):
+                        frontmatter = parsed
+                except Exception:
+                    for line in yaml_text.splitlines():
+                        if ":" in line:
+                            k, v = line.split(":", 1)
+                            frontmatter[k.strip()] = v.strip().strip('"').strip("'")
 
         return frontmatter, body
 
@@ -174,7 +192,7 @@ class SkillCardParser:
             elif clean.startswith("Version:"):
                 meta["version"] = clean.split(":", 1)[1].strip()
                 last_field = "version"
-            elif clean.startswith("Trigger:") or clean.startswith("Triggers:"):
+            elif clean.startswith(("Trigger:", "Triggers:")):
                 val = clean.split(":", 1)[1].strip()
                 extracted = re.findall(r'"([^"]+)"', val)
                 if extracted:
@@ -182,7 +200,7 @@ class SkillCardParser:
                 else:
                     triggers.append(val.strip('"'))
                 last_field = "triggers"
-            elif clean.startswith("Requires:") or clean.startswith("Require:"):
+            elif clean.startswith(("Requires:", "Require:")):
                 val = clean.split(":", 1)[1].strip()
                 extracted = re.findall(r'"([^"]+)"|\'([^\']+)\'', val)
                 req_list = [t[0] or t[1] for t in extracted if (t[0] or t[1])]
@@ -190,7 +208,7 @@ class SkillCardParser:
                     req_list = [t.strip().strip('"').strip("'") for t in val.split(",") if t.strip()]
                 meta["requires"] = req_list
                 last_field = "requires"
-            elif clean.startswith("Provides:") or clean.startswith("Provide:"):
+            elif clean.startswith(("Provides:", "Provide:")):
                 val = clean.split(":", 1)[1].strip()
                 extracted = re.findall(r'"([^"]+)"|\'([^\']+)\'', val)
                 prov_list = [t[0] or t[1] for t in extracted if (t[0] or t[1])]
@@ -317,7 +335,7 @@ class SkillCardParser:
 
         for line in section.splitlines():
             line_s = line.strip()
-            if line_s.startswith("-") or line_s.startswith("*"):
+            if line_s.startswith(("-", "*")):
                 # Pattern: - **Name** — description
                 m = re.search(r"[\-\*]\s+\*\*([^*]+)\*\*\s*[—\-–:]\s*(.+)", line_s)
                 if m:
@@ -341,11 +359,11 @@ class SkillCardParser:
             elif line_s.startswith("## ") and in_invariants_section:
                 in_invariants_section = False
 
-            if line_s.startswith("- [ ]") or line_s.startswith("- [x]"):
+            if line_s.startswith(("- [ ]", "- [x]")):
                 clean = line_s.replace("- [ ]", "").replace("- [x]", "").strip()
                 clean_text = re.sub(r"\*\*([^*]+)\*\*", r"\1", clean).strip()
                 invariants.append(InvariantNode(rule=clean_text, is_blocking=True))
-            elif in_invariants_section and (line_s.startswith("-") or line_s.startswith("*") or re.match(r"^\d+\.", line_s)):
+            elif in_invariants_section and (line_s.startswith(("-", "*")) or re.match(r"^\d+\.", line_s)):
                 clean = re.sub(r"^[\-\*\d\.]+\s*", "", line_s).strip()
                 clean_text = re.sub(r"\*\*([^*]+)\*\*", r"\1", clean).strip()
                 if clean_text:

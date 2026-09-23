@@ -1,0 +1,28 @@
+# Baseline Operational Budgets for Context Engineering Architect (Rule 44)
+schema_version: "1.0.0"
+skill_name: "context-engineering-architect"
+
+budgets:
+  max_react_steps: 30
+  step_timeout_seconds: 60
+  token_budget_ceiling: 16000
+  subagent_fanout_file_threshold: 10
+  max_parallel_subagents: 5
+
+sandboxing:
+  path_confinement_strict: true
+  command_whitelist:
+    - "git"
+    - "pytest"
+    - "python"
+    - "uv"
+    - "ruff"
+
+observability:
+  enable_pre_tool_hooks: true
+  enable_post_tool_hooks: true
+  telemetry_drain_timeout_ms: 200
+
+model_calibration:
+  tier: "High"
+  thinking_tokens: 16384

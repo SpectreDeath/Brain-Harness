@@ -16,6 +16,12 @@ from typing import TYPE_CHECKING, Any
 
 import structlog
 
+from harness.kernel.graph import (
+    CyclicDependencyError,
+    DependencyGraph,
+    GraphCycleError,
+)
+
 if TYPE_CHECKING:
     from harness.kernel.context import ServiceContext
     from harness.plugins.base import HarnessPlugin
@@ -70,12 +76,6 @@ class DependencyError(Exception):
         )
 
 
-from harness.kernel.graph import (
-    CyclicDependencyError,
-    DependencyGraph,
-    GraphCycleError,
-)
-
 
 @dataclass
 class PluginEntry:
@@ -106,6 +106,8 @@ class PluginLifecycle:
         self._context = context
         self._event_bus = event_bus or getattr(context, "event_bus", None)
         self._entries: dict[str, PluginEntry] = {}
+        self._graph_epoch: int = 0
+        self._cached_graph: tuple[int, tuple[str, ...], DependencyGraph[str]] | None = None
 
     @property
     def event_bus(self) -> Any | None:
@@ -145,6 +147,10 @@ class PluginLifecycle:
         if target != PluginState.ERROR:
             entry.error = None
 
+        # Only bump graph epoch on transitions that affect topological scheduling
+        if target in (PluginState.ENABLED, PluginState.DISABLED, PluginState.UNLOADED, PluginState.ERROR):
+            self._graph_epoch += 1
+
         logger.info(
             "Plugin state transition",
             plugin=name,
@@ -167,6 +173,7 @@ class PluginLifecycle:
                 return
 
         self._entries[plugin.name] = PluginEntry(plugin=plugin)
+        self._graph_epoch += 1
         logger.info("Plugin discovered", plugin=plugin.name, version=plugin.version)
         from harness.events.types import EventType
 
@@ -321,9 +328,19 @@ class PluginLifecycle:
             ]
             if active_dependents:
                 try:
-                    order = self.resolve_enable_order(active_dependents)
+                    all_active = [
+                        n for n, e in self._entries.items() if e.state == PluginState.ENABLED
+                    ]
+                    graph = self.build_dependency_graph(all_active)
+                    trans_deps = graph.transitive_dependents(name)
+                    active_trans_deps = [
+                        dep for dep in trans_deps
+                        if self._entries.get(dep) and self._entries[dep].state == PluginState.ENABLED
+                    ]
+                    target_deps = active_trans_deps or active_dependents
+                    order = self.resolve_enable_order(target_deps)
                     for dep in reversed(order):
-                        await self.disable(dep, cascade=True)
+                        await self.disable(dep, cascade=False)
                 except Exception as e:
                     logger.warning("Error draining dependents during disable", plugin=name, error=str(e))
 
@@ -361,9 +378,19 @@ class PluginLifecycle:
             ]
             if active_dependents:
                 try:
-                    order = self.resolve_enable_order(active_dependents)
+                    all_active = [
+                        n for n, e in self._entries.items() if e.state == PluginState.ENABLED
+                    ]
+                    graph = self.build_dependency_graph(all_active)
+                    trans_deps = graph.transitive_dependents(name)
+                    active_trans_deps = [
+                        dep for dep in trans_deps
+                        if self._entries.get(dep) and self._entries[dep].state == PluginState.ENABLED
+                    ]
+                    target_deps = active_trans_deps or active_dependents
+                    order = self.resolve_enable_order(target_deps)
                     for dep in reversed(order):
-                        await self.disable(dep, cascade=True)
+                        await self.disable(dep, cascade=False)
                 except Exception as e:
                     logger.warning("Error draining dependents during unload", plugin=name, error=str(e))
 
@@ -408,6 +435,9 @@ class PluginLifecycle:
             return True
 
         try:
+            if entry.state == PluginState.ERROR:
+                self._transition(name, PluginState.DISCOVERED)
+
             if entry.state in (PluginState.DISCOVERED, PluginState.UNLOADED):
                 if entry.state == PluginState.UNLOADED:
                     self.discover(entry.plugin)
@@ -483,6 +513,12 @@ class PluginLifecycle:
                 if e.state in (PluginState.VALIDATED, PluginState.LOADED, PluginState.DISABLED)
             ]
 
+        names_key = tuple(sorted(names))
+        if self._cached_graph is not None:
+            cached_epoch, cached_names, cached_g = self._cached_graph
+            if cached_epoch == self._graph_epoch and cached_names == names_key:
+                return cached_g
+
         graph = DependencyGraph[str]()
         for n in names:
             graph.add_node(n)
@@ -504,6 +540,7 @@ class PluginLifecycle:
                     if dep_plugin and dep_plugin != name and graph.has_node(dep_plugin):
                         graph.add_edge(from_node=dep_plugin, to_node=name)
 
+        self._cached_graph = (self._graph_epoch, names_key, graph)
         return graph
 
     def resolve_enable_waves(self, names: list[str] | None = None) -> list[list[str]]:

@@ -1,0 +1,128 @@
+{
+  "name": "plugin.garf_reporting_pipeline",
+  "version": "1.0.0",
+  "description": "Google Garf declarative SQL reporting, synthetic simulation, multi-destination data pipeline, and workflow DAG execution bridge",
+  "language": "python",
+  "entrypoint": "main.py",
+  "isolation": "subprocess",
+  "trusted": true,
+  "provides": [
+    "data_engineering.garf_reporting"
+  ],
+  "entrypoints": [
+    {
+      "name": "garf_parse_query",
+      "description": "Parse a reporting API SQL query into structured components (fields, aliases, filters, sorts, limit, dynamic macros)",
+      "parameters": [
+        {
+          "name": "query_text",
+          "type": "string",
+          "description": "SQL query text (e.g. SELECT id, metrics.clicks AS clicks FROM campaigns WHERE status = 'ACTIVE' LIMIT 10)",
+          "required": true
+        },
+        {
+          "name": "macros",
+          "type": "object",
+          "description": "Optional dictionary of custom macro key-value replacements",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "garf_simulate_report",
+      "description": "Deterministically simulate a tabular report matching SQL query specifications without live network API calls",
+      "parameters": [
+        {
+          "name": "query_text",
+          "type": "string",
+          "description": "SQL query text specifying columns and resource name",
+          "required": true
+        },
+        {
+          "name": "row_count",
+          "type": "integer",
+          "description": "Number of synthetic rows to generate (default: 5)",
+          "required": false
+        },
+        {
+          "name": "seed",
+          "type": "integer",
+          "description": "Deterministic PRNG seed for reproducible test results (default: 42)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "garf_write_report",
+      "description": "Write a tabular report batch to target storage (CSV, JSON, SQLite, Console)",
+      "parameters": [
+        {
+          "name": "report_data",
+          "type": "object",
+          "description": "Serialized GarfReportBatch dictionary containing column_names, rows, and row_count",
+          "required": true
+        },
+        {
+          "name": "destination_type",
+          "type": "string",
+          "description": "Storage destination type: 'csv', 'json', 'sqlite', or 'console'",
+          "required": true
+        },
+        {
+          "name": "destination_path",
+          "type": "string",
+          "description": "Filesystem path for target output file",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "garf_execute_query",
+      "description": "End-to-end execution: parses query, simulates/fetches report, and optionally writes to target destination",
+      "parameters": [
+        {
+          "name": "query_text",
+          "type": "string",
+          "description": "SQL query string for reporting API",
+          "required": true
+        },
+        {
+          "name": "destination_type",
+          "type": "string",
+          "description": "Optional storage writer type ('csv', 'json', 'sqlite')",
+          "required": false
+        },
+        {
+          "name": "destination_path",
+          "type": "string",
+          "description": "Optional filesystem path for written output",
+          "required": false
+        },
+        {
+          "name": "macros",
+          "type": "object",
+          "description": "Optional dictionary of macro replacements",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "garf_run_workflow",
+      "description": "Execute a multi-step analytical workflow DAG orchestrating API data queries and SQL post-processing",
+      "parameters": [
+        {
+          "name": "steps",
+          "type": "array",
+          "description": "List of workflow step specifications with step_id, step_type, sql_query, writer_type, destination, and depends_on",
+          "required": true
+        },
+        {
+          "name": "context_params",
+          "type": "object",
+          "description": "Optional initial dictionary of execution context variables",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

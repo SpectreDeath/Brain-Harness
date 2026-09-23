@@ -15,7 +15,11 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - `task_planner` — Hierarchical DAG task decomposition and dependency sequencing.
   - `human_in_the_loop` — Interactive checkpoints, approval gates, and escalation modals.
   - `orca_bridge` — Multi-agent Git worktree isolation, FIFO coordinator inboxes, injected preambles, and worker settlement.
+  - `context_course_bridge` — 6-layer context engineering stack auditor, FastMCP validator, subagent swarm planner, and sandboxed Nano Harness ReAct loop.
+  - `tau_harness_bridge` — Pi-style minimalist coding agent harness bridge with branchable session tree DAGs, append-only locked JSONL journal, in-flight tool repair, and project-trust security gates.
 * **Member Skills**:
+  - [`context-engineering-architect`](.agents/skills/context-engineering-architect/SKILL.md) — Architect, audit, compose, and govern autonomous code agent context using the 6-layer stack (skills, FastMCP, plugins, subagents, hooks, nano harness) and path confinement.
+  - [`pi-coding-harness`](.agents/skills/pi-coding-harness/SKILL.md) — Architect, construct, sandbox, and evaluate portable terminal coding agents using decoupled 3-tier layering, branchable session tree DAGs, append-only JSONL storage, provider-safe tool history repair, and project-trust security gates.
   - [`agent-harness-architect`](.agents/skills/agent-harness-architect/SKILL.md) — Architect, evaluate, select, and sandbox production-grade AI agent harnesses and runtime loops using 5-part harness architecture, 4-mechanism validation, and 4-layer stack partitioning.
   - [`ai-native-harness-engineer`](.agents/skills/ai-native-harness-engineer/SKILL.md) — Architect, construct, and govern production AI coding harnesses using 4-gate behavioral pipelines, credential-free MCP security, and continuous drift telemetry.
   - [`questio-reflection`](.agents/skills/questio-reflection/SKILL.md) — Aquinas-style adversarial self-reflection and invariant challenge before execution.
@@ -56,6 +60,7 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - `deepselect_topk` — High-performance TopK kernel selection, harmonic bound estimation, and DeepSeek Sparse Attention (DSA) routing.
   - `paperless_ngx` — Paperless-NGX document ingestion, hybrid Tantivy full-text search, and SQLite-Vec RAG integration bridge.
   - `bigquery_augmented_analytics` — In-database BigQuery TVF execution for anomaly detection, change point isolation, Apriori attribution, and ARIMA_PLUS causal lift.
+  - `garf_reporting_pipeline` — Google Garf declarative SQL reporting, synthetic simulation, multi-destination report egress, and two-stage analytical workflow DAG bridge.
 * **Member Skills**:
   - [`structured-data-scout`](.agents/skills/structured-data-scout/SKILL.md) — Curated tabular dataset ingestion from authoritative registries (UCI, Kaggle, OpenData).
   - [`paperless-document-pipeline`](.agents/skills/paperless-document-pipeline/SKILL.md) — Ingest, classify, parse, and query documents across Paperless-NGX using hybrid Tantivy lexical and SQLite-Vec semantic search.
@@ -68,6 +73,8 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - [`neo4j-knowledge-graph-architect`](.agents/skills/neo4j-knowledge-graph-architect/SKILL.md) — Production Neo4j labeled property graph architecture, backward schema modeling, idempotent batch ingestion, Cypher traversal safety, index profiling, and epistemic evidence boundaries.
   - [`knowledge-graph-pipeline`](.agents/skills/knowledge-graph-pipeline/SKILL.md) — End-to-end data scouting, ontological engineering, backward LPG schema design, idempotent UNWIND batching, and dual-engine recursive SQL traversal.
   - [`bigquery-augmented-analytics`](.agents/skills/bigquery-augmented-analytics/SKILL.md) — In-database augmented analytics via Google BigQuery TVFs for automated change-point detection, multi-dimensional driver attribution, and ARIMA_PLUS counterfactual causal lift.
+  - [`garf-reporting-architect`](.agents/skills/garf-reporting-architect/SKILL.md) — Architect, simulate, execute, and govern declarative SQL reporting pipelines and analytical workflow DAGs across heterogeneous APIs and data stores using Google Garf patterns.
+  - [`open-source-gis-architect`](.agents/skills/open-source-gis-architect/SKILL.md) — Select, route, and validate open-source GIS engine workloads across 14 engines using deterministic decision trees, CRS safety gates, LiDAR format routing, and defense-restricted domain isolation.
 
 
 ### 4. [Software Engineering](./docs/domains/software-engineering/CONTEXT.md)
@@ -81,6 +88,7 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - `artifact_generator` — Markdown summaries, visual brief generation, and diff reports.
   - `pr_lens_graph` — Standalone animated SVG architecture diagrams, graph validation, and diff visualization.
   - `repo_triad_forge` — Authoritative repository triad pipeline: 5-stage cognitive audit, visual brief generation, Knowledge Vault commits, and verification orchestration.
+  - `hf_doc_builder` — Hugging Face doc-builder integration for AST autodoc inspection, deterministic link checking, MDX transpilation, and semantic chunking.
 * **Member Skills**:
   - [`crafting-skills`](.agents/skills/crafting-skills/SKILL.md) — High-precision agent skill authoring, refactoring, and companion card generation.
   - [`deepen-architecture`](.agents/skills/deepen-architecture/SKILL.md) — Iterative architecture deepening loop, eliminating shallow modules.
@@ -97,6 +105,7 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - [`pr-lens-visualizer`](.agents/skills/pr-lens-visualizer/SKILL.md) — Standalone animated SVG architecture and data-flow diagrams from PR diffs, graph validation, and progressive disclosure walkthroughs.
   - [`repo-triad-forge`](.agents/skills/repo-triad-forge/SKILL.md) — Unified repository cognitive audit, dual-file Knowledge Vault retention, slotted skill synthesis, and sandboxed plugin forging.
   - [`responsible-ai-prototyping`](.agents/skills/responsible-ai-prototyping/SKILL.md) — Build, audit, and harden web applications generated by AI builders (Lovable, v0, Bolt) using data minimization, security-first prompt templates, bipartite auth/authz testing, dependency pruning, and honest stage-gate classification.
+  - [`hf-doc-builder-architect`](.agents/skills/hf-doc-builder-architect/SKILL.md) — Multi-package documentation engineering using zero-dependency mock virtualization, deterministic AST anchor graphs, and unified MDX transpilation.
 
 
 ### 5. [Security & Forensics](./docs/domains/security-and-forensics/CONTEXT.md)

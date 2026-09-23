@@ -1,0 +1,144 @@
+{
+  "name": "plugin.open_source_gis",
+  "version": "1.0.0",
+  "description": "Open-source GIS analytical engine selector, CRS projection safety validator, topology hygiene auditor, and visual brief generator across 14 GIS engines",
+  "language": "python",
+  "entrypoint": "main.py",
+  "isolation": "subprocess",
+  "trusted": true,
+  "provides": [
+    "service.open_source_gis"
+  ],
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "gis_route_workload",
+      "description": "Route spatial analysis workloads to optimal open-source GIS engines (QGIS, SAGA, Whitebox, GRASS, GeoDa, gvSIG, MapWindow, Diva GIS, OrbisGIS) using deterministic fitness matching",
+      "parameters": [
+        {
+          "name": "geometry_type",
+          "type": "string",
+          "description": "Spatial geometry structure (e.g. 'vector_polygon', 'raster_dem', 'point_cloud', 'satellite_multispectral')",
+          "required": false,
+          "default": "vector_polygon"
+        },
+        {
+          "name": "domain",
+          "type": "string",
+          "description": "Primary spatial analytical domain (e.g. 'lidar_hydrology', 'terrain_morphometry', 'spatial_statistics', 'remote_sensing', 'field_survey', 'watershed_delineation')",
+          "required": true
+        },
+        {
+          "name": "data_formats",
+          "type": "array",
+          "description": "List of source file formats (e.g. ['LAS', 'LAZ'], ['GeoTIFF'], ['Shapefile', 'GeoPackage'])",
+          "required": false,
+          "default": []
+        },
+        {
+          "name": "sector",
+          "type": "string",
+          "description": "Operational sector ('civilian', 'academic', 'environmental', 'public_health')",
+          "required": false,
+          "default": "civilian"
+        },
+        {
+          "name": "analysis",
+          "type": "string",
+          "description": "Specific analytical operation (e.g. 'twi', 'moran_i', 'lisa', 'spectral_classification')",
+          "required": false,
+          "default": ""
+        },
+        {
+          "name": "has_lidar",
+          "type": "boolean",
+          "description": "Whether workload contains LiDAR point cloud datasets",
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "needs_statistics",
+          "type": "boolean",
+          "description": "Whether spatial regression or spatial autocorrelation is needed",
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "needs_mobile",
+          "type": "boolean",
+          "description": "Whether field mobile GPS capture is required",
+          "required": false,
+          "default": false
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "gis_validate_pipeline",
+      "description": "Validate a spatial pipeline execution DAG for metric Coordinate Reference System (CRS) projection safety and format handoffs",
+      "parameters": [
+        {
+          "name": "steps",
+          "type": "array",
+          "description": "List of pipeline step dictionaries with step_id, operation, engine, input_crs, output_crs, input_format, output_format",
+          "required": true
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "gis_audit_topology",
+      "description": "Audit vector polygon geometries for topological integrity: self-intersections, unclosed rings, duplicate vertices, and micro-slivers",
+      "parameters": [
+        {
+          "name": "features",
+          "type": "array",
+          "description": "GeoJSON Feature array with geometry and properties",
+          "required": true
+        },
+        {
+          "name": "sliver_threshold_m2",
+          "type": "number",
+          "description": "Area threshold in square meters below which polygons are flagged as slivers",
+          "required": false,
+          "default": 0.05
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "gis_architect_workload",
+      "description": "End-to-end spatial workload architecture interrogation: routes engines, checks DAG CRS safety, audits geometry topology, and renders Stage 5 HTML visual brief",
+      "parameters": [
+        {
+          "name": "workload_profile",
+          "type": "object",
+          "description": "Workload profile dictionary defining domain, geometry_type, data_formats, sector, analysis",
+          "required": true
+        },
+        {
+          "name": "pipeline_steps",
+          "type": "array",
+          "description": "Optional pipeline execution steps to validate",
+          "required": false,
+          "default": []
+        },
+        {
+          "name": "features",
+          "type": "array",
+          "description": "Optional GeoJSON features to topology-audit",
+          "required": false,
+          "default": []
+        },
+        {
+          "name": "generate_brief",
+          "type": "boolean",
+          "description": "Whether to render self-contained HTML visual brief to %TEMP%",
+          "required": false,
+          "default": true
+        }
+      ],
+      "returns": "object"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "id": "ki_hf_lifecycle_hooks_guardrails_dashboard",
+  "title": "Bidirectional Agent Lifecycle Hook Events & Live Gradio Observability Telemetry",
+  "category": "agent_orchestration",
+  "tags": [
+    "hooks",
+    "guardrails",
+    "security",
+    "telemetry",
+    "gradio",
+    "huggingface"
+  ],
+  "source_repo": "huggingface/context-course",
+  "provenance": [
+    "https://github.com/huggingface/context-course",
+    "D:/GitHub/cloned/context-course/units/en/unit5/hook-events.mdx#L1-L120",
+    "D:/GitHub/cloned/context-course/units/en/unit5/hands-on.mdx#L1-L150"
+  ],
+  "created_at": "2026-09-21T18:00:00Z"
+}

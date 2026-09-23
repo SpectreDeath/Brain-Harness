@@ -1,0 +1,88 @@
+{
+  "name": "plugin.context_course_bridge",
+  "version": "1.0.0",
+  "description": "Hugging Face Context Engineering Bridge: 6-layer stack auditor, FastMCP validator, subagent swarm planner, and sandboxed Nano Harness ReAct loop",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "category": "agent_orchestration",
+  "author": "Brain Harness",
+  "provides": [
+    "service.context_course"
+  ],
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "audit_context_surface",
+      "description": "Audit a project workspace against the 6-layer context engineering stack (Skills, MCP, Plugins, Subagents, Hooks, Nano Harness)",
+      "parameters": [
+        {
+          "name": "project_dir",
+          "type": "string",
+          "description": "Path to the project workspace directory to audit",
+          "required": true
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "run_nano_harness",
+      "description": "Execute a sandboxed, path-confined minimal ReAct agentic step loop",
+      "parameters": [
+        {
+          "name": "task",
+          "type": "string",
+          "description": "The objective task for the agent",
+          "required": true
+        },
+        {
+          "name": "workspace_root",
+          "type": "string",
+          "description": "Path to the sandboxed workspace root",
+          "required": true
+        },
+        {
+          "name": "max_steps",
+          "type": "integer",
+          "description": "Maximum number of ReAct loop steps",
+          "required": false,
+          "default": 20
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "verify_context_snippets",
+      "description": "Parse and syntax-validate all fenced code snippets in markdown instructions",
+      "parameters": [
+        {
+          "name": "markdown_text",
+          "type": "string",
+          "description": "Markdown text or documentation content to verify",
+          "required": true
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "plan_subagent_topology",
+      "description": "Plan optimal subagent coordination topology using the 10+ files heuristic",
+      "parameters": [
+        {
+          "name": "files_count",
+          "type": "integer",
+          "description": "Number of files within the task scope",
+          "required": true
+        },
+        {
+          "name": "task_type",
+          "type": "string",
+          "description": "Type of task: general, review, refactor, or audit",
+          "required": false,
+          "default": "general"
+        }
+      ],
+      "returns": "object"
+    }
+  ]
+}

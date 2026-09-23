@@ -1,0 +1,37 @@
+{
+  "id": "ki_garf_reporting_engine",
+  "title": "Google Garf Declarative SQL Reporting & Multi-Destination Data Pipeline Architecture",
+  "created": "2026-09-21T18:45:00-04:00",
+  "updated": "2026-09-21T18:45:00-04:00",
+  "summary": "Architectural distillation of Google Garf (v0.2.0-core, 588 commits, commit dad42091), an enterprise framework unifying reporting APIs (Google Ads, Analytics, YouTube, REST) behind declarative SQL queries. Details query compilation, dynamic date macro resolution (:YYYYMMDD-N), in-memory GarfReport matrices, heterogeneous analytical writers (BigQuery, DuckDB, SQLite), deterministic zero-network simulation, and two-stage DAG workflow execution.",
+  "references": [
+    {"path": "D:/GitHub/cloned/garf/libs/core/garf/core/query_parser.py", "description": "GarfQueryParser and GarfQuery AST specifications"},
+    {"path": "D:/GitHub/cloned/garf/libs/core/garf/core/query_editor.py", "description": "QueryEditor, macro replacements, and virtual column expressions"},
+    {"path": "D:/GitHub/cloned/garf/libs/core/garf/core/report.py", "description": "GarfReport in-memory tabular matrix and row slicer"},
+    {"path": "D:/GitHub/cloned/garf/libs/core/garf/core/simulator.py", "description": "Simulator for deterministic zero-network test report generation"},
+    {"path": "D:/GitHub/cloned/garf/libs/io/garf/io/writer.py", "description": "AbsWriter and multi-destination egress factory"},
+    {"path": "D:/GitHub/cloned/garf/libs/executors/garf/executors/workflows/workflow.py", "description": "GarfWorkflow and parallel DAG workflow execution"}
+  ],
+  "claims": [
+    {
+      "claim": "Declarative SQL query parsing transforms standard SQL SELECT ... FROM ... WHERE ... clauses into typed API request parameters and nested field extraction paths without requiring procedural API client code.",
+      "source": "libs/core/garf/core/query_parser.py",
+      "line_range": "30-110"
+    },
+    {
+      "claim": "Dynamic date macros (:YYYYMMDD-N, :TODAY) dynamically compute rolling date windows at evaluation time, eliminating stale hardcoded date strings in recurring reporting pipelines.",
+      "source": "libs/core/garf/core/query_editor.py",
+      "line_range": "45-120"
+    },
+    {
+      "claim": "The Simulator generates synthetic GarfReport batches matching query column specifications without network requests, shielding external API rate limits and quotas during verification loops.",
+      "source": "libs/core/garf/core/simulator.py",
+      "line_range": "20-95"
+    },
+    {
+      "claim": "Two-stage analytical workflow DAGs orchestrate data extraction from reporting APIs into intermediate staging storage, followed by execution of post-processing analytical SQL queries.",
+      "source": "libs/executors/garf/executors/workflows/workflow.py",
+      "line_range": "40-180"
+    }
+  ]
+}

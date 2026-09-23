@@ -1,0 +1,55 @@
+{
+  "id": "ki-hf-datasets-arrow-streaming",
+  "title": "PyArrow Memory-Mapped Zero-Copy Execution, Lazy Generator Streaming & xxhash Deterministic Caching in Hugging Face Datasets",
+  "created": "2026-09-22T07:20:00-04:00",
+  "updated": "2026-09-22T07:20:00-04:00",
+  "summary": "Epistemic architectural distillation of Hugging Face datasets (v5.0.2.dev0). Details the dual-backed Arrow Dataset and IterableDataset engines, C++ PyArrow zero-copy memory mapping, lazy sharded streaming pipelines with generator evaluation, xxhash+dill deterministic transformation cache fingerprinting, 30+ lakehouse and scientific biostructure (mmCIF/PDB/FASTQ/GenBank) packaged modules, and declarative Features schema system.",
+  "references": [
+    {
+      "path": "D:/GitHub/cloned/datasets/src/datasets/arrow_dataset.py",
+      "description": "Core Dataset class backed by PyArrow table with zero-copy buffer slicing"
+    },
+    {
+      "path": "D:/GitHub/cloned/datasets/src/datasets/iterable_dataset.py",
+      "description": "IterableDataset generator-backed streaming pipeline with sharded prefetching"
+    },
+    {
+      "path": "D:/GitHub/cloned/datasets/src/datasets/fingerprint.py",
+      "description": "Hasher xxhash and dill deterministic transform cache fingerprinting"
+    },
+    {
+      "path": "D:/GitHub/cloned/datasets/src/datasets/features/features.py",
+      "description": "Features schema dictionary and recursive type decoders"
+    },
+    {
+      "path": "D:/GitHub/cloned/datasets/src/datasets/features/bio_structure.py",
+      "description": "BioStructure feature decoding for mmCIF and PDB macromolecular structures"
+    },
+    {
+      "path": "D:/GitHub/cloned/datasets/src/datasets/packaged_modules/",
+      "description": "Packaged dataset builders for 30+ lakehouse and tabular file formats"
+    }
+  ],
+  "claims": [
+    {
+      "claim": "Dataset wraps PyArrow tables with memory-mapped backing files, enabling terabyte-scale tabular indexing, zero-copy column slicing, and batch mapping without loading entire datasets into RAM.",
+      "source": "src/datasets/arrow_dataset.py",
+      "line_range": "709-850"
+    },
+    {
+      "claim": "IterableDataset implements lazy generator pipelines with shard-level parallel prefetching, buffer-windowed shuffling, and dynamic interleave combinators for unbounded data streams.",
+      "source": "src/datasets/iterable_dataset.py",
+      "line_range": "2592-2650"
+    },
+    {
+      "claim": "Deterministic transform caching hashes dataset internal state, function bytecode, and execution kwargs using Hasher (xxhash + dill), preventing redundant re-computation of dataset transforms across sessions.",
+      "source": "src/datasets/fingerprint.py",
+      "line_range": "235-270"
+    },
+    {
+      "claim": "Features provides polymorphic schema validation and decoding for multimodal data (Audio, Image, Video, Mesh, PDF, NIfTI) and biological structures (BioSequence, BioStructure).",
+      "source": "src/datasets/features/features.py",
+      "line_range": "1877-1910"
+    }
+  ]
+}

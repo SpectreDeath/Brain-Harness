@@ -1,0 +1,193 @@
+{
+  "name": "domain.hf_datasets",
+  "version": "1.0.0",
+  "description": "Hugging Face Datasets engine: PyArrow zero-copy tables, lazy streaming iterables, lakehouse conversion, and schema profiling",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "provides": [
+    "service.hf_datasets"
+  ],
+  "entrypoints": [
+    {
+      "name": "hf_inspect_dataset",
+      "description": "Inspect dataset splits, features, row counts, and metadata without full data pull",
+      "parameters": [
+        {
+          "name": "path_or_name",
+          "type": "string",
+          "description": "Dataset identifier, HuggingFace hub name, or local directory/file path",
+          "required": true
+        },
+        {
+          "name": "split",
+          "type": "string",
+          "description": "Specific split to inspect (e.g. train, test, validation)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "hf_evaluate_storage_strategy",
+      "description": "Evaluate dataset footprint and select between memory-mapped Arrow and streaming iterators",
+      "parameters": [
+        {
+          "name": "path_or_name",
+          "type": "string",
+          "description": "Dataset identifier or file path",
+          "required": true
+        },
+        {
+          "name": "split",
+          "type": "string",
+          "description": "Specific split to evaluate",
+          "required": false
+        },
+        {
+          "name": "auto_stream_threshold_mb",
+          "type": "integer",
+          "description": "Threshold in megabytes to trigger streaming mode",
+          "required": false,
+          "default": 500
+        }
+      ]
+    },
+    {
+      "name": "hf_stream_sample",
+      "description": "Lazily sample N records from a streaming dataset iterator without downloading full dataset",
+      "parameters": [
+        {
+          "name": "path_or_name",
+          "type": "string",
+          "description": "Dataset identifier or file path",
+          "required": true
+        },
+        {
+          "name": "split",
+          "type": "string",
+          "description": "Dataset split to stream",
+          "required": false,
+          "default": "train"
+        },
+        {
+          "name": "max_samples",
+          "type": "integer",
+          "description": "Maximum number of records to sample",
+          "required": false,
+          "default": 10
+        }
+      ]
+    },
+    {
+      "name": "hf_profile_schema",
+      "description": "Extract detailed column schemas, Arrow types, nullability, and sample values",
+      "parameters": [
+        {
+          "name": "path_or_name",
+          "type": "string",
+          "description": "Dataset identifier or file path",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "hf_transform_dataset",
+      "description": "Execute lazy filtering, column projection, and batch transformation",
+      "parameters": [
+        {
+          "name": "input_path",
+          "type": "string",
+          "description": "Source dataset file path",
+          "required": true
+        },
+        {
+          "name": "output_path",
+          "type": "string",
+          "description": "Destination file path",
+          "required": true
+        },
+        {
+          "name": "filter_field",
+          "type": "string",
+          "description": "Field name to filter on",
+          "required": false
+        },
+        {
+          "name": "filter_op",
+          "type": "string",
+          "description": "Filter operator (eq, neq, gt, gte, lt, lte, contains, in)",
+          "required": false
+        },
+        {
+          "name": "filter_value",
+          "type": "string",
+          "description": "Value to match against",
+          "required": false
+        },
+        {
+          "name": "batch_size",
+          "type": "integer",
+          "description": "Batch processing chunk size",
+          "required": false,
+          "default": 100
+        }
+      ]
+    },
+    {
+      "name": "hf_convert_format",
+      "description": "Convert dataset file between CSV, JSON, Arrow, and Parquet lakehouse formats",
+      "parameters": [
+        {
+          "name": "input_path",
+          "type": "string",
+          "description": "Source dataset file path",
+          "required": true
+        },
+        {
+          "name": "output_path",
+          "type": "string",
+          "description": "Destination file path",
+          "required": true
+        },
+        {
+          "name": "target_format",
+          "type": "string",
+          "description": "Target format: parquet, arrow, json, or csv",
+          "required": false,
+          "default": "parquet"
+        }
+      ]
+    },
+    {
+      "name": "hf_commit_to_vault",
+      "description": "Commit dataset catalog and schema provenance to Knowledge Vault (Rule 40)",
+      "parameters": [
+        {
+          "name": "dataset_name",
+          "type": "string",
+          "description": "Human-readable dataset identifier",
+          "required": true
+        },
+        {
+          "name": "input_path",
+          "type": "string",
+          "description": "Source dataset file or directory path",
+          "required": true
+        },
+        {
+          "name": "split",
+          "type": "string",
+          "description": "Dataset split",
+          "required": false,
+          "default": "train"
+        },
+        {
+          "name": "vault_root",
+          "type": "string",
+          "description": "Custom Knowledge Vault directory root",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

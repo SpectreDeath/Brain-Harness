@@ -1,0 +1,24 @@
+# Baseline Operational Budgets for hf-datasets-engineer (Rule 44)
+schema_version: "1.0.0"
+skill: "hf-datasets-engineer"
+
+operational_budgets:
+  timeout_seconds: 300
+  max_stream_samples: 1000
+  default_batch_size: 100
+  buffer_window_size: 10000
+  cache_enabled: true
+  max_retries: 3
+
+storage_strategy:
+  auto_stream_threshold_mb: 500
+  preferred_columnar_format: "parquet"
+  compression: "snappy"
+
+lakehouse_formats:
+  supported:
+    - "parquet"
+    - "arrow"
+    - "json"
+    - "jsonl"
+    - "csv"

@@ -1,0 +1,74 @@
+{
+  "name": "plugin.tau_harness_bridge",
+  "version": "1.0.0",
+  "description": "Pi-style minimalist coding agent harness bridge providing branchable session tree DAGs, append-only JSONL journal locking, in-flight provider-safe tool history repair, and project-trust security gating (Tau v0.4.4 / twotimespi)",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "category": "agent_orchestration",
+  "author": "Brain Harness",
+  "provides": [
+    "service.tau_harness_bridge"
+  ],
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "tau_session_fork",
+      "description": "Traverse branchable session tree DAG entries and resolve linear ancestry path from root to target entry",
+      "parameters": [
+        {
+          "name": "entries",
+          "type": "array",
+          "description": "List of session entries containing id and parent_id attributes",
+          "required": true
+        },
+        {
+          "name": "target_id",
+          "type": "string",
+          "description": "ID of the target fork entry to resolve",
+          "required": true
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "tau_tool_history_repair",
+      "description": "Normalize message history in-flight to repair orphan tool responses or unresponded assistant tool calls",
+      "parameters": [
+        {
+          "name": "messages",
+          "type": "array",
+          "description": "Raw conversation messages to normalize before LLM submission",
+          "required": true
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "tau_project_trust_eval",
+      "description": "Evaluate workspace security boundaries, git root inheritance, and sensitive file exposures",
+      "parameters": [
+        {
+          "name": "project_path",
+          "type": "string",
+          "description": "Canonical path to the workspace root directory",
+          "required": true
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "tau_rpc_session_dispatch",
+      "description": "Format or dispatch a Pi-compatible JSONL RPC protocol envelope for headless runner execution",
+      "parameters": [
+        {
+          "name": "request_id",
+          "type": "string",
+          "description": "JSON-RPC request identifier",
+          "required": true
+        }
+      ],
+      "returns": "object"
+    }
+  ]
+}

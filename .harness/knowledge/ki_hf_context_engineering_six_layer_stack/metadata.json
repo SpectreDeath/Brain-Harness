@@ -1,0 +1,21 @@
+{
+  "id": "ki_hf_context_engineering_six_layer_stack",
+  "title": "The Six-Layer Context Engineering Stack for Autonomous Code Agents",
+  "category": "agent_orchestration",
+  "tags": [
+    "context_engineering",
+    "agent_stack",
+    "progressive_disclosure",
+    "huggingface",
+    "burtenshaw"
+  ],
+  "source_repo": "huggingface/context-course",
+  "provenance": [
+    "https://github.com/huggingface/context-course",
+    "D:/GitHub/cloned/context-course/units/en/unit0/introduction.mdx#L1-L80",
+    "D:/GitHub/cloned/context-course/units/en/unit1/what-are-skills.mdx#L1-L60",
+    "D:/GitHub/cloned/context-course/units/en/unit3/anatomy.mdx#L1-L50",
+    "D:/GitHub/cloned/context-course/units/en/unit6/agent-loop.mdx#L1-L70"
+  ],
+  "created_at": "2026-09-21T18:00:00Z"
+}

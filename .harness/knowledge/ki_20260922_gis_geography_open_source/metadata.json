@@ -1,0 +1,81 @@
+{
+  "id": "ki_20260922_gis_geography_open_source",
+  "title": "Open-Source GIS Architecture & Multicriteria Software Benchmarking",
+  "category": "data_engineering",
+  "created_at": "2026-09-22T14:00:00Z",
+  "author": "GIS Geography / Antigravity Cognitive Distillation",
+  "tags": [
+    "gis",
+    "geospatial",
+    "qgis",
+    "grass_gis",
+    "whitebox",
+    "saga_gis",
+    "geoda",
+    "mapwindow",
+    "gvsig",
+    "ilwis",
+    "lidar",
+    "dem",
+    "topology",
+    "spatial_statistics",
+    "hydrology",
+    "remote_sensing",
+    "field_survey",
+    "biodiversity",
+    "defense_restricted"
+  ],
+  "isnad": {
+    "decision_id": "dec_20260922_gis_01",
+    "claims": [
+      {
+        "assertion": "Whitebox GAT succeeded Terrain Analysis System (TAS) for hydro-geomorphic DEM applications and is the leading free LiDAR tool with 410+ tools and native LAS-to-shapefile extraction.",
+        "evidence_type": "empirical_benchmark",
+        "source": "https://gisgeography.com/free-gis-software/#3-whitebox-gat",
+        "verified": true
+      },
+      {
+        "assertion": "GRASS GIS is trusted by NASA, NOAA, USDA, and USGS for land management, image classification, and digital terrain manipulation with over 350 rock-solid tools.",
+        "evidence_type": "institutional_adoption",
+        "source": "https://gisgeography.com/free-gis-software/#2-grass-gis",
+        "verified": true
+      },
+      {
+        "assertion": "SAGA GIS's Topographic Wetness Index (TWI) and Topographic Position Classification make it the definitive engine for raster DEM morphometry and closing data gaps.",
+        "evidence_type": "empirical_benchmark",
+        "source": "https://gisgeography.com/free-gis-software/#7-saga-gis",
+        "verified": true
+      },
+      {
+        "assertion": "GeoDa is the standard academic spatial statistics gateway (Harvard, MIT, Cornell) covering Moran's I, LISA clusters, and spatial lag/error regression.",
+        "evidence_type": "academic_adoption",
+        "source": "https://gisgeography.com/free-gis-software/#8-geoda",
+        "verified": true
+      },
+      {
+        "assertion": "MapWindow 5 bundles TauDEM for automatic watershed delineation and HydroDesktop under a US EPA 'Basins' open-source contract.",
+        "evidence_type": "institutional_adoption",
+        "source": "https://gisgeography.com/free-gis-software/#9-mapwindow",
+        "verified": true
+      },
+      {
+        "assertion": "gvSIG Mobile enables GPS field data collection with OpenCAD vertex snapping, geometry splitting, and NavTable vertical record navigation.",
+        "evidence_type": "code_implementation",
+        "source": "https://gisgeography.com/free-gis-software/#5-gvsig",
+        "verified": true
+      },
+      {
+        "assertion": "Diva GIS specializes in biological richness and diversity distribution including DNA marker data and WorldClim climate extractions.",
+        "evidence_type": "empirical_benchmark",
+        "source": "https://gisgeography.com/free-gis-software/#14-diva-gis",
+        "verified": true
+      },
+      {
+        "assertion": "FalconView was developed by Georgia Tech for the US Department of Defense and National Geospatial-Intelligence Agencies for combat flight planning and is defense-restricted.",
+        "evidence_type": "institutional_adoption",
+        "source": "https://gisgeography.com/free-gis-software/#12-falconview",
+        "verified": true
+      }
+    ]
+  }
+}

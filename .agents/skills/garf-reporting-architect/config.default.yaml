@@ -1,0 +1,7 @@
+# Zero-fork configuration defaults for garf-reporting-architect
+default_row_count: 5
+simulation_seed: 42
+default_writer: json
+workflow_timeout_seconds: 120.0
+enable_sql_post_processing: true
+export_telemetry: true

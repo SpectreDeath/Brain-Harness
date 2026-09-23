@@ -1,0 +1,36 @@
+{
+  "id": "ki_hf_doc_anchor_graph_integrity",
+  "title": "Deterministic Markdown Anchor Graph & Cross-Reference Link Verification",
+  "source_target": "D:\\GitHub\\cloned\\doc-builder",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_ki_hf_doc_anchor_graph_integrity",
+    "claims": [
+      {
+        "assertion": "Fast single-pass AST tokenization stripping inline code blocks, HTML comments, and blockquotes enables deterministic anchor graph extraction across Markdown headings, HTML IDs, and autodoc components, resolving extensionless relative links and cross-version documentation routes without external web servers.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "src/doc_builder/check_links.py#L1-L150",
+            "sha256_hash": "N/A",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "git commit bcd143e",
+            "sha256_hash": "N/A",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "documentation",
+    "link_checker",
+    "markdown",
+    "anchors",
+    "verification"
+  ]
+}

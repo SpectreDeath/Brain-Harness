@@ -1,0 +1,7 @@
+# Operational default configuration for garf_reporting_pipeline
+default_timeout_seconds: 60.0
+default_batch_size: 1000
+default_writer: json
+max_simulation_rows: 500
+parallel_workflow_execution: true
+sqlite_busy_timeout_ms: 5000

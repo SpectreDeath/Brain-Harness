@@ -1,0 +1,21 @@
+{
+  "id": "ki_hf_subagent_topology_patterns",
+  "title": "Multi-Agent Subagent Coordination Topologies & The 10+ Files Context Boundary",
+  "category": "agent_orchestration",
+  "tags": [
+    "subagents",
+    "swarms",
+    "fan_out_fan_in",
+    "supervisor",
+    "context_preservation",
+    "huggingface"
+  ],
+  "source_repo": "huggingface/context-course",
+  "provenance": [
+    "https://github.com/huggingface/context-course",
+    "D:/GitHub/cloned/context-course/units/en/unit4/introduction.mdx#L1-L95",
+    "D:/GitHub/cloned/context-course/units/en/unit4/patterns.mdx#L1-L110",
+    "D:/GitHub/cloned/context-course/units/en/unit4/using-subagents.mdx#L1-L100"
+  ],
+  "created_at": "2026-09-21T18:00:00Z"
+}

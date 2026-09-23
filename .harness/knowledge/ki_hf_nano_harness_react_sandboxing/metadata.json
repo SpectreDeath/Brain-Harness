@@ -1,0 +1,21 @@
+{
+  "id": "ki_hf_nano_harness_react_sandboxing",
+  "title": "Minimal ReAct Autonomous Loops, Safe-Path Sandboxing & Bounded Error Self-Repair",
+  "category": "software_engineering",
+  "tags": [
+    "nano_harness",
+    "react_loop",
+    "sandboxing",
+    "safe_path",
+    "self_repair",
+    "huggingface"
+  ],
+  "source_repo": "huggingface/context-course",
+  "provenance": [
+    "https://github.com/huggingface/context-course",
+    "D:/GitHub/cloned/context-course/units/en/unit6/agent-loop.mdx#L1-L140",
+    "D:/GitHub/cloned/context-course/units/en/unit6/tools-and-sandboxing.mdx#L1-L100",
+    "D:/GitHub/cloned/context-course/units/en/unit6/hands-on.mdx#L1-L156"
+  ],
+  "created_at": "2026-09-21T18:00:00Z"
+}

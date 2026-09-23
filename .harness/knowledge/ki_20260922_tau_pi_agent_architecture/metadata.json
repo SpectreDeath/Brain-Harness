@@ -1,0 +1,51 @@
+{
+  "id": "ki_20260922_tau_pi_agent_architecture",
+  "title": "Pi-Style Minimalist Coding Agent Harness Architecture (Tau v0.4.4 / twotimespi)",
+  "created": "2026-09-22T06:23:00-04:00",
+  "updated": "2026-09-22T06:23:00-04:00",
+  "summary": "Authoritative engineering heuristics, mental models, and architectural invariants for building portable terminal coding agents. Distills the Tau repository (huggingface/tau v0.4.4) into strict 3-tier decoupling (tau_ai / tau_agent / tau_coding), immutable branchable session tree DAGs with O(N) ancestry traversal, advisory file-locked append-only JSONL journal storage, in-flight provider-safe tool history normalization, and hierarchical project-trust security perimeters.",
+  "references": [
+    {
+      "path": "D:/GitHub/cloned/tau",
+      "description": "Tau upstream repository (commit 681275b, tags v0.1.1..v0.4.4, Alejandro AO / Hugging Face)"
+    },
+    {
+      "path": ".agents/skills/pi-coding-harness/SKILL.md",
+      "description": "Executable deep agent skill for Pi-style coding agent harness design"
+    },
+    {
+      "path": ".agents/skills/pi-coding-harness/CARD.md",
+      "description": "Companion summary card, 5-stage progression matrix, and invariant checklist"
+    },
+    {
+      "path": "plugins/agent_orchestration/tau_harness_bridge/README.md",
+      "description": "Tau Harness Bridge plugin documentation and IoC service specification"
+    }
+  ],
+  "claims": [
+    {
+      "claim": "Core agent loops must maintain strict zero-dependency decoupling from CLI and TUI rendering packages to remain portable.",
+      "source_file": "D:/GitHub/cloned/tau/AGENTS.md",
+      "lines": "25-35",
+      "confidence": "VERIFIED"
+    },
+    {
+      "claim": "Conversation sessions should be modeled as immutable DAG entries with parent pointers, enabling branching without journal rewrites.",
+      "source_file": "D:/GitHub/cloned/tau/src/tau_agent/session/tree.py",
+      "lines": "1-40",
+      "confidence": "VERIFIED"
+    },
+    {
+      "claim": "Interleaved tool call transcripts must be repaired in-flight to prevent HTTP 400 Bad Request errors across Anthropic and OpenAI.",
+      "source_file": "D:/GitHub/cloned/tau/src/tau_agent/tool_history.py",
+      "lines": "1-169",
+      "confidence": "VERIFIED"
+    },
+    {
+      "claim": "Workspace execution requires hierarchical project trust verification to isolate sensitive credentials and SSH keys.",
+      "source_file": "D:/GitHub/cloned/tau/src/tau_coding/project_trust.py",
+      "lines": "1-703",
+      "confidence": "VERIFIED"
+    }
+  ]
+}

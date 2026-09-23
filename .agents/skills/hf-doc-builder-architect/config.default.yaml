@@ -1,0 +1,28 @@
+# Baseline operational budgets for hf-doc-builder-architect (Rule 44)
+timeout_seconds: 180
+max_chunk_size_tokens: 1500
+min_passing_link_score: 100.0
+
+mock_virtualization:
+  enabled: true
+  auto_mock_packages:
+    - torch
+    - tensorflow
+    - jax
+    - flax
+    - tokenizers
+    - timm
+    - accelerate
+
+link_checker:
+  check_anchors: true
+  check_external: false
+  allow_extensionless: true
+  supported_extensions:
+    - .md
+    - .mdx
+    - .ipynb
+
+style_linter:
+  ruff_enabled: true
+  format_code_examples: true

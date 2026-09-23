@@ -16,12 +16,11 @@ import sys
 import textwrap
 from abc import ABC, abstractmethod
 from pathlib import Path
-from typing import TYPE_CHECKING, Any
+from typing import Any
 
 import structlog
 
-if TYPE_CHECKING:
-    from harness.plugins.transport import StdioJsonRpcTransport
+from harness.plugins.transport import StdioJsonRpcTransport
 
 logger = structlog.get_logger()
 
@@ -162,47 +161,10 @@ class SubprocessExecutor(SandboxExecutor):
         return self._transport is not None and self._transport.is_running
 
     async def start(self) -> None:
-        """Start the subprocess with the JSON-RPC bridge wrapper."""
-        from harness.plugins.transport import StdioJsonRpcTransport
-
-        wrapper_code = textwrap.dedent(f"""\
-            import sys
-            import json
-            import importlib.util
-
-            # Load the plugin module
-            spec = importlib.util.spec_from_file_location("plugin", {str(self._script_path)!r})
-            module = importlib.util.module_from_spec(spec)
-            spec.loader.exec_module(module)
-
-            # JSON-RPC loop
-            for line in sys.stdin:
-                try:
-                    request = json.loads(line.strip())
-                    method = request.get("method", "")
-                    params = request.get("params", {{}})
-                    req_id = request.get("id", 0)
-
-                    func = getattr(module, method, None)
-                    if func is None:
-                        response = {{"jsonrpc": "2.0", "id": req_id, "error": f"Method not found: {{method}}"}}
-                    else:
-                        try:
-                            result = func(**params)
-                            response = {{"jsonrpc": "2.0", "id": req_id, "result": result}}
-                        except Exception as e:
-                            response = {{"jsonrpc": "2.0", "id": req_id, "error": str(e)}}
-
-                    sys.stdout.write(json.dumps(response) + "\\n")
-                    sys.stdout.flush()
-                except Exception as e:
-                    sys.stdout.write(json.dumps({{"jsonrpc": "2.0", "id": 0, "error": str(e)}}) + "\\n")
-                    sys.stdout.flush()
-        """)
-
+        runner_path = Path(__file__).parent / "bridge_runner.py"
         self._transport = StdioJsonRpcTransport(
             self._python,
-            ["-c", wrapper_code],
+            [str(runner_path), str(self._script_path)],
             env=self._env,
         )
         await self._transport.start()
@@ -438,8 +400,9 @@ class ContainerExecutor(SandboxExecutor):
 
     async def start(self) -> None:
         """Start the container and attach JSON-RPC bridge."""
-        from harness.plugins.transport import StdioJsonRpcTransport
         import uuid
+
+        from harness.plugins.transport import StdioJsonRpcTransport
 
         if not self._runtime_binary:
             raise SandboxError("docker", "Container runtime (docker/podman) not found in system PATH")
@@ -504,7 +467,7 @@ class ContainerExecutor(SandboxExecutor):
             f"--cpus={cpu_limit}",
             f"--network={network}",
             "-v",
-            f"{str(self._plugin_dir)}:/app:ro",
+            f"{self._plugin_dir!s}:/app:ro",
             "-w",
             "/app",
         ]
@@ -608,6 +571,7 @@ class SandboxExecutorFactory:
             Configured SandboxExecutor or None if no valid strategy/entrypoint found.
         """
         import importlib.util
+
         from harness.plugins.manifest import IsolationMode
 
         root_path = Path(root).resolve()

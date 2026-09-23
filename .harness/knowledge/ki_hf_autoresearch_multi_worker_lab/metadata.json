@@ -1,0 +1,22 @@
+{
+  "id": "ki_hf_autoresearch_multi_worker_lab",
+  "title": "Multi-Agent Autoresearch AI Lab Architecture & Heterogeneous Model Workers",
+  "category": "machine_learning",
+  "tags": [
+    "autoresearch",
+    "multi_worker",
+    "karpathy",
+    "hermes",
+    "codex",
+    "claude",
+    "huggingface"
+  ],
+  "source_repo": "huggingface/context-course",
+  "provenance": [
+    "https://github.com/huggingface/context-course",
+    "D:/GitHub/cloned/context-course/projects/pre-training/README.md#L1-L80",
+    "D:/GitHub/cloned/context-course/projects/pre-training/scripts/hermes_worker.py#L1-L100",
+    "D:/GitHub/cloned/context-course/projects/pre-training/scripts/pi_worker.py#L1-L100"
+  ],
+  "created_at": "2026-09-21T18:00:00Z"
+}

@@ -47,10 +47,14 @@ from harness.commands.creator import (
     creator_validate,
 )
 from harness.commands.data import data_group
+from harness.commands.datasets import datasets_group
 from harness.commands.doc import doc_group
+from harness.commands.doc_builder import doc_builder_group
 from harness.commands.events import events_cli
+from harness.commands.garf import garf_group
 from harness.commands.gate import gate_group
 from harness.commands.gemini_vercel import gemini_vercel_group
+from harness.commands.gis import gis_group
 from harness.commands.gradio_app import gradio_group
 from harness.commands.harness_architect import architect_group
 from harness.commands.mcp import mcp_group
@@ -59,18 +63,19 @@ from harness.commands.okf import okf_group
 from harness.commands.plugins import plugin_group
 from harness.commands.pre_commit_security import pre_commit_security_group
 from harness.commands.reflection import knowledge_group, reflect_cli
-from harness.commands.self_eval import eval_group
-from harness.commands.uncertainty import uncertainty_group
 from harness.commands.runtime import (
     apply_cli,
     config_group,
     run_cli,
     ui_cli,
 )
+from harness.commands.self_eval import eval_group
 from harness.commands.session import session_group
 from harness.commands.skills import skills_group
 from harness.commands.system import introspect_cli, services_cli
+from harness.commands.tau import tau_group
 from harness.commands.tools import tool_group
+from harness.commands.uncertainty import uncertainty_group
 from harness.commands.validation_loop import validation_loop_group
 from harness.commands.workspace import init_cli, watch_cli
 
@@ -120,7 +125,10 @@ main.add_command(session_group, name="session")
 main.add_command(context_group, name="context")
 main.add_command(antigravity_group, name="antigravity")
 main.add_command(data_group, name="data")
+main.add_command(datasets_group, name="datasets")
 main.add_command(doc_group, name="doc")
+main.add_command(doc_builder_group, name="doc-builder")
+main.add_command(doc_builder_group, name="hf-doc-builder")
 main.add_command(architect_group, name="architect")
 main.add_command(architect_group, name="harness-architect")
 main.add_command(gate_group, name="gate")
@@ -147,6 +155,12 @@ main.add_command(eval_group, name="eval")
 main.add_command(eval_group, name="self-eval")
 main.add_command(uncertainty_group, name="uncertainty")
 main.add_command(uncertainty_group, name="uncertainty-guard")
+main.add_command(garf_group, name="garf")
+main.add_command(garf_group, name="garf-reporting")
+main.add_command(gis_group, name="gis")
+main.add_command(gis_group, name="open-source-gis")
+main.add_command(tau_group, name="tau")
+main.add_command(tau_group, name="coding-harness")
 
 # --- Register Standalone Commands ---
 main.add_command(init_cli, name="init")

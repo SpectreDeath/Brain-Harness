@@ -1,0 +1,24 @@
+# Baseline Operational Configuration for pi-coding-harness skill (Rule 44)
+skill:
+  name: "pi-coding-harness"
+  version: "1.0.0"
+
+architecture:
+  max_turn_steps: 50
+  cancellation_timeout_seconds: 300
+  enable_event_streaming: true
+
+session_dag:
+  max_depth: 1000
+  enforce_parent_pointers: true
+  allow_cycle_override: false
+
+tool_history_repair:
+  enabled: true
+  drop_orphan_responses: true
+  synthesize_missing_placeholders: true
+
+project_trust:
+  strict: true
+  block_on_private_keys: true
+  default_permission_level: "RESTRICTED"

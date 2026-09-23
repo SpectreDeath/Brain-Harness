@@ -1,0 +1,36 @@
+{
+  "id": "ki_hf_autodoc_mock_virtualization",
+  "title": "Zero-Dependency Meta-Path Mock Virtualization for AST Introspection",
+  "source_target": "D:\\GitHub\\cloned\\doc-builder",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_ki_hf_autodoc_mock_virtualization",
+    "claims": [
+      {
+        "assertion": "Using Python's sys.meta_path hooks paired with dynamic MockFinder and metaclass-synthesized proxy classes enables deep AST introspection, type annotation extraction, and docstring compilation of massive machine learning libraries without requiring multi-gigabyte native dependencies or GPU acceleration.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "src/doc_builder/mock_imports.py#L30-L120",
+            "sha256_hash": "N/A",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "src/doc_builder/autodoc.py#L40-L115",
+            "sha256_hash": "N/A",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "documentation",
+    "autodoc",
+    "meta_path",
+    "mocking",
+    "ast"
+  ]
+}
