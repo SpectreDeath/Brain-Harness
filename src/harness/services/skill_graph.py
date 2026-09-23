@@ -42,11 +42,15 @@ class SkillAntiPatternDefinition(BaseModel):
 class AntiPatternViolation(BaseModel):
     """Identified anti-pattern violation within an execution proposal."""
 
-    skill_name: str = Field(..., description="Skill declaring the violated anti-pattern")
+    skill_name: str = Field(
+        ..., description="Skill declaring the violated anti-pattern"
+    )
     anti_pattern: str = Field(..., description="Anti-pattern name")
     symptom: str = Field(default="", description="Declared failure symptom")
     remedy: str = Field(default="", description="Prescribed corrective action")
-    matched_phrase: str = Field(default="", description="Phrase or token triggering the violation")
+    matched_phrase: str = Field(
+        default="", description="Phrase or token triggering the violation"
+    )
 
 
 class AntiPatternGuard:
@@ -61,31 +65,42 @@ class AntiPatternGuard:
         """Scan proposed plan or tool arguments for symptoms of declared anti-patterns."""
         violations: list[AntiPatternViolation] = []
         text_lower = proposed_action_or_plan.lower()
+        negation_markers = ("avoid", "do not", "don't", "prevent", "never", "without")
 
         for ap in skill.anti_patterns:
             ap_name_lower = ap.name.lower()
-            ap_tokens = [tok.lower() for tok in re.findall(r"\w+", ap.name) if len(tok) > 3]
+            ap_tokens = [
+                tok.lower() for tok in re.findall(r"\w+", ap.name) if len(tok) > 3
+            ]
 
             if ap_name_lower in text_lower:
-                violations.append(
-                    AntiPatternViolation(
-                        skill_name=skill.name,
-                        anti_pattern=ap.name,
-                        symptom=ap.symptom,
-                        remedy=ap.remedy,
-                        matched_phrase=ap.name,
+                match_idx = text_lower.find(ap_name_lower)
+                window = text_lower[max(0, match_idx - 50) : match_idx]
+                if not any(marker in window for marker in negation_markers):
+                    violations.append(
+                        AntiPatternViolation(
+                            skill_name=skill.name,
+                            anti_pattern=ap.name,
+                            symptom=ap.symptom,
+                            remedy=ap.remedy,
+                            matched_phrase=ap.name,
+                        )
                     )
-                )
             elif ap_tokens and all(t in text_lower for t in ap_tokens):
-                violations.append(
-                    AntiPatternViolation(
-                        skill_name=skill.name,
-                        anti_pattern=ap.name,
-                        symptom=ap.symptom,
-                        remedy=ap.remedy,
-                        matched_phrase=" ".join(ap_tokens),
-                    )
+                min_idx = min(
+                    text_lower.find(t) for t in ap_tokens if text_lower.find(t) != -1
                 )
+                window = text_lower[max(0, min_idx - 50) : min_idx]
+                if not any(marker in window for marker in negation_markers):
+                    violations.append(
+                        AntiPatternViolation(
+                            skill_name=skill.name,
+                            anti_pattern=ap.name,
+                            symptom=ap.symptom,
+                            remedy=ap.remedy,
+                            matched_phrase=" ".join(ap_tokens),
+                        )
+                    )
 
         return violations
 
@@ -94,7 +109,9 @@ class SkillInvariantDefinition(BaseModel):
     """Guarded non-negotiable invariant rule within a skill."""
 
     rule: str = Field(..., description="Invariant rule description or assertion")
-    is_blocking: bool = Field(default=True, description="Whether violation blocks execution")
+    is_blocking: bool = Field(
+        default=True, description="Whether violation blocks execution"
+    )
 
 
 class SkillCardDefinition(BaseModel):
@@ -102,16 +119,33 @@ class SkillCardDefinition(BaseModel):
 
     name: str = Field(..., description="Skill kebab-case identifier")
     category: str = Field(default="general", description="Domain classification")
-    invocation: str = Field(default="", description="Command / trigger format e.g. /deepen-architecture")
-    triggers: list[str] = Field(default_factory=list, description="Natural language trigger phrases")
+    invocation: str = Field(
+        default="", description="Command / trigger format e.g. /deepen-architecture"
+    )
+    triggers: list[str] = Field(
+        default_factory=list, description="Natural language trigger phrases"
+    )
     version: str = Field(default="1.0.0", description="Semantic version")
     target: str = Field(default="", description="Operational target summary")
-    stages: list[SkillStageDefinition] = Field(default_factory=list, description="Execution progression")
-    anti_patterns: list[SkillAntiPatternDefinition] = Field(default_factory=list, description="Guarded anti-patterns")
-    invariants: list[SkillInvariantDefinition] = Field(default_factory=list, description="Guarded invariants")
-    dependencies: list[str] = Field(default_factory=list, description="Referenced peer skills")
-    knowledge_items: list[str] = Field(default_factory=list, description="Linked Knowledge Item IDs from Knowledge Vault")
-    services: list[str] = Field(default_factory=list, description="Required micro-kernel ServiceKey identifiers")
+    stages: list[SkillStageDefinition] = Field(
+        default_factory=list, description="Execution progression"
+    )
+    anti_patterns: list[SkillAntiPatternDefinition] = Field(
+        default_factory=list, description="Guarded anti-patterns"
+    )
+    invariants: list[SkillInvariantDefinition] = Field(
+        default_factory=list, description="Guarded invariants"
+    )
+    dependencies: list[str] = Field(
+        default_factory=list, description="Referenced peer skills"
+    )
+    knowledge_items: list[str] = Field(
+        default_factory=list,
+        description="Linked Knowledge Item IDs from Knowledge Vault",
+    )
+    services: list[str] = Field(
+        default_factory=list, description="Required micro-kernel ServiceKey identifiers"
+    )
     tools: list[str] = Field(default_factory=list, description="Required tool names")
     card_path: str = Field(default="", description="Path to companion CARD.md")
     skill_path: str = Field(default="", description="Path to authoritative SKILL.md")
@@ -177,13 +211,18 @@ class SkillRegistryService(Protocol):
         ...
 
 
-SKILL_GRAPH_KEY: ServiceKey[SkillGraphService] = ServiceKey("service.skill_knowledge_graph")
-SKILL_REGISTRY_KEY: ServiceKey[SkillRegistryService] = ServiceKey("service.skill_registry")
+SKILL_GRAPH_KEY: ServiceKey[SkillGraphService] = ServiceKey(
+    "service.skill_knowledge_graph"
+)
+SKILL_REGISTRY_KEY: ServiceKey[SkillRegistryService] = ServiceKey(
+    "service.skill_registry"
+)
 
 
 # ============================================================================
 # Authoritative Built-in Skill Registry Implementation
 # ============================================================================
+
 
 class BuiltinSkillRegistryService(SkillRegistryService):
     """Authoritative in-memory caching Skill Registry and Knowledge Graph engine.
@@ -196,8 +235,11 @@ class BuiltinSkillRegistryService(SkillRegistryService):
         self._default_root = default_root
         self._skills_cache: dict[str, SkillCardDefinition] = {}
         self._adjacency: dict[str, set[str]] = collections.defaultdict(set)
+        self._synthetic_adjacency: dict[str, set[str]] = collections.defaultdict(set)
         self._categories: set[str] = set()
-        self._anti_pattern_map: dict[str, list[SkillAntiPatternDefinition]] = collections.defaultdict(list)
+        self._anti_pattern_map: dict[str, list[SkillAntiPatternDefinition]] = (
+            collections.defaultdict(list)
+        )
         self._last_scan_time: float = 0.0
 
     def discover_all(self, root_dir: str = ".") -> list[SkillCardDefinition]:
@@ -211,7 +253,9 @@ class BuiltinSkillRegistryService(SkillRegistryService):
         clean_name = name.strip().lower().replace("_", "-")
         return self._skills_cache.get(clean_name)
 
-    def check_anti_patterns(self, skill_name: str, proposed_text: str) -> list[AntiPatternViolation]:
+    def check_anti_patterns(
+        self, skill_name: str, proposed_text: str
+    ) -> list[AntiPatternViolation]:
         """Verify proposed action or text against anti-patterns for a given skill."""
         skill = self.get_skill(skill_name)
         if not skill:
@@ -224,7 +268,15 @@ class BuiltinSkillRegistryService(SkillRegistryService):
         self._skills_cache.clear()
         self._categories.clear()
         self._adjacency.clear()
+        self._synthetic_adjacency.clear()
         self._anti_pattern_map.clear()
+
+    def _get_neighbors(self, node: str, *, include_synthetic: bool = False) -> set[str]:
+        """Retrieve adjacent nodes, optionally including synthetic precedence edges."""
+        neighbors = set(self._adjacency.get(node, set()))
+        if include_synthetic:
+            neighbors.update(self._synthetic_adjacency.get(node, set()))
+        return neighbors
 
     def route_intent(
         self, intent: str, top_k: int = 3, min_confidence: float = 0.20
@@ -279,13 +331,17 @@ class BuiltinSkillRegistryService(SkillRegistryService):
                 norm_score = score / (1.5 * len_norm + 1.0)
                 confidence = min(0.98, max(0.20, norm_score / 2.2 + 0.25))
                 if confidence >= min_confidence:
-                    matches.append({
-                        "skill_name": skill.name,
-                        "category": skill.category,
-                        "confidence": round(confidence, 3),
-                        "target": skill.target,
-                        "matched_triggers": list(dict.fromkeys(matched_triggers))[:4],
-                    })
+                    matches.append(
+                        {
+                            "skill_name": skill.name,
+                            "category": skill.category,
+                            "confidence": round(confidence, 3),
+                            "target": skill.target,
+                            "matched_triggers": list(dict.fromkeys(matched_triggers))[
+                                :4
+                            ],
+                        }
+                    )
 
         matches.sort(key=lambda m: float(m["confidence"]), reverse=True)
         top_matches = matches[:top_k]
@@ -294,11 +350,11 @@ class BuiltinSkillRegistryService(SkillRegistryService):
         recommended_chain: list[str] = []
         if len(top_matches) >= 2:
             s1, s2 = top_matches[0]["skill_name"], top_matches[1]["skill_name"]
-            chain_res = self.get_chain(s1, s2, fallback_direct=True)
+            chain_res = self.get_chain(s1, s2, fallback_direct=False)
             if chain_res.status == "ok" and chain_res.chain:
                 recommended_chain = chain_res.chain
             else:
-                recommended_chain = [s1, s2]
+                recommended_chain = []
         elif top_matches:
             recommended_chain = [top_matches[0]["skill_name"]]
 
@@ -311,7 +367,12 @@ class BuiltinSkillRegistryService(SkillRegistryService):
         }
 
     def get_chain(
-        self, start_skill: str, target_skill: str, *, fallback_direct: bool = False
+        self,
+        start_skill: str,
+        target_skill: str,
+        *,
+        fallback_direct: bool = False,
+        include_synthetic: bool = False,
     ) -> SkillChainResult:
         """Calculate the shortest directed execution path between two skills using BFS."""
         self._ensure_scanned(self._default_root)
@@ -352,7 +413,9 @@ class BuiltinSkillRegistryService(SkillRegistryService):
             path = queue.popleft()
             curr = path[-1]
 
-            neighbors = self._adjacency.get(curr, set())
+            neighbors = self._get_neighbors(
+                curr, include_synthetic=(include_synthetic or fallback_direct)
+            )
             for neighbor in sorted(neighbors):
                 if neighbor == s_target:
                     full_chain = path + [neighbor]
@@ -401,7 +464,15 @@ class BuiltinSkillRegistryService(SkillRegistryService):
         categories: set[str] = set()
         adjacency: dict[str, set[str]] = collections.defaultdict(set)
 
-        ignored_parts = {".venv", "venv", "venvs", ".git", "node_modules", "site-packages", "__pycache__"}
+        ignored_parts = {
+            ".venv",
+            "venv",
+            "venvs",
+            ".git",
+            "node_modules",
+            "site-packages",
+            "__pycache__",
+        }
 
         for scan_dir in paths_to_scan:
             if not scan_dir.exists():
@@ -417,14 +488,20 @@ class BuiltinSkillRegistryService(SkillRegistryService):
                         discovered[card.name] = card
                         categories.add(card.category)
                         for dep in card.dependencies:
-                            clean_dep = dep.strip().lower().replace("_", "-").lstrip("/")
+                            clean_dep = (
+                                dep.strip().lower().replace("_", "-").lstrip("/")
+                            )
                             if clean_dep != card.name:
                                 adjacency[card.name].add(clean_dep)
                 except Exception as e:
-                    logger.debug("Failed parsing skill directory", path=str(skill_file.parent), error=str(e))
+                    logger.debug(
+                        "Failed parsing skill directory",
+                        path=str(skill_file.parent),
+                        error=str(e),
+                    )
                     continue
 
-        # Known canonical pipeline precedence pairs
+        # Known canonical pipeline precedence pairs (isolated into synthetic adjacency)
         pipeline_pairs = [
             ("structured-data-scout", "data-topology-mapper"),
             ("data-topology-mapper", "epistemic-isnad-audit"),
@@ -438,13 +515,15 @@ class BuiltinSkillRegistryService(SkillRegistryService):
             ("mind-reader", "harness-reflector"),
             ("deepen-architecture", "crafting-skills"),
         ]
+        synthetic_adj: dict[str, set[str]] = collections.defaultdict(set)
         for s1, s2 in pipeline_pairs:
             if s1 in discovered and s2 in discovered:
-                adjacency[s1].add(s2)
+                synthetic_adj[s1].add(s2)
 
         self._skills_cache = discovered
         self._categories = categories
         self._adjacency = adjacency
+        self._synthetic_adjacency = synthetic_adj
         self._last_scan_time = now
 
     def _parse_skill_directory(self, skill_dir: Path) -> SkillCardDefinition | None:
@@ -462,6 +541,7 @@ class BuiltinSkillRegistryService(SkillRegistryService):
             from plugins.memory_and_epistemics.skill_knowledge_graph.parser import (
                 SkillCardParser,
             )
+
             node = SkillCardParser.parse_directory(skill_dir)
             if node is not None:
                 return SkillCardDefinition(
@@ -494,7 +574,11 @@ class BuiltinSkillRegistryService(SkillRegistryService):
                         )
                         for inv in node.invariants
                     ],
-                    dependencies=[d for d in list(dict.fromkeys(node.references)) if d != node.name],
+                    dependencies=[
+                        d
+                        for d in list(dict.fromkeys(node.references))
+                        if d != node.name
+                    ],
                     knowledge_items=[],
                     services=[],
                     tools=[],
@@ -534,20 +618,24 @@ class BuiltinSkillRegistryService(SkillRegistryService):
             re.MULTILINE,
         )
         for idx, (s_num_str, s_name) in enumerate(stage_matches, start=1):
-            stages.append(SkillStageDefinition(
-                stage_num=int(s_num_str) if s_num_str.isdigit() else idx,
-                name=s_name.strip(),
-                completion_gate=f"Gate for Stage {s_num_str}",
-            ))
+            stages.append(
+                SkillStageDefinition(
+                    stage_num=int(s_num_str) if s_num_str.isdigit() else idx,
+                    name=s_name.strip(),
+                    completion_gate=f"Gate for Stage {s_num_str}",
+                )
+            )
 
         # Parse Anti-Patterns
         ap_matches = re.findall(r"-\s+\*\*([^*]+)\*\*\s*[—–-]\s*([^\n]+)", content)
         for ap_name, ap_desc in ap_matches:
-            anti_patterns.append(SkillAntiPatternDefinition(
-                name=ap_name.strip(),
-                symptom=ap_desc.strip(),
-                remedy="Follow standard protocol",
-            ))
+            anti_patterns.append(
+                SkillAntiPatternDefinition(
+                    name=ap_name.strip(),
+                    symptom=ap_desc.strip(),
+                    remedy="Follow standard protocol",
+                )
+            )
 
         # Check for companion CARD.md
         card_file = skill_dir / "CARD.md"
@@ -565,16 +653,27 @@ class BuiltinSkillRegistryService(SkillRegistryService):
                     dependencies.append(clean_d)
 
         # Parse explicit dependencies from YAML frontmatter (S2)
-        dep_match = re.search(r"^dependencies:\s*\n((?:\s*-\s*[^\n]+\n)+)", content, re.MULTILINE)
+        dep_match = re.search(
+            r"^dependencies:\s*\n((?:\s*-\s*[^\n]+\n)+)", content, re.MULTILINE
+        )
         if dep_match:
             for d in re.findall(r"-\s*([a-zA-Z0-9\-_]+)", dep_match.group(1)):
                 clean_d = d.strip().lower().replace("_", "-").lstrip("/")
                 if clean_d and clean_d != skill_name and clean_d not in dependencies:
                     dependencies.append(clean_d)
-        dep_inline_match = re.search(r"^dependencies:\s*\[([^\]]+)\]", content, re.MULTILINE)
+        dep_inline_match = re.search(
+            r"^dependencies:\s*\[([^\]]+)\]", content, re.MULTILINE
+        )
         if dep_inline_match:
             for d in dep_inline_match.group(1).split(","):
-                clean_d = d.strip().strip('"').strip("'").lower().replace("_", "-").lstrip("/")
+                clean_d = (
+                    d.strip()
+                    .strip('"')
+                    .strip("'")
+                    .lower()
+                    .replace("_", "-")
+                    .lstrip("/")
+                )
                 if clean_d and clean_d != skill_name and clean_d not in dependencies:
                     dependencies.append(clean_d)
 
@@ -595,7 +694,9 @@ class BuiltinSkillRegistryService(SkillRegistryService):
             stages=stages,
             anti_patterns=anti_patterns,
             invariants=invariants,
-            dependencies=[d for d in list(dict.fromkeys(dependencies)) if d != skill_name],
+            dependencies=[
+                d for d in list(dict.fromkeys(dependencies)) if d != skill_name
+            ],
             knowledge_items=[],
             services=[],
             tools=[],
@@ -621,7 +722,9 @@ class BuiltinSkillRegistryService(SkillRegistryService):
                 meta = json.loads(meta_path.read_text(encoding="utf-8"))
                 ki_id = meta.get("id", ki_dir.name)
                 raw_tags = meta.get("tags") or []
-                tags = [t.lower().replace("_", "-") for t in raw_tags if isinstance(t, str)]
+                tags = [
+                    t.lower().replace("_", "-") for t in raw_tags if isinstance(t, str)
+                ]
                 title = (meta.get("title") or "").lower()
 
                 for skill_name, skill in self._skills_cache.items():
@@ -629,14 +732,24 @@ class BuiltinSkillRegistryService(SkillRegistryService):
                     matched = False
 
                     # Exact skill name in tags or id
-                    if skill_name in tags or skill_name in ki_id.lower() or skill_name.replace("-", "_") in ki_id.lower() or any(tok in tags for tok in s_tokens if len(tok) > 3) or any(tok in title for tok in s_tokens if len(tok) > 3):
+                    if (
+                        skill_name in tags
+                        or skill_name in ki_id.lower()
+                        or skill_name.replace("-", "_") in ki_id.lower()
+                        or any(tok in tags for tok in s_tokens if len(tok) > 3)
+                        or any(tok in title for tok in s_tokens if len(tok) > 3)
+                    ):
                         matched = True
 
                     if matched and ki_id not in skill.knowledge_items:
                         skill.knowledge_items.append(ki_id)
                         linked_count += 1
             except Exception as e:
-                logger.debug("Failed processing knowledge vault item", path=str(ki_dir), error=str(e))
+                logger.debug(
+                    "Failed processing knowledge vault item",
+                    path=str(ki_dir),
+                    error=str(e),
+                )
                 continue
 
         return linked_count
@@ -645,6 +758,7 @@ class BuiltinSkillRegistryService(SkillRegistryService):
 # ============================================================================
 # Authoritative Built-in Skill Graph Async Implementation
 # ============================================================================
+
 
 class BuiltinSkillGraphService(SkillGraphService):
     """Async facade over BuiltinSkillRegistryService."""
@@ -657,9 +771,11 @@ class BuiltinSkillGraphService(SkillGraphService):
         return len(skills)
 
     async def find_chain(
-        self, start_skill: str, target_skill: str, *, fallback_direct: bool = True
+        self, start_skill: str, target_skill: str, *, fallback_direct: bool = False
     ) -> list[str]:
-        res = self._registry.get_chain(start_skill, target_skill, fallback_direct=fallback_direct)
+        res = self._registry.get_chain(
+            start_skill, target_skill, fallback_direct=fallback_direct
+        )
         return res.chain
 
     async def query_router(self, intent: str, top_k: int = 3) -> dict[str, Any]:
@@ -673,7 +789,8 @@ class BuiltinSkillGraphService(SkillGraphService):
         out = (
             Path(output_path).resolve()
             if output_path
-            else Path(tempfile.gettempdir()) / f"skill-graph-visual-{int(time.time())}.html"
+            else Path(tempfile.gettempdir())
+            / f"skill-graph-visual-{int(time.time())}.html"
         )
 
         categories = sorted({s.category for s in skills})
@@ -732,6 +849,7 @@ graph TD
 # Built-in Harness Plugin Registration
 # ============================================================================
 
+
 class SkillRegistryPlugin(HarnessPlugin):
     """In-process Harness plugin providing BuiltinSkillRegistryService and BuiltinSkillGraphService."""
 
@@ -753,6 +871,7 @@ class SkillRegistryPlugin(HarnessPlugin):
         ctx.provide(SKILL_GRAPH_KEY, self._graph)
 
     async def on_enable(self) -> None:
+        self._registry.invalidate_cache()
         self._registry.discover_all()
 
     async def on_disable(self) -> None:

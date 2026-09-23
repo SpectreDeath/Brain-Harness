@@ -10,6 +10,7 @@ revoked from the ServiceContext.
 
 from __future__ import annotations
 
+import asyncio
 import enum
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any
@@ -44,10 +45,16 @@ class PluginState(enum.Enum):
 # Valid state transitions
 _TRANSITIONS: dict[PluginState, frozenset[PluginState]] = {
     PluginState.DISCOVERED: frozenset({PluginState.LOADED, PluginState.ERROR}),
-    PluginState.LOADED: frozenset({PluginState.VALIDATED, PluginState.UNLOADED, PluginState.ERROR}),
-    PluginState.VALIDATED: frozenset({PluginState.ENABLED, PluginState.UNLOADED, PluginState.ERROR}),
+    PluginState.LOADED: frozenset(
+        {PluginState.VALIDATED, PluginState.UNLOADED, PluginState.ERROR}
+    ),
+    PluginState.VALIDATED: frozenset(
+        {PluginState.ENABLED, PluginState.UNLOADED, PluginState.ERROR}
+    ),
     PluginState.ENABLED: frozenset({PluginState.DISABLED, PluginState.ERROR}),
-    PluginState.DISABLED: frozenset({PluginState.ENABLED, PluginState.UNLOADED, PluginState.ERROR}),
+    PluginState.DISABLED: frozenset(
+        {PluginState.ENABLED, PluginState.UNLOADED, PluginState.ERROR}
+    ),
     PluginState.UNLOADED: frozenset({PluginState.DISCOVERED}),
     PluginState.ERROR: frozenset({PluginState.UNLOADED, PluginState.DISCOVERED}),
 }
@@ -71,10 +78,7 @@ class DependencyError(Exception):
     def __init__(self, plugin: str, missing: list[str]) -> None:
         self.plugin = plugin
         self.missing = missing
-        super().__init__(
-            f"Plugin {plugin!r} has unsatisfied dependencies: {missing}"
-        )
-
+        super().__init__(f"Plugin {plugin!r} has unsatisfied dependencies: {missing}")
 
 
 @dataclass
@@ -107,7 +111,9 @@ class PluginLifecycle:
         self._event_bus = event_bus or getattr(context, "event_bus", None)
         self._entries: dict[str, PluginEntry] = {}
         self._graph_epoch: int = 0
-        self._cached_graph: tuple[int, tuple[str, ...], DependencyGraph[str]] | None = None
+        self._cached_graph: tuple[int, tuple[str, ...], DependencyGraph[str]] | None = (
+            None
+        )
 
     @property
     def event_bus(self) -> Any | None:
@@ -148,7 +154,12 @@ class PluginLifecycle:
             entry.error = None
 
         # Only bump graph epoch on transitions that affect topological scheduling
-        if target in (PluginState.ENABLED, PluginState.DISABLED, PluginState.UNLOADED, PluginState.ERROR):
+        if target in (
+            PluginState.ENABLED,
+            PluginState.DISABLED,
+            PluginState.UNLOADED,
+            PluginState.ERROR,
+        ):
             self._graph_epoch += 1
 
         logger.info(
@@ -199,8 +210,14 @@ class PluginLifecycle:
             self._emit_event(
                 EventType.PLUGIN_LOADED,
                 name,
-                provides=[k.name if hasattr(k, "name") else str(k) for k in getattr(entry.plugin, "provides", [])],
-                requires=[k.name if hasattr(k, "name") else str(k) for k in getattr(entry.plugin, "requires", [])],
+                provides=[
+                    k.name if hasattr(k, "name") else str(k)
+                    for k in getattr(entry.plugin, "provides", [])
+                ],
+                requires=[
+                    k.name if hasattr(k, "name") else str(k)
+                    for k in getattr(entry.plugin, "requires", [])
+                ],
             )
         except Exception as e:
             entry.state = PluginState.ERROR
@@ -286,7 +303,8 @@ class PluginLifecycle:
             if other_name == name:
                 continue
             req_names = {
-                k.name if hasattr(k, "name") else str(k) for k in other_entry.plugin.requires
+                k.name if hasattr(k, "name") else str(k)
+                for k in other_entry.plugin.requires
             }
             if req_names & provided_key_names:
                 dependents.append(other_name)
@@ -324,25 +342,34 @@ class PluginLifecycle:
             active_dependents = [
                 dep
                 for dep in dependents
-                if self._entries.get(dep) and self._entries[dep].state == PluginState.ENABLED
+                if self._entries.get(dep)
+                and self._entries[dep].state == PluginState.ENABLED
             ]
             if active_dependents:
                 try:
                     all_active = [
-                        n for n, e in self._entries.items() if e.state == PluginState.ENABLED
+                        n
+                        for n, e in self._entries.items()
+                        if e.state == PluginState.ENABLED
                     ]
                     graph = self.build_dependency_graph(all_active)
                     trans_deps = graph.transitive_dependents(name)
                     active_trans_deps = [
-                        dep for dep in trans_deps
-                        if self._entries.get(dep) and self._entries[dep].state == PluginState.ENABLED
+                        dep
+                        for dep in trans_deps
+                        if self._entries.get(dep)
+                        and self._entries[dep].state == PluginState.ENABLED
                     ]
                     target_deps = active_trans_deps or active_dependents
                     order = self.resolve_enable_order(target_deps)
                     for dep in reversed(order):
                         await self.disable(dep, cascade=False)
                 except Exception as e:
-                    logger.warning("Error draining dependents during disable", plugin=name, error=str(e))
+                    logger.warning(
+                        "Error draining dependents during disable",
+                        plugin=name,
+                        error=str(e),
+                    )
 
         self._transition(name, PluginState.DISABLED)
         self._context.set_plugin_services_active(name, False)
@@ -353,7 +380,9 @@ class PluginLifecycle:
             self._emit_event(EventType.PLUGIN_DISABLED, name)
         except Exception as e:
             logger.warning("Plugin disable had errors", plugin=name, error=str(e))
-            self._emit_event(EventType.PLUGIN_ERROR, name, error=str(e), stage="disable")
+            self._emit_event(
+                EventType.PLUGIN_ERROR, name, error=str(e), stage="disable"
+            )
 
     async def unload(self, name: str) -> None:
         """Unload a plugin and revoke all its services with guarded deactivation (Theorem 63).
@@ -374,25 +403,34 @@ class PluginLifecycle:
             active_dependents = [
                 dep
                 for dep in dependents
-                if self._entries.get(dep) and self._entries[dep].state == PluginState.ENABLED
+                if self._entries.get(dep)
+                and self._entries[dep].state == PluginState.ENABLED
             ]
             if active_dependents:
                 try:
                     all_active = [
-                        n for n, e in self._entries.items() if e.state == PluginState.ENABLED
+                        n
+                        for n, e in self._entries.items()
+                        if e.state == PluginState.ENABLED
                     ]
                     graph = self.build_dependency_graph(all_active)
                     trans_deps = graph.transitive_dependents(name)
                     active_trans_deps = [
-                        dep for dep in trans_deps
-                        if self._entries.get(dep) and self._entries[dep].state == PluginState.ENABLED
+                        dep
+                        for dep in trans_deps
+                        if self._entries.get(dep)
+                        and self._entries[dep].state == PluginState.ENABLED
                     ]
                     target_deps = active_trans_deps or active_dependents
                     order = self.resolve_enable_order(target_deps)
                     for dep in reversed(order):
                         await self.disable(dep, cascade=False)
                 except Exception as e:
-                    logger.warning("Error draining dependents during unload", plugin=name, error=str(e))
+                    logger.warning(
+                        "Error draining dependents during unload",
+                        plugin=name,
+                        error=str(e),
+                    )
 
         self._transition(name, PluginState.UNLOADED)
         from harness.events.types import EventType
@@ -411,8 +449,9 @@ class PluginLifecycle:
                 services=revoked,
             )
 
-        self._emit_event(EventType.PLUGIN_UNLOADED, name, revoked_services=revoked or [])
-
+        self._emit_event(
+            EventType.PLUGIN_UNLOADED, name, revoked_services=revoked or []
+        )
 
     async def ensure_enabled(self, name: str) -> bool:
         """Advance a plugin from its current state directly to ENABLED.
@@ -504,13 +543,16 @@ class PluginLifecycle:
 
     # --- Batch operations ---
 
-    def build_dependency_graph(self, names: list[str] | None = None) -> DependencyGraph[str]:
+    def build_dependency_graph(
+        self, names: list[str] | None = None
+    ) -> DependencyGraph[str]:
         """Construct the DependencyGraph for tracked or specified plugins."""
         if names is None:
             names = [
                 n
                 for n, e in self._entries.items()
-                if e.state in (PluginState.VALIDATED, PluginState.LOADED, PluginState.DISABLED)
+                if e.state
+                in (PluginState.VALIDATED, PluginState.LOADED, PluginState.DISABLED)
             ]
 
         names_key = tuple(sorted(names))
@@ -609,12 +651,20 @@ class PluginLifecycle:
                     await self.load(name)
                     await self.validate(name)
                 except Exception as e:
-                    logger.warning("Failed loading plugin before enable_all", plugin=name, error=str(e))
+                    logger.warning(
+                        "Failed loading plugin before enable_all",
+                        plugin=name,
+                        error=str(e),
+                    )
             elif entry.state == PluginState.LOADED:
                 try:
                     await self.validate(name)
                 except Exception as e:
-                    logger.warning("Failed validating plugin before enable_all", plugin=name, error=str(e))
+                    logger.warning(
+                        "Failed validating plugin before enable_all",
+                        plugin=name,
+                        error=str(e),
+                    )
 
         to_enable = [
             n
@@ -624,9 +674,8 @@ class PluginLifecycle:
             and (not skip_user_plugins or not n.startswith("plugin."))
         ]
 
-
         try:
-            order = self.resolve_enable_order(to_enable)
+            waves = self.resolve_enable_waves(to_enable)
         except CyclicDependencyError:
             logger.error("Cannot enable plugins: cyclic dependencies detected")
             raise
@@ -634,22 +683,49 @@ class PluginLifecycle:
         results: dict[str, bool] = {
             n: True for n, e in self._entries.items() if e.state == PluginState.ENABLED
         }
-        for name in order:
-            try:
-                await self.enable(name)
-                results[name] = True
-            except Exception as e:
-                results[name] = False
-                logger.error("Failed to enable plugin", plugin=name, error=str(e))
+        failed_names: set[str] = set()
+        graph = self.build_dependency_graph(to_enable)
+
+        for wave in waves:
+            runnable: list[str] = []
+            for name in wave:
+                # Check if name depends directly or transitively on any already-failed plugin
+                if any(
+                    dep in failed_names for dep in graph.transitive_dependencies(name)
+                ):
+                    failed_names.add(name)
+                    results[name] = False
+                    entry = self._entries.get(name)
+                    if entry and entry.state != PluginState.ERROR:
+                        entry.state = PluginState.ERROR
+                        entry.error = "Prerequisite plugin failure in dependencies"
+                else:
+                    runnable.append(name)
+
+            if not runnable:
+                continue
+
+            wave_results = await asyncio.gather(
+                *[self.enable(n) for n in runnable],
+                return_exceptions=True,
+            )
+
+            for name, res in zip(runnable, wave_results):
+                if isinstance(res, Exception):
+                    failed_names.add(name)
+                    results[name] = False
+                    logger.error(
+                        "Failed to enable plugin in wave", plugin=name, error=str(res)
+                    )
+                else:
+                    results[name] = True
 
         return results
 
     async def disable_all(self) -> dict[str, bool]:
         """Disable all enabled plugins in reverse dependency order."""
         enabled = [
-            n
-            for n, e in self._entries.items()
-            if e.state == PluginState.ENABLED
+            n for n, e in self._entries.items() if e.state == PluginState.ENABLED
         ]
 
         try:
@@ -674,7 +750,11 @@ class PluginLifecycle:
 
         results: dict[str, bool] = {}
         for name, entry in list(self._entries.items()):
-            if entry.state in (PluginState.DISABLED, PluginState.LOADED, PluginState.VALIDATED):
+            if entry.state in (
+                PluginState.DISABLED,
+                PluginState.LOADED,
+                PluginState.VALIDATED,
+            ):
                 try:
                     await self.unload(name)
                     results[name] = True

@@ -15,14 +15,70 @@ import sys
 from typing import Any
 
 
-def _execute_func(func: Any, params: dict[str, Any]) -> Any:
+async def _execute_func(func: Any, params: dict[str, Any]) -> Any:
     """Execute function supporting both synchronous and asynchronous implementations."""
     if inspect.iscoroutinefunction(func):
-        return asyncio.run(func(**params))
-    res = func(**params)
+        return await func(**params)
+    res = await asyncio.to_thread(func, **params)
     if inspect.isawaitable(res):
-        return asyncio.run(res)
+        return await res
     return res
+
+
+async def async_main(module: Any) -> None:
+    """Asynchronous JSON-RPC server loop over stdin/stdout with atomic locking."""
+    stdout_lock = asyncio.Lock()
+
+    async def handle_request(line_str: str) -> None:
+        try:
+            request = json.loads(line_str)
+            method = request.get("method", "")
+            params = request.get("params") or {}
+            req_id = request.get("id", 0)
+
+            func = getattr(module, method, None)
+            if func is None:
+                response = {
+                    "jsonrpc": "2.0",
+                    "id": req_id,
+                    "error": f"Method not found: {method}",
+                }
+            else:
+                try:
+                    result = await _execute_func(func, params)
+                    response = {"jsonrpc": "2.0", "id": req_id, "result": result}
+                except Exception as e:
+                    response = {"jsonrpc": "2.0", "id": req_id, "error": str(e)}
+
+            payload = json.dumps(response) + "\n"
+            async with stdout_lock:
+                sys.stdout.write(payload)
+                sys.stdout.flush()
+        except Exception as e:
+            err_payload = (
+                json.dumps({"jsonrpc": "2.0", "id": 0, "error": str(e)}) + "\n"
+            )
+            async with stdout_lock:
+                sys.stdout.write(err_payload)
+                sys.stdout.flush()
+
+    tasks: set[asyncio.Task[Any]] = set()
+
+    while True:
+        line = await asyncio.to_thread(sys.stdin.readline)
+        if not line:
+            # EOF reached
+            break
+        line_str = line.strip()
+        if not line_str:
+            continue
+
+        task = asyncio.create_task(handle_request(line_str))
+        tasks.add(task)
+        task.add_done_callback(tasks.discard)
+
+    if tasks:
+        await asyncio.gather(*tasks, return_exceptions=True)
 
 
 def main() -> None:
@@ -57,38 +113,7 @@ def main() -> None:
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
 
-    # JSON-RPC loop over stdin
-    for line in sys.stdin:
-        line_str = line.strip()
-        if not line_str:
-            continue
-        try:
-            request = json.loads(line_str)
-            method = request.get("method", "")
-            params = request.get("params", {})
-            req_id = request.get("id", 0)
-
-            func = getattr(module, method, None)
-            if func is None:
-                response = {
-                    "jsonrpc": "2.0",
-                    "id": req_id,
-                    "error": f"Method not found: {method}",
-                }
-            else:
-                try:
-                    result = _execute_func(func, params)
-                    response = {"jsonrpc": "2.0", "id": req_id, "result": result}
-                except Exception as e:
-                    response = {"jsonrpc": "2.0", "id": req_id, "error": str(e)}
-
-            sys.stdout.write(json.dumps(response) + "\n")
-            sys.stdout.flush()
-        except Exception as e:
-            sys.stdout.write(
-                json.dumps({"jsonrpc": "2.0", "id": 0, "error": str(e)}) + "\n"
-            )
-            sys.stdout.flush()
+    asyncio.run(async_main(module))
 
 
 if __name__ == "__main__":

@@ -124,9 +124,7 @@ class InProcessExecutor(SandboxExecutor):
 
         try:
             if asyncio.iscoroutinefunction(func):
-                result = await asyncio.wait_for(
-                    func(**(params or {})), timeout=timeout
-                )
+                result = await asyncio.wait_for(func(**(params or {})), timeout=timeout)
             else:
                 result = func(**(params or {}))
 
@@ -135,6 +133,68 @@ class InProcessExecutor(SandboxExecutor):
             return {"status": "error", "error": f"Timeout after {timeout}s"}
         except Exception as e:
             return {"status": "error", "error": str(e)}
+
+
+def _get_process_rss_mb(pid: int) -> float | None:
+    """Sample RSS memory usage of a process in megabytes across operating systems."""
+    try:
+        import psutil
+
+        return psutil.Process(pid).memory_info().rss / (1024 * 1024)
+    except Exception:
+        pass
+
+    if sys.platform == "win32":
+        try:
+            import ctypes
+            from ctypes import wintypes
+
+            class _PROCESS_MEMORY_COUNTERS(ctypes.Structure):
+                _fields_ = [
+                    ("cb", wintypes.DWORD),
+                    ("PageFaultCount", wintypes.DWORD),
+                    ("PeakWorkingSetSize", ctypes.c_size_t),
+                    ("WorkingSetSize", ctypes.c_size_t),
+                    ("QuotaPeakPagedPoolUsage", ctypes.c_size_t),
+                    ("QuotaPagedPoolUsage", ctypes.c_size_t),
+                    ("QuotaPeakNonPagedPoolUsage", ctypes.c_size_t),
+                    ("QuotaNonPagedPoolUsage", ctypes.c_size_t),
+                    ("PagefileUsage", ctypes.c_size_t),
+                    ("PeakPagefileUsage", ctypes.c_size_t),
+                ]
+
+            process_query_information = 0x0400
+            process_vm_read = 0x0010
+            handle = ctypes.windll.kernel32.OpenProcess(
+                process_query_information | process_vm_read, False, pid
+            )
+            if not handle:
+                return None
+            try:
+                counters = _PROCESS_MEMORY_COUNTERS()
+                counters.cb = ctypes.sizeof(_PROCESS_MEMORY_COUNTERS)
+                success = ctypes.windll.psapi.GetProcessMemoryInfo(
+                    handle, ctypes.byref(counters), counters.cb
+                )
+                if success:
+                    return counters.WorkingSetSize / (1024 * 1024)
+            finally:
+                ctypes.windll.kernel32.CloseHandle(handle)
+        except Exception:
+            return None
+    elif sys.platform.startswith("linux"):
+        try:
+            with open(f"/proc/{pid}/statm", "r") as f:
+                parts = f.read().split()
+                if len(parts) >= 2:
+                    pages = int(parts[1])
+                    import resource
+
+                    page_size = resource.getpagesize()
+                    return (pages * page_size) / (1024 * 1024)
+        except Exception:
+            return None
+    return None
 
 
 class SubprocessExecutor(SandboxExecutor):
@@ -146,11 +206,17 @@ class SubprocessExecutor(SandboxExecutor):
         *,
         python: str | None = None,
         env: dict[str, str] | None = None,
+        memory_limit_mb: float = 512.0,
+        watchdog_interval: float = 2.0,
     ) -> None:
         self._script_path = script_path
         self._python = python or sys.executable
         self._env = env
+        self._memory_limit_mb = memory_limit_mb
+        self._watchdog_interval = watchdog_interval
         self._transport: StdioJsonRpcTransport | None = None
+        self._watchdog_task: asyncio.Task[None] | None = None
+        self._memory_exceeded: bool = False
 
     @property
     def name(self) -> str:
@@ -160,6 +226,32 @@ class SubprocessExecutor(SandboxExecutor):
     def is_running(self) -> bool:
         return self._transport is not None and self._transport.is_running
 
+    async def _memory_watchdog(self) -> None:
+        """Background watchdog sampling RSS memory and stopping child if limit exceeded."""
+        try:
+            while self.is_running and self._transport:
+                pid = getattr(self._transport, "pid", None)
+                if pid:
+                    rss = _get_process_rss_mb(pid)
+                    if rss is not None and rss > self._memory_limit_mb:
+                        logger.error(
+                            "Subprocess exceeded memory limit; terminating",
+                            script=str(self._script_path),
+                            pid=pid,
+                            rss_mb=rss,
+                            limit_mb=self._memory_limit_mb,
+                        )
+                        self._memory_exceeded = True
+                        if self._transport:
+                            await self._transport.stop()
+                            self._transport = None
+                        break
+                await asyncio.sleep(self._watchdog_interval)
+        except asyncio.CancelledError:
+            pass
+        except Exception as e:
+            logger.warning("Memory watchdog error", error=str(e))
+
     async def start(self) -> None:
         runner_path = Path(__file__).parent / "bridge_runner.py"
         self._transport = StdioJsonRpcTransport(
@@ -167,16 +259,29 @@ class SubprocessExecutor(SandboxExecutor):
             [str(runner_path), str(self._script_path)],
             env=self._env,
         )
+        self._memory_exceeded = False
         await self._transport.start()
+
+        if self._memory_limit_mb is not None and self._memory_limit_mb > 0:
+            self._watchdog_task = asyncio.create_task(self._memory_watchdog())
 
         logger.info(
             "Subprocess sandbox started",
             script=str(self._script_path),
             pid=self._transport.pid,
+            memory_limit_mb=self._memory_limit_mb,
         )
 
     async def stop(self) -> None:
         """Terminate the subprocess."""
+        if self._watchdog_task and not self._watchdog_task.done():
+            self._watchdog_task.cancel()
+            try:
+                await self._watchdog_task
+            except asyncio.CancelledError:
+                pass
+            self._watchdog_task = None
+
         if self._transport:
             await self._transport.stop()
             self._transport = None
@@ -191,15 +296,31 @@ class SubprocessExecutor(SandboxExecutor):
         *,
         timeout: float = 30.0,
     ) -> dict[str, Any]:
+        if self._memory_exceeded:
+            raise SandboxError(
+                "subprocess",
+                f"Process exceeded memory limit of {self._memory_limit_mb:.0f} MB",
+            )
+
         if not self.is_running or self._transport is None:
             return {"status": "error", "error": "Subprocess not running"}
 
         try:
             resp = await self._transport.call(method, params, timeout=timeout)
+            if self._memory_exceeded:
+                raise SandboxError(
+                    "subprocess",
+                    f"Process exceeded memory limit of {self._memory_limit_mb:.0f} MB",
+                )
             if "error" in resp:
                 return {"status": "error", "error": resp["error"]}
             return {"status": "ok", "result": resp.get("result")}
         except Exception as e:
+            if self._memory_exceeded:
+                raise SandboxError(
+                    "subprocess",
+                    f"Process exceeded memory limit of {self._memory_limit_mb:.0f} MB",
+                )
             return {"status": "error", "error": str(e)}
 
 
@@ -307,12 +428,20 @@ class VenvExecutor(SandboxExecutor):
                         proc.stdin.close()
                     except Exception:
                         pass
-                if proc.stdout and hasattr(proc.stdout, "_transport") and proc.stdout._transport is not None:
+                if (
+                    proc.stdout
+                    and hasattr(proc.stdout, "_transport")
+                    and proc.stdout._transport is not None
+                ):
                     try:
                         proc.stdout._transport.close()
                     except Exception:
                         pass
-                if proc.stderr and hasattr(proc.stderr, "_transport") and proc.stderr._transport is not None:
+                if (
+                    proc.stderr
+                    and hasattr(proc.stderr, "_transport")
+                    and proc.stderr._transport is not None
+                ):
                     try:
                         proc.stderr._transport.close()
                     except Exception:
@@ -405,11 +534,15 @@ class ContainerExecutor(SandboxExecutor):
         from harness.plugins.transport import StdioJsonRpcTransport
 
         if not self._runtime_binary:
-            raise SandboxError("docker", "Container runtime (docker/podman) not found in system PATH")
+            raise SandboxError(
+                "docker", "Container runtime (docker/podman) not found in system PATH"
+            )
 
         entrypoint = self._find_entrypoint()
         if not entrypoint:
-            raise SandboxError("docker", "No Python entrypoint found for container sandbox")
+            raise SandboxError(
+                "docker", "No Python entrypoint found for container sandbox"
+            )
 
         try:
             ep_rel = entrypoint.relative_to(self._plugin_dir)
@@ -418,11 +551,21 @@ class ContainerExecutor(SandboxExecutor):
 
         self._container_name = f"harness_plugin_{uuid.uuid4().hex[:8]}"
 
-        image = getattr(self._config, "image", "python:3.11-slim") if self._config else "python:3.11-slim"
-        memory = getattr(self._config, "memory_limit", "256m") if self._config else "256m"
-        cpu_limit = str(getattr(self._config, "cpu_limit", 1.0)) if self._config else "1.0"
+        image = (
+            getattr(self._config, "image", "python:3.11-slim")
+            if self._config
+            else "python:3.11-slim"
+        )
+        memory = (
+            getattr(self._config, "memory_limit", "256m") if self._config else "256m"
+        )
+        cpu_limit = (
+            str(getattr(self._config, "cpu_limit", 1.0)) if self._config else "1.0"
+        )
         network = getattr(self._config, "network", "none") if self._config else "none"
-        read_only = getattr(self._config, "read_only_root", True) if self._config else True
+        read_only = (
+            getattr(self._config, "read_only_root", True) if self._config else True
+        )
 
         wrapper_code = textwrap.dedent(f"""\
             import sys
@@ -576,7 +719,11 @@ class SandboxExecutorFactory:
 
         root_path = Path(root).resolve()
         entrypoint = cls.find_entrypoint(manifest, root_path)
-        isolation = force_isolation if force_isolation is not None else getattr(manifest, "isolation", IsolationMode.SUBPROCESS)
+        isolation = (
+            force_isolation
+            if force_isolation is not None
+            else getattr(manifest, "isolation", IsolationMode.SUBPROCESS)
+        )
         trusted = getattr(manifest, "trusted", False)
         deps = getattr(manifest, "dependencies", []) or []
         name = getattr(manifest, "name", root_path.name)
@@ -586,7 +733,9 @@ class SandboxExecutorFactory:
             if trusted and entrypoint and entrypoint.exists():
                 try:
                     module_name = f"sandboxed_inproc_{name.replace('.', '_')}"
-                    spec = importlib.util.spec_from_file_location(module_name, entrypoint)
+                    spec = importlib.util.spec_from_file_location(
+                        module_name, entrypoint
+                    )
                     if spec and spec.loader:
                         mod = importlib.util.module_from_spec(spec)
                         spec.loader.exec_module(mod)
@@ -626,8 +775,20 @@ class SandboxExecutorFactory:
                 dependencies=deps,
             )
 
+        mem_limit = 512.0
+        if container_cfg and getattr(container_cfg, "memory_limit", None):
+            try:
+                raw_mem = str(container_cfg.memory_limit).lower()
+                if raw_mem.endswith(("m", "mb")):
+                    mem_limit = float(raw_mem.rstrip("mb"))
+                elif raw_mem.endswith(("g", "gb")):
+                    mem_limit = float(raw_mem.rstrip("gb")) * 1024
+                else:
+                    mem_limit = float(raw_mem)
+            except Exception:
+                pass
+
         if entrypoint and entrypoint.exists():
-            return SubprocessExecutor(entrypoint)
+            return SubprocessExecutor(entrypoint, memory_limit_mb=mem_limit)
 
         return None
-
