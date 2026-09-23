@@ -627,6 +627,7 @@ class PluginLifecycle:
         *,
         trusted_only: bool = False,
         skip_user_plugins: bool = False,
+        enable_timeout: float = 30.0,
     ) -> dict[str, bool]:
         """Enable all discovered and validated plugins in topological dependency order.
 
@@ -636,6 +637,7 @@ class PluginLifecycle:
         Args:
             trusted_only: If True, only enables trusted/in-process plugins.
             skip_user_plugins: If True, skips external/user plugins prefixed with 'plugin.'.
+            enable_timeout: Maximum timeout in seconds for enabling each plugin in a wave.
 
         Returns:
             Dict mapping plugin names to success status.
@@ -706,7 +708,10 @@ class PluginLifecycle:
                 continue
 
             wave_results = await asyncio.gather(
-                *[self.enable(n) for n in runnable],
+                *[
+                    asyncio.wait_for(self.enable(n), timeout=enable_timeout)
+                    for n in runnable
+                ],
                 return_exceptions=True,
             )
 
@@ -714,6 +719,11 @@ class PluginLifecycle:
                 if isinstance(res, Exception):
                     failed_names.add(name)
                     results[name] = False
+                    entry = self._entries.get(name)
+                    if entry and entry.state != PluginState.ERROR:
+                        entry.state = PluginState.ERROR
+                        entry.error = str(res) or f"Timed out after {enable_timeout}s"
+                    self._context.set_plugin_services_active(name, False)
                     logger.error(
                         "Failed to enable plugin in wave", plugin=name, error=str(res)
                     )

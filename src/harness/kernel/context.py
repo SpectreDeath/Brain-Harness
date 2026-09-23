@@ -98,7 +98,9 @@ class ServiceContext:
     ) -> None:
         self._entries: dict[str, ServiceEntry] = {}
         self._parent = parent
-        self._event_bus: Any | None = event_bus or (parent._event_bus if parent else None)
+        self._event_bus: Any | None = event_bus or (
+            parent._event_bus if parent else None
+        )
         # Track which plugin provided which services (for automatic revocation)
         self._plugin_services: dict[str, list[str]] = {}
         # Accumulator φ: LIFO stack of inverse operations (Revertible Effects, Definition 2)
@@ -183,12 +185,16 @@ class ServiceContext:
             yield tx_ctx
             with self._mutation_lock:
                 # Record pre-images of existing entries that will be overwritten
-                prior_entries = {k: self._entries[k] for k in tx_ctx._entries if k in self._entries}
+                prior_entries = {
+                    k: self._entries[k] for k in tx_ctx._entries if k in self._entries
+                }
                 if prior_entries:
+
                     def _restore_priors() -> None:
                         with self._mutation_lock:
                             for k, prior in prior_entries.items():
                                 self._entries[k] = prior
+
                     self._dispose_stack.append(_restore_priors)
 
                 # Commit: merge transaction entries, services, and effects into parent context
@@ -276,7 +282,9 @@ class ServiceContext:
 
         return self.effect(_forward)
 
-    def _emit_event(self, event_type: Any, source: str, payload: dict[str, Any]) -> None:
+    def _emit_event(
+        self, event_type: Any, source: str, payload: dict[str, Any]
+    ) -> None:
         """Emit an event onto the attached event bus if available."""
         if self._event_bus is not None:
             from harness.events.types import HarnessEvent
@@ -318,7 +326,9 @@ class ServiceContext:
             if realm_key in self._entries and not allow_override:
                 raise DuplicateServiceError(key)
 
-            entry = ServiceEntry(key=key, instance=instance, provider_plugin=provider, is_active=True)
+            entry = ServiceEntry(
+                key=key, instance=instance, provider_plugin=provider, is_active=True
+            )
             self._entries[realm_key] = entry
 
             # Track for automatic revocation
@@ -330,13 +340,23 @@ class ServiceContext:
                 with self._mutation_lock:
                     if self._entries.get(realm_key) is entry:
                         self._entries.pop(realm_key, None)
-                    if self._parent is not None and self._parent._entries.get(realm_key) is entry:
+                    if (
+                        self._parent is not None
+                        and self._parent._entries.get(realm_key) is entry
+                    ):
                         self._parent._entries.pop(realm_key, None)
 
                     if provider:
-                        if provider in self._plugin_services and realm_key in self._plugin_services[provider]:
+                        if (
+                            provider in self._plugin_services
+                            and realm_key in self._plugin_services[provider]
+                        ):
                             self._plugin_services[provider].remove(realm_key)
-                        if self._parent is not None and provider in self._parent._plugin_services and realm_key in self._parent._plugin_services[provider]:
+                        if (
+                            self._parent is not None
+                            and provider in self._parent._plugin_services
+                            and realm_key in self._parent._plugin_services[provider]
+                        ):
                             self._parent._plugin_services[provider].remove(realm_key)
 
                 from harness.events.types import EventType
@@ -451,7 +471,10 @@ class ServiceContext:
                 )
                 from harness.events.types import EventType
 
-                payload = {"service": key.name, "provider": entry.provider_plugin or "core"}
+                payload = {
+                    "service": key.name,
+                    "provider": entry.provider_plugin or "core",
+                }
                 if realm_key != key.name:
                     payload["realm"] = realm_key
 
@@ -479,13 +502,20 @@ class ServiceContext:
         """
         old_provider = None
         with self._mutation_lock:
-            old_entry = self._entries.get(key.name)
+            realm_key = self._resolve_realm(key.name)
+            old_entry = self._entries.get(realm_key) or self._entries.get(key.name)
             if old_entry:
                 old_provider = old_entry.provider_plugin
 
-            self.provide(
-                key, new_instance, provider=provider, allow_override=True
-            )
+            # Rule 54: Purge stale inverse closures for this realm_key before
+            # hot_swap appends a new one, preventing orphaned dispose_stack growth.
+            self._dispose_stack = [
+                inv
+                for inv in self._dispose_stack
+                if getattr(inv, "_realm_key", None) not in (realm_key, key.name)
+            ]
+
+        self.provide(key, new_instance, provider=provider, allow_override=True)
 
         logger.info(
             "Service hot-swapped",
@@ -499,7 +529,11 @@ class ServiceContext:
         self._emit_event(
             EventType.SERVICE_HOT_SWAPPED,
             provider or "core",
-            {"service": key.name, "old_provider": old_provider or "core", "new_provider": provider or "core"},
+            {
+                "service": key.name,
+                "old_provider": old_provider or "core",
+                "new_provider": provider or "core",
+            },
         )
 
     def revoke_all_from(self, provider: str) -> list[str]:
@@ -559,10 +593,7 @@ class ServiceContext:
         Returns:
             Dict mapping service key names to provider plugin names.
         """
-        return {
-            name: entry.provider_plugin
-            for name, entry in self._entries.items()
-        }
+        return {name: entry.provider_plugin for name, entry in self._entries.items()}
 
     def __contains__(self, key: ServiceKey[Any]) -> bool:
         return self.has(key)
@@ -623,4 +654,3 @@ class ScopedServiceContext(ServiceContext):
 
     def __repr__(self) -> str:
         return f"<ScopedServiceContext plugin={self.plugin_name!r} keys={len(self._provided_keys)}>"
-

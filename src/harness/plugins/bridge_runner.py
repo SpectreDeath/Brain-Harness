@@ -103,6 +103,20 @@ def main() -> None:
     parser.add_argument("script_path", help="Path to plugin entrypoint script")
     args = parser.parse_args()
 
+    from pathlib import Path
+
+    runner_file = Path(__file__).resolve()
+    if len(runner_file.parents) >= 3:
+        src_dir = str(runner_file.parents[2])
+        if src_dir not in sys.path:
+            sys.path.insert(0, src_dir)
+        workspace_root = str(runner_file.parents[3])
+        if workspace_root not in sys.path:
+            sys.path.insert(0, workspace_root)
+    script_dir = str(Path(args.script_path).resolve().parent)
+    if script_dir not in sys.path:
+        sys.path.insert(0, script_dir)
+
     # Load the plugin module
     spec = importlib.util.spec_from_file_location("plugin", args.script_path)
     if spec is None or spec.loader is None:
@@ -111,6 +125,7 @@ def main() -> None:
         sys.exit(1)
 
     module = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = module
     spec.loader.exec_module(module)
 
     asyncio.run(async_main(module))

@@ -14,9 +14,11 @@ import asyncio
 import time
 from pathlib import Path
 from typing import Any
+from unittest.mock import MagicMock
 
 import pytest
 
+from harness.agent.react import StepExecutionEngine
 from harness.kernel.context import ServiceContext, ServiceKey
 from harness.kernel.lifecycle import PluginLifecycle, PluginState
 from harness.plugins.base import HarnessPlugin
@@ -281,3 +283,89 @@ def allocate() -> str:
         route_res = registry.route_intent("perform alpha task and beta task", top_k=2)
         assert len(route_res["matches"]) >= 2
         assert route_res["recommended_chain"] == []
+
+    def test_extract_action_xml_tool_call(self) -> None:
+        """Verify Rule 21: extract_action parses XML <tool_call> tags."""
+        engine = StepExecutionEngine(llm=MagicMock(), tools=MagicMock())
+        thought = (
+            "I need to read the file first.\n"
+            '<tool_call>{"action": "read_file", "input": {"path": "src/main.py"}}</tool_call>\n'
+            "Waiting for result."
+        )
+        action, action_input = engine.extract_action(thought)
+        assert action == "read_file"
+        assert action_input == {"path": "src/main.py"}
+
+    def test_extract_action_json_auto_repair(self) -> None:
+        """Verify Rule 21: extract_action auto-repairs trailing commas and unclosed braces."""
+        engine = StepExecutionEngine(llm=MagicMock(), tools=MagicMock())
+        # Trailing comma in JSON object
+        thought_comma = '{"action": "write_file", "input": {"data": "hello",}}'
+        action, action_input = engine.extract_action(thought_comma)
+        assert action == "write_file"
+        assert action_input == {"data": "hello"}
+
+        # Unclosed brace
+        thought_unclosed = '{"action": "exec_cmd", "input": {"cmd": "ls"'
+        action2, action_input2 = engine.extract_action(thought_unclosed)
+        assert action2 == "exec_cmd"
+        assert action_input2 == {"cmd": "ls"}
+
+    def test_hot_swap_dispose_stack_no_accumulation(self) -> None:
+        """Verify Rule 54: hot_swap purges stale inverse closures from _dispose_stack."""
+        ctx = ServiceContext()
+        ctx.provide(KEY_A, "v1", provider="plugin1")
+
+        # Initial provide creates 1 inverse for KEY_A
+        inverses_a = [
+            inv
+            for inv in ctx._dispose_stack
+            if getattr(inv, "_realm_key", None) == KEY_A.name
+        ]
+        assert len(inverses_a) == 1
+
+        # Hot-swap 5 times consecutively
+        for i in range(5):
+            ctx.hot_swap(KEY_A, f"v_swap_{i}", provider=f"plugin_swap_{i}")
+
+        # Rule 54 Invariant: Dispose stack must not leak/accumulate orphaned inverses
+        inverses_a_after = [
+            inv
+            for inv in ctx._dispose_stack
+            if getattr(inv, "_realm_key", None) == KEY_A.name
+        ]
+        assert len(inverses_a_after) == 1
+        assert ctx.require(KEY_A) == "v_swap_4"
+
+    @pytest.mark.asyncio
+    async def test_enable_all_wave_timeout_propagates(self) -> None:
+        """Verify per-wave timeout bounds hanging plugin on_enable without blocking startup."""
+        ctx = ServiceContext()
+        lc = PluginLifecycle(ctx)
+
+        # Hanging plugin that sleeps for 10 seconds
+        hanging = DelayPlugin("hanging_plugin", delay=10.0, provides=[KEY_A])
+        # Fast plugin in the same wave
+        fast = DelayPlugin("fast_plugin", delay=0.01, provides=[KEY_B])
+
+        lc.discover(hanging)
+        lc.discover(fast)
+
+        start = time.perf_counter()
+        # Enable with 0.1s timeout
+        results = await lc.enable_all(enable_timeout=0.1)
+        elapsed = time.perf_counter() - start
+
+        # Must finish well under the 10s hang time (e.g. < 1.0s)
+        assert elapsed < 1.0
+        assert results["hanging_plugin"] is False
+        assert results["fast_plugin"] is True
+
+        hanging_entry = lc._entries["hanging_plugin"]
+        assert hanging_entry.state == PluginState.ERROR
+        assert "Timed out" in (hanging_entry.error or "") or "Timeout" in (
+            hanging_entry.error or ""
+        )
+
+        fast_entry = lc._entries["fast_plugin"]
+        assert fast_entry.state == PluginState.ENABLED

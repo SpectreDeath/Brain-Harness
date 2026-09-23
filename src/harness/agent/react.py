@@ -153,25 +153,76 @@ class StepExecutionEngine:
         return messages
 
     def extract_action(self, thought: str) -> tuple[str | None, dict[str, Any]]:
-        """Extract action name and input parameters from thought text."""
-        # 1. Check markdown fenced JSON blocks
-        if "```json" in thought:
-            try:
-                json_str = thought.split("```json", 1)[1].split("```", 1)[0].strip()
-                parsed = json.loads(json_str)
-                if isinstance(parsed, dict) and "action" in parsed:
-                    return parsed["action"], parsed.get("input", {})
-            except Exception:
-                pass
+        """Extract action name and input parameters from thought text.
 
-        # 2. Check direct raw JSON object
-        if thought.strip().startswith("{") and thought.strip().endswith("}"):
+        Applies a four-pass parser (JSON fences -> XML tool_call -> raw JSON -> auto-repair)
+        conforming to Rule 21 in-flight stream normalization invariant.
+        """
+        import ast
+        import re
+
+        def _parse_json_safe(s: str) -> dict[str, Any] | None:
+            """Attempt strict JSON parse, then conservative auto-repair fallback."""
             try:
-                parsed = json.loads(thought.strip())
-                if isinstance(parsed, dict) and "action" in parsed:
-                    return parsed["action"], parsed.get("input", {})
+                parsed = json.loads(s)
+                if isinstance(parsed, dict):
+                    return parsed
             except Exception:
                 pass
+            # Auto-repair: strip trailing commas before closing braces/brackets
+            repaired = re.sub(r",\s*([}\]])", r"\1", s)
+            # Auto-repair: close any unclosed braces
+            open_count = repaired.count("{") - repaired.count("}")
+            if open_count > 0:
+                repaired += "}" * open_count
+            try:
+                parsed = json.loads(repaired)
+                if isinstance(parsed, dict):
+                    return parsed
+            except Exception:
+                pass
+            try:
+                obj = ast.literal_eval(repaired)
+                return obj if isinstance(obj, dict) else None
+            except Exception:
+                return None
+
+        def _extract_from_dict(d: dict[str, Any]) -> tuple[str | None, dict[str, Any]]:
+            if "action" in d:
+                inp = d.get("input") or {}
+                return d["action"], inp if isinstance(inp, dict) else {}
+            return None, {}
+
+        # Pass 1: Markdown JSON fence
+        if "```json" in thought:
+            raw = thought.split("```json", 1)[1].split("```", 1)[0].strip()
+            parsed = _parse_json_safe(raw)
+            if parsed:
+                res = _extract_from_dict(parsed)
+                if res[0] is not None:
+                    return res
+
+        # Pass 2: XML <tool_call> tag (Rule 21)
+        xml_match = re.search(r"<tool_call>(.*?)</tool_call>", thought, re.DOTALL)
+        if xml_match:
+            parsed = _parse_json_safe(xml_match.group(1).strip())
+            if parsed:
+                res = _extract_from_dict(parsed)
+                if res[0] is not None:
+                    return res
+
+        # Pass 3: Raw JSON object or outermost {...} block
+        candidate = thought.strip()
+        if not (candidate.startswith("{") and candidate.endswith("}")):
+            brace_match = re.search(r"\{[\s\S]*\}", thought)
+            if brace_match:
+                candidate = brace_match.group(0).strip()
+        if candidate.startswith("{"):
+            parsed = _parse_json_safe(candidate)
+            if parsed:
+                res = _extract_from_dict(parsed)
+                if res[0] is not None:
+                    return res
 
         return None, {}
 
