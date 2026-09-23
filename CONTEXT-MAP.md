@@ -115,10 +115,11 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - `pre_commit_security_guard` — Shift-left SAST analysis, Shannon entropy secret interception, deliberate synthetic smoke tests, and SARIF dual-gate CI defense.
   - `threat_modeler` — STRIDE threat modeling and attack tree formulation.
   - `log_forensics` — Structured log pattern extraction and anomaly hunting.
-  - `network_forensics` — Port security audit and network connectivity verification.
+  - `network_forensics` — Port security audit, TTL hop discovery, tri-state port evaluation, TCP flag deconstruction, cleartext exposure analysis, and 7-layer fault isolation.
   - `trajectory_auditor` — Execution step replay and invariant trajectory verification.
 * **Member Skills**:
   - [`pre-commit-security-guard`](.agents/skills/pre-commit-security-guard/SKILL.md) — Shift security left by intercepting vulnerabilities and secrets before pull requests using Git pre-commit hooks, multi-file DevSkim SAST, Gitleaks, deliberate failure injection, and dual-gate CI enforcement.
+  - [`ethical-hacker-networking`](.agents/skills/ethical-hacker-networking/SKILL.md) — Protocol-level network reconnaissance, packet capture inspection, tri-state port evaluation, TCP flag state machine analysis, and systematic 7-layer fault isolation.
 
 ### 6. [Infrastructure & Cloud Operations](./docs/domains/infra-and-cloud/CONTEXT.md)
 * **Scope**: Container management, Kubernetes manifest validation, Infrastructure-as-Code (IaC), and CI/CD pipelines.

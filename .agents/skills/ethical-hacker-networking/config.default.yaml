@@ -1,0 +1,7 @@
+# Default operational budgets for ethical-hacker-networking skill
+timeout_seconds: 30
+max_hops_analyzed: 30
+max_ports_scanned: 1000
+enforce_tristate_classification: true
+safe_mode: true
+alert_on_cleartext: true

@@ -15,6 +15,7 @@ Commands:
     harness bridge status             Check ecosystem bridges
     harness creator build <name>      Scaffold a new plugin project
 """
+# ruff: noqa: E402
 
 from __future__ import annotations
 
@@ -60,6 +61,7 @@ from harness.commands.harness_architect import architect_group
 from harness.commands.mcp import mcp_group
 from harness.commands.model_router import model_router_group
 from harness.commands.okf import okf_group
+from harness.commands.network_forensics import network_forensics_group
 from harness.commands.plugins import plugin_group
 from harness.commands.pre_commit_security import pre_commit_security_group
 from harness.commands.reflection import knowledge_group, reflect_cli
@@ -161,6 +163,9 @@ main.add_command(gis_group, name="gis")
 main.add_command(gis_group, name="open-source-gis")
 main.add_command(tau_group, name="tau")
 main.add_command(tau_group, name="coding-harness")
+main.add_command(network_forensics_group, name="network-forensics")
+main.add_command(network_forensics_group, name="network")
+main.add_command(network_forensics_group, name="net-diag")
 
 # --- Register Standalone Commands ---
 main.add_command(init_cli, name="init")

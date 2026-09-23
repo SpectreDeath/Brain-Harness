@@ -1,7 +1,7 @@
 {
   "name": "domain.network_forensics",
   "version": "1.0.0",
-  "description": "Network traffic metadata analyzer, TLS cert inspector, and port security auditor",
+  "description": "Network traffic metadata analyzer, TLS cert inspector, tri-state port security auditor, and 7-layer fault isolation engine",
   "entrypoint": "main.py",
   "isolation": "in_process",
   "trusted": true,
@@ -39,6 +39,102 @@
           "type": "object",
           "description": "Certificate dictionary ({'issuer': '...', 'days_to_expiry': 30, 'tls_version': 'TLSv1.3'})",
           "required": true
+        }
+      ]
+    },
+    {
+      "name": "analyze_traceroute_hops",
+      "description": "Parse traceroute output, identify intermediate TTL-decrementing hops, and detect latency anomalies or routing loops",
+      "parameters": [
+        {
+          "name": "raw_output",
+          "type": "string",
+          "description": "Raw text output from traceroute or tracert utility",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "evaluate_port_states",
+      "description": "Classify port scan findings into tri-state reachability: open (SYN/ACK), closed (RST), or filtered (drop/timeout)",
+      "parameters": [
+        {
+          "name": "scan_results",
+          "type": "array",
+          "description": "List of scan observations ({'port': 80, 'response': 'SYN/ACK'})",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "decode_tcp_flags",
+      "description": "Decode hexadecimal TCP flags, evaluate handshake semantics, and detect scan evasion signatures (Null, Xmas, SYN-FIN)",
+      "parameters": [
+        {
+          "name": "flags_hex",
+          "type": "string",
+          "description": "Hexadecimal flag string (e.g. '0x02', '0x29', '0x00')",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "classify_cleartext_exposure",
+      "description": "Evaluate cleartext protocol exposure risk and unencrypted credential vulnerabilities for HTTP, Telnet, FTP, etc.",
+      "parameters": [
+        {
+          "name": "protocol",
+          "type": "string",
+          "description": "Protocol name (e.g. 'HTTP', 'FTP', 'Telnet', 'HTTPS')",
+          "required": true
+        },
+        {
+          "name": "port",
+          "type": "integer",
+          "description": "Port number (e.g. 80, 21, 23, 443)",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "run_7layer_diagnostic_chain",
+      "description": "Execute systematic 7-layer network fault isolation chain from physical to application layer",
+      "parameters": [
+        {
+          "name": "target",
+          "type": "string",
+          "description": "Target hostname or IP address",
+          "required": true
+        },
+        {
+          "name": "port",
+          "type": "integer",
+          "description": "Target service port (defaults to 80)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "calculate_subnet_geometry",
+      "description": "Calculate bitwise network address, broadcast address, and host capacity for an IPv4 CIDR prefix",
+      "parameters": [
+        {
+          "name": "cidr",
+          "type": "string",
+          "description": "CIDR prefix notation (e.g. '192.168.1.0/24')",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "generate_visual_brief",
+      "description": "Generate interactive HTML visual brief with Mermaid diagrams in %TEMP%",
+      "parameters": [
+        {
+          "name": "output_path",
+          "type": "string",
+          "description": "Optional file path destination for the HTML brief",
+          "required": false
         }
       ]
     }

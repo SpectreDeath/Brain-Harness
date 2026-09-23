@@ -1,0 +1,93 @@
+{
+  "id": "ki_20260923_ethical_hacker_networking",
+  "title": "Practical Networking for Ethical Hacking: Protocol Encapsulation, Tri-State Recon, and 7-Layer Fault Isolation",
+  "category": "security_and_forensics",
+  "created_at": "2026-09-23T10:10:00Z",
+  "author": "The Cyber Mentor (synthesized by Brain Harness)",
+  "source_url": "https://www.youtube.com/watch?v=yjAG88KOyqM",
+  "sha256_digest": "b82f8fedb5fe032b8ccb822e88d7a3b5b5414e495ccbad60770cdc63b90e4503",
+  "tags": [
+    "networking",
+    "ethical_hacking",
+    "traceroute",
+    "tcp",
+    "wireshark",
+    "nmap",
+    "subnetting",
+    "ipv6",
+    "firewall",
+    "dns",
+    "fault_isolation",
+    "osi_model"
+  ],
+  "references": [
+    ".agents/skills/ethical-hacker-networking/SKILL.md",
+    ".agents/skills/ethical-hacker-networking/CARD.md",
+    "plugins/security_and_forensics/network_forensics/main.py",
+    "src/harness/services/network_forensics.py"
+  ],
+  "isnad": {
+    "claims": [
+      {
+        "id": "claim_01",
+        "topic": "TTL Hop Discovery",
+        "timestamp_start": 0,
+        "timestamp_end": 610,
+        "assertion": "traceroute identifies intermediate Layer 3 hops by sending probe packets with sequentially incrementing TTL values starting at 1, capturing ICMP Time Exceeded (Type 11, Code 0) responses from routers.",
+        "quote": "Traceroute works by taking advantage of that TTL field... sending packets with a TTL of one, then two, then three... each router decrements the TTL, and when it hits zero, it drops the packet and sends back an ICMP Time Exceeded message.",
+        "evidence_type": "protocol_mechanics",
+        "verified": true
+      },
+      {
+        "id": "claim_02",
+        "topic": "Tri-State Port Recon",
+        "timestamp_start": 5605,
+        "timestamp_end": 6306,
+        "assertion": "Nmap port states are fundamentally tri-state (Open, Closed, Filtered): SYN/ACK indicates open, RST/ACK indicates closed, and packet drop or ICMP Type 3 unreachable indicates filtered by a stateful firewall.",
+        "quote": "In Nmap, a port isn't just open or closed. If we send a SYN and get a SYN-ACK, it's open. If we get a RST, it's closed. But if we send a packet and get nothing back at all, or an ICMP destination unreachable, Nmap marks it as filtered, meaning a firewall is dropping our packets.",
+        "evidence_type": "empirical_recon",
+        "verified": true
+      },
+      {
+        "id": "claim_03",
+        "topic": "Cleartext Credential Exposure",
+        "timestamp_start": 4748,
+        "timestamp_end": 5605,
+        "assertion": "HTTP, Telnet, and FTP transmit credentials in unencrypted plaintext inside the Layer 7 payload, enabling instantaneous credential harvesting from passive PCAP packet captures.",
+        "quote": "With HTTP, everything is in clear text. When you submit a login form over HTTP, your username and password are right there in the packet payload for anyone listening on the network to see. It takes two seconds in Wireshark to find your password.",
+        "evidence_type": "vulnerability_demonstration",
+        "verified": true
+      },
+      {
+        "id": "claim_04",
+        "topic": "TCP 3-Way Handshake & Flag Decoding",
+        "timestamp_start": 3385,
+        "timestamp_end": 4037,
+        "assertion": "TCP connections require SYN, SYN/ACK, and ACK handshake sequence before data transfer; unexpected flags like SYN-FIN or Null scans indicate evasion attempts or scanning probes.",
+        "quote": "Before any data can be transferred over TCP, we have the three-way handshake: SYN, SYN-ACK, ACK. If you see packets with invalid flag combinations like SYN and FIN set at the same time, or no flags at all, that's almost always a port scanner trying to bypass firewall rules.",
+        "evidence_type": "protocol_mechanics",
+        "verified": true
+      },
+      {
+        "id": "claim_05",
+        "topic": "Layer 7 Diagnostic Chain",
+        "timestamp_start": 8014,
+        "timestamp_end": 8965,
+        "assertion": "Network troubleshooting must follow a strict bottom-up or top-down layered approach (Layer 1 link -> Layer 3 IP/gateway -> Layer 4 TCP port -> Layer 7 DNS/service) rather than random probing.",
+        "quote": "When troubleshooting, don't just guess randomly. Use the OSI model. Check physical and link connectivity first, verify IP and default gateway reachability with ping, test the transport layer port with netcat or telnet, and then check DNS resolution and the application layer.",
+        "evidence_type": "troubleshooting_heuristic",
+        "verified": true
+      },
+      {
+        "id": "claim_06",
+        "topic": "Stateful Firewalls vs Stateless ACLs",
+        "timestamp_start": 7122,
+        "timestamp_end": 8014,
+        "assertion": "Stateful firewalls track bidirectional TCP connection states (ESTABLISHED, RELATED) and dynamically allow return traffic, whereas stateless packet filters evaluate rules unidirectionally per packet without session memory.",
+        "quote": "A stateful firewall keeps a state table. It knows that you initiated an outbound connection on port 80 or 443, so it automatically allows the incoming response traffic back in. A stateless firewall doesn't remember anything—it inspects each packet in isolation, requiring explicit inbound and outbound rules.",
+        "evidence_type": "security_architecture",
+        "verified": true
+      }
+    ]
+  }
+}

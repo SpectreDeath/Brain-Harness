@@ -858,4 +858,17 @@ from harness.services.open_source_gis import (
     TopologyAuditReport,
     TopologyValidationError,
 )
+from harness.services.network_forensics import (
+    CleartextExposureData,
+    DiagnosticChainReportData,
+    HopAnalysisData,
+    LayerDiagnosticData,
+    NETWORK_FORENSICS_KEY,
+    NetworkForensicsService,
+    PortEvaluationData,
+    PortReconReportData,
+    SubnetGeometryData,
+    TCPFlagAnalysisData,
+    TracerouteReportData,
+)
 
