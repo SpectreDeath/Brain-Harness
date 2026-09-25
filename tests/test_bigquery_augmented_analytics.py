@@ -2,25 +2,29 @@
 
 from __future__ import annotations
 
-import json
+import sys
 from pathlib import Path
-from typing import Any
 
 import pytest
 from click.testing import CliRunner
 
+_SKILL_SCRIPTS = (
+    Path(__file__).parent.parent
+    / ".agents"
+    / "skills"
+    / "bigquery-augmented-analytics"
+    / "scripts"
+)
+if _SKILL_SCRIPTS.exists() and str(_SKILL_SCRIPTS) not in sys.path:
+    sys.path.insert(0, str(_SKILL_SCRIPTS))
+
 from bigquery_augmented_analytics import (
     AugmentedInvestigationResult,
     BigQueryAugmentedAnalyticsEngine,
-    CausalEffectResult,
-    CausalTrajectoryPoint,
     ChangePointItem,
-    ChangePointsResult,
     DriverSegmentItem,
     ExecutiveDiagnosticNarrative,
-    KeyDriversResult,
     SeasonalityCycle,
-    TemporalProfileResult,
     TemporalTrendPoint,
 )
 
@@ -32,10 +36,6 @@ from harness.services.bigquery_augmented_analytics import (
     BIGQUERY_AUGMENTED_ANALYTICS_SERVICE_KEY,
     AugmentedInvestigationData,
     BigQueryAugmentedAnalyticsService,
-    CausalEffectData,
-    ChangePointsData,
-    KeyDriversData,
-    TemporalProfileData,
 )
 from plugins.data_engineering.bigquery_augmented_analytics.main import (
     BigQueryAugmentedAnalyticsPlugin,
@@ -45,9 +45,10 @@ from plugins.data_engineering.bigquery_augmented_analytics.main import (
     bigquery_detect_change_points,
     bigquery_temporal_profile,
     bigquery_visual_brief,
+)
+from plugins.data_engineering.bigquery_augmented_analytics.main import (
     plugin as bq_plugin_singleton,
 )
-
 
 # ---------------------------------------------------------------------------
 # 1. Slotted & Frozen Dataclass Immutability Tests (Rule 12 & Rule 43)

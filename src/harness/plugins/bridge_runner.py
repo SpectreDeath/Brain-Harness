@@ -103,7 +103,16 @@ def main() -> None:
     if os.environ.get("HARNESS_NO_NETWORK") == "1":
         import socket
 
-        def _blocked_connect(*args: Any, **kwargs: Any) -> None:
+        _orig_connect = socket.socket.connect
+
+        def _blocked_connect(self: Any, *args: Any, **kwargs: Any) -> Any:
+            # Allow loopback connections required by Windows asyncio Proactor self-pipe
+            if args:
+                target = args[0]
+                if isinstance(target, tuple) and len(target) >= 1:
+                    host = str(target[0])
+                    if host in ("127.0.0.1", "localhost", "::1"):
+                        return _orig_connect(self, *args, **kwargs)
             raise PermissionError("Outbound network access disabled for sandboxed plugin")
 
         socket.socket.connect = _blocked_connect  # type: ignore[assignment]

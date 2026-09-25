@@ -5,6 +5,7 @@ from __future__ import annotations
 import ast
 import json
 from pathlib import Path
+
 import pytest
 import yaml
 
@@ -18,7 +19,9 @@ import sys
 if str(SKILL_ROOT / "scripts") not in sys.path:
     sys.path.insert(0, str(SKILL_ROOT / "scripts"))
 
-from engine import (  # noqa: E402
+from topology_hygiene_checker import audit_polygon_rings
+
+from harness.services.open_source_gis import (
     CRSProjectionError,
     EngineSelectionResult,
     FalconViewRestrictedDomainError,
@@ -30,8 +33,6 @@ from engine import (  # noqa: E402
     SpatialWorkloadProfile,
     TopologyAuditReport,
 )
-from spatial_pipeline_validator import validate_steps  # noqa: E402
-from topology_hygiene_checker import audit_polygon_rings  # noqa: E402
 
 
 @pytest.mark.unit

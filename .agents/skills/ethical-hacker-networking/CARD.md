@@ -49,3 +49,14 @@
 | **Visual Brief** | `generate_visual_brief(output_path)` |
 | **Headless CLI** | `harness network [traceroute|scan-ports|decode-flags|subnet]` |
 | **Skill Dispatcher** | `python scripts/network_diagnostics.py --help` |
+
+---
+
+## Mandatory Invariants Checklist
+
+- [ ] **Tri-State Categorization Invariant**: Never conflate dropped packets with closed ports; dropped probes must be classified as `filtered`.
+- [ ] **7-Layer Diagnostic Order**: Always evaluate network faults sequentially from Layer 1 through Layer 7; never skip lower-layer connectivity checks.
+- [ ] **Cleartext Defense Invariant**: Administrative credentials must never traverse unencrypted protocols (HTTP, Telnet) in production networks.
+- [ ] **Slotted Data Structure Standard**: All packet inspection, traceroute hop, and subnet records must use slotted and frozen dataclass schemas.
+- [ ] **Subnet Boundary Integrity**: Subnet geometry calculations must explicitly assert valid host bit allocations and broadcast boundaries.
+

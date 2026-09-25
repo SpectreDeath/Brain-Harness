@@ -28,7 +28,7 @@ workspace_src = script_dir.parent.parent.parent.parent / "src"
 if workspace_src.exists() and str(workspace_src) not in sys.path:
     sys.path.insert(0, str(workspace_src))
 
-from engine import (
+from harness.services.open_source_gis import (
     DefaultOpenSourceGisService,
     TopologyAuditReport,
 )

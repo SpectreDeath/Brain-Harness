@@ -457,8 +457,11 @@ class BuiltinSkillRegistryService(SkillRegistryService):
             chain_res = self.get_chain(s1, s2, fallback_direct=False)
             if chain_res.status == "ok" and chain_res.chain:
                 recommended_chain = chain_res.chain
-            else:
+            elif abs(float(top_matches[0]["confidence"]) - float(top_matches[1]["confidence"])) < 0.02:
+                # Disconnected tie: neither skill dominates and no reachability path exists
                 recommended_chain = []
+            else:
+                recommended_chain = [s1]
         elif top_matches:
             recommended_chain = [top_matches[0]["skill_name"]]
 
