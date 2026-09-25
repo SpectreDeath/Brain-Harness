@@ -1,0 +1,65 @@
+{
+  "id": "ki_self_20260924_01",
+  "title": "Win32 Job Object Kernel Memory Boundaries, CPython Baseline Footprint, and Subprocess Termination Triangulation",
+  "category": "security_and_sandboxing",
+  "created_at": "2026-09-24T19:00:00Z",
+  "author": "Brain Harness Autobiographical Reflection Engine (harness-reflector)",
+  "tags": [
+    "security_and_sandboxing",
+    "subprocess",
+    "win32",
+    "job_object",
+    "memory_limits",
+    "oom",
+    "endogenous_memory",
+    "self_reflection"
+  ],
+  "context": "Enforcing native OS-level memory limits on Windows via Win32 Job Objects (JOBOBJECT_EXTENDED_LIMIT_INFORMATION with JOB_OBJECT_LIMIT_PROCESS_MEMORY) provides hardware-enforced OOM termination without user-space polling overhead. However, page limits below CPython's initialization footprint (~15-20MB) crash the runtime at init_import_site. Furthermore, kernel termination must be triangulated to raise SandboxError rather than returning an unhandled dead-process dictionary.",
+  "distilled_learning": "Subprocess sandboxing under Windows Job Objects must enforce a minimum allocation ceiling (>= 32MB) for standard CPython runtimes. Transports and sandboxes must triangulate unexpected process exits under active Job Objects, checking exit codes or Job Object status to raise synchronous SandboxError rather than returning silent unhandled error dictionaries.",
+  "isnad": {
+    "decision_id": "dec_20260924_self_01",
+    "status": "VERIFIED",
+    "claims": [
+      {
+        "assertion": "Win32 Job Objects apply instant hardware-level page limits on Windows via AssignProcessToJobObject, eliminating user-space polling latency.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "src/harness/plugins/sandbox.py#L256-L334",
+            "verified": true
+          },
+          {
+            "node_type": "git_commit",
+            "uri": "c04d401",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "assertion": "Setting Win32 Job Object memory limits below 20MB crashes CPython on bootstrap at init_import_site before any script or watchdog can execute.",
+        "lineage": [
+          {
+            "node_type": "test_failure_trace",
+            "uri": "tests/test_architectural_modernization.py:test_subprocess_memory_watchdog",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "assertion": "SubprocessExecutor.execute() must detect dead process state when _win32_job_handle is active and synchronously raise SandboxError rather than returning an unhandled dead-process dictionary.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "src/harness/plugins/sandbox.py#L394-L403",
+            "verified": true
+          },
+          {
+            "node_type": "test_contract",
+            "uri": "tests/test_architectural_modernization.py#L190-L208",
+            "verified": true
+          }
+        ]
+      }
+    ]
+  }
+}

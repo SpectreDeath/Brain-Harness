@@ -68,7 +68,6 @@ def _node_to_card_def(node: SkillNode) -> SkillCardDefinition:
 
 def _ensure_indexed(root_path: str = ".") -> SkillKnowledgeGraph:
     """Helper to lazily index workspace skills if graph is empty."""
-    global _GRAPH_INSTANCE
     if not _GRAPH_INSTANCE.nodes:
         index_skill_catalog(root_path=root_path)
     return _GRAPH_INSTANCE
@@ -229,4 +228,11 @@ class SkillGraphPlugin(HarnessPlugin):
         from harness.services.skill_graph import BuiltinSkillRegistryService
         reg = BuiltinSkillRegistryService()
         return reg.link_knowledge_vault(vault_dir)
+
+    def evaluate_chain_feasibility(
+        self, chain: list[str], context: Any = None
+    ) -> tuple[bool, list[str]]:
+        from harness.services.skill_graph import BuiltinSkillRegistryService
+        reg = BuiltinSkillRegistryService()
+        return reg.evaluate_chain_feasibility(chain, context)
 

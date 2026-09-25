@@ -62,6 +62,33 @@ class MyTestPlugin(HarnessPlugin):
         assert len(plugins) == 1
         assert plugins[0].name == "python-test-plugin"
 
+    def test_load_untrusted_python_plugin_blocked(self, tmp_path: Path) -> None:
+        """Verify untrusted external Python modules without manifest are blocked from in-process loading."""
+        plugin_code = '''
+from harness.plugins.base import HarnessPlugin
+
+class UntrustedExternalPlugin(HarnessPlugin):
+    @property
+    def name(self) -> str:
+        return "untrusted-plugin"
+
+    @property
+    def version(self) -> str:
+        return "1.0.0"
+
+    @property
+    def trusted(self) -> bool:
+        return False
+'''
+        plugin_dir = tmp_path / "untrusted-py-plugin"
+        plugin_dir.mkdir()
+        (plugin_dir / "plugin.py").write_text(plugin_code)
+
+        loader = PluginLoader(plugin_dirs=[])
+        # Explicitly loading with trusted=False must block in-process instantiation
+        plugins = loader.load_from_directory(plugin_dir, trusted=False)
+        assert len(plugins) == 0
+
     def test_load_from_zip(self, tmp_path: Path) -> None:
         import zipfile
 
@@ -142,7 +169,11 @@ class TestManifestPlugin:
         assert plugin.root == tmp_path
 
     def test_manifest_card_and_quickstart_format(self) -> None:
-        from harness.plugins.manifest import EntrypointSpec, ParameterSpec, PluginManifest
+        from harness.plugins.manifest import (
+            EntrypointSpec,
+            ParameterSpec,
+            PluginManifest,
+        )
 
         manifest = PluginManifest(
             name="demo-skills",

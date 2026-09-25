@@ -12,6 +12,7 @@ swap isolation strategies without changing calling code.
 from __future__ import annotations
 
 import asyncio
+import os
 import sys
 import textwrap
 from abc import ABC, abstractmethod
@@ -208,15 +209,18 @@ class SubprocessExecutor(SandboxExecutor):
         env: dict[str, str] | None = None,
         memory_limit_mb: float = 512.0,
         watchdog_interval: float = 2.0,
+        network_disabled: bool = False,
     ) -> None:
         self._script_path = script_path
         self._python = python or sys.executable
         self._env = env
         self._memory_limit_mb = memory_limit_mb
         self._watchdog_interval = watchdog_interval
+        self._network_disabled = network_disabled
         self._transport: StdioJsonRpcTransport | None = None
         self._watchdog_task: asyncio.Task[None] | None = None
         self._memory_exceeded: bool = False
+        self._win32_job_handle: Any = None
 
     @property
     def name(self) -> str:
@@ -252,17 +256,98 @@ class SubprocessExecutor(SandboxExecutor):
         except Exception as e:
             logger.warning("Memory watchdog error", error=str(e))
 
+    def _apply_win32_job_limits(self, pid: int, limit_mb: float) -> None:
+        """Assign Windows Job Object with process memory limit for instant kernel OOM enforcement."""
+        if sys.platform != "win32":
+            return
+        try:
+            import ctypes
+            from ctypes import wintypes
+
+            class IO_COUNTERS(ctypes.Structure):
+                _fields_ = [
+                    ("ReadOperationCount", ctypes.c_uint64),
+                    ("WriteOperationCount", ctypes.c_uint64),
+                    ("OtherOperationCount", ctypes.c_uint64),
+                    ("ReadTransferCount", ctypes.c_uint64),
+                    ("WriteTransferCount", ctypes.c_uint64),
+                    ("OtherTransferCount", ctypes.c_uint64),
+                ]
+
+            class JOBOBJECT_BASIC_LIMIT_INFORMATION(ctypes.Structure):
+                _fields_ = [
+                    ("PerProcessUserTimeLimit", ctypes.c_int64),
+                    ("PerJobUserTimeLimit", ctypes.c_int64),
+                    ("LimitFlags", wintypes.DWORD),
+                    ("MinimumWorkingSetSize", ctypes.c_size_t),
+                    ("MaximumWorkingSetSize", ctypes.c_size_t),
+                    ("ActiveProcessLimit", wintypes.DWORD),
+                    ("Affinity", ctypes.c_size_t),
+                    ("PriorityClass", wintypes.DWORD),
+                    ("SchedulingClass", wintypes.DWORD),
+                ]
+
+            class JOBOBJECT_EXTENDED_LIMIT_INFORMATION(ctypes.Structure):
+                _fields_ = [
+                    ("BasicLimitInformation", JOBOBJECT_BASIC_LIMIT_INFORMATION),
+                    ("IoInfo", IO_COUNTERS),
+                    ("ProcessMemoryLimit", ctypes.c_size_t),
+                    ("JobMemoryLimit", ctypes.c_size_t),
+                    ("PeakProcessMemoryUsed", ctypes.c_size_t),
+                    ("PeakJobMemoryUsed", ctypes.c_size_t),
+                ]
+
+            JOB_OBJECT_LIMIT_PROCESS_MEMORY = 0x00000100
+            JobObjectExtendedLimitInformation = 9
+            PROCESS_SET_QUOTA = 0x0100
+            PROCESS_TERMINATE = 0x0001
+
+            job = ctypes.windll.kernel32.CreateJobObjectW(None, None)
+            if not job:
+                return
+
+            info = JOBOBJECT_EXTENDED_LIMIT_INFORMATION()
+            info.BasicLimitInformation.LimitFlags = JOB_OBJECT_LIMIT_PROCESS_MEMORY
+            info.ProcessMemoryLimit = int(limit_mb * 1024 * 1024)
+
+            success = ctypes.windll.kernel32.SetInformationJobObject(
+                job,
+                JobObjectExtendedLimitInformation,
+                ctypes.byref(info),
+                ctypes.sizeof(info),
+            )
+            if not success:
+                return
+
+            proc_handle = ctypes.windll.kernel32.OpenProcess(
+                PROCESS_SET_QUOTA | PROCESS_TERMINATE, False, pid
+            )
+            if proc_handle:
+                ctypes.windll.kernel32.AssignProcessToJobObject(job, proc_handle)
+                ctypes.windll.kernel32.CloseHandle(proc_handle)
+                self._win32_job_handle = job
+                logger.debug(
+                    "Win32 Job Object memory limit applied", pid=pid, limit_mb=limit_mb
+                )
+        except Exception as e:
+            logger.debug("Failed applying Win32 Job Object limits", error=str(e))
+
     async def start(self) -> None:
         runner_path = Path(__file__).parent / "bridge_runner.py"
+        child_env = dict(self._env) if self._env else os.environ.copy()
+        if self._network_disabled:
+            child_env["HARNESS_NO_NETWORK"] = "1"
         self._transport = StdioJsonRpcTransport(
             self._python,
             [str(runner_path), str(self._script_path)],
-            env=self._env,
+            env=child_env,
         )
         self._memory_exceeded = False
         await self._transport.start()
 
         if self._memory_limit_mb is not None and self._memory_limit_mb > 0:
+            if self._transport and self._transport.pid:
+                self._apply_win32_job_limits(self._transport.pid, self._memory_limit_mb)
             self._watchdog_task = asyncio.create_task(self._memory_watchdog())
 
         logger.info(
@@ -270,6 +355,7 @@ class SubprocessExecutor(SandboxExecutor):
             script=str(self._script_path),
             pid=self._transport.pid,
             memory_limit_mb=self._memory_limit_mb,
+            network_disabled=self._network_disabled,
         )
 
     async def stop(self) -> None:
@@ -281,6 +367,15 @@ class SubprocessExecutor(SandboxExecutor):
             except asyncio.CancelledError:
                 pass
             self._watchdog_task = None
+
+        if self._win32_job_handle:
+            try:
+                import ctypes
+
+                ctypes.windll.kernel32.CloseHandle(self._win32_job_handle)
+            except Exception:
+                pass
+            self._win32_job_handle = None
 
         if self._transport:
             await self._transport.stop()
@@ -296,7 +391,7 @@ class SubprocessExecutor(SandboxExecutor):
         *,
         timeout: float = 30.0,
     ) -> dict[str, Any]:
-        if self._memory_exceeded:
+        if self._memory_exceeded or (self._win32_job_handle is not None and not self.is_running):
             raise SandboxError(
                 "subprocess",
                 f"Process exceeded memory limit of {self._memory_limit_mb:.0f} MB",
@@ -789,6 +884,10 @@ class SandboxExecutorFactory:
                 pass
 
         if entrypoint and entrypoint.exists():
-            return SubprocessExecutor(entrypoint, memory_limit_mb=mem_limit)
+            return SubprocessExecutor(
+                entrypoint,
+                memory_limit_mb=mem_limit,
+                network_disabled=(not trusted),
+            )
 
         return None

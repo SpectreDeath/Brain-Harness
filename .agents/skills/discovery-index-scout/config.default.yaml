@@ -1,0 +1,26 @@
+# Default configuration for discovery-index-scout
+line_budget_limit: 500
+token_budget_limit: 6000
+enforce_two_phase_validation: true
+max_repair_attempts: 3
+security_risk_threshold: 20
+
+# Query defaults
+default_output_format: json
+max_results_per_query: 20
+request_timeout_seconds: 30
+
+# Category filter controls
+enabled_categories:
+  - transcripts
+  - public_records
+  - research_corpora
+  - github_indexes
+
+# Additive extension points (project overrides append, never replace)
+extra_sources: []
+extra_categories: []
+
+# Cross-skill delegation
+delegate_hf_retrieval_to: hf-datasets-engineer
+delegate_kaggle_to: structured-data-scout

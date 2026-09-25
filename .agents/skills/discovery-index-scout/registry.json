@@ -1,0 +1,731 @@
+{
+  "version": "1.0.0",
+  "updated_at": "2026-09-24T22:09:03.042457+00:00",
+  "total_count": 46,
+  "sources": [
+    {
+      "id": "c-span-video-library",
+      "name": "C-SPAN Video Library",
+      "category": "transcripts",
+      "url": "https://www.c-span.org/",
+      "access_method": "Web, API, Program Transcripts",
+      "provenance_tier": "Primary Official",
+      "update_cadence": "Continuous / As Published",
+      "export_formats": [
+        "JSON",
+        "VTT",
+        "MP4"
+      ],
+      "notes": "Auto-initialized from discovery indexes catalog. Tags: congress, hearings, politics, transcripts, video",
+      "added_at": "2026-09-24T22:09:03.041847+00:00"
+    },
+    {
+      "id": "internet-archive-tv-news",
+      "name": "Internet Archive TV News",
+      "category": "transcripts",
+      "url": "https://archive.org/details/tv",
+      "access_method": "Web Search, IA API",
+      "provenance_tier": "Secondary Archival",
+      "update_cadence": "Continuous / As Published",
+      "export_formats": [
+        "JSON",
+        "SRT",
+        "Video stream"
+      ],
+      "notes": "Auto-initialized from discovery indexes catalog. Tags: television, captions, news, broadcast, transcripts",
+      "added_at": "2026-09-24T22:09:03.041874+00:00"
+    },
+    {
+      "id": "internet-archive-c-span-collection",
+      "name": "Internet Archive C-SPAN Collection",
+      "category": "transcripts",
+      "url": "https://archive.org/details/TV-CSPAN?tab=collection",
+      "access_method": "IA Metadata API, Web",
+      "provenance_tier": "Secondary Archival",
+      "update_cadence": "Continuous / As Published",
+      "export_formats": [
+        "JSON",
+        "Torrent",
+        "XML"
+      ],
+      "notes": "Auto-initialized from discovery indexes catalog. Tags: cspan, video, government, archive",
+      "added_at": "2026-09-24T22:09:03.041882+00:00"
+    },
+    {
+      "id": "vanderbilt-television-news-archive",
+      "name": "Vanderbilt Television News Archive",
+      "category": "transcripts",
+      "url": "https://tvnews.vanderbilt.edu/",
+      "access_method": "Web Catalog, Inter-library Loan",
+      "provenance_tier": "Academic Archival",
+      "update_cadence": "Continuous / As Published",
+      "export_formats": [
+        "Citations",
+        "Loan Video"
+      ],
+      "notes": "Auto-initialized from discovery indexes catalog. Tags: historical, television, evening news, broadcast",
+      "added_at": "2026-09-24T22:09:03.041887+00:00"
+    },
+    {
+      "id": "american-presidency-project",
+      "name": "American Presidency Project",
+      "category": "transcripts",
+      "url": "https://www.presidency.ucsb.edu/",
+      "access_method": "Web Search, Static Archives",
+      "provenance_tier": "Academic Archival",
+      "update_cadence": "Continuous / As Published",
+      "export_formats": [
+        "HTML",
+        "Text"
+      ],
+      "notes": "Auto-initialized from discovery indexes catalog. Tags: president, debates, executive orders, speeches",
+      "added_at": "2026-09-24T22:09:03.041891+00:00"
+    },
+    {
+      "id": "miller-center-presidential-speeches",
+      "name": "Miller Center Presidential Speeches",
+      "category": "transcripts",
+      "url": "https://millercenter.org/the-presidency/presidential-speeches",
+      "access_method": "Web Catalog, Audio Player",
+      "provenance_tier": "Academic Archival",
+      "update_cadence": "Continuous / As Published",
+      "export_formats": [
+        "MP3",
+        "HTML",
+        "Text"
+      ],
+      "notes": "Auto-initialized from discovery indexes catalog. Tags: president, speeches, audio, history",
+      "added_at": "2026-09-24T22:09:03.041896+00:00"
+    },
+    {
+      "id": "congressgov",
+      "name": "Congress.gov",
+      "category": "transcripts",
+      "url": "https://www.congress.gov/",
+      "access_method": "REST API (api.congress.gov), Bulk XML",
+      "provenance_tier": "Primary Official",
+      "update_cadence": "Continuous / As Published",
+      "export_formats": [
+        "JSON",
+        "XML",
+        "PDF"
+      ],
+      "notes": "Auto-initialized from discovery indexes catalog. Tags: congress, legislation, bills, congressional record",
+      "added_at": "2026-09-24T22:09:03.041901+00:00"
+    },
+    {
+      "id": "govinfo",
+      "name": "GovInfo",
+      "category": "transcripts",
+      "url": "https://www.govinfo.gov/",
+      "access_method": "GovInfo API, Bulk Data Service",
+      "provenance_tier": "Primary Official",
+      "update_cadence": "Continuous / As Published",
+      "export_formats": [
+        "JSON",
+        "XML",
+        "PDF",
+        "MODS"
+      ],
+      "notes": "Auto-initialized from discovery indexes catalog. Tags: official, gpo, statutes, regulations, hearings",
+      "added_at": "2026-09-24T22:09:03.041905+00:00"
+    },
+    {
+      "id": "federal-register",
+      "name": "Federal Register",
+      "category": "transcripts",
+      "url": "https://www.federalregister.gov/",
+      "access_method": "Federal Register REST API",
+      "provenance_tier": "Primary Official",
+      "update_cadence": "Continuous / As Published",
+      "export_formats": [
+        "JSON",
+        "XML",
+        "CSV"
+      ],
+      "notes": "Auto-initialized from discovery indexes catalog. Tags: regulations, executive orders, rules, agencies",
+      "added_at": "2026-09-24T22:09:03.041910+00:00"
+    },
+    {
+      "id": "supreme-court-oral-arguments-(oyez)",
+      "name": "Supreme Court Oral Arguments (Oyez)",
+      "category": "transcripts",
+      "url": "https://www.oyez.org/",
+      "access_method": "Web, Oyez API",
+      "provenance_tier": "Judicial Archival",
+      "update_cadence": "Continuous / As Published",
+      "export_formats": [
+        "Audio",
+        "JSON",
+        "Text"
+      ],
+      "notes": "Auto-initialized from discovery indexes catalog. Tags: scotus, supreme court, oral arguments, judicial",
+      "added_at": "2026-09-24T22:09:03.041914+00:00"
+    },
+    {
+      "id": "united-nations-digital-library",
+      "name": "United Nations Digital Library",
+      "category": "transcripts",
+      "url": "https://digitallibrary.un.org/",
+      "access_method": "Search Portal, OAI-PMH",
+      "provenance_tier": "International Primary",
+      "update_cadence": "Continuous / As Published",
+      "export_formats": [
+        "MarcXML",
+        "PDF",
+        "DublinCore"
+      ],
+      "notes": "Auto-initialized from discovery indexes catalog. Tags: un, international, resolutions, diplomacy, speeches",
+      "added_at": "2026-09-24T22:09:03.041918+00:00"
+    },
+    {
+      "id": "uk-hansard",
+      "name": "UK Hansard",
+      "category": "transcripts",
+      "url": "https://hansard.parliament.uk/",
+      "access_method": "UK Parliament API, Web Search",
+      "provenance_tier": "Parliamentary Official",
+      "update_cadence": "Continuous / As Published",
+      "export_formats": [
+        "JSON",
+        "XML",
+        "HTML"
+      ],
+      "notes": "Auto-initialized from discovery indexes catalog. Tags: uk, parliament, commons, lords, debates, hansard",
+      "added_at": "2026-09-24T22:09:03.041922+00:00"
+    },
+    {
+      "id": "european-parliament-plenary",
+      "name": "European Parliament Plenary",
+      "category": "transcripts",
+      "url": "https://www.europarl.europa.eu/plenary/en/debates-video.html",
+      "access_method": "Europarl Open Data, Web",
+      "provenance_tier": "Parliamentary Official",
+      "update_cadence": "Continuous / As Published",
+      "export_formats": [
+        "XML",
+        "PDF",
+        "Multilingual Text"
+      ],
+      "notes": "Auto-initialized from discovery indexes catalog. Tags: eu, europe, parliament, plenary, debates",
+      "added_at": "2026-09-24T22:09:03.041926+00:00"
+    },
+    {
+      "id": "datagov",
+      "name": "Data.gov",
+      "category": "public_records",
+      "url": "https://data.gov/",
+      "access_method": "CKAN API, Web Search",
+      "provenance_tier": "Federal Catalog",
+      "update_cadence": "Continuous / As Published",
+      "export_formats": [
+        "JSON",
+        "CSV",
+        "RDF",
+        "GeoJSON"
+      ],
+      "notes": "Auto-initialized from discovery indexes catalog. Tags: federal, open data, agencies, census, environment",
+      "added_at": "2026-09-24T22:09:03.041931+00:00"
+    },
+    {
+      "id": "usaspendinggov",
+      "name": "USAspending.gov",
+      "category": "public_records",
+      "url": "https://www.usaspending.gov/",
+      "access_method": "USAspending REST API, Bulk Archives",
+      "provenance_tier": "Primary Official",
+      "update_cadence": "Continuous / As Published",
+      "export_formats": [
+        "JSON",
+        "CSV",
+        "TSV"
+      ],
+      "notes": "Auto-initialized from discovery indexes catalog. Tags: contracts, procurement, spending, grants, subsidies",
+      "added_at": "2026-09-24T22:09:03.041935+00:00"
+    },
+    {
+      "id": "samgov-contract-opportunities",
+      "name": "SAM.gov Contract Opportunities",
+      "category": "public_records",
+      "url": "https://sam.gov/content/opportunities",
+      "access_method": "SAM.gov Public API, Data Feeds",
+      "provenance_tier": "Primary Official",
+      "update_cadence": "Continuous / As Published",
+      "export_formats": [
+        "JSON",
+        "CSV"
+      ],
+      "notes": "Auto-initialized from discovery indexes catalog. Tags: procurement, contracts, rfp, solicitations, defense",
+      "added_at": "2026-09-24T22:09:03.041940+00:00"
+    },
+    {
+      "id": "federal-procurement-data-system-(fpds)",
+      "name": "Federal Procurement Data System (FPDS)",
+      "category": "public_records",
+      "url": "https://www.fpds.gov/",
+      "access_method": "FPDS Web Search, Atom Feeds",
+      "provenance_tier": "Primary Official",
+      "update_cadence": "Continuous / As Published",
+      "export_formats": [
+        "Atom",
+        "XML",
+        "CSV"
+      ],
+      "notes": "Auto-initialized from discovery indexes catalog. Tags: procurement, contracts, vendors, transactions",
+      "added_at": "2026-09-24T22:09:03.041945+00:00"
+    },
+    {
+      "id": "sec-edgar",
+      "name": "SEC EDGAR",
+      "category": "public_records",
+      "url": "https://www.sec.gov/edgar/search/",
+      "access_method": "SEC EDGAR REST API, Submissions API",
+      "provenance_tier": "Regulatory Primary",
+      "update_cadence": "Continuous / As Published",
+      "export_formats": [
+        "JSON",
+        "XML",
+        "XBRL",
+        "HTML"
+      ],
+      "notes": "Auto-initialized from discovery indexes catalog. Tags: sec, corporate, filings, insider trades, 10-k, ownership",
+      "added_at": "2026-09-24T22:09:03.041949+00:00"
+    },
+    {
+      "id": "fec-data",
+      "name": "FEC Data",
+      "category": "public_records",
+      "url": "https://www.fec.gov/data/",
+      "access_method": "FEC REST API, Bulk Data Downloads",
+      "provenance_tier": "Primary Official",
+      "update_cadence": "Continuous / As Published",
+      "export_formats": [
+        "JSON",
+        "CSV bulk"
+      ],
+      "notes": "Auto-initialized from discovery indexes catalog. Tags: campaign finance, elections, pac, contributions, donors",
+      "added_at": "2026-09-24T22:09:03.041953+00:00"
+    },
+    {
+      "id": "opensecrets",
+      "name": "OpenSecrets",
+      "category": "public_records",
+      "url": "https://www.opensecrets.org/",
+      "access_method": "OpenSecrets API, Bulk Licensing",
+      "provenance_tier": "Investigative Research",
+      "update_cadence": "Continuous / As Published",
+      "export_formats": [
+        "JSON",
+        "CSV",
+        "Excel"
+      ],
+      "notes": "Auto-initialized from discovery indexes catalog. Tags: lobbying, campaign finance, influence, dark money, revolving door",
+      "added_at": "2026-09-24T22:09:03.041957+00:00"
+    },
+    {
+      "id": "senate-lobbying-disclosure-(lda)",
+      "name": "Senate Lobbying Disclosure (LDA)",
+      "category": "public_records",
+      "url": "https://lda.senate.gov/system/public/",
+      "access_method": "LDA REST API, Bulk XML",
+      "provenance_tier": "Primary Official",
+      "update_cadence": "Continuous / As Published",
+      "export_formats": [
+        "JSON",
+        "XML",
+        "ZIP"
+      ],
+      "notes": "Auto-initialized from discovery indexes catalog. Tags: lobbying, senate, registrations, influence, clients",
+      "added_at": "2026-09-24T22:09:03.041962+00:00"
+    },
+    {
+      "id": "propublica-nonprofit-explorer",
+      "name": "ProPublica Nonprofit Explorer",
+      "category": "public_records",
+      "url": "https://projects.propublica.org/nonprofits/",
+      "access_method": "ProPublica REST API, Form 990 PDFs",
+      "provenance_tier": "Secondary Archival",
+      "update_cadence": "Continuous / As Published",
+      "export_formats": [
+        "JSON",
+        "PDF"
+      ],
+      "notes": "Auto-initialized from discovery indexes catalog. Tags: nonprofits, form 990, irs, charities, compensation",
+      "added_at": "2026-09-24T22:09:03.041966+00:00"
+    },
+    {
+      "id": "pacer",
+      "name": "PACER",
+      "category": "public_records",
+      "url": "https://pacer.uscourts.gov/",
+      "access_method": "PACER Web Portal, Case Search API",
+      "provenance_tier": "Primary Official",
+      "update_cadence": "Continuous / As Published",
+      "export_formats": [
+        "PDF",
+        "HTML dockets"
+      ],
+      "notes": "Auto-initialized from discovery indexes catalog. Tags: courts, litigation, dockets, federal court, bankruptcy",
+      "added_at": "2026-09-24T22:09:03.041971+00:00"
+    },
+    {
+      "id": "courtlistener",
+      "name": "CourtListener",
+      "category": "public_records",
+      "url": "https://www.courtlistener.com/",
+      "access_method": "CourtListener REST API v4",
+      "provenance_tier": "Public Interest Archival",
+      "update_cadence": "Continuous / As Published",
+      "export_formats": [
+        "JSON",
+        "PDF",
+        "Audio"
+      ],
+      "notes": "Auto-initialized from discovery indexes catalog. Tags: courts, opinions, recap, judges, dockets, citations",
+      "added_at": "2026-09-24T22:09:03.041976+00:00"
+    },
+    {
+      "id": "foiagov",
+      "name": "FOIA.gov",
+      "category": "public_records",
+      "url": "https://www.foia.gov/",
+      "access_method": "FOIA.gov API, Agency Routing",
+      "provenance_tier": "Administrative Official",
+      "update_cadence": "Continuous / As Published",
+      "export_formats": [
+        "JSON",
+        "CSV"
+      ],
+      "notes": "Auto-initialized from discovery indexes catalog. Tags: foia, public records, transparency, agency requests",
+      "added_at": "2026-09-24T22:09:03.041980+00:00"
+    },
+    {
+      "id": "national-archives-catalog",
+      "name": "National Archives Catalog",
+      "category": "public_records",
+      "url": "https://catalog.archives.gov/",
+      "access_method": "NARA Catalog API, Web Portal",
+      "provenance_tier": "Primary Archival",
+      "update_cadence": "Continuous / As Published",
+      "export_formats": [
+        "JSON",
+        "XML",
+        "Scanned PDF"
+      ],
+      "notes": "Auto-initialized from discovery indexes catalog. Tags: nara, national archives, historical, military, records",
+      "added_at": "2026-09-24T22:09:03.041985+00:00"
+    },
+    {
+      "id": "opensanctions",
+      "name": "OpenSanctions",
+      "category": "public_records",
+      "url": "https://www.opensanctions.org/",
+      "access_method": "FollowTheMoney API, Bulk Parquet",
+      "provenance_tier": "Public Interest Intelligence",
+      "update_cadence": "Continuous / As Published",
+      "export_formats": [
+        "JSON",
+        "CSV",
+        "FtM",
+        "Parquet"
+      ],
+      "notes": "Auto-initialized from discovery indexes catalog. Tags: sanctions, pep, illicit finance, security, watchlists",
+      "added_at": "2026-09-24T22:09:03.041990+00:00"
+    },
+    {
+      "id": "hugging-face-datasets",
+      "name": "Hugging Face Datasets",
+      "category": "research_corpora",
+      "url": "https://huggingface.co/datasets",
+      "access_method": "datasets Python library, Hub API",
+      "provenance_tier": "Research Aggregator",
+      "update_cadence": "Continuous / As Published",
+      "export_formats": [
+        "Arrow",
+        "Parquet",
+        "JSON",
+        "CSV"
+      ],
+      "notes": "Auto-initialized from discovery indexes catalog. Tags: nlp, ml, speech, benchmarks, corpora, transcripts",
+      "added_at": "2026-09-24T22:09:03.041994+00:00"
+    },
+    {
+      "id": "zenodo",
+      "name": "Zenodo",
+      "category": "research_corpora",
+      "url": "https://zenodo.org/",
+      "access_method": "Zenodo REST API, OAI-PMH",
+      "provenance_tier": "Academic Repository",
+      "update_cadence": "Continuous / As Published",
+      "export_formats": [
+        "TAR",
+        "ZIP",
+        "CSV",
+        "NetCDF"
+      ],
+      "notes": "Auto-initialized from discovery indexes catalog. Tags: doi, replication, academic, open science, datasets",
+      "added_at": "2026-09-24T22:09:03.041998+00:00"
+    },
+    {
+      "id": "harvard-dataverse",
+      "name": "Harvard Dataverse",
+      "category": "research_corpora",
+      "url": "https://dataverse.harvard.edu/",
+      "access_method": "Dataverse REST API, Web Download",
+      "provenance_tier": "Academic Repository",
+      "update_cadence": "Continuous / As Published",
+      "export_formats": [
+        "Tabular",
+        "RData",
+        "CSV"
+      ],
+      "notes": "Auto-initialized from discovery indexes catalog. Tags: social science, policy, political science, replication",
+      "added_at": "2026-09-24T22:09:03.042002+00:00"
+    },
+    {
+      "id": "icpsr",
+      "name": "ICPSR",
+      "category": "research_corpora",
+      "url": "https://www.icpsr.umich.edu/",
+      "access_method": "Web Portal, Institutional Access",
+      "provenance_tier": "Academic Repository",
+      "update_cadence": "Continuous / As Published",
+      "export_formats": [
+        "SAS",
+        "SPSS",
+        "Stata",
+        "CSV"
+      ],
+      "notes": "Auto-initialized from discovery indexes catalog. Tags: surveys, voting, demographics, elections, social science",
+      "added_at": "2026-09-24T22:09:03.042006+00:00"
+    },
+    {
+      "id": "osf-(open-science-framework)",
+      "name": "OSF (Open Science Framework)",
+      "category": "research_corpora",
+      "url": "https://osf.io/",
+      "access_method": "OSF REST API v2",
+      "provenance_tier": "Open Science Repository",
+      "update_cadence": "Continuous / As Published",
+      "export_formats": [
+        "ZIP",
+        "CSV",
+        "Markdown"
+      ],
+      "notes": "Auto-initialized from discovery indexes catalog. Tags: open science, preregistration, reproducibility, experiments",
+      "added_at": "2026-09-24T22:09:03.042010+00:00"
+    },
+    {
+      "id": "kaggle-datasets",
+      "name": "Kaggle Datasets",
+      "category": "research_corpora",
+      "url": "https://www.kaggle.com/datasets",
+      "access_method": "Kaggle CLI / Python API",
+      "provenance_tier": "Community / Benchmark",
+      "update_cadence": "Continuous / As Published",
+      "export_formats": [
+        "CSV",
+        "SQLite",
+        "Parquet",
+        "JSON"
+      ],
+      "notes": "Auto-initialized from discovery indexes catalog. Tags: community, tabular, competitions, machine learning",
+      "added_at": "2026-09-24T22:09:03.042014+00:00"
+    },
+    {
+      "id": "google-dataset-search",
+      "name": "Google Dataset Search",
+      "category": "research_corpora",
+      "url": "https://datasetsearch.research.google.com/",
+      "access_method": "Web Search Index",
+      "provenance_tier": "Search Engine Meta",
+      "update_cadence": "Continuous / As Published",
+      "export_formats": [
+        "Discovery pointers"
+      ],
+      "notes": "Auto-initialized from discovery indexes catalog. Tags: search engine, metadata, schema.org, discovery",
+      "added_at": "2026-09-24T22:09:03.042019+00:00"
+    },
+    {
+      "id": "internet-archive",
+      "name": "Internet Archive",
+      "category": "research_corpora",
+      "url": "https://archive.org/",
+      "access_method": "IA Python CLI, S3-like API",
+      "provenance_tier": "Archival Repository",
+      "update_cadence": "Continuous / As Published",
+      "export_formats": [
+        "JSON",
+        "WARC",
+        "PDF",
+        "Audio"
+      ],
+      "notes": "Auto-initialized from discovery indexes catalog. Tags: archive, books, multimedia, web collections, history",
+      "added_at": "2026-09-24T22:09:03.042023+00:00"
+    },
+    {
+      "id": "wayback-machine",
+      "name": "Wayback Machine",
+      "category": "research_corpora",
+      "url": "https://web.archive.org/",
+      "access_method": "CDX Server API, Availability API",
+      "provenance_tier": "Archival Snapshot",
+      "update_cadence": "Continuous / As Published",
+      "export_formats": [
+        "HTML",
+        "WARC",
+        "CDX JSON"
+      ],
+      "notes": "Auto-initialized from discovery indexes catalog. Tags: wayback, web archive, temporal audit, history, snapshots",
+      "added_at": "2026-09-24T22:09:03.042028+00:00"
+    },
+    {
+      "id": "media-cloud",
+      "name": "Media Cloud",
+      "category": "research_corpora",
+      "url": "https://mediacloud.org/",
+      "access_method": "Media Cloud REST API v2",
+      "provenance_tier": "Academic Research Tool",
+      "update_cadence": "Continuous / As Published",
+      "export_formats": [
+        "JSON",
+        "CSV"
+      ],
+      "notes": "Auto-initialized from discovery indexes catalog. Tags: news analysis, media attention, narratives, journalism",
+      "added_at": "2026-09-24T22:09:03.042032+00:00"
+    },
+    {
+      "id": "poldata",
+      "name": "PolData",
+      "category": "github_indexes",
+      "url": "https://github.com/erikgahner/PolData",
+      "access_method": "Git Clone, GitHub Markdown",
+      "provenance_tier": "Curated Index",
+      "update_cadence": "Continuous / As Published",
+      "export_formats": [
+        "Markdown Catalog",
+        "Direct Links"
+      ],
+      "notes": "Auto-initialized from discovery indexes catalog. Tags: poldata, politics, debates, parliamentary, speech corpora",
+      "added_at": "2026-09-24T22:09:03.042037+00:00"
+    },
+    {
+      "id": "awesome-public-datasets",
+      "name": "Awesome Public Datasets",
+      "category": "github_indexes",
+      "url": "https://github.com/awesomedata/awesome-public-datasets",
+      "access_method": "Git Clone, Markdown Catalog",
+      "provenance_tier": "Curated Index",
+      "update_cadence": "Continuous / As Published",
+      "export_formats": [
+        "Markdown",
+        "Direct Links"
+      ],
+      "notes": "Auto-initialized from discovery indexes catalog. Tags: awesome list, public datasets, open data, multi-domain",
+      "added_at": "2026-09-24T22:09:03.042041+00:00"
+    },
+    {
+      "id": "awesome-uk-government-datasets",
+      "name": "Awesome UK Government Datasets",
+      "category": "github_indexes",
+      "url": "https://github.com/i-dot-ai/awesome-gov-datasets",
+      "access_method": "Git Clone, Markdown Catalog",
+      "provenance_tier": "Curated Index",
+      "update_cadence": "Continuous / As Published",
+      "export_formats": [
+        "Markdown",
+        "Direct Links"
+      ],
+      "notes": "Auto-initialized from discovery indexes catalog. Tags: uk, government, hansard, developer apis",
+      "added_at": "2026-09-24T22:09:03.042046+00:00"
+    },
+    {
+      "id": "hugging-face-datasets-source-repository",
+      "name": "Hugging Face Datasets Source Repository",
+      "category": "github_indexes",
+      "url": "https://github.com/huggingface/datasets",
+      "access_method": "Git Clone, Python Package",
+      "provenance_tier": "Engineering Tooling",
+      "update_cadence": "Continuous / As Published",
+      "export_formats": [
+        "Python code",
+        "Documentation"
+      ],
+      "notes": "Auto-initialized from discovery indexes catalog. Tags: huggingface, loaders, documentation, arrow, parquet",
+      "added_at": "2026-09-24T22:09:03.042051+00:00"
+    },
+    {
+      "id": "rev-speech-datasets",
+      "name": "Rev Speech Datasets",
+      "category": "github_indexes",
+      "url": "https://github.com/revdotcom/speech-datasets",
+      "access_method": "Git Clone, Markdown Catalog",
+      "provenance_tier": "Curated Index",
+      "update_cadence": "Continuous / As Published",
+      "export_formats": [
+        "Markdown",
+        "Corpus links"
+      ],
+      "notes": "Auto-initialized from discovery indexes catalog. Tags: speech, asr, audio, transcripts, diarization",
+      "added_at": "2026-09-24T22:09:03.042056+00:00"
+    },
+    {
+      "id": "gigaspeech",
+      "name": "GigaSpeech",
+      "category": "github_indexes",
+      "url": "https://github.com/SpeechColab/GigaSpeech",
+      "access_method": "Git Clone, Corpus Download",
+      "provenance_tier": "Academic Benchmark",
+      "update_cadence": "Continuous / As Published",
+      "export_formats": [
+        "WAV",
+        "JSON",
+        "Text"
+      ],
+      "notes": "Auto-initialized from discovery indexes catalog. Tags: speech, audio, asr, transcribed speech, benchmark",
+      "added_at": "2026-09-24T22:09:03.042060+00:00"
+    },
+    {
+      "id": "github-topic:-government-data",
+      "name": "GitHub Topic: government-data",
+      "category": "github_indexes",
+      "url": "https://github.com/topics/government-data",
+      "access_method": "GitHub Topic Search",
+      "provenance_tier": "Community Topic Index",
+      "update_cadence": "Continuous / As Published",
+      "export_formats": [
+        "Repository links"
+      ],
+      "notes": "Auto-initialized from discovery indexes catalog. Tags: github topic, government data, pipelines, scrapers",
+      "added_at": "2026-09-24T22:09:03.042066+00:00"
+    },
+    {
+      "id": "github-topic:-public-datasets",
+      "name": "GitHub Topic: public-datasets",
+      "category": "github_indexes",
+      "url": "https://github.com/topics/public-datasets",
+      "access_method": "GitHub Topic Search",
+      "provenance_tier": "Community Topic Index",
+      "update_cadence": "Continuous / As Published",
+      "export_formats": [
+        "Repository links"
+      ],
+      "notes": "Auto-initialized from discovery indexes catalog. Tags: github topic, public datasets, open data",
+      "added_at": "2026-09-24T22:09:03.042070+00:00"
+    },
+    {
+      "id": "github-topic:-interview-transcripts",
+      "name": "GitHub Topic: interview-transcripts",
+      "category": "github_indexes",
+      "url": "https://github.com/topics/interview-transcripts",
+      "access_method": "GitHub Topic Search",
+      "provenance_tier": "Community Topic Index",
+      "update_cadence": "Continuous / As Published",
+      "export_formats": [
+        "Repository links"
+      ],
+      "notes": "Auto-initialized from discovery indexes catalog. Tags: github topic, interviews, transcripts, oral history",
+      "added_at": "2026-09-24T22:09:03.042075+00:00"
+    }
+  ]
+}

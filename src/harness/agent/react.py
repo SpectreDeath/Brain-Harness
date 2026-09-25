@@ -74,6 +74,8 @@ class StepExecutionEngine:
         self.optimizer: AgentContextOptimizer = optimizer or DefaultContextOptimizer(
             context=self.context
         )
+        self._step_count: int = 0
+        self._context_rotation_cadence: int = 25
 
     async def _invoke_tool_safely(
         self, action_name: str, action_input: dict[str, Any]
@@ -237,6 +239,20 @@ class StepExecutionEngine:
             True if the agent should continue to the next step, False if finished.
         """
         logger.info("Agent iteration", step=step_idx, task=trajectory.task[:50])
+
+        # Bounded session context rotation to prevent unbounded inverse accumulator growth
+        self._step_count += 1
+        if (
+            self._step_count % self._context_rotation_cadence == 0
+            and self.context.parent is not None
+        ):
+            parent = self.context.parent
+            await self.context.dispose()
+            self.context = parent.child()
+            logger.debug(
+                "Session context rotated to bound inverse accumulator",
+                step=self._step_count,
+            )
 
         if self.event_bus:
             await self.event_bus.emit(

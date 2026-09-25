@@ -871,4 +871,13 @@ from harness.services.network_forensics import (
     TCPFlagAnalysisData,
     TracerouteReportData,
 )
+from harness.services.discovery_index import (
+    DISCOVERY_INDEX_SERVICE_KEY,
+    DiscoveryIndexService,
+    DiscoverySearchResult,
+    DiscoverySourceModel,
+    DiscoveryStatsModel,
+    LocalDiscoveryIndexService,
+)
+
 

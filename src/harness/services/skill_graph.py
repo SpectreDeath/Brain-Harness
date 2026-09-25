@@ -6,6 +6,7 @@ caching, topological BFS chaining, intent routing, and visual brief generation.
 
 from __future__ import annotations
 
+import ast
 import collections
 import json
 import re
@@ -57,6 +58,54 @@ class AntiPatternGuard:
     """Active runtime interceptor evaluating proposed agent actions against skill anti-patterns."""
 
     @classmethod
+    def _check_code_ast(
+        cls, code_block: str, skill: SkillCardDefinition
+    ) -> list[AntiPatternViolation]:
+        """Inspect Python code blocks for security-critical anti-pattern call invocations."""
+        violations: list[AntiPatternViolation] = []
+        try:
+            tree = ast.parse(code_block)
+        except Exception:
+            return violations
+
+        blocked_calls = {"eval", "exec", "input", "__import__"}
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Call):
+                func_name = None
+                if isinstance(node.func, ast.Name):
+                    func_name = node.func.id
+                elif isinstance(node.func, ast.Attribute):
+                    func_name = node.func.attr
+                if func_name and func_name in blocked_calls:
+                    violations.append(
+                        AntiPatternViolation(
+                            skill_name=skill.name,
+                            anti_pattern=f"Blocked Call: {func_name}()",
+                            symptom=f"Direct call to {func_name}() detected in proposed code block",
+                            remedy="Use sandboxed execution or approved kernel tools instead",
+                            matched_phrase=f"{func_name}()",
+                        )
+                    )
+        return violations
+
+    @classmethod
+    def format_self_repair_observation(
+        cls, violations: list[AntiPatternViolation]
+    ) -> dict[str, Any]:
+        """Format violations into an actionable ReAct observation dictionary for in-flight self-repair."""
+        if not violations:
+            return {"status": "ok"}
+        v = violations[0]
+        return {
+            "status": "error",
+            "anti_pattern_violation": f"{v.anti_pattern} ({v.skill_name})",
+            "symptom": v.symptom,
+            "prescribed_remedy": v.remedy,
+            "matched_phrase": v.matched_phrase,
+            "corrective_action_required": True,
+        }
+
+    @classmethod
     def check_proposal(
         cls,
         skill: SkillCardDefinition,
@@ -66,6 +115,13 @@ class AntiPatternGuard:
         violations: list[AntiPatternViolation] = []
         text_lower = proposed_action_or_plan.lower()
         negation_markers = ("avoid", "do not", "don't", "prevent", "never", "without")
+
+        # AST analysis on fenced code blocks
+        code_blocks = re.findall(
+            r"```(?:python)?\s*\n(.*?)\n```", proposed_action_or_plan, re.DOTALL
+        )
+        for block in code_blocks:
+            violations.extend(cls._check_code_ast(block, skill))
 
         for ap in skill.anti_patterns:
             ap_name_lower = ap.name.lower()
@@ -210,6 +266,12 @@ class SkillRegistryService(Protocol):
         """Cross-link knowledge vault items to skills."""
         ...
 
+    def evaluate_chain_feasibility(
+        self, chain: list[str], context: Any = None
+    ) -> tuple[bool, list[str]]:
+        """Check whether all declared service preconditions for a skill chain are satisfied."""
+        ...
+
 
 SKILL_GRAPH_KEY: ServiceKey[SkillGraphService] = ServiceKey(
     "service.skill_knowledge_graph"
@@ -278,6 +340,26 @@ class BuiltinSkillRegistryService(SkillRegistryService):
             neighbors.update(self._synthetic_adjacency.get(node, set()))
         return neighbors
 
+    def evaluate_chain_feasibility(
+        self, chain: list[str], context: Any = None
+    ) -> tuple[bool, list[str]]:
+        """Check whether all declared service preconditions for a skill chain are satisfied."""
+        self._ensure_scanned(self._default_root)
+        missing_services: list[str] = []
+        if context is None:
+            return True, []
+        for skill_name in chain:
+            skill = self.get_skill(skill_name)
+            if not skill or not skill.services:
+                continue
+            for svc_name in skill.services:
+                from harness.kernel.context import ServiceKey
+
+                key: ServiceKey[Any] = ServiceKey(svc_name)
+                if hasattr(context, "has") and not context.has(key):
+                    missing_services.append(f"{skill_name}:{svc_name}")
+        return len(missing_services) == 0, missing_services
+
     def route_intent(
         self, intent: str, top_k: int = 3, min_confidence: float = 0.20
     ) -> dict[str, Any]:
@@ -290,6 +372,16 @@ class BuiltinSkillRegistryService(SkillRegistryService):
         avg_tokens = 8.0
         n_tokens = max(1.0, float(len(intent_tokens)))
         len_norm = 0.75 + 0.25 * min(2.5, n_tokens / avg_tokens)
+
+        # Character trigram overlap helper for vocabulary mismatch mitigation
+        def _trigram_overlap(s1: str, s2: str) -> float:
+            if len(s1) < 3 or len(s2) < 3:
+                return 0.0
+            tri1 = {s1[i : i + 3] for i in range(len(s1) - 2)}
+            tri2 = {s2[i : i + 3] for i in range(len(s2) - 2)}
+            if not tri1 or not tri2:
+                return 0.0
+            return len(tri1 & tri2) / min(len(tri1), len(tri2))
 
         matches: list[dict[str, Any]] = []
 
@@ -326,6 +418,18 @@ class BuiltinSkillRegistryService(SkillRegistryService):
             text_overlap = intent_tokens.intersection(text_tokens)
             if text_overlap:
                 score += 0.3 * len(text_overlap)
+
+            # Character trigram overlap (asymmetric overlap for semantic/stemming resilience)
+            tri_score = _trigram_overlap(intent_lower, text_corpus)
+            if tri_score > 0.15:
+                score += 1.2 * tri_score
+
+            # Knowledge Item cross-link boost
+            if skill.knowledge_items:
+                for ki in skill.knowledge_items:
+                    if ki.lower() in intent_lower or ki.lower().replace("-", " ") in intent_lower:
+                        score += 1.5
+                        matched_triggers.append(ki)
 
             if score > 0.0:
                 norm_score = score / (1.5 * len_norm + 1.0)
@@ -519,6 +623,7 @@ class BuiltinSkillRegistryService(SkillRegistryService):
         for s1, s2 in pipeline_pairs:
             if s1 in discovered and s2 in discovered:
                 synthetic_adj[s1].add(s2)
+                adjacency[s1].add(s2)
 
         self._skills_cache = discovered
         self._categories = categories
@@ -869,6 +974,24 @@ class SkillRegistryPlugin(HarnessPlugin):
     async def on_load(self, ctx: ServiceContext) -> None:
         ctx.provide(SKILL_REGISTRY_KEY, self._registry)
         ctx.provide(SKILL_GRAPH_KEY, self._graph)
+        try:
+            from harness.events.bus import EVENT_BUS_KEY
+            from harness.events.types import EventType
+
+            bus = ctx.optional(EVENT_BUS_KEY)
+            if bus:
+                ctx.subscribe(EventType.FILE_MODIFIED, self._on_skill_file_changed)
+                ctx.subscribe(EventType.FILE_CREATED, self._on_skill_file_changed)
+                ctx.subscribe(EventType.FILE_DELETED, self._on_skill_file_changed)
+        except Exception:
+            pass
+
+    def _on_skill_file_changed(self, event: Any) -> None:
+        """Handle EventBus file change events by invalidating cache on skill/card modifications."""
+        payload = getattr(event, "payload", {}) or {}
+        path = str(payload.get("path", ""))
+        if "SKILL.md" in path or "CARD.md" in path:
+            self._registry.invalidate_cache()
 
     async def on_enable(self) -> None:
         self._registry.invalidate_cache()

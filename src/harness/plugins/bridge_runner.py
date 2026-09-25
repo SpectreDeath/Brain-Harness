@@ -99,6 +99,15 @@ def main() -> None:
         except Exception:
             pass
 
+    import os
+    if os.environ.get("HARNESS_NO_NETWORK") == "1":
+        import socket
+
+        def _blocked_connect(*args: Any, **kwargs: Any) -> None:
+            raise PermissionError("Outbound network access disabled for sandboxed plugin")
+
+        socket.socket.connect = _blocked_connect  # type: ignore[assignment]
+
     parser = argparse.ArgumentParser(description="Harness Sandboxed Plugin Runner")
     parser.add_argument("script_path", help="Path to plugin entrypoint script")
     args = parser.parse_args()

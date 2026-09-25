@@ -68,7 +68,9 @@ class PluginLoader:
         """Force a rebuild of the plugin catalog index."""
         return self.catalog.refresh()
 
-    def load_from_directory(self, directory: Path) -> list[HarnessPlugin]:
+    def load_from_directory(
+        self, directory: Path, *, trusted: bool | None = None
+    ) -> list[HarnessPlugin]:
         """Scan a directory for plugins (supporting both flat and domain-nested layouts).
 
         Looks for:
@@ -117,6 +119,7 @@ class PluginLoader:
                 )
 
         # Scan for Python modules with HarnessPlugin subclasses outside manifest dirs
+        is_trusted = trusted if trusted is not None else True
         for py_file in sorted(directory.glob("**/*.py")):
             if (
                 py_file.parent in processed_dirs
@@ -125,7 +128,7 @@ class PluginLoader:
             ):
                 continue
             try:
-                found = self._load_python_module(py_file)
+                found = self._load_python_module(py_file, trusted=is_trusted)
                 plugins.extend(found)
             except Exception as e:
                 logger.warning(
@@ -163,7 +166,7 @@ class PluginLoader:
             raise PluginLoadError(str(zip_path), f"Invalid ZIP: {e}") from e
 
         logger.info("Extracted ZIP", zip_path=str(zip_path), target=str(extract_to))
-        return self.load_from_directory(extract_to)
+        return self.load_from_directory(extract_to, trusted=False)
 
     def load_from_entry_points(self, group: str = "harness.plugins") -> list[HarnessPlugin]:
         """Discover plugins via Python entry points.
@@ -263,7 +266,9 @@ class PluginLoader:
         # Use SandboxedPlugin wrapper for all subprocess/venv or untrusted plugins
         return ManifestPlugin(manifest, directory)
 
-    def _load_python_module(self, py_file: Path) -> list[HarnessPlugin]:
+    def _load_python_module(
+        self, py_file: Path, *, trusted: bool = False
+    ) -> list[HarnessPlugin]:
         """Import a Python file and find HarnessPlugin subclasses."""
         plugins: list[HarnessPlugin] = []
 
@@ -293,6 +298,17 @@ class PluginLoader:
             ):
                 try:
                     instance = attr()
+                    # Inspect instance.trusted property (avoiding class-level property descriptor truthiness)
+                    inst_trusted = getattr(instance, "trusted", False)
+                    if callable(inst_trusted):
+                        inst_trusted = inst_trusted()
+                    if not (trusted or bool(inst_trusted)):
+                        logger.warning(
+                            "Blocking untrusted in-process plugin class; must use sandboxed manifest",
+                            file=str(py_file),
+                            plugin=instance.name,
+                        )
+                        continue
                     plugins.append(instance)
                     logger.debug(
                         "Found HarnessPlugin",

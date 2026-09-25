@@ -1,0 +1,65 @@
+{
+  "id": "ki_self_20260924_02",
+  "title": "Dual-Silo CLI Consolidation, Slotted Domain Engine Architecture, and IoC Service Elevation (discovery-index-scout)",
+  "category": "data_engineering",
+  "created_at": "2026-09-24T19:00:00Z",
+  "author": "Brain Harness Autobiographical Reflection Engine (harness-reflector)",
+  "tags": [
+    "data_engineering",
+    "architecture",
+    "ioc",
+    "slotted_models",
+    "micro_kernel",
+    "plugin_elevation",
+    "endogenous_memory",
+    "self_reflection"
+  ],
+  "context": "Agent skills scaffolding multiple CLI utilities often develop fragmented data silos. In discovery-index-scout, search_index.py maintained a hardcoded static list of 46 curated sources while catalog_registry.py read and wrote to a local JSON registry file. ReAct agent step loops were forced to fork external subprocesses to search the catalog, and config overrides were ignored.",
+  "distilled_learning": "Multi-script CLI skills must eliminate dual data silos by consolidating sources into a unified, slotted domain engine (DiscoveryCatalogEngine) supporting weighted multi-field search and faceted filtering. CLI frontends must be reduced to thin delegator wrappers, and capabilities elevated to a typed micro-kernel service protocol (DiscoveryIndexService) co-located under plugins/ (Rules 18, 44, 45, and 49) for zero-subprocess in-memory agent tool execution.",
+  "isnad": {
+    "decision_id": "dec_20260924_self_02",
+    "status": "VERIFIED",
+    "claims": [
+      {
+        "assertion": "Disparate CLI scripts with fragmented data stores produce data drift and prevent ReAct agent step loops from resolving tools in-memory.",
+        "lineage": [
+          {
+            "node_type": "visual_brief",
+            "uri": "%TEMP%/architecture-review-discovery-index-scout-20260924-223255.html",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "assertion": "Consolidating curated lists and local JSON stores into a slotted DiscoveryCatalogEngine with weighted BM25 ranking provides unified query access across static and user sources.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": ".agents/skills/discovery-index-scout/scripts/discovery_engine.py",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "assertion": "Elevating the domain engine to DiscoveryIndexService in src/harness/services/ and registering plugin = DiscoveryIndexScoutPlugin() enables direct IoC container resolution.",
+        "lineage": [
+          {
+            "node_type": "service_contract",
+            "uri": "src/harness/services/discovery_index.py",
+            "verified": true
+          },
+          {
+            "node_type": "plugin_provider",
+            "uri": "plugins/data_engineering/discovery_index_scout/main.py",
+            "verified": true
+          },
+          {
+            "node_type": "test_contract",
+            "uri": "tests/unit/test_discovery_index_scout.py",
+            "verified": true
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "id": "ki_self_20260924_03",
+  "title": "Bounded ReAct Context Accumulator Rotation, Interceptor Epoch Invalidation, and AST Codeblock Anti-Pattern Interception",
+  "category": "agent_orchestration",
+  "created_at": "2026-09-24T19:00:00Z",
+  "author": "Brain Harness Autobiographical Reflection Engine (harness-reflector)",
+  "tags": [
+    "agent_orchestration",
+    "react",
+    "kernel",
+    "dispose_stack",
+    "interceptors",
+    "ast_analysis",
+    "anti_patterns",
+    "endogenous_memory",
+    "self_reflection"
+  ],
+  "context": "Long-running multi-agent swarms accumulating inverse teardown closures in ServiceContext._dispose_stack risk memory bloat over dozens of steps. Dynamic coeffect interceptors risk executing stale compilation pipelines across deep context trees. Furthermore, LLMs emitting unvetted codeblocks containing dangerous functions (eval, exec, input) waste entire conversational rounds if caught only after execution fails.",
+  "distilled_learning": "Agent step loops (StepExecutionEngine) must apply cadenced child context rotation (_step_count % 25 == 0), disposing and re-instantiating child contexts to bound inverse teardown accumulator memory. Hierarchical interceptor caches must track root-level _interceptor_epoch invalidations. Proposed model actions must undergo fast AST syntax tree pre-scanning (AntiPatternGuard._check_code_ast) to detect banned function calls in fenced code blocks and return structured self-repair observations in-flight.",
+  "isnad": {
+    "decision_id": "dec_20260924_self_03",
+    "status": "VERIFIED",
+    "claims": [
+      {
+        "assertion": "StepExecutionEngine accumulating inverse closures in _dispose_stack requires periodic child context rotation to prevent unbounded memory retention during multi-step runs.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "src/harness/agent/react.py#L74-L80",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "src/harness/agent/react.py#L240-L256",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "assertion": "ServiceContext coeffect interception pipelines require root-level _interceptor_epoch invalidation to guarantee fresh compiled chains across deep context hierarchies.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "src/harness/kernel/context.py#L150-L190",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "src/harness/kernel/context.py#L265-L280",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "assertion": "Parsing fenced code blocks with ast.parse and inspecting Call nodes via ast.walk intercepts banned functions (eval, exec, input, __import__) and yields structured self-repair observations in-flight.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "src/harness/services/skill_graph.py#L55-L105",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "assertion": "Zero-synthetic intent routing (Rule 55) requires route_intent to return recommended_chain = [] whenever BFS pathfinding yields no directed path.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "src/harness/services/skill_graph.py#L455-L465",
+            "verified": true
+          },
+          {
+            "node_type": "test_contract",
+            "uri": "tests/test_architectural_modernization.py:test_route_intent_no_synthetic_chain",
+            "verified": true
+          }
+        ]
+      }
+    ]
+  }
+}

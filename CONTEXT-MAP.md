@@ -75,6 +75,7 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - [`bigquery-augmented-analytics`](.agents/skills/bigquery-augmented-analytics/SKILL.md) — In-database augmented analytics via Google BigQuery TVFs for automated change-point detection, multi-dimensional driver attribution, and ARIMA_PLUS counterfactual causal lift.
   - [`garf-reporting-architect`](.agents/skills/garf-reporting-architect/SKILL.md) — Architect, simulate, execute, and govern declarative SQL reporting pipelines and analytical workflow DAGs across heterogeneous APIs and data stores using Google Garf patterns.
   - [`open-source-gis-architect`](.agents/skills/open-source-gis-architect/SKILL.md) — Select, route, and validate open-source GIS engine workloads across 14 engines using deterministic decision trees, CRS safety gates, LiDAR format routing, and defense-restricted domain isolation.
+  - [`discovery-index-scout`](.agents/skills/discovery-index-scout/SKILL.md) — Open-data discovery engine scouting public record archives, legislative transcripts, corporate filings, campaign finances, and research datasets across 46+ curated discovery indexes.
 
 
 ### 4. [Software Engineering](./docs/domains/software-engineering/CONTEXT.md)

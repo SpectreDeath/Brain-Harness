@@ -109,10 +109,12 @@ class ServiceContext:
         self._realms: dict[str, str] = {}
         # Interception table ι: (k: K) → list[wrapper] (Coeffect Interception, Definition 30)
         self._interceptors: dict[str, list[Callable[[Any], Any]]] = defaultdict(list)
-        # Fast path: compiled interceptor pipeline cache per service key
-        self._compiled_interceptors: dict[str, list[Callable[[Any], Any]]] = {}
+        # Fast path: compiled interceptor pipeline cache per service key: (epoch, chain)
+        self._compiled_interceptors: dict[str, Any] = {}
         # Concurrency & thread safety lock
         self._mutation_lock = threading.RLock()
+        self._teardown_epoch: int = 0
+        self._interceptor_epoch: int = 0
 
     @property
     def parent(self) -> ServiceContext | None:
@@ -147,6 +149,13 @@ class ServiceContext:
         child_ctx._realms[key.name] = target_realm
         return child_ctx
 
+    def _get_root(self) -> ServiceContext:
+        """Traverse to the root ServiceContext in the hierarchy."""
+        curr = self
+        while curr._parent is not None:
+            curr = curr._parent
+        return curr
+
     def intercept(
         self, key: ServiceKey[T], wrapper: Callable[[T], T]
     ) -> ServiceContext:
@@ -158,17 +167,25 @@ class ServiceContext:
         child_ctx = self.child()
         child_ctx._interceptors[key.name].append(cast(Callable[[Any], Any], wrapper))
         child_ctx._compiled_interceptors.pop(key.name, None)
+        root = self._get_root()
+        root._interceptor_epoch = getattr(root, "_interceptor_epoch", 0) + 1
         return child_ctx
 
     def _collect_interceptors(self, key_name: str) -> list[Callable[[Any], Any]]:
         """Collect all interceptors along the context hierarchy with caching."""
-        if key_name in self._compiled_interceptors:
-            return self._compiled_interceptors[key_name]
+        root = self._get_root()
+        root_epoch = getattr(root, "_interceptor_epoch", 0)
+        cached = self._compiled_interceptors.get(key_name)
+        if cached is not None and isinstance(cached, tuple):
+            cached_epoch, chain = cached
+            if cached_epoch == root_epoch:
+                return chain
+
         chain: list[Callable[[Any], Any]] = []
         if self._parent is not None:
             chain.extend(self._parent._collect_interceptors(key_name))
         chain.extend(self._interceptors.get(key_name, []))
-        self._compiled_interceptors[key_name] = chain
+        self._compiled_interceptors[key_name] = (root_epoch, chain)
         return chain
 
     @asynccontextmanager
@@ -252,9 +269,12 @@ class ServiceContext:
         with self._mutation_lock:
             stack = list(self._dispose_stack)
             self._dispose_stack.clear()
+            teardown_epoch = self._teardown_epoch = getattr(self, "_teardown_epoch", 0) + 1
 
         while stack:
             inverse = stack.pop()
+            if getattr(inverse, "_teardown_epoch", -1) > teardown_epoch:
+                continue
             try:
                 if inspect.iscoroutinefunction(inverse):
                     await inverse()

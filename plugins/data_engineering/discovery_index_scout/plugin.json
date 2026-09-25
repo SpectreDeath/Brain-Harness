@@ -1,0 +1,67 @@
+{
+  "name": "domain.discovery_index_scout",
+  "version": "1.0.0",
+  "description": "Discovery Index Scout engine: multi-domain search across transcripts, public records, research corpora, and open data indexes",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "provides": [
+    "service.discovery_index"
+  ],
+  "entrypoints": [
+    {
+      "name": "discovery_search",
+      "description": "Execute weighted multi-field search across 46+ discovery indexes with faceted filters",
+      "parameters": [
+        {
+          "name": "query",
+          "type": "string",
+          "description": "Keyword or free-text query",
+          "required": false
+        },
+        {
+          "name": "category",
+          "type": "string",
+          "description": "Filter by category: transcripts, public_records, research_corpora, github_indexes",
+          "required": false
+        },
+        {
+          "name": "tag",
+          "type": "string",
+          "description": "Match specific tag",
+          "required": false
+        },
+        {
+          "name": "provenance_tier",
+          "type": "string",
+          "description": "Filter by provenance tier (e.g. Primary Official)",
+          "required": false
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "description": "Max results to return",
+          "required": false,
+          "default": 20
+        }
+      ]
+    },
+    {
+      "name": "discovery_get_source",
+      "description": "Retrieve detailed metadata for a specific discovery source by ID",
+      "parameters": [
+        {
+          "name": "source_id",
+          "type": "string",
+          "description": "Exact source identifier",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "discovery_get_stats",
+      "description": "Retrieve faceted counts and category distributions for all registered discovery sources",
+      "parameters": []
+    }
+  ]
+}
