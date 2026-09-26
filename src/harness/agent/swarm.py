@@ -497,27 +497,45 @@ class SwarmCoordinator:
     ) -> SwarmDAG:
         """Decompose a high-level objective into a structured SwarmDAG derived from agent skills."""
         try:
-            from harness.services.skill_graph import (
-                SKILL_REGISTRY_KEY,
-            )
+            from harness.services.skill_graph import resolve_skill_intelligence
 
-            registry = self.context.optional(SKILL_REGISTRY_KEY)
+            intelligence = resolve_skill_intelligence(self.context)
         except Exception:
-            registry = None
+            intelligence = None
 
-        if registry is None:
+        if intelligence is None:
             return self.decompose(objective)
 
         target_skills: list[str] = []
         if skill_names:
             target_skills = list(skill_names)
         else:
-            routing = registry.route_intent(objective, top_k=top_k)
-            target_skills = [
-                m.get("skill_name") or m.get("name")
-                for m in (routing.get("matches") or [])
-                if (m.get("skill_name") or m.get("name"))
-            ]
+            try:
+                guidance = intelligence.compile_execution_guidance(
+                    objective, max_skills=top_k, include_verifier=include_verifier
+                )
+                if guidance and guidance.execution_pipeline:
+                    target_skills = list(guidance.execution_pipeline)
+            except Exception:
+                pass
+
+            if not target_skills:
+                try:
+                    plan = intelligence.select_skills_for_task(
+                        objective, max_skills=top_k, include_verifier=include_verifier
+                    )
+                    if plan and getattr(plan, "execution_pipeline", None):
+                        target_skills = list(plan.execution_pipeline)
+                except Exception:
+                    pass
+
+            if not target_skills:
+                routing = intelligence.route_intent(objective, top_k=top_k)
+                target_skills = [
+                    m.get("skill_name") or m.get("name")
+                    for m in (routing.get("matches") or [])
+                    if (m.get("skill_name") or m.get("name"))
+                ]
             if not target_skills:
                 return self.decompose(objective)
 
@@ -525,7 +543,7 @@ class SwarmCoordinator:
         prev_node_id: str | None = None
 
         for skill_name in target_skills:
-            skill = registry.get_skill(skill_name)
+            skill = intelligence.get_skill(skill_name)
             if not skill:
                 continue
 
@@ -561,7 +579,7 @@ class SwarmCoordinator:
                 dag.add_node(node)
                 prev_node_id = node_id
 
-        if include_verifier and prev_node_id:
+        if include_verifier and prev_node_id and not any("verifier" in n for n in dag.nodes):
             verifier_id = "adversarial_verifier"
             dag.add_node(
                 SwarmNode(

@@ -250,17 +250,26 @@ from harness.services.self_evaluating_pipeline import (
     StatisticalGateData,
 )
 from harness.services.skill_graph import (
+    CANONICAL_PIPELINE_PRECEDENCE,
     SKILL_GRAPH_KEY,
+    SKILL_INTELLIGENCE_KEY,
     SKILL_REGISTRY_KEY,
+    ActionGateResult,
     BuiltinSkillGraphService,
     BuiltinSkillRegistryService,
     SkillCardDefinition,
     SkillChainResult,
+    SkillExecutionGuidance,
     SkillGraphService,
+    SkillIntelligenceService,
     SkillInvariantDefinition,
+    SkillNode,
     SkillRegistryPlugin,
     SkillRegistryService,
+    resolve_skill_intelligence,
 )
+from harness.services.skill_parser import SkillCardParser
+from harness.services.skill_visualizer import SkillGraphVisualizer
 from harness.services.stagehand_browser import (
     STAGEHAND_BROWSER_KEY,
     StagehandBrowserService,
@@ -371,9 +380,15 @@ __all__ = [
     "REPO_TRIAD_FORGE_SERVICE_KEY",
     # Self-Evaluating Pipeline
     "SELF_EVALUATING_PIPELINE_SERVICE_KEY",
+    "CANONICAL_PIPELINE_PRECEDENCE",
     "SEMANTIC_CACHE_KEY",
     "SKILL_GRAPH_KEY",
+    "SKILL_INTELLIGENCE_KEY",
     "SKILL_REGISTRY_KEY",
+    "ActionGateResult",
+    "resolve_skill_intelligence",
+    "SkillExecutionGuidance",
+    "SkillIntelligenceService",
     "STAGEHAND_BROWSER_KEY",
     "SYMBOLIC_SOLVER_KEY",
     "TAU_HARNESS_BRIDGE_SERVICE_KEY",

@@ -9,9 +9,63 @@
   "author": "Brain Harness Forge Engine",
   "provides": [
     "service.skill_knowledge_graph",
-    "service.skill_registry"
+    "service.skill_registry",
+    "service.skill_clustering"
   ],
   "entrypoints": [
+    {
+      "name": "select_skills_for_task",
+      "description": "Select skills and compile a prerequisite-aware execution plan for an agent task using the skill knowledge graph",
+      "parameters": [
+        {
+          "name": "task",
+          "type": "string",
+          "description": "Natural language task or intent prompt",
+          "required": true
+        },
+        {
+          "name": "max_skills",
+          "type": "integer",
+          "description": "Maximum number of skills to select (default: 5)",
+          "required": false
+        },
+        {
+          "name": "include_verifier",
+          "type": "boolean",
+          "description": "Whether to append a quality/adversarial verifier skill (default: true)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "cluster_skill_graph",
+      "description": "Cluster workspace skills into functional capability domains and discover novel capabilities",
+      "parameters": [
+        {
+          "name": "min_cluster_size",
+          "type": "integer",
+          "description": "Minimum skill count for a cluster (default: 2)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "discover_emergent_capabilities",
+      "description": "Search for emergent macro-capabilities formed by composite multi-skill pipelines",
+      "parameters": [
+        {
+          "name": "query",
+          "type": "string",
+          "description": "Optional search filter for capability domain",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "get_cross_cluster_bridges",
+      "description": "Discover cross-domain macro-bridges connecting distinct clusters",
+      "parameters": []
+    },
     {
       "name": "index_skill_catalog",
       "description": "Scan workspace (.agents/skills and plugin directories) to build the in-memory skill knowledge graph",

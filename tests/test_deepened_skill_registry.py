@@ -4,18 +4,21 @@ from __future__ import annotations
 
 import tempfile
 from pathlib import Path
+
 import pytest
 
+from harness.commands.skills import get_skill_topology_cmd
 from harness.kernel.context import ServiceContext
 from harness.services.skill_graph import (
-    BuiltinSkillGraphService,
-    BuiltinSkillRegistryService,
     SKILL_GRAPH_KEY,
     SKILL_REGISTRY_KEY,
-    SkillCardDefinition,
+    BuiltinSkillGraphService,
+    BuiltinSkillRegistryService,
     SkillChainResult,
     SkillRegistryPlugin,
+    SkillTopologyReport,
 )
+from plugins.memory_and_epistemics.skill_knowledge_graph.parser import SkillCardParser
 
 
 @pytest.mark.unit
@@ -45,7 +48,9 @@ def test_builtin_skill_registry_get_skill() -> None:
 def test_builtin_skill_registry_route_intent() -> None:
     """Test intent routing to matching skills with confidence scores."""
     registry = BuiltinSkillRegistryService()
-    res = registry.route_intent("refactor architecture seams and remove shallow modules", top_k=3)
+    res = registry.route_intent(
+        "refactor architecture seams and remove shallow modules", top_k=3
+    )
     assert res["status"] == "ok"
     assert len(res["matches"]) > 0
 
@@ -109,3 +114,66 @@ async def test_skill_registry_plugin_ioc_registration() -> None:
 
     skills = reg.discover_all(".")
     assert len(skills) > 0
+
+
+@pytest.mark.unit
+def test_builtin_skill_registry_topology() -> None:
+    """Test retrieving bidirectional topology (upstream prereqs, downstream handoffs, anti-patterns)."""
+    registry = BuiltinSkillRegistryService()
+    topo: SkillTopologyReport = registry.get_topology("repo-reader")
+    assert topo.skill.name == "repo-reader"
+    assert "repo-to-plugin-forge" in topo.downstream_handoffs
+    assert len(topo.mitigated_anti_patterns) > 0
+
+    with pytest.raises(KeyError):
+        registry.get_topology("non-existent-skill-xyz")
+
+
+@pytest.mark.unit
+def test_cli_get_skill_topology_downstream_handoffs() -> None:
+    """Test CLI get_skill_topology_cmd surfaces authentic downstream handoffs."""
+    res = get_skill_topology_cmd("repo-reader")
+    assert res["status"] == "ok"
+    topology = res["topology"]
+    assert "repo-to-plugin-forge" in topology["downstream_handoffs"]
+    assert topology["skill"]["name"] == "repo-reader"
+
+
+@pytest.mark.asyncio
+@pytest.mark.unit
+async def test_builtin_skill_graph_service_get_topology_async() -> None:
+    """Test BuiltinSkillGraphService get_topology async facade."""
+    graph_service = BuiltinSkillGraphService()
+    res = await graph_service.get_topology("repo-reader")
+    assert res["status"] == "ok"
+    assert "repo-to-plugin-forge" in res["topology"]["downstream_handoffs"]
+
+    res_err = await graph_service.get_topology("non-existent-skill-xyz")
+    assert res_err["status"] == "error"
+
+
+@pytest.mark.unit
+def test_scan_root_bounded_noise_pruning(tmp_path: Path) -> None:
+    """Test Rule 52 bounded scan pruning: noise directories are skipped."""
+    valid_dir = tmp_path / "valid-skill"
+    valid_dir.mkdir()
+    (valid_dir / "SKILL.md").write_text(
+        "---\nname: valid-skill\ndescription: Valid skill\n---\n", encoding="utf-8"
+    )
+
+    venv_dir = tmp_path / ".venv" / "fake-skill"
+    venv_dir.mkdir(parents=True)
+    (venv_dir / "SKILL.md").write_text(
+        "---\nname: fake-venv-skill\n---\n", encoding="utf-8"
+    )
+
+    nm_dir = tmp_path / "node_modules" / "fake-skill"
+    nm_dir.mkdir(parents=True)
+    (nm_dir / "SKILL.md").write_text(
+        "---\nname: fake-nm-skill\n---\n", encoding="utf-8"
+    )
+
+    discovered = SkillCardParser.scan_root(tmp_path)
+    assert "valid-skill" in discovered
+    assert "fake-venv-skill" not in discovered
+    assert "fake-nm-skill" not in discovered

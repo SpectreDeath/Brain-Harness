@@ -59,14 +59,14 @@ class StepExecutionEngine:
 
     def __init__(
         self,
-        llm: LLMService,
-        tools: ToolRegistry,
+        llm: LLMService | None = None,
+        tools: ToolRegistry | None = None,
         event_bus: EventBus | None = None,
         context: ServiceContext | None = None,
         optimizer: AgentContextOptimizer | None = None,
     ) -> None:
-        self.llm = llm
-        self.tools = tools
+        self.llm = llm  # type: ignore[assignment]
+        self.tools = tools if tools is not None else ToolRegistry()
         self.event_bus = event_bus
         self.context: ServiceContext = (
             context if context is not None else ServiceContext()
@@ -76,6 +76,7 @@ class StepExecutionEngine:
         )
         self._step_count: int = 0
         self._context_rotation_cadence: int = 25
+        self.active_skills: list[str] = []
 
     async def _invoke_tool_safely(
         self, action_name: str, action_input: dict[str, Any]
@@ -91,6 +92,19 @@ class StepExecutionEngine:
             or action_input.get("file_path")
             or action_input.get("target_file")
         )
+
+        # Rule 16 & Rule 21: Active Anti-Pattern & Invariant Interception before tool execution
+        try:
+            from harness.services.skill_graph import resolve_skill_intelligence
+
+            intel = resolve_skill_intelligence(self.context)
+            gate = intel.evaluate_action_gate(
+                action_name, action_input, active_skills=self.active_skills
+            )
+            if gate.is_blocked:
+                return gate.to_observation()
+        except Exception:
+            pass
 
         async with self.context.transaction() as tx:
             prev_ctx = self.context
@@ -152,6 +166,19 @@ class StepExecutionEngine:
             messages = self.optimizer.inject_repo_map(
                 messages, query_context=task, config=cfg
             )
+
+        # Knowledge Graph & Skill Guidance injection via authoritative SkillIntelligenceService
+        try:
+            from harness.services.skill_graph import resolve_skill_intelligence
+
+            intel = resolve_skill_intelligence(self.context)
+            guidance = intel.compile_execution_guidance(task, max_skills=4)
+            if guidance and guidance.should_inject:
+                self.active_skills = list(guidance.selected_skills)
+                messages[0] = guidance.inject_into_message(messages[0])
+        except Exception:
+            pass
+
         return messages
 
     def extract_action(self, thought: str) -> tuple[str | None, dict[str, Any]]:
@@ -228,16 +255,32 @@ class StepExecutionEngine:
 
         return None, {}
 
-    async def execute_step(self, trajectory: AgentTrajectory, step_idx: int) -> bool:
-        """Execute a single atomic ReAct step on the trajectory.
+    async def execute_step(
+        self,
+        trajectory: AgentTrajectory | None = None,
+        step_idx: int = 1,
+        action_name: str | None = None,
+        action_input: dict[str, Any] | None = None,
+    ) -> Any:
+        """Execute a single atomic ReAct step or direct action invocation.
 
         Args:
-            trajectory: The active stateful execution trajectory.
+            trajectory: The active stateful execution trajectory (optional if action_name given).
             step_idx: 1-indexed step number.
+            action_name: Explicit tool name to invoke directly.
+            action_input: Tool arguments dictionary when invoking directly.
 
         Returns:
-            True if the agent should continue to the next step, False if finished.
+            Observation dictionary if direct action invoked; True if agent continues, False if finished.
         """
+        if action_name is not None:
+            return await self._invoke_tool_safely(
+                action_name, action_input if action_input is not None else {}
+            )
+
+        if trajectory is None:
+            raise ValueError("trajectory must be provided when action_name is not specified")
+
         logger.info("Agent iteration", step=step_idx, task=trajectory.task[:50])
 
         # Bounded session context rotation to prevent unbounded inverse accumulator growth

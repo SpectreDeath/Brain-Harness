@@ -2,15 +2,11 @@
 
 from __future__ import annotations
 
-import pytest
 from pathlib import Path
 
-from harness.services.skill_graph import (
-    BuiltinSkillRegistryService,
-    BuiltinSkillGraphService,
-    SkillCardDefinition,
-)
-from harness.services.storage import SQLiteStorageService
+import pytest
+
+from harness.services.skill_graph import BuiltinSkillRegistryService
 
 
 @pytest.mark.unit
@@ -67,3 +63,83 @@ class TestDeepenedSkillsAndHarnessSeam:
         for s in skills:
             assert "venvs" not in s.skill_path.lower()
             assert ".venv" not in s.skill_path.lower()
+
+    def test_canonical_pipeline_precedence_single_sourced(self) -> None:
+        """Adversarial assertion: Pipeline precedence must be single-sourced and shared across modules."""
+        from harness.services import (
+            CANONICAL_PIPELINE_PRECEDENCE as PRECEDENCE_SERVICES,
+        )
+        from harness.services.skill_graph import (
+            CANONICAL_PIPELINE_PRECEDENCE as PRECEDENCE_CORE,
+        )
+        from plugins.memory_and_epistemics.skill_knowledge_graph.graph import (
+            CANONICAL_PIPELINE_PRECEDENCE as PRECEDENCE_PLUGIN,
+        )
+
+        assert PRECEDENCE_CORE is PRECEDENCE_SERVICES
+        assert PRECEDENCE_CORE is PRECEDENCE_PLUGIN
+        assert len(PRECEDENCE_CORE) >= 11
+        assert ("codebase-design", "deepen-architecture") in PRECEDENCE_CORE
+        assert ("deepen-architecture", "crafting-skills") in PRECEDENCE_CORE
+
+    def test_invalidation_listener_synchronization(self, workspace_root: str) -> None:
+        """Adversarial assertion: Cache invalidation on registry triggers registered listeners."""
+        registry = BuiltinSkillRegistryService(default_root=workspace_root)
+        called = False
+
+        def on_invalidate() -> None:
+            nonlocal called
+            called = True
+
+        registry.add_invalidation_listener(on_invalidate)
+        registry.discover_all(workspace_root)
+        assert registry._skills_cache
+
+        registry.invalidate_cache()
+        assert called is True
+        assert len(registry._skills_cache) == 0
+
+        # Unregister listener
+        called = False
+        registry.remove_invalidation_listener(on_invalidate)
+        registry.invalidate_cache()
+        assert called is False
+
+    @pytest.mark.asyncio
+    async def test_swarm_coordinator_typed_skill_resolution(self, workspace_root: str) -> None:
+        """Adversarial assertion: SwarmCoordinator resolves skills through typed ServiceKey contracts."""
+        from harness.agent.swarm import SwarmCoordinator
+        from harness.kernel.context import ServiceContext
+        from harness.services.skill_clustering import SKILL_CLUSTERING_KEY
+        from harness.services.skill_graph import (
+            SKILL_REGISTRY_KEY,
+            BuiltinSkillRegistryService,
+        )
+
+        ctx = ServiceContext()
+        registry = BuiltinSkillRegistryService(default_root=workspace_root)
+        ctx.provide(SKILL_REGISTRY_KEY, registry)
+        ctx.provide(SKILL_CLUSTERING_KEY, registry)
+
+        coordinator = SwarmCoordinator(context=ctx)
+        dag = coordinator.decompose_with_skills(
+            objective="Deepen codebase architecture and craft summary cards",
+            top_k=3,
+        )
+
+        assert dag is not None
+        assert len(dag.nodes) > 0
+        node_roles = [node.role for node in dag.nodes.values()]
+        assert len(node_roles) > 0
+
+        # Also test explicit skill_names routing
+        dag_explicit = coordinator.decompose_with_skills(
+            objective="Deepen codebase architecture",
+            skill_names=["deepen-architecture", "crafting-skills"],
+        )
+        assert dag_explicit is not None
+        assert len(dag_explicit.nodes) > 0
+        explicit_roles = [node.role for node in dag_explicit.nodes.values()]
+        assert any("deepen-architecture" in r for r in explicit_roles)
+        assert any("crafting-skills" in r for r in explicit_roles)
+
