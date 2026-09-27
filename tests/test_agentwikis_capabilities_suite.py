@@ -355,6 +355,9 @@ class TestStage5SliceRetrievalAndDispatch:
         if offset_table:
             assert offset_table.total_blocks > 100
 
+            # Warm up to eliminate cold OS page fault jitter on Windows
+            _ = engine.extract_document("hermes/wiki/concepts/bot-mode.md")
+
             t0 = time.perf_counter()
             doc = engine.extract_document("hermes/wiki/concepts/bot-mode.md")
             elapsed_ms = (time.perf_counter() - t0) * 1000

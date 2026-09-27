@@ -22,7 +22,10 @@ _HARNESS_SRC = _REPO_ROOT / "src"
 if _HARNESS_SRC.exists() and str(_HARNESS_SRC) not in sys.path:
     sys.path.insert(0, str(_HARNESS_SRC))
 
-from service import HfDocBuilderSubprocessService
+try:
+    from .service import HfDocBuilderSubprocessService
+except ImportError:
+    from service import HfDocBuilderSubprocessService
 
 from harness.kernel.context import ServiceContext, ServiceKey
 from harness.plugins.base import HarnessPlugin
