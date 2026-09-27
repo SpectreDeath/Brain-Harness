@@ -20,6 +20,9 @@ from harness.services.skill_graph import (
     SKILL_REGISTRY_KEY,
     ActionGateResult,
     BuiltinSkillRegistryService,
+    SkillIntelligenceAdapter,
+    SkillIntelligenceService,
+    SkillRegistryService,
     resolve_skill_intelligence,
 )
 
@@ -208,3 +211,28 @@ def test_swarm_coordinator_single_seam_decomposition() -> None:
 
     assert isinstance(dag, SwarmDAG)
     assert len(dag.nodes) > 0
+
+
+@pytest.mark.unit
+def test_resolve_skill_intelligence_adapts_partial_registry() -> None:
+    """Verify resolve_skill_intelligence adapts partial / mock SkillRegistryService instances."""
+    from unittest.mock import MagicMock
+
+    ctx = ServiceContext()
+    mock_reg = MagicMock(spec=SkillRegistryService)
+    mock_reg.route_intent.return_value = {
+        "status": "ok",
+        "matches": [{"skill_name": "crafting-skills"}],
+    }
+
+    ctx.provide(SKILL_REGISTRY_KEY, mock_reg)
+    resolved = resolve_skill_intelligence(ctx)
+
+    assert isinstance(resolved, SkillIntelligenceAdapter)
+    assert isinstance(resolved, SkillIntelligenceService)
+
+    # Verify delegation
+    res = resolved.route_intent("crafting-skills")
+    assert res["status"] == "ok"
+    assert res["matches"][0]["skill_name"] == "crafting-skills"
+    mock_reg.route_intent.assert_called_once_with("crafting-skills", top_k=3)

@@ -1841,6 +1841,205 @@ def get_default_skill_graph(root_dir: str = ".") -> BuiltinSkillGraphService:
     return _DEFAULT_GRAPH_INSTANCE
 
 
+class SkillIntelligenceAdapter:
+    """Non-invasive adapter wrapping a SkillRegistryService or partial service to satisfy SkillIntelligenceService."""
+
+    def __init__(self, target: Any) -> None:
+        self._target = target
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._target, name)
+
+    def discover_all(self, root_dir: str = ".") -> list[SkillCardDefinition]:
+        return (
+            self._target.discover_all(root_dir)
+            if hasattr(self._target, "discover_all")
+            else []
+        )
+
+    def get_skill(self, name: str) -> SkillCardDefinition | None:
+        return (
+            self._target.get_skill(name) if hasattr(self._target, "get_skill") else None
+        )
+
+    def get_topology(self, skill_name: str) -> Any:
+        return (
+            self._target.get_topology(skill_name)
+            if hasattr(self._target, "get_topology")
+            else None
+        )
+
+    def get_prerequisite_closure(self, skill_name: str) -> list[str]:
+        return (
+            self._target.get_prerequisite_closure(skill_name)
+            if hasattr(self._target, "get_prerequisite_closure")
+            else []
+        )
+
+    def export_html_brief(self, output_path: str | None = None) -> str:
+        return (
+            self._target.export_html_brief(output_path)
+            if hasattr(self._target, "export_html_brief")
+            else ""
+        )
+
+    def route_intent(self, intent: str, top_k: int = 3) -> dict[str, Any]:
+        return (
+            self._target.route_intent(intent, top_k=top_k)
+            if hasattr(self._target, "route_intent")
+            else {"status": "ok", "matches": []}
+        )
+
+    def get_chain(self, start_skill: str, target_skill: str, **kwargs: Any) -> Any:
+        return (
+            self._target.get_chain(start_skill, target_skill, **kwargs)
+            if hasattr(self._target, "get_chain")
+            else None
+        )
+
+    def link_knowledge_vault(self, vault_dir: Any = ".harness/knowledge") -> int:
+        return (
+            self._target.link_knowledge_vault(vault_dir)
+            if hasattr(self._target, "link_knowledge_vault")
+            else 0
+        )
+
+    def evaluate_chain_feasibility(
+        self, chain: list[str], context: Any = None
+    ) -> tuple[bool, list[str]]:
+        return (
+            self._target.evaluate_chain_feasibility(chain, context)
+            if hasattr(self._target, "evaluate_chain_feasibility")
+            else (True, [])
+        )
+
+    def cluster_skills(self, min_cluster_size: int = 2) -> list[Any]:
+        return (
+            self._target.cluster_skills(min_cluster_size)
+            if hasattr(self._target, "cluster_skills")
+            else []
+        )
+
+    def discover_emergent_capabilities(self, query: str | None = None) -> list[Any]:
+        return (
+            self._target.discover_emergent_capabilities(query)
+            if hasattr(self._target, "discover_emergent_capabilities")
+            else []
+        )
+
+    def get_cross_cluster_bridges(self) -> list[Any]:
+        return (
+            self._target.get_cross_cluster_bridges()
+            if hasattr(self._target, "get_cross_cluster_bridges")
+            else []
+        )
+
+    def select_skills_for_task(
+        self, task: str, max_skills: int = 5, include_verifier: bool = True
+    ) -> Any:
+        if hasattr(self._target, "select_skills_for_task"):
+            return self._target.select_skills_for_task(
+                task, max_skills=max_skills, include_verifier=include_verifier
+            )
+        return None
+
+    def intercept_action(
+        self,
+        action_name: str,
+        action_input: dict[str, Any],
+        active_skills: list[str] | None = None,
+    ) -> list[AntiPatternViolation]:
+        if hasattr(self._target, "intercept_action"):
+            return self._target.intercept_action(action_name, action_input, active_skills)
+        lookup = getattr(self._target, "get_skill", None)
+        return AntiPatternGuard.evaluate_action(
+            action_name, action_input, active_skills, skill_lookup=lookup
+        )
+
+    def evaluate_action_gate(
+        self,
+        action_name: str,
+        action_input: dict[str, Any],
+        active_skills: list[str] | None = None,
+    ) -> ActionGateResult:
+        if hasattr(self._target, "evaluate_action_gate"):
+            return self._target.evaluate_action_gate(
+                action_name=action_name,
+                action_input=action_input,
+                active_skills=active_skills,
+            )
+        lookup = getattr(self._target, "get_skill", None)
+        return AntiPatternGuard.evaluate_action_gate(
+            action_name=action_name,
+            action_input=action_input,
+            active_skills=active_skills,
+            skill_lookup=lookup,
+        )
+
+    def compile_execution_guidance(
+        self, task: str, max_skills: int = 4, include_verifier: bool = True
+    ) -> SkillExecutionGuidance:
+        if hasattr(self._target, "compile_execution_guidance"):
+            return self._target.compile_execution_guidance(
+                task, max_skills=max_skills, include_verifier=include_verifier
+            )
+        target_skills: list[str] = []
+        if hasattr(self._target, "select_skills_for_task"):
+            try:
+                plan = self._target.select_skills_for_task(
+                    task, max_skills=max_skills, include_verifier=include_verifier
+                )
+                if plan and getattr(plan, "execution_pipeline", None):
+                    target_skills = list(plan.execution_pipeline)
+            except Exception:
+                pass
+        if not target_skills and hasattr(self._target, "route_intent"):
+            try:
+                res = self._target.route_intent(task, top_k=max_skills)
+                if isinstance(res, dict):
+                    matches = res.get("matches") or []
+                    for m in matches:
+                        s_name = m.get("skill_name") or m.get("name")
+                        if s_name:
+                            target_skills.append(s_name)
+            except Exception:
+                pass
+
+        stages: list[dict[str, Any]] = []
+        anti_patterns: list[dict[str, Any]] = []
+        if hasattr(self._target, "get_skill"):
+            for s_name in target_skills:
+                s_obj = self._target.get_skill(s_name)
+                if s_obj:
+                    for st in getattr(s_obj, "stages", []) or []:
+                        stages.append(
+                            {
+                                "skill": s_obj.name,
+                                "stage_num": getattr(st, "stage_num", 1),
+                                "name": getattr(st, "name", ""),
+                                "completion_gate": getattr(st, "completion_gate", ""),
+                            }
+                        )
+                    for ap in getattr(s_obj, "anti_patterns", []) or []:
+                        anti_patterns.append(
+                            {
+                                "skill": s_obj.name,
+                                "anti_pattern": getattr(ap, "name", ""),
+                                "symptom": getattr(ap, "symptom", ""),
+                                "remedy": getattr(ap, "remedy", ""),
+                            }
+                        )
+
+        return SkillExecutionGuidance(
+            task=task,
+            selected_skills=tuple(target_skills),
+            execution_pipeline=tuple(target_skills),
+            confidence=0.85 if target_skills else 0.0,
+            stages=tuple(stages),
+            active_anti_patterns=tuple(anti_patterns),
+        )
+
+
 def resolve_skill_intelligence(
     context: Any = None, root_dir: str = "."
 ) -> SkillIntelligenceService:
@@ -1852,15 +2051,21 @@ def resolve_skill_intelligence(
     """
     if context is not None and hasattr(context, "optional"):
         intel = context.optional(SKILL_INTELLIGENCE_KEY)
-        if intel is not None and isinstance(intel, SkillIntelligenceService):
-            return intel
+        if intel is not None:
+            if isinstance(intel, SkillIntelligenceService):
+                return intel
+            return SkillIntelligenceAdapter(intel)
         reg = context.optional(SKILL_REGISTRY_KEY)
-        if reg is not None and isinstance(reg, SkillIntelligenceService):
-            return reg
+        if reg is not None:
+            if isinstance(reg, SkillIntelligenceService):
+                return reg
+            return SkillIntelligenceAdapter(reg)
         from harness.services.skill_clustering import SKILL_CLUSTERING_KEY
 
         clust = context.optional(SKILL_CLUSTERING_KEY)
-        if clust is not None and isinstance(clust, SkillIntelligenceService):
-            return clust
+        if clust is not None:
+            if isinstance(clust, SkillIntelligenceService):
+                return clust
+            return SkillIntelligenceAdapter(clust)
 
     return get_default_skill_registry(root_dir=root_dir)
