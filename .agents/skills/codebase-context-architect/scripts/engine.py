@@ -15,13 +15,13 @@ Provides deep-module abstractions for:
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
 import json
 import math
-from pathlib import Path
 import re
 import sys
-from typing import Any, Union
+from dataclasses import dataclass, field
+from pathlib import Path
+from typing import Any
 
 try:
     import tomllib
@@ -130,7 +130,7 @@ class SyncDriftCheck:
         }
 
 
-CheckResult = Union[TokenBudgetCheck, PathIntegrityCheck, ScriptIntegrityCheck, SyncDriftCheck]
+CheckResult = TokenBudgetCheck | PathIntegrityCheck | ScriptIntegrityCheck | SyncDriftCheck
 
 
 @dataclass(slots=True, frozen=True)
@@ -299,6 +299,7 @@ class SemanticPathClassifier:
         "config.yaml",
         "CONTEXT.md",
         "colors.toml",
+        "plugin.json",
     })
 
     @classmethod
@@ -346,8 +347,10 @@ class CodebaseContextEngine:
         return re.sub(r"```[\s\S]*?```", "", text)
 
     def extract_inline_spans(self, text: str) -> list[str]:
-        """Extract backtick code spans from prose text."""
+        """Extract backtick code spans from prose text, evaluating link targets for formatted labels."""
         prose = self.strip_fenced_blocks(text)
+        # Per Rule 47: Handle [`label`](target) links so target path is evaluated rather than display label
+        prose = re.sub(r"\[`[^`\n]+`\]\(([^)\s]+)\)", r"`\1`", prose)
         return [m.group(1).strip() for m in re.finditer(r"`([^`\n]+)`", prose)]
 
     def looks_like_path(self, span: str) -> bool:
@@ -441,8 +444,11 @@ class CodebaseContextEngine:
             claude_file = self.root / "CLAUDE.md"
             if claude_file.exists():
                 content = claude_file.read_text(encoding="utf-8", errors="ignore")
-                if "Generated from AGENTS.md" in content:
-                    if "@AGENTS.md" not in content and "@./AGENTS.md" not in content:
+                if (
+                    "Generated from AGENTS.md" in content
+                    and "@AGENTS.md" not in content
+                    and "@./AGENTS.md" not in content
+                ):
                         checks.append(
                             SyncDriftCheck(
                                 target_file="CLAUDE.md",

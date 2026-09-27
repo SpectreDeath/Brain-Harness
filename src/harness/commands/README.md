@@ -9,7 +9,7 @@ The `harness.commands` package provides pure async and synchronous command handl
 Commands are decoupled from Click CLI option parsers:
 - **Pure Async Entrypoints**: Command modules define reusable functions (`cmd_*`) that accept typed arguments or options, allowing programmatic invocation from scripts or test fixtures without shell spawning.
 - **IoC Service Resolution**: Command handlers instantiate or connect to the `HarnessRuntime`, resolve typed `ServiceKey[T]` instances from the context, and execute transactional workflows.
-- **Rule 6 Compliance**: Subcommands are consolidated into single-source command groups (`main.py` and `cli.py`) to prevent subcommand shadowing.
+- **Rule 6 Compliance**: Subcommands are consolidated into single-source command groups ([`cli.py`](../cli.py)) to prevent subcommand shadowing.
 
 ---
 

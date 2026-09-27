@@ -4,7 +4,7 @@
 codebase-context-architect:
   chars_per_token: 4
   budgets:
-    AGENTS.md: 5000
+    AGENTS.md: 8000
     CLAUDE.md: 300
-    .github/copilot-instructions.md: 5000
+    .github/copilot-instructions.md: 8000
     src/AGENTS.md: 400
