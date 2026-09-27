@@ -11,6 +11,7 @@ Verifies:
 from __future__ import annotations
 
 import time
+from pathlib import Path
 
 import pytest
 
@@ -395,3 +396,29 @@ def test_sync_export_html_brief() -> None:
     cmd_res = export_skill_graph_visual_cmd()
     assert cmd_res["status"] == "ok"
     assert cmd_res["html_path"].endswith(".html")
+
+
+@pytest.mark.unit
+def test_skill_card_parser_handles_quoted_trigger_tuples(tmp_path: Path) -> None:
+    """Assert SkillCardParser handles descriptions with multiple mixed quotes without tuple AttributeError."""
+    from harness.services.skill_parser import SkillCardParser
+
+    skill_dir = tmp_path / "mixed-quotes-skill"
+    skill_dir.mkdir(parents=True, exist_ok=True)
+
+    skill_content = (
+        "---\n"
+        "name: mixed-quotes-skill\n"
+        'description: Diagnosis loop. Use when the user says "diagnose"/\'debug this\', or reports something broken.\n'
+        "---\n\n"
+        "# Mixed Quotes Skill\n\n"
+        "## Anti-Patterns\n"
+        "- **Premature Edit** — Editing before diagnosis.\n"
+    )
+    (skill_dir / "SKILL.md").write_text(skill_content, encoding="utf-8")
+
+    card = SkillCardParser.parse_directory(skill_dir)
+    assert card is not None
+    assert card.name == "mixed-quotes-skill"
+    assert "diagnose" in card.triggers
+    assert "debug this" in card.triggers

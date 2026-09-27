@@ -108,10 +108,11 @@ class SkillCardParser:
 
         # Infer triggers from description if empty
         if not triggers and description:
+            raw_matches = re.findall(r'"([^"]+)"|\'([^\']+)\'', description)
             triggers = [
-                t.strip().strip('"').strip("'")
-                for t in re.findall(r'"([^"]+)"|\'([^\']+)\'', description)
-                if t
+                (t[0] or t[1]).strip().strip('"').strip("'")
+                for t in raw_matches
+                if (t[0] or t[1])
             ]
             if not triggers:
                 triggers = [name.replace("-", " ")]
