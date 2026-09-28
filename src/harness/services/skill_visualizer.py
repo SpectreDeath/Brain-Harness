@@ -80,6 +80,16 @@ class SkillGraphVisualizer:
                 f'<span class="bg-[#2d1f1f] text-[#ff7b72] px-2 py-0.5 rounded text-xs mr-1 mb-1 inline-block border border-[#492424]">{getattr(ap, "name", str(ap))}</span>'
                 for ap in anti_patterns[:3]
             )
+            invariants = getattr(node, "invariants", []) or []
+            inv_badges = "".join(
+                f'<span class="bg-[#2d261a] text-[#f2cc60] px-2 py-0.5 rounded text-xs mr-1 mb-1 inline-block border border-[#59441a]">{getattr(inv, "rule", str(inv))[:60]}</span>'
+                for inv in invariants[:2]
+            )
+            deps = getattr(node, "dependencies", []) or getattr(node, "references", []) or []
+            deps_badges = "".join(
+                f'<span class="bg-[#1b222d] text-[#79c0ff] px-1.5 py-0.5 rounded text-[11px] mr-1 mb-1 inline-block border border-[#2b3a4e]">{d}</span>'
+                for d in deps[:4]
+            )
 
             target_text = getattr(node, "target", "") or getattr(node, "description", "") or ""
             card = f"""
@@ -95,7 +105,9 @@ class SkillGraphVisualizer:
                   <div class="flex flex-wrap">{triggers_badges or '<span class="text-xs text-gray-500">None</span>'}</div>
                 </div>
                 {f'<div class="mb-3"><div class="text-[10px] uppercase tracking-wider text-gray-500 font-semibold mb-1">Stages</div><ul class="list-none pl-0">{stages_list}</ul></div>' if stages_list else ""}
-                {f'<div><div class="text-[10px] uppercase tracking-wider text-gray-500 font-semibold mb-1">Anti-Patterns Guarded</div><div class="flex flex-wrap">{ap_badges}</div></div>' if ap_badges else ""}
+                {f'<div class="mb-2"><div class="text-[10px] uppercase tracking-wider text-gray-500 font-semibold mb-1">Anti-Patterns Guarded</div><div class="flex flex-wrap">{ap_badges}</div></div>' if ap_badges else ""}
+                {f'<div class="mb-2"><div class="text-[10px] uppercase tracking-wider text-amber-500 font-semibold mb-1">Mandatory Invariants</div><div class="flex flex-wrap">{inv_badges}</div></div>' if inv_badges else ""}
+                {f'<div><div class="text-[10px] uppercase tracking-wider text-blue-400 font-semibold mb-1">Prerequisites</div><div class="flex flex-wrap">{deps_badges}</div></div>' if deps_badges else ""}
               </div>
               <div class="mt-4 pt-3 border-t border-[#21262d] flex justify-between items-center text-[11px] text-gray-400">
                 <span>{getattr(node, "invocation", "") or f"/{node.name}"}</span>
