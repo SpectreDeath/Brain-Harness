@@ -274,7 +274,27 @@ def test_invariant_aware_action_interception() -> None:
     assert len(v_cmd) >= 1
     assert any("Inline -c" in getattr(v, "rule", "") or "Inline -c" in getattr(v, "anti_pattern", "") for v in v_cmd)
 
-    # 3. Clean action produces no violations
+    # 3. Action violating Rule 15 (plaintext access token in shell command)
+    v_token = AntiPatternGuard.evaluate_action(
+        action_name="run_command",
+        action_input={"CommandLine": "git push https://ghp_secretToken1234567890@github.com/repo.git main"},
+        active_skills=["test-guarded-skill"],
+        skill_lookup=skills_map.get,
+    )
+    assert len(v_token) >= 1
+    assert any("Credential Exposure" in getattr(v, "anti_pattern", "") or "plaintext access token" in getattr(v, "matched_phrase", "") for v in v_token)
+
+    # 4. Action violating Rule 30 (pytest glob path in PowerShell)
+    v_glob = AntiPatternGuard.evaluate_action(
+        action_name="run_command",
+        action_input={"CommandLine": "pytest tests/test_*.py"},
+        active_skills=["test-guarded-skill"],
+        skill_lookup=skills_map.get,
+    )
+    assert len(v_glob) >= 1
+    assert any("PowerShell Glob Non-Expansion" in getattr(v, "anti_pattern", "") or "pytest glob path" in getattr(v, "matched_phrase", "") for v in v_glob)
+
+    # 5. Clean action produces no violations
     v_clean = AntiPatternGuard.evaluate_action(
         action_name="view_file",
         action_input={"path": "src/main.py"},

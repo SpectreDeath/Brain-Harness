@@ -267,7 +267,33 @@ class AntiPatternGuard:
                             )
                         )
 
-        # 3. Check declared anti-patterns and invariants for active skills
+        # 3. Rule 15 Credential Exposure Guard
+        if re.search(r"(?:ghp_[A-Za-z0-9_]{10,}|github_pat_[A-Za-z0-9_]{10,})", combined_text):
+            violations.append(
+                AntiPatternViolation(
+                    skill_name=system_guard_name,
+                    anti_pattern="Rule 15: Credential Exposure in Action Parameters",
+                    symptom="Plaintext access token detected in proposed action parameters",
+                    remedy="Pass authenticated credentials via isolated runner script with in-memory log redaction",
+                    matched_phrase="[REDACTED_TOKEN_DETECTED]",
+                )
+            )
+
+        # 4. Rule 30 PowerShell Glob Non-Expansion Guard
+        if action_name in ("run_command", "bash", "execute_command"):
+            cmd_val = str(action_input.get("CommandLine") or action_input.get("command") or combined_text)
+            if re.search(r"pytest\s+[^\s]*\*", cmd_val):
+                violations.append(
+                    AntiPatternViolation(
+                        skill_name=system_guard_name,
+                        anti_pattern="Rule 30: PowerShell Glob Non-Expansion in pytest",
+                        symptom="Glob wildcard '*' in pytest target path will not be expanded by PowerShell",
+                        remedy='Use pytest -k "<pattern>" keyword filtering or explicit file lists instead of glob paths',
+                        matched_phrase="pytest * glob",
+                    )
+                )
+
+        # 5. Check declared anti-patterns and invariants for active skills
         if active_skills and skill_lookup:
             for skill_name in active_skills:
                 skill = (
@@ -388,6 +414,48 @@ class AntiPatternGuard:
                             matched_phrase="python -c inline string",
                             is_blocking=getattr(inv, "is_blocking", True),
                             remedy="Write logic to a scratch script and execute via python <path>",
+                        )
+                    )
+
+            # Invariant: PowerShell Glob Non-Expansion (Rule 30)
+            if (
+                ("powershell glob" in inv_lower or "non-expansion" in inv_lower or "rule 30" in inv_lower)
+                and (
+                    action_name in ("run_command", "bash", "execute_command")
+                    or "command" in action_input
+                    or "CommandLine" in action_input
+                )
+            ):
+                cmd_val = str(action_input.get("CommandLine") or action_input.get("command") or combined_text)
+                if re.search(r"pytest\s+[^\s]*\*", cmd_val):
+                    violations.append(
+                        InvariantViolation(
+                            skill_name=skill.name,
+                            rule=inv_rule,
+                            matched_phrase="pytest glob path in PowerShell",
+                            is_blocking=getattr(inv, "is_blocking", True),
+                            remedy='Use pytest -k "<pattern>" keyword filtering or explicit file lists instead of glob paths',
+                        )
+                    )
+
+            # Invariant: Secure Credential Injection & Runner Isolation (Rule 15)
+            if (
+                ("credential" in inv_lower or "token" in inv_lower or "rule 15" in inv_lower or "runner isolation" in inv_lower)
+                and (
+                    action_name in ("run_command", "bash", "execute_command")
+                    or "command" in action_input
+                    or "CommandLine" in action_input
+                )
+            ):
+                cmd_val = str(action_input.get("CommandLine") or action_input.get("command") or combined_text)
+                if re.search(r"(?:ghp_[A-Za-z0-9_]{10,}|github_pat_[A-Za-z0-9_]{10,})", cmd_val):
+                    violations.append(
+                        InvariantViolation(
+                            skill_name=skill.name,
+                            rule=inv_rule,
+                            matched_phrase="plaintext access token in shell command",
+                            is_blocking=getattr(inv, "is_blocking", True),
+                            remedy="Pass authenticated credentials via an isolated Python runner script with in-memory log redaction",
                         )
                     )
 
