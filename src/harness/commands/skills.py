@@ -254,6 +254,29 @@ def get_prerequisite_closure_cmd(
     }
 
 
+def check_chain_feasibility_cmd(
+    chain: list[str],
+    root_path: str | Path = ".",
+    verify_prerequisites: bool = True,
+    context: Any = None,
+) -> dict[str, Any]:
+    """Check whether declared service preconditions and prerequisite dependencies for a skill chain are satisfied (Rule 10)."""
+    registry = get_skill_registry(root_path, context=context)
+    feasible, missing = registry.evaluate_chain_feasibility(
+        chain=chain,
+        context=context,
+        verify_prerequisites=verify_prerequisites,
+    )
+    return {
+        "status": "ok" if feasible else "error",
+        "feasible": feasible,
+        "chain": chain,
+        "length": len(chain),
+        "missing_items": missing,
+        "missing_count": len(missing),
+    }
+
+
 def get_skill_topology_cmd(
     skill_name: str, context: Any = None
 ) -> dict[str, Any]:
@@ -790,7 +813,46 @@ def skills_prereqs(skill_name: str, as_json: bool, path: str) -> None:
     click.echo("━" * 80)
 
 
+@skills_group.command("check-chain")
+@click.argument("skills", nargs=-1, required=True)
+@click.option("--verify-prereqs/--no-verify-prereqs", default=True, help="Verify topological prerequisite closure")
+@click.option("--json", "as_json", is_flag=True, help="Output raw JSON format")
+@click.option("--path", default=".", help="Root directory to scan for skills")
+def skills_check_chain(
+    skills: tuple[str, ...],
+    verify_prereqs: bool,
+    as_json: bool,
+    path: str,
+) -> None:
+    """Evaluate whether an execution sequence of skills is feasible with all preconditions met (Rule 10)."""
+    import json
+
+    chain = list(skills)
+    res = check_chain_feasibility_cmd(
+        chain=chain,
+        root_path=path,
+        verify_prerequisites=verify_prereqs,
+    )
+    if as_json:
+        click.echo(json.dumps(res, indent=2))
+        return
+
+    click.echo(f"\n🔗 Chain Feasibility Assessment ({len(chain)} steps)")
+    click.echo("━" * 80)
+    click.echo(f"Chain: {' -> '.join(chain)}")
+    status_badge = "✓ FEASIBLE (All preconditions met)" if res["feasible"] else "✗ BLOCKED (Missing dependencies/prerequisites)"
+    click.echo(f"Status: {status_badge}")
+    if res["missing_items"]:
+        click.echo(f"\nMissing Items ({res['missing_count']} total):")
+        for item in res["missing_items"]:
+            click.echo(f"   ❌ {item}")
+    else:
+        click.echo("   Zero missing prerequisites or unsatisfied service preconditions.")
+    click.echo("━" * 80)
+
+
 __all__ = [
+    "check_chain_feasibility_cmd",
     "cluster_skills_cmd",
     "compile_guidance_cmd",
     "discover_capabilities_cmd",

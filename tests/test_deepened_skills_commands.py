@@ -14,6 +14,7 @@ from harness.commands.plugins import (
     enable_plugin_by_name,
 )
 from harness.commands.skills import (
+    check_chain_feasibility_cmd,
     export_skill_graph_visual_cmd,
     find_skill_chain_cmd,
     get_skill_topology_cmd,
@@ -183,3 +184,50 @@ def test_cli_skills_group(tmp_path: Path) -> None:
     result = runner.invoke(main, ["skills", "validate", str(skill_dir)])
     assert result.exit_code == 0
     assert "Overall Status: ✓ PASS" in result.output
+
+
+@pytest.mark.unit
+def test_check_chain_feasibility_cmd() -> None:
+    """Assert check_chain_feasibility_cmd evaluates topological prerequisites accurately."""
+    # Test valid sequence without strict prereq enforcement
+    res_valid = check_chain_feasibility_cmd(
+        ["crafting-skills", "deepen-architecture"],
+        verify_prerequisites=False,
+    )
+    assert res_valid["status"] == "ok"
+    assert res_valid["feasible"] is True
+    assert res_valid["missing_count"] == 0
+
+    # Test true root skill with strict prereq enforcement
+    res_root = check_chain_feasibility_cmd(["chatbotx"], verify_prerequisites=True)
+    assert res_root["feasible"] is True
+    assert res_root["missing_count"] == 0
+
+    # Test skill with upstream prerequisites flags missing items when alone
+    res_dep = check_chain_feasibility_cmd(["crafting-skills"], verify_prerequisites=True)
+    assert res_dep["feasible"] is False
+    assert res_dep["missing_count"] > 0
+    assert any("prerequisite_missing" in item for item in res_dep["missing_items"])
+
+
+@pytest.mark.unit
+def test_cli_skills_check_chain() -> None:
+    """Assert headless Click CLI skills check-chain command executes cleanly (Rule 10)."""
+    runner = CliRunner()
+
+    # Formatted human output
+    res = runner.invoke(main, ["skills", "check-chain", "crafting-skills", "deepen-architecture"])
+    assert res.exit_code == 0
+    assert "Chain Feasibility Assessment" in res.output
+    assert "Chain:" in res.output
+
+    # JSON output
+    res_json = runner.invoke(
+        main,
+        ["skills", "check-chain", "crafting-skills", "deepen-architecture", "--json"],
+    )
+    assert res_json.exit_code == 0
+    data = json.loads(res_json.output)
+    assert "feasible" in data
+    assert "missing_items" in data
+    assert data["length"] == 2
