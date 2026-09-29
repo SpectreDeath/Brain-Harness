@@ -1,0 +1,12 @@
+# Default operational configuration for deterministic-validation-loop skill (Rule 44)
+version: "1.0.0"
+operational_budgets:
+  max_turns: 15
+  cost_budget_usd: 2.00
+  subprocess_timeout_seconds: 60
+  token_budget_bound: 32000
+validation_policy:
+  max_repair_retries: 3
+  validation_tier_enforcement: "tier_3"
+  exact_error_injection: true
+  fail_early_on_syntax: true

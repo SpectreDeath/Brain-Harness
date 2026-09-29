@@ -38,12 +38,12 @@
 
 ---
 
-## Invariants & Guardrails
+## Mandatory Invariants Checklist
 
-1. **Security Guardrail**: Never enclose credentials, `.env`, `.git`, or private keys in `<SHOW_FILE>` tags.
-2. **Deterministic Output**: Always provide `<GENERATE_FILE>` tags for expected binary deliverables (PDF, GLB, MP4, XLSX).
-3. **Team Mode Constraint**: Reserve `chat_mode="team"` strictly for deep multi-source research tasks; use `agent` max for asset generation.
-4. **Mandatory Gate**: Never execute unapproved cloud sub-agent tasks without the Stage 4 checkpoint.
+- [ ] **Security Guardrail** — Never enclose credentials, `.env`, `.git`, or private keys in `<SHOW_FILE>` tags.
+- [ ] **Deterministic Output** — Always provide `<GENERATE_FILE>` tags for expected binary deliverables (PDF, GLB, MP4, XLSX).
+- [ ] **Team Mode Constraint** — Reserve `chat_mode="team"` strictly for deep multi-source research tasks; use `agent` max for asset generation.
+- [ ] **Mandatory Gate** — Never execute unapproved cloud sub-agent tasks without the Stage 4 checkpoint.
 
 ---
 

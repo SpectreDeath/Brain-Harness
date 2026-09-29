@@ -1,0 +1,12 @@
+# Default operational configuration for responsible-ai-prototyping skill (Rule 44)
+version: "1.0.0"
+operational_budgets:
+  max_turns: 20
+  cost_budget_usd: 3.00
+  subprocess_timeout_seconds: 90
+  token_budget_bound: 48000
+security_policy:
+  data_minimization_check: true
+  bipartite_auth_verification: true
+  block_inline_secrets: true
+  prune_unused_dependencies: true

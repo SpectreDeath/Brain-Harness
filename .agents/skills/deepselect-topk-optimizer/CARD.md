@@ -5,7 +5,9 @@
 │ Version: 1.0.0                                                       │
 │ Invocation: /deepselect-topk-optimizer                               │
 │ Triggers: "deepselect topk optimizer", "topk dsa selection",         │
-│           "sparse attention topk", "denormal fp32 addition"          │
+│           "sparse attention topk", "denormal fp32 addition",         │
+│           "top-k attention heads", "deepseek sparse attention",      │
+│           "kernel topk selection", "topk kernel"                    │
 │ Requires: "neural-network-from-scratch", "data-topology-mapper"       │
 │ Target: High-throughput TopK kernel design and DSA attention routing │
 └──────────────────────────────────────────────────────────────────────┘

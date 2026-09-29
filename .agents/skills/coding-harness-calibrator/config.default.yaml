@@ -1,0 +1,13 @@
+# Default operational configuration for coding-harness-calibrator skill (Rule 44)
+version: "1.0.0"
+operational_budgets:
+  max_turns: 20
+  cost_budget_usd: 3.50
+  subprocess_timeout_seconds: 90
+  token_budget_bound: 48000
+calibration_policy:
+  context_staging_tier: "T4"
+  action_space: "tools"
+  re_patch_limit: 3
+  planning_scaffold: "scaffold_mode"
+  enforce_read_before_write: true

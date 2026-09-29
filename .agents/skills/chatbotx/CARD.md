@@ -19,13 +19,13 @@
 
 ---
 
-## Blocking Invariants
+## Mandatory Invariants Checklist
 
-1. **Resolve IDs Before Action** — Never call tagging or flow actions without querying `list_contacts` and resolving verified UUIDs first.
-2. **Respect `x-mcp` Safety Hints** — Treat operations flagged with `destructiveHint: true` as mandatory checkpoint stops.
-3. **Workspace Token Scope Only** — Filter out channel-token security requirements; only dispatch operations authenticated via workspace developer tokens.
-4. **Subprocess Sandbox Execution** — Execute user-submitted JavaScript steps inside isolated microservices (`isolated-vm`), never inside the main proactor.
-5. **Local String Salvage** — Strip markdown fences and remove trailing commas before paying reprompt tokens on raw model responses.
+- [ ] **Resolve IDs Before Action** — Never call tagging or flow actions without querying `list_contacts` and resolving verified UUIDs first.
+- [ ] **Respect `x-mcp` Safety Hints** — Treat operations flagged with `destructiveHint: true` as mandatory checkpoint stops.
+- [ ] **Workspace Token Scope Only** — Filter out channel-token security requirements; only dispatch operations authenticated via workspace developer tokens.
+- [ ] **Subprocess Sandbox Execution** — Execute user-submitted JavaScript steps inside isolated microservices (`isolated-vm`), never inside the main proactor.
+- [ ] **Local String Salvage** — Strip markdown fences and remove trailing commas before paying reprompt tokens on raw model responses.
 
 ---
 
