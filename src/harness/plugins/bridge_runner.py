@@ -25,8 +25,10 @@ async def _execute_func(func: Any, params: dict[str, Any]) -> Any:
     return res
 
 
-async def async_main(module: Any) -> None:
+async def async_main(module: Any, rpc_out: Any = None) -> None:
     """Asynchronous JSON-RPC server loop over stdin/stdout with atomic locking."""
+    if rpc_out is None:
+        rpc_out = sys.__stdout__
     stdout_lock = asyncio.Lock()
 
     async def handle_request(line_str: str) -> None:
@@ -52,15 +54,15 @@ async def async_main(module: Any) -> None:
 
             payload = json.dumps(response) + "\n"
             async with stdout_lock:
-                sys.stdout.write(payload)
-                sys.stdout.flush()
+                rpc_out.write(payload)
+                rpc_out.flush()
         except Exception as e:
             err_payload = (
                 json.dumps({"jsonrpc": "2.0", "id": 0, "error": str(e)}) + "\n"
             )
             async with stdout_lock:
-                sys.stdout.write(err_payload)
-                sys.stdout.flush()
+                rpc_out.write(err_payload)
+                rpc_out.flush()
 
     tasks: set[asyncio.Task[Any]] = set()
 
@@ -79,6 +81,87 @@ async def async_main(module: Any) -> None:
 
     if tasks:
         await asyncio.gather(*tasks, return_exceptions=True)
+
+
+def _apply_resource_limits() -> None:
+    """Enforce memory and CPU execution bounds from environment variables."""
+    import os
+
+    mem_limit_env = os.environ.get("HARNESS_MEM_LIMIT_MB")
+    cpu_limit_env = os.environ.get("HARNESS_CPU_LIMIT_S")
+
+    if mem_limit_env or cpu_limit_env:
+        import platform
+
+        if platform.system() != "Windows":
+            try:
+                import resource
+
+                if mem_limit_env:
+                    mem_bytes = int(mem_limit_env) * 1024 * 1024
+                    resource.setrlimit(resource.RLIMIT_AS, (mem_bytes, mem_bytes))
+                if cpu_limit_env:
+                    cpu_s = int(cpu_limit_env)
+                    resource.setrlimit(resource.RLIMIT_CPU, (cpu_s, cpu_s))
+            except Exception as e:
+                sys.stderr.write(f"Resource limit configuration warning: {e}\n")
+        else:
+            try:
+                import ctypes
+                from ctypes import wintypes
+
+                class IO_COUNTERS(ctypes.Structure):
+                    _fields_ = [
+                        ("ReadOperationCount", ctypes.c_uint64),
+                        ("WriteOperationCount", ctypes.c_uint64),
+                        ("OtherOperationCount", ctypes.c_uint64),
+                        ("ReadTransferCount", ctypes.c_uint64),
+                        ("WriteTransferCount", ctypes.c_uint64),
+                        ("OtherTransferCount", ctypes.c_uint64),
+                    ]
+
+                class JOBOBJECT_BASIC_LIMIT_INFORMATION(ctypes.Structure):
+                    _fields_ = [
+                        ("PerProcessUserTimeLimit", wintypes.LARGE_INTEGER),
+                        ("PerJobUserTimeLimit", wintypes.LARGE_INTEGER),
+                        ("LimitFlags", wintypes.DWORD),
+                        ("MinimumWorkingSetSize", ctypes.c_size_t),
+                        ("MaximumWorkingSetSize", ctypes.c_size_t),
+                        ("ActiveProcessLimit", wintypes.DWORD),
+                        ("Affinity", ctypes.c_size_t),
+                        ("PriorityClass", wintypes.DWORD),
+                        ("SchedulingClass", wintypes.DWORD),
+                    ]
+
+                class JOBOBJECT_EXTENDED_LIMIT_INFORMATION(ctypes.Structure):
+                    _fields_ = [
+                        ("BasicLimitInformation", JOBOBJECT_BASIC_LIMIT_INFORMATION),
+                        ("IoInfo", IO_COUNTERS),
+                        ("ProcessMemoryLimit", ctypes.c_size_t),
+                        ("JobMemoryLimit", ctypes.c_size_t),
+                        ("PeakProcessMemoryUsed", ctypes.c_size_t),
+                        ("PeakJobMemoryUsed", ctypes.c_size_t),
+                    ]
+
+                kernel32 = ctypes.WinDLL("kernel32", use_last_error=True)
+                kernel32.GetCurrentProcess.restype = wintypes.HANDLE
+                kernel32.CreateJobObjectW.restype = wintypes.HANDLE
+                kernel32.AssignProcessToJobObject.argtypes = [wintypes.HANDLE, wintypes.HANDLE]
+                kernel32.AssignProcessToJobObject.restype = wintypes.BOOL
+
+                h_job = kernel32.CreateJobObjectW(None, None)
+                if h_job and mem_limit_env:
+                    info = JOBOBJECT_EXTENDED_LIMIT_INFORMATION()
+                    info.BasicLimitInformation.LimitFlags = 0x00000100  # JOB_OBJECT_LIMIT_PROCESS_MEMORY
+                    info.ProcessMemoryLimit = int(mem_limit_env) * 1024 * 1024
+
+                    if kernel32.SetInformationJobObject(
+                        h_job, 9, ctypes.byref(info), ctypes.sizeof(info)
+                    ):
+                        proc = kernel32.GetCurrentProcess()
+                        kernel32.AssignProcessToJobObject(h_job, proc)
+            except Exception as e:
+                sys.stderr.write(f"Windows Job Object configuration notice: {e}\n")
 
 
 def main() -> None:
@@ -117,6 +200,12 @@ def main() -> None:
 
         socket.socket.connect = _blocked_connect  # type: ignore[assignment]
 
+    _apply_resource_limits()
+
+    # Isolate JSON-RPC stdout stream from untrusted plugin print statements (Phase 1)
+    rpc_stdout = sys.__stdout__
+    sys.stdout = sys.stderr
+
     parser = argparse.ArgumentParser(description="Harness Sandboxed Plugin Runner")
     parser.add_argument("script_path", help="Path to plugin entrypoint script")
     args = parser.parse_args()
@@ -146,7 +235,8 @@ def main() -> None:
     sys.modules[spec.name] = module
     spec.loader.exec_module(module)
 
-    asyncio.run(async_main(module))
+    asyncio.run(async_main(module, rpc_stdout))
+
 
 
 if __name__ == "__main__":

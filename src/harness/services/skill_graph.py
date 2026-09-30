@@ -9,7 +9,9 @@ from __future__ import annotations
 import ast
 import collections
 import json
+import os
 import re
+import threading
 import time
 from dataclasses import dataclass, field
 from enum import Enum
@@ -929,6 +931,7 @@ class BuiltinSkillRegistryService(SkillIntelligenceService):
         self._clustering_engine: Any = None
         self._invalidation_listeners: list[Any] = []
         self._is_invalidating: bool = False
+        self._scan_lock = threading.Lock()
 
     @property
     def edges(self) -> list[SkillEdge]:
@@ -1565,58 +1568,76 @@ class BuiltinSkillRegistryService(SkillIntelligenceService):
         )
 
     def _ensure_scanned(self, root_dir: str) -> None:
-        """Scan workspace directories if not yet populated or if 30s elapsed."""
+        """Scan workspace directories if not yet populated or if 30s elapsed (Rule 52)."""
         now = time.time()
         if self._skills_cache and (now - self._last_scan_time) < 30.0:
             return
 
-        p = Path(root_dir).resolve()
-        paths_to_scan = [
-            p / ".agents" / "skills",
-            p / "skills",
-            p / "plugins",
-        ]
+        with self._scan_lock:
+            # Double-checked locking
+            if self._skills_cache and (time.time() - self._last_scan_time) < 30.0:
+                return
 
-        discovered: dict[str, SkillCardDefinition] = {}
-        categories: set[str] = set()
-        adjacency: dict[str, set[str]] = collections.defaultdict(set)
+            p = Path(root_dir).resolve()
+            paths_to_scan = [
+                p / ".agents" / "skills",
+                p / "skills",
+                p / "plugins",
+            ]
 
-        ignored_parts = {
-            ".venv",
-            "venv",
-            "venvs",
-            ".git",
-            "node_modules",
-            "site-packages",
-            "__pycache__",
-        }
+            discovered: dict[str, SkillCardDefinition] = {}
+            categories: set[str] = set()
+            adjacency: dict[str, set[str]] = collections.defaultdict(set)
 
-        for scan_dir in paths_to_scan:
-            if not scan_dir.exists():
-                continue
-            for skill_file in scan_dir.rglob("SKILL.md"):
-                # Guard against virtualenv and package directories
-                parts = set(skill_file.parts)
-                if any(part.lower() in ignored_parts for part in parts):
+            ignored_parts = {
+                ".venv",
+                "venv",
+                "venvs",
+                ".git",
+                "node_modules",
+                "site-packages",
+                "__pycache__",
+                "target",
+                "dist",
+                ".gemini",
+            }
+
+            for scan_dir in paths_to_scan:
+                if not scan_dir.exists():
                     continue
-                try:
-                    card = self._parse_skill_directory(skill_file.parent)
-                    if card and card.name not in discovered:
-                        discovered[card.name] = card
-                        categories.add(card.category)
-                        for dep in card.dependencies:
-                            clean_dep = (
-                                dep.strip().lower().replace("_", "-").lstrip("/")
+                scan_dir_path = Path(scan_dir).resolve()
+                for root_dirpath, dirnames, filenames in os.walk(str(scan_dir_path)):
+                    rel_parts = Path(root_dirpath).relative_to(scan_dir_path).parts
+                    if len(rel_parts) >= 8:
+                        dirnames.clear()
+                        continue
+
+                    # In-place topdown directory pruning (Rule 52)
+                    dirnames[:] = [
+                        d for d in dirnames
+                        if d.lower() not in ignored_parts and not d.startswith(".")
+                    ]
+
+                    if "SKILL.md" in filenames:
+                        skill_file = Path(root_dirpath) / "SKILL.md"
+                        try:
+                            card = self._parse_skill_directory(skill_file.parent)
+                            if card and card.name not in discovered:
+                                discovered[card.name] = card
+                                categories.add(card.category)
+                                for dep in card.dependencies:
+                                    clean_dep = (
+                                        dep.strip().lower().replace("_", "-").lstrip("/")
+                                    )
+                                    if clean_dep != card.name:
+                                        adjacency[card.name].add(clean_dep)
+                        except Exception as e:
+                            logger.debug(
+                                "Failed parsing skill directory",
+                                path=str(skill_file.parent),
+                                error=str(e),
                             )
-                            if clean_dep != card.name:
-                                adjacency[card.name].add(clean_dep)
-                except Exception as e:
-                    logger.debug(
-                        "Failed parsing skill directory",
-                        path=str(skill_file.parent),
-                        error=str(e),
-                    )
-                    continue
+                            continue
 
         # Known canonical pipeline precedence pairs (isolated into synthetic adjacency)
         synthetic_adj: dict[str, set[str]] = collections.defaultdict(set)

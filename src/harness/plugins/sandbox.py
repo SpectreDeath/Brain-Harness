@@ -230,6 +230,11 @@ class SubprocessExecutor(SandboxExecutor):
     def is_running(self) -> bool:
         return self._transport is not None and self._transport.is_running
 
+    @property
+    def transport(self) -> StdioJsonRpcTransport | None:
+        """The underlying StdioJsonRpcTransport instance."""
+        return self._transport
+
     async def _memory_watchdog(self) -> None:
         """Background watchdog sampling RSS memory and stopping child if limit exceeded."""
         try:

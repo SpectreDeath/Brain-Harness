@@ -165,28 +165,30 @@ class ServiceContext:
         applied dynamically whenever components in the derived context require *key*.
         """
         child_ctx = self.child()
-        child_ctx._interceptors[key.name].append(cast(Callable[[Any], Any], wrapper))
-        child_ctx._compiled_interceptors.pop(key.name, None)
         root = self._get_root()
-        root._interceptor_epoch = getattr(root, "_interceptor_epoch", 0) + 1
+        with root._mutation_lock:
+            child_ctx._interceptors[key.name].append(cast(Callable[[Any], Any], wrapper))
+            child_ctx._compiled_interceptors.pop(key.name, None)
+            root._interceptor_epoch = getattr(root, "_interceptor_epoch", 0) + 1
         return child_ctx
 
     def _collect_interceptors(self, key_name: str) -> list[Callable[[Any], Any]]:
         """Collect all interceptors along the context hierarchy with caching."""
         root = self._get_root()
-        root_epoch = getattr(root, "_interceptor_epoch", 0)
-        cached = self._compiled_interceptors.get(key_name)
-        if cached is not None and isinstance(cached, tuple):
-            cached_epoch, chain = cached
-            if cached_epoch == root_epoch:
-                return chain
+        with root._mutation_lock:
+            root_epoch = getattr(root, "_interceptor_epoch", 0)
+            cached = self._compiled_interceptors.get(key_name)
+            if cached is not None and isinstance(cached, tuple):
+                cached_epoch, chain = cached
+                if cached_epoch == root_epoch:
+                    return list(chain)
 
-        chain: list[Callable[[Any], Any]] = []
-        if self._parent is not None:
-            chain.extend(self._parent._collect_interceptors(key_name))
-        chain.extend(self._interceptors.get(key_name, []))
-        self._compiled_interceptors[key_name] = (root_epoch, chain)
-        return chain
+            chain: list[Callable[[Any], Any]] = []
+            if self._parent is not None:
+                chain.extend(self._parent._collect_interceptors(key_name))
+            chain.extend(list(self._interceptors.get(key_name, [])))
+            self._compiled_interceptors[key_name] = (root_epoch, chain)
+            return list(chain)
 
     @asynccontextmanager
     async def transaction(self) -> AsyncIterator[ServiceContext]:

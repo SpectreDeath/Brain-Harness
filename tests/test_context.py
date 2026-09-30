@@ -159,3 +159,51 @@ class TestServiceContextParentChild:
 
         child = parent.child()
         assert child.has(key)
+
+
+@pytest.mark.unit
+class TestServiceContextInterception:
+    def test_interceptor_wrapping(self) -> None:
+        ctx = ServiceContext()
+        key = ServiceKey[str]("greeting")
+        ctx.provide(key, "hello")
+
+        child = ctx.intercept(key, lambda s: f"{s} world")
+        assert child.require(key) == "hello world"
+        assert ctx.require(key) == "hello"
+
+    def test_interceptor_hierarchy_ordering(self) -> None:
+        ctx = ServiceContext()
+        key = ServiceKey[int]("number")
+        ctx.provide(key, 5)
+
+        # Parent adds 10, child multiplies by 2: (5 + 10) * 2 = 30
+        parent_child = ctx.intercept(key, lambda n: n + 10)
+        grandchild = parent_child.intercept(key, lambda n: n * 2)
+
+        assert grandchild.require(key) == 30
+
+    def test_interceptor_concurrent_safety(self) -> None:
+        import concurrent.futures
+
+        ctx = ServiceContext()
+        key = ServiceKey[int]("counter")
+        ctx.provide(key, 1)
+
+        errors: list[Exception] = []
+
+        def worker(i: int) -> None:
+            try:
+                for _ in range(50):
+                    # Intercept and create derived context
+                    c = ctx.intercept(key, lambda n: n + 1)
+                    val = c.require(key)
+                    assert val >= 2
+            except Exception as e:
+                errors.append(e)
+
+        with concurrent.futures.ThreadPoolExecutor(max_workers=16) as pool:
+            futures = [pool.submit(worker, i) for i in range(16)]
+            concurrent.futures.wait(futures)
+
+        assert not errors, f"Concurrent intercept errors: {errors}"
