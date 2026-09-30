@@ -105,7 +105,7 @@ class NodeCliBridge:
             return ImageryRenderResult(
                 status="error",
                 tool_name="sat-ortho",
-                output_path=os.path.join(target_out, f"ortho_error.png"),
+                output_path=os.path.join(target_out, "ortho_error.png"),
                 format="png",
                 dimensions=[size, size],
                 metadata={"error": str(e)},

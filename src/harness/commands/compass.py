@@ -250,7 +250,7 @@ def feedback_cmd(
         click.echo(_json.dumps(res.model_dump(), indent=2))
         return
 
-    click.echo(f"Feedback Grounding Verification:")
+    click.echo("Feedback Grounding Verification:")
     click.echo(f"  Grounded:         {'YES' if res.grounded else 'NO'}")
     click.echo(f"  Assigned Track:   {res.assigned_track.upper()}")
     click.echo(f"  Confidence:       {res.confidence:.2f}")

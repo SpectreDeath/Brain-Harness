@@ -202,7 +202,7 @@ def profile_cmd(prompt: str, tools: str, json_output: bool) -> None:
         click.echo(_json.dumps(prof.model_dump(), indent=2))
         return
 
-    click.echo(f"Prompt Complexity Profile:")
+    click.echo("Prompt Complexity Profile:")
     click.echo(f"  Tier:             {prof.tier.upper()}")
     click.echo(f"  Score:            {prof.complexity_score}")
     click.echo(f"  Words / Tokens:   {prof.word_count} words / ~{prof.token_count} tokens")
@@ -283,7 +283,7 @@ def simulate_cmd(
         click.echo(_json.dumps(res.model_dump(), indent=2))
         return
 
-    click.echo(f"Execution Simulation Result:")
+    click.echo("Execution Simulation Result:")
     click.echo(f"  Status:          {res.status}")
     click.echo(f"  Tier:            {res.complexity_tier.upper()}")
     click.echo(f"  Primary Model:   {res.primary_model}")

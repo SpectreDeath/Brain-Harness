@@ -218,7 +218,7 @@ class MantisSandboxEngine:
             try:
                 # Attempt git apply or direct diff ingestion
                 patch_res = await self.sandbox_exec(
-                    command=f'git apply fix.diff',
+                    command='git apply fix.diff',
                     timeout_seconds=30,
                     cwd=str(shadow_path),
                 )

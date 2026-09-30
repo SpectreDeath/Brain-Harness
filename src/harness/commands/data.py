@@ -417,7 +417,7 @@ def resolve_cli(
         click.echo(json.dumps(result, indent=2))
         return
 
-    click.echo(f"\n[Golden Records Resolution]")
+    click.echo("\n[Golden Records Resolution]")
     click.echo(f"  Input records: {result['input_records']}")
     click.echo(f"  Golden entities generated: {result['golden_records_count']}")
     for g in result["golden_records"]:
@@ -576,7 +576,7 @@ def topk_analyze_cli(batch_size: int, vocab_size: int, topk: int, dtype: str, sc
     if json_out:
         click.echo(json.dumps(res, indent=2))
         return
-    click.echo(f"\n[DeepSelect TopK Workload Analysis]")
+    click.echo("\n[DeepSelect TopK Workload Analysis]")
     click.echo(f"  Scenario: {res['scenario']} | Recommended: {res['recommended_variant']}")
     click.echo(f"  Cluster Size: {res['cluster_size']} | Stride Padding: {res['requires_stride_padding']}")
     click.echo(f"  Estimated Speedup: {res['estimated_speedup']}x vs torch.topk")
@@ -596,7 +596,7 @@ def topk_bounds_cli(batch_size: int, vocab_size: int, topk: int, block_size: int
     if json_out:
         click.echo(json.dumps(res, indent=2))
         return
-    click.echo(f"\n[DeepSelect Analytical Performance Bounds]")
+    click.echo("\n[DeepSelect Analytical Performance Bounds]")
     click.echo(f"  Harmonic Number H_m: {res['harmonic_number_hm']} | Rank Bound L: {res['candidate_rank_bound_l']}")
     click.echo(f"  Expected Candidates E[W]: {res['expected_candidates_w']} elements")
     click.echo(f"  Expected Speedup: {res['speedup_estimate_vs_torch']}x vs torch.topk")
@@ -614,6 +614,6 @@ def topk_recommend_cli(batch_size: int, vocab_size: int, topk: int, dtype: str, 
     if json_out:
         click.echo(json.dumps(res, indent=2))
         return
-    click.echo(f"\n[DeepSelect Kernel Recommendation]")
+    click.echo("\n[DeepSelect Kernel Recommendation]")
     click.echo(f"  Block Size B: {res['block_size_b']} | Compaction Threshold B2: {res['compact_threshold_b2']}")
     click.echo(f"  Cluster Size: {res['cluster_size']} | Threads: {res['num_threads']}")

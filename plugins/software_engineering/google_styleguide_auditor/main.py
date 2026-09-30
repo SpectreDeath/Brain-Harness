@@ -17,7 +17,6 @@ if __name__ not in sys.modules:
 
 
 import ast
-import os
 from pathlib import Path
 from typing import Any, Protocol, runtime_checkable
 import structlog

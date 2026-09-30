@@ -16,7 +16,6 @@ if __name__ not in sys.modules:
     sys.modules[__name__] = sys.modules.get("__main__") or types.ModuleType(__name__)
 
 
-import os
 from pathlib import Path
 from typing import Any, Protocol, runtime_checkable
 import structlog

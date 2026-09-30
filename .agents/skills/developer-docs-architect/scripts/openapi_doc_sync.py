@@ -279,7 +279,7 @@ class OpenApiDocSynchronizer:
         llms_file = p_out / "llms.txt"
         llms_lines = [
             f"# {title} (v{version})",
-            f"> Machine-readable documentation catalog for AI agent retrieval.",
+            "> Machine-readable documentation catalog for AI agent retrieval.",
             "",
             "## Available Endpoints",
         ]

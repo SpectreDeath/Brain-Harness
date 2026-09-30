@@ -401,7 +401,7 @@ def brief_cli(
         mock_data={},
     )
     brief_path = svc.visual_brief(report, output_path=output)
-    click.echo(f"\n[Visual Brief Generated]")
+    click.echo("\n[Visual Brief Generated]")
     click.echo(f"  Path: {brief_path}\n")
 
     if open_browser:

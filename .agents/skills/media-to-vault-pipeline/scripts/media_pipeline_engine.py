@@ -501,11 +501,11 @@ class MediaPipelineEngine:
             card_content += f"| **Stage {s.get('step_num', 1)}: {s.get('title', 'Action')}** | {s.get('action_directive', 'Execute')} | Status Artifact | {s.get('completion_criterion', 'Completed')} |\n"
 
         card_content += (
-            f"\n---\n\n"
-            f"## Mandatory Invariants Checklist\n\n"
-            f"- [ ] **Slotted Data Architecture**: All entity schemas must use `slots=True, frozen=True` (Rule 12).\n"
-            f"- [ ] **Isnad Lineage Assertion**: Maintain unbroken claim provenance back to source media.\n"
-            f"- [ ] **Dual-File Vault Integrity**: Comply with canonical dual-file storage schema (Rule 40).\n"
+            "\n---\n\n"
+            "## Mandatory Invariants Checklist\n\n"
+            "- [ ] **Slotted Data Architecture**: All entity schemas must use `slots=True, frozen=True` (Rule 12).\n"
+            "- [ ] **Isnad Lineage Assertion**: Maintain unbroken claim provenance back to source media.\n"
+            "- [ ] **Dual-File Vault Integrity**: Comply with canonical dual-file storage schema (Rule 40).\n"
         )
         card_file = target_dir / "CARD.md"
         card_file.write_text(card_content, encoding="utf-8")
@@ -519,7 +519,7 @@ class MediaPipelineEngine:
             "",
             f"# {clean_name.replace('-', ' ').title()}",
             "",
-            f"Domain capability distilled from verified multimedia lecture transcript via `media-to-vault-pipeline`.",
+            "Domain capability distilled from verified multimedia lecture transcript via `media-to-vault-pipeline`.",
             "",
             "## Dependencies",
             "- [`media-to-vault-pipeline`](file:///.agents/skills/media-to-vault-pipeline/SKILL.md)",

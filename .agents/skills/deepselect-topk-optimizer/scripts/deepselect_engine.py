@@ -141,7 +141,7 @@ class DeepSelectEngine:
         notes = (
             f"Harmonic blocks m={m}, rank bound L={l_bound}",
             f"Compaction complexity bounded to O(k log(N/k)) = {round(expected_w, 1)} elements",
-            f"Memory read bandwidth decoupled from sorting comparisons",
+            "Memory read bandwidth decoupled from sorting comparisons",
         )
 
         return AnalyticalPerformanceBound(

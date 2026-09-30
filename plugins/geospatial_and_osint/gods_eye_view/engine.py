@@ -13,7 +13,9 @@ import math
 import time
 import uuid
 from datetime import datetime, timedelta, timezone
-from typing import Any
+from typing import Any, TypeVar
+
+T = TypeVar("T")
 
 import httpx
 import structlog
