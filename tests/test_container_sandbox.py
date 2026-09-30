@@ -70,11 +70,12 @@ class TestContainerSandbox:
     @pytest.mark.asyncio
     async def test_container_executor_start_missing_runtime_raises(self, tmp_path: Path) -> None:
         (tmp_path / "main.py").write_text("def run(): return 'ok'")
-        executor = ContainerExecutor(tmp_path, runtime=None)
+        with patch.object(ContainerExecutor, "_detect_runtime", return_value=None):
+            executor = ContainerExecutor(tmp_path, runtime=None)
 
-        with pytest.raises(SandboxError) as exc_info:
-            await executor.start()
-        assert "Container runtime (docker/podman) not found" in str(exc_info.value)
+            with pytest.raises(SandboxError) as exc_info:
+                await executor.start()
+            assert "Container runtime (docker/podman) not found" in str(exc_info.value)
 
     @pytest.mark.asyncio
     async def test_container_executor_start_and_execute_mocked(self, tmp_path: Path) -> None:

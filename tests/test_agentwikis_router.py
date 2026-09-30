@@ -14,6 +14,11 @@ import pytest
 CLI_PATH = Path(".agents/skills/agentwikis-router/scripts/agentwikis_cli.py").resolve()
 CORPUS_DIR = Path(r"D:\AgentWikis")
 
+pytestmark = pytest.mark.skipif(
+    not CORPUS_DIR.exists(),
+    reason="AgentWikis corpus not found at D:\\AgentWikis (requires local corpus)",
+)
+
 
 def run_cli(*args: str) -> tuple[int, str, str]:
     """Helper to execute agentwikis_cli in subprocess."""

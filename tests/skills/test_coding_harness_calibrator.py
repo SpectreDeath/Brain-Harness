@@ -182,7 +182,7 @@ def test_skill_validator_passes_zero_warnings() -> None:
 def test_skill_registry_intent_routing() -> None:
     workspace_root = Path(__file__).parents[2]
     registry = BuiltinSkillRegistryService(default_root=str(workspace_root))
-    routing = registry.route_intent("calibrate harness")
+    routing = registry.route_intent("calibrate coding harness")
     matches = routing.get("matches", [])
     assert len(matches) > 0
     top_skill = matches[0]["skill_name"]

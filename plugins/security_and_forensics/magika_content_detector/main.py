@@ -252,15 +252,29 @@ class MagikaContentDetectorEngine:
                 logger.warning("failed_reading_kb_json", error=str(e))
 
         if mag is not None:
-            for ct in mag.get_output_content_types():
-                items.append({
-                    "label": str(ct),
-                    "mime_type": f"application/{ct}",
-                    "group": "unknown",
-                    "description": f"Output label {ct}",
-                    "extensions": [str(ct)],
-                    "is_text": False,
-                })
+            if hasattr(mag, "_cts_infos") and isinstance(mag._cts_infos, dict):
+                for label, ct in mag._cts_infos.items():
+                    grp = str(getattr(ct, "group", "unknown"))
+                    if filter_grp and grp.lower() != filter_grp:
+                        continue
+                    items.append({
+                        "label": str(getattr(ct, "label", label)),
+                        "mime_type": str(getattr(ct, "mime_type", f"application/{label}")),
+                        "group": grp,
+                        "description": str(getattr(ct, "description", f"Output label {label}")),
+                        "extensions": [str(x) for x in getattr(ct, "extensions", [])],
+                        "is_text": bool(getattr(ct, "is_text", False)),
+                    })
+            else:
+                for ct in mag.get_output_content_types():
+                    items.append({
+                        "label": str(ct),
+                        "mime_type": f"application/{ct}",
+                        "group": "unknown",
+                        "description": f"Output label {ct}",
+                        "extensions": [str(ct)],
+                        "is_text": False,
+                    })
 
         return {
             "status": "ok",

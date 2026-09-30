@@ -7,6 +7,11 @@ from pathlib import Path
 import time
 import pytest
 
+pytestmark = pytest.mark.skipif(
+    not Path(r"D:\AgentWikis").exists(),
+    reason="AgentWikis corpus not found at D:\\AgentWikis (requires local corpus)",
+)
+
 from harness.kernel.context import ServiceContext
 from harness.services.agentwikis import AGENTWIKIS_SERVICE_KEY, AgentWikisService
 from plugins.integration_and_io.agentwikis.main import AgentWikisPlugin, plugin as agentwikis_plugin_singleton

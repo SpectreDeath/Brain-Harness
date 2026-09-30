@@ -66,7 +66,7 @@ class TestRepoTriadForgeEngine:
         root = Path(__file__).parent.parent
         res = RepoTriadPipelineEngine.inspect_repository(root)
 
-        assert res.repo_name == "Brain Harness"
+        assert res.repo_name in ("Brain Harness", "Brain-Harness")
         assert "Python" in res.languages
         assert res.total_files > 10
         assert res.compute_tier in ("High", "Medium", "Low")
@@ -206,7 +206,7 @@ class TestRepoTriadForgeEngine:
             text=True,
             check=True,
         )
-        assert "Brain Harness" in p_ins.stdout
+        assert ("Brain Harness" in p_ins.stdout) or ("Brain-Harness" in p_ins.stdout)
 
         p_plan = subprocess.run(
             [sys.executable, str(script_path), "plan", "--repo", workspace_root],

@@ -26,6 +26,11 @@ from pathlib import Path
 
 import pytest
 
+pytestmark = pytest.mark.skipif(
+    not Path(r"D:\AgentWikis").exists(),
+    reason="AgentWikis corpus not found at D:\\AgentWikis (requires local corpus)",
+)
+
 # Ensure relocatable paths
 REPO_ROOT = Path(__file__).resolve().parent.parent
 SRC_DIR = REPO_ROOT / "src"

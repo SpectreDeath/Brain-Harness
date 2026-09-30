@@ -23,6 +23,11 @@ from pathlib import Path
 import pytest
 import yaml
 
+pytestmark = pytest.mark.skipif(
+    not Path(r"D:\AgentWikis").exists(),
+    reason="AgentWikis corpus not found at D:\\AgentWikis (requires local corpus)",
+)
+
 # Ensure skill scripts directory is on sys.path
 SKILL_ROOT = Path(".agents/skills/agentwikis-router").resolve()
 SCRIPTS_DIR = SKILL_ROOT / "scripts"

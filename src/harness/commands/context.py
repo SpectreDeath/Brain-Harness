@@ -177,11 +177,14 @@ async def optimize_context_cmd(
 
 async def skeletonize_code_cmd(source_or_file: str | Path) -> CodeSkeletonResult:
     """Skeletonize Python code stripping function bodies and leaving structural outline."""
-    p = Path(str(source_or_file))
-    if p.exists() and p.is_file():
-        source = p.read_text(encoding="utf-8")
-    else:
-        source = str(source_or_file)
+    source = str(source_or_file)
+    if "\n" not in source and len(source) < 4096:
+        try:
+            p = Path(source)
+            if p.exists() and p.is_file():
+                source = p.read_text(encoding="utf-8")
+        except OSError:
+            pass
 
     skeleton, stripped = skeletonize_source(source)
     raw_tokens = max(1, len(source) // 4)

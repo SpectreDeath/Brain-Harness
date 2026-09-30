@@ -183,7 +183,7 @@ def test_state_loop_exhausted_retries_triage():
 def test_skill_compliance_and_formatting():
     """Verify SKILL.md, CARD.md, and Knowledge Item conform to Harness standards."""
     import pathlib
-    root = pathlib.Path("d:/GitHub/projects/Brain Harness")
+    root = pathlib.Path(__file__).resolve().parents[2]
     skill_file = root / ".agents/skills/deterministic-validation-loop/SKILL.md"
     card_file = root / ".agents/skills/deterministic-validation-loop/CARD.md"
     ki_meta = root / ".harness/knowledge/ki_self_20260917_03/metadata.json"

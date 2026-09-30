@@ -119,7 +119,7 @@ def test_chatbotx_zero_fork_config_resolution() -> None:
 @pytest.mark.unit
 def test_chatbotx_skill_documentation_hygiene() -> None:
     """Verify SKILL.md, CARD.md, and description budget per Rule 37 and Rule 44."""
-    skill_dir = Path(r"d:\GitHub\projects\Brain Harness\.agents\skills\chatbotx")
+    skill_dir = Path(__file__).resolve().parent.parent / ".agents" / "skills" / "chatbotx"
     skill_md = (skill_dir / "SKILL.md").read_text(encoding="utf-8")
     card_md = (skill_dir / "CARD.md").read_text(encoding="utf-8")
 
