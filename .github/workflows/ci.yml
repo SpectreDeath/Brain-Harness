@@ -57,5 +57,7 @@ jobs:
           pip install -e ".[dev]"
 
       - name: Run Pytest
+        env:
+          PYTHONPATH: .:src
         run: |
           pytest -q --timeout=120
