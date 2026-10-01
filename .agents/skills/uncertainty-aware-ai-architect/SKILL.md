@@ -162,7 +162,7 @@ else:
 
 ### 2. Standalone Slotted Domain Engine (`uncertainty_guard_engine.py`)
 
-The underlying engine ([`uncertainty_guard_engine.py`](scripts/uncertainty_guard_engine.py)) uses slotted and frozen dataclasses ([`Rule 12`](../../AGENTS.md), [`Rule 43`](../../AGENTS.md)) with zero-dependency sub-millisecond cosine vectorization:
+The underlying engine ([`uncertainty_guard_engine.py`](scripts/uncertainty_guard_engine.py)) uses slotted and frozen dataclasses ([`Rule 12`](../../../AGENTS.md), [`Rule 43`](../../../AGENTS.md)) with zero-dependency sub-millisecond cosine vectorization:
 
 ```python
 from scripts.uncertainty_guard_engine import UncertaintyGuardEngine

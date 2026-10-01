@@ -17,7 +17,7 @@ Every Pi-style coding harness follows a strict 5-stage progression:
 ```
 
 See [CARD.md](CARD.md) for the companion summary card, 5-stage progression matrix, and operational invariants.
-Consult [tau_harness_bridge](../../plugins/agent_orchestration/tau_harness_bridge/README.md) for the in-memory micro-kernel IoC service integration.
+Consult [tau_harness_bridge](../../../plugins/agent_orchestration/tau_harness_bridge/README.md) for the in-memory micro-kernel IoC service integration.
 
 ---
 

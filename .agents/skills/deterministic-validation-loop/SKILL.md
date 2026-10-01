@@ -127,8 +127,8 @@ Audit the agent application to ensure the pattern is correctly applied and verif
 The deterministic validation loop is elevated into the Brain Harness micro-kernel as an authoritative service and CLI:
 
 1. **Domain Engine**: [validation_loop_engine.py](scripts/validation_loop_engine.py) provides slotted, frozen models (`ValidationSpec`, `ValidationRule`, `DeterministicValidationEngine`) with sub-millisecond execution and built-in preset specs (`deployment_config`, `plugin_manifest`).
-2. **IoC Service Key**: [`DETERMINISTIC_VALIDATION_SERVICE_KEY`](../../src/harness/services/deterministic_validation.py) exports `ServiceKey[DeterministicValidationService]` for in-memory resolution (`context.require()`).
-3. **Plugin Packaging**: [deterministic_validation_loop plugin](../../plugins/agent_orchestration/deterministic_validation_loop/README.md) registers the service and exposes agent tools (`validate_payload`, `run_validation_loop`).
+2. **IoC Service Key**: [`DETERMINISTIC_VALIDATION_SERVICE_KEY`](../../../src/harness/services/deterministic_validation.py) exports `ServiceKey[DeterministicValidationService]` for in-memory resolution (`context.require()`).
+3. **Plugin Packaging**: [deterministic_validation_loop plugin](../../../plugins/agent_orchestration/deterministic_validation_loop/README.md) registers the service and exposes agent tools (`validate_payload`, `run_validation_loop`).
 4. **Headless Click CLI**: Execute validation from terminal or CI scripts:
    - `harness validation-loop specs`
    - `harness validation-loop validate --spec deployment_config --file config.json`

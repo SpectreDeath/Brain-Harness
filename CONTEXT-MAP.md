@@ -6,7 +6,7 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
 
 ## Bounded Domains
 
-### 1. [Agent Orchestration](./docs/domains/agent-orchestration/CONTEXT.md)
+### 1. [Agent Orchestration](./docs/domains/agent-orchestration/EXPLANATION.md)
 * **Scope**: Multi-agent consensus, hierarchical task decomposition, adversarial debate, critic evaluation, and human-in-the-loop governance.
 * **Member Plugins**:
   - `agent_supervisor` — Multi-agent delegation, wave coordination, and quorum consensus.
@@ -33,7 +33,7 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - [`harness-compass`](.agents/skills/harness-compass/SKILL.md) — Evolve, calibrate, and benchmark autonomous AI agent harnesses using constrained evolution, 4-stage proactive feedback, dual-track optimization, and R3 integration.
   - [`coding-harness-calibrator`](.agents/skills/coding-harness-calibrator/SKILL.md) — Empirically calibrate and optimize autonomous coding agent harnesses across context management (T0-T4 staging), action spaces (tools vs bash), and planning scaffolds.
 
-### 2. [Memory & Epistemics](./docs/domains/memory-and-epistemics/CONTEXT.md)
+### 2. [Memory & Epistemics](./docs/domains/memory-and-epistemics/EXPLANATION.md)
 * **Scope**: Declarative skill graphs, semantic embeddings, context distillation, prompt benchmarking, and claim lineage.
 * **Member Plugins**:
   - `skill_knowledge_graph` — Skill network indexing, shortest-path chain synthesis, and intent routing.
@@ -50,7 +50,7 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - [`epistemic-memory-lifecycle`](.agents/skills/epistemic-memory-lifecycle/SKILL.md) — Bounded 8-state knowledge item promotion pipeline, 6-class memory partitioning, and Theseus continuity audit.
   - [`okf-memory-governor`](.agents/skills/okf-memory-governor/SKILL.md) — Git-native OKF v0.2 agent memory governance, pre-edit path scoping, atomic mutations, and normative validation.
 
-### 3. [Data Engineering](./docs/domains/data-engineering/CONTEXT.md)
+### 3. [Data Engineering](./docs/domains/data-engineering/EXPLANATION.md)
 * **Scope**: Curated tabular ingestion, out-of-core statistical profiling, schema transformation, and relational database execution.
 * **Member Plugins**:
   - `dataset_profiler` — Out-of-core moments, null ratios, and Z-score outlier detection.
@@ -78,7 +78,7 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - [`discovery-index-scout`](.agents/skills/discovery-index-scout/SKILL.md) — Open-data discovery engine scouting public record archives, legislative transcripts, corporate filings, campaign finances, and research datasets across 46+ curated discovery indexes.
 
 
-### 4. [Software Engineering](./docs/domains/software-engineering/CONTEXT.md)
+### 4. [Software Engineering](./docs/domains/software-engineering/EXPLANATION.md)
 * **Scope**: AST code refactoring, architecture invariant linting, sandbox script execution, git operations, and artifact reporting.
 * **Member Plugins**:
   - `refactor_engine` — AST-aware code transformation and import hygiene.
@@ -109,7 +109,7 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - [`hf-doc-builder-architect`](.agents/skills/hf-doc-builder-architect/SKILL.md) — Multi-package documentation engineering using zero-dependency mock virtualization, deterministic AST anchor graphs, and unified MDX transpilation.
 
 
-### 5. [Security & Forensics](./docs/domains/security-and-forensics/CONTEXT.md)
+### 5. [Security & Forensics](./docs/domains/security-and-forensics/EXPLANATION.md)
 * **Scope**: Threat modeling, vulnerability scanning, log forensics, network port auditing, and execution trajectory auditing.
 * **Member Plugins**:
   - `security_scanner` — Vulnerability detection and secret leakage analysis.
@@ -122,7 +122,7 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - [`pre-commit-security-guard`](.agents/skills/pre-commit-security-guard/SKILL.md) — Shift security left by intercepting vulnerabilities and secrets before pull requests using Git pre-commit hooks, multi-file DevSkim SAST, Gitleaks, deliberate failure injection, and dual-gate CI enforcement.
   - [`ethical-hacker-networking`](.agents/skills/ethical-hacker-networking/SKILL.md) — Protocol-level network reconnaissance, packet capture inspection, tri-state port evaluation, TCP flag state machine analysis, and systematic 7-layer fault isolation.
 
-### 6. [Infrastructure & Cloud Operations](./docs/domains/infra-and-cloud/CONTEXT.md)
+### 6. [Infrastructure & Cloud Operations](./docs/domains/infra-and-cloud/EXPLANATION.md)
 * **Scope**: Container management, Kubernetes manifest validation, Infrastructure-as-Code (IaC), and CI/CD pipelines.
 * **Member Plugins**:
   - `docker_container` — Container lifecycle, build, run, and port binding.
@@ -132,7 +132,7 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
 * **Member Skills**:
   - *(Inherits infrastructure tooling; domain skills scaffolded on demand)*
 
-### 7. [Integration & I/O](./docs/domains/integration-and-io/CONTEXT.md)
+### 7. [Integration & I/O](./docs/domains/integration-and-io/EXPLANATION.md)
 * **Scope**: Clean web fetching, OpenAPI client generation, webhook notifications, and symbolic constraint solving.
 * **Member Plugins**:
   - `web_fetcher` — Markdown web scraping and HTTP JSON requests.

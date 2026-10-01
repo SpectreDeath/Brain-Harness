@@ -1,0 +1,31 @@
+# Brain Harness — Autonomous Agent Micro-Kernel Documentation
+
+> Brain Harness is a modular autonomous AI agent execution environment and micro-kernel where everything is a plugin.
+
+## Core Architectural Invariants
+- Everything is a Plugin: Capabilities register into the IoC container. No domain tools are hardcoded in kernel.
+- Typed Service Keys: Services use ServiceKey[T] (`context.require(KEY)`). Never raw strings.
+- Transactional Isolation: Step executions execute in context transactions with automated Git rollback on failure.
+- Immutable Events: The EventBus log is append-only and strictly immutable.
+- Sandboxing: Untrusted external plugins run in subprocess sandboxes with lazy venv staging and proactor pipe disposal.
+
+## Documentation Navigation
+- [Diátaxis Hub](README.md): Central navigation portal across 4 quadrants.
+- [Getting Started Tutorial](TUTORIAL.md): Step-by-step beginner guide to workspace init, agent execution, and session trees.
+- [How-To Guides](HOWTO.md): Recipes for authoring plugins, registering tools, crafting skills, and running swarms.
+- [Architecture Explanation](EXPLANATION.md): Deep-dive into micro-kernel design, ReAct step loops, and memory provability.
+- [Kernel Reference](reference/kernel.md): ServiceContext, ServiceKey, DependencyGraph, PluginLifecycleManager.
+- [Agent Reference](reference/agent.md): ReActAgentLoop, StepExecutionEngine, SwarmCoordinator, ContextOptimizer.
+- [Ingestion Reference](reference/ingestion.md): UniversalSourceRegistry, RepoFetcher, RepoInspector, RepoConverter.
+- [Core Services Registry](reference/services.md): Directory of 70+ typed ServiceKey[T] identifiers and protocols.
+- [CLI Reference](reference/cli.md): Click CLI commands, options, and usage examples.
+- [Plugin Manifest](reference/plugin-manifest.md): plugin.json schema, lifecycle states, and zero-fork configuration.
+
+## Domain Architectures
+- [Agent Orchestration](domains/agent-orchestration/EXPLANATION.md): Multi-agent swarms, debate loops, and reflection checkpoints.
+- [Data Engineering](domains/data-engineering/EXPLANATION.md): Out-of-core profiling, curated pipelines, and BigQuery TVFs.
+- [Infrastructure & Cloud](domains/infra-and-cloud/EXPLANATION.md): Container managers, Kubernetes manifest checkers, and IaC specs.
+- [Integration & I/O](domains/integration-and-io/EXPLANATION.md): Clean web fetchers, OpenAPI converters, and repo ingestion.
+- [Memory & Epistemics](domains/memory-and-epistemics/EXPLANATION.md): Skill Knowledge Graph, OKF memory, and Isnad lineage.
+- [Security & Forensics](domains/security-and-forensics/EXPLANATION.md): Pre-commit SAST scanning, DevSkim, and trajectory audits.
+- [Software Engineering](domains/software-engineering/EXPLANATION.md): AST refactoring, architecture linting, and slotted models.

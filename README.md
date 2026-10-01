@@ -117,6 +117,11 @@ harness ui --port 8080
 
 ## 📖 Documentation & Ecosystem
 
+- **[Documentation Suite Hub](docs/README.md)**: Diátaxis navigation portal systematically partitioned into four cognitive modes.
+  - **[Getting Started Tutorial](docs/TUTORIAL.md)**: Step-by-step walkthrough from installation to autonomous agent execution and transcript inspection.
+  - **[How-To Guides](docs/HOWTO.md)**: Practical recipes for plugin authoring, tool registration, skill crafting, and multi-agent swarms.
+  - **[Architecture & Design Concepts](docs/EXPLANATION.md)**: Deep architectural examination of the micro-kernel, ReAct engine, and sandboxing.
+  - **[Technical Reference Catalog](docs/reference/README.md)**: API references for [Kernel](docs/reference/kernel.md), [Agent](docs/reference/agent.md), [Services](docs/reference/services.md), and [CLI](docs/reference/cli.md).
 - **[User Manual & Reference Guide](USER_MANUAL.md)**: Comprehensive guide covering all CLI commands, plugin authoring, sandbox configurations, MCP server/client setup, and Python SDK usage.
 - **[Agent Standards (AGENTS.md)](AGENTS.md)**: Architectural invariants, code style conventions, and testing guidelines.
 - **[Domain Context Map (CONTEXT-MAP.md)](CONTEXT-MAP.md)**: Partitioned bounded domains, ubiquitous language, and skill taxonomy.

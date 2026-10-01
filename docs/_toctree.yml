@@ -1,0 +1,97 @@
+- title: "Getting Started"
+  sections:
+    - local: README
+      title: "Documentation Hub"
+    - local: TUTORIAL
+      title: "Getting Started Tutorial"
+    - local: HOWTO
+      title: "How-To Guides"
+    - local: EXPLANATION
+      title: "Architecture & Design Concepts"
+
+- title: "API & System Reference"
+  sections:
+    - local: reference/README
+      title: "Reference Catalog"
+    - local: reference/kernel
+      title: "Micro-Kernel Reference"
+    - local: reference/agent
+      title: "Agent Reasoning Reference"
+    - local: reference/ingestion
+      title: "Ingestion Pipeline Reference"
+    - local: reference/services
+      title: "Core Services Registry"
+    - local: reference/cli
+      title: "Click CLI Command Reference"
+    - local: reference/plugin-manifest
+      title: "Plugin Manifest Reference"
+
+- title: "Domain Architectures"
+  sections:
+    - local: domains/agent-orchestration/EXPLANATION
+      title: "Agent Orchestration"
+    - local: domains/data-engineering/EXPLANATION
+      title: "Data Engineering"
+    - local: domains/infra-and-cloud/EXPLANATION
+      title: "Infrastructure & Cloud"
+    - local: domains/integration-and-io/EXPLANATION
+      title: "Integration & I/O"
+    - local: domains/memory-and-epistemics/EXPLANATION
+      title: "Memory & Epistemics"
+    - local: domains/security-and-forensics/EXPLANATION
+      title: "Security & Forensics"
+    - local: domains/software-engineering/EXPLANATION
+      title: "Software Engineering"
+
+- title: "Bridge Integrations"
+  sections:
+    - local: mantis_bridge/TUTORIAL
+      title: "Mantis Bridge Tutorial"
+    - local: mantis_bridge/HOWTO
+      title: "Mantis Bridge How-To"
+    - local: mantis_bridge/EXPLANATION
+      title: "Mantis Bridge Explanation"
+    - local: mantis_bridge/REFERENCE
+      title: "Mantis Bridge Reference"
+    - local: integrations/google_codebases/tutorial
+      title: "Google Codebases Tutorial"
+    - local: integrations/google_codebases/how_to_guide
+      title: "Google Codebases How-To"
+    - local: integrations/google_codebases/explanation
+      title: "Google Codebases Explanation"
+    - local: integrations/google_codebases/reference
+      title: "Google Codebases Reference"
+
+- title: "Ecosystem Plugins"
+  sections:
+    - local: plugins/earth_engine/tutorial
+      title: "Earth Engine Tutorial"
+    - local: plugins/earth_engine/how-to
+      title: "Earth Engine How-To"
+    - local: plugins/earth_engine/explanation
+      title: "Earth Engine Explanation"
+    - local: plugins/earth_engine/reference
+      title: "Earth Engine Reference"
+    - local: plugins/magika/tutorial
+      title: "Magika Tutorial"
+    - local: plugins/magika/how-to
+      title: "Magika How-To"
+    - local: plugins/magika/explanation
+      title: "Magika Explanation"
+    - local: plugins/magika/reference
+      title: "Magika Reference"
+    - local: plugins/omarchy_bridge/tutorial
+      title: "Omarchy Bridge Tutorial"
+    - local: plugins/omarchy_bridge/how_to
+      title: "Omarchy Bridge How-To"
+    - local: plugins/omarchy_bridge/explanation
+      title: "Omarchy Bridge Explanation"
+    - local: plugins/omarchy_bridge/reference
+      title: "Omarchy Bridge Reference"
+
+- title: "Architecture Decision Records"
+  sections:
+    - local: adr/0001-domain-partitioning-for-ecosystem-plugins
+      title: "ADR 0001: Domain Partitioning for Ecosystem Plugins"
+    - local: adr/0002-domain-partitioning-for-agent-skills
+      title: "ADR 0002: Domain Partitioning for Agent Skills"

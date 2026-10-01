@@ -86,24 +86,10 @@ Entrypoint module and HarnessPlugin implementation for Skill Knowledge Graph & R
 
 ### Module [`models.py`](models.py)
 
-Pydantic data schemas for the Skill Knowledge Graph plugin.
+Pydantic data schemas for the Skill Knowledge Graph plugin. Re-exports canonical service models from `harness.services.skill_graph` with backward-compatible aliases while declaring plugin-specific result schemas.
 
-#### Classes
+#### Plugin Schemas
 
-- `class EdgeType`
-  Semantic relationship types between skills and graph entities.
-- `class StageNode`
-  A discrete execution stage within a skill.
-- `class AntiPatternNode`
-  A named failure mode guarded against by a skill.
-- `class InvariantNode`
-  A non-negotiable architectural invariant or quality checklist item.
-- `class SkillNode`
-  Core skill node representing an agent capability.
-- `class SkillEdge`
-  Directed relation between two nodes in the skill knowledge graph.
-- `class SkillTopologyReport`
-  Topological inspection report for a single skill.
 - `class SkillMatch`
   Ranked skill match from the semantic router.
 - `class SkillRouterResult`
@@ -111,28 +97,36 @@ Pydantic data schemas for the Skill Knowledge Graph plugin.
 - `class SkillGraphSnapshot`
   Full snapshot of the skill knowledge graph.
 
+#### Canonical Service Re-exports & Aliases
+
+The following types are canonical models defined in `harness.services.skill_graph` and re-exported for backward compatibility:
+- `EdgeType`: Semantic relationship types between skills and graph entities.
+- `StageNode` (alias for `SkillStageDefinition`): A discrete execution stage within a skill.
+- `AntiPatternNode` (alias for `SkillAntiPatternDefinition`): A named failure mode guarded against by a skill.
+- `InvariantNode` (alias for `SkillInvariantDefinition`): A non-negotiable architectural invariant or quality checklist item.
+- `SkillNode` (alias for `SkillCardDefinition`): Core skill node representing an agent capability.
+- `SkillEdge`: Directed relation between two nodes in the skill knowledge graph.
+- `SkillTopologyReport`: Topological inspection report for a single skill.
+
 
 ### Module [`parser.py`](parser.py)
 
 Markdown AST and card parser for agent skill files.
 
-#### Classes
+#### Architectural Delegation
 
-- `class SkillCardParser`
-  Parses CARD.md and SKILL.md files into structured SkillNode schemas.
-  - `def parse_directory(cls, dir_path) -> SkillNode | None`
-  - `def scan_root(cls, root_path) -> dict[str, SkillNode]`
+In accordance with Rule 49 (Skill-to-IoC Micro-Kernel Seam Elevation Invariant), parsing logic is elevated into the core micro-kernel service `harness.services.skill_parser.SkillCardParser`. This module re-exports `SkillCardParser` for backward compatibility:
+- `SkillCardParser`: Authoritative parser from `harness.services.skill_parser` providing `parse_directory(cls, dir_path)` and `scan_root(cls, root_path)`.
 
 
 ### Module [`visualizer.py`](visualizer.py)
 
 Interactive HTML Visual Brief generator for the Skill Knowledge Graph.
 
-#### Classes
+#### Architectural Delegation
 
-- `class SkillGraphVisualizer`
-  Renders interactive HTML reports visualizing the agent skill network.
-  - `def render_html(cls, graph, output_path) -> str`
+In accordance with Rule 49 (Skill-to-IoC Micro-Kernel Seam Elevation Invariant), rendering logic is elevated into `harness.services.skill_visualizer.SkillGraphVisualizer`. This module re-exports `SkillGraphVisualizer` for backward compatibility:
+- `SkillGraphVisualizer`: Authoritative renderer from `harness.services.skill_visualizer` providing `render_html(cls, graph, output_path)`.
 
 
 
