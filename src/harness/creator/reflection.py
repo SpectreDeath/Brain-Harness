@@ -362,6 +362,63 @@ class ErrorRecoveryPatternExtractor(BaseMemoryPatternExtractor):
         return heuristics
 
 
+class TestExecutionPatternExtractor(BaseMemoryPatternExtractor):
+    """Extracts test regression patterns, failure coordinates, and invariant violations."""
+
+    @property
+    def name(self) -> str:
+        return "test_execution"
+
+    @property
+    def category(self) -> str:
+        return "error_recovery"
+
+    def extract(
+        self,
+        reports: Sequence[ReportArtifact],
+        transcripts: Sequence[TranscriptSession],
+    ) -> list[DistilledHeuristic]:
+        heuristics: list[DistilledHeuristic] = []
+
+        for rep in reports:
+            if rep.report_type != "test_report" and "test" not in rep.title.lower():
+                continue
+
+            failures = rep.metadata.get("failures", [])
+            for fail in failures:
+                test_name = fail.get("test_name", "unknown_test")
+                test_file = fail.get("test_file", str(rep.file_path))
+                message = fail.get("message", "")
+
+                title = f"Test Regression: {test_name}"
+                heuristic_text = (
+                    f"Regression detected in test '{test_name}' ({test_file}). "
+                    f"Failure reason: {message[:160]}. "
+                    f"Enforce regression safety net before committing changes."
+                )
+
+                heuristics.append(
+                    DistilledHeuristic(
+                        title=title,
+                        category="error_recovery",
+                        heuristic=heuristic_text,
+                        anti_pattern=f"Allowing {test_name} assertion failure to persist across CI cycles.",
+                        confidence=0.97,
+                        source_artifacts=[str(rep.file_path)],
+                        isnad_claims=[
+                            {
+                                "source": test_file,
+                                "timestamp": rep.created_at,
+                                "assertion": f"Test failure observed: {message[:120]}",
+                                "status": "VERIFIED",
+                            }
+                        ],
+                    )
+                )
+
+        return heuristics
+
+
 class MemoryPatternPipeline:
     """Pluggable registry and execution pipeline for memory pattern extractors."""
 
@@ -374,6 +431,7 @@ class MemoryPatternPipeline:
                 TransactionalStepPatternExtractor(),
                 ComputeCalibrationPatternExtractor(),
                 ErrorRecoveryPatternExtractor(),
+                TestExecutionPatternExtractor(),
             ]
 
     def register(self, extractor: BaseMemoryPatternExtractor) -> None:
@@ -615,6 +673,69 @@ class HarnessHistoryHarvester:
             recovery_actions=recovery_actions[:5],
         )
 
+    def harvest_junit_reports(
+        self,
+        report_path: Path | str | None = None,
+        scope: ReflectionScope | None = None,
+    ) -> list[ReportArtifact]:
+        """Discover and parse JUnit XML test reports."""
+        import xml.etree.ElementTree as ET
+
+        reports: list[ReportArtifact] = []
+        candidates: list[Path] = []
+        if report_path:
+            p = Path(report_path).resolve()
+            if p.exists():
+                candidates.append(p)
+        else:
+            for cand in [Path("test-report.xml"), self.temp_dir / "test-report.xml"]:
+                if cand.exists():
+                    candidates.append(cand)
+
+        for p in candidates:
+            try:
+                tree = ET.parse(p)
+                root = tree.getroot()
+
+                failures: list[dict[str, Any]] = []
+                testcases = root.findall(".//testcase")
+                for tc in testcases:
+                    fail_node = tc.find("failure")
+                    err_node = tc.find("error")
+                    active_node = fail_node if fail_node is not None else err_node
+                    if active_node is not None:
+                        cname = tc.get("classname", "")
+                        name = tc.get("name", "")
+                        msg = active_node.get("message", "")
+                        tb = active_node.text or ""
+                        failures.append({
+                            "test_name": f"{cname}::{name}" if cname else name,
+                            "test_file": tc.get("file", cname),
+                            "line": tc.get("line"),
+                            "message": msg,
+                            "traceback": tb,
+                        })
+
+                if failures:
+                    mtime = datetime.fromtimestamp(p.stat().st_mtime, tz=timezone.utc).isoformat()
+                    summary_text = f"Test Report {p.name}: {len(failures)} failures encountered."
+                    friction_points = [f"{f['test_name']}: {f['message'][:80]}" for f in failures]
+                    reports.append(
+                        ReportArtifact(
+                            file_path=p,
+                            title=f"CI Test Run Report ({p.name})",
+                            created_at=mtime,
+                            report_type="test_report",
+                            content_text=summary_text,
+                            friction_points=friction_points,
+                            metadata={"failures": failures, "total_failures": len(failures)},
+                        )
+                    )
+            except Exception as e:
+                logger.warning("Failed parsing JUnit test report", path=str(p), error=str(e))
+
+        return reports
+
 
 # --- Reflector Engine ---
 
@@ -685,6 +806,7 @@ class HarnessReflectorEngine:
         self,
         *,
         scope: ReflectionScope | None = None,
+        test_report_path: Path | str | None = None,
         commit_to_vault: bool = True,
         generate_html_brief: bool = True,
         vault_dir: Path | str = ".harness/knowledge",
@@ -695,6 +817,9 @@ class HarnessReflectorEngine:
 
         # 1. Harvest with scope
         reports = self.harvester.harvest_temp_reports(scope=scope)
+        if test_report_path:
+            junit_reports = self.harvester.harvest_junit_reports(test_report_path, scope=scope)
+            reports.extend(junit_reports)
         transcripts = self.harvester.harvest_transcripts(scope=scope)
 
         # 2. Distill through pluggable pipeline

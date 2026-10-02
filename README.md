@@ -16,10 +16,10 @@ When you install and configure plugins, **your harness becomes a direct reflecti
 
 1. **Clean Micro-Kernel Core**: Models, tools, memory, storage engines, and agent loops are all plugins registered into a unified Inversion of Control (IoC) container with typed `ServiceKey[T]` resolution.
 2. **Universal Ingestion Pipeline**: Point Harness at any public/private GitHub repository or local ZIP archive (`harness plugin add <url/zip>`). The engine auto-inspects code, generates schema manifests, and wraps the codebase into a sandboxed plugin.
-3. **Subprocess Isolation by Default**: Ingested plugins run in isolated subprocess sandboxes via line-buffered JSON-RPC over `stdin`/`stdout`, protecting host memory and enforcing strict resource limits.
+3. **Subprocess & WebAssembly Isolation by Default**: Ingested plugins run in isolated subprocess or WebAssembly (WASM/WASI) sandboxes with epoch-based preemption, protecting host memory and achieving sub-millisecond cold starts for pure compute plugins.
 4. **Agent Skill Knowledge Graph**: Harness indexes structured agent skills (`SKILL.md` and `CARD.md`) into a directed knowledge graph, enabling autonomous multi-step skill chaining, semantic intent routing, and anti-pattern defense.
-5. **Interactive Web Control Room & Headless CLI**: Full visibility through live terminal commands, an interactive Web dashboard (`harness ui`), live file watching (`harness watch`), and an append-only event stream.
-6. **Autobiographical Memory & Reflection**: Harness introspects its own execution history, logs, and visual reports (`harness reflect`) to distill verified, Isnad-grounded Knowledge Items into a persistent Knowledge Vault.
+5. **Interactive Web Control Room & Headless CLI**: Full visibility through live terminal commands, an interactive Web dashboard (`harness ui`) with dual-mode Kernel Architecture and Skill Cluster visualizations, live file watching (`harness watch`), and an append-only event stream.
+6. **Autobiographical Memory & Continuous Reflection**: Harness introspects its own execution history, test run trajectories, logs, and visual reports (`harness reflect`, `--test-report`, `--daemon`) to distill verified, Isnad-grounded Knowledge Items into a persistent Knowledge Vault.
 
 ---
 
@@ -98,7 +98,7 @@ harness ui --port 8080
 │                       Universal Ingestion & Sandbox Engine                       │
 │   • GitHub URL Fetcher & Inspector (AST analysis & auto-manifest)                │
 │   • ZIP / Local Codebase / OpenAPI / PyPI Converters                             │
-│   • Isolated Subprocess & Virtualenv Sandboxes (JSON-RPC Transport)              │
+│   • Isolated Subprocess, Virtualenv & WebAssembly (WASM) Sandboxes (JSON-RPC)    │
 ├──────────────────────────────────────────────────────────────────────────────────┤
 │                              Core Service Plugins                                │
 │   • LLM Service (LiteLLM / OpenAI / Anthropic / Local LLMs)                      │

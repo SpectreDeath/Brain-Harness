@@ -60,4 +60,12 @@ jobs:
         env:
           PYTHONPATH: .:src
         run: |
-          pytest -q --timeout=120
+          pytest -q --timeout=120 --junitxml=test-report.xml
+
+      - name: Continuous Knowledge Distillation
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push' && matrix.python-version == '3.11'
+        env:
+          PYTHONPATH: .:src
+          PYTHONIOENCODING: utf-8
+        run: |
+          python -m harness.cli reflect --test-report test-report.xml --no-html --no-commit

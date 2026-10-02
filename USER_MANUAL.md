@@ -517,6 +517,12 @@ harness reflect
 # Filter reflection to a specific category
 harness reflect --category architecture --min-confidence 0.85
 
+# Distill test execution trajectories from a JUnit XML report
+harness reflect --test-report test-report.xml
+
+# Run continuous background reflection daemon (polls every 300s)
+harness reflect --daemon --interval 300 --vault .harness/knowledge
+
 # Dry run without committing to knowledge vault
 harness reflect --no-commit
 ```
@@ -626,7 +632,10 @@ Launches the real-time Web Control Room dashboard with WebSocket telemetry.
 ```bash
 harness ui --host 127.0.0.1 --port 8080
 ```
-Open [http://127.0.0.1:8080](http://127.0.0.1:8080) in your browser to inspect live agent execution, telemetry, and IoC container status.
+Open [http://127.0.0.1:8080](http://127.0.0.1:8080) in your browser to inspect:
+- **Live Agent Execution & Step Stream**: Real-time event streams, reasoning traces, and token usage rollups.
+- **Interactive Graph Canvas**: Toggle between **Kernel Architecture** (plugin dependencies and service IoC graph) and **Skill Clusters** (Leiden/Louvain cluster partitions, modularity scores, cross-cluster bridges, and emergent capabilities).
+- **REST APIs**: Query `/api/skills/clusters` for raw clustering data and `/api/skills/clusters/mermaid` for pre-rendered Mermaid DAG diagrams.
 
 ---
 
@@ -800,8 +809,9 @@ Brain Harness guarantees strict isolation for external, GitHub-sourced, and untr
 ### Isolation Modes
 1. **`subprocess` (Default):** Executes in a separate child process. Input and output are exchanged via strict JSON-RPC 2.0 messages over standard I/O pipes managed by [`StdioJsonRpcTransport`](src/harness/plugins/transport.py).
 2. **`venv` (Virtual Environment):** Creates an isolated virtualenv, installs the repository's dependencies (`requirements.txt` or `pyproject.toml`), and runs the subprocess inside the virtualenv.
-3. **`in_process` (Explicitly trusted plugins only):** Executes within the host Python process for microsecond execution speed.
-4. **`docker` (Container Isolation):** Executes within an isolated OCI container sandbox.
+3. **`wasm` (WebAssembly Runtime):** Executes inside a sandboxed WebAssembly runtime via Wasmtime and WASI standard I/O pipes. Engineered for pure computation and leaf data-transformation plugins to provide sub-millisecond cold starts, strict memory bounds, and epoch-based preemption to prevent infinite loops. If `wasmtime` or a `.wasm` binary is absent, the sandbox factory degrades gracefully to standard subprocess execution.
+4. **`in_process` (Explicitly trusted plugins only):** Executes within the host Python process for microsecond execution speed.
+5. **`docker` (Container Isolation):** Executes within an isolated OCI container sandbox.
 
 ### Lazy Subprocess Staging & Context Transactions
 - **Lazy Staging**: External plugins with `subprocess` or `venv` isolation remain in `DISCOVERED`/`VALIDATED` state during startup, provisioning virtualenvs lazily on first invocation to eliminate cold-start delays.

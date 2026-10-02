@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import asyncio
 from datetime import datetime
 from pathlib import Path
 
@@ -25,6 +26,7 @@ async def run_reflection_cmd(
     since_iso: str | None = None,
     conv_id: str | None = None,
     category: str | None = None,
+    test_report_path: Path | str | None = None,
     min_confidence: float = 0.80,
     limit: int = 50,
     commit_to_vault: bool = True,
@@ -65,6 +67,7 @@ async def run_reflection_cmd(
         )
         report = await engine.reflect(
             scope=scope,
+            test_report_path=test_report_path,
             commit_to_vault=commit_to_vault,
             generate_html_brief=generate_html,
             vault_dir=vault_dir,
@@ -193,8 +196,11 @@ def knowledge_verify(ki_id: str, vault_dir: str) -> None:
 @click.option("--since", "since_iso", default=None, help="Filter memory artifacts created on or after this ISO date/timestamp")
 @click.option("--conv-id", "conv_id", default=None, help="Filter transcript harvesting to a specific conversation ID")
 @click.option("--category", "category", default=None, help="Filter distilled heuristics by category (e.g. architecture, performance)")
+@click.option("--test-report", "test_report", default=None, help="Path to JUnit XML test report or CI artifacts to distill")
 @click.option("--min-confidence", "min_confidence", default=0.80, type=float, help="Minimum confidence threshold (0.0 - 1.0)")
 @click.option("--limit", "limit", default=50, type=int, help="Maximum number of reports/transcripts to harvest")
+@click.option("--daemon", "daemon", is_flag=True, help="Run continuous background reflection daemon")
+@click.option("--interval", "interval_seconds", default=300.0, type=float, help="Interval in seconds between daemon distillation cycles")
 @click.option("--no-html", "no_html", is_flag=True, help="Disable generating interactive HTML visual brief")
 @click.option("--no-commit", "no_commit", is_flag=True, help="Do not commit distilled items into the knowledge vault")
 def knowledge_reflect(
@@ -202,17 +208,48 @@ def knowledge_reflect(
     since_iso: str | None,
     conv_id: str | None,
     category: str | None,
+    test_report: str | None,
     min_confidence: float,
     limit: int,
+    daemon: bool,
+    interval_seconds: float,
     no_html: bool,
     no_commit: bool,
 ) -> None:
-    """Reflect on internal history (HTML reports, transcripts) and distill Knowledge Items."""
+    """Reflect on internal history (HTML reports, transcripts, test runs) and distill Knowledge Items."""
+    if daemon:
+        click.echo(f"Starting continuous reflection daemon (interval: {interval_seconds}s, vault: {vault_dir})...")
+        from harness.services.reflection_worker import ReflectionDaemonWorker
+
+        worker = ReflectionDaemonWorker(
+            interval_seconds=interval_seconds,
+            test_report_path=test_report,
+            vault_dir=vault_dir,
+            commit_to_vault=not no_commit,
+            generate_html=not no_html,
+            min_confidence=min_confidence,
+        )
+
+        async def _run_daemon() -> None:
+            worker.start()
+            try:
+                while True:
+                    await asyncio.sleep(1)
+            except (asyncio.CancelledError, KeyboardInterrupt):
+                await worker.stop()
+
+        try:
+            _run_async(_run_daemon())
+        except KeyboardInterrupt:
+            click.echo("\nReflection daemon stopped by user.")
+        return
+
     report = _run_async(
         run_reflection_cmd(
             since_iso=since_iso,
             conv_id=conv_id,
             category=category,
+            test_report_path=test_report,
             min_confidence=min_confidence,
             limit=limit,
             commit_to_vault=not no_commit,
@@ -246,8 +283,11 @@ def knowledge_reflect(
 @click.option("--since", "since_iso", default=None, help="Filter memory artifacts created on or after this ISO date/timestamp")
 @click.option("--conv-id", "conv_id", default=None, help="Filter transcript harvesting to a specific conversation ID")
 @click.option("--category", "category", default=None, help="Filter distilled heuristics by category (e.g. architecture, performance)")
+@click.option("--test-report", "test_report", default=None, help="Path to JUnit XML test report or CI artifacts to distill")
 @click.option("--min-confidence", "min_confidence", default=0.80, type=float, help="Minimum confidence threshold (0.0 - 1.0)")
 @click.option("--limit", "limit", default=50, type=int, help="Maximum number of reports/transcripts to harvest")
+@click.option("--daemon", "daemon", is_flag=True, help="Run continuous background reflection daemon")
+@click.option("--interval", "interval_seconds", default=300.0, type=float, help="Interval in seconds between daemon distillation cycles")
 @click.option("--no-html", "no_html", is_flag=True, help="Disable generating interactive HTML visual brief")
 @click.option("--no-commit", "no_commit", is_flag=True, help="Do not commit distilled items into the knowledge vault")
 def reflect_cli(
@@ -255,8 +295,11 @@ def reflect_cli(
     since_iso: str | None,
     conv_id: str | None,
     category: str | None,
+    test_report: str | None,
     min_confidence: float,
     limit: int,
+    daemon: bool,
+    interval_seconds: float,
     no_html: bool,
     no_commit: bool,
 ) -> None:
@@ -266,8 +309,11 @@ def reflect_cli(
         since_iso=since_iso,
         conv_id=conv_id,
         category=category,
+        test_report=test_report,
         min_confidence=min_confidence,
         limit=limit,
+        daemon=daemon,
+        interval_seconds=interval_seconds,
         no_html=no_html,
         no_commit=no_commit,
     )

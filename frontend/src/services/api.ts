@@ -114,6 +114,16 @@ export const api = {
     return res.json();
   },
 
+  async getSkillClusters(minClusterSize: number = 2): Promise<{ status: string; total: number; clusters: any[]; bridges: any[] }> {
+    const res = await fetch(`${API_BASE}/skills/clusters?min_cluster_size=${minClusterSize}`);
+    return res.json();
+  },
+
+  async getSkillClusterMermaid(minClusterSize: number = 2): Promise<{ status: string; mermaid: string }> {
+    const res = await fetch(`${API_BASE}/skills/clusters/mermaid?min_cluster_size=${minClusterSize}`);
+    return res.json();
+  },
+
   async runAgentTask(task: string, maxSteps: number = 10): Promise<any> {
     const res = await fetch(`${API_BASE}/agent/run`, {
       method: 'POST',

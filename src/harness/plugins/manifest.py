@@ -32,6 +32,9 @@ class IsolationMode(str, Enum):
     DOCKER = "docker"
     """Docker container isolation (requires Docker)."""
 
+    WASM = "wasm"
+    """Lightweight WebAssembly runtime (wasmtime). Sub-ms cold start for leaf plugins."""
+
 
 class ParameterSpec(BaseModel):
     """A single parameter in a tool or function schema."""
@@ -159,6 +162,9 @@ class PluginManifest(BaseModel):
 
     container: ContainerConfig | None = None
     """Optional container execution configuration for Docker isolation."""
+
+    wasm_entrypoint: str | None = None
+    """Optional path to compiled .wasm binary relative to plugin root."""
 
     metadata: dict[str, Any] = Field(default_factory=dict)
     """Arbitrary key-value metadata."""
