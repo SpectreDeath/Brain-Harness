@@ -105,6 +105,9 @@ class SkillStageDefinition(BaseModel):
     primary_artifact: str = Field(
         default="", description="Artifact produced by this stage"
     )
+    consumes: list[str] = Field(
+        default_factory=list, description="Artifact types this stage requires as input"
+    )
 
     @property
     def title(self) -> str:
@@ -667,6 +670,7 @@ class EdgeType(str, Enum):
     MANDATES = "MANDATES"
     ACTIVATES = "ACTIVATES"
     COMPLEMENTS = "COMPLEMENTS"
+    FEEDS = "FEEDS"
 
 
 class SkillEdge(BaseModel):
@@ -907,6 +911,20 @@ CANONICAL_PIPELINE_PRECEDENCE: list[tuple[str, str]] = [
 # ============================================================================
 
 
+def _would_create_cycle(adj: dict[str, set[str]], src: str, dst: str) -> bool:
+    """Return True if adding src->dst would create a directed cycle via DFS reachability."""
+    visited: set[str] = set()
+    stack = [dst]
+    while stack:
+        node = stack.pop()
+        if node == src:
+            return True
+        if node not in visited:
+            visited.add(node)
+            stack.extend(adj.get(node, set()))
+    return False
+
+
 class BuiltinSkillRegistryService(SkillIntelligenceService):
     """Authoritative in-memory caching Skill Registry and Knowledge Graph engine.
 
@@ -932,6 +950,7 @@ class BuiltinSkillRegistryService(SkillIntelligenceService):
         self._invalidation_listeners: list[Any] = []
         self._is_invalidating: bool = False
         self._scan_lock = threading.Lock()
+        self._idf_table: dict[str, float] = {}
 
     @property
     def edges(self) -> list[SkillEdge]:
@@ -1413,7 +1432,8 @@ class BuiltinSkillRegistryService(SkillIntelligenceService):
                     trig_tokens = set(re.findall(r"\w+", trig_lower))
                     overlap = intent_tokens.intersection(trig_tokens)
                     if overlap:
-                        score += 0.5 * len(overlap)
+                        idf_trigger_score = sum(self._idf_table.get(t, 1.0) for t in overlap)
+                        score += 0.5 * idf_trigger_score
                         matched_triggers.extend(list(overlap)[:2])
 
             # Description / target token overlap
@@ -1421,7 +1441,8 @@ class BuiltinSkillRegistryService(SkillIntelligenceService):
             text_tokens = set(re.findall(r"\w+", text_corpus))
             text_overlap = intent_tokens.intersection(text_tokens)
             if text_overlap:
-                score += 0.3 * len(text_overlap)
+                idf_score = sum(self._idf_table.get(t, 1.0) for t in text_overlap)
+                score += 0.3 * idf_score
 
             # Character trigram overlap (asymmetric overlap for semantic/stemming resilience)
             tri_score = _trigram_overlap(intent_lower, text_corpus)
@@ -1667,6 +1688,43 @@ class BuiltinSkillRegistryService(SkillIntelligenceService):
         for s1, s2 in CANONICAL_PIPELINE_PRECEDENCE:
             if s1 in discovered and s2 in discovered:
                 self._add_edge(s1, s2, EdgeType.PRECEDES)
+
+        # Build artifact production and consumption indexes
+        producer_map: dict[str, set[str]] = collections.defaultdict(set)
+        consumer_map: dict[str, set[str]] = collections.defaultdict(set)
+        for card in discovered.values():
+            for stage in card.stages:
+                if stage.primary_artifact:
+                    producer_map[stage.primary_artifact].add(card.name)
+                for artifact in (stage.consumes or []):
+                    consumer_map[artifact].add(card.name)
+
+        # Synthesize FEEDS edges with DFS cycle pre-check
+        for artifact, producers in producer_map.items():
+            for consumer_skill in consumer_map.get(artifact, set()):
+                for producer_skill in producers:
+                    if producer_skill == consumer_skill:
+                        continue
+                    if not _would_create_cycle(adjacency, producer_skill, consumer_skill):
+                        self._add_edge(producer_skill, consumer_skill, EdgeType.FEEDS)
+                        adjacency[producer_skill].add(consumer_skill)
+                    else:
+                        logger.debug(
+                            "Skipping FEEDS edge %s -> %s: would create directed cycle",
+                            producer_skill,
+                            consumer_skill,
+                        )
+
+        # Compute corpus-level IDF weights for intent routing
+        import math
+        corpus_df: dict[str, int] = collections.Counter()
+        for skill in discovered.values():
+            tokens = set(re.findall(r"\w+", f"{skill.target} {skill.category}".lower()))
+            corpus_df.update(tokens)
+        n_docs = max(1, len(discovered))
+        self._idf_table = {
+            t: math.log((n_docs + 1) / (df + 1)) for t, df in corpus_df.items()
+        }
 
         self._skills_cache = discovered
         self._categories = categories

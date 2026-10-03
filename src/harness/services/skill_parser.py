@@ -355,12 +355,24 @@ class SkillCardParser:
             if crit_match:
                 criterion = crit_match.group(1).strip()
 
+            artifact = ""
+            art_match = re.search(r"(?:Produces|Primary)\s+artifact(?:\*\*)?:\s*(.+)", section, re.IGNORECASE)
+            if art_match:
+                artifact = art_match.group(1).strip().strip("`").strip('"')
+
+            consumes: list[str] = []
+            cons_match = re.search(r"Consumes\s+artifact(?:s)?(?:\*\*)?:\s*(.+)", section, re.IGNORECASE)
+            if cons_match:
+                consumes = [c.strip().strip("`").strip('"') for c in cons_match.group(1).split(",") if c.strip()]
+
             stages.append(
                 SkillStageDefinition(
                     stage_num=num,
                     name=name,
                     completion_gate=criterion or f"Gate for Stage {num}",
                     objective=name,
+                    primary_artifact=artifact,
+                    consumes=consumes,
                 )
             )
 

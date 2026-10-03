@@ -1,0 +1,67 @@
+{
+  "id": "ki_self_20261002_03",
+  "title": "Stage Artifact Contracts, Dynamic Directed FEEDS Edge Synthesis & Cycle Prevention",
+  "category": "skill_graph",
+  "created_at": "2026-10-02T19:20:00Z",
+  "author": "Brain Harness Autobiographical Reflection Engine (harness-reflector)",
+  "tags": [
+    "skill_graph",
+    "dag_routing",
+    "artifact_contracts",
+    "endogenous_memory",
+    "self_reflection"
+  ],
+  "context": "Agent skills in modular agent architectures often produce intermediate artifacts consumed by sibling skills (e.g. AST diff generator producing an artifact consumed by an adversarial reviewer). Hardcoding these pipelines in static lists is brittle and prevents emergent skill combinations. However, automated graph edge synthesis based on artifact matching risks introducing cyclic dependencies in the skill DAG.",
+  "distilled_learning": "Agent skills must declare formal stage contracts via Produces artifact: and Consumes artifact(s):. The skill knowledge graph dynamically derives directed FEEDS edges between producer and consumer skills, verifying acyclicity via DFS reachability (_would_create_cycle) prior to edge insertion to prevent infinite cyclic execution in topological planners.",
+  "isnad": {
+    "decision_id": "dec_20261002_self_03",
+    "status": "VERIFIED",
+    "claims": [
+      {
+        "assertion": "Skill parser parses Produces artifact: and Consumes artifact(s): from markdown stage headers.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "src/harness/services/skill_parser.py#L358-L375",
+            "verified": true
+          },
+          {
+            "node_type": "test_contract",
+            "uri": "tests/test_skill_graph_hardening.py:test_contract_edge_synthesis",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "assertion": "Skill graph synthesizes directed FEEDS edges between producer and consumer skills.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "src/harness/services/skill_graph.py#L670-L685",
+            "verified": true
+          },
+          {
+            "node_type": "test_contract",
+            "uri": "tests/test_skill_graph_hardening.py:test_contract_edge_synthesis",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "assertion": "DFS reachability check prevents circular FEEDS edges from introducing cycles in the skill execution graph.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "src/harness/services/skill_graph.py#L910-L930",
+            "verified": true
+          },
+          {
+            "node_type": "test_contract",
+            "uri": "tests/test_skill_graph_hardening.py:test_feeds_edge_acyclicity",
+            "verified": true
+          }
+        ]
+      }
+    ]
+  }
+}

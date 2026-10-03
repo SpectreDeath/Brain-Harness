@@ -1,0 +1,67 @@
+{
+  "id": "ki_self_20261002_01",
+  "title": "Copy-on-Write (COW) Lock-Free Context Registry & Transaction Inverse Compaction",
+  "category": "architecture",
+  "created_at": "2026-10-02T19:20:00Z",
+  "author": "Brain Harness Autobiographical Reflection Engine (harness-reflector)",
+  "tags": [
+    "architecture",
+    "ioc_container",
+    "concurrency",
+    "endogenous_memory",
+    "self_reflection"
+  ],
+  "context": "In high-throughput ReAct multi-agent swarms, hundreds of concurrent agent step loops query the IoC container (context.require(), context.optional()) while background workers register plugins or execute interceptor injections. Traditional readers-writer locks introduce synchronization latency and thread starvation under high read pressure. Furthermore, multi-step agent tool execution transactions (async with context.transaction()) accumulating rollbacks into the parent _dispose_stack cause unbounded closure accumulation and redundant inverse invocations.",
+  "distilled_learning": "IoC context reads must be completely lock-free via atomic dictionary reference swapping under the GIL with root/local epoch tracking (_interceptor_epoch). Furthermore, context transaction commits must compact inverse closures in reversed order to retain only the latest inverse per _realm_key, eliminating memory bloat and duplicate rollback execution across multi-step transactions.",
+  "isnad": {
+    "decision_id": "dec_20261002_self_01",
+    "status": "VERIFIED",
+    "claims": [
+      {
+        "assertion": "Lock-free COW registry allows concurrent readers to achieve zero lock contention during high-frequency writer mutations.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "src/harness/kernel/context.py#L175-L210",
+            "verified": true
+          },
+          {
+            "node_type": "test_contract",
+            "uri": "tests/test_context.py:test_context_lock_free_read_latency",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "assertion": "Transaction commit inverse compaction retains only the latest inverse per _realm_key in reversed order, preventing inverse bloat in _dispose_stack.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "src/harness/kernel/context.py#L240-L265",
+            "verified": true
+          },
+          {
+            "node_type": "test_contract",
+            "uri": "tests/test_context.py:test_transaction_inverse_compaction",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "assertion": "Interceptor cache invalidation increments root and child _interceptor_epoch on write to guarantee fresh resolution without lock overhead.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "src/harness/kernel/context.py#L180-L195",
+            "verified": true
+          },
+          {
+            "node_type": "test_contract",
+            "uri": "tests/test_context.py:test_interceptor_epoch_increments_on_write",
+            "verified": true
+          }
+        ]
+      }
+    ]
+  }
+}

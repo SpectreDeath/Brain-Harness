@@ -207,3 +207,98 @@ class TestServiceContextInterception:
             concurrent.futures.wait(futures)
 
         assert not errors, f"Concurrent intercept errors: {errors}"
+
+
+@pytest.mark.asyncio
+async def test_context_lock_free_read_latency() -> None:
+    """Validate that high-frequency writes do not cause lock contention or read failure."""
+    import asyncio
+    import time
+
+    ctx = ServiceContext()
+    keys = [ServiceKey[int](f"service_{i}") for i in range(50)]
+    for i, key in enumerate(keys):
+        ctx.provide(key, i)
+
+    # 1. Baseline: concurrent tasks performing reads without writer pressure
+    async def reader_task(iterations: int = 500) -> float:
+        t0 = time.perf_counter()
+        for _ in range(iterations):
+            for k in keys:
+                assert ctx.require(k) is not None
+        return time.perf_counter() - t0
+
+    baseline_times = await asyncio.gather(*(reader_task() for _ in range(20)))
+    avg_baseline = sum(baseline_times) / len(baseline_times)
+
+    # 2. Under writer pressure: background writer mutating at high frequency
+    writer_running = True
+    writer_key = ServiceKey[str]("writer.key")
+    ctx.provide(writer_key, "initial")
+
+    async def writer_task() -> None:
+        counter = 0
+        while writer_running:
+            counter += 1
+            ctx.provide(writer_key, f"v_{counter}", allow_override=True)
+            await asyncio.sleep(0.001)
+
+    w_task = asyncio.create_task(writer_task())
+    try:
+        contended_times = await asyncio.gather(*(reader_task() for _ in range(20)))
+    finally:
+        writer_running = False
+        await w_task
+
+    avg_contended = sum(contended_times) / len(contended_times)
+    # Read latency under write pressure should remain bounded
+    assert avg_contended < avg_baseline * 3.5, (
+        f"Contended latency ({avg_contended:.4f}s) exceeded bound vs baseline ({avg_baseline:.4f}s)"
+    )
+
+
+@pytest.mark.asyncio
+async def test_transaction_inverse_compaction() -> None:
+    """Verify that multi-step transactions compact redundant inverses down to O(K) keys."""
+    ctx = ServiceContext()
+    key_a = ServiceKey[str]("key.a")
+    key_b = ServiceKey[str]("key.b")
+
+    initial_stack_len = len(ctx._dispose_stack)
+
+    async with ctx.transaction() as tx:
+        for i in range(50):
+            tx.provide(key_a, f"val_a_{i}", allow_override=True)
+            tx.provide(key_b, f"val_b_{i}", allow_override=True)
+
+    # Inverses should be compacted: at most 2 inverses (one per unique key mutated), NOT 100
+    added_inverses = len(ctx._dispose_stack) - initial_stack_len
+    assert added_inverses <= 2, f"Expected <= 2 compacted inverses, got {added_inverses}"
+
+    # Disposing root context should still cleanly dispose both keys
+    await ctx.dispose()
+    assert not ctx.has(key_a)
+    assert not ctx.has(key_b)
+
+
+def test_interceptor_epoch_increments_on_write() -> None:
+    """Verify that _interceptor_epoch bumps on provide, revoke, and hot-swap for cache busting."""
+    ctx = ServiceContext()
+    key = ServiceKey[str]("epoch.test")
+
+    e0 = getattr(ctx, "_interceptor_epoch", 0)
+    ctx.provide(key, "v1")
+    e1 = getattr(ctx, "_interceptor_epoch", 0)
+    assert e1 == e0 + 1, f"Epoch should increment on provide: {e1} != {e0 + 1}"
+
+    ctx.provide(key, "v2", allow_override=True)
+    e2 = getattr(ctx, "_interceptor_epoch", 0)
+    assert e2 == e1 + 1, f"Epoch should increment on override provide: {e2} != {e1 + 1}"
+
+    ctx.hot_swap(key, "v3")
+    e3 = getattr(ctx, "_interceptor_epoch", 0)
+    assert e3 == e2 + 1, f"Epoch should increment on hot_swap: {e3} != {e2 + 1}"
+
+    ctx.revoke(key)
+    e4 = getattr(ctx, "_interceptor_epoch", 0)
+    assert e4 == e3 + 1, f"Epoch should increment on revoke: {e4} != {e3 + 1}"

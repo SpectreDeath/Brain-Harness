@@ -34,9 +34,35 @@ async def async_main(module: Any, rpc_out: Any = None) -> None:
     async def handle_request(line_str: str) -> None:
         try:
             request = json.loads(line_str)
+            if "__shm__" in request and isinstance(request["__shm__"], dict):
+                shm_meta = request["__shm__"]
+                if shm_meta.get("version") == 1:
+                    from multiprocessing import shared_memory
+
+                    shm_name = shm_meta["name"]
+                    shm_size = shm_meta["size"]
+                    shm = shared_memory.SharedMemory(name=shm_name)
+                    try:
+                        raw_bytes = bytes(shm.buf[:shm_size])
+                        request = json.loads(raw_bytes.decode("utf-8"))
+                    finally:
+                        shm.close()
+
             method = request.get("method", "")
             params = request.get("params") or {}
             req_id = request.get("id", 0)
+
+            if method == "harness.hello":
+                response = {
+                    "jsonrpc": "2.0",
+                    "id": req_id,
+                    "result": {"capabilities": ["shm"]},
+                }
+                payload = json.dumps(response) + "\n"
+                async with stdout_lock:
+                    rpc_out.write(payload)
+                    rpc_out.flush()
+                return
 
             func = getattr(module, method, None)
             if func is None:

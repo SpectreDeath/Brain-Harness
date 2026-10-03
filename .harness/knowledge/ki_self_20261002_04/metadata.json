@@ -1,0 +1,73 @@
+{
+  "id": "ki_self_20261002_04",
+  "title": "Continuous Reflection Daemon, JUnit Test Trajectory Harvesting & CI Distillation",
+  "category": "reflection_and_daemon",
+  "created_at": "2026-10-02T19:20:00Z",
+  "author": "Brain Harness Autobiographical Reflection Engine (harness-reflector)",
+  "tags": [
+    "reflection",
+    "junit_harvesting",
+    "daemon",
+    "continuous_distillation",
+    "endogenous_memory",
+    "self_reflection"
+  ],
+  "context": "In autonomous agent harnesses, execution knowledge is often lost as ephemeral residue once a process exits. When CI runs execute test suites, rich diagnostics (failures, errors, and fixes) are discarded upon runner shutdown. Manually running reflection CLI commands is insufficient for unattended multi-day developmental velocity.",
+  "distilled_learning": "Continuous autobiographical reflection must operate across two distinct modes: an interactive CLI inspection seam (harness reflect) and an asynchronous background daemon (ReflectionDaemonWorker) wired directly into CI test runs via JUnit XML report ingestion (--test-report). Test execution pattern extractors must defensively parse heterogeneous testsuite hierarchies and distinguish transient timeouts from structural architecture regressions.",
+  "isnad": {
+    "decision_id": "dec_20261002_self_04",
+    "status": "VERIFIED",
+    "claims": [
+      {
+        "assertion": "ReflectionDaemonWorker executes recurring autobiographical distillation loops in background tasks.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "src/harness/services/reflection_worker.py#L30-L115",
+            "verified": true
+          },
+          {
+            "node_type": "test_contract",
+            "uri": "tests/test_reflection_daemon.py:test_daemon_worker_step_and_lifecycle",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "assertion": "TestExecutionPatternExtractor parses JUnit XML test failure trajectories into verifiable Knowledge Items.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "src/harness/creator/reflection.py#L510-L620",
+            "verified": true
+          },
+          {
+            "node_type": "test_contract",
+            "uri": "tests/test_reflection_daemon.py:test_harvest_junit_reports_valid",
+            "verified": true
+          },
+          {
+            "node_type": "git_commit",
+            "uri": "c3bfffebc5749c6aab51f19004b595d1b552c90c",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "assertion": "CI pipeline invokes harness reflect with --test-report flag for automated post-test distillation.",
+        "lineage": [
+          {
+            "node_type": "ci_pipeline",
+            "uri": ".github/workflows/ci.yml#L45-L55",
+            "verified": true
+          },
+          {
+            "node_type": "cli_command",
+            "uri": "src/harness/commands/reflection.py#L65-L85",
+            "verified": true
+          }
+        ]
+      }
+    ]
+  }
+}

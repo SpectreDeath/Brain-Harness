@@ -256,3 +256,102 @@ class TestSandboxedPluginAdapter:
         err = SandboxError("venv", "Failed to build")
         assert "venv" in str(err)
         assert "Failed to build" in str(err)
+
+
+@pytest.mark.unit
+def test_posix_cgroup_lifecycle(tmp_path: Path) -> None:
+    """Verify privilege-aware Linux cgroup v2 detection, limit application, and cleanup."""
+    fake_sys_cgroup = tmp_path / "sys" / "fs" / "cgroup"
+    fake_slice = fake_sys_cgroup / "user.slice" / "user-1000.slice"
+    fake_slice.mkdir(parents=True)
+    (fake_sys_cgroup / "cgroup.controllers").write_text("memory pids\n", encoding="utf-8")
+
+    fake_proc_cgroup = tmp_path / "proc_self_cgroup"
+    fake_proc_cgroup.write_text("0::/user.slice/user-1000.slice\n", encoding="utf-8")
+
+    dummy_script = tmp_path / "dummy.py"
+    dummy_script.write_text("def ping(): return 'pong'\n", encoding="utf-8")
+
+    executor = SubprocessExecutor(dummy_script, memory_limit_mb=256.0)
+
+    # 1. Apply limits in mock Linux cgroup v2 hierarchy
+    success = executor._apply_cgroup_limits(
+        pid=4242,
+        limit_mb=256.0,
+        cgroup_root=fake_sys_cgroup,
+        proc_cgroup=fake_proc_cgroup,
+    )
+    assert success is True
+    assert executor._cgroup_path is not None
+    assert executor._cgroup_path.exists()
+    assert (executor._cgroup_path / "memory.max").read_text(encoding="utf-8") == str(256 * 1024 * 1024)
+    assert (executor._cgroup_path / "cgroup.procs").read_text(encoding="utf-8") == "4242"
+
+    # 2. Cleanup
+    cgroup_dir = executor._cgroup_path
+    (cgroup_dir / "cgroup.procs").unlink()
+    (cgroup_dir / "memory.max").unlink()
+    executor._cleanup_cgroup()
+    assert not cgroup_dir.exists()
+    assert executor._cgroup_path is None
+
+    # 3. PermissionError / non-writable slice fallback without raising
+    non_writable = tmp_path / "read_only"
+    non_writable.mkdir()
+    res = executor._apply_cgroup_limits(
+        pid=9999,
+        limit_mb=128.0,
+        cgroup_root=non_writable,
+        proc_cgroup=fake_proc_cgroup,
+    )
+    assert res is False
+    assert executor._cgroup_path is None
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_transport_capability_negotiation(tmp_path: Path) -> None:
+    """Verify StdioJsonRpcTransport negotiates capabilities with the bridge runner."""
+    script = tmp_path / "mock_plugin.py"
+    script.write_text("def ping(): return 'pong'\n", encoding="utf-8")
+
+    executor = SubprocessExecutor(script)
+    await executor.start()
+    try:
+        assert executor.transport is not None
+        assert "shm" in executor.transport.peer_capabilities
+    finally:
+        await executor.stop()
+
+
+@pytest.mark.integration
+@pytest.mark.asyncio
+async def test_transport_shm_round_trip(tmp_path: Path) -> None:
+    """Send a >64KB payload through StdioJsonRpcTransport and verify byte-for-byte recovery via SHM."""
+    import hashlib
+
+    script = tmp_path / "echo_large.py"
+    script.write_text(
+        "import hashlib\n"
+        "def echo_blob(data: str) -> dict:\n"
+        "    digest = hashlib.sha256(data.encode('utf-8')).hexdigest()\n"
+        "    return {'length': len(data), 'sha256': digest}\n",
+        encoding="utf-8",
+    )
+
+    executor = SubprocessExecutor(script)
+    await executor.start()
+    try:
+        # 256 KB string payload
+        large_str = "A" * (256 * 1024)
+        expected_sha256 = hashlib.sha256(large_str.encode("utf-8")).hexdigest()
+        res = await executor.execute("echo_blob", {"data": large_str}, timeout=15.0)
+        assert res["status"] == "ok"
+        assert res["result"]["length"] == len(large_str)
+        assert res["result"]["sha256"] == expected_sha256
+        # Confirm that SHM transport was actually negotiated and used
+        assert executor.transport is not None
+        assert "shm" in executor.transport.peer_capabilities
+    finally:
+        await executor.stop()
+

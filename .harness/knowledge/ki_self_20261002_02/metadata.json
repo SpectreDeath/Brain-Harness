@@ -1,0 +1,73 @@
+{
+  "id": "ki_self_20261002_02",
+  "title": "Shared Memory (SHM) IPC Acceleration & Safe Native Engine Graceful Degradation",
+  "category": "sandboxing",
+  "created_at": "2026-10-02T19:20:00Z",
+  "author": "Brain Harness Autobiographical Reflection Engine (harness-reflector)",
+  "tags": [
+    "sandboxing",
+    "ipc_transport",
+    "shared_memory",
+    "wasm",
+    "endogenous_memory",
+    "self_reflection"
+  ],
+  "context": "Passing large tool inputs and outputs (>64KB AST diffs, tabular datasets, repository maps) across subprocess pipes introduces JSON serialization and IPC buffer overhead, which can cause OS pipe deadlocks. In parallel, integrating native virtualization engines (like Wasmtime WASI runtimes) introduces platform dependency risks when host environments lack precompiled native wheels (ModuleNotFoundError: No module named 'wasmtime').",
+  "distilled_learning": "Sandboxed plugin transports handling high-throughput or large payloads (>64KB) must negotiate shared memory (multiprocessing.shared_memory.SharedMemory) capabilities during handshake, registering defensive atexit cleanup hooks while falling back seamlessly to standard stdio JSON-RPC. Similarly, native virtualization executors (such as Wasmtime WASI engines) must feature automatic, transparent degradation to subprocess sandboxing when native modules are unavailable on the host environment.",
+  "isnad": {
+    "decision_id": "dec_20261002_self_02",
+    "status": "VERIFIED",
+    "claims": [
+      {
+        "assertion": "Handshake capability negotiation detects peer SHM support, routing large payloads (>64KB) through memory-mapped buffers with zero pipe copy.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "src/harness/plugins/transport.py#L45-L120",
+            "verified": true
+          },
+          {
+            "node_type": "test_contract",
+            "uri": "tests/test_sandbox.py:test_transport_capability_negotiation",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "assertion": "Defensive atexit and _cleanup_all_shm unlinking prevents leaked OS shared memory blocks on proactor shutdown.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "src/harness/plugins/transport.py#L50-L65",
+            "verified": true
+          },
+          {
+            "node_type": "test_contract",
+            "uri": "tests/test_sandbox.py:test_transport_shm_round_trip",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "assertion": "WasmSandboxExecutor transparently degrades to SubprocessExecutor when wasmtime module is absent or execution fails.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "src/harness/plugins/sandbox.py#L820-L890",
+            "verified": true
+          },
+          {
+            "node_type": "test_contract",
+            "uri": "tests/test_wasm_sandbox.py",
+            "verified": true
+          },
+          {
+            "node_type": "transcript_error",
+            "uri": "conversations/ed7c4cf2-8671-4f6b-ad48-a7a0e1aa8a17:Step 353",
+            "verified": true
+          }
+        ]
+      }
+    ]
+  }
+}

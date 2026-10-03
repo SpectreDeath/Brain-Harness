@@ -221,6 +221,7 @@ class SubprocessExecutor(SandboxExecutor):
         self._watchdog_task: asyncio.Task[None] | None = None
         self._memory_exceeded: bool = False
         self._win32_job_handle: Any = None
+        self._cgroup_path: Path | None = None
 
     @property
     def name(self) -> str:
@@ -337,6 +338,71 @@ class SubprocessExecutor(SandboxExecutor):
         except Exception as e:
             logger.debug("Failed applying Win32 Job Object limits", error=str(e))
 
+    def _resolve_cgroup_path(
+        self,
+        pid: int,
+        cgroup_root: Path = Path("/sys/fs/cgroup"),
+        proc_cgroup: Path = Path("/proc/self/cgroup"),
+    ) -> Path | None:
+        """Detect a writable cgroup v2 slice for this process."""
+        cgroup_controllers = cgroup_root / "cgroup.controllers"
+        if not cgroup_controllers.exists():
+            return None  # not a cgroups v2 host
+        if not proc_cgroup.exists():
+            return None
+        try:
+            # Read own slice from kernel (format: "0::/<slice_path>")
+            content = proc_cgroup.read_text(encoding="utf-8").strip()
+            lines = content.splitlines()
+            if not lines:
+                return None
+            own_cgroup = lines[0].split(":")[-1]
+            slice_path = cgroup_root / own_cgroup.lstrip("/")
+            candidate = slice_path / f"harness_{pid}"
+            candidate.mkdir(parents=False, exist_ok=True)
+            return candidate
+        except (PermissionError, OSError):
+            return None  # fall through to RSS watchdog
+
+    def _apply_cgroup_limits(
+        self,
+        pid: int,
+        limit_mb: float,
+        cgroup_root: Path = Path("/sys/fs/cgroup"),
+        proc_cgroup: Path = Path("/proc/self/cgroup"),
+    ) -> bool:
+        """Apply memory.max and cgroup.procs for kernel-level OOM enforcement on Linux."""
+        cgroup_dir = self._resolve_cgroup_path(
+            pid, cgroup_root=cgroup_root, proc_cgroup=proc_cgroup
+        )
+        if not cgroup_dir:
+            return False
+        try:
+            mem_bytes = int(limit_mb * 1024 * 1024)
+            (cgroup_dir / "memory.max").write_text(str(mem_bytes), encoding="utf-8")
+            (cgroup_dir / "cgroup.procs").write_text(str(pid), encoding="utf-8")
+            self._cgroup_path = cgroup_dir
+            logger.debug(
+                "Linux cgroup v2 memory limit applied",
+                pid=pid,
+                cgroup=str(cgroup_dir),
+                limit_mb=limit_mb,
+            )
+            return True
+        except (PermissionError, OSError) as e:
+            logger.debug("Failed applying cgroup v2 memory limit", error=str(e))
+            return False
+
+    def _cleanup_cgroup(self) -> None:
+        """Cleanly remove the cgroup directory if one was created."""
+        if self._cgroup_path is not None:
+            try:
+                if self._cgroup_path.exists():
+                    self._cgroup_path.rmdir()
+            except OSError:
+                pass
+            self._cgroup_path = None
+
     async def start(self) -> None:
         runner_path = Path(__file__).parent / "bridge_runner.py"
         child_env = dict(self._env) if self._env else os.environ.copy()
@@ -348,11 +414,14 @@ class SubprocessExecutor(SandboxExecutor):
             env=child_env,
         )
         self._memory_exceeded = False
-        await self._transport.start()
+        await self._transport.start(negotiate=True)
 
         if self._memory_limit_mb is not None and self._memory_limit_mb > 0:
             if self._transport and self._transport.pid:
-                self._apply_win32_job_limits(self._transport.pid, self._memory_limit_mb)
+                if sys.platform == "win32":
+                    self._apply_win32_job_limits(self._transport.pid, self._memory_limit_mb)
+                elif sys.platform.startswith("linux"):
+                    self._apply_cgroup_limits(self._transport.pid, self._memory_limit_mb)
             self._watchdog_task = asyncio.create_task(self._memory_watchdog())
 
         logger.info(
@@ -381,6 +450,8 @@ class SubprocessExecutor(SandboxExecutor):
             except Exception:
                 pass
             self._win32_job_handle = None
+
+        self._cleanup_cgroup()
 
         if self._transport:
             await self._transport.stop()

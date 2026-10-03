@@ -1,0 +1,68 @@
+{
+  "id": "ki_self_20261002_05",
+  "title": "Privilege-Aware Posix Cgroup v2 Isolation & Hierarchical Slice Traversal",
+  "category": "security_and_sandboxing",
+  "created_at": "2026-10-02T19:20:00Z",
+  "author": "Brain Harness Autobiographical Reflection Engine (harness-reflector)",
+  "tags": [
+    "security",
+    "sandboxing",
+    "cgroups",
+    "resource_isolation",
+    "endogenous_memory",
+    "self_reflection"
+  ],
+  "context": "Sandboxed subprocess plugins executing untrusted external code on Linux require strict CPU and memory resource bounds. However, root-only cgroup v1 or v2 configurations fail in unprivileged container environments (e.g. GitHub Actions runners, Docker without --privileged), causing permission denied errors on boot.",
+  "distilled_learning": "Linux sandboxed subprocess executors must dynamically inspect /proc/self/cgroup to discover unprivileged user slices (user.slice), configuring delegated controller subtree limits (memory.max) and attaching spawned child PIDs without requiring elevated root privileges, paired with fallback teardown on process exit.",
+  "isnad": {
+    "decision_id": "dec_20261002_self_05",
+    "status": "VERIFIED",
+    "claims": [
+      {
+        "assertion": "Discovery of current user slice in /proc/self/cgroup allows unprivileged memory cap application.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "src/harness/plugins/sandbox.py#L320-L360",
+            "verified": true
+          },
+          {
+            "node_type": "test_contract",
+            "uri": "tests/test_sandbox.py:test_posix_cgroup_lifecycle",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "assertion": "Subtree controller validation checks cgroup.controllers before writing limits to prevent runtime PermissionError.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "src/harness/plugins/sandbox.py#L330-L345",
+            "verified": true
+          },
+          {
+            "node_type": "test_contract",
+            "uri": "tests/test_sandbox.py:test_posix_cgroup_lifecycle",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "assertion": "Teardown removes temporary child cgroup directories upon subprocess exit to prevent kernel inode exhaustion.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "src/harness/plugins/sandbox.py#L365-L380",
+            "verified": true
+          },
+          {
+            "node_type": "test_contract",
+            "uri": "tests/test_sandbox.py:test_posix_cgroup_lifecycle",
+            "verified": true
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -7,7 +7,9 @@ Unified inter-process communication layer underlying both SubprocessExecutor
 from __future__ import annotations
 
 import asyncio
+import atexit
 import json
+import sys
 from collections import deque
 from pathlib import Path
 from typing import Any
@@ -43,6 +45,26 @@ class StdioJsonRpcTransport:
         self._stderr_buffer: deque[str] = deque(maxlen=50)
         self._stderr_task: asyncio.Task[None] | None = None
         self._stdout_task: asyncio.Task[None] | None = None
+        self._peer_capabilities: set[str] = set()
+        self._pending_shm: dict[int, Any] = {}
+
+        def _cleanup_all_shm() -> None:
+            for s in list(self._pending_shm.values()):
+                try:
+                    s.close()
+                    if sys.platform != "win32":
+                        s.unlink()
+                except Exception:
+                    pass
+            self._pending_shm.clear()
+
+        self._cleanup_all_shm = _cleanup_all_shm
+        atexit.register(_cleanup_all_shm)
+
+    @property
+    def peer_capabilities(self) -> set[str]:
+        """Capabilities declared by the remote peer during handshake."""
+        return set(self._peer_capabilities)
 
     @property
     def _lock(self) -> asyncio.Lock:
@@ -63,6 +85,21 @@ class StdioJsonRpcTransport:
     def stderr_lines(self) -> list[str]:
         """Recent stderr lines captured from the child process."""
         return list(self._stderr_buffer)
+
+    async def negotiate_capabilities(self, timeout: float = 2.0) -> set[str]:
+        """Handshake with peer to discover supported protocol extensions (e.g. shm)."""
+        try:
+            resp = await self.call(
+                "harness.hello",
+                {"version": "1", "capabilities": ["shm"]},
+                timeout=timeout,
+            )
+            if isinstance(resp, dict) and "result" in resp and isinstance(resp["result"], dict):
+                caps = resp["result"].get("capabilities", [])
+                self._peer_capabilities = set(caps)
+        except Exception as e:
+            logger.debug("Capability negotiation skipped or unsupported", error=str(e))
+        return set(self._peer_capabilities)
 
     async def _drain_stderr(self) -> None:
         """Continuously read lines from stderr and keep in ring buffer."""
@@ -112,7 +149,7 @@ class StdioJsonRpcTransport:
                     fut.set_result(err_payload)
             self._pending_futures.clear()
 
-    async def start(self) -> None:
+    async def start(self, *, negotiate: bool = False) -> None:
         """Spawn the child subprocess with piped standard streams."""
         if self.is_running:
             return
@@ -139,8 +176,12 @@ class StdioJsonRpcTransport:
             pid=self._process.pid,
         )
 
+        if negotiate:
+            await self.negotiate_capabilities()
+
     async def stop(self, timeout: float = 3.0) -> None:
         """Terminate child process with graceful escalation to SIGKILL."""
+        self._cleanup_all_shm()
         if self._stdout_task is not None:
             self._stdout_task.cancel()
             try:
@@ -245,10 +286,39 @@ class StdioJsonRpcTransport:
             }
 
             try:
-                line_to_send = json.dumps(payload) + "\n"
-                self._process.stdin.write(line_to_send.encode("utf-8"))
-                await self._process.stdin.drain()
+                json_bytes = json.dumps(payload).encode("utf-8")
+                if "shm" in self._peer_capabilities and len(json_bytes) > 65_536:
+                    from multiprocessing import shared_memory
+
+                    shm = shared_memory.SharedMemory(create=True, size=len(json_bytes))
+                    shm.buf[: len(json_bytes)] = json_bytes
+                    self._pending_shm[req_id] = shm
+                    shm_frame = {
+                        "jsonrpc": "2.0",
+                        "id": req_id,
+                        "method": method,
+                        "__shm__": {
+                            "name": shm.name,
+                            "size": len(json_bytes),
+                            "version": 1,
+                        },
+                    }
+                    line_to_send = json.dumps(shm_frame) + "\n"
+                    self._process.stdin.write(line_to_send.encode("utf-8"))
+                    await self._process.stdin.drain()
+                else:
+                    line_to_send = json_bytes.decode("utf-8") + "\n"
+                    self._process.stdin.write(line_to_send.encode("utf-8"))
+                    await self._process.stdin.drain()
             except (OSError, RuntimeError) as err:
+                shm = self._pending_shm.pop(req_id, None)
+                if shm is not None:
+                    try:
+                        shm.close()
+                        if sys.platform != "win32":
+                            shm.unlink()
+                    except Exception:
+                        pass
                 self._pending_futures.pop(req_id, None)
                 raise TransportError(
                     f"Transport communication failure: {err}{_stderr_suffix()}"
@@ -265,6 +335,15 @@ class StdioJsonRpcTransport:
                 "id": req_id,
                 "error": f"Call to '{method}' timed out after {timeout}s{_stderr_suffix()}",
             }
+        finally:
+            shm = self._pending_shm.pop(req_id, None)
+            if shm is not None:
+                try:
+                    shm.close()
+                    if sys.platform != "win32":
+                        shm.unlink()
+                except Exception:
+                    pass
 
     async def send_notification(self, method: str, params: dict[str, Any] | None = None) -> None:
         """Send a one-way notification (no response expected)."""

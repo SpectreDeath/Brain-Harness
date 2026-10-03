@@ -10,6 +10,7 @@ locally without affecting siblings.
 
 from __future__ import annotations
 
+import sys
 import threading
 import uuid
 from collections import defaultdict
@@ -19,6 +20,8 @@ from dataclasses import dataclass
 from typing import Any, Generic, TypeVar, cast
 
 import structlog
+
+assert not getattr(sys.flags, "nogil", False), "COW registry requires GIL"
 
 logger = structlog.get_logger()
 
@@ -175,6 +178,13 @@ class ServiceContext:
     def _collect_interceptors(self, key_name: str) -> list[Callable[[Any], Any]]:
         """Collect all interceptors along the context hierarchy with caching."""
         root = self._get_root()
+        root_epoch = getattr(root, "_interceptor_epoch", 0)
+        cached = self._compiled_interceptors.get(key_name)
+        if cached is not None and isinstance(cached, tuple):
+            cached_epoch, chain = cached
+            if cached_epoch == root_epoch:
+                return list(chain)
+
         with root._mutation_lock:
             root_epoch = getattr(root, "_interceptor_epoch", 0)
             cached = self._compiled_interceptors.get(key_name)
@@ -187,7 +197,9 @@ class ServiceContext:
             if self._parent is not None:
                 chain.extend(self._parent._collect_interceptors(key_name))
             chain.extend(list(self._interceptors.get(key_name, [])))
-            self._compiled_interceptors[key_name] = (root_epoch, chain)
+            new_compiled = dict(self._compiled_interceptors)
+            new_compiled[key_name] = (root_epoch, chain)
+            self._compiled_interceptors = new_compiled
             return list(chain)
 
     @asynccontextmanager
@@ -211,16 +223,41 @@ class ServiceContext:
 
                     def _restore_priors() -> None:
                         with self._mutation_lock:
+                            new_entries = dict(self._entries)
                             for k, prior in prior_entries.items():
-                                self._entries[k] = prior
+                                new_entries[k] = prior
+                            self._entries = new_entries
+                            self._interceptor_epoch += 1
+                            root = self._get_root()
+                            if root is not self:
+                                root._interceptor_epoch += 1
 
                     self._dispose_stack.append(_restore_priors)
 
                 # Commit: merge transaction entries, services, and effects into parent context
-                self._entries.update(tx_ctx._entries)
+                new_entries = dict(self._entries)
+                new_entries.update(tx_ctx._entries)
+                self._entries = new_entries
+                self._interceptor_epoch += 1
+                root = self._get_root()
+                if root is not self:
+                    root._interceptor_epoch += 1
+
                 for prov, services in tx_ctx._plugin_services.items():
                     self._plugin_services.setdefault(prov, []).extend(services)
-                self._dispose_stack.extend(tx_ctx._dispose_stack)
+
+                # Compact inverses: Keep only the latest inverse per realm_key
+                # in tx_ctx._dispose_stack (as seen in reversed iteration)
+                seen: set[str] = set()
+                compacted: list[Any] = []
+                for inv in reversed(tx_ctx._dispose_stack):
+                    rk = getattr(inv, "_realm_key", None)
+                    if rk is not None:
+                        if rk in seen:
+                            continue
+                        seen.add(rk)
+                    compacted.append(inv)
+                self._dispose_stack.extend(reversed(compacted))
                 tx_ctx._dispose_stack.clear()
         except Exception:
             # Abort: rollback all intermediate effects in LIFO order
@@ -351,7 +388,13 @@ class ServiceContext:
             entry = ServiceEntry(
                 key=key, instance=instance, provider_plugin=provider, is_active=True
             )
-            self._entries[realm_key] = entry
+            new_entries = dict(self._entries)
+            new_entries[realm_key] = entry
+            self._entries = new_entries
+            self._interceptor_epoch += 1
+            root = self._get_root()
+            if root is not self:
+                root._interceptor_epoch += 1
 
             # Track for automatic revocation
             if provider:
@@ -361,12 +404,24 @@ class ServiceContext:
             def _inverse() -> None:
                 with self._mutation_lock:
                     if self._entries.get(realm_key) is entry:
-                        self._entries.pop(realm_key, None)
+                        new_e = dict(self._entries)
+                        new_e.pop(realm_key, None)
+                        self._entries = new_e
+                        self._interceptor_epoch += 1
+                        r = self._get_root()
+                        if r is not self:
+                            r._interceptor_epoch += 1
                     if (
                         self._parent is not None
                         and self._parent._entries.get(realm_key) is entry
                     ):
-                        self._parent._entries.pop(realm_key, None)
+                        new_pe = dict(self._parent._entries)
+                        new_pe.pop(realm_key, None)
+                        self._parent._entries = new_pe
+                        self._parent._interceptor_epoch += 1
+                        pr = self._parent._get_root()
+                        if pr is not self._parent:
+                            pr._interceptor_epoch += 1
 
                     if provider:
                         if (
@@ -474,11 +529,18 @@ class ServiceContext:
         """
         with self._mutation_lock:
             realm_key = self._resolve_realm(key.name)
-            entry = self._entries.pop(realm_key, None)
-            if entry is None and key.name in self._entries:
-                entry = self._entries.pop(key.name, None)
+            new_entries = dict(self._entries)
+            entry = new_entries.pop(realm_key, None)
+            if entry is None and key.name in new_entries:
+                entry = new_entries.pop(key.name, None)
 
             if entry is not None:
+                self._entries = new_entries
+                self._interceptor_epoch += 1
+                root = self._get_root()
+                if root is not self:
+                    root._interceptor_epoch += 1
+
                 # Purge matching inverse from dispose stack to eliminate orphaned closures
                 self._dispose_stack = [
                     inv
@@ -573,12 +635,19 @@ class ServiceContext:
         with self._mutation_lock:
             service_names = self._plugin_services.pop(provider, [])
             revoked: list[str] = []
+            new_entries = dict(self._entries)
             for name in service_names:
-                if name in self._entries:
-                    del self._entries[name]
+                if name in new_entries:
+                    del new_entries[name]
                     revoked.append(name)
 
             if revoked:
+                self._entries = new_entries
+                self._interceptor_epoch += 1
+                root = self._get_root()
+                if root is not self:
+                    root._interceptor_epoch += 1
+
                 revoked_set = set(revoked)
                 # Purge matching inverses from dispose stack to eliminate orphaned closures
                 self._dispose_stack = [
