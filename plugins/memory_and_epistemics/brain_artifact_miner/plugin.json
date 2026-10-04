@@ -1,0 +1,14 @@
+{
+  "name": "plugin.brain_artifact_miner",
+  "version": "0.1.0",
+  "description": "Filesystem-native workspace archaeology engine for mining artifacts, reusable scratch tools, and dual-transcript execution streams",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "category": "memory_and_epistemics",
+  "author": "Brain Harness Forge Engine",
+  "provides": [
+    "service.brain_artifact_miner"
+  ],
+  "requires": []
+}

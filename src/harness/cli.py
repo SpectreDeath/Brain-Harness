@@ -36,6 +36,9 @@ from harness.commands._utils import _run_async
 from harness.commands.agent import agent_group
 from harness.commands.antigravity import antigravity_group
 from harness.commands.bigquery import bigquery_group
+from harness.commands.brain_miner import brain_miner_group
+from harness.commands.trajectory_miner import trajectory_group
+from harness.commands.temp_miner import temp_miner_group
 from harness.commands.bridges import bridge_group
 from harness.commands.calibrator import calibrator_group
 from harness.commands.compass import compass_group
@@ -166,6 +169,15 @@ main.add_command(tau_group, name="coding-harness")
 main.add_command(network_forensics_group, name="network-forensics")
 main.add_command(network_forensics_group, name="network")
 main.add_command(network_forensics_group, name="net-diag")
+main.add_command(brain_miner_group, name="brain-miner")
+main.add_command(brain_miner_group, name="miner")
+main.add_command(brain_miner_group, name="artifact-miner")
+main.add_command(trajectory_group, name="trajectory")
+main.add_command(trajectory_group, name="trajectory-miner")
+main.add_command(trajectory_group, name="conversation-miner")
+main.add_command(temp_miner_group, name="temp")
+main.add_command(temp_miner_group, name="temp-miner")
+main.add_command(temp_miner_group, name="ephemeral-miner")
 
 # --- Register Standalone Commands ---
 main.add_command(init_cli, name="init")

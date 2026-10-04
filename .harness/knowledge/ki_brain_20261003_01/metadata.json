@@ -1,0 +1,73 @@
+{
+  "id": "ki_brain_20261003_01",
+  "title": "Antigravity IDE Brain Workspace Epistemic Topology and Scratch Salvage Invariants",
+  "category": "memory_and_epistemics",
+  "created_at": "2026-10-03T16:35:00Z",
+  "author": "Antigravity Book-to-Skill Forge (book-to-skill-forge)",
+  "tags": [
+    "brain_store",
+    "artifact_archaeology",
+    "scratch_salvage",
+    "dual_transcript",
+    "task_triage",
+    "epistemics"
+  ],
+  "context": "The Antigravity IDE maintains a primary filesystem-native workspace store at C:\\Users\\spectre\\.gemini\\antigravity-ide\\brain\\ spanning 343 conversation directories, 1,085 Python scratch tools, 530 strategic plans/walkthroughs, 1,655 subprocess task logs, and 243 dual-transcript streams. While conversations/*.db contains relational execution telemetry, the brain/ store constitutes the living epistemic workspace of the developer-agent partnership.",
+  "distilled_learning": "Mining filesystem-native workspace stores requires strict adherence to four operational invariants: (1) Protection Boundary Resilience (Rule 46) pivoting to non-modifying shell reads on permission denials; (2) O(1) Binary Byte-Offset Lookups (Rule 48) for transcripts exceeding 10 MB with automatic is_truncated dereferencing to transcript_full.jsonl; (3) AST-Based Scratch Tool Classification with Defensive Batch Exception Logging (Rule 32) reraising NameError/TypeError/AttributeError; and (4) Subprocess Stderr Drainage & Deadlock Triage (Rule 53) capturing trailing failure lines from task-*.log files.",
+  "isnad": {
+    "decision_id": "dec_20261003_brain_01",
+    "status": "VERIFIED",
+    "claims": [
+      {
+        "assertion": "The Antigravity IDE brain/ store contains a massive reservoir of 1,085 domain-specialized Python scratch tools across 343 conversation workspaces that can be classified via AST inspection into seven cohesive functional categories.",
+        "lineage": [
+          {
+            "node_type": "empirical_census",
+            "uri": "C:\\Users\\spectre\\.gemini\\antigravity-ide\\brain\\8418a90f-0edc-41ae-b7e6-3737811535b9\\scratch\\analyze_brain_store.py",
+            "verified": true
+          },
+          {
+            "node_type": "architectural_rule",
+            "uri": "AGENTS.md#L42",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "assertion": "Dual-transcript stream architectures feature paired compact (transcript.jsonl) and untruncated (transcript_full.jsonl) files where compact steps with is_truncated: true must be dereferenced by step_index to prevent reasoning loss.",
+        "lineage": [
+          {
+            "node_type": "empirical_census",
+            "uri": "C:\\Users\\spectre\\.gemini\\antigravity-ide\\brain\\8418a90f-0edc-41ae-b7e6-3737811535b9\\scratch\\analyze_brain_store.py",
+            "verified": true
+          },
+          {
+            "node_type": "architectural_rule",
+            "uri": "AGENTS.md#L22",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": ".agents/skills/brain-artifact-miner/scripts/brain_artifact_miner.py#L85-L120",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "assertion": "Background subprocess tasks in .system_generated/tasks/task-*.log (1,655 files) record exit codes and pipe deadlocks that require bounded ring-buffer stderr drainage to prevent silent failure masking.",
+        "lineage": [
+          {
+            "node_type": "architectural_rule",
+            "uri": "AGENTS.md#L53",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": ".agents/skills/brain-artifact-miner/scripts/brain_artifact_miner.py#L220-L280",
+            "verified": true
+          }
+        ]
+      }
+    ]
+  }
+}

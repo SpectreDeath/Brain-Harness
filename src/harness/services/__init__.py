@@ -896,5 +896,43 @@ from harness.services.discovery_index import (
     DiscoveryStatsModel,
     LocalDiscoveryIndexService,
 )
+from harness.services.brain_artifact_miner import (
+    BRAIN_ARTIFACT_MINER_KEY,
+    ArtifactLifecycleEntry,
+    BrainArtifactMinerService,
+    ByteOffsetEntry,
+    DualTranscriptStep,
+    ScratchCatalog,
+    ScratchCatalogItem,
+    StandardBrainArtifactMinerService,
+    TaskTriageReport,
+)
+from harness.services.conversation_trajectory_miner import (
+    CONVERSATION_TRAJECTORY_MINER_KEY,
+    ByteOffsetSeekTable,
+    CognitiveBifurcationReport,
+    ConversationManifest,
+    ConversationTrajectoryMinerService,
+    FailureCluster,
+    FrictionScorecard,
+    IsnadClaimRecord,
+    StandardConversationTrajectoryMinerService,
+    TrajectoryStepRecord,
+)
+from harness.services.temp_artifact_miner import (
+    TEMP_ARTIFACT_MINER_KEY,
+    BriefCatalog,
+    BriefCatalogItem,
+    IsnadAttributionRecord,
+    SandboxFixture,
+    SandboxReport,
+    StandardTempArtifactMinerService,
+    TempArtifactMinerService,
+    VisualSalvageReport,
+    CognitiveBifurcationReport as TempCognitiveBifurcationReport,
+)
+
+
+
 
 

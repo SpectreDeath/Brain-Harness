@@ -1,0 +1,9 @@
+# Default configuration for brain-artifact-miner (Rule 44)
+timeout_seconds: 300
+token_budget_limit: 8000
+max_retries: 3
+max_scan_depth: 3
+batch_size: 50
+byte_offset_indexing: true
+defensive_exception_logging: true
+default_brain_path: "C:\\Users\\spectre\\.gemini\\antigravity-ide\\brain"

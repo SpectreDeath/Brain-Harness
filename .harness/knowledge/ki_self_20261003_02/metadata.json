@@ -1,0 +1,47 @@
+{
+  "id": "ki_self_20261003_02",
+  "title": "Dynamic Importlib sys.modules Registration for Slotted/Frozen Dataclasses",
+  "category": "python_runtime_and_testing",
+  "created_at": "2026-10-03T17:15:00Z",
+  "author": "Harness Reflector (harness-reflector)",
+  "tags": [
+    "importlib",
+    "dataclasses",
+    "slotted_frozen",
+    "dynamic_loading",
+    "python313"
+  ],
+  "context": "Python 3.12 and 3.13 introduced internal enhancements to dataclasses compilation. When @dataclass(slots=True, frozen=True) is evaluated, dataclasses._process_class checks whether field types are special markers via _is_type, which performs a module lookup: ns = sys.modules.get(cls.__module__).__dict__.",
+  "distilled_learning": "When dynamically loading modules via importlib.util.spec_from_file_location and spec.loader.exec_module without adding the module instance to sys.modules, sys.modules.get(cls.__module__) returns None. Consequently, ns.__dict__ raises AttributeError: 'NoneType' object has no attribute '__dict__'. Callers executing isolated or dynamic module loading must explicitly register sys.modules[spec.name] = module before calling spec.loader.exec_module(module).",
+  "isnad": {
+    "decision_id": "dec_20261003_refl_02",
+    "status": "VERIFIED",
+    "claims": [
+      {
+        "assertion": "CPython dataclasses._process_class relies on sys.modules.get(cls.__module__) to resolve module namespace during slotted/frozen dataclass initialization.",
+        "lineage": [
+          {
+            "node_type": "standard_library",
+            "uri": "Lib/dataclasses.py#L757",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "assertion": "Registering the module in sys.modules prior to exec_module resolves the AttributeError and allows slotted/frozen dataclass classes to initialize cleanly.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "tests/test_brain_artifact_miner.py#L80-L95",
+            "verified": true
+          },
+          {
+            "node_type": "empirical_trace",
+            "uri": "brain/8418a90f-0edc-41ae-b7e6-3737811535b9/scratch/validate_brain_artifact_miner.py",
+            "verified": true
+          }
+        ]
+      }
+    ]
+  }
+}

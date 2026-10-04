@@ -1,0 +1,52 @@
+{
+  "id": "ki_self_20261003_04",
+  "title": "Dual-Store Autobiographical Memory Federation Architecture",
+  "category": "epistemic_architecture",
+  "created_at": "2026-10-03T17:15:00Z",
+  "author": "Harness Reflector (harness-reflector)",
+  "tags": [
+    "autobiographical_memory",
+    "federation",
+    "rule20",
+    "sqlite_wal",
+    "brain_workspace"
+  ],
+  "context": "Autonomous coding agent sessions generate two fundamentally orthogonal memory surfaces: relational SQLite databases under active WAL journaling (conversations/*.db) and filesystem-native epistemic workspace trees (brain/<cid>/) containing ephemeral scratch scripts, strategic plans, and task logs.",
+  "distilled_learning": "Memory archaeology must be federated into two decoupled, single-responsibility skills: (1) conversation-trajectory-miner for proactor-safe read-only SQLite URI connections (?mode=ro, Rule 22) extracting relational step payloads and friction metrics; and (2) brain-artifact-miner for bounded filesystem traversal (depth <= 3, Rule 52) with AST scratch tool classification, dual-transcript dereferencing (Rule 22), and subprocess stderr triage (Rule 53). This satisfies Rule 20 by providing orthogonal tools for orthogonal storage tiers without tool sprawl or lock contention.",
+  "isnad": {
+    "decision_id": "dec_20261003_refl_04",
+    "status": "VERIFIED",
+    "claims": [
+      {
+        "assertion": "conversations/*.db contains relational execution telemetry under active WAL locks requiring ?mode=ro to prevent worker contention (Rule 22).",
+        "lineage": [
+          {
+            "node_type": "architectural_rule",
+            "uri": "AGENTS.md#L22",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": ".agents/skills/conversation-trajectory-miner/SKILL.md",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "assertion": "brain/<cid>/ contains filesystem-native scratch scripts, implementation plans, and task logs that are completely absent from relational SQLite schemas, justifying an orthogonal dedicated skill under Rule 20.",
+        "lineage": [
+          {
+            "node_type": "architectural_rule",
+            "uri": "AGENTS.md#L20",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": ".agents/skills/brain-artifact-miner/SKILL.md",
+            "verified": true
+          }
+        ]
+      }
+    ]
+  }
+}

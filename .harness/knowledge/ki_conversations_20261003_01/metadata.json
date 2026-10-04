@@ -1,0 +1,68 @@
+{
+  "id": "ki_conversations_20261003_01",
+  "title": "Multi-Store Autobiographical Trajectory Mining with Proactor-Safe Read-Only Handshake",
+  "category": "memory_and_epistemics",
+  "created_at": "2026-10-03T15:05:00Z",
+  "author": "Antigravity Book-to-Skill Forge (book-to-skill-forge)",
+  "tags": [
+    "autobiographical_memory",
+    "trajectory_mining",
+    "sqlite_wal",
+    "proactor_safety",
+    "byte_offset_indexing",
+    "epistemics"
+  ],
+  "context": "Autonomous coding agent sessions produce rich, high-volume execution histories across two decoupled stores: an append-only JSONL event stream in brain/<cid>/transcript.jsonl and a relational SQLite database in conversations/<cid>.db. Concurrently, IDE worker proactors maintain live WAL locks on active session databases. Mining these multi-gigabyte corpora for architectural friction, error clusters, and proven invariants risks lock starvation, file corruption, and memory exhaustion if opened in default read-write mode or scanned via full-corpus string iteration.",
+  "distilled_learning": "Autobiographical trajectory mining must enforce three non-negotiable architectural invariants: (1) Proactor-Safe Read-Only Handshake via SQLite URI mode ('file:<path>?mode=ro', Rule 22) to prevent lock contention with active IDE worker processes; (2) Binary Byte-Offset Seek Tables scanned once in binary mode ('rb') to map step indices to byte ranges, enabling O(1) random retrieval across multi-megabyte JSONL streams without loading entire files into memory (Rule 48); and (3) Relational Fallback to conversations/<cid>.db when brain/<cid>/ artifact directories encounter IDE system protection boundaries or permission restrictions (Rule 46).",
+  "isnad": {
+    "decision_id": "dec_20261003_conv_01",
+    "status": "VERIFIED",
+    "claims": [
+      {
+        "assertion": "Connecting to active SQLite WAL databases using URI read-only mode ('file:<path>?mode=ro') prevents proactor lock contention and eliminates database corruption risks during concurrent session execution.",
+        "lineage": [
+          {
+            "node_type": "architectural_rule",
+            "uri": "AGENTS.md#L22",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": ".agents/skills/conversation-trajectory-miner/scripts/trajectory_miner.py#L90-L105",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "assertion": "Binary byte-offset lookup tables compiled once in binary mode enable O(1) seek extraction of execution steps across gigabyte-scale logs without full-file memory allocation.",
+        "lineage": [
+          {
+            "node_type": "architectural_rule",
+            "uri": "AGENTS.md#L48",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": ".agents/skills/conversation-trajectory-miner/scripts/trajectory_miner.py#L60-L85",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "assertion": "When IDE system protection boundaries restrict direct file reads from brain/<cid>/ artifact stores, the relational conversations/<cid>.db steps table provides complete, decoupled trajectory introspection without halting.",
+        "lineage": [
+          {
+            "node_type": "architectural_rule",
+            "uri": "AGENTS.md#L46",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": ".agents/skills/conversation-trajectory-miner/scripts/trajectory_miner.py#L125-L165",
+            "verified": true
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "id": "ki_self_20261003_01",
+  "title": "Stage-Pillar Heading Disambiguation in Markdown AST Parsers",
+  "category": "architecture_and_parsers",
+  "created_at": "2026-10-03T17:15:00Z",
+  "author": "Harness Reflector (harness-reflector)",
+  "tags": [
+    "markdown_ast",
+    "parser_seams",
+    "skill_scaffolding",
+    "regex_isolation",
+    "invariants"
+  ],
+  "context": "Agent skill specification files (SKILL.md) declare execution stages via numbered markdown headings and foundational craft pillars (The Visual Brief, The Mandatory Checkpoint, Explicit Anti-Patterns). The SkillCardParser service uses the regular expression r'^(?:##|###)\\s+(\\d+)\\.\\s+(.+)$' to automatically extract execution stages.",
+  "distilled_learning": "When foundational craft pillars are numbered using Arabic digits (e.g. '### 1. The Visual Brief'), the stage extraction regex matches them as execution stages, falsely inflating declared stages (e.g. from 5 to 8) and causing stage count test assertions to fail. Styling foundational pillars with Roman numerals (e.g. '### Pillar I: The Visual Brief', '### Pillar II: The Mandatory Checkpoint', '### Pillar III: Explicit Anti-Patterns') completely prevents regex collision with execution stages while satisfying SkillPillarRule keyword checks.",
+  "isnad": {
+    "decision_id": "dec_20261003_refl_01",
+    "status": "VERIFIED",
+    "claims": [
+      {
+        "assertion": "SkillCardParser._extract_stages_from_skill_md matches level-2 and level-3 numbered headings matching r'^(?:##|###)\\s+(\\d+)\\.', misidentifying numbered pillar sections as execution stages.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "src/harness/services/skill_parser.py#L338-L380",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "assertion": "Roman numeral heading prefixes ('### Pillar I: ...') avoid the integer regex match while fully satisfying SkillPillarRule validation checks.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "src/harness/creator/skills.py#L416-L442",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": ".agents/skills/brain-artifact-miner/SKILL.md#L153-L165",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "assertion": "Contract tests in test_brain_artifact_miner.py assert exact 5-stage extraction after Roman numeral pillar disambiguation.",
+        "lineage": [
+          {
+            "node_type": "verification_test",
+            "uri": "tests/test_brain_artifact_miner.py#L46-L56",
+            "verified": true
+          }
+        ]
+      }
+    ]
+  }
+}

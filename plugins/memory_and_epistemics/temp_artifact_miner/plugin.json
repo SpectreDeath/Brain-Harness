@@ -1,0 +1,14 @@
+{
+  "name": "plugin.temp_artifact_miner",
+  "version": "0.1.0",
+  "description": "Ephemeral workspace archaeology engine for mining HTML visual briefs, test sandbox environments, and dual-lens cognitive bifurcation",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "category": "memory_and_epistemics",
+  "author": "Brain Harness Forge Engine",
+  "provides": [
+    "service.temp_artifact_miner"
+  ],
+  "requires": []
+}

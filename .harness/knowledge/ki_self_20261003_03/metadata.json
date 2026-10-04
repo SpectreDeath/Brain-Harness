@@ -1,0 +1,42 @@
+{
+  "id": "ki_self_20261003_03",
+  "title": "Monotonic Threshold Assertions for Dynamic Skill and Plugin Catalogs",
+  "category": "testing_and_hygiene",
+  "created_at": "2026-10-03T17:15:00Z",
+  "author": "Harness Reflector (harness-reflector)",
+  "tags": [
+    "test_hardening",
+    "catalog_discovery",
+    "regression_testing",
+    "dynamic_skills",
+    "bounded_traversal"
+  ],
+  "context": "The Harness provides an extensible, plugin- and skill-based architecture where new capabilities are forged directly into .agents/skills/ and plugins/. Test suites testing bounded traversal hygiene (test_skill_graph_hardening.py) previously asserted exact item counts.",
+  "distilled_learning": "Hardcoding exact catalog counts (e.g. assert len(skills) == 109) in discovery tests causes immediate false-positive regression failures whenever legitimate skills are forged. Extensible catalog tests must assert monotonic threshold bounds (assert len(skills) >= baseline) paired with specific membership assertions (assert 'skill-name' in names). Concurrency double-checked locking tests must assert result consistency across threads (assert len(r) == len(results[0])) rather than checking against static constants.",
+  "isnad": {
+    "decision_id": "dec_20261003_refl_03",
+    "status": "VERIFIED",
+    "claims": [
+      {
+        "assertion": "test_skill_graph_hardening.py hardcoding assert len(skills) == 109 broke when conversation-trajectory-miner and brain-artifact-miner were added to .agents/skills/.",
+        "lineage": [
+          {
+            "node_type": "test_failure_trace",
+            "uri": "tests/test_skill_graph_hardening.py#L19",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "assertion": "Refactoring assertions to assert len(skills) >= 109 and checking named membership eliminates false-positive test failures while preserving scan verification.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "tests/test_skill_graph_hardening.py#L13-L36",
+            "verified": true
+          }
+        ]
+      }
+    ]
+  }
+}

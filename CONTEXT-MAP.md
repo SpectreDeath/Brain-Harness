@@ -32,6 +32,9 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - [`dynamic-model-router`](.agents/skills/dynamic-model-router/SKILL.md) — Architect, configure, and operate multi-provider dynamic LLM routing pipelines with sub-5ms heuristic complexity classification, declarative model matrices, and automated failover.
   - [`harness-compass`](.agents/skills/harness-compass/SKILL.md) — Evolve, calibrate, and benchmark autonomous AI agent harnesses using constrained evolution, 4-stage proactive feedback, dual-track optimization, and R3 integration.
   - [`coding-harness-calibrator`](.agents/skills/coding-harness-calibrator/SKILL.md) — Empirically calibrate and optimize autonomous coding agent harnesses across context management (T0-T4 staging), action spaces (tools vs bash), and planning scaffolds.
+  - [`conversation-trajectory-miner`](.agents/skills/conversation-trajectory-miner/SKILL.md) — Extract, deconstruct, and synthesize operational skills, debugging rubrics, and regression invariants from IDE conversation databases and execution trajectories. Do not use for superficial keyword search or live streaming logs.
+  - [`brain-artifact-miner`](.agents/skills/brain-artifact-miner/SKILL.md) — Extract, deconstruct, and synthesize operational skills, plan evolutions, and reusable scratch utilities from IDE brain artifact stores and streaming transcripts. Do not use for: relational SQLite conversation database queries (use conversation-trajectory-miner), live streaming log tailing, production database writes, or unauthenticated remote session access.
+  - [`temp-artifact-miner`](.agents/skills/temp-artifact-miner/SKILL.md) — Extract, triage, and synthesize architecture decision records, visual DAG briefs, and ephemeral test diagnostics from system temporary directories and pytest sandboxes. Do not use for relational SQLite queries, persistent brain workspaces, or destructive temp purging.
 
 ### 2. [Memory & Epistemics](./docs/domains/memory-and-epistemics/EXPLANATION.md)
 * **Scope**: Declarative skill graphs, semantic embeddings, context distillation, prompt benchmarking, and claim lineage.
@@ -42,6 +45,9 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - `context_compactor` — Context window distillation and token-budget compression.
   - `prompt_benchmark` — Prompt efficacy benchmarking and token telemetry.
   - `okf_memory` — Git-native agent memory governor, in-memory BM25 lexical ranking, pre-edit governance scoping, and trust validation.
+  - `brain_artifact_miner` — Filesystem-native workspace archaeology, scratch tool salvage, and dual-transcript introspection.
+  - `conversation_trajectory_miner` — Autobiographical trajectory archaeology, failure cluster detection, and dual-lens cognitive bifurcation.
+  - `temp_artifact_miner` — Ephemeral workspace archaeology, HTML visual brief extraction, test sandbox triage, and dual-lens cognitive bifurcation.
 * **Member Skills**:
   - [`epistemic-isnad-audit`](.agents/skills/epistemic-isnad-audit/SKILL.md) — Unbroken chain-of-custody lineage verification for facts and decisions.
   - [`mind-reader`](.agents/skills/mind-reader/SKILL.md) — Introspection and heuristic extraction from attached brain trajectories.
@@ -49,6 +55,8 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - [`harness-reflector`](.agents/skills/harness-reflector/SKILL.md) — Autobiographical reflection and heuristic distillation from internal reports and execution logs.
   - [`epistemic-memory-lifecycle`](.agents/skills/epistemic-memory-lifecycle/SKILL.md) — Bounded 8-state knowledge item promotion pipeline, 6-class memory partitioning, and Theseus continuity audit.
   - [`okf-memory-governor`](.agents/skills/okf-memory-governor/SKILL.md) — Git-native OKF v0.2 agent memory governance, pre-edit path scoping, atomic mutations, and normative validation.
+  - [`temp-artifact-miner`](.agents/skills/temp-artifact-miner/SKILL.md) — Ephemeral visual brief salvage, pytest sandbox triage, and Knowledge Vault cognitive bifurcation.
+
 
 ### 3. [Data Engineering](./docs/domains/data-engineering/EXPLANATION.md)
 * **Scope**: Curated tabular ingestion, out-of-core statistical profiling, schema transformation, and relational database execution.

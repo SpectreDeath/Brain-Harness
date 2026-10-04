@@ -1,0 +1,74 @@
+{
+  "id": "ki_temp_20261003_01",
+  "title": "Antigravity Tri-Store Trinity: Ephemeral Runtime Archaeology and Visual Brief Preservation",
+  "category": "memory_and_epistemics",
+  "created_at": "2026-10-03T17:35:00Z",
+  "author": "Antigravity Book-to-Skill Forge (book-to-skill-forge)",
+  "tags": [
+    "temp_store",
+    "tri_store_trinity",
+    "visual_brief_salvage",
+    "mermaid_extraction",
+    "topology_bounding",
+    "pytest_sandbox",
+    "epistemics"
+  ],
+  "context": "The Antigravity IDE and Harness ecosystem partitions agent execution deliverables into an orthogonal Tri-Store Trinity: (1) Relational step execution database at conversations/*.db (mined by conversation-trajectory-miner); (2) Persistent workspace artifact store at brain/<cid>/ (mined by brain-artifact-miner); and (3) Ephemeral runtime and visual brief store at %TEMP% (C:\\Users\\spectre\\AppData\\Local\\Temp\\, mined by temp-artifact-miner). An empirical census of %TEMP% cataloged 133 HTML visual briefs (10.21 MB) spanning 16 cognitive domains, 23 interactive topology snapshots (406.5 KB each), and 3 pytest sandbox test environments.",
+  "distilled_learning": "Preserving intellectual assets and runtime diagnostics from ephemeral stores requires four operational invariants: (1) Non-Modifying Read Hygiene (Rule 46) preventing destructive deletions of live proactor sockets or un-salvaged briefs; (2) Heavy Topology Context Bounding (Rule 9, 48) summarizing 400KB+ Cytoscape/SVG graphs to prevent context blowout; (3) Bounded Sandbox Traversal (Rule 52) inspecting pytest-of-spectre fixtures to depth <= 3 with noise root pruning; and (4) Dual-Lens Cognitive Bifurcation (Rule 41) committing visual decision records to the Knowledge Vault with cryptographic isnad verification.",
+  "isnad": {
+    "decision_id": "dec_20261003_temp_01",
+    "status": "VERIFIED",
+    "claims": [
+      {
+        "assertion": "The Antigravity ecosystem maintains a Tri-Store Mining Trinity where %TEMP% serves as the ephemeral visual deliverable and sandbox store containing 133 interactive HTML visual briefs and 3 pytest test sandboxes.",
+        "lineage": [
+          {
+            "node_type": "empirical_census",
+            "uri": "C:\\Users\\spectre\\AppData\\Local\\Temp\\book-to-skill-forge-temp.html",
+            "verified": true
+          },
+          {
+            "node_type": "architectural_rule",
+            "uri": "AGENTS.md#L41",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "assertion": "Interactive visual topology snapshots (skill-graph-*.html) average 406.5 KB each and must be bounded via metadata summaries to prevent LLM context window blowout.",
+        "lineage": [
+          {
+            "node_type": "empirical_census",
+            "uri": "C:\\Users\\spectre\\AppData\\Local\\Temp\\book-to-skill-forge-temp.html",
+            "verified": true
+          },
+          {
+            "node_type": "architectural_rule",
+            "uri": "AGENTS.md#L9",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": ".agents/skills/temp-artifact-miner/scripts/temp_artifact_miner.py#L95-L140",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "assertion": "Ephemeral pytest sandbox fixtures in pytest-of-spectre/ maintain dynamic mock skill trees that require bounded directory traversal (depth <= 3) and noise root pruning to prevent proactor pipe deadlocks.",
+        "lineage": [
+          {
+            "node_type": "architectural_rule",
+            "uri": "AGENTS.md#L52",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": ".agents/skills/temp-artifact-miner/scripts/temp_artifact_miner.py#L180-L230",
+            "verified": true
+          }
+        ]
+      }
+    ]
+  }
+}
