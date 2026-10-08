@@ -36,11 +36,15 @@ This domain manages persistent intelligence, long-term memory, and epistemic tru
 
 ## Co-Located Plugins & Micro-Kernel Services
 
-- Skill Knowledge Graph: [`src/harness/services/skill_graph.py`](../../../src/harness/services/skill_graph.py) providing `SkillKnowledgeGraphService` (`SKILL_GRAPH_SERVICE_KEY`).
+- Skill Knowledge Graph: [`src/harness/services/skill_graph/`](../../../src/harness/services/skill_graph/) providing `SkillKnowledgeGraphService` (`SKILL_GRAPH_SERVICE_KEY`).
 - Skill Card Parser: [`src/harness/services/skill_parser.py`](../../../src/harness/services/skill_parser.py) providing `SkillCardParserService`.
 - OKF Memory Service: [`src/harness/services/okf_memory.py`](../../../src/harness/services/okf_memory.py) providing `OKF_MEMORY_SERVICE_KEY`.
 - Vector Index Service: [`src/harness/services/vector_index.py`](../../../src/harness/services/vector_index.py) providing `VECTOR_INDEX_SERVICE_KEY`.
+- Brain Artifact Miner: [`src/harness/services/brain_artifact_miner.py`](../../../src/harness/services/brain_artifact_miner.py) providing `BrainArtifactMinerService` (`BRAIN_ARTIFACT_MINER_KEY`).
+- Brain Bridge Service: [`src/harness/services/brain_bridge/`](../../../src/harness/services/brain_bridge/) providing `BrainBridgeService` (`BRAIN_BRIDGE_KEY`).
 - Skill Knowledge Graph Plugin: [`plugins/memory_and_epistemics/skill_knowledge_graph/`](../../../plugins/memory_and_epistemics/skill_knowledge_graph/README.md).
+- Brain Artifact Miner Plugin: [`plugins/memory_and_epistemics/brain_artifact_miner/`](../../../plugins/memory_and_epistemics/brain_artifact_miner/).
+- Brain Bridge Plugin: [`plugins/memory_and_epistemics/brain_bridge/`](../../../plugins/memory_and_epistemics/brain_bridge/).
 
 ---
 
@@ -49,4 +53,5 @@ This domain manages persistent intelligence, long-term memory, and epistemic tru
 - [`epistemic-isnad-audit`](../../../.agents/skills/epistemic-isnad-audit/SKILL.md): Verifies unbroken chain-of-custody lineage for facts and architectural decisions.
 - [`epistemic-memory-lifecycle`](../../../.agents/skills/epistemic-memory-lifecycle/SKILL.md): Executes 8-state knowledge item promotion pipelines.
 - [`okf-memory-governor`](../../../.agents/skills/okf-memory-governor/SKILL.md): Governs Git-native agent memory using OKF v0.2 protocols.
+- [`brain-artifact-miner`](../../../.agents/skills/brain-artifact-miner/SKILL.md): Filesystem-native workspace archaeology, scratch utility salvage, and dual-transcript O(1) random seek.
 - [`harness-reflector`](../../../.agents/skills/harness-reflector/SKILL.md): Introspects and distills learnings from execution logs and transcripts.

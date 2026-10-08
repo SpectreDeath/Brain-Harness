@@ -23,7 +23,7 @@ Brain Harness strictly separates kernel mechanisms from domain capabilities:
 |---|---|---|
 | [`context.py`](context.py) | `ServiceContext`, `ServiceKey`, `ServiceBinding` | Hierarchical IoC container supporting scoped child contexts, typed resolution, and atomic transactions. |
 | [`graph.py`](graph.py) | `DependencyGraph`, `ResolutionOrder` | Directed acyclic graph (DAG) solver for topological dependency resolution and cycle detection. |
-| [`lifecycle.py`](lifecycle.py) | `PluginLifecycleManager`, `PluginState` | State machine governing plugin phases (`DISCOVERED` $\rightarrow$ `LOADED` $\rightarrow$ `ENABLED`). |
+| [`lifecycle/`](lifecycle/) | `PluginLifecycle`, `PluginState`, `PluginEntry` | Decomposed package (`models`, `transitions`, `sorter`, `manager`) governing plugin phases (`DISCOVERED` → `LOADED` → `VALIDATED` → `ENABLED` ⇄ `DISABLED` → `UNLOADED`), guarded withdrawal (Theorem 63), and single-seam IoC resolution (`resolve_plugin_lifecycle`). |
 | [`reconciler.py`](reconciler.py) | `StateReconciler` | Convergence engine comparing desired plugin configurations with active container states. |
 | [`runtime.py`](runtime.py) | `HarnessRuntime` | Top-level runtime coordinator managing kernel boot, storage, and agent task execution. |
 

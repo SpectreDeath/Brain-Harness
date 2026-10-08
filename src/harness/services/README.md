@@ -45,9 +45,9 @@ Brain Harness implements an extensible micro-kernel architecture with strict con
 ### 3. Knowledge, Epistemics & Memory
 | Service Module | Authoritative ServiceKey | Protocol / Class | Description |
 |---|---|---|---|
-| [`skill_graph.py`](skill_graph.py) | `SKILL_GRAPH_SERVICE_KEY` | `SkillKnowledgeGraphService` | Directed knowledge graph of agent skills with topological shortest-path routing. |
+| [`skill_graph/`](skill_graph/) | `SKILL_GRAPH_SERVICE_KEY` | `SkillKnowledgeGraphService` | Directed knowledge graph of agent skills with topological shortest-path routing. |
 | [`skill_parser.py`](skill_parser.py) | `SKILL_PARSER_SERVICE_KEY` | `SkillCardParserService` | Parses `CARD.md` metadata boxes and `SKILL.md` documents into structured schemas. |
-| [`skill_clustering.py`](skill_clustering.py) | `SKILL_CLUSTERING_SERVICE_KEY` | `SkillClusteringService` | Computes semantic and topological clusters across agent capability catalogs. |
+| [`skill_clustering/`](skill_clustering/) | `SKILL_CLUSTERING_SERVICE_KEY` | `SkillClusteringService` | Computes semantic and topological clusters across agent capability catalogs. |
 | [`skill_visualizer.py`](skill_visualizer.py) | `SKILL_VISUALIZER_SERVICE_KEY` | `SkillVisualizerService` | Generates self-contained interactive HTML Visual Briefs of skill topologies. |
 | [`storage.py`](storage.py) | `STORAGE_SERVICE_KEY` | `StorageService` | Relational SQLite persistence supporting read-only URI mode and transactions. |
 | [`vector_index.py`](vector_index.py) | `VECTOR_INDEX_SERVICE_KEY` | `VectorIndexService` | In-memory and disk-persisted dense vector indexing and cosine similarity search. |
@@ -55,18 +55,22 @@ Brain Harness implements an extensible micro-kernel architecture with strict con
 | [`memgraphrag.py`](memgraphrag.py) | `MEMGRAPHRAG_SERVICE_KEY` | `MemGraphRagService` | Hybrid graph and retrieval-augmented generation memory indexing. |
 | [`graphiti.py`](graphiti.py) | `GRAPHITI_SERVICE_KEY` | `GraphitiService` | Temporal knowledge graph tracking entity evolutions and relationship lifespans. |
 | [`discovery_index.py`](discovery_index.py) | `DISCOVERY_INDEX_SERVICE_KEY` | `DiscoveryIndexService` | Catalogs and searches open public record archives and research corpora. |
+| [`brain_artifact_miner.py`](brain_artifact_miner.py) | `BRAIN_ARTIFACT_MINER_KEY` | `BrainArtifactMinerService` | Filesystem-native brain store archaeology, scratch salvage, and dual-transcript seek. |
+| [`conversation_trajectory_miner.py`](conversation_trajectory_miner.py) | `CONVERSATION_TRAJECTORY_MINER_KEY` | `ConversationTrajectoryMinerService` | Autobiographical session trajectory extraction, friction scorecard analysis, and cognitive bifurcation. |
+| [`temp_artifact_miner.py`](temp_artifact_miner.py) | `TEMP_ARTIFACT_MINER_KEY` | `TempArtifactMinerService` | Ephemeral visual brief triage, pytest sandbox archaeology, and dual-lens cognitive bifurcation. |
+| [`brain_bridge/`](brain_bridge/) | `BRAIN_BRIDGE_KEY` | `BrainBridgeService` | Foreign brain format detection, git history parsing, and TF-IDF search indexing. |
 
 ### 4. Data Engineering, Documentation & External Bridges
 | Service Module | Authoritative ServiceKey | Protocol / Class | Description |
 |---|---|---|---|
-| [`doc_builder.py`](doc_builder.py) | `DOC_BUILDER_SERVICE_KEY` | `HfDocBuilderService` | AST autodoc generation, Diátaxis compilation, and zero-dependency mock loading. |
+| [`doc_builder/`](doc_builder/) | `DOC_BUILDER_SERVICE_KEY` | `HfDocBuilderService` | AST autodoc generation, Diátaxis compilation, and zero-dependency mock loading. |
 | [`doc_synchronizer.py`](doc_synchronizer.py) | `DOC_SYNCHRONIZER_KEY` | `DocSynchronizerService` | Code-to-doc coverage auditing, stale symbol detection, and link drift checking. |
 | [`bigquery_augmented_analytics.py`](bigquery_augmented_analytics.py) | `BIGQUERY_AUGMENTED_ANALYTICS_SERVICE_KEY` | `BigQueryAugmentedAnalyticsService` | In-database augmented analytics via Table-Valued Functions (TVFs) and ARIMA_PLUS. |
 | [`garf_reporting.py`](garf_reporting.py) | `GARF_REPORTING_SERVICE_KEY` | `GarfReportingService` | Declarative SQL reporting pipelines and analytical workflow DAGs across APIs. |
-| [`open_source_gis.py`](open_source_gis.py) | `OPEN_SOURCE_GIS_SERVICE_KEY` | `OpenSourceGisService` | Geospatial processing across 14 GIS engines with CRS safety verification. |
+| [`open_source_gis/`](open_source_gis/) | `OPEN_SOURCE_GIS_SERVICE_KEY` | `OpenSourceGisService` | Geospatial processing across 14 GIS engines with CRS safety verification. |
 | [`paperless_ngx.py`](paperless_ngx.py) | `PAPERLESS_NGX_SERVICE_KEY` | `PaperlessNgxService` | Document ingestion, classification, and hybrid Tantivy/SQLite-Vec search. |
 | [`hf_datasets.py`](hf_datasets.py) | `HF_DATASETS_SERVICE_KEY` | `HfDatasetsService` | Arrow zero-copy memory mapping and streaming pipelines for large datasets. |
-| [`tau_bridge.py`](tau_bridge.py) | `TAU_BRIDGE_SERVICE_KEY` | `TauBridgeService` | Bidirectional integration with HuggingFace Tau coding agent harness. |
+| [`tau_bridge/`](tau_bridge/) | `TAU_BRIDGE_SERVICE_KEY` | `TauBridgeService` | Bidirectional integration with HuggingFace Tau coding agent harness. |
 | [`claude_code.py`](claude_code.py) | `CLAUDE_CODE_BRIDGE_KEY` | `ClaudeCodeBridgeService` | Claude Code prompt compaction and dangerous bash command guardrails. |
 | [`stagehand_browser.py`](stagehand_browser.py) | `STAGEHAND_BROWSER_KEY` | `StagehandBrowserService` | Autonomous headless browser orchestration and DOM extraction. |
 

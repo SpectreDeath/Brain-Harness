@@ -30,6 +30,7 @@ from harness.services.temp_artifact_miner import (
     StandardTempArtifactMinerService,
     TempArtifactMinerService,
     VisualSalvageReport,
+    resolve_temp_artifact_miner,
 )
 from plugins.memory_and_epistemics.temp_artifact_miner.main import (
     TempArtifactMinerPlugin,
@@ -62,6 +63,35 @@ class TestTempArtifactMinerDeepening:
         resolved_service = ctx.require(TEMP_ARTIFACT_MINER_KEY)
         assert resolved_service is not None
         assert isinstance(resolved_service, TempArtifactMinerService)
+
+    def test_resolve_temp_artifact_miner_fallback_and_reexport(self) -> None:
+        """Verify resolve_temp_artifact_miner returns fallback and is re-exported from harness.services (Rule 58)."""
+        from harness.services import resolve_temp_artifact_miner as root_resolver
+
+        # Verify fallback on None
+        svc_none = resolve_temp_artifact_miner(None)
+        assert isinstance(svc_none, StandardTempArtifactMinerService)
+
+        # Verify fallback on empty context
+        ctx_empty = ServiceContext()
+        svc_empty = root_resolver(ctx_empty)
+        assert isinstance(svc_empty, StandardTempArtifactMinerService)
+
+        # Verify default_temp_dir parameter forwarding
+        custom_dir = Path("/custom/temp/dir")
+        svc_custom = resolve_temp_artifact_miner(None, default_temp_dir=custom_dir)
+        assert svc_custom._default_temp_dir == custom_dir
+
+    @pytest.mark.asyncio
+    async def test_resolve_temp_artifact_miner_from_ioc(self) -> None:
+        """Verify resolve_temp_artifact_miner resolves registered instance from IoC context (Rule 58)."""
+        ctx = ServiceContext()
+        plugin = TempArtifactMinerPlugin()
+        await plugin.on_load(ctx)
+
+        resolved = resolve_temp_artifact_miner(ctx)
+        assert isinstance(resolved, TempArtifactMinerService)
+        assert resolved is ctx.require(TEMP_ARTIFACT_MINER_KEY)
 
     def test_slotted_frozen_dataclass_immutability(self) -> None:
         """Verify slotted and frozen immutability across all domain models (Rule 12, Rule 43)."""

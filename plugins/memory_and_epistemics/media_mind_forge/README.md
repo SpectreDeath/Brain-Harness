@@ -26,21 +26,18 @@ Cognitive analysis, epistemic distillation, and skill forging engine combining b
 
 ## Key Modules & AST Symbols
 
-### Module [`engine.py`](engine.py)
+### Package [`engine/`](engine/)
 
-Cognitive analysis, epistemic distillation, and skill forging engine.
+Cognitive analysis, epistemic distillation, and skill forging engine decomposed into domain-partitioned submodules:
 
-#### Classes
-
-- `class MediaMindForgeEngine`
-  Core cognitive engine synthesizing book-to-skill-forge and mind-reader capabilities.
-  - `def __init__() -> None`
-  - `def deconstruct_transcript(raw_text, segments) -> dict[str, Any]`
-  - `def analyze(transcript_data, title, speaker, video_id, transcript_source, skill_name, author_or_speaker, source_url, video_title) -> CognitiveAnalysisReport`
-  - `def generate_visual_brief(report, target_dir) -> str`
-  - `def generate_skill_md(report, skill_name) -> str`
-  - `def generate_card_md(report, skill_name) -> str`
-  - `def forge_skill_package(report, output_dir, skill_name) -> dict[str, str]`
+- [`engine/models.py`](engine/models.py): Slotted/frozen internal representations (`DeconstructedTranscriptResult`, `IsnadClaimNode`, `ThematicPoints`, `SkillPackageResult`).
+- [`engine/transcripts.py`](engine/transcripts.py): Transcript normalization, timeline segmentation, and speaking pace (WPM) metrics.
+- [`engine/distillation.py`](engine/distillation.py): Mind-Reader epistemic lens for mental models, decision heuristics, and isnād provenance attribution.
+- [`engine/procedures.py`](engine/procedures.py): Forge procedural lens for Shu-Ha-Ri execution stages, diagnostic scorecards, and anti-pattern items.
+- [`engine/brief.py`](engine/brief.py): Interactive HTML visual brief generator with embedded Mermaid DAG and metrics badges in `%TEMP%`.
+- [`engine/scaffolder.py`](engine/scaffolder.py): High-precision `SKILL.md` (Rule 37) and `CARD.md` (single-pipe borders per Rule 37) scaffolding.
+- [`engine/core.py`](engine/core.py): Slotted coordinator class `MediaMindForgeEngine` unifying all domain pipelines.
+- [`engine/__init__.py`](engine/__init__.py): Subpackage facade re-exporting all domain symbols with 100% backward compatibility.
 
 
 ### Module [`main.py`](main.py)

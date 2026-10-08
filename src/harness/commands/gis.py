@@ -28,6 +28,7 @@ from harness.services.open_source_gis import (
     FalconViewRestrictedDomainError,
     OpenSourceGisService,
     SpatialWorkloadProfile,
+    resolve_open_source_gis,
 )
 
 logger = structlog.get_logger(__name__)
@@ -36,21 +37,8 @@ logger = structlog.get_logger(__name__)
 def get_open_source_gis_service(
     context: ServiceContext | None = None,
 ) -> OpenSourceGisService:
-    """Retrieve or bootstrap the OpenSourceGisService singleton."""
-    if context is not None:
-        svc = context.optional(OPEN_SOURCE_GIS_SERVICE_KEY)
-        if svc is not None:
-            return svc
-
-    try:
-        from plugins.geospatial_and_osint.open_source_gis.main import (
-            plugin as gis_plugin,
-        )
-
-        return gis_plugin
-    except Exception as exc:
-        logger.debug("gis_plugin_fallback_failed", error=str(exc))
-        return DefaultOpenSourceGisService()
+    """Retrieve or bootstrap the OpenSourceGisService singleton via single seam (Rule 58)."""
+    return resolve_open_source_gis(context)
 
 
 @click.group("gis")

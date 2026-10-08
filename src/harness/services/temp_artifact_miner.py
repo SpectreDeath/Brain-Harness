@@ -35,7 +35,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Protocol, runtime_checkable
 
-from harness.kernel.context import ServiceKey
+from harness.kernel.context import ServiceContext, ServiceKey
 
 # Windows UTF-8 stream codec entrypoint invariant (Rule 23, Rule 50)
 if sys.platform == "win32":
@@ -688,6 +688,19 @@ class StandardTempArtifactMinerService:
 
 TEMP_ARTIFACT_MINER_KEY = ServiceKey[TempArtifactMinerService]("temp_artifact_miner_service")
 
+
+def resolve_temp_artifact_miner(
+    ctx: ServiceContext | None = None,
+    default_temp_dir: Path | None = None,
+) -> TempArtifactMinerService:
+    """Resolve TempArtifactMinerService from IoC context or fall back to standard implementation (Rule 58)."""
+    if ctx is not None:
+        svc = ctx.optional(TEMP_ARTIFACT_MINER_KEY)
+        if svc is not None and isinstance(svc, TempArtifactMinerService):
+            return svc
+    return StandardTempArtifactMinerService(default_temp_dir=default_temp_dir)
+
+
 __all__ = [
     "BriefCatalog",
     "BriefCatalogItem",
@@ -701,4 +714,5 @@ __all__ = [
     "VisualSalvageReport",
     "compute_file_sha256",
     "detect_brief_category",
+    "resolve_temp_artifact_miner",
 ]

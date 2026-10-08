@@ -1,0 +1,79 @@
+{
+  "name": "plugin.codebase_context",
+  "version": "1.0.0",
+  "description": "Multi-layer codebase context architecture, token budgeting, SSOT synchronization, and 5-stage context governance",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "category": "developer_tooling",
+  "author": "Brain Harness",
+  "provides": [
+    "harness.services.codebase_context"
+  ],
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "context_lint",
+      "description": "Verify repository context files across token budgets, path integrity, manifest scripts, and sync drift",
+      "parameters": [
+        {
+          "name": "root",
+          "type": "string",
+          "description": "Repository root path to lint",
+          "required": false,
+          "default": "."
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "context_sync",
+      "description": "Synchronize downstream vendor context files (CLAUDE.md, copilot-instructions.md) against canonical SSOT",
+      "parameters": [
+        {
+          "name": "root",
+          "type": "string",
+          "description": "Repository root path",
+          "required": false,
+          "default": "."
+        },
+        {
+          "name": "source",
+          "type": "string",
+          "description": "Canonical source file name",
+          "required": false,
+          "default": "AGENTS.md"
+        },
+        {
+          "name": "dry_run",
+          "type": "boolean",
+          "description": "If true, check for sync drift without modifying disk files",
+          "required": false,
+          "default": false
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "context_govern",
+      "description": "Execute complete 5-stage context governance cycle and dynamic 5D compute tier assessment",
+      "parameters": [
+        {
+          "name": "root",
+          "type": "string",
+          "description": "Repository root path to govern",
+          "required": false,
+          "default": "."
+        },
+        {
+          "name": "complexity",
+          "type": "number",
+          "description": "Estimated 5D repository complexity score between 0.0 and 1.0",
+          "required": false,
+          "default": 0.5
+        }
+      ],
+      "returns": "object"
+    }
+  ]
+}

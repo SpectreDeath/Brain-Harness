@@ -27,6 +27,7 @@ from harness.services.doc_builder import (
     DOC_BUILDER_SERVICE_KEY,
     DefaultHfDocBuilderService,
     HfDocBuilderProtocol,
+    resolve_doc_builder,
 )
 
 logger = structlog.get_logger(__name__)
@@ -38,16 +39,18 @@ def get_doc_builder_service(
     """Retrieve or bootstrap the HfDocBuilderProtocol service instance."""
     if context is not None:
         svc = context.optional(DOC_BUILDER_SERVICE_KEY)
-        if svc is not None:
+        if svc is not None and isinstance(svc, HfDocBuilderProtocol):
             return svc
 
     try:
         from plugins.developer_tooling.hf_doc_builder.main import plugin as doc_plugin
 
-        return doc_plugin
+        if isinstance(doc_plugin, HfDocBuilderProtocol):
+            return doc_plugin
     except Exception as exc:
         logger.debug("hf_doc_builder_plugin_fallback_failed", error=str(exc))
-        return DefaultHfDocBuilderService()
+
+    return resolve_doc_builder(context)
 
 
 def inspect_autodoc_cmd(

@@ -36,7 +36,7 @@ Commands are strictly decoupled from Click CLI option parsers:
 |---|---|---|
 | [`plugins.py`](plugins.py) | `harness plugin` | Plugin lifecycle management (`list`, `enable`, `disable`, `info`, `inspect`). |
 | [`creator.py`](creator.py) | `harness creator` | Dynamic plugin scaffolding, archetype validation, and AST auto-remediation. |
-| [`skills.py`](skills.py) | `harness skills` | Skill Knowledge Graph queries, topological shortest-path chaining, and skill authoring. |
+| [`skills/`](skills/) | `harness skills` | Skill Knowledge Graph queries, topological shortest-path chaining, and skill authoring. |
 | [`tools.py`](tools.py) | `harness tools` | Granular tool registry inspection, tool testing, and execution sandboxing. |
 | [`mcp.py`](mcp.py) | `harness mcp` | Model Context Protocol (MCP) server launching, tool discovery, and JSON-RPC bridging. |
 | [`gate.py`](gate.py) | `harness gate` | Security and verification gate evaluations for production deployments. |

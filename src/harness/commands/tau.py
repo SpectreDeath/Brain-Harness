@@ -32,6 +32,7 @@ from harness.services.tau_bridge import (
     SessionTreeResolver,
     TauBridgeService,
     ToolHistoryRepairEngine,
+    resolve_tau_bridge,
 )
 
 logger = structlog.get_logger(__name__)
@@ -41,7 +42,7 @@ def get_tau_service(context: ServiceContext | None = None) -> TauBridgeService:
     """Retrieve or bootstrap the TauBridgeService singleton."""
     if context is not None:
         svc = context.optional(TAU_HARNESS_BRIDGE_SERVICE_KEY)
-        if svc is not None:
+        if svc is not None and isinstance(svc, TauBridgeService):
             return svc
 
     try:
@@ -49,10 +50,12 @@ def get_tau_service(context: ServiceContext | None = None) -> TauBridgeService:
             plugin as tau_plugin,
         )
 
-        return tau_plugin
+        if isinstance(tau_plugin, TauBridgeService):
+            return tau_plugin
     except Exception as exc:
         logger.debug("tau_plugin_fallback_failed", error=str(exc))
-        return DefaultTauHarnessBridgeService()
+
+    return resolve_tau_bridge(context)
 
 
 # ---------------------------------------------------------------------------

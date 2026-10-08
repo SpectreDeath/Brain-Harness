@@ -34,7 +34,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Protocol, runtime_checkable
 
-from harness.kernel.context import ServiceKey
+from harness.kernel.context import ServiceContext, ServiceKey
 
 logger = logging.getLogger("harness.services.brain_artifact_miner")
 
@@ -554,3 +554,26 @@ class StandardBrainArtifactMinerService:
 
 # Typed IoC ServiceKey (Rule 2, Rule 49)
 BRAIN_ARTIFACT_MINER_KEY: ServiceKey[BrainArtifactMinerService] = ServiceKey("service.brain_artifact_miner")
+
+
+def resolve_brain_artifact_miner(ctx: ServiceContext | None = None) -> BrainArtifactMinerService:
+    """Resolve BrainArtifactMinerService from IoC context or fall back to StandardBrainArtifactMinerService (Rule 58)."""
+    if ctx is not None:
+        svc = ctx.optional(BRAIN_ARTIFACT_MINER_KEY)
+        if svc is not None and isinstance(svc, BrainArtifactMinerService):
+            return svc
+    return StandardBrainArtifactMinerService()
+
+
+__all__ = [
+    "ArtifactLifecycleEntry",
+    "BRAIN_ARTIFACT_MINER_KEY",
+    "BrainArtifactMinerService",
+    "ByteOffsetEntry",
+    "DualTranscriptStep",
+    "ScratchCatalog",
+    "ScratchCatalogItem",
+    "StandardBrainArtifactMinerService",
+    "TaskTriageReport",
+    "resolve_brain_artifact_miner",
+]

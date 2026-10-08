@@ -32,6 +32,7 @@ from harness.services.conversation_trajectory_miner import (
     IsnadClaimRecord,
     StandardConversationTrajectoryMinerService,
     TrajectoryStepRecord,
+    resolve_conversation_trajectory_miner,
 )
 from plugins.memory_and_epistemics.conversation_trajectory_miner.main import (
     ConversationTrajectoryMinerPlugin,
@@ -63,6 +64,30 @@ class TestConversationTrajectoryMinerDeepening:
         resolved_service = ctx.require(CONVERSATION_TRAJECTORY_MINER_KEY)
         assert resolved_service is not None
         assert isinstance(resolved_service, ConversationTrajectoryMinerService)
+
+    def test_resolve_conversation_trajectory_miner_fallback_and_reexport(self) -> None:
+        """Verify resolve_conversation_trajectory_miner returns fallback and is re-exported from harness.services (Rule 58)."""
+        from harness.services import resolve_conversation_trajectory_miner as root_resolver
+
+        # Verify fallback on None
+        svc_none = resolve_conversation_trajectory_miner(None)
+        assert isinstance(svc_none, StandardConversationTrajectoryMinerService)
+
+        # Verify fallback on empty context
+        ctx_empty = ServiceContext()
+        svc_empty = root_resolver(ctx_empty)
+        assert isinstance(svc_empty, StandardConversationTrajectoryMinerService)
+
+    @pytest.mark.asyncio
+    async def test_resolve_conversation_trajectory_miner_from_ioc(self) -> None:
+        """Verify resolve_conversation_trajectory_miner resolves registered instance from IoC context (Rule 58)."""
+        ctx = ServiceContext()
+        plugin = ConversationTrajectoryMinerPlugin()
+        await plugin.on_load(ctx)
+
+        resolved = resolve_conversation_trajectory_miner(ctx)
+        assert isinstance(resolved, ConversationTrajectoryMinerService)
+        assert resolved is ctx.require(CONVERSATION_TRAJECTORY_MINER_KEY)
 
     def test_slotted_frozen_dataclass_immutability(self) -> None:
         """Verify slotted and frozen immutability across all domain models (Rule 12, Rule 43)."""

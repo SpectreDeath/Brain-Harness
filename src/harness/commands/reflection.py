@@ -13,6 +13,7 @@ from harness.creator.reflection import (
     MemoryPatternPipeline,
     ReflectionReport,
     ReflectionScope,
+    resolve_reflector_engine,
 )
 from harness.services.storage import SQLiteStorageService
 
@@ -59,7 +60,7 @@ async def run_reflection_cmd(
 
     storage = SQLiteStorageService(db_path=db_path)
     try:
-        engine = HarnessReflectorEngine(
+        engine = resolve_reflector_engine(
             storage=storage,
             temp_dir=temp_dir,
             app_data_dir=app_data_dir,

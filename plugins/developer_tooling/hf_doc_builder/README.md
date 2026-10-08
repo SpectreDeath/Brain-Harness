@@ -19,7 +19,7 @@ The `plugin.hf_doc_builder` plugin provides deep integration with Hugging Face d
 - **Subprocess Pipe Disposal (Rule 14)**: The `HfDocBuilderSubprocessService` executes command-line operations with strict `finally` blocks explicitly closing `stdin`, `stdout`, and `stderr` pipes.
 - **Plugin Module Singleton (Rule 45)**: Entrypoint `main.py` subclasses `HarnessPlugin`, implements `HfDocBuilderProtocol`, provides `DOC_BUILDER_SERVICE_KEY` in `on_load`, and exports `plugin = HfDocBuilderPlugin()`.
 - **Codeblock Isolation (Rule 47)**: Strips code fences (```` ```...``` ````) prior to link parsing, preventing false positives on type annotations or shell commands.
-- **Micro-Kernel Seam Elevation (Rule 49)**: Core logic is implemented in the slotted domain engine `DocBuilderDomainEngine` (`src/harness/services/doc_builder.py`) and resolved in-memory via `context.require(DOC_BUILDER_SERVICE_KEY)`.
+- **Micro-Kernel Seam Elevation (Rule 49)**: Core logic is implemented in the slotted domain engine `DocBuilderDomainEngine` (`src/harness/services/doc_builder/`) and resolved in-memory via `context.require(DOC_BUILDER_SERVICE_KEY)`.
 
 ---
 
@@ -79,5 +79,5 @@ if __name__ == "__main__":
 ## Related Documentation
 
 - [HF Doc Builder Skill Reference](../../../.agents/skills/hf-doc-builder-architect/SKILL.md)
-- [Doc Builder Service Protocol](../../../src/harness/services/doc_builder.py)
+- [Doc Builder Service Protocol](../../../src/harness/services/doc_builder/)
 - [Documentation Suite Hub](../../../docs/README.md)

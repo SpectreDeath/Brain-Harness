@@ -18,6 +18,7 @@ from harness.creator.reflection import (
     MemoryPatternPipeline,
     ReflectionReport,
     ReflectionScope,
+    resolve_reflector_engine,
 )
 from harness.kernel.context import ServiceKey
 from harness.services.storage import SQLiteStorageService
@@ -73,7 +74,7 @@ class ReflectionDaemonWorker:
         storage = SQLiteStorageService(db_path=self.db_path)
         try:
             pipeline = MemoryPatternPipeline()
-            engine = HarnessReflectorEngine(
+            engine = resolve_reflector_engine(
                 storage=storage,
                 pipeline=pipeline,
             )

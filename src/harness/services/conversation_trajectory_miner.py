@@ -32,7 +32,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Protocol, runtime_checkable
 
-from harness.kernel.context import ServiceKey
+from harness.kernel.context import ServiceContext, ServiceKey
 
 logger = logging.getLogger("harness.services.conversation_trajectory_miner")
 
@@ -273,6 +273,17 @@ class ConversationTrajectoryMinerService(Protocol):
 CONVERSATION_TRAJECTORY_MINER_KEY = ServiceKey[ConversationTrajectoryMinerService](
     "conversation_trajectory_miner_service"
 )
+
+
+def resolve_conversation_trajectory_miner(
+    ctx: ServiceContext | None = None,
+) -> ConversationTrajectoryMinerService:
+    """Resolve ConversationTrajectoryMinerService from IoC context or fall back to standard implementation (Rule 58)."""
+    if ctx is not None:
+        svc = ctx.optional(CONVERSATION_TRAJECTORY_MINER_KEY)
+        if svc is not None and isinstance(svc, ConversationTrajectoryMinerService):
+            return svc
+    return StandardConversationTrajectoryMinerService()
 
 
 # =============================================================================
@@ -631,8 +642,8 @@ class StandardConversationTrajectoryMinerService(ConversationTrajectoryMinerServ
                 + "\n\n## Invariants\n"
                 + "\n".join(f"- {inv}" for inv in extracted_invariants)
                 + "\n\n## Anti-Patterns\n\n"
-                f"- **Unverified Invariant Mutation** — Mutating invariants without isnad provenance verification.\n"
-                f"- **Subprocess Lock Contention** — Opening active SQLite databases in read-write mode.\n"
+                "- **Unverified Invariant Mutation** — Mutating invariants without isnad provenance verification.\n"
+                "- **Subprocess Lock Contention** — Opening active SQLite databases in read-write mode.\n"
             )
             skill_file.write_text(skill_content, encoding="utf-8")
 
@@ -706,3 +717,20 @@ class StandardConversationTrajectoryMinerService(ConversationTrajectoryMinerServ
         if "connection" in combined or "socket" in combined:
             return "Network / Connection Failure"
         return "ToolExecution / General Error"
+
+
+__all__ = [
+    "ByteOffsetSeekTable",
+    "CognitiveBifurcationReport",
+    "CONVERSATION_TRAJECTORY_MINER_KEY",
+    "ConversationManifest",
+    "ConversationTrajectoryMinerService",
+    "FailureCluster",
+    "FrictionScorecard",
+    "IsnadClaimRecord",
+    "STATUS_MAP",
+    "STEP_TYPE_MAP",
+    "StandardConversationTrajectoryMinerService",
+    "TrajectoryStepRecord",
+    "resolve_conversation_trajectory_miner",
+]

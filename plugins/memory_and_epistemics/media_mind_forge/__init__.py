@@ -10,6 +10,7 @@ from .main import (
     media_mind_forge_craft_skill,
     media_mind_forge_distill_kis,
     media_mind_forge_visual_brief,
+    plugin,
 )
 from .models import (
     AntiPatternItem,
@@ -38,4 +39,5 @@ __all__ = [
     "media_mind_forge_craft_skill",
     "media_mind_forge_distill_kis",
     "media_mind_forge_visual_brief",
+    "plugin",
 ]

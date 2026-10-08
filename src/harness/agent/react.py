@@ -38,6 +38,7 @@ from harness.services.arch_linter import (
     ARCH_LINTER_KEY,
     ArchLinterService,
     DefaultArchLinterService,
+    resolve_arch_linter,
 )
 from harness.services.filesystem_git import (
     FILESYSTEM_GIT_KEY,
@@ -83,9 +84,7 @@ class StepExecutionEngine:
     ) -> Any:
         """Invoke tool inside a transactional boundary if context supports transactions."""
         git_svc: FilesystemGitService | None = self.context.optional(FILESYSTEM_GIT_KEY)
-        linter_svc: ArchLinterService = (
-            self.context.optional(ARCH_LINTER_KEY) or DefaultArchLinterService()
-        )
+        linter_svc: ArchLinterService = resolve_arch_linter(self.context)
 
         target_file_path = (
             action_input.get("path")

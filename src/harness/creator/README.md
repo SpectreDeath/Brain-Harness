@@ -28,15 +28,16 @@ The creator package enables agents and developers to build, inspect, and verify 
 
 | Module | Core Classes / Symbols | Description |
 |---|---|---|
-| [`archetypes.py`](archetypes.py) | `ArchetypeRegistry`, `ToolArchetype`, `ServiceArchetype`, `McpBridgeArchetype` | Pattern registry generating boilerplate structures for domain plugin types. |
+| [`archetypes/`](archetypes/) | `ArchetypeRegistry`, `ToolArchetype`, `ServiceArchetype`, `McpBridgeArchetype` | Pattern registry generating boilerplate structures for domain plugin types. |
 | [`creator.py`](creator.py) | `PluginCreator` | High-level orchestrator combining scaffolding, synthesis, and validation. |
-| [`dynamic.py`](dynamic.py) | `DynamicPluginBuilder`, `DynamicPythonPlugin` | Generates and loads in-memory ephemeral plugins without touching the filesystem. |
+| [`dynamic/`](dynamic/) | `DynamicPluginBuilder`, `DynamicPythonPlugin` | Generates and loads in-memory ephemeral plugins without touching the filesystem. |
 | [`introspection.py`](introspection.py) | `RuntimeIntrospector` | Introspects active kernel state and registered services to infer needed dependencies. |
+| [`reflection/`](reflection/) | `HarnessReflectorEngine`, `EpisodicMemoryReflector`, `MemoryPatternPipeline`, `HarnessHistoryHarvester` | Endogenous memory and reflection engine distilling execution residue into Knowledge Vault. |
 | [`scaffold.py`](scaffold.py) | `PluginScaffoldEngine`, `ScaffoldOptions`, `ScaffoldResult` | Scaffolds plugin directory trees, manifests, default configurations, and test files. |
 | [`schema.py`](schema.py) | `SchemaInferrer` | Generates JSONSchema definitions from Python types and function signatures. |
-| [`skills.py`](skills.py) | `SkillScaffoldEngine`, `SkillValidator`, `SkillCardRule` | Scaffolds and audits agent skills in `.agents/skills/` against SDLC craft standards. |
+| [`skills/`](skills/) | `SkillScaffoldEngine`, `SkillValidator`, `SkillCardRule` | Scaffolds and audits agent skills in `.agents/skills/` against SDLC craft standards. |
 | [`synthesis.py`](synthesis.py) | `CreatorService`, `PluginSynthesisEngine`, `CREATOR_SERVICE_KEY` | Orchestrates LLM prompt pipelines for automated capability synthesis. |
-| [`validator.py`](validator.py) | `PluginValidator`, `ValidationReport`, `ValidationCheck`, `RuleSeverity` | Multi-rule AST and sandbox validator ensuring plugin safety before loading. |
+| [`validator/`](validator/) | `PluginValidator`, `ValidationReport`, `ValidationCheck`, `RuleSeverity` | Multi-rule AST and sandbox validator ensuring plugin safety before loading. |
 
 ---
 

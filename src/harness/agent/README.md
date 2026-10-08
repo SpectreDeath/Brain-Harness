@@ -30,8 +30,8 @@ The agent package orchestrates the lifecycle of autonomous tasks:
 | [`base.py`](base.py) | `AgentLoopService`, `AgentStep`, `AgentTaskResult`, `AGENT_LOOP_KEY` | Abstract service protocol and slotted value objects for agent reasoning loops. |
 | [`context_optimizer.py`](context_optimizer.py) | `AgentContextOptimizer`, `ContextOptimizationConfig`, `DefaultContextOptimizer` | Prunes context tokens, injects AST repo maps, and bounds LLM input budgets. |
 | [`react.py`](react.py) | `ReActAgentLoop`, `StepExecutionEngine`, `ReActAgentPlugin` | Primary autonomous ReAct engine with transactional checkpointing and tool execution. |
-| [`session.py`](session.py) | `AgentSessionManager`, `AgentSession`, `SessionTreeNode`, `AGENT_SESSION_MANAGER_KEY` | Branchable tree DAG session manager with append-only step storage. |
-| [`swarm.py`](swarm.py) | `SwarmCoordinator`, `SwarmDAG`, `SwarmNode`, `ConsensusEngine`, `SWARM_COORDINATOR_KEY` | Multi-agent DAG swarm coordinator with token governance and consensus deliberation. |
+| [`session/`](session/) | `AgentSessionManager`, `AgentSession`, `SessionTreeNode`, `AGENT_SESSION_MANAGER_KEY` | Branchable tree DAG session manager with append-only step storage. |
+| [`swarm/`](swarm/) | `SwarmCoordinator`, `SwarmDAG`, `SwarmNode`, `ConsensusEngine`, `SWARM_COORDINATOR_KEY` | Multi-agent DAG swarm coordinator with token governance and consensus deliberation. |
 
 ---
 

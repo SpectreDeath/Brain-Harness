@@ -200,33 +200,35 @@ async def skeletonize_code_cmd(source_or_file: str | Path) -> CodeSkeletonResult
     )
 
 
-# --- Codebase Context Architecture (Headless Seams) ---
-_engine_dir = _ws_root / ".agents" / "skills" / "codebase-context-architect" / "scripts"
-if str(_engine_dir) not in sys.path:
-    sys.path.insert(0, str(_engine_dir))
-
-try:
-    from engine import CodebaseContextEngine, ContextLintReport, SyncResult
-except ImportError:
-    CodebaseContextEngine = None  # type: ignore
-    ContextLintReport = None  # type: ignore
-    SyncResult = None  # type: ignore
+# --- Codebase Context Architecture (Micro-Kernel Seams: Rule 49 & Rule 57) ---
+from harness.services.codebase_context import (
+    ContextGovernanceReport,
+    ContextLintReport,
+    SyncResult,
+    resolve_codebase_context,
+)
 
 
-async def lint_codebase_context_cmd(root: str | Path = ".") -> Any:
+async def lint_codebase_context_cmd(root: str | Path = ".") -> ContextLintReport:
     """Execute 4-check context file linting on the target repository."""
-    if CodebaseContextEngine is None:
-        raise RuntimeError("CodebaseContextEngine could not be imported")
-    engine = CodebaseContextEngine(root=root)
-    return engine.lint()
+    service = resolve_codebase_context(root=root)
+    return service.lint()
 
 
-async def sync_codebase_context_cmd(root: str | Path = ".", source: str = "AGENTS.md", dry_run: bool = False) -> Any:
+async def sync_codebase_context_cmd(root: str | Path = ".", source: str = "AGENTS.md", dry_run: bool = False) -> SyncResult:
     """Synchronize downstream context files against canonical source."""
-    if CodebaseContextEngine is None:
-        raise RuntimeError("CodebaseContextEngine could not be imported")
-    engine = CodebaseContextEngine(root=root)
-    return engine.sync(source_rel=source, dry_run=dry_run)
+    service = resolve_codebase_context(root=root)
+    return service.sync(source_rel=source, dry_run=dry_run)
+
+
+async def govern_codebase_context_cmd(
+    root: str | Path = ".",
+    target_file: str | Path | None = None,
+    complexity_score: float = 0.5,
+) -> ContextGovernanceReport:
+    """Execute full 5-stage context governance pipeline on the target repository."""
+    service = resolve_codebase_context(root=root)
+    return service.govern(root=root, target_file=target_file, complexity_score=complexity_score)
 
 
 # --- Click CLI adapters ---
@@ -316,12 +318,41 @@ def context_sync(root: str, source: str, dry_run: bool, silent: bool) -> None:
     sys.exit(0)
 
 
+@context_group.command("govern")
+@click.option("--root", "-r", default=".", help="Repository root path")
+@click.option("--complexity", "-c", default=0.5, type=float, help="5D complexity score (0.0 to 1.0)")
+@click.option("--json", "as_json", is_flag=True, help="Output as JSON")
+@click.option("--silent", is_flag=True, help="Suppress output on pass")
+def context_govern(root: str, complexity: float, as_json: bool, silent: bool) -> None:
+    """Execute complete 5-stage context governance audit and compute tier assessment."""
+    report = _run_async(govern_codebase_context_cmd(root=root, complexity_score=complexity))
+    if as_json:
+        click.echo(_json.dumps(report.to_dict(), indent=2))
+        sys.exit(0 if report.passed else 1)
+
+    if report.passed:
+        if not silent:
+            click.echo(f"\n[PASS] Context Governance Audit Passed ({report.passed_stages_count}/{report.total_stages} stages)")
+            click.echo("━" * 60)
+            click.echo(f"Recommended Compute Tier: {report.recommended_tier}")
+            for st in report.stages:
+                click.echo(f"  Stage {st.stage_num} [{st.stage_name}]: {st.message} ({st.duration_ms:.1f}ms)")
+            click.echo()
+        sys.exit(0)
+
+    click.echo("\n[FAIL] Context Governance Violations Detected:", err=True)
+    for v in report.violations:
+        click.echo(f"  - [{v.rule_name}] {v.file_path}:{v.line_number}: {v.message}", err=True)
+    sys.exit(1)
+
+
 __all__ = [
     "CodeSkeletonResult",
     "ContextCompileResult",
     "ContextOptimizeResult",
     "compile_context_cmd",
     "context_group",
+    "govern_codebase_context_cmd",
     "lint_codebase_context_cmd",
     "optimize_context_cmd",
     "skeletonize_code_cmd",

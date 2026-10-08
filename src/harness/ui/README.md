@@ -18,7 +18,7 @@ The UI package provides both interactive visual monitoring and machine-readable 
 
 | Module | Core Classes / Symbols | Description |
 |---|---|---|
-| [`server.py`](server.py) | `create_app`, `RuntimeAdapter`, `TaskRequest` | FastAPI application factory defining REST and WebSocket routes for runtime interaction. |
+| [`server/`](server/) | `create_app`, `RuntimeAdapter`, `TaskRequest` | FastAPI application factory defining REST and WebSocket routes for runtime interaction. |
 | [`projection.py`](projection.py) | `UIProjectionEngine`, `ChannelSubscription` | Decoupled telemetry engine filtering and routing events across active WebSocket clients. |
 
 ---

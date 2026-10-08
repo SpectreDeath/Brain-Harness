@@ -27,6 +27,7 @@ from harness.services.brain_artifact_miner import (
     ScratchCatalogItem,
     StandardBrainArtifactMinerService,
     TaskTriageReport,
+    resolve_brain_artifact_miner,
 )
 from plugins.memory_and_epistemics.brain_artifact_miner.main import (
     BrainArtifactMinerPlugin,
@@ -270,3 +271,43 @@ class TestBrainArtifactMinerDeepening:
         assert res_brief.exit_code == 0
         assert brief_out.exists()
         assert "<!DOCTYPE html>" in brief_out.read_text(encoding="utf-8")
+
+    def test_resolve_brain_artifact_miner_without_context(self) -> None:
+        """Verify resolve_brain_artifact_miner safely defaults to StandardBrainArtifactMinerService (Rule 58)."""
+        svc = resolve_brain_artifact_miner(None)
+        assert isinstance(svc, StandardBrainArtifactMinerService)
+
+    def test_resolve_brain_artifact_miner_from_ioc_context(self) -> None:
+        """Verify resolve_brain_artifact_miner extracts service from IoC container (Rule 58)."""
+        ctx = ServiceContext()
+        custom_svc = StandardBrainArtifactMinerService()
+        ctx.provide(BRAIN_ARTIFACT_MINER_KEY, custom_svc)
+
+        resolved = resolve_brain_artifact_miner(ctx)
+        assert resolved is custom_svc
+
+    def test_services_facade_re_exports(self) -> None:
+        """Verify harness.services re-exports all brain artifact miner public symbols cleanly."""
+        from harness.services import (
+            BRAIN_ARTIFACT_MINER_KEY as FACADE_KEY,
+            ArtifactLifecycleEntry as FacadeLifecycle,
+            BrainArtifactMinerService as FacadeProtocol,
+            ByteOffsetEntry as FacadeOffset,
+            DualTranscriptStep as FacadeStep,
+            ScratchCatalog as FacadeCatalog,
+            ScratchCatalogItem as FacadeItem,
+            StandardBrainArtifactMinerService as FacadeService,
+            TaskTriageReport as FacadeReport,
+            resolve_brain_artifact_miner as facade_resolve,
+        )
+
+        assert FACADE_KEY is BRAIN_ARTIFACT_MINER_KEY
+        assert FacadeProtocol is BrainArtifactMinerService
+        assert FacadeService is StandardBrainArtifactMinerService
+        assert facade_resolve is resolve_brain_artifact_miner
+        assert FacadeCatalog is ScratchCatalog
+        assert FacadeItem is ScratchCatalogItem
+        assert FacadeReport is TaskTriageReport
+        assert FacadeOffset is ByteOffsetEntry
+        assert FacadeStep is DualTranscriptStep
+        assert FacadeLifecycle is ArtifactLifecycleEntry

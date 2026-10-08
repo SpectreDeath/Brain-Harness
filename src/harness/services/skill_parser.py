@@ -12,7 +12,7 @@ import re
 from pathlib import Path
 from typing import Any
 
-from harness.services.skill_graph import (
+from harness.services.skill_graph.models import (
     SkillAntiPatternDefinition,
     SkillCardDefinition,
     SkillInvariantDefinition,

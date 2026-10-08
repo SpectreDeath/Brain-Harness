@@ -19,7 +19,7 @@ The `harness.plugins` package implements the plugin lifecycle engine, manifest s
 | [`base.py`](base.py) | `HarnessPlugin`, `PluginContext` | Base class defining lifecycle hooks (`on_load`, `on_enable`, `on_disable`, `on_unload`). |
 | [`manifest.py`](manifest.py) | `PluginManifest`, `IsolationMode` | Pydantic v2 schema for `plugin.json` declaring dependencies, tools, and isolation levels. |
 | [`loader.py`](loader.py) | `PluginLoader` | Dynamic module importer and filesystem scanner for drop-in plugin bundles. |
-| [`sandbox.py`](sandbox.py) | `SubprocessSandbox`, `VenvManager` | Process isolation, venv staging, and timeout-bounded process execution. |
+| [`sandbox/`](sandbox/) | `SandboxExecutor`, `InProcessExecutor`, `SubprocessExecutor`, `VenvExecutor`, `ContainerExecutor`, `WasmSandboxExecutor`, `SandboxExecutorFactory` | Decomposed package (`base`, `in_process`, `subprocess`, `venv`, `container`, `wasm`, `factory`) providing multiple isolation strategies, Win32/Linux kernel OOM enforcement, and single-seam IoC factory resolution (`resolve_sandbox_executor_factory`). |
 | [`sandboxed.py`](sandboxed.py) | `SandboxedPlugin` | Adapter wrapping sandboxed processes into standard `HarnessPlugin` interfaces. |
 | [`transport.py`](transport.py) | `StdioJsonRpcTransport` | Strict JSON-RPC 2.0 framing and async pipe transport for child processes. |
 | [`catalog.py`](catalog.py) | `PluginCatalog` | Searchable registry of discovered, loaded, and available plugins. |

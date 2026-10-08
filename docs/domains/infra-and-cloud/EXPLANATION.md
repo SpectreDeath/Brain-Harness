@@ -31,7 +31,7 @@ This domain manages operational runtime environments, container sandboxes, and c
 
 ## Co-Located Plugins & Micro-Kernel Services
 
-- Plugin Sandbox Subsystem: [`src/harness/plugins/sandbox.py`](../../../src/harness/plugins/sandbox.py) providing process sandboxes and venv staging.
+- Plugin Sandbox Subsystem: [`src/harness/plugins/sandbox/`](../../../src/harness/plugins/sandbox/) providing process sandboxes and venv staging.
 - System Diagnostics Service: [`src/harness/commands/system.py`](../../../src/harness/commands/system.py) providing system resource and host environment telemetry.
 
 ---

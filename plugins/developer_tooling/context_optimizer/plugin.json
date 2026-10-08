@@ -1,0 +1,56 @@
+{
+  "name": "plugin.context_optimizer",
+  "version": "1.0.0",
+  "description": "Pre-LLM context optimization, observation compaction, and composable pruning strategies",
+  "category": "developer_tooling",
+  "author": "Brain Harness",
+  "entrypoint": "main.py",
+  "trusted": true,
+  "execution_mode": "in_process",
+  "provides": [
+    "service.context_optimizer",
+    "agent.context_optimizer"
+  ],
+  "requires": [],
+  "tools": [
+    {
+      "name": "context_compact_observation",
+      "description": "Compact and truncate a raw tool observation into a token-efficient representation.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "action_name": {
+            "type": "string",
+            "description": "Name of the tool action that produced the observation"
+          },
+          "observation": {
+            "description": "Raw observation data (string, dict, or list)"
+          },
+          "max_chars": {
+            "type": "integer",
+            "description": "Optional maximum characters ceiling"
+          }
+        },
+        "required": ["action_name", "observation"]
+      }
+    },
+    {
+      "name": "context_optimize_messages",
+      "description": "Prune and budget a sequence of LLM messages using registered strategies.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "messages": {
+            "type": "array",
+            "description": "List of message dictionaries with role and content"
+          },
+          "max_total_messages": {
+            "type": "integer",
+            "description": "Maximum total messages before pruning triggers"
+          }
+        },
+        "required": ["messages"]
+      }
+    }
+  ]
+}

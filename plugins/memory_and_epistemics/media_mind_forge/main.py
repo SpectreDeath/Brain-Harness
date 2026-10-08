@@ -10,8 +10,17 @@ from typing import Any, Protocol, runtime_checkable
 from harness.kernel.context import ServiceContext, ServiceKey
 from harness.plugins.base import HarnessPlugin
 
-from .engine import MediaMindForgeEngine
-from .models import CognitiveAnalysisReport
+try:
+    from .engine import MediaMindForgeEngine
+    from .models import CognitiveAnalysisReport
+except (ImportError, ValueError):
+    import sys
+    from pathlib import Path
+    _pkg_dir = Path(__file__).resolve().parent
+    if str(_pkg_dir) not in sys.path:
+        sys.path.insert(0, str(_pkg_dir))
+    from engine import MediaMindForgeEngine
+    from models import CognitiveAnalysisReport
 
 # Configure standard streams to UTF-8 on Windows (AGENTS.md Rule 23)
 if hasattr(sys.stdout, "reconfigure"):
@@ -352,4 +361,8 @@ class MediaMindForgePlugin(HarnessPlugin):
     ) -> dict[str, str]:
         report = self.engine.analyze(transcript_data=transcript_data)
         return self.engine.forge_skill_package(report=report, output_dir=output_dir, skill_name=skill_name)
+
+
+# Authoritative module-level plugin singleton export (AGENTS.md Rule 45)
+plugin = MediaMindForgePlugin()
 
