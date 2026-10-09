@@ -490,3 +490,23 @@ class GodsEyeViewPlugin(HarnessPlugin, GodsEyeViewService):
             style=style,
             outdir=outdir,
         )
+
+
+# Module-level singleton export per AGENTS.md Rule 45
+plugin = GodsEyeViewPlugin()
+
+__all__ = [
+    "GodsEyeViewPlugin",
+    "gev_analyst_query",
+    "gev_calculate_satellite_passes",
+    "gev_capture_streetview_headings",
+    "gev_fetch_ais_vessels",
+    "gev_fetch_earthquakes",
+    "gev_fetch_firms_hotspots",
+    "gev_fetch_live_flights",
+    "gev_query_infrastructure",
+    "gev_query_military_awareness",
+    "gev_render_globe_snapshot",
+    "gev_render_sat_ortho",
+    "plugin",
+]
