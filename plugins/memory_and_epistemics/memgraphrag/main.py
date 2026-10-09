@@ -236,3 +236,18 @@ class MemGraphRAGPlugin(HarnessPlugin, MemGraphRAGService):
             conflicts_count=res["conflicts_count"],
             conflicts=[ConflictGroup(**c) for c in res["conflicts"]],
         )
+
+
+# Module-level singleton (Rule 45)
+plugin = MemGraphRAGPlugin()
+
+__all__ = [
+    "MemGraphRAGPlugin",
+    "memgraphrag_add_passage",
+    "memgraphrag_detect_conflicts",
+    "memgraphrag_get_memory_summary",
+    "memgraphrag_index",
+    "memgraphrag_query",
+    "memgraphrag_retrieve",
+    "plugin",
+]

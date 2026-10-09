@@ -34,7 +34,7 @@ This domain coordinates autonomous agent execution loops and multi-agent systems
 
 ## Co-Located Plugins & Micro-Kernel Services
 
-- **ReAct Execution Engine**: [`src/harness/agent/react.py`](../../../src/harness/agent/react.py) providing `ReActAgentLoop` and `StepExecutionEngine`.
+- **ReAct Execution Engine**: [`src/harness/agent/react/`](../../../src/harness/agent/react/) providing `ReActAgentLoop` and `StepExecutionEngine`.
 - **Swarm Coordinator**: [`src/harness/agent/swarm/`](../../../src/harness/agent/swarm/) providing `SwarmCoordinator` and `ConsensusEngine`.
 - **Session DAG Store**: [`src/harness/services/agent_graph.py`](../../../src/harness/services/agent_graph.py) providing `AgentExecutionGraphService` (`AGENT_GRAPH_STORE_KEY`).
 - **Deterministic Validation Loop Plugin**: [`plugins/agent_orchestration/deterministic_validation_loop/`](../../../plugins/agent_orchestration/deterministic_validation_loop/README.md).

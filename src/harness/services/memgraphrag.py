@@ -177,3 +177,30 @@ class MemGraphRAGService(Protocol):
 
 
 MEMGRAPHRAG_MEMORY_KEY: ServiceKey[MemGraphRAGService] = ServiceKey("service.memgraphrag")
+
+
+def resolve_memgraphrag(ctx: Any = None) -> MemGraphRAGService:
+    """Single-seam resolver for MemGraphRAGService from IoC container or default plugin instance."""
+    if ctx is not None and hasattr(ctx, "optional"):
+        svc = ctx.optional(MEMGRAPHRAG_MEMORY_KEY)
+        if svc is not None:
+            return svc
+
+    from plugins.memory_and_epistemics.memgraphrag.main import plugin
+    return plugin
+
+
+__all__ = [
+    "ConflictGroup",
+    "FactResult",
+    "MEMGRAPHRAG_MEMORY_KEY",
+    "MemGraphRAGConflictResult",
+    "MemGraphRAGIndexResult",
+    "MemGraphRAGQueryResult",
+    "MemGraphRAGRetrieveResult",
+    "MemGraphRAGService",
+    "MemGraphRAGSummaryResult",
+    "PassageResult",
+    "SchemaResult",
+    "resolve_memgraphrag",
+]

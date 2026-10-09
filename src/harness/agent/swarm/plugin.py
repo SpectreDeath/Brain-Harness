@@ -30,4 +30,7 @@ class SwarmCoordinatorPlugin(HarnessPlugin):
         ctx.provide(SWARM_COORDINATOR_KEY, self._coordinator)
 
 
-__all__ = ["SwarmCoordinatorPlugin"]
+# Module-level singleton export per Rule 45
+plugin = SwarmCoordinatorPlugin()
+
+__all__ = ["SwarmCoordinatorPlugin", "plugin"]

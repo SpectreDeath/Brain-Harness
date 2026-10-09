@@ -17,52 +17,28 @@ from harness.services.network_forensics import (
 )
 
 try:
-    from .engine import (
-        HopAnalysisResult,
-        LayerDiagnosticResult,
-        NetworkForensicsEngine,
-        PortScanEvaluation,
-        TCPFlagAnalysis,
-        _CLEARTEXT_SERVICES,
-        _DANGEROUS_PORTS,
-        _TRACEROUTE_LINE_REGEX,
-        analyze_packet_summary as _engine_analyze_packet_summary,
-        analyze_traceroute_dict,
-        audit_port_configuration as _engine_audit_port_configuration,
-        calculate_subnet_geometry as _calc_subnet_geom,
-        classify_cleartext_exposure_dict,
-        decode_tcp_flags_dict,
-        evaluate_port_states_dict,
-        generate_visual_brief as _gen_visual_brief,
-        inspect_tls_certificate as _engine_inspect_tls_certificate,
-        run_7layer_diagnostic_chain_dict,
-    )
+    from . import engine as _mod
 except (ImportError, ValueError):
-    import sys
-    from pathlib import Path
-    _pkg_dir = Path(__file__).resolve().parent
-    if str(_pkg_dir) not in sys.path:
-        sys.path.insert(0, str(_pkg_dir))
-    from engine import (
-        HopAnalysisResult,
-        LayerDiagnosticResult,
-        NetworkForensicsEngine,
-        PortScanEvaluation,
-        TCPFlagAnalysis,
-        _CLEARTEXT_SERVICES,
-        _DANGEROUS_PORTS,
-        _TRACEROUTE_LINE_REGEX,
-        analyze_packet_summary as _engine_analyze_packet_summary,
-        analyze_traceroute_dict,
-        audit_port_configuration as _engine_audit_port_configuration,
-        calculate_subnet_geometry as _calc_subnet_geom,
-        classify_cleartext_exposure_dict,
-        decode_tcp_flags_dict,
-        evaluate_port_states_dict,
-        generate_visual_brief as _gen_visual_brief,
-        inspect_tls_certificate as _engine_inspect_tls_certificate,
-        run_7layer_diagnostic_chain_dict,
-    )
+    import engine as _mod  # type: ignore[no-redef]
+
+HopAnalysisResult = _mod.HopAnalysisResult
+LayerDiagnosticResult = _mod.LayerDiagnosticResult
+NetworkForensicsEngine = _mod.NetworkForensicsEngine
+PortScanEvaluation = _mod.PortScanEvaluation
+TCPFlagAnalysis = _mod.TCPFlagAnalysis
+_CLEARTEXT_SERVICES = _mod._CLEARTEXT_SERVICES
+_DANGEROUS_PORTS = _mod._DANGEROUS_PORTS
+_TRACEROUTE_LINE_REGEX = _mod._TRACEROUTE_LINE_REGEX
+_engine_analyze_packet_summary = _mod.analyze_packet_summary
+analyze_traceroute_dict = _mod.analyze_traceroute_dict
+_engine_audit_port_configuration = _mod.audit_port_configuration
+_calc_subnet_geom = _mod.calculate_subnet_geometry
+classify_cleartext_exposure_dict = _mod.classify_cleartext_exposure_dict
+decode_tcp_flags_dict = _mod.decode_tcp_flags_dict
+evaluate_port_states_dict = _mod.evaluate_port_states_dict
+_gen_visual_brief = _mod.generate_visual_brief
+_engine_inspect_tls_certificate = _mod.inspect_tls_certificate
+run_7layer_diagnostic_chain_dict = _mod.run_7layer_diagnostic_chain_dict
 
 # Global default engine instance
 _engine = NetworkForensicsEngine()
@@ -74,13 +50,8 @@ _engine = NetworkForensicsEngine()
 
 def audit_port_configuration(open_ports: list[int | dict[str, Any]]) -> dict[str, Any]:
     """Audit open ports and exposed network services against security best practices."""
-    clean_ports: list[int] = []
-    for p in open_ports:
-        if isinstance(p, dict):
-            clean_ports.append(int(p.get("port", 0)))
-        elif isinstance(p, (int, str)):
-            clean_ports.append(int(p))
-    return _engine_audit_port_configuration(clean_ports)
+    clean = [int(p.get("port", 0)) if isinstance(p, dict) else int(p) for p in open_ports if isinstance(p, (dict, int, str))]
+    return _engine_audit_port_configuration(clean)
 
 
 def analyze_packet_summary(flows: list[dict[str, Any]]) -> dict[str, Any]:
@@ -154,10 +125,7 @@ class NetworkForensicsPlugin(HarnessPlugin, NetworkForensicsService):
 
     @property
     def description(self) -> str:
-        return (
-            "Network forensics, tri-state recon, TCP flag decoding, "
-            "and 7-layer fault isolation engine"
-        )
+        return "Network forensics, tri-state recon, TCP flag decoding, and 7-layer fault isolation engine"
 
     @property
     def provides(self) -> list[ServiceKey[Any]]:
@@ -169,10 +137,6 @@ class NetworkForensicsPlugin(HarnessPlugin, NetworkForensicsService):
 
     async def on_load(self, ctx: ServiceContext) -> None:
         ctx.provide(NETWORK_FORENSICS_KEY, self)
-
-    # -------------------------------------------------------------------------
-    # NetworkForensicsService Protocol Implementation
-    # -------------------------------------------------------------------------
 
     def analyze_traceroute_hops(self, raw_output: str) -> dict[str, Any]:
         return analyze_traceroute_hops(raw_output)
@@ -200,25 +164,12 @@ class NetworkForensicsPlugin(HarnessPlugin, NetworkForensicsService):
 plugin = NetworkForensicsPlugin()
 
 __all__ = [
-    "HopAnalysisResult",
-    "LayerDiagnosticResult",
-    "NetworkForensicsEngine",
-    "NetworkForensicsPlugin",
-    "PortScanEvaluation",
-    "TCPFlagAnalysis",
-    "_CLEARTEXT_SERVICES",
-    "_DANGEROUS_PORTS",
-    "_TRACEROUTE_LINE_REGEX",
-    "_engine",
-    "analyze_packet_summary",
-    "analyze_traceroute_hops",
-    "audit_port_configuration",
-    "calculate_subnet_geometry",
-    "classify_cleartext_exposure",
-    "decode_tcp_flags",
-    "evaluate_port_states",
-    "generate_visual_brief",
-    "inspect_tls_certificate",
-    "plugin",
-    "run_7layer_diagnostic_chain",
+    "HopAnalysisResult", "LayerDiagnosticResult", "NetworkForensicsEngine",
+    "NetworkForensicsPlugin", "PortScanEvaluation", "TCPFlagAnalysis",
+    "_CLEARTEXT_SERVICES", "_DANGEROUS_PORTS", "_TRACEROUTE_LINE_REGEX",
+    "_engine", "analyze_packet_summary", "analyze_traceroute_hops",
+    "audit_port_configuration", "calculate_subnet_geometry",
+    "classify_cleartext_exposure", "decode_tcp_flags",
+    "evaluate_port_states", "generate_visual_brief",
+    "inspect_tls_certificate", "plugin", "run_7layer_diagnostic_chain",
 ]

@@ -12,7 +12,7 @@ def _utc_now() -> datetime:
     return datetime.now(timezone.utc)
 
 
-@dataclass
+@dataclass(slots=True)
 class SchemaNode:
     """Schema layer node: stores abstract ontology triple (head_type, relation, tail_type)."""
 
@@ -42,7 +42,7 @@ class SchemaNode:
         )
 
 
-@dataclass
+@dataclass(slots=True)
 class FactNode:
     """Fact layer node: stores concrete relational triple (head, relation, tail)."""
 
@@ -75,7 +75,7 @@ class FactNode:
         )
 
 
-@dataclass
+@dataclass(slots=True)
 class PassageNode:
     """Passage layer node: stores original text chunks and citation identifiers."""
 
