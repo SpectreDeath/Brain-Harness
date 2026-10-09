@@ -56,7 +56,7 @@ Brain Harness implements an extensible micro-kernel architecture with strict con
 | [`graphiti.py`](graphiti.py) | `GRAPHITI_SERVICE_KEY` | `GraphitiService` | Temporal knowledge graph tracking entity evolutions and relationship lifespans. |
 | [`discovery_index.py`](discovery_index.py) | `DISCOVERY_INDEX_SERVICE_KEY` | `DiscoveryIndexService` | Catalogs and searches open public record archives and research corpora. |
 | [`brain_artifact_miner.py`](brain_artifact_miner.py) | `BRAIN_ARTIFACT_MINER_KEY` | `BrainArtifactMinerService` | Filesystem-native brain store archaeology, scratch salvage, and dual-transcript seek. |
-| [`conversation_trajectory_miner.py`](conversation_trajectory_miner.py) | `CONVERSATION_TRAJECTORY_MINER_KEY` | `ConversationTrajectoryMinerService` | Autobiographical session trajectory extraction, friction scorecard analysis, and cognitive bifurcation. |
+| [`conversation_trajectory_miner/`](conversation_trajectory_miner/) | `CONVERSATION_TRAJECTORY_MINER_KEY` | `ConversationTrajectoryMinerService` | Autobiographical session trajectory extraction, friction scorecard analysis, and cognitive bifurcation. |
 | [`temp_artifact_miner.py`](temp_artifact_miner.py) | `TEMP_ARTIFACT_MINER_KEY` | `TempArtifactMinerService` | Ephemeral visual brief triage, pytest sandbox archaeology, and dual-lens cognitive bifurcation. |
 | [`brain_bridge/`](brain_bridge/) | `BRAIN_BRIDGE_KEY` | `BrainBridgeService` | Foreign brain format detection, git history parsing, and TF-IDF search indexing. |
 

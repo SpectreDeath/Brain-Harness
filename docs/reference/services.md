@@ -77,7 +77,7 @@ gis_svc = resolve_open_source_gis(context)
 | `GRAPHITI_SERVICE_KEY` | `GraphitiService` | [`harness.services.graphiti`](../../src/harness/services/graphiti.py) | Temporal knowledge graph tracking entity evolutions over time. |
 | `DISCOVERY_INDEX_SERVICE_KEY` | `DiscoveryIndexService` | [`harness.services.discovery_index`](../../src/harness/services/discovery_index.py) | Discovers and catalogs public record archives and research corpora. |
 | `BRAIN_ARTIFACT_MINER_KEY` | `BrainArtifactMinerService` | [`harness.services.brain_artifact_miner`](../../src/harness/services/brain_artifact_miner.py) | Filesystem-native brain store archaeology, scratch salvage, and dual-transcript seek. |
-| `CONVERSATION_TRAJECTORY_MINER_KEY` | `ConversationTrajectoryMinerService` | [`harness.services.conversation_trajectory_miner`](../../src/harness/services/conversation_trajectory_miner.py) | Autobiographical session trajectory extraction, friction scorecard analysis, and cognitive bifurcation. |
+| `CONVERSATION_TRAJECTORY_MINER_KEY` | `ConversationTrajectoryMinerService` | [`harness.services.conversation_trajectory_miner`](../../src/harness/services/conversation_trajectory_miner/) | Autobiographical session trajectory extraction, friction scorecard analysis, and cognitive bifurcation. |
 | `TEMP_ARTIFACT_MINER_KEY` | `TempArtifactMinerService` | [`harness.services.temp_artifact_miner`](../../src/harness/services/temp_artifact_miner.py) | Ephemeral visual brief triage, pytest sandbox archaeology, and dual-lens cognitive bifurcation. |
 | `BRAIN_BRIDGE_KEY` | `BrainBridgeService` | [`harness.services.brain_bridge`](../../src/harness/services/brain_bridge/) | Foreign brain format detection, git history parsing, and TF-IDF search indexing. |
 
