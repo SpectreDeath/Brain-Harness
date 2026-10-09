@@ -93,7 +93,7 @@ gis_svc = resolve_open_source_gis(context)
 | `GARF_REPORTING_SERVICE_KEY` | `GarfReportingService` | [`harness.services.garf_reporting`](../../src/harness/services/garf_reporting.py) | Declarative SQL reporting pipelines across heterogeneous APIs. |
 | `OPEN_SOURCE_GIS_SERVICE_KEY` | `OpenSourceGisService` | [`harness.services.open_source_gis`](../../src/harness/services/open_source_gis/) | Multi-engine geospatial analysis with CRS safety verification. |
 | `PAPERLESS_NGX_SERVICE_KEY` | `PaperlessNgxService` | [`harness.services.paperless_ngx`](../../src/harness/services/paperless_ngx.py) | Document classification and hybrid Tantivy/SQLite-Vec search. |
-| `HF_DATASETS_SERVICE_KEY` | `HfDatasetsService` | [`harness.services.hf_datasets`](../../src/harness/services/hf_datasets.py) | Arrow memory mapping and streaming for large datasets. |
+| `HF_DATASETS_SERVICE_KEY` | `HfDatasetsService` | [`harness.services.hf_datasets`](../../src/harness/services/hf_datasets/) | Arrow memory mapping and streaming for large datasets. |
 | `DATA_MANAGEMENT_SERVICE_KEY` | `DataManagementService` | [`harness.services.data_management`](../../src/harness/services/data_management.py) | DAMA-DMBOK data lifecycle governance and open data contracts. |
 | `TAU_BRIDGE_SERVICE_KEY` | `TauBridgeService` | [`harness.services.tau_bridge`](../../src/harness/services/tau_bridge/) | Bidirectional bridge to the HuggingFace Tau coding harness. |
 | `CLAUDE_CODE_BRIDGE_KEY` | `ClaudeCodeBridgeService` | [`harness.services.claude_code`](../../src/harness/services/claude_code.py) | Claude Code prompt compaction and dangerous bash hooks. |

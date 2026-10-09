@@ -35,7 +35,7 @@ This domain handles structured data ingestion, analytical profiling, and data tr
 
 - **Data Management Service**: [`src/harness/services/data_management.py`](../../../src/harness/services/data_management.py) providing `DataManagementService`.
 - **BigQuery Augmented Analytics**: [`src/harness/services/bigquery_augmented_analytics.py`](../../../src/harness/services/bigquery_augmented_analytics.py) providing `BIGQUERY_AUGMENTED_ANALYTICS_SERVICE_KEY`.
-- **HF Datasets Service**: [`src/harness/services/hf_datasets.py`](../../../src/harness/services/hf_datasets.py) providing `HF_DATASETS_SERVICE_KEY`.
+- **HF Datasets Service**: [`src/harness/services/hf_datasets/`](../../../src/harness/services/hf_datasets/) providing `HF_DATASETS_SERVICE_KEY`.
 - **Garf Reporting Service**: [`src/harness/services/garf_reporting.py`](../../../src/harness/services/garf_reporting.py) providing `GARF_REPORTING_SERVICE_KEY`.
 - **Open-Source GIS Service**: [`src/harness/services/open_source_gis/`](../../../src/harness/services/open_source_gis/) providing `OPEN_SOURCE_GIS_SERVICE_KEY`.
 

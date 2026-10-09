@@ -69,7 +69,7 @@ Brain Harness implements an extensible micro-kernel architecture with strict con
 | [`garf_reporting.py`](garf_reporting.py) | `GARF_REPORTING_SERVICE_KEY` | `GarfReportingService` | Declarative SQL reporting pipelines and analytical workflow DAGs across APIs. |
 | [`open_source_gis/`](open_source_gis/) | `OPEN_SOURCE_GIS_SERVICE_KEY` | `OpenSourceGisService` | Geospatial processing across 14 GIS engines with CRS safety verification. |
 | [`paperless_ngx.py`](paperless_ngx.py) | `PAPERLESS_NGX_SERVICE_KEY` | `PaperlessNgxService` | Document ingestion, classification, and hybrid Tantivy/SQLite-Vec search. |
-| [`hf_datasets.py`](hf_datasets.py) | `HF_DATASETS_SERVICE_KEY` | `HfDatasetsService` | Arrow zero-copy memory mapping and streaming pipelines for large datasets. |
+| [`hf_datasets/`](hf_datasets/) | `HF_DATASETS_SERVICE_KEY` | `HfDatasetsService` | Arrow zero-copy memory mapping, streaming pipelines, lakehouse format conversion, and single-seam resolution (`resolve_hf_datasets_service`). |
 | [`tau_bridge/`](tau_bridge/) | `TAU_BRIDGE_SERVICE_KEY` | `TauBridgeService` | Bidirectional integration with HuggingFace Tau coding agent harness. |
 | [`claude_code.py`](claude_code.py) | `CLAUDE_CODE_BRIDGE_KEY` | `ClaudeCodeBridgeService` | Claude Code prompt compaction and dangerous bash command guardrails. |
 | [`stagehand_browser.py`](stagehand_browser.py) | `STAGEHAND_BROWSER_KEY` | `StagehandBrowserService` | Autonomous headless browser orchestration and DOM extraction. |
