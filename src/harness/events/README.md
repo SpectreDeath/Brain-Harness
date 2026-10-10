@@ -26,7 +26,7 @@ The event subsystem provides real-time pub/sub telemetry and an unalterable flig
 
 | Module | Core Classes / Symbols | Description |
 |---|---|---|
-| [`bus.py`](bus.py) | `EventBus`, `EventHandler`, `EVENT_BUS_KEY` | Async event dispatcher managing in-memory event queues and subscriber registries. |
+| [`bus/`](bus/) | `EventBus`, `EventHandler`, `EVENT_BUS_KEY` | Async event dispatcher managing in-memory event queues and subscriber registries. |
 | [`types.py`](types.py) | `HarnessEvent`, `EventType`, `plugin_event`, `tool_event` | Immutable event schemas, event type enumeration, and helper constructor factories. |
 
 ---

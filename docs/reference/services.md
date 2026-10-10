@@ -90,7 +90,7 @@ gis_svc = resolve_open_source_gis(context)
 | `DOC_BUILDER_SERVICE_KEY` | `HfDocBuilderService` | [`harness.services.doc_builder`](../../src/harness/services/doc_builder/) | HuggingFace doc-builder AST compiler, autodoc, and mock loader. |
 | `DOC_SYNCHRONIZER_KEY` | `DocSynchronizerService` | [`harness.services.doc_synchronizer`](../../src/harness/services/doc_synchronizer.py) | Codebase doc coverage auditor, drift checker, and scaffolder. |
 | `BIGQUERY_AUGMENTED_ANALYTICS_SERVICE_KEY` | `BigQueryAugmentedAnalyticsService` | [`harness.services.bigquery_augmented_analytics`](../../src/harness/services/bigquery_augmented_analytics.py) | BigQuery Table-Valued Functions (TVFs) and causal inference. |
-| `GARF_REPORTING_SERVICE_KEY` | `GarfReportingService` | [`harness.services.garf_reporting`](../../src/harness/services/garf_reporting.py) | Declarative SQL reporting pipelines across heterogeneous APIs. |
+| `GARF_REPORTING_SERVICE_KEY` | `GarfReportingService` | [`harness.services.garf_reporting`](../../src/harness/services/garf_reporting/) | Declarative SQL reporting pipelines across heterogeneous APIs. |
 | `OPEN_SOURCE_GIS_SERVICE_KEY` | `OpenSourceGisService` | [`harness.services.open_source_gis`](../../src/harness/services/open_source_gis/) | Multi-engine geospatial analysis with CRS safety verification. |
 | `PAPERLESS_NGX_SERVICE_KEY` | `PaperlessNgxService` | [`harness.services.paperless_ngx`](../../src/harness/services/paperless_ngx.py) | Document classification and hybrid Tantivy/SQLite-Vec search. |
 | `HF_DATASETS_SERVICE_KEY` | `HfDatasetsService` | [`harness.services.hf_datasets`](../../src/harness/services/hf_datasets/) | Arrow memory mapping and streaming for large datasets. |
@@ -109,7 +109,7 @@ gis_svc = resolve_open_source_gis(context)
 | ServiceKey Constant | Inferred Type | Defining Module | Central Function |
 |---|---|---|---|
 | `STORAGE_SERVICE_KEY` | `StorageService` | [`harness.services.storage`](../../src/harness/services/storage.py) | SQLite persistence engine with transactional support. |
-| `EVENT_BUS_KEY` | `EventBus` | [`harness.events.bus`](../../src/harness/events/bus.py) | Async event bus dispatching immutable domain events. |
+| `EVENT_BUS_KEY` | `EventBus` | [`harness.events.bus`](../../src/harness/events/bus/) | Async event bus dispatching immutable domain events. |
 | `LLM_SERVICE_KEY` | `LLMService` | [`harness.services.llm`](../../src/harness/services/llm.py) | Multi-provider LLM client protocol and completion gateway. |
 | `CREATOR_SERVICE_KEY` | `CreatorService` | [`harness.creator.synthesis`](../../src/harness/creator/synthesis.py) | Autonomous plugin synthesis and capability creator. |
 | `OPENROUTER_GATEWAY_KEY` | `OpenRouterGatewayService` | [`harness.services.openrouter_gateway`](../../src/harness/services/openrouter_gateway.py) | Multi-model routing gateway with token telemetry. |
