@@ -174,3 +174,7 @@ def openrouter_jsonrpc_call(
     except Exception as e:
         logger.error("openrouter_jsonrpc_call tool error", error=str(e))
         return {"status": "error", "error": str(e)}
+
+
+# Export instantiated module-level singleton per AGENTS.md Rule 45
+plugin = OpenRouterGatewayPlugin()
