@@ -199,3 +199,7 @@ def cellcog_list_capabilities() -> dict[str, Any]:
             for item in catalog.capabilities
         ],
     }
+
+
+# Export instantiated module-level singleton per AGENTS.md Rule 45
+plugin = CellCogPlugin()
