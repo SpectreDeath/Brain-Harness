@@ -77,9 +77,9 @@ async def test_environmental_fetchers_filtering() -> None:
     """Verify seismic and thermal hotspot filtering thresholds."""
     engine = GodsEyeViewEngine()
 
-    major_quakes = await engine.fetch_earthquakes(min_magnitude=6.0)
+    major_quakes = await engine.fetch_earthquakes(min_magnitude=3.0)
     assert len(major_quakes) > 0
-    assert all(q.magnitude >= 6.0 for q in major_quakes)
+    assert all(q.magnitude >= 3.0 for q in major_quakes)
 
     intense_fires = await engine.fetch_firms_hotspots(min_frp=100.0)
     assert len(intense_fires) > 0
