@@ -57,7 +57,8 @@ coverage.xml
 !.harness/config.json
 !.harness/*.py
 test_ingested_plugins/
-data/
+/data/
+!src/harness/commands/data/
 logs/
 *.log
 *.sqlite
