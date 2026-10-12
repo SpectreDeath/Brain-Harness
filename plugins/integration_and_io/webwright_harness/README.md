@@ -65,22 +65,16 @@ Webwright Harness Plugin Entrypoint & Service Implementation.
 ### Module [__init__.py](__init__.py)
 
 Webwright Harness Plugin Package.
-### Module [engine.py](engine.py)
+### Subpackage [engine/](engine/)
 
-Core Engine for Webwright Web Agent Trajectory Skill Synthesis & Browser Lifecycle.
+Modular Engine for Webwright Web Agent Trajectory Skill Synthesis & Browser Lifecycle.
 
-#### Classes
+#### Classes & Models
 
-- `class SkillMetadata` — Metadata describing a synthesized Webwright skill.
-- `class BrowserDaemonState` — State of persistent local Chromium browser process.
-- `class WebwrightHarnessEngine` — Production-grade Webwright engine for skill learning, routing, browser management, and evaluation.
-  - `def __init__(base_dir) -> None`
-  - `def learn_skill(trajectory_dirs, template, library_dir) -> dict[str, Any]` — Synthesize a reusable Python web automation skill from execution trajectories.
-  - `def retrieve_skills(task, k, library_dir) -> dict[str, Any]` — Rank and retrieve skills relevant to the task.
-  - `def route_and_execute(task, start_url, library_dir, timeout_s) -> dict[str, Any]` — Route a task to matching skill execution or fallback.
-  - `def manage_browser_session(action, port, headless) -> dict[str, Any]` — Manage persistent local Chromium process.
-  - `def image_qa(image_path, question, model) -> dict[str, Any]` — Perform multimodal VLM QA on web screenshot.
-  - `def self_reflect(task, screenshots_dir, action_history) -> dict[str, Any]` — Critique and verify task success over execution history.
+- `class SkillMetadata` — Slotted metadata describing a synthesized Webwright skill.
+- `class BrowserDaemonState` — Slotted state of persistent local Chromium browser process.
+- `class WebwrightHarnessEngine` — Production-grade Webwright engine integrating sub-mixins for learning, routing, daemon management, and evaluation.
+- `def resolve_webwright_engine(context, base_dir) -> WebwrightHarnessEngine` — Single-seam resolver per Rule 58.
 
 
 ---
