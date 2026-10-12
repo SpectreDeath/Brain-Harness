@@ -38,6 +38,12 @@ from harness.agent.session.scope import AgentSessionScope
 from harness.agent.session.manager import (
     AGENT_SESSION_MANAGER_KEY,
     AgentSessionManager,
+    SessionCreationMixin,
+    SessionExportMixin,
+    SessionHierarchyMixin,
+    SessionLifecycleMixin,
+    SessionQueryMixin,
+    resolve_session_manager,
 )
 
 # 6. IoC Plugin
@@ -63,6 +69,12 @@ __all__ = [
     # Manager
     "AGENT_SESSION_MANAGER_KEY",
     "AgentSessionManager",
+    "SessionCreationMixin",
+    "SessionExportMixin",
+    "SessionHierarchyMixin",
+    "SessionLifecycleMixin",
+    "SessionQueryMixin",
+    "resolve_session_manager",
     # Plugin
     "AgentSessionPlugin",
 ]
