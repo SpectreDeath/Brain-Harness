@@ -26,7 +26,7 @@ AST-based 3-tier token-efficient context compilation, skeletonization, and reach
 
 ## Key Modules & AST Symbols
 
-### Module [`compiler_core.py`](compiler_core.py)
+### Subpackage [`compiler_core/`](compiler_core/)
 
 Core AST skeletonizing, symbol reachability analysis, and 3-tier context compilation engine.
 
