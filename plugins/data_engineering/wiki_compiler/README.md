@@ -30,7 +30,7 @@ Compiler-style dual in-memory / disk wiki builder with topological graph queries
 
 ## Key Modules & AST Symbols
 
-### Module [`compiler_core.py`](compiler_core.py)
+### Subpackage [`compiler_core/`](compiler_core/)
 
 Core Wiki Compiler: Extraction, Phrase Index Mention Detection, Virtual Compilation, and Graph Analytics.
 
