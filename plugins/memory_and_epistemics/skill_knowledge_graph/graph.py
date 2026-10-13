@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-from collections import defaultdict
 from typing import Any
 
 from harness.services.skill_graph import (
@@ -20,6 +19,7 @@ from .models import (
     SkillRouterResult,
     SkillTopologyReport,
 )
+from .visualizer import render_mermaid
 
 
 class SkillKnowledgeGraph:
@@ -185,37 +185,7 @@ class SkillKnowledgeGraph:
 
     def generate_mermaid(self) -> str:
         """Generate Mermaid diagram markdown representing the full skill knowledge graph."""
-        lines = ["flowchart TD"]
-
-        # Group by category
-        cat_to_skills: dict[str, list[str]] = defaultdict(list)
-        for name, node in self.nodes.items():
-            cat_to_skills[node.category].append(name)
-
-        for cat, s_names in sorted(cat_to_skills.items()):
-            clean_cat = cat.replace("/", "_").replace("-", "_")
-            lines.append(f'    subgraph sg_{clean_cat} ["{cat.upper()}"]')
-            for s in sorted(s_names):
-                skill = self.nodes[s]
-                label = f"{skill.name}\\n({skill.invocation or skill.name})"
-                lines.append(f'        node_{s.replace("-", "_")}["{label}"]')
-            lines.append("    end")
-
-        # Add Edges
-        for edge in self.edges:
-            if edge.source in self.nodes and edge.target in self.nodes:
-                src_id = f"node_{edge.source.replace('-', '_')}"
-                tgt_id = f"node_{edge.target.replace('-', '_')}"
-                rel_label = edge.relation.value
-
-                if edge.relation == EdgeType.PRECEDES:
-                    lines.append(f"    {src_id} -->|{rel_label}| {tgt_id}")
-                elif edge.relation == EdgeType.REQUIRES:
-                    lines.append(f"    {src_id} -.->|{rel_label}| {tgt_id}")
-                elif edge.relation == EdgeType.COMPLEMENTS:
-                    lines.append(f"    {src_id} <-->|{rel_label}| {tgt_id}")
-
-        return "\n".join(lines)
+        return render_mermaid(self.nodes, self.edges)
 
     def get_snapshot(self) -> SkillGraphSnapshot:
         """Serialize complete graph state into snapshot schema."""

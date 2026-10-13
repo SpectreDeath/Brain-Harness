@@ -47,41 +47,33 @@ Directed Knowledge Graph engine for indexing, routing, and chaining skills.
 
 ### Module [`main.py`](main.py)
 
-Entrypoint module and HarnessPlugin implementation for Skill Knowledge Graph & Registry.
+Entrypoint module re-exporting standalone tools and instantiated plugin singleton.
+- Single-Seam Resolver: `resolve_skill_knowledge_graph(context)` (Rule 58)
+- Plugin Singleton: `plugin = SkillGraphPlugin()` (Rule 45)
 
-#### Classes
+### Module [`service.py`](service.py)
 
-- `class SkillGraphPlugin`
-  In-process Harness plugin providing SkillGraphService and SkillRegistryService.
-  - `def __init__() -> None`
-  - `def provides() -> list[ServiceKey[Any]]`
-  - `def on_load(ctx) -> None`
-  - `def on_enable() -> None`
-  - `def on_disable() -> None`
-  - `def on_unload() -> None`
-  - `def index(root_dir) -> int`
-  - `def find_chain(start_skill, target_skill) -> list[str]`
-  - `def query_router(intent, top_k) -> dict[str, Any]`
-  - `def export_html_brief(output_path) -> str`
-  - `def discover_all(root_dir) -> list[SkillCardDefinition]`
-  - `def get_skill(name) -> SkillCardDefinition | None`
-  - `def route_intent(intent, top_k) -> dict[str, Any]`
-  - `def get_chain(start_skill, target_skill) -> SkillChainResult`
-  - `def link_knowledge_vault(vault_dir) -> int`
+`SkillGraphPlugin` implementing `HarnessPlugin`, `ToolMountMixin`, and protocol mixins for graph, registry, clustering, and intelligence services.
 
+### Module [`mixins.py`](mixins.py)
 
-#### Functions
+Service protocol mixin implementations:
+- `GraphServiceMixin`: `SkillGraphService` methods
+- `RegistryServiceMixin`: `SkillRegistryService` methods
+- `ClusteringServiceMixin`: `SkillClusteringService` methods
+- `IntelligenceServiceMixin`: `SkillIntelligenceService` methods
 
-- `def index_skill_catalog(root_path) -> dict[str, Any]`
-  - Scan workspace (.agents/skills, plugins) and construct the knowledge graph.
-- `def query_skill_router(intent, top_k) -> dict[str, Any]`
-  - Route natural language task intent to matching skills and recommended chains.
-- `def find_skill_chain(start_skill, target_skill) -> dict[str, Any]`
-  - Find shortest directed execution chain between two skills.
-- `def get_skill_topology(skill_name) -> dict[str, Any]`
-  - Retrieve full topological inspection for a specific skill.
-- `def export_skill_graph_visual(output_path) -> dict[str, Any]`
-  - Generate an interactive HTML visual brief in %TEMP%.
+### Module [`tools.py`](tools.py)
+
+Core workspace indexing, router queries, directed pathfinding, and visual topology exports.
+
+### Module [`clustering_tools.py`](clustering_tools.py)
+
+Skill domain clustering, emergent capability discovery, cross-cluster bridges, and execution guidance compilation.
+
+### Module [`resolvers.py`](resolvers.py)
+
+Single-seam IoC resolver `resolve_skill_knowledge_graph(context)` adhering to Rule 58.
 
 
 ### Module [`models.py`](models.py)
