@@ -397,3 +397,6 @@ class ContextTypeSystemPlugin(HarnessPlugin, ContextTypeService):
     ) -> ContextSnapshotResult:
         res = context_import_session(session_id, data)
         return ContextSnapshotResult(**res)
+
+# Module-level singleton instance per Rule 45
+plugin = ContextTypeSystemPlugin()

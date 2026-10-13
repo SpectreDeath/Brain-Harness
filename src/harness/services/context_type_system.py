@@ -173,3 +173,16 @@ class ContextTypeService(Protocol):
 
 
 CONTEXT_TYPE_SYSTEM_KEY: ServiceKey[ContextTypeService] = ServiceKey("service.context_type_system")
+
+def resolve_context_type_system(
+    context: Any | None = None,
+) -> ContextTypeService:
+    """Resolve ContextTypeService from ServiceContext or instantiate fallback singleton (Rule 58)."""
+    if context is not None:
+        service = getattr(context, "optional", lambda k: None)(CONTEXT_TYPE_SYSTEM_KEY)
+        if service is not None:
+            return service
+
+    # Fallback to in-process plugin implementation
+    from plugins.memory_and_epistemics.context_type_system.main import plugin
+    return plugin
