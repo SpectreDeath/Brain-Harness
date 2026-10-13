@@ -29,7 +29,7 @@ Commands are strictly decoupled from Click CLI option parsers:
 | [`compass.py`](compass.py) | `harness compass` | Autonomous agent harness benchmarking and constrained evolution. |
 | [`self_eval.py`](self_eval.py) | `harness self-eval` | Deterministic prompt evaluation pipelines and gold-standard assertions. |
 | [`validation_loop.py`](validation_loop.py) | `harness validation-loop`| Spec-first deterministic validation loop execution and HTML report generation. |
-| [`uncertainty.py`](uncertainty.py) | `harness uncertainty` | 3-layer uncertainty gating, retrieval similarity scoring, and logprob validation. |
+| [`uncertainty/`](uncertainty/) | `harness uncertainty` | 3-layer uncertainty gating, retrieval similarity scoring, and logprob validation. |
 
 ### 2. Plugins & Capability Creation
 | Module | Command Group | Purpose & Capabilities |
