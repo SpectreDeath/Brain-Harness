@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0.0",
+  "id": "ki_self_20261014_02",
+  "title": "Markdown Document Structural Formatting and Unified Unordered List Hygiene",
+  "category": "documentation_hygiene",
+  "source_target": "Brain Harness (CONTEXT-MAP.md, CARD.md, docs/)",
+  "detected_format": "harness_endogenous_reflection",
+  "timestamp": "2026-10-14T11:00:00Z",
+  "tags": [
+    "documentation_hygiene",
+    "endogenous_memory",
+    "self_reflection",
+    "markdownlint",
+    "context_map"
+  ],
+  "anchors": {
+    "source_brief": "harness-reflection-20261014-70-cycle-milestone.html",
+    "commit_evidence": "6e43ba7",
+    "target_doc": "CONTEXT-MAP.md",
+    "warnings_cleared": 45
+  },
+  "isnad": {
+    "decision_id": "decision-self-20261014-02",
+    "timestamp": "2026-10-14T11:00:00Z",
+    "status": "VERIFIED",
+    "claims": [
+      {
+        "claim_id": "isnad-self-20261014-02-a",
+        "assertion": "Markdown headings must be separated from preceding and following lists or paragraphs by exactly one blank line to satisfy MD022 and MD032.",
+        "evidence": "Commit 6e43ba7 added blank lines below all ### domain headings in CONTEXT-MAP.md, clearing MD022 and MD032 warnings.",
+        "verified_by": "markdownlint inspection"
+      },
+      {
+        "claim_id": "isnad-self-20261014-02-b",
+        "assertion": "Unordered list items across top-level and nested hierarchies must use a uniform bullet marker (dash '-') rather than mixing asterisks and dashes to prevent MD004 style conflicts.",
+        "evidence": "Commit 6e43ba7 unified all list markers to '-' in CONTEXT-MAP.md, resolving all MD004 warnings.",
+        "verified_by": "markdownlint inspection, test_context_map_registration"
+      }
+    ]
+  }
+}

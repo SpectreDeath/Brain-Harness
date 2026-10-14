@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0.0",
+  "id": "ki_self_20261014_01",
+  "title": "Skill CLI Script Single-File Self-Containment and Language Server Isolation",
+  "category": "architecture_and_deepening",
+  "source_target": "Brain Harness (.agents/skills/*/scripts/)",
+  "detected_format": "harness_endogenous_reflection",
+  "timestamp": "2026-10-14T11:00:00Z",
+  "tags": [
+    "architecture_and_deepening",
+    "endogenous_memory",
+    "self_reflection",
+    "cli_tooling",
+    "rule_11"
+  ],
+  "anchors": {
+    "source_brief": "harness-reflection-20261014-70-cycle-milestone.html",
+    "commit_evidence": "6e43ba7",
+    "target_skill": "architecture-deepening-workflow",
+    "line_bound": 200
+  },
+  "isnad": {
+    "decision_id": "decision-self-20261014-01",
+    "timestamp": "2026-10-14T11:00:00Z",
+    "status": "VERIFIED",
+    "claims": [
+      {
+        "claim_id": "isnad-self-20261014-01-a",
+        "assertion": "Helper scripts located under .agents/skills/<name>/scripts/ must remain self-contained single-file utilities to eliminate language server / Pyright module lookup errors outside project root src/.",
+        "evidence": "Splitting deepen_cycle.py into sibling deepen_ops.py caused Pyright 'Cannot find module' diagnostics. Consolidating into 189-line deepen_cycle.py in commit 6e43ba7 eliminated all errors.",
+        "verified_by": "Pyright diagnostics, ruff check, pytest tests/test_architecture_deepening_skills.py"
+      },
+      {
+        "claim_id": "isnad-self-20261014-01-b",
+        "assertion": "Self-contained skill CLI helpers can achieve multi-command orchestration (scan, check-lines, verify, push) within the strict <= 200 LOC bound (Rule 11) using compact argument dispatch.",
+        "evidence": "deepen_cycle.py orchestrates 4 subcommands across 189 lines while passing all contract tests.",
+        "verified_by": "pytest tests/test_architecture_deepening_skills.py -k test_cli_script_subcommands"
+      }
+    ]
+  }
+}
