@@ -1,0 +1,11 @@
+# Operational configuration for monolith-decomposition-engine
+version: "1.0.0"
+budgets:
+  max_submodule_lines: 200
+  self_repair_circuit_breaker: 3
+rules:
+  enforce_slots: true
+  enforce_frozen: true
+  enforce_rule_58_resolver: true
+  enforce_rule_6_click: true
+  enforce_rule_45_singleton: true

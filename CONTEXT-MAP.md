@@ -99,6 +99,8 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - `repo_triad_forge` — Authoritative repository triad pipeline: 5-stage cognitive audit, visual brief generation, Knowledge Vault commits, and verification orchestration.
   - `hf_doc_builder` — Hugging Face doc-builder integration for AST autodoc inspection, deterministic link checking, MDX transpilation, and semantic chunking.
 * **Member Skills**:
+  - [`architecture-deepening-workflow`](.agents/skills/architecture-deepening-workflow/SKILL.md) — Orchestrate the 7-phase architecture deepening cycle to decompose monolithic hotspots into subpackages <= 200 lines with contract tests and visual briefs.
+  - [`monolith-decomposition-engine`](.agents/skills/monolith-decomposition-engine/SKILL.md) — Factor monolithic codebases into slotted domain models, single-seam resolvers, and Click command groups strictly bounded to <= 200 lines.
   - [`crafting-skills`](.agents/skills/crafting-skills/SKILL.md) — High-precision agent skill authoring, refactoring, and companion card generation.
   - [`deepen-architecture`](.agents/skills/deepen-architecture/SKILL.md) — Iterative architecture deepening loop, eliminating shallow modules.
   - [`compute-model-assessor`](.agents/skills/compute-model-assessor/SKILL.md) — Model routing, task complexity assessment, and reasoning compute budgeting.

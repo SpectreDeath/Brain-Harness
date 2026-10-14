@@ -1,0 +1,15 @@
+# Operational configuration for architecture-deepening-workflow
+version: "1.0.0"
+budgets:
+  max_submodule_lines: 200
+  self_repair_circuit_breaker: 3
+  regression_timeout_s: 300
+  subprocess_timeout_s: 120
+scanner:
+  default_threshold: 200
+  ignore_patterns:
+    - ".git"
+    - "node_modules"
+    - ".venv"
+    - "__pycache__"
+    - "gods_eye_view"
