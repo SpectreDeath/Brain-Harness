@@ -71,6 +71,7 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - `paperless_ngx` — Paperless-NGX document ingestion, hybrid Tantivy full-text search, and SQLite-Vec RAG integration bridge.
   - `bigquery_augmented_analytics` — In-database BigQuery TVF execution for anomaly detection, change point isolation, Apriori attribution, and ARIMA_PLUS causal lift.
   - `garf_reporting_pipeline` — Google Garf declarative SQL reporting, synthetic simulation, multi-destination report egress, and two-stage analytical workflow DAG bridge.
+  - `rea_javascript` — REA JavaScript & Web reverse engineering: Wakaru bundle deobfuscation, Electron ASAR inspection, passive CDP observation, .NET managed assembly inspection, and offline HAR capture analysis.
 - **Member Skills**:
   - [`structured-data-scout`](.agents/skills/structured-data-scout/SKILL.md) — Curated tabular dataset ingestion from authoritative registries (UCI, Kaggle, OpenData).
   - [`paperless-document-pipeline`](.agents/skills/paperless-document-pipeline/SKILL.md) — Ingest, classify, parse, and query documents across Paperless-NGX using hybrid Tantivy lexical and SQLite-Vec semantic search.

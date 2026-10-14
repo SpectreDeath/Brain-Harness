@@ -1,0 +1,4 @@
+subprocess_timeout_s: 120
+wakaru_max_input_bytes: 67108864
+wakaru_max_output_entries: 10000
+cdp_observation_timeout_s: 30

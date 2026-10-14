@@ -1,0 +1,140 @@
+{
+  "name": "plugin.rea_javascript",
+  "version": "1.0.0",
+  "description": "REA JavaScript & Web reverse engineering: Wakaru ^1.13.0 bundle deobfuscation, Electron ASAR archive inspection, passive CDP observation, .NET managed assembly inspection, and offline HAR capture analysis.",
+  "language": "python",
+  "entrypoint": "main.py",
+  "isolation": "subprocess",
+  "trusted": true,
+  "source_repo": "https://github.com/morluto/rea",
+  "verified_commit": "166dcd21d06f687a9c480a6a6d36beb3b4954dd0",
+  "isnad_lineage": {
+    "source_url": "https://github.com/morluto/rea",
+    "commit_hash": "166dcd21d06f687a9c480a6a6d36beb3b4954dd0",
+    "anchors": [
+      "src/javascript/WakaruRelease.ts",
+      "src/contracts/javascriptToolContracts.ts",
+      "src/contracts/officialToolContracts.ts"
+    ]
+  },
+  "dependencies": [
+    "pydantic>=2.0",
+    "structlog"
+  ],
+  "provides": [
+    "service.rea_javascript"
+  ],
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "rea_javascript_recover_sources",
+      "description": "Recover module directory trees and source maps from minified/bundled scripts via Wakaru ^1.13.0.",
+      "parameters": [
+        {
+          "name": "bundle_path",
+          "type": "string",
+          "description": "Path to bundled or minified JavaScript file",
+          "required": true
+        },
+        {
+          "name": "output_dir",
+          "type": "string",
+          "description": "Directory to write recovered source modules",
+          "required": true
+        },
+        {
+          "name": "sourcemap_path",
+          "type": "string",
+          "description": "Optional path to separate source map file",
+          "required": false
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "rea_javascript_electron_inspect",
+      "description": "Inspect Electron ASAR archives: manifest, processes, preload scripts, and declared IPC event channels.",
+      "parameters": [
+        {
+          "name": "asar_path",
+          "type": "string",
+          "description": "Path to Electron ASAR archive file",
+          "required": true
+        },
+        {
+          "name": "extract_ipc",
+          "type": "boolean",
+          "description": "Whether to analyze scripts for IPC channel declarations",
+          "required": false,
+          "default": true
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "rea_javascript_web_observe",
+      "description": "Passive Chrome DevTools Protocol observation of page DOM structure, loaded scripts, event listeners, and network activity.",
+      "parameters": [
+        {
+          "name": "cdp_endpoint",
+          "type": "string",
+          "description": "CDP WebSocket endpoint URL",
+          "required": true
+        },
+        {
+          "name": "target_id",
+          "type": "string",
+          "description": "Optional specific target/page ID to observe",
+          "required": false
+        },
+        {
+          "name": "duration_ms",
+          "type": "number",
+          "description": "Observation window duration in milliseconds (default: 10000)",
+          "required": false,
+          "default": 10000
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "rea_javascript_dotnet_inspect",
+      "description": "Open a managed .NET PE/CLI image: inventory type hierarchies, CIL hashes, and P/Invoke declarations.",
+      "parameters": [
+        {
+          "name": "assembly_path",
+          "type": "string",
+          "description": "Path to .NET managed PE assembly (DLL or EXE)",
+          "required": true
+        },
+        {
+          "name": "include_cil",
+          "type": "boolean",
+          "description": "Whether to compute CIL instruction hashes",
+          "required": false,
+          "default": true
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "rea_javascript_har_inspect",
+      "description": "Inspect offline HAR 1.2 or native mitmproxy capture records without contacting recorded servers.",
+      "parameters": [
+        {
+          "name": "har_path",
+          "type": "string",
+          "description": "Path to HAR archive file",
+          "required": true
+        },
+        {
+          "name": "filter_status",
+          "type": "number",
+          "description": "Optional HTTP status code filter (e.g. 404, 500)",
+          "required": false
+        }
+      ],
+      "returns": "object"
+    }
+  ]
+}
