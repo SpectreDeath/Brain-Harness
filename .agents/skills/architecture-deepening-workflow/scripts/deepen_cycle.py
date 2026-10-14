@@ -1,17 +1,13 @@
-"""Multi-command CLI helper for architecture-deepening-workflow."""
+"""Multi-command CLI orchestrator for architecture-deepening-workflow."""
 
 from __future__ import annotations
 
 import argparse
 import json
 from pathlib import Path
+import subprocess
 import sys
 from typing import Any
-
-try:
-    from .deepen_ops import cmd_push, cmd_verify
-except ImportError:
-    from deepen_ops import cmd_push, cmd_verify
 
 # Windows UTF-8 Stream Codec Entrypoint Invariant (Rule 23)
 if sys.platform == "win32":
@@ -26,8 +22,8 @@ def cmd_scan(args: argparse.Namespace) -> int:
     root = Path(args.root).resolve()
     threshold = args.threshold
     ignore_dirs = {".git", "node_modules", ".venv", "__pycache__", "gods_eye_view", ".gemini"}
-
     hotspots: list[dict[str, Any]] = []
+
     for base in [root / "src", root / "plugins"]:
         if not base.exists():
             continue
@@ -39,11 +35,7 @@ def cmd_scan(args: argparse.Namespace) -> int:
             try:
                 lines = len(p.read_text(encoding="utf-8", errors="replace").splitlines())
                 if lines > threshold:
-                    hotspots.append({
-                        "path": str(p.relative_to(root)).replace("\\", "/"),
-                        "lines": lines,
-                        "excess": lines - threshold,
-                    })
+                    hotspots.append({"path": str(p.relative_to(root)).replace("\\", "/"), "lines": lines, "excess": lines - threshold})
             except Exception:
                 pass
 
@@ -51,10 +43,9 @@ def cmd_scan(args: argparse.Namespace) -> int:
     result = {"status": "ok", "threshold": threshold, "total_hotspots": len(hotspots), "hotspots": hotspots}
 
     if args.output:
-        out_p = Path(args.output).resolve()
-        out_p.parent.mkdir(parents=True, exist_ok=True)
-        out_p.write_text(json.dumps(result, indent=2), encoding="utf-8")
-        print(f"Success! Scan results written to: {out_p}")
+        Path(args.output).resolve().parent.mkdir(parents=True, exist_ok=True)
+        Path(args.output).resolve().write_text(json.dumps(result, indent=2), encoding="utf-8")
+        print(f"Success! Scan results written to: {args.output}")
     else:
         print(f"Found {len(hotspots)} files > {threshold} lines:")
         for h in hotspots[:15]:
@@ -75,67 +66,119 @@ def cmd_check_lines(args: argparse.Namespace) -> int:
 
     for p in sorted(target_dir.glob("*.py")):
         lines = len(p.read_text(encoding="utf-8", errors="replace").splitlines())
-        entry = {"file": p.name, "lines": lines, "max_lines": max_lines}
-        if lines > max_lines:
-            violations.append(entry)
-        else:
-            passed_files.append(entry)
+        (violations if lines > max_lines else passed_files).append({"file": p.name, "lines": lines, "max_lines": max_lines})
 
     all_passed = len(violations) == 0
-    result = {
-        "status": "ok" if all_passed else "failed",
-        "passed": all_passed,
-        "max_lines": max_lines,
-        "total_files": len(passed_files) + len(violations),
-        "violations": violations,
-        "passed_files": passed_files,
-    }
+    result = {"status": "ok" if all_passed else "failed", "passed": all_passed, "max_lines": max_lines, "violations": violations, "passed_files": passed_files}
 
     if args.output:
-        out_p = Path(args.output).resolve()
-        out_p.parent.mkdir(parents=True, exist_ok=True)
-        out_p.write_text(json.dumps(result, indent=2), encoding="utf-8")
-        print(f"Line check report written to: {out_p}")
+        Path(args.output).resolve().parent.mkdir(parents=True, exist_ok=True)
+        Path(args.output).resolve().write_text(json.dumps(result, indent=2), encoding="utf-8")
+        print(f"Line check report written to: {args.output}")
 
     if all_passed:
         print(f"✓ All {len(passed_files)} files in {target_dir.name}/ are <= {max_lines} lines!")
         return 0
-    else:
-        print(f"✗ Rule 11 Bound Exceeded in {len(violations)} files:", file=sys.stderr)
-        for v in violations:
-            print(f"  {v['file']}: {v['lines']} lines > {max_lines}", file=sys.stderr)
+    print(f"✗ Rule 11 Bound Exceeded in {len(violations)} files:", file=sys.stderr)
+    for v in violations:
+        print(f"  {v['file']}: {v['lines']} lines > {max_lines}", file=sys.stderr)
+    return 1
+
+
+def cmd_verify(args: argparse.Namespace) -> int:
+    """Run pytest contract tests and ruff linting."""
+    root = Path(args.root).resolve()
+    test_target = args.test
+    lint_target = args.lint_target or args.test
+
+    print(f"Running contract verification for: {test_target}")
+    pytest_res = subprocess.run(["pytest", test_target, "-v", "--tb=short"], cwd=root, capture_output=True, text=True, encoding="utf-8", errors="replace")
+    print(f"Running ruff static analysis for: {lint_target}")
+    ruff_res = subprocess.run(["ruff", "check", lint_target], cwd=root, capture_output=True, text=True, encoding="utf-8", errors="replace")
+
+    passed = pytest_res.returncode == 0 and ruff_res.returncode == 0
+    result = {"status": "ok" if passed else "failed", "pytest_code": pytest_res.returncode, "ruff_code": ruff_res.returncode}
+
+    if args.output:
+        Path(args.output).resolve().write_text(json.dumps(result, indent=2), encoding="utf-8")
+        print(f"Verification report written to: {args.output}")
+
+    if passed:
+        print("✓ All contract tests and ruff lint checks passed cleanly!")
+        return 0
+    print("✗ Verification failed:", file=sys.stderr)
+    for res in (pytest_res, ruff_res):
+        if res.returncode != 0:
+            print(res.stdout, file=sys.stderr)
+    return 1
+
+
+def cmd_push(args: argparse.Namespace) -> int:
+    """Stage cycle files and push with in-memory token redaction (Rule 15)."""
+    root = Path(args.root).resolve()
+    token_path = Path(args.token_file or r"D:\GitHub\projects\Tokens\tokens.txt").resolve()
+    if not token_path.exists():
+        print(f"Error: Token file not found at {token_path}", file=sys.stderr)
         return 1
+
+    token = token_path.read_text(encoding="utf-8", errors="ignore").strip()
+    if not token or not args.files:
+        print("Error: Empty token or no files specified", file=sys.stderr)
+        return 1
+
+    redact = lambda t: t.replace(token, "***REDACTED***") if t else ""
+    print(f"Staging {len(args.files)} cycle files...")
+    subprocess.run(["git", "add"] + args.files, cwd=root, check=True)
+    if args.deleted_file:
+        subprocess.run(["git", "rm", "--cached", args.deleted_file], cwd=root, check=False)
+
+    commit_msg = f"refactor(cycle-{args.cycle}): {args.message}"
+    print(f"Committing: {commit_msg}")
+    commit_res = subprocess.run(["git", "commit", "-m", commit_msg], cwd=root, capture_output=True, text=True)
+    print(commit_res.stdout.strip())
+
+    if args.dry_run:
+        print("✓ Dry run enabled: skipped remote git push.")
+        return 0
+
+    auth_url = f"https://{token}@github.com/SpectreDeath/Brain-Harness.git"
+    print("Pushing to remote origin main...")
+    push_res = subprocess.run(["git", "push", auth_url, "main"], cwd=root, capture_output=True, text=True)
+    for out in (push_res.stdout, push_res.stderr):
+        if out:
+            print(redact(out).strip())
+    return push_res.returncode
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Architecture Deepening Cycle Orchestrator")
-    subparsers = parser.add_subparsers(dest="subcommand", required=True)
+    sub = parser.add_subparsers(dest="subcommand", required=True)
 
-    p_scan = subparsers.add_parser("scan", help="Scan for monolithic hotspots > threshold lines")
-    p_scan.add_argument("--root", default=".", help="Repository root path")
-    p_scan.add_argument("--threshold", type=int, default=200, help="Line count threshold")
-    p_scan.add_argument("--include-facades", action="store_true", help="Include __init__.py files")
-    p_scan.add_argument("--output", help="Path to write JSON output")
+    p_scan = sub.add_parser("scan")
+    p_scan.add_argument("--root", default=".")
+    p_scan.add_argument("--threshold", type=int, default=200)
+    p_scan.add_argument("--include-facades", action="store_true")
+    p_scan.add_argument("--output")
 
-    p_check = subparsers.add_parser("check-lines", help="Assert all submodules <= max lines (Rule 11)")
-    p_check.add_argument("--dir", required=True, help="Directory containing submodules to check")
-    p_check.add_argument("--max-lines", type=int, default=200, help="Maximum allowed line count")
-    p_check.add_argument("--output", help="Path to write JSON output")
+    p_chk = sub.add_parser("check-lines")
+    p_chk.add_argument("--dir", required=True)
+    p_chk.add_argument("--max-lines", type=int, default=200)
+    p_chk.add_argument("--output")
 
-    p_verify = subparsers.add_parser("verify", help="Run contract pytest and ruff lint")
-    p_verify.add_argument("--root", default=".", help="Repository root path")
-    p_verify.add_argument("--test", required=True, help="Path to contract test file")
-    p_verify.add_argument("--lint-target", help="Path to lint target directory or file")
-    p_verify.add_argument("--output", help="Path to write JSON output")
+    p_ver = sub.add_parser("verify")
+    p_ver.add_argument("--root", default=".")
+    p_ver.add_argument("--test", required=True)
+    p_ver.add_argument("--lint-target")
+    p_ver.add_argument("--output")
 
-    p_push = subparsers.add_parser("push", help="Stage, commit, and push cycle files with token redaction")
-    p_push.add_argument("--root", default=".", help="Repository root path")
-    p_push.add_argument("--cycle", type=int, required=True, help="Cycle number")
-    p_push.add_argument("--message", required=True, help="Commit description")
-    p_push.add_argument("--files", nargs="+", required=True, help="List of files to stage")
-    p_push.add_argument("--deleted-file", help="Old monolithic file to unstage/delete")
-    p_push.add_argument("--token-file", help="Path to tokens file")
-    p_push.add_argument("--dry-run", action="store_true", help="Stage and commit without pushing")
+    p_push = sub.add_parser("push")
+    p_push.add_argument("--root", default=".")
+    p_push.add_argument("--cycle", type=int, required=True)
+    p_push.add_argument("--message", required=True)
+    p_push.add_argument("--files", nargs="+", required=True)
+    p_push.add_argument("--deleted-file")
+    p_push.add_argument("--token-file")
+    p_push.add_argument("--dry-run", action="store_true")
 
     args = parser.parse_args()
     dispatch = {"scan": cmd_scan, "check-lines": cmd_check_lines, "verify": cmd_verify, "push": cmd_push}

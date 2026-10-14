@@ -7,8 +7,9 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
 ## Bounded Domains
 
 ### 1. [Agent Orchestration](./docs/domains/agent-orchestration/EXPLANATION.md)
-* **Scope**: Multi-agent consensus, hierarchical task decomposition, adversarial debate, critic evaluation, and human-in-the-loop governance.
-* **Member Plugins**:
+
+- **Scope**: Multi-agent consensus, hierarchical task decomposition, adversarial debate, critic evaluation, and human-in-the-loop governance.
+- **Member Plugins**:
   - `agent_supervisor` — Multi-agent delegation, wave coordination, and quorum consensus.
   - `agent_debater` — Dialectical / Chavruta adversarial debate between generator and critic nodes.
   - `evaluator_critic` — Structured criteria evaluation and quality scoring.
@@ -17,7 +18,7 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - `orca_bridge` — Multi-agent Git worktree isolation, FIFO coordinator inboxes, injected preambles, and worker settlement.
   - `context_course_bridge` — 6-layer context engineering stack auditor, FastMCP validator, subagent swarm planner, and sandboxed Nano Harness ReAct loop.
   - `tau_harness_bridge` — Pi-style minimalist coding agent harness bridge with branchable session tree DAGs, append-only locked JSONL journal, in-flight tool repair, and project-trust security gates.
-* **Member Skills**:
+- **Member Skills**:
   - [`context-engineering-architect`](.agents/skills/context-engineering-architect/SKILL.md) — Architect, audit, compose, and govern autonomous code agent context using the 6-layer stack (skills, FastMCP, plugins, subagents, hooks, nano harness) and path confinement.
   - [`pi-coding-harness`](.agents/skills/pi-coding-harness/SKILL.md) — Architect, construct, sandbox, and evaluate portable terminal coding agents using decoupled 3-tier layering, branchable session tree DAGs, append-only JSONL storage, provider-safe tool history repair, and project-trust security gates.
   - [`agent-harness-architect`](.agents/skills/agent-harness-architect/SKILL.md) — Architect, evaluate, select, and sandbox production-grade AI agent harnesses and runtime loops using 5-part harness architecture, 4-mechanism validation, and 4-layer stack partitioning.
@@ -37,8 +38,9 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - [`temp-artifact-miner`](.agents/skills/temp-artifact-miner/SKILL.md) — Extract, triage, and synthesize architecture decision records, visual DAG briefs, and ephemeral test diagnostics from system temporary directories and pytest sandboxes. Do not use for relational SQLite queries, persistent brain workspaces, or destructive temp purging.
 
 ### 2. [Memory & Epistemics](./docs/domains/memory-and-epistemics/EXPLANATION.md)
-* **Scope**: Declarative skill graphs, semantic embeddings, context distillation, prompt benchmarking, and claim lineage.
-* **Member Plugins**:
+
+- **Scope**: Declarative skill graphs, semantic embeddings, context distillation, prompt benchmarking, and claim lineage.
+- **Member Plugins**:
   - `skill_knowledge_graph` — Skill network indexing, shortest-path chain synthesis, and intent routing.
   - `vector_index` — Local semantic vector indexing and hybrid BM25/cosine retrieval.
   - `embedding_cluster` — Vector clustering and dimensionality reduction.
@@ -48,7 +50,7 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - `brain_artifact_miner` — Filesystem-native workspace archaeology, scratch tool salvage, and dual-transcript introspection.
   - `conversation_trajectory_miner` — Autobiographical trajectory archaeology, failure cluster detection, and dual-lens cognitive bifurcation.
   - `temp_artifact_miner` — Ephemeral workspace archaeology, HTML visual brief extraction, test sandbox triage, and dual-lens cognitive bifurcation.
-* **Member Skills**:
+- **Member Skills**:
   - [`epistemic-isnad-audit`](.agents/skills/epistemic-isnad-audit/SKILL.md) — Unbroken chain-of-custody lineage verification for facts and decisions.
   - [`mind-reader`](.agents/skills/mind-reader/SKILL.md) — Introspection and heuristic extraction from attached brain trajectories.
   - [`repo-reader`](.agents/skills/repo-reader/SKILL.md) — Architectural pattern and commit trajectory introspection from Git repositories.
@@ -57,10 +59,10 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - [`okf-memory-governor`](.agents/skills/okf-memory-governor/SKILL.md) — Git-native OKF v0.2 agent memory governance, pre-edit path scoping, atomic mutations, and normative validation.
   - [`temp-artifact-miner`](.agents/skills/temp-artifact-miner/SKILL.md) — Ephemeral visual brief salvage, pytest sandbox triage, and Knowledge Vault cognitive bifurcation.
 
-
 ### 3. [Data Engineering](./docs/domains/data-engineering/EXPLANATION.md)
-* **Scope**: Curated tabular ingestion, out-of-core statistical profiling, schema transformation, and relational database execution.
-* **Member Plugins**:
+
+- **Scope**: Curated tabular ingestion, out-of-core statistical profiling, schema transformation, and relational database execution.
+- **Member Plugins**:
   - `dataset_profiler` — Out-of-core moments, null ratios, and Z-score outlier detection.
   - `data_transformer` — Schema reshaping, column normalization, and type casting.
   - `database_sql` — SQL query execution, transaction handling, and schema reflection.
@@ -69,7 +71,7 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - `paperless_ngx` — Paperless-NGX document ingestion, hybrid Tantivy full-text search, and SQLite-Vec RAG integration bridge.
   - `bigquery_augmented_analytics` — In-database BigQuery TVF execution for anomaly detection, change point isolation, Apriori attribution, and ARIMA_PLUS causal lift.
   - `garf_reporting_pipeline` — Google Garf declarative SQL reporting, synthetic simulation, multi-destination report egress, and two-stage analytical workflow DAG bridge.
-* **Member Skills**:
+- **Member Skills**:
   - [`structured-data-scout`](.agents/skills/structured-data-scout/SKILL.md) — Curated tabular dataset ingestion from authoritative registries (UCI, Kaggle, OpenData).
   - [`paperless-document-pipeline`](.agents/skills/paperless-document-pipeline/SKILL.md) — Ingest, classify, parse, and query documents across Paperless-NGX using hybrid Tantivy lexical and SQLite-Vec semantic search.
   - [`survival-analysis`](.agents/skills/survival-analysis/SKILL.md) — Kaplan-Meier estimation, Cox proportional hazards regression, and Schoenfeld diagnostics.
@@ -85,10 +87,10 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - [`open-source-gis-architect`](.agents/skills/open-source-gis-architect/SKILL.md) — Select, route, and validate open-source GIS engine workloads across 14 engines using deterministic decision trees, CRS safety gates, LiDAR format routing, and defense-restricted domain isolation.
   - [`discovery-index-scout`](.agents/skills/discovery-index-scout/SKILL.md) — Open-data discovery engine scouting public record archives, legislative transcripts, corporate filings, campaign finances, and research datasets across 46+ curated discovery indexes.
 
-
 ### 4. [Software Engineering](./docs/domains/software-engineering/EXPLANATION.md)
-* **Scope**: AST code refactoring, architecture invariant linting, sandbox script execution, git operations, and artifact reporting.
-* **Member Plugins**:
+
+- **Scope**: AST code refactoring, architecture invariant linting, sandbox script execution, git operations, and artifact reporting.
+- **Member Plugins**:
   - `refactor_engine` — AST-aware code transformation and import hygiene.
   - `arch_linter` — Architecture boundary checking and cyclic dependency linting.
   - `code_runner` — Isolated script execution and exit code assertions.
@@ -98,7 +100,7 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - `pr_lens_graph` — Standalone animated SVG architecture diagrams, graph validation, and diff visualization.
   - `repo_triad_forge` — Authoritative repository triad pipeline: 5-stage cognitive audit, visual brief generation, Knowledge Vault commits, and verification orchestration.
   - `hf_doc_builder` — Hugging Face doc-builder integration for AST autodoc inspection, deterministic link checking, MDX transpilation, and semantic chunking.
-* **Member Skills**:
+- **Member Skills**:
   - [`architecture-deepening-workflow`](.agents/skills/architecture-deepening-workflow/SKILL.md) — Orchestrate the 7-phase architecture deepening cycle to decompose monolithic hotspots into subpackages <= 200 lines with contract tests and visual briefs.
   - [`monolith-decomposition-engine`](.agents/skills/monolith-decomposition-engine/SKILL.md) — Factor monolithic codebases into slotted domain models, single-seam resolvers, and Click command groups strictly bounded to <= 200 lines.
   - [`crafting-skills`](.agents/skills/crafting-skills/SKILL.md) — High-precision agent skill authoring, refactoring, and companion card generation.
@@ -118,33 +120,35 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - [`responsible-ai-prototyping`](.agents/skills/responsible-ai-prototyping/SKILL.md) — Build, audit, and harden web applications generated by AI builders (Lovable, v0, Bolt) using data minimization, security-first prompt templates, bipartite auth/authz testing, dependency pruning, and honest stage-gate classification.
   - [`hf-doc-builder-architect`](.agents/skills/hf-doc-builder-architect/SKILL.md) — Multi-package documentation engineering using zero-dependency mock virtualization, deterministic AST anchor graphs, and unified MDX transpilation.
 
-
 ### 5. [Security & Forensics](./docs/domains/security-and-forensics/EXPLANATION.md)
-* **Scope**: Threat modeling, vulnerability scanning, log forensics, network port auditing, and execution trajectory auditing.
-* **Member Plugins**:
+
+- **Scope**: Threat modeling, vulnerability scanning, log forensics, network port auditing, and execution trajectory auditing.
+- **Member Plugins**:
   - `security_scanner` — Vulnerability detection and secret leakage analysis.
   - `pre_commit_security_guard` — Shift-left SAST analysis, Shannon entropy secret interception, deliberate synthetic smoke tests, and SARIF dual-gate CI defense.
   - `threat_modeler` — STRIDE threat modeling and attack tree formulation.
   - `log_forensics` — Structured log pattern extraction and anomaly hunting.
   - `network_forensics` — Port security audit, TTL hop discovery, tri-state port evaluation, TCP flag deconstruction, cleartext exposure analysis, and 7-layer fault isolation.
   - `trajectory_auditor` — Execution step replay and invariant trajectory verification.
-* **Member Skills**:
+- **Member Skills**:
   - [`pre-commit-security-guard`](.agents/skills/pre-commit-security-guard/SKILL.md) — Shift security left by intercepting vulnerabilities and secrets before pull requests using Git pre-commit hooks, multi-file DevSkim SAST, Gitleaks, deliberate failure injection, and dual-gate CI enforcement.
   - [`ethical-hacker-networking`](.agents/skills/ethical-hacker-networking/SKILL.md) — Protocol-level network reconnaissance, packet capture inspection, tri-state port evaluation, TCP flag state machine analysis, and systematic 7-layer fault isolation.
 
 ### 6. [Infrastructure & Cloud Operations](./docs/domains/infra-and-cloud/EXPLANATION.md)
-* **Scope**: Container management, Kubernetes manifest validation, Infrastructure-as-Code (IaC), and CI/CD pipelines.
-* **Member Plugins**:
+
+- **Scope**: Container management, Kubernetes manifest validation, Infrastructure-as-Code (IaC), and CI/CD pipelines.
+- **Member Plugins**:
   - `docker_container` — Container lifecycle, build, run, and port binding.
   - `k8s_manifest` — Kubernetes YAML schema validation and resource scaffolding.
   - `terraform_iac` — Terraform HCL syntax validation and plan checking.
   - `ci_pipeline` — CI/CD pipeline definition and automated workflow validation.
-* **Member Skills**:
+- **Member Skills**:
   - *(Inherits infrastructure tooling; domain skills scaffolded on demand)*
 
 ### 7. [Integration & I/O](./docs/domains/integration-and-io/EXPLANATION.md)
-* **Scope**: Clean web fetching, OpenAPI client generation, webhook notifications, and symbolic constraint solving.
-* **Member Plugins**:
+
+- **Scope**: Clean web fetching, OpenAPI client generation, webhook notifications, and symbolic constraint solving.
+- **Member Plugins**:
   - `web_fetcher` — Markdown web scraping and HTTP JSON requests.
   - `api_openapi` — OpenAPI spec ingestion and client tool synthesis.
   - `notification_webhook` — Webhook broadcasting and alert dispatch.
@@ -152,7 +156,7 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - `chatbotx` — Omnichannel messaging, contact management, visual flow DAG execution, and dynamic OpenAPI/MCP tool dispatch across WhatsApp, Telegram, Messenger, and Zalo.
   - `gradio_app_architect` — Production AI interface engineering, AST diagnostic inspection, and decoupled 3-tier scaffolding for Gradio applications (Eva J Patel 2026).
   - `gemini_vercel_streaming_chatbot` — Production AI chatbot engineering with Google Gemini & Vercel Serverless plain-text chunk streaming, CORS preflight gates, and reactive stream consumers (Johnson Samuel 2026).
-* **Member Skills**:
+- **Member Skills**:
   - [`repo-to-plugin-forge`](.agents/skills/repo-to-plugin-forge/SKILL.md) — Autonomous synthesis and scaffolding of Harness plugins from attached codebases.
   - [`book-to-skill-forge`](.agents/skills/book-to-skill-forge/SKILL.md) — Synthesis and authoring of deep-module agent skills and coaching rubrics from books, articles, and video transcripts.
   - [`developer-docs-architect`](.agents/skills/developer-docs-architect/SKILL.md) — Architecture, authoring, and AI-optimization of technical documentation, API reference suites, and C4 architecture blueprints using Diátaxis and Docs-as-Code pipelines.
@@ -164,8 +168,6 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - [`chatbotx`](.agents/skills/chatbotx/SKILL.md) — Omnichannel chatbot automation, contact identity tagging, DAG flows, and dynamic OpenAPI tool execution across messaging networks.
   - [`gradio-app-architect`](.agents/skills/gradio-app-architect/SKILL.md) — Production-grade Gradio web applications and AI interfaces with decoupled logic, reactive Blocks event graphs, session state isolation, multimodal pipelines, and queued streaming.
   - [`gemini-vercel-streaming-chatbot`](.agents/skills/gemini-vercel-streaming-chatbot/SKILL.md) — Production-grade AI chatbots and embed widgets with Google Gemini and Vercel Serverless Functions using plain-text chunk streaming, CORS preflight guards, and React stream consumers.
-
-
 
 ---
 
@@ -185,6 +187,6 @@ flowchart LR
     SF -->|Audits Infrastructure| IC
 ```
 
-* **Agent Orchestration $\rightarrow$ Memory & Epistemics**: Agents query the `skill_knowledge_graph` and `vector_index` to route intent and retrieve relevant execution chains before decomposing tasks.
-* **Agent Orchestration $\rightarrow$ Security & Forensics**: Destructive or mutating operations trigger `trajectory_auditor` and `human_in_the_loop` before committing to state.
-* **Software Engineering $\rightarrow$ Infra & Cloud**: Refactored codebases and schemas hand off to `docker_container`, `k8s_manifest`, and `ci_pipeline` for containerization and delivery.
+- **Agent Orchestration $\rightarrow$ Memory & Epistemics**: Agents query the `skill_knowledge_graph` and `vector_index` to route intent and retrieve relevant execution chains before decomposing tasks.
+- **Agent Orchestration $\rightarrow$ Security & Forensics**: Destructive or mutating operations trigger `trajectory_auditor` and `human_in_the_loop` before committing to state.
+- **Software Engineering $\rightarrow$ Infra & Cloud**: Refactored codebases and schemas hand off to `docker_container`, `k8s_manifest`, and `ci_pipeline` for containerization and delivery.
