@@ -33,7 +33,7 @@ This domain handles structured data ingestion, analytical profiling, and data tr
 
 ## Co-Located Plugins & Micro-Kernel Services
 
-- **Data Management Service**: [`src/harness/services/data_management.py`](../../../src/harness/services/data_management.py) providing `DataManagementService`.
+- **Data Management Service**: [`src/harness/services/data_management/`](../../../src/harness/services/data_management/) providing `DataManagementService`.
 - **BigQuery Augmented Analytics**: [`src/harness/services/bigquery_augmented_analytics.py`](../../../src/harness/services/bigquery_augmented_analytics.py) providing `BIGQUERY_AUGMENTED_ANALYTICS_SERVICE_KEY`.
 - **HF Datasets Service**: [`src/harness/services/hf_datasets/`](../../../src/harness/services/hf_datasets/) providing `HF_DATASETS_SERVICE_KEY`.
 - **Garf Reporting Service**: [`src/harness/services/garf_reporting/`](../../../src/harness/services/garf_reporting/) providing `GARF_REPORTING_SERVICE_KEY`.

@@ -36,7 +36,7 @@ This domain coordinates bidirectional communication between Brain Harness and th
 - **Ingestion Pipeline**: [`src/harness/ingestion/pipeline.py`](../../../src/harness/ingestion/pipeline.py) providing `PluginIngestionPipeline`.
 - **OpenAPI Converter**: [`src/harness/ingestion/openapi_converter.py`](../../../src/harness/ingestion/openapi_converter.py) providing `OpenApiConverter`.
 - **Web Fetcher Service**: [`src/harness/services/web_fetcher.py`](../../../src/harness/services/web_fetcher.py) providing `WEB_FETCHER_KEY`.
-- **CellCog Service**: [`src/harness/services/cellcog.py`](../../../src/harness/services/cellcog.py) providing `CELLCOG_SERVICE_KEY`.
+- **CellCog Service**: [`src/harness/services/cellcog/`](../../../src/harness/services/cellcog/) providing `CELLCOG_SERVICE_KEY`.
 - **ChatbotX Service**: [`src/harness/services/chatbotx.py`](../../../src/harness/services/chatbotx.py) providing `CHATBOTX_SERVICE_KEY`.
 
 ---

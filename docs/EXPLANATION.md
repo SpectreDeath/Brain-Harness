@@ -31,7 +31,7 @@ Generic typing guarantees that IDEs and static type checkers know the exact inte
 
 Autonomous agents run inside the `ReActAgentLoop` guided by `StepExecutionEngine`. Every step progresses through a resilient execution pipeline:
 
-```
+```text
 [Thought Formulation] ──► [In-Flight Tool Repair] ──► [Context Transaction]
                                                              │
                                                              ▼

@@ -37,10 +37,10 @@ This domain manages persistent intelligence, long-term memory, and epistemic tru
 ## Co-Located Plugins & Micro-Kernel Services
 
 - Skill Knowledge Graph: [`src/harness/services/skill_graph/`](../../../src/harness/services/skill_graph/) providing `SkillKnowledgeGraphService` (`SKILL_GRAPH_SERVICE_KEY`).
-- Skill Card Parser: [`src/harness/services/skill_parser.py`](../../../src/harness/services/skill_parser.py) providing `SkillCardParserService`.
+- Skill Card Parser: [`src/harness/services/skill_parser/`](../../../src/harness/services/skill_parser/) providing `SkillCardParserService`.
 - OKF Memory Service: [`src/harness/services/okf_memory.py`](../../../src/harness/services/okf_memory.py) providing `OKF_MEMORY_SERVICE_KEY`.
 - Vector Index Service: [`src/harness/services/vector_index.py`](../../../src/harness/services/vector_index.py) providing `VECTOR_INDEX_SERVICE_KEY`.
-- Brain Artifact Miner: [`src/harness/services/brain_artifact_miner.py`](../../../src/harness/services/brain_artifact_miner.py) providing `BrainArtifactMinerService` (`BRAIN_ARTIFACT_MINER_KEY`).
+- Brain Artifact Miner: [`src/harness/services/brain_artifact_miner/`](../../../src/harness/services/brain_artifact_miner/) providing `BrainArtifactMinerService` (`BRAIN_ARTIFACT_MINER_KEY`).
 - Brain Bridge Service: [`src/harness/services/brain_bridge/`](../../../src/harness/services/brain_bridge/) providing `BrainBridgeService` (`BRAIN_BRIDGE_KEY`).
 - Skill Knowledge Graph Plugin: [`plugins/memory_and_epistemics/skill_knowledge_graph/`](../../../plugins/memory_and_epistemics/skill_knowledge_graph/README.md).
 - Brain Artifact Miner Plugin: [`plugins/memory_and_epistemics/brain_artifact_miner/`](../../../plugins/memory_and_epistemics/brain_artifact_miner/).

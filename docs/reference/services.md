@@ -68,7 +68,7 @@ gis_svc = resolve_open_source_gis(context)
 | ServiceKey Constant | Inferred Type | Defining Module | Central Function |
 |---|---|---|---|
 | `SKILL_GRAPH_SERVICE_KEY` | `SkillKnowledgeGraphService` | [`harness.services.skill_graph`](../../src/harness/services/skill_graph/) | Directed skill knowledge graph with shortest-path chaining. |
-| `SKILL_PARSER_SERVICE_KEY` | `SkillCardParserService` | [`harness.services.skill_parser`](../../src/harness/services/skill_parser.py) | Parses `CARD.md` metadata boxes and `SKILL.md` documents. |
+| `SKILL_PARSER_SERVICE_KEY` | `SkillCardParserService` | [`harness.services.skill_parser`](../../src/harness/services/skill_parser/) | Parses `CARD.md` metadata boxes and `SKILL.md` documents. |
 | `SKILL_CLUSTERING_SERVICE_KEY` | `SkillClusteringService` | [`harness.services.skill_clustering`](../../src/harness/services/skill_clustering/) | Semantic and topological clustering across skill catalogs. |
 | `SKILL_VISUALIZER_SERVICE_KEY` | `SkillVisualizerService` | [`harness.services.skill_visualizer`](../../src/harness/services/skill_visualizer.py) | Renders interactive HTML Visual Briefs of skill graphs. |
 | `OKF_MEMORY_SERVICE_KEY` | `OkfMemoryService` | [`harness.services.okf_memory`](../../src/harness/services/okf_memory.py) | Open Knowledge Framework (OKF v0.2) Git-native memory. |
@@ -76,7 +76,7 @@ gis_svc = resolve_open_source_gis(context)
 | `MEMGRAPHRAG_SERVICE_KEY` | `MemGraphRagService` | [`harness.services.memgraphrag`](../../src/harness/services/memgraphrag.py) | Hybrid graph and retrieval-augmented generation memory index. |
 | `GRAPHITI_SERVICE_KEY` | `GraphitiService` | [`harness.services.graphiti`](../../src/harness/services/graphiti.py) | Temporal knowledge graph tracking entity evolutions over time. |
 | `DISCOVERY_INDEX_SERVICE_KEY` | `DiscoveryIndexService` | [`harness.services.discovery_index`](../../src/harness/services/discovery_index.py) | Discovers and catalogs public record archives and research corpora. |
-| `BRAIN_ARTIFACT_MINER_KEY` | `BrainArtifactMinerService` | [`harness.services.brain_artifact_miner`](../../src/harness/services/brain_artifact_miner.py) | Filesystem-native brain store archaeology, scratch salvage, and dual-transcript seek. |
+| `BRAIN_ARTIFACT_MINER_KEY` | `BrainArtifactMinerService` | [`harness.services.brain_artifact_miner`](../../src/harness/services/brain_artifact_miner/) | Filesystem-native brain store archaeology, scratch salvage, and dual-transcript seek. |
 | `CONVERSATION_TRAJECTORY_MINER_KEY` | `ConversationTrajectoryMinerService` | [`harness.services.conversation_trajectory_miner`](../../src/harness/services/conversation_trajectory_miner/) | Autobiographical session trajectory extraction, friction scorecard analysis, and cognitive bifurcation. |
 | `TEMP_ARTIFACT_MINER_KEY` | `TempArtifactMinerService` | [`harness.services.temp_artifact_miner`](../../src/harness/services/temp_artifact_miner/) | Ephemeral visual brief triage, pytest sandbox archaeology, and dual-lens cognitive bifurcation. |
 | `BRAIN_BRIDGE_KEY` | `BrainBridgeService` | [`harness.services.brain_bridge`](../../src/harness/services/brain_bridge/) | Foreign brain format detection, git history parsing, and TF-IDF search indexing. |
@@ -92,14 +92,14 @@ gis_svc = resolve_open_source_gis(context)
 | `BIGQUERY_AUGMENTED_ANALYTICS_SERVICE_KEY` | `BigQueryAugmentedAnalyticsService` | [`harness.services.bigquery_augmented_analytics`](../../src/harness/services/bigquery_augmented_analytics.py) | BigQuery Table-Valued Functions (TVFs) and causal inference. |
 | `GARF_REPORTING_SERVICE_KEY` | `GarfReportingService` | [`harness.services.garf_reporting`](../../src/harness/services/garf_reporting/) | Declarative SQL reporting pipelines across heterogeneous APIs. |
 | `OPEN_SOURCE_GIS_SERVICE_KEY` | `OpenSourceGisService` | [`harness.services.open_source_gis`](../../src/harness/services/open_source_gis/) | Multi-engine geospatial analysis with CRS safety verification. |
-| `PAPERLESS_NGX_SERVICE_KEY` | `PaperlessNgxService` | [`harness.services.paperless_ngx`](../../src/harness/services/paperless_ngx.py) | Document classification and hybrid Tantivy/SQLite-Vec search. |
+| `PAPERLESS_NGX_SERVICE_KEY` | `PaperlessNgxService` | [`harness.services.paperless_ngx`](../../src/harness/services/paperless_ngx/) | Document classification and hybrid Tantivy/SQLite-Vec search. |
 | `HF_DATASETS_SERVICE_KEY` | `HfDatasetsService` | [`harness.services.hf_datasets`](../../src/harness/services/hf_datasets/) | Arrow memory mapping and streaming for large datasets. |
-| `DATA_MANAGEMENT_SERVICE_KEY` | `DataManagementService` | [`harness.services.data_management`](../../src/harness/services/data_management.py) | DAMA-DMBOK data lifecycle governance and open data contracts. |
+| `DATA_MANAGEMENT_SERVICE_KEY` | `DataManagementService` | [`harness.services.data_management`](../../src/harness/services/data_management/) | DAMA-DMBOK data lifecycle governance and open data contracts. |
 | `TAU_BRIDGE_SERVICE_KEY` | `TauBridgeService` | [`harness.services.tau_bridge`](../../src/harness/services/tau_bridge/) | Bidirectional bridge to the HuggingFace Tau coding harness. |
 | `CLAUDE_CODE_BRIDGE_KEY` | `ClaudeCodeBridgeService` | [`harness.services.claude_code`](../../src/harness/services/claude_code.py) | Claude Code prompt compaction and dangerous bash hooks. |
 | `STAGEHAND_BROWSER_KEY` | `StagehandBrowserService` | [`harness.services.stagehand_browser`](../../src/harness/services/stagehand_browser.py) | Autonomous headless browser orchestration and DOM extraction. |
 | `WEB_FETCHER_KEY` | `WebFetcherService` | [`harness.services.web_fetcher`](../../src/harness/services/web_fetcher.py) | Direct HTTP streaming and HTML-to-markdown conversion. |
-| `CELLCOG_SERVICE_KEY` | `CellCogService` | [`harness.services.cellcog`](../../src/harness/services/cellcog.py) | Multimodal sub-agent delegation for 3D, video, and audio. |
+| `CELLCOG_SERVICE_KEY` | `CellCogService` | [`harness.services.cellcog`](../../src/harness/services/cellcog/) | Multimodal sub-agent delegation for 3D, video, and audio. |
 | `CHATBOTX_SERVICE_KEY` | `ChatbotXService` | [`harness.services.chatbotx`](../../src/harness/services/chatbotx.py) | Omnichannel messaging bot orchestration and webhook routing. |
 
 ---
@@ -108,8 +108,8 @@ gis_svc = resolve_open_source_gis(context)
 
 | ServiceKey Constant | Inferred Type | Defining Module | Central Function |
 |---|---|---|---|
-| `STORAGE_SERVICE_KEY` | `StorageService` | [`harness.services.storage`](../../src/harness/services/storage.py) | SQLite persistence engine with transactional support. |
+| `STORAGE_SERVICE_KEY` | `StorageService` | [`harness.services.storage`](../../src/harness/services/storage/) | SQLite persistence engine with transactional support. |
 | `EVENT_BUS_KEY` | `EventBus` | [`harness.events.bus`](../../src/harness/events/bus/) | Async event bus dispatching immutable domain events. |
 | `LLM_SERVICE_KEY` | `LLMService` | [`harness.services.llm`](../../src/harness/services/llm.py) | Multi-provider LLM client protocol and completion gateway. |
 | `CREATOR_SERVICE_KEY` | `CreatorService` | [`harness.creator.synthesis`](../../src/harness/creator/synthesis.py) | Autonomous plugin synthesis and capability creator. |
-| `OPENROUTER_GATEWAY_KEY` | `OpenRouterGatewayService` | [`harness.services.openrouter_gateway`](../../src/harness/services/openrouter_gateway.py) | Multi-model routing gateway with token telemetry. |
+| `OPENROUTER_GATEWAY_KEY` | `OpenRouterGatewayService` | [`harness.services.openrouter_gateway`](../../src/harness/services/openrouter_gateway/) | Multi-model routing gateway with token telemetry. |

@@ -96,7 +96,7 @@ harness session tree <session_id>
 ```
 
 The output renders an ASCII DAG depicting step transitions:
-```
+```text
 Session: sess_94a2b1 [COMPLETED]
 ├── [Step 1] Thought: Inspect available plugin categories on disk.
 │   └── Tool: list_dir(DirectoryPath="plugins") -> OK
@@ -137,7 +137,7 @@ harness skills route "We need to verify code changes before creating a pull requ
 ```
 
 The skill router evaluates semantic relevance and returns ranked matches:
-```
+```text
 Rank 1: pre-commit-security-guard (score: 0.88)
 Rank 2: adversarial-agent-verifier (score: 0.82)
 ```

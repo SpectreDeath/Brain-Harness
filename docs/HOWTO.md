@@ -122,7 +122,7 @@ Author an agent skill in `.agents/skills/<skill-name>/` conforming to SDLC craft
 Create the skill directory with both `SKILL.md` and `CARD.md`:
 
 ```bash
-harness skills scaffold my-analysis-skill
+harness skills create my-analysis-skill
 ```
 
 ### Step 2: Write Frontmatter with Explicit Boundaries (Rule 44)
@@ -219,7 +219,7 @@ harness doc audit --root . --min-coverage 95.0 --output scratch/coverage.json
 
 ### Step 2: Check for Broken Links and Stale Symbols
 ```bash
-harness doc drift-check --root . --output scratch/drift.json
+harness doc drift --root . --output scratch/drift.json
 ```
 
 If drift is detected, inspect `scratch/drift.json` to identify broken relative links or stale class names.

@@ -67,7 +67,7 @@ Plugins must declare one of the following 11 canonical domain categories (Rule 1
 
 Brain Harness validates and manages plugins through a 6-state lifecycle:
 
-```
+```text
 [DISCOVERED] ──► [VALIDATED] ──► [LOADED] ──► [ENABLED]
                                    │              │
                                    ▼              ▼

@@ -22,7 +22,7 @@ Untrusted repositories and model-generated exploit scripts must never execute wi
 1. **Process Boundary:** All dynamic execution occurs inside a dedicated child process with restricted environment variables, no sensitive token inheritance, and temporary shadow directory isolation.
 2. **Rule 14 Pipe Drainage Guarantee:** Asynchronous process management on Windows proactor loops and POSIX event loops is prone to zombie process leaks and unclosed pipe handles if exceptions interrupt execution. The `MantisSandboxEngine` wraps all subprocess invocations in strict `try...finally` blocks that drain stdout/stderr, close `stdin`, and explicitly terminate runaway processes.
 
-```
+```text
 +-------------------------------------------------------------+
 | Brain Harness Process (Trusted)                            |
 |  - ServiceContext (IoC)                                     |
