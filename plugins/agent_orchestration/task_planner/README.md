@@ -21,7 +21,6 @@ Hierarchical Directed Acyclic Graph (DAG) goal decomposition and milestone depen
 | `plan_get_next_milestone` | `(plan_id)` | Get the next unblocked task(s) whose dependencies are completed |
 | `plan_update_status` | `(plan_id, task_id, status, result)` | Update task status (pending, in_progress, completed, failed) and attach result |
 | `plan_export_dag` | `(plan_id)` | Export the DAG plan in structured JSON and Mermaid graph format |
-
 ---
 
 ## Key Modules & AST Symbols

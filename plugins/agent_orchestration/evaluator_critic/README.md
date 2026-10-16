@@ -20,7 +20,6 @@ Adversarial code review, AST static analysis, destructive command safety filter,
 | `critic_evaluate_code` | `(code, language)` | Statically analyze code syntax, complexity, function docstrings, and potential anti-patterns |
 | `critic_review_plan` | `(goal, steps)` | Evaluate an execution plan for logical consistency, risk factors, and missing dependencies |
 | `critic_check_safety` | `(command)` | Scan a CLI shell command for dangerous or irreversible operations |
-
 ---
 
 ## Key Modules & AST Symbols

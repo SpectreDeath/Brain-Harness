@@ -198,3 +198,18 @@ def data_validate_schema(data: dict[str, Any], schema: dict[str, Any]) -> dict[s
         "missing_fields": missing_fields,
         "type_mismatches": type_mismatches,
     }
+
+# -----------------------------------------------------------------------------
+# Harness Plugin Class & IoC Singleton (Rule 45)
+# -----------------------------------------------------------------------------
+from harness.plugins.base import HarnessPlugin
+class PluginDataTransformerPlugin(HarnessPlugin):
+    """Multi-format data converter (JSON ↔ CSV ↔ YAML ↔ TOML), tabular filter, and statistical profiler"""
+
+    name = "plugin.data_transformer"
+    version = "1.0.0"
+    description = """Multi-format data converter (JSON ↔ CSV ↔ YAML ↔ TOML), tabular filter, and statistical profiler"""
+    trusted = True
+
+
+plugin = PluginDataTransformerPlugin()

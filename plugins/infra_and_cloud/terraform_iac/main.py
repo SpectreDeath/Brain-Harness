@@ -118,3 +118,18 @@ def estimate_resource_costs(resources: list[dict[str, Any]]) -> dict[str, Any]:
         "estimated_monthly_usd": round(total_monthly, 2),
         "breakdown": cost_items,
     }
+
+# -----------------------------------------------------------------------------
+# Harness Plugin Class & IoC Singleton (Rule 45)
+# -----------------------------------------------------------------------------
+from harness.plugins.base import HarnessPlugin
+class DomainTerraformIacPlugin(HarnessPlugin):
+    """Terraform / OpenTofu HCL parser, state drift detector, and cloud resource cost estimator"""
+
+    name = "domain.terraform_iac"
+    version = "1.0.0"
+    description = """Terraform / OpenTofu HCL parser, state drift detector, and cloud resource cost estimator"""
+    trusted = True
+
+
+plugin = DomainTerraformIacPlugin()

@@ -21,3 +21,15 @@ Synthesized from Chidiebere Njoku's literature (*How to Build AI Applications Th
 - `harness router route [--complexity simple|medium|complex]`
 - `harness router simulate "<prompt>" [--fail-primary]`
 - `harness router brief`
+
+
+---
+
+## Tools & Entrypoints
+
+| Entrypoint | Parameters | Description |
+|---|---|---|
+| `profile_prompt` | `(prompt)` | Deterministic syntax and keyword complexity profiling (<5ms, zero-LLM) |
+| `resolve_routing` | `(complexity, cost_ceiling)` | Resolve primary and fallback model configuration asserting provider diversity |
+| `route_and_execute` | `(prompt, override_complexity)` | Execute prompt with automated fallback rollover and circuit breaker protection |
+| `model_router_visual_brief` | `(output_path)` | Generate interactive HTML visual brief with telemetry and routing distribution |

@@ -24,7 +24,6 @@ A2A v1.0 Agent-to-Agent protocol adapter for cross-host swarm federation, task d
 | `openclaw_a2a_poll_task` | `(task_id)` | Polls the status, observation, and token telemetry of an active A2A task. |
 | `openclaw_a2a_complete_task` | `(task_id, observation, tokens_used)` | Completes an A2A task and records observation output and token rollups. |
 | `openclaw_a2a_resolve_capabilities` | `(agent_id)` | Queries supported capabilities, tools, and archetype roles for a registered A2A agent. |
-
 ---
 
 ## Key Modules & AST Symbols

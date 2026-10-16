@@ -34,3 +34,18 @@ def get_session_telemetry(session_id: str) -> dict[str, Any]:
         "status": "READY",
         "steps_count": 2,
     }
+
+# -----------------------------------------------------------------------------
+# Harness Plugin Class & IoC Singleton (Rule 45)
+# -----------------------------------------------------------------------------
+from harness.plugins.base import HarnessPlugin
+class DomainAntigravityCoreBridgePlugin(HarnessPlugin):
+    """Google Antigravity SDK core bridge providing LocalConnection proactor transport, streaming step ingestion, and subagent orchestration"""
+
+    name = "domain.antigravity_core_bridge"
+    version = "1.0.0"
+    description = """Google Antigravity SDK core bridge providing LocalConnection proactor transport, streaming step ingestion, and subagent orchestration"""
+    trusted = True
+
+
+plugin = DomainAntigravityCoreBridgePlugin()

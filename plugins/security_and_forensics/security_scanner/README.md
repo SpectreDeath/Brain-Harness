@@ -23,7 +23,6 @@ Static code vulnerability scanner, secret detection, and dependency audit plugin
 | `scan_secrets` | `(content)` | Scan text or code content for leaked API keys, tokens, private keys, and passwords |
 | `scan_code_vulnerabilities` | `(code)` | Perform static AST and pattern analysis for security vulnerabilities (injection, eval, deserialization) |
 | `audit_dependencies` | `(requirements_content)` | Audit a requirements.txt or dependency list against known vulnerability patterns and unpinned packages |
-
 ---
 
 ## Key Modules & AST Symbols

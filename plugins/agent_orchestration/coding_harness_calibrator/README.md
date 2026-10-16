@@ -25,3 +25,15 @@ from harness.services.coding_harness_calibrator import CODING_HARNESS_CALIBRATOR
 calibrator = context.require(CODING_HARNESS_CALIBRATOR_SERVICE_KEY)
 rec = calibrator.calibrate("Claude-3.7", 550.0, "terminal_cli")
 ```
+
+
+---
+
+## Tools & Entrypoints
+
+| Entrypoint | Parameters | Description |
+|---|---|---|
+| `calibrate_harness` | `(model_name, parameter_billions, workload, context_budget)` | Derive optimal empirical harness configuration across model capability tiers and workload types |
+| `simulate_staging` | `(events, usable_window)` | Simulate Two-Tier Context Staging ($T_4$) elision and 7-heading summarization over turn events |
+| `predict_repatch` | `(model_capability, action_space, workload)` | Predict mean re-patches per task and cost reductions using Fan et al. empirical laws |
+| `calibrator_visual_brief` | `(model_name, parameter_billions, workload, output_path)` | Render interactive HTML visual brief with Mermaid topology and empirical scorecard |

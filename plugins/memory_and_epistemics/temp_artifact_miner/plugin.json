@@ -10,5 +10,129 @@
   "provides": [
     "service.temp_artifact_miner"
   ],
-  "requires": []
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "scan_briefs",
+      "description": "Executes the operation.",
+      "parameters": [
+        {
+          "name": "temp_dir",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "max_depth",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "heavy_threshold",
+          "type": "string",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "triage_sandbox",
+      "description": "Executes the operation.",
+      "parameters": [
+        {
+          "name": "pytest_dir",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "max_depth",
+          "type": "string",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "tail_diagnostic_log",
+      "description": "Executes the operation.",
+      "parameters": [
+        {
+          "name": "log_path",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "max_lines",
+          "type": "string",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "generate_salvage_markdown",
+      "description": "Executes the operation.",
+      "parameters": [
+        {
+          "name": "catalog",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "sandbox",
+          "type": "string",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "bifurcate_brief",
+      "description": "Executes the operation.",
+      "parameters": [
+        {
+          "name": "brief_path",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "target_vault_dir",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "target_docs_dir",
+          "type": "string",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "salvage_diagrams",
+      "description": "Executes the operation.",
+      "parameters": [
+        {
+          "name": "brief_path",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "target_docs_dir",
+          "type": "string",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "parse_html_brief",
+      "description": "Executes the operation.",
+      "parameters": [
+        {
+          "name": "file_path",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "heavy_threshold",
+          "type": "string",
+          "required": false
+        }
+      ]
+    }
+  ]
 }

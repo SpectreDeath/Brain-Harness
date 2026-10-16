@@ -134,3 +134,18 @@ def nudge_learning_persistence(
         "should_nudge": should_nudge,
         "recommended_action": "PERSIST_KNOWLEDGE_ITEM" if should_nudge else "CONTINUE_IN_MEMORY",
     }
+
+# -----------------------------------------------------------------------------
+# Harness Plugin Class & IoC Singleton (Rule 45)
+# -----------------------------------------------------------------------------
+from harness.plugins.base import HarnessPlugin
+class DomainHermesCognitiveEnginePlugin(HarnessPlugin):
+    """Hermes closed learning loop, autonomous skill formation, verification evidence evaluator, and think stream scrubber"""
+
+    name = "domain.hermes_cognitive_engine"
+    version = "1.0.0"
+    description = """Hermes closed learning loop, autonomous skill formation, verification evidence evaluator, and think stream scrubber"""
+    trusted = True
+
+
+plugin = DomainHermesCognitiveEnginePlugin()

@@ -1,0 +1,32 @@
+{
+  "id": "ki_20261010_gev_downward_dependency_architecture",
+  "title": "Downward-Only Tool Boundary Architecture & Package Isolation Invariant",
+  "category": "geospatial_and_osint",
+  "created_at": "2026-10-10T19:43:52Z",
+  "author": "God's Eye View / Antigravity Cognitive Audit",
+  "tags": [
+    "architecture",
+    "boundary_enforcement",
+    "dependency_hygiene",
+    "mcp",
+    "tool_catalog",
+    "gods_eye_view"
+  ],
+  "isnad": {
+    "decision_id": "dec_20261010_gev_01",
+    "claims": [
+      {
+        "assertion": "Tool definitions in src/tools/ and queries in src/tools/queries/ are strictly isolated from DOM, Cesium, and Node globals, guaranteed by AST check-package-boundaries.mjs.",
+        "evidence_type": "code_implementation",
+        "source": "D:\\GitHub\\cloned\\gods-eye-view\\scripts\\check-package-boundaries.mjs",
+        "verified": true
+      },
+      {
+        "assertion": "composeCatalog combines tools, requires services, and wraps calls with onion interceptors without mutating definitions.",
+        "evidence_type": "code_implementation",
+        "source": "D:\\GitHub\\cloned\\gods-eye-view\\src\\tools\\catalog.js",
+        "verified": true
+      }
+    ]
+  }
+}

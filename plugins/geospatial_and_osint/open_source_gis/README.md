@@ -22,3 +22,15 @@ Default budgets and weights are configured in `config.default.yaml` with 3-tier 
 1. Workspace root `.agents/skills.config.yaml`
 2. Co-located `config.default.yaml`
 3. In-memory hardcoded fallback
+
+
+---
+
+## Tools & Entrypoints
+
+| Entrypoint | Parameters | Description |
+|---|---|---|
+| `gis_route_workload` | `(domain, geometry_type, data_formats, sector, analysis, has_lidar, needs_statistics, needs_mobile)` | Route spatial analysis workloads to optimal open-source GIS engines (QGIS, SAGA, Whitebox, GRASS, GeoDa, gvSIG, MapWindow, Diva GIS, OrbisGIS) using deterministic fitness matching |
+| `gis_validate_pipeline` | `(steps)` | Validate a spatial pipeline execution DAG for metric Coordinate Reference System (CRS) projection safety and format handoffs |
+| `gis_audit_topology` | `(features, sliver_threshold_m2)` | Audit vector polygon geometries for topological integrity: self-intersections, unclosed rings, duplicate vertices, and micro-slivers |
+| `gis_architect_workload` | `(workload_profile, pipeline_steps, features, generate_brief)` | End-to-end spatial workload architecture interrogation: routes engines, checks DAG CRS safety, audits geometry topology, and renders Stage 5 HTML visual brief |

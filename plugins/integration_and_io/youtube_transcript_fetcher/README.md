@@ -24,7 +24,6 @@ Extract transcripts and timed captions from YouTube video URLs or IDs via isolat
 | `get_transcript_text` | `(video_url, video_id, languages)` | Extract plain concatenated text of a YouTube video transcript without timestamp metadata |
 | `list_transcripts` | `(video_url, video_id)` | List all available transcripts, languages, and translation tracks for a YouTube video |
 | `health` | `()` | Check runtime health status and dependencies of the YouTube transcript fetcher plugin |
-
 ---
 
 ## Key Modules & AST Symbols

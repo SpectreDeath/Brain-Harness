@@ -20,7 +20,6 @@ Human-in-the-loop permission escalation gate, decision checkpoints, and approval
 | `request_human_approval` | `(action_name, risk_level, details)` | Create a pending approval request for a sensitive tool call or state transition (e.g. database drop, code push) |
 | `record_human_decision` | `(request_id, approved, reason)` | Record human operator decision (approved / rejected) for an approval request |
 | `list_pending_approvals` | `()` | List all active approvals awaiting human decision |
-
 ---
 
 ## Key Modules & AST Symbols

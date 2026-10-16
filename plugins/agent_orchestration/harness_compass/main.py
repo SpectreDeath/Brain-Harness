@@ -384,3 +384,60 @@ class HarnessCompassPlugin(HarnessPlugin, HarnessCompassService):
 
 # Rule 45: Plugin Module Singleton & IoC Provider Invariant
 plugin = HarnessCompassPlugin()
+
+
+# Top-level tool entrypoints matching plugin.json
+def validate_gate(
+    id: str,
+    surface: str,
+    description: str,
+    target_file: str,
+    content: str,
+    is_advisory: bool = False,
+    is_code_executable: bool = False,
+) -> dict[str, Any]:
+    """Validate candidate harness edit against generalization invariants."""
+    return plugin.validate_gate_tool(id, surface, description, target_file, content, is_advisory, is_code_executable)
+
+
+def ground_feedback(
+    kind: str,
+    component: str,
+    friction: str,
+    desired_change: str,
+    trace_refs: list[str] | None = None,
+    attribution: str = "harness",
+    trajectory_turns: list[dict[str, Any]] | None = None,
+) -> dict[str, Any]:
+    """Ground agent usability feedback and check trace citations."""
+    return plugin.ground_feedback_tool(kind, component, friction, desired_change, trace_refs, attribution, trajectory_turns)
+
+
+def merge_r3(
+    winner_name: str,
+    winner_score: float,
+    winner_edits: list[dict[str, Any]],
+    loser_name: str,
+    loser_score: float,
+    loser_edits: list[dict[str, Any]],
+) -> dict[str, Any]:
+    """Execute reflexive round reduction and merge non-conflicting edits."""
+    return plugin.merge_r3(winner_name, winner_score, winner_edits, loser_name, loser_score, loser_edits)
+
+
+def run_evolution_round(
+    round_num: int,
+    baseline_score: float,
+    structural_edits: list[dict[str, Any]],
+    guidance_edits: list[dict[str, Any]],
+    structural_score: float,
+    guidance_score: float,
+) -> dict[str, Any]:
+    """Execute complete dual-track evolution round simulation."""
+    return plugin.run_evolution_round(round_num, baseline_score, structural_edits, guidance_edits, structural_score, guidance_score)
+
+
+def harness_compass_visual_brief(output_path: str | None = None) -> str:
+    """Generate interactive HTML visual brief for evolution status."""
+    return plugin.harness_compass_visual_brief(output_path)
+

@@ -21,7 +21,6 @@ Multi-format data converter (JSON ↔ CSV ↔ YAML ↔ TOML), tabular filter, an
 | `data_filter_table` | `(records, filters, sort_by, descending, limit)` | Filter, sort, and slice a list of dictionary records |
 | `data_summarize_stats` | `(records, columns)` | Compute statistical metrics (count, mean, min, max, nulls, unique count) for columns in tabular data |
 | `data_validate_schema` | `(data, schema)` | Validate a dictionary against expected types and required field schema |
-
 ---
 
 ## Key Modules & AST Symbols

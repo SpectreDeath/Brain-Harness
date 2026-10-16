@@ -23,7 +23,6 @@ CI/CD pipeline workflow linter, circular job dependency detector, and action sec
 | `validate_github_actions_workflow` | `(workflow_yaml)` | Validate GitHub Actions YAML workflow structure (name, on trigger, jobs, permissions) |
 | `find_circular_job_dependencies` | `(jobs)` | Detect cyclic or broken 'needs:' dependencies across pipeline jobs |
 | `audit_action_pins` | `(workflow_yaml)` | Audit third-party GitHub Actions for mutable tags (e.g. @v3) vs immutable commit SHA pins |
-
 ---
 
 ## Key Modules & AST Symbols

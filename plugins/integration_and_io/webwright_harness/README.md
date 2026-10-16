@@ -26,7 +26,6 @@ SWE-style browser agent harness with trajectory skill learning, semantic retriev
 | `webwright_browser_session_manage` | `(action, port, headless)` | Manage persistent local Chromium browser daemons with DevTools remote debugging endpoints |
 | `webwright_image_qa` | `(image_path, question, model)` | Perform high-detail multimodal visual question answering on web screenshots and DOM captures |
 | `webwright_self_reflection` | `(task, screenshots_dir, action_history)` | Critique and verify task success over screenshot sequences and chronological action histories |
-
 ---
 
 ## Key Modules & AST Symbols

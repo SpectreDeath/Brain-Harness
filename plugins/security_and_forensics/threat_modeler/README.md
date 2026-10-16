@@ -23,7 +23,6 @@ STRIDE threat modeling, MITRE ATT&CK taxonomy mapping, and attack graph generato
 | `model_stride_threats` | `(components)` | Model STRIDE threats (Spoofing, Tampering, Repudiation, Info Disclosure, DoS, Elevation of Privilege) for architectural components |
 | `map_mitre_attack` | `(observed_techniques)` | Map observed threat behaviors or technical findings to MITRE ATT&CK Enterprise tactics and techniques |
 | `generate_attack_tree` | `(adversary_goal, attack_vectors)` | Synthesize a hierarchical attack tree graph (in Mermaid and structured format) toward an adversary objective |
-
 ---
 
 ## Key Modules & AST Symbols

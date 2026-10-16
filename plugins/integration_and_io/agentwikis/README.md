@@ -26,7 +26,6 @@ AgentWikis knowledge discovery, boundary triage, and offline documentation slici
 | `agentwikis_search` | `(query, wiki, limit)` | Search documentation corpus across documents and metadata with calibrated confidence |
 | `agentwikis_read` | `(doc_path, section, remote)` | Extract exact Markdown document or sub-section slice offline or with remote fallback |
 | `agentwikis_pack` | `(query, max_tokens)` | Prepare a one-shot token-bounded Markdown context pack ready for LLM injection |
-
 ---
 
 ## Key Modules & AST Symbols

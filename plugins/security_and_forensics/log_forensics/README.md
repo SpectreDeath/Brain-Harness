@@ -23,7 +23,6 @@ High-throughput SIEM log stream parser, anomaly detection, and incident timeline
 | `parse_log_stream` | `(log_content, format_hint)` | Parse raw text log stream (Syslog, JSONL, Apache/Nginx, or standard key-value) into structured records |
 | `detect_log_anomalies` | `(log_events)` | Detect attack patterns (brute force, 4xx/5xx spikes, privilege escalation, suspicious IPs) in parsed logs |
 | `build_incident_timeline` | `(log_events)` | Sort and synthesize a chronological incident timeline with severity tagging |
-
 ---
 
 ## Key Modules & AST Symbols

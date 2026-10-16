@@ -19,7 +19,6 @@ Schema-constrained synthetic mock dataset and time-series generator
 |---|---|---|
 | `generate_mock_records` | `(schema, count, seed)` | Generate synthetic tabular records conforming to a schema definition (name, email, uuid, integer, float, enum) |
 | `generate_synthetic_timeseries` | `(days, baseline, trend)` | Generate synthetic daily time-series values with trend, seasonality, and Gaussian noise |
-
 ---
 
 ## Key Modules & AST Symbols

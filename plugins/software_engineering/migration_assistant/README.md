@@ -21,8 +21,7 @@ Python framework migration checker (Pydantic v1 to v2, Python 3.10+ union syntax
 | Entrypoint | Parameters | Description |
 |---|---|---|
 | `check_pydantic_v2_readiness` | `(code)` | Scan Python code for deprecated Pydantic v1 patterns (class Config, regex field parameter, validator decorator) |
-| `check_python_version_compat` | `(code)` | Scan for deprecated legacy Python patterns (typing.Union instead of |, typing.Optional, distutils) |
-
+| `check_python_version_compat` | `(code)` | Scan for deprecated legacy Python patterns (typing.Union instead of \|, typing.Optional, distutils) |
 ---
 
 ## Key Modules & AST Symbols

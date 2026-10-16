@@ -126,3 +126,18 @@ def compute_correlation_matrix(
         "columns": target_cols,
         "matrix": matrix,
     }
+
+# -----------------------------------------------------------------------------
+# Harness Plugin Class & IoC Singleton (Rule 45)
+# -----------------------------------------------------------------------------
+from harness.plugins.base import HarnessPlugin
+class DomainDatasetProfilerPlugin(HarnessPlugin):
+    """Tabular statistical profiling, outlier detection (Z-score), and correlation matrix calculator"""
+
+    name = "domain.dataset_profiler"
+    version = "1.0.0"
+    description = """Tabular statistical profiling, outlier detection (Z-score), and correlation matrix calculator"""
+    trusted = True
+
+
+plugin = DomainDatasetProfilerPlugin()

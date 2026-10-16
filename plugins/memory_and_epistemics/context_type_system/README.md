@@ -28,7 +28,6 @@ Context provenance, type channel separation, origin ledger verification, token b
 | `context_get_lineage` | `(session_id, request_id)` | Trace the full multi-hop derivation chain back to the root observation (Isnad lineage audit) |
 | `context_export_session` | `(session_id)` | Export session state as a portable snapshot dictionary |
 | `context_import_session` | `(session_id, data)` | Restore a session from a snapshot dictionary |
-
 ---
 
 ## Key Modules & AST Symbols

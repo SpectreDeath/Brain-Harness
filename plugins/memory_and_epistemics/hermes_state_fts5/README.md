@@ -24,7 +24,6 @@ Hermes SQLite WAL state storage with FTS5 search, parent-child session compressi
 | `fork_session_tree` | `(parent_session_id, compression_checkpoint)` | Fork session history into a child branch with parent_session_id compression linkage |
 | `compress_session_slice` | `(session_id, window_size)` | Apply AST/textual compression to a window of messages to bound token context |
 | `query_session_provenance` | `(message_id)` | Retrieve full lineage and parent DAG coordinates for a given message or checkpoint |
-
 ---
 
 ## Key Modules & AST Symbols

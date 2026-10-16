@@ -24,7 +24,6 @@ Similarity-based semantic cache for LLM prompts and agent task results
 | `cache_get` | `(prompt, similarity_threshold)` | Retrieve cached response based on prompt token similarity threshold |
 | `cache_stats` | `()` | Get current cache metrics including hits, misses, and hit rate |
 | `cache_clear` | `()` | Purge all cached entries |
-
 ---
 
 ## Key Modules & AST Symbols

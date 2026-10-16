@@ -23,7 +23,6 @@ Zero-dependency embedded hybrid KV and document database with CRC32-checksummed 
 | `kimi_minidb_put` | `(collection, key, value)` | Insert or update a document in an embedded collection with CRC32-checksummed write-ahead log (WAL) persistence. |
 | `kimi_minidb_get` | `(collection, key)` | Retrieve a stored document by collection name and key with CRC32 integrity verification. |
 | `kimi_minidb_compact` | `(target_generation)` | Triggers generational snapshot compaction, consolidating write-ahead logs into a clean baseline snapshot. |
-
 ---
 
 ## Key Modules & AST Symbols

@@ -24,6 +24,7 @@ from .mock_data import (
     asyncio_wrap,
 )
 from .resolvers import resolve_gods_eye_view_engine
+from .simulation import build_simulated_mcp_response
 from .tactical import (
     calculate_satellite_passes,
     query_military_awareness,
@@ -37,6 +38,7 @@ __all__ = [
     "MOCK_FLIGHTS",
     "MOCK_VESSELS",
     "asyncio_wrap",
+    "build_simulated_mcp_response",
     "calculate_satellite_passes",
     "execute_analyst_query",
     "fetch_earthquakes",

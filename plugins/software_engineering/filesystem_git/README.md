@@ -27,7 +27,6 @@ Safe filesystem navigation, line-slice reading, regex search, and git operations
 | `git_status` | `(repo_path)` | Get git repository status (staged, modified, untracked files, current branch) |
 | `git_diff` | `(repo_path, target)` | Get git diff for uncommitted changes or against a commit/branch |
 | `git_log` | `(repo_path, max_commits)` | Get recent git commit log |
-
 ---
 
 ## Key Modules & AST Symbols

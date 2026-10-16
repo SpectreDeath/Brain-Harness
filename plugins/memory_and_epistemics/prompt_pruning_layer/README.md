@@ -22,7 +22,6 @@ Deterministic 3-pass prompt optimization engine (expired context elimination, du
 | `estimate_prompt_reduction` | `(messages)` | Calculate token counts before vs after 3-pass pruning with pass-by-pass removal diagnostics |
 | `generate_benchmark_corpus` | `(num_turns, workload, seed)` | Generate a synthetic multi-turn dialogue corpus with controlled duplicates and tool usage |
 | `benchmark_pruning_workloads` | `(num_turns, seed)` | Run comparative evaluation across chat, rag, and tool_agent workloads |
-
 ---
 
 ## Key Modules & AST Symbols

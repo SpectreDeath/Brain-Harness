@@ -22,3 +22,15 @@ This plugin mirrors that architecture into the Brain Harness IoC container, prov
 ## Configuration
 
 Default configuration is specified in `config.default.yaml`. Override the Omarchy root repository via the `OMARCHY_PATH` environment variable or direct service injection.
+
+
+---
+
+## Tools & Entrypoints
+
+| Entrypoint | Parameters | Description |
+|---|---|---|
+| `omarchy_list_commands` | `(group, include_hidden)` | List Omarchy CLI commands filtered by functional group and visibility |
+| `omarchy_get_command` | `(command_name)` | Retrieve detailed metadata for a specific Omarchy CLI command |
+| `omarchy_search_commands` | `(query)` | Search Omarchy commands across names, summaries, usage patterns, and argument descriptions |
+| `omarchy_list_groups` | `()` | List all functional command groups and their member command counts |

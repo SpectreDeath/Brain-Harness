@@ -15,3 +15,15 @@
 2. `harness_score(config_path)`: Evaluate 4 reliability mechanisms across Level 0 to Level 2.
 3. `harness_classify_bet(bottleneck)`: Classify team bottleneck to one of four architectural bets (`dsh`, `claude-code`, `hermes`, `pi`).
 4. `harness_visual_brief(target, output_path)`: Generate interactive HTML review report with Mermaid diagrams.
+
+
+---
+
+## Tools & Entrypoints
+
+| Entrypoint | Parameters | Description |
+|---|---|---|
+| `harness_audit` | `(target)` | Execute comprehensive 5-part architecture and 4-layer boundary audit for a target directory |
+| `harness_score` | `(config_path)` | Evaluate planning, sandbox, subagent, compression, and observability across Level 0 to Level 2 |
+| `harness_classify_bet` | `(bottleneck)` | Classify team operational bottleneck into one of four architectural harness bets |
+| `harness_visual_brief` | `(target, output_path)` | Render interactive HTML visual brief with Mermaid topology and reliability scorecard |

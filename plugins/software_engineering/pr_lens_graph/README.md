@@ -25,7 +25,6 @@ PR Lens standalone animated SVG architecture diagrams, graph validation, and dif
 | `pr_lens_diff` | `(base_ref, head_ref, repo_path)` | Extract unified git diff between two commit references via safe subprocess transport |
 | `pr_lens_analyze` | `(diff_text, overlay_map)` | Synthesize a structured GraphDocument and progressive walkthrough from unified diff text |
 | `pr_lens_comment` | `(analysis, svg_content)` | Compose GitHub PR markdown comment enclosing standalone diagram and progressive walkthrough |
-
 ---
 
 ## Key Modules & AST Symbols

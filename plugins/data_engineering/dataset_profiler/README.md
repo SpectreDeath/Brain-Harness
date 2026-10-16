@@ -20,7 +20,6 @@ Tabular statistical profiling, outlier detection (Z-score), and correlation matr
 | `profile_tabular_dataset` | `(records)` | Compute comprehensive statistics, null ratios, uniqueness, and distributions across all columns |
 | `detect_outliers_zscore` | `(values, threshold)` | Detect numerical anomalies using standard Z-score deviations (> threshold) |
 | `compute_correlation_matrix` | `(records, columns)` | Compute Pearson correlation coefficients between numerical columns |
-
 ---
 
 ## Key Modules & AST Symbols

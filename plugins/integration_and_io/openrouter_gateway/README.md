@@ -24,7 +24,6 @@ OpenRouter Gateway routing, JSON-RPC 2.0 protocol engine, and Context Epoch prom
 | `openrouter_list_models` | `(provider, modality, max_price, api_key)` | Fetch and filter available models from OpenRouter catalogue |
 | `openrouter_resolve_route` | `(task_type, tier, budget)` | Intelligently match task complexity and tier to optimal OpenRouter model routes |
 | `openrouter_jsonrpc_call` | `(request_payload, api_key)` | Execute direct JSON-RPC 2.0 protocol request against OpenRouter Gateway |
-
 ---
 
 ## Key Modules & AST Symbols

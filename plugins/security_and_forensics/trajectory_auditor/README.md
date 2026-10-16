@@ -23,7 +23,6 @@ Agent trajectory step auditor, repetitive loop / stuck detector, and recovery pr
 | `audit_trajectory_steps` | `(steps)` | Analyze an agent's execution history for repeated tool failures, excessive step counts, and inefficiency |
 | `detect_repetitive_loop` | `(actions, window_size)` | Detect cyclic repetition in agent action sequences (e.g. A -> B -> A -> B) |
 | `synthesize_recovery_prompt` | `(stuck_reason, last_failed_action)` | Generate an intervention prompt to break an agent out of a stuck loop or error cycle |
-
 ---
 
 ## Key Modules & AST Symbols

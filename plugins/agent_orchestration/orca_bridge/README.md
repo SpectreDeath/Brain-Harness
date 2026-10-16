@@ -58,3 +58,16 @@ batch = orca.check_mailbox(wait=True, timeout_ms=30000)
 for msg in batch.messages:
     print(f"Received {msg['type']}: {msg['subject']}")
 ```
+
+
+---
+
+## Tools & Entrypoints
+
+| Entrypoint | Parameters | Description |
+|---|---|---|
+| `orca_coordinate_task` | `(task_spec, agent, worktree_name, model, effort, timeout_seconds)` | High-leverage swarm execution: provisions an isolated Git worktree, dispatches a supervised worker with authority preamble, monitors the FIFO coordinator mailbox, and returns structured task settlement |
+| `orca_create_worktree` | `(name, repo_id, agent, prompt)` | Create an isolated Git worktree sandbox for an autonomous agent worker |
+| `orca_start_worker` | `(task_id, spec, agent, worktree, model, effort)` | Start a supervised agent worker in a dedicated worktree with injected authority preamble |
+| `orca_check_mailbox` | `(terminal, wait, timeout_ms, ack_delivery_id)` | Inspect the coordinator FIFO mailbox for incoming agent reports and settlement signals |
+| `orca_send_message` | `(subject, to, body, message_type, outcome)` | Deliver an inter-agent message or post a worker settlement signal |

@@ -24,7 +24,6 @@ Hermes unattended natural language cron scheduler, incident classification, and 
 | `list_cron_jobs` | `(status_filter)` | Query active, paused, or completed cron jobs |
 | `inspect_cron_incidents` | `(job_id, limit)` | Retrieve execution incident reports and error diagnostics for cron tasks |
 | `manage_blueprint_catalog` | `(action, blueprint_id)` | Query or instantiate curated unattended automation blueprints |
-
 ---
 
 ## Key Modules & AST Symbols

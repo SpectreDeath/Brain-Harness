@@ -172,3 +172,18 @@ def plan_export_dag(plan_id: str) -> dict[str, Any]:
         "tasks": list(tasks.values()),
         "mermaid": "\n".join(mermaid_lines),
     }
+
+# -----------------------------------------------------------------------------
+# Harness Plugin Class & IoC Singleton (Rule 45)
+# -----------------------------------------------------------------------------
+from harness.plugins.base import HarnessPlugin
+class PluginTaskPlannerPlugin(HarnessPlugin):
+    """Hierarchical Directed Acyclic Graph (DAG) goal decomposition and milestone dependency tracker"""
+
+    name = "plugin.task_planner"
+    version = "1.0.0"
+    description = """Hierarchical Directed Acyclic Graph (DAG) goal decomposition and milestone dependency tracker"""
+    trusted = True
+
+
+plugin = PluginTaskPlannerPlugin()

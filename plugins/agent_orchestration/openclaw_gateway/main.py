@@ -172,3 +172,6 @@ class OpenClawGatewayPlugin(HarnessPlugin):
     ) -> dict[str, Any]:
         """Tool handler for openclaw_gateway_send_message."""
         return await self.service.send_message(channel, message, recipient_id)
+
+# Module-level plugin singleton (Rule 45)
+plugin = OpenClawGatewayPlugin()

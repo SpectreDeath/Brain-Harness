@@ -26,7 +26,6 @@ Static AST security scanner detecting AI-generated code vulnerabilities, secrets
 | `compare_benchmark` | `(vulnerable_code, secure_code)` | Compare vulnerable code against remediated/secure code to verify risk reduction and fix efficacy |
 | `generate_sarif_report` | `(dir_path, output_path)` | Scan a project directory and export a standard SARIF v2.1.0 security report for GitHub Security integration |
 | `generate_json_report` | `(dir_path, output_path)` | Scan a project directory and export a structured JSON security findings report |
-
 ---
 
 ## Key Modules & AST Symbols

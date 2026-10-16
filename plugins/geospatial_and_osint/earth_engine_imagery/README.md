@@ -28,3 +28,16 @@
 3. `ee_composite_timeseries`: Generate multi-temporal composites (median, mean, min, max, greenest pixel) with cloud masking.
 4. `ee_get_image_thumbnail_url`: Generate visual preview thumbnail URLs and map tile endpoints.
 5. `ee_describe_image`: Extract image properties, band definitions, spatial resolution, and CRS projection.
+
+
+---
+
+## Tools & Entrypoints
+
+| Entrypoint | Parameters | Description |
+|---|---|---|
+| `ee_search_image_collection` | `(collection_id, bbox, start_date, end_date, max_cloud_cover, limit)` | Search and filter satellite image collections (Sentinel-2, Landsat, MODIS) by spatial bounding box, temporal window, and cloud cover |
+| `ee_compute_spectral_index` | `(image_id, index_type, nir_band, red_band, blue_band, swir_band, custom_formula)` | Compute multi-spectral vegetation and water indices (NDVI, NDWI, EVI, NBR) or custom normalized band equations |
+| `ee_composite_timeseries` | `(collection_id, bbox, start_date, end_date, composite_method, mask_clouds)` | Generate multi-temporal composite reductions (median, mean, min, max, greenest pixel) with QA cloud masking |
+| `ee_get_image_thumbnail_url` | `(image_id, bands, min_val, max_val, dimensions, palette)` | Generate visual preview thumbnail URLs and map tile metadata for an Earth Engine image |
+| `ee_describe_image` | `(image_id)` | Extract image properties, band definitions, spatial resolution, and CRS projection metadata |

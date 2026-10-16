@@ -23,7 +23,6 @@ Local semantic vector index, natural language code/doc retrieval, and hybrid sea
 | `vector_index_directory` | `(path, extensions, chunk_lines)` | Scan and index source code or markdown documents in a directory for semantic search |
 | `vector_search_semantic` | `(query, top_k)` | Perform natural language semantic cosine search over the indexed chunks |
 | `vector_search_hybrid` | `(query, keyword, top_k)` | Perform hybrid lexical + semantic search combining exact keyword and vector ranking |
-
 ---
 
 ## Key Modules & AST Symbols

@@ -74,3 +74,18 @@ def tally_consensus_votes(
         "avg_confidence": avg_confidence,
         "decision": "APPROVED" if consensus_reached else "REJECTED",
     }
+
+# -----------------------------------------------------------------------------
+# Harness Plugin Class & IoC Singleton (Rule 45)
+# -----------------------------------------------------------------------------
+from harness.plugins.base import HarnessPlugin
+class DomainAgentSupervisorPlugin(HarnessPlugin):
+    """Hierarchical multi-agent supervisor, token budget allocator, and consensus voting orchestrator"""
+
+    name = "domain.agent_supervisor"
+    version = "1.0.0"
+    description = """Hierarchical multi-agent supervisor, token budget allocator, and consensus voting orchestrator"""
+    trusted = True
+
+
+plugin = DomainAgentSupervisorPlugin()

@@ -38,3 +38,18 @@ def get_statusline_payload(mode: str = "idle") -> dict[str, Any]:
         "active_spans_count": 0,
         "completed_spans_count": 1,
     }
+
+# -----------------------------------------------------------------------------
+# Harness Plugin Class & IoC Singleton (Rule 45)
+# -----------------------------------------------------------------------------
+from harness.plugins.base import HarnessPlugin
+class DomainAntigravityOtelTelemetryPlugin(HarnessPlugin):
+    """Google Antigravity OpenTelemetry distributed trace exporter and dynamic CLI statusline IPC metric generator"""
+
+    name = "domain.antigravity_otel_telemetry"
+    version = "1.0.0"
+    description = """Google Antigravity OpenTelemetry distributed trace exporter and dynamic CLI statusline IPC metric generator"""
+    trusted = True
+
+
+plugin = DomainAntigravityOtelTelemetryPlugin()

@@ -17,9 +17,9 @@ from harness.services.network_forensics import (
 )
 
 try:
-    from . import engine as _mod
+    from plugins.security_and_forensics.network_forensics import engine as _mod
 except (ImportError, ValueError):
-    import engine as _mod  # type: ignore[no-redef]
+    from . import engine as _mod  # type: ignore[no-redef]
 
 HopAnalysisResult = _mod.HopAnalysisResult
 LayerDiagnosticResult = _mod.LayerDiagnosticResult
@@ -69,9 +69,9 @@ def analyze_traceroute_hops(raw_output: str) -> dict[str, Any]:
     return analyze_traceroute_dict(raw_output)
 
 
-def evaluate_port_states(port_probes: list[dict[str, Any]] | None = None, **kwargs: Any) -> dict[str, Any]:
+def evaluate_port_states(scan_results: list[dict[str, Any]] | None = None, port_probes: list[dict[str, Any]] | None = None, **kwargs: Any) -> dict[str, Any]:
     """Classify port scan findings into tri-state reachability: open, closed, or filtered."""
-    probes = port_probes or kwargs.get("scan_results") or []
+    probes = scan_results if scan_results is not None else (port_probes or kwargs.get("scan_results") or [])
     return evaluate_port_states_dict(probes)
 
 

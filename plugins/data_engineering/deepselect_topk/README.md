@@ -24,7 +24,6 @@ DeepSelect High-Performance TopK Selection & DSA Routing Plugin with Monotonic T
 | `deepselect_estimate_bounds` | `(batch_size, vocab_size, topk, block_size, compact_threshold, dtype)` | Compute theoretical upper bounds on candidate elements E[W] and speedup relative to vanilla torch.topk |
 | `deepselect_recommend_config` | `(batch_size, vocab_size, topk, dtype)` | Recommend optimal block sizes, compaction threshold, and Threadblock Cluster size for workload |
 | `deepselect_simulate_selection` | `(input_matrix, topk, block_size, compact_threshold)` | Simulate randomized block scanning and monotonic threshold compaction on a 2D matrix of numbers |
-
 ---
 
 ## Key Modules & AST Symbols

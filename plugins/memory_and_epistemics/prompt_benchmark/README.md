@@ -23,7 +23,6 @@ LLM output evaluation, BLEU/ROUGE ngram similarity scoring, and regression bench
 | `score_text_similarity_bleu_rouge` | `(reference, candidate)` | Compute token precision (BLEU-1, BLEU-2) and recall/F1 (ROUGE-1, ROUGE-L) between reference and candidate text |
 | `evaluate_model_outputs` | `(test_cases)` | Run automated evaluation over a batch of prompt test cases against criteria (exact match, contains keywords, regex, length) |
 | `generate_regression_matrix` | `(runs)` | Compare benchmark scores across multiple prompt versions or model runs |
-
 ---
 
 ## Key Modules & AST Symbols

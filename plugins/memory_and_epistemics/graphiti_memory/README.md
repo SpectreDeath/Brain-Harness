@@ -22,7 +22,6 @@ Temporal knowledge graph engine with bi-temporal edge invalidation and tri-brid 
 | `graphiti_get_entity` | `(name_or_uuid, group_id)` | Retrieve full entity node state, summaries, attributes, and incident relationships |
 | `graphiti_invalidate_fact` | `(edge_uuid, reason)` | Mark a fact relation edge as invalidated with a timestamped record to preserve historical truth |
 | `graphiti_get_status` | `(group_id)` | Inspect knowledge graph memory statistics and driver backend health |
-
 ---
 
 ## Key Modules & AST Symbols

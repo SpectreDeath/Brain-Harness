@@ -26,3 +26,18 @@ def add_policy_rule(tool_pattern: str, decision: str, rationale: str = "") -> di
         "decision": decision,
         "rationale": rationale,
     }
+
+# -----------------------------------------------------------------------------
+# Harness Plugin Class & IoC Singleton (Rule 45)
+# -----------------------------------------------------------------------------
+from harness.plugins.base import HarnessPlugin
+class DomainAntigravityPolicyGatePlugin(HarnessPlugin):
+    """Google Antigravity declarative security policy gate enforcing tri-state allow/deny/ask_user tool evaluation"""
+
+    name = "domain.antigravity_policy_gate"
+    version = "1.0.0"
+    description = """Google Antigravity declarative security policy gate enforcing tri-state allow/deny/ask_user tool evaluation"""
+    trusted = True
+
+
+plugin = DomainAntigravityPolicyGatePlugin()

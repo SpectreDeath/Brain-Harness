@@ -281,3 +281,6 @@ class WebFetcherPlugin(HarnessPlugin, WebFetcherService):
         return await asyncio.to_thread(
             self.http_request, url, method, headers, json_data, timeout
         )
+
+# Module-level plugin singleton (Rule 45)
+plugin = WebFetcherPlugin()

@@ -291,3 +291,6 @@ class SymbolicSolverPlugin(HarnessPlugin, SymbolicSolverService):
             rule=res.get("rule"),
             error=res.get("error"),
         )
+
+# Module-level plugin singleton (Rule 45)
+plugin = SymbolicSolverPlugin()

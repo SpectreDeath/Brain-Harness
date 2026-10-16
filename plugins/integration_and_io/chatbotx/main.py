@@ -100,13 +100,13 @@ class ChatbotXPlugin(HarnessPlugin, ChatbotXService):
 
 
 # Module-level tool wrappers for direct ReAct step execution
-def chatbotx_list_contacts(
+async def chatbotx_list_contacts(
     limit: int = 20,
     tag: str | None = None,
     channel: str | None = None,
 ) -> dict[str, Any]:
     """Search and filter contacts across WhatsApp, Telegram, and Messenger."""
-    contacts = asyncio.run(plugin.list_contacts(limit=limit, tag=tag, channel=channel))
+    contacts = await plugin.list_contacts(limit=limit, tag=tag, channel=channel)
     return {
         "status": "ok",
         "count": len(contacts),
@@ -126,14 +126,14 @@ def chatbotx_list_contacts(
     }
 
 
-def chatbotx_send_message(
+async def chatbotx_send_message(
     contact_id: str,
     text: str,
     channel: str | None = None,
 ) -> dict[str, Any]:
     """Send an outbound text message to a contact."""
     try:
-        msg = asyncio.run(plugin.send_message(contact_id=contact_id, text=text, channel=channel))
+        msg = await plugin.send_message(contact_id=contact_id, text=text, channel=channel)
         return {
             "status": "ok",
             "message_id": msg.id,
@@ -148,13 +148,13 @@ def chatbotx_send_message(
         return {"status": "error", "error": str(e)}
 
 
-def chatbotx_trigger_flow(
+async def chatbotx_trigger_flow(
     contact_id: str,
     flow_id: str,
 ) -> dict[str, Any]:
     """Trigger an automated visual flow DAG for a contact."""
     try:
-        execution = asyncio.run(plugin.trigger_flow(contact_id=contact_id, flow_id=flow_id))
+        execution = await plugin.trigger_flow(contact_id=contact_id, flow_id=flow_id)
         return {
             "status": "ok",
             "execution_id": execution.execution_id,
@@ -167,14 +167,14 @@ def chatbotx_trigger_flow(
         return {"status": "error", "error": str(e)}
 
 
-def chatbotx_manage_tags(
+async def chatbotx_manage_tags(
     contact_id: str,
     action: str,
     tag: str,
 ) -> dict[str, Any]:
     """Add or remove a tag on a contact."""
     try:
-        contact = asyncio.run(plugin.manage_tags(contact_id=contact_id, action=action, tag=tag))
+        contact = await plugin.manage_tags(contact_id=contact_id, action=action, tag=tag)
         return {
             "status": "ok",
             "contact_id": contact.id,
@@ -184,12 +184,12 @@ def chatbotx_manage_tags(
         return {"status": "error", "error": str(e)}
 
 
-def chatbotx_query_conversations(
+async def chatbotx_query_conversations(
     limit: int = 20,
     status: str = "open",
 ) -> dict[str, Any]:
     """List active conversations and unread queue counts."""
-    convs = asyncio.run(plugin.query_conversations(limit=limit, status=status))
+    convs = await plugin.query_conversations(limit=limit, status=status)
     return {
         "status": "ok",
         "count": len(convs),
@@ -207,16 +207,16 @@ def chatbotx_query_conversations(
     }
 
 
-def chatbotx_broadcast(
+async def chatbotx_broadcast(
     audience_tag: str,
     message_text: str,
     channel: str | None = None,
 ) -> dict[str, Any]:
     """Dispatch a broadcast message to all contacts matching audience_tag."""
-    contacts = asyncio.run(plugin.list_contacts(limit=100, tag=audience_tag, channel=channel))
+    contacts = await plugin.list_contacts(limit=100, tag=audience_tag, channel=channel)
     dispatched = []
     for c in contacts:
-        msg = asyncio.run(plugin.send_message(contact_id=c.id, text=message_text, channel=channel))
+        msg = await plugin.send_message(contact_id=c.id, text=message_text, channel=channel)
         dispatched.append(msg.id)
     return {
         "status": "ok",
@@ -226,12 +226,12 @@ def chatbotx_broadcast(
     }
 
 
-def chatbotx_execute_tool(
+async def chatbotx_execute_tool(
     operation_id: str,
     parameters: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Execute a dynamic OpenAPI / MCP tool operation."""
-    res = asyncio.run(plugin.execute_tool(operation_id=operation_id, parameters=parameters))
+    res = await plugin.execute_tool(operation_id=operation_id, parameters=parameters)
     return {
         "status": res.status,
         "operation_id": res.operation_id,

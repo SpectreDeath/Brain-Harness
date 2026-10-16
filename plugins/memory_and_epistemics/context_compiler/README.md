@@ -21,7 +21,6 @@ AST-based 3-tier token-efficient context compilation, skeletonization, and reach
 | `skeletonize_code` | `(source_code)` | Strip function and method bodies from Python source, preserving signatures and docstrings |
 | `resolve_reachability` | `(repo_root, target_file, max_hops)` | Perform multi-hop AST symbol and import reachability analysis from a target file |
 | `estimate_token_reduction` | `(repo_root, target_file, max_hops)` | Calculate potential token savings of compiled 3-tier context versus a naive repository dump |
-
 ---
 
 ## Key Modules & AST Symbols

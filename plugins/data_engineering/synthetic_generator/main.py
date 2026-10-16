@@ -97,3 +97,18 @@ def generate_synthetic_timeseries(
         "trend": trend,
         "series": data_points,
     }
+
+# -----------------------------------------------------------------------------
+# Harness Plugin Class & IoC Singleton (Rule 45)
+# -----------------------------------------------------------------------------
+from harness.plugins.base import HarnessPlugin
+class DomainSyntheticGeneratorPlugin(HarnessPlugin):
+    """Schema-constrained synthetic mock dataset and time-series generator"""
+
+    name = "domain.synthetic_generator"
+    version = "1.0.0"
+    description = """Schema-constrained synthetic mock dataset and time-series generator"""
+    trusted = True
+
+
+plugin = DomainSyntheticGeneratorPlugin()

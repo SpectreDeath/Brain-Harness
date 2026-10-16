@@ -23,7 +23,6 @@ Interactive HTML report generation, Mermaid diagram visualization, and executive
 | `report_generate_html` | `(title, sections, output_path, theme)` | Generate an interactive, responsive HTML report with charts and formatted tables |
 | `diagram_generate_mermaid` | `(nodes, edges, direction)` | Synthesize valid Mermaid diagram syntax from nodes and edges |
 | `report_create_briefing` | `(title, summary, metrics, recommendations, output_path)` | Create an executive markdown and HTML briefing summary |
-
 ---
 
 ## Key Modules & AST Symbols

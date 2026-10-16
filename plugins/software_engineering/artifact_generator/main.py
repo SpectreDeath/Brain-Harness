@@ -291,3 +291,6 @@ class ArtifactGeneratorPlugin(HarnessPlugin, ArtifactGeneratorService):
             output_path=res.get("output_path"),
             error=res.get("error"),
         )
+
+# Module-level plugin singleton (Rule 45)
+plugin = ArtifactGeneratorPlugin()

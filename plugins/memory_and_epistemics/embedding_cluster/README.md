@@ -22,7 +22,6 @@ Unsupervised text chunk clustering, topic keyword extraction, and cluster summar
 |---|---|---|
 | `cluster_text_chunks` | `(texts, num_clusters)` | Cluster a collection of text documents or chunks into K topic groups based on TF-IDF representation |
 | `extract_cluster_topic_keywords` | `(cluster_texts, top_n)` | Extract top TF-IDF keywords characterizing a cluster group |
-
 ---
 
 ## Key Modules & AST Symbols

@@ -19,7 +19,6 @@ Dialectical multi-agent reasoning, Proposer vs Challenger debate rounds, and arb
 |---|---|---|
 | `conduct_dialectical_debate` | `(topic, pro_arguments, con_arguments)` | Run structured dialectical debate rounds (Thesis / Proposer vs Antithesis / Challenger) |
 | `synthesize_debate_verdict` | `(debate_summary)` | Synthesize final arbiter verdict, identifying concessions, unaddressed risks, and final recommendation |
-
 ---
 
 ## Key Modules & AST Symbols

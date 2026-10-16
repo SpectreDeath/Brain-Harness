@@ -13,3 +13,13 @@
 
 ## Architectural Deepening (Rule 20)
 Complements Brain Harness's `RepoMapService` by providing offline, content-addressed SQLite AST caching for instant symbol cross-referencing during ReAct agent step execution.
+
+
+---
+
+## Tools & Entrypoints
+
+| Entrypoint | Parameters | Description |
+|---|---|---|
+| `mantis_build_structural_index` | `(repo_path, db_path)` | Parse codebase AST into content-addressed semantic units and index into SQLite database |
+| `mantis_query_symbol` | `(symbol_name, db_path, query_type)` | Query symbol definitions, references, and semantic unit hashes from the structural index |

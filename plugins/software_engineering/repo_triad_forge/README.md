@@ -25,7 +25,6 @@ Authoritative Repo-Triad Forge plugin: 5-stage repository cognitive audit, visua
 | `triad_ki_candidates` | `(repo_path)` | Extract candidate Knowledge Items with isnad citations from repository scan |
 | `triad_plan` | `(repo_path, skill_name, plugin_name)` | Synthesize 5-stage triad pipeline implementation plan with operational budgets |
 | `triad_run` | `(repo_path, options)` | Execute full 5-stage triad pipeline with bounded in-flight self-repair |
-
 ---
 
 ## Key Modules & AST Symbols

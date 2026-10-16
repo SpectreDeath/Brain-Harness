@@ -23,7 +23,6 @@ Docker container linter, multi-stage Dockerfile generator, and container securit
 | `lint_dockerfile` | `(dockerfile_content)` | Lint Dockerfile for root user vulnerabilities, missing cache flags, latest tag usage, and security antipatterns |
 | `generate_dockerfile` | `(runtime, entrypoint_command, port)` | Generate an optimized, production-ready multi-stage Dockerfile for a given language/runtime |
 | `audit_container_security` | `(container_config)` | Audit container runtime configuration (privileged mode, read-only rootfs, capabilities, volume mounts) |
-
 ---
 
 ## Key Modules & AST Symbols

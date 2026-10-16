@@ -278,31 +278,31 @@ _GLOBAL_SANDBOX = MantisSandboxEngine()
 # Tool Entrypoints Matching plugin.json Specification
 # -----------------------------------------------------------------------------
 
-def mantis_sandbox_exec(
+async def mantis_sandbox_exec(
     command: str,
     timeout_seconds: int = 120,
     env_vars: dict[str, str] | None = None,
 ) -> dict[str, Any]:
     """Execute command securely inside isolated subprocess sandbox."""
-    return asyncio.run(_GLOBAL_SANDBOX.sandbox_exec(command, timeout_seconds, env_vars or {}))
+    return await _GLOBAL_SANDBOX.sandbox_exec(command, timeout_seconds, env_vars or {})
 
 
-def mantis_reproduce_crash(
+async def mantis_reproduce_crash(
     reproducer_script: str,
     target_file: str,
     sanitizers: list[str] | None = None,
 ) -> dict[str, Any]:
     """Execute crash reproducer script against target file in sandbox isolation."""
-    return asyncio.run(_GLOBAL_SANDBOX.reproduce_crash(reproducer_script, target_file, sanitizers or ["asan"]))
+    return await _GLOBAL_SANDBOX.reproduce_crash(reproducer_script, target_file, sanitizers or ["asan"])
 
 
-def mantis_patch_verify(
+async def mantis_patch_verify(
     diff_content: str,
     reproducer_script: str,
     run_bypass_reattack: bool = True,
 ) -> dict[str, Any]:
     """Apply candidate security fix and verify it blocks the crash reproducer."""
-    return asyncio.run(_GLOBAL_SANDBOX.patch_verify(diff_content, reproducer_script, run_bypass_reattack))
+    return await _GLOBAL_SANDBOX.patch_verify(diff_content, reproducer_script, run_bypass_reattack)
 
 
 # -----------------------------------------------------------------------------
@@ -353,3 +353,6 @@ class MantisSandboxVerifierPlugin(HarnessPlugin, MantisSandboxVerifierService):
 
     async def patch_verify(self, diff_content: str, reproducer_script: str, run_bypass_reattack: bool = True) -> dict[str, Any]:
         return await self._engine.patch_verify(diff_content, reproducer_script, run_bypass_reattack)
+
+# Module-level plugin singleton (Rule 45)
+plugin = MantisSandboxVerifierPlugin()

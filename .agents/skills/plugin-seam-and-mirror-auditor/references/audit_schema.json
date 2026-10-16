@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PluginAuditorReport",
+  "description": "Schema for plugin seam and mirror audit report outputs.",
+  "type": "object",
+  "required": [
+    "target_dir",
+    "total_plugins",
+    "dag_valid",
+    "mirror_discrepancies",
+    "fuzz_safe",
+    "fuzz_timeouts",
+    "fuzz_unhandled"
+  ],
+  "properties": {
+    "target_dir": {
+      "type": "string",
+      "description": "Resolved absolute or relative path to the audited directory."
+    },
+    "total_plugins": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Number of discovered plugin directories."
+    },
+    "dag_valid": {
+      "type": "boolean",
+      "description": "Whether the IoC dependency DAG is free of cycles and dangling requirements."
+    },
+    "mirror_discrepancies": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Count of documentation-to-code signature mismatches or missing tools."
+    },
+    "fuzz_safe": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Count of safe or expected error invocations under adversarial parameter fuzzing."
+    },
+    "fuzz_timeouts": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Count of execution timeouts or potential deadlocks (>5.0s)."
+    },
+    "fuzz_unhandled": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Count of unexpected runtime exceptions encountered during fuzzing."
+    }
+  },
+  "additionalProperties": true
+}

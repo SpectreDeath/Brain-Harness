@@ -25,7 +25,6 @@ Ebbinghaus forgetting curve memory engine with channel multipliers, snapshot ses
 | `export_memory_session` | `(session_id)` | Export snapshot serialization of an active memory session |
 | `import_memory_session` | `(session_id, snapshot)` | Import snapshot serialization to restore a memory session |
 | `simulate_session_benchmark` | `(num_turns, total_memories, recall_probability, seed)` | Run comparative simulation between Ebbinghaus memory decay and a fixed-window recency baseline |
-
 ---
 
 ## Key Modules & AST Symbols

@@ -31,3 +31,18 @@ def fire_reactive_trigger(trigger_id: str, payload: dict[str, Any]) -> dict[str,
         "trigger_id": trigger_id,
         "payload": payload,
     }
+
+# -----------------------------------------------------------------------------
+# Harness Plugin Class & IoC Singleton (Rule 45)
+# -----------------------------------------------------------------------------
+from harness.plugins.base import HarnessPlugin
+class DomainAntigravityTriggerRuntimePlugin(HarnessPlugin):
+    """Google Antigravity reactive trigger scheduling engine providing async interval and file watcher wakeup without polling"""
+
+    name = "domain.antigravity_trigger_runtime"
+    version = "1.0.0"
+    description = """Google Antigravity reactive trigger scheduling engine providing async interval and file watcher wakeup without polling"""
+    trusted = True
+
+
+plugin = DomainAntigravityTriggerRuntimePlugin()

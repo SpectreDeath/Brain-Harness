@@ -23,7 +23,6 @@ Google Antigravity OpenTelemetry distributed trace exporter and dynamic CLI stat
 | `start_telemetry_span` | `(name, span_id, parent_id)` | Start a new hierarchical telemetry span |
 | `end_telemetry_span` | `(span_id, status)` | Close an active telemetry span |
 | `get_statusline_payload` | `(mode)` | Generate Antigravity dynamic statusline IPC payload |
-
 ---
 
 ## Key Modules & AST Symbols

@@ -21,8 +21,7 @@ Autonomous test discovery, test execution, and structured failure parsing for TD
 | Entrypoint | Parameters | Description |
 |---|---|---|
 | `discover_tests` | `(root_dir)` | Discover test files, classes, and test functions across a directory tree |
-| `run_tests` | `(target_path, markers, keyword_filter, timeout)` | Execute pytest on a target path and return structured pass/fail results with tracebacks |
-
+| `run_tests` | `(target_path, markers, keyword_filter, timeout, root_dir)` | Execute pytest on a target path and return structured pass/fail results with tracebacks |
 ---
 
 ## Key Modules & AST Symbols

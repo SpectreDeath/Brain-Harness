@@ -67,3 +67,15 @@ deployment_policy:
   enforce_env_key_isolation: true
   restrict_cors_origin_in_production: true
 ```
+
+
+---
+
+## Tools & Entrypoints
+
+| Entrypoint | Parameters | Description |
+|---|---|---|
+| `audit_code` | `(source_code, file_path)` | Run static analysis against the 5 production streaming rubrics |
+| `scaffold_app` | `(config)` | Generate a production 3-tier Gemini & Vercel streaming application |
+| `simulate_stream` | `(prompt, chunks_count)` | Simulate unbuffered plain-text chunk streaming |
+| `generate_visual_brief` | `(output_path)` | Generate standalone HTML visual brief with telemetry and topology diagram |

@@ -24,3 +24,15 @@ tau_bridge = context.require(TAU_HARNESS_BRIDGE_SERVICE_KEY)
 - `tau_tool_history_repair`: In-flight repair of malformed tool call histories.
 - `tau_project_trust_eval`: Evaluates directory permissions and protected files.
 - `tau_rpc_session_dispatch`: Formats JSON-RPC 2.0 protocol envelopes.
+
+
+---
+
+## Tools & Entrypoints
+
+| Entrypoint | Parameters | Description |
+|---|---|---|
+| `tau_session_fork` | `(entries, target_id)` | Traverse branchable session tree DAG entries and resolve linear ancestry path from root to target entry |
+| `tau_tool_history_repair` | `(messages)` | Normalize message history in-flight to repair orphan tool responses or unresponded assistant tool calls |
+| `tau_project_trust_eval` | `(project_path, trusted_roots)` | Evaluate workspace security boundaries, git root inheritance, and sensitive file exposures |
+| `tau_rpc_session_dispatch` | `(request_id, result, error)` | Format or dispatch a Pi-compatible JSONL RPC protocol envelope for headless runner execution |

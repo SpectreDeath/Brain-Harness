@@ -135,15 +135,29 @@ class AstFunctionInspectionRule(ValidationRule):
         try:
             code_content = entrypoint_path.read_text(encoding="utf-8")
             tree = ast.parse(code_content, filename=str(entrypoint_path))
-            defined_functions = {
-                node.name
-                for node in ast.walk(tree)
-                if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
-            }
+            defined_functions = set()
+            for node in ast.walk(tree):
+                if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                    defined_functions.add(node.name)
+                elif isinstance(node, ast.ImportFrom):
+                    for alias in node.names:
+                        defined_functions.add(alias.asname or alias.name)
+                elif isinstance(node, ast.Import):
+                    for alias in node.names:
+                        defined_functions.add(alias.asname or alias.name)
+                elif isinstance(node, ast.Assign):
+                    for target in node.targets:
+                        if isinstance(target, ast.Name):
+                            defined_functions.add(target.id)
 
-            missing_funcs = [
-                ep.name for ep in ctx.manifest.entrypoints if ep.name not in defined_functions
-            ]
+            has_dynamic_getattr = "__getattr__" in defined_functions
+
+            missing_funcs = []
+            if not has_dynamic_getattr:
+                for ep in ctx.manifest.entrypoints:
+                    cand_names = {ep.name, ep.name.replace("-", "_")}
+                    if not (cand_names & defined_functions):
+                        missing_funcs.append(ep.name)
 
             if missing_funcs:
                 if ctx.remediate:

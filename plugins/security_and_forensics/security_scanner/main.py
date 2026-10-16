@@ -133,3 +133,18 @@ def audit_dependencies(requirements_content: str) -> dict[str, Any]:
         "vulnerabilities": vulnerable_alerts,
         "passed": len(vulnerable_alerts) == 0,
     }
+
+# -----------------------------------------------------------------------------
+# Harness Plugin Class & IoC Singleton (Rule 45)
+# -----------------------------------------------------------------------------
+from harness.plugins.base import HarnessPlugin
+class DomainSecurityScannerPlugin(HarnessPlugin):
+    """Static code vulnerability scanner, secret detection, and dependency audit plugin"""
+
+    name = "domain.security_scanner"
+    version = "1.0.0"
+    description = """Static code vulnerability scanner, secret detection, and dependency audit plugin"""
+    trusted = True
+
+
+plugin = DomainSecurityScannerPlugin()

@@ -10,5 +10,134 @@
   "provides": [
     "service.brain_artifact_miner"
   ],
-  "requires": []
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "build_offset_index",
+      "description": "Executes the operation.",
+      "parameters": [
+        {
+          "name": "path",
+          "type": "string",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "get_step",
+      "description": "Executes the operation.",
+      "parameters": [
+        {
+          "name": "transcript_path",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "step_index",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "dereference_truncated",
+          "type": "string",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "stream_steps",
+      "description": "Executes the operation.",
+      "parameters": [
+        {
+          "name": "transcript_path",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "dereference_truncated",
+          "type": "string",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "scan_scratch_tools",
+      "description": "Executes the operation.",
+      "parameters": [
+        {
+          "name": "brain_dir",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "max_depth",
+          "type": "string",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "triage_task_logs",
+      "description": "Executes the operation.",
+      "parameters": [
+        {
+          "name": "brain_dir",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "max_depth",
+          "type": "string",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "generate_html_brief",
+      "description": "Executes the operation.",
+      "parameters": [
+        {
+          "name": "data",
+          "type": "string",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "export_knowledge_item",
+      "description": "Executes the operation.",
+      "parameters": [
+        {
+          "name": "output_dir",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "ki_id",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "category",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "summary",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "claims",
+          "type": "string",
+          "required": false
+        }
+      ]
+    }
+  ]
 }

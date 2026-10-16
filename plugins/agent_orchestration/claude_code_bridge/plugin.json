@@ -8,5 +8,34 @@
   "provides": [
     "service.claude_code_bridge"
   ],
-  "requires": []
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "evaluate_bash_guardrails",
+      "description": "Inspect a shell command line before execution against dangerous patterns.",
+      "parameters": [
+        {
+          "name": "command",
+          "type": "string",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "compact_prompt",
+      "description": "Compact context prompt using deduplication and progressive line folding.",
+      "parameters": [
+        {
+          "name": "text",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "max_lines",
+          "type": "string",
+          "required": false
+        }
+      ]
+    }
+  ]
 }

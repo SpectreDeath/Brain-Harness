@@ -205,3 +205,6 @@ class PromptBenchmarkPlugin(HarnessPlugin, PromptBenchmarkService):
             ranking=res.get("ranking", []),
             error=res.get("error"),
         )
+
+# Module-level plugin singleton (Rule 45)
+plugin = PromptBenchmarkPlugin()

@@ -23,7 +23,6 @@ In-flight stream normalization and plain-text tool-call recovery engine for repa
 | `openclaw_parse_tool_blocks` | `(text)` | Parses plain-text tool call codeblocks, JSON fences, or XML-wrapped calls from raw LLM output. |
 | `openclaw_repair_tool_call` | `(raw_call, tool_name)` | Repairs malformed tool call JSON payloads (trailing commas, unescaped characters, unclosed brackets). |
 | `openclaw_normalize_stream_chunk` | `(chunk)` | Processes a streaming chunk, stripping plain-text tool blocks from the visible stream and yielding promoted tool events. |
-
 ---
 
 ## Key Modules & AST Symbols

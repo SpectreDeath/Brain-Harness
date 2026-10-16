@@ -11,6 +11,8 @@ Wraps tools/ scripts from gods-eye-view:
 from __future__ import annotations
 
 import asyncio
+from collections import deque
+import json
 import os
 import shutil
 import tempfile
@@ -24,15 +26,143 @@ logger = structlog.get_logger(__name__)
 
 
 class NodeCliBridge:
-    """Safe subprocess invoker for upstream Node.js scripts."""
+    """Safe subprocess invoker for upstream Node.js scripts and MCP stdio server."""
 
     def __init__(self, tools_dir: str | None = None) -> None:
-        self.tools_dir = tools_dir or r"D:\GitHub\cloned\gods-eye-view-main\gods-eye-view-main\tools"
+        self.tools_dir = (
+            tools_dir
+            or os.environ.get("GEV_TOOLS_DIR")
+            or r"D:\GitHub\cloned\gods-eye-view\tools"
+        )
+        self.repo_root = os.path.dirname(os.path.abspath(self.tools_dir))
         self.node_path = shutil.which("node")
 
     def is_node_available(self) -> bool:
         """Check if Node.js runtime is installed on the host system."""
         return self.node_path is not None
+
+    def _simulate_fallback(
+        self,
+        tool_name: str,
+        arguments: dict[str, Any] | None = None,
+        reason: str = "Subprocess offline fallback",
+    ) -> dict[str, Any]:
+        """Generate structured schema-compliant fallback response when MCP server is offline."""
+        from .engine.simulation import build_simulated_mcp_response
+
+        return build_simulated_mcp_response(tool_name, arguments, reason)
+
+    async def query_mcp_tool(
+        self,
+        tool_name: str,
+        arguments: dict[str, Any] | None = None,
+        timeout: float = 20.0,
+    ) -> dict[str, Any]:
+        """Query upstream Node.js MCP server (server/mcp/stdio.js) over stdio JSON-RPC with stderr ring buffer."""
+        mcp_script = os.path.join(self.repo_root, "server", "mcp", "stdio.js")
+        if not self.is_node_available() or not os.path.exists(mcp_script):
+            return self._simulate_fallback(
+                tool_name,
+                arguments,
+                reason="Node.js or MCP stdio server script unavailable",
+            )
+
+        rpc_request = (
+            json.dumps({
+                "jsonrpc": "2.0",
+                "id": 1,
+                "method": "tools/call",
+                "params": {
+                    "name": tool_name,
+                    "arguments": arguments or {},
+                },
+            })
+            + "\n"
+        )
+
+        stderr_buffer: deque[str] = deque(maxlen=50)
+        proc = None
+        try:
+            proc = await asyncio.create_subprocess_exec(
+                self.node_path or "node",
+                mcp_script,
+                stdin=asyncio.subprocess.PIPE,
+                stdout=asyncio.subprocess.PIPE,
+                stderr=asyncio.subprocess.PIPE,
+                cwd=self.repo_root,
+            )
+
+            stdout, stderr = await asyncio.wait_for(
+                proc.communicate(input=rpc_request.encode("utf-8")),
+                timeout=timeout,
+            )
+
+            if stderr:
+                for line in stderr.decode("utf-8", errors="ignore").splitlines():
+                    if line.strip():
+                        stderr_buffer.append(line.strip())
+
+            if proc.returncode != 0:
+                trailing = "\n".join(list(stderr_buffer)[-10:])
+                logger.warning(
+                    "mcp_subprocess_nonzero",
+                    tool=tool_name,
+                    returncode=proc.returncode,
+                    stderr=trailing,
+                )
+                return self._simulate_fallback(
+                    tool_name,
+                    arguments,
+                    reason=f"Subprocess exited {proc.returncode}: {trailing[:200]}",
+                )
+
+            for line in stdout.decode("utf-8", errors="ignore").splitlines():
+                if line.strip().startswith("{"):
+                    try:
+                        resp = json.loads(line)
+                        if "result" in resp:
+                            res = resp["result"]
+                            return {
+                                "status": "ok",
+                                "source": "mcp_live",
+                                "is_live": True,
+                                "result": res,
+                            }
+                        if "error" in resp:
+                            return {
+                                "status": "error",
+                                "source": "mcp_live",
+                                "is_live": False,
+                                "error": resp["error"],
+                            }
+                    except Exception:
+                        continue
+            return self._simulate_fallback(
+                tool_name,
+                arguments,
+                reason="Subprocess produced no JSON-RPC response",
+            )
+        except Exception as e:
+            trailing = "\n".join(list(stderr_buffer)[-10:])
+            logger.warning("mcp_query_error", error=str(e), stderr=trailing)
+            return self._simulate_fallback(
+                tool_name,
+                arguments,
+                reason=f"Transport exception: {str(e)}",
+            )
+        finally:
+            if proc and proc.returncode is None:
+                try:
+                    proc.kill()
+                    await proc.wait()
+                except Exception:
+                    pass
+            if proc and proc.stdin:
+                try:
+                    if hasattr(proc.stdin, "is_closing") and not proc.stdin.is_closing():
+                        proc.stdin.close()
+                except Exception:
+                    pass
 
     async def render_sat_ortho(
         self,

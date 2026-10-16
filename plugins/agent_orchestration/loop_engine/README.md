@@ -23,7 +23,6 @@ Goal-directed agent loop state machine with tri-state resource polling, decision
 | `validate_task_dag` | `(tasks)` | Validate task DAG for cyclic dependencies, missing task IDs, and structural correctness |
 | `benchmark_loop_vs_linear` | `(num_scenarios, seed, max_iterations)` | Benchmark goal-directed LoopController against one-shot linear baseline across failure topologies |
 | `create_scenario_graph` | `(num_branches, tasks_per_branch, seed, failure_mix)` | Generate a synthetic task graph scenario with controlled failure and latency injection |
-
 ---
 
 ## Key Modules & AST Symbols

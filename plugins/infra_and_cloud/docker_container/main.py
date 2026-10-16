@@ -182,3 +182,18 @@ def audit_container_security(container_config: dict[str, Any]) -> dict[str, Any]
         "warnings_count": len(warnings),
         "warnings": warnings,
     }
+
+# -----------------------------------------------------------------------------
+# Harness Plugin Class & IoC Singleton (Rule 45)
+# -----------------------------------------------------------------------------
+from harness.plugins.base import HarnessPlugin
+class DomainDockerContainerPlugin(HarnessPlugin):
+    """Docker container linter, multi-stage Dockerfile generator, and container security auditor"""
+
+    name = "domain.docker_container"
+    version = "1.0.0"
+    description = """Docker container linter, multi-stage Dockerfile generator, and container security auditor"""
+    trusted = True
+
+
+plugin = DomainDockerContainerPlugin()

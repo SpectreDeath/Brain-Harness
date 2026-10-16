@@ -23,7 +23,6 @@ Google Antigravity SDK core bridge providing LocalConnection proactor transport,
 | `connect_proactor` | `(host, port)` | Establish Antigravity proactor connection |
 | `dispatch_local_step` | `(session_id, prompt)` | Dispatch prompt to proactor and return step observation stream |
 | `get_session_telemetry` | `(session_id)` | Retrieve telemetry metrics for session |
-
 ---
 
 ## Key Modules & AST Symbols

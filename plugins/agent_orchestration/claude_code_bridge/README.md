@@ -8,3 +8,13 @@ A sandboxed Harness plugin providing pre-tool bash command guardrails and prompt
 
 ## Service Key
 - `service.claude_code_bridge` (`CLAUDE_CODE_BRIDGE_KEY`)
+
+
+---
+
+## Tools & Entrypoints
+
+| Entrypoint | Parameters | Description |
+|---|---|---|
+| `evaluate_bash_guardrails` | `(command)` | Inspect a shell command line before execution against dangerous patterns. |
+| `compact_prompt` | `(text, max_lines)` | Compact context prompt using deduplication and progressive line folding. |

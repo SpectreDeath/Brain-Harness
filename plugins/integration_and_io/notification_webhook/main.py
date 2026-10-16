@@ -292,3 +292,6 @@ class NotificationWebhookPlugin(HarnessPlugin, NotificationService):
         return await asyncio.to_thread(
             self.notify_task_event, event_type, task_name, details, webhook_url
         )
+
+# Module-level plugin singleton (Rule 45)
+plugin = NotificationWebhookPlugin()

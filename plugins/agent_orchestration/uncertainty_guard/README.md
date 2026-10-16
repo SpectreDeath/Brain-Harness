@@ -88,3 +88,15 @@ telemetry:
   escalation_queue_max_size: 1000
   cluster_min_size_for_debt: 2
 ```
+
+
+---
+
+## Tools & Entrypoints
+
+| Entrypoint | Parameters | Description |
+|---|---|---|
+| `verify_boundary` | `(query, target_domains, threshold)` | Layer 1 input domain boundary gating with normalized cosine centroid similarity |
+| `score_retrieval` | `(user_query, retrieved_chunks, minimum_relevance)` | Layer 2 context sufficiency and semantic distance scoring across retrieved chunks |
+| `validate_logprobs` | `(token_logprobs, logprob_threshold)` | Layer 3 token generation log probability and text perplexity analysis |
+| `intercept_request` | `(query, target_domains, retrieved_chunks, token_logprobs, draft_response, escalate_on_failure)` | Unified 3-layer sequential request interception lifecycle with deterministic routing |

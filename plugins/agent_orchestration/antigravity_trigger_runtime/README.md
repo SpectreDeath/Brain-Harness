@@ -23,7 +23,6 @@ Google Antigravity reactive trigger scheduling engine providing async interval a
 | `register_interval_trigger` | `(trigger_id, interval_seconds)` | Register an asynchronous interval wakeup trigger |
 | `register_file_change_trigger` | `(trigger_id, file_path)` | Register a reactive file-change wakeup trigger |
 | `fire_reactive_trigger` | `(trigger_id, payload)` | Simulate reactive trigger wakeup |
-
 ---
 
 ## Key Modules & AST Symbols

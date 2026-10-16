@@ -22,3 +22,16 @@ Domain-partitioned plugin providing production harness governance, 4 behavioral 
 - `mcp_security_audit(config_path: str | None)`
 - `negative_backlog_mine(logs_path: str | None)`
 - `ai_native_harness_brief(target: str | None, output_path: str | None)`
+
+
+---
+
+## Tools & Entrypoints
+
+| Entrypoint | Parameters | Description |
+|---|---|---|
+| `four_gates_evaluate` | `(target)` | Evaluate the 4 Behavioral Verification Gates (Typecheck, 100% Coverage, E2E Simulation, Live Demo) |
+| `doc_drift_audit` | `(target)` | Calculate Git code-to-doc commit drift count and status badges |
+| `mcp_security_audit` | `(config_path)` | Audit MCP server posture for zero credentials, PAT forwarding, and uniform leak defense |
+| `negative_backlog_mine` | `(logs_path)` | Mine unanswered assistant queries and cluster into a demand-ranked documentation backlog |
+| `ai_native_harness_brief` | `(target, output_path)` | Render interactive HTML visual brief with Mermaid topology and telemetry tables |

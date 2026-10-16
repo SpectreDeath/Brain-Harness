@@ -96,3 +96,39 @@ class DiscoveryIndexScoutPlugin(HarnessPlugin, DiscoveryIndexService):
 
 # Module-level plugin singleton (Rule 45)
 plugin = DiscoveryIndexScoutPlugin()
+
+
+# Top-level tool entrypoints matching plugin.json
+async def discovery_search(
+    query: str | None = None,
+    category: str | None = None,
+    tag: str | None = None,
+    provenance_tier: str | None = None,
+    export_format: str | None = None,
+    limit: int = 20,
+) -> list[dict[str, Any]]:
+    """Search discovery catalog by query, category, tag, or provenance tier."""
+    results = await plugin.search(
+        query=query,
+        category=category,
+        tag=tag,
+        provenance_tier=provenance_tier,
+        export_format=export_format,
+        limit=limit,
+    )
+    return [r.__dict__ if hasattr(r, "__dict__") else r for r in results]
+
+
+async def discovery_get_source(source_id: str) -> dict[str, Any] | None:
+    """Retrieve details for a single discovery source by ID."""
+    source = await plugin.get_source(source_id)
+    if source is None:
+        return None
+    return source.__dict__ if hasattr(source, "__dict__") else source
+
+
+async def discovery_get_stats() -> dict[str, Any]:
+    """Retrieve statistical rollups across the discovery knowledge catalog."""
+    stats = await plugin.get_stats()
+    return stats.__dict__ if hasattr(stats, "__dict__") else stats
+

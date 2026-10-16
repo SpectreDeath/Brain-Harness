@@ -14,10 +14,10 @@ The `plugin.openclaw_tool_repair` provides in-flight plain-text tool-call recove
 from harness.kernel.context import ServiceContext
 from harness.services.openclaw_bridge import OPENCLAW_TOOL_REPAIR_KEY
 
-repair_svc = context.resolve(OPENCLAW_TOOL_REPAIR_KEY)
+repair_svc = context.require(OPENCLAW_TOOL_REPAIR_KEY)
 
-# Handle plain text output from a model
-raw_text = 'Let me run this for you:\n```json\n{"tool": "bash", "arguments": {"command": "ls -la",}}\n```'
+# Handle plain text output with tool call
+raw_text = 'Tool call: {"tool": "bash", "arguments": {"command": "ls -la",}}'
 blocks = repair_svc.parse_plain_text_tool_blocks(raw_text)
 
 for block in blocks:

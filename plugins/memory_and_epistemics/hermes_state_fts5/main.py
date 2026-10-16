@@ -135,3 +135,18 @@ def query_session_provenance(message_id: str) -> dict[str, Any]:
         "status": "ok",
         "provenance": dict(row),
     }
+
+# -----------------------------------------------------------------------------
+# Harness Plugin Class & IoC Singleton (Rule 45)
+# -----------------------------------------------------------------------------
+from harness.plugins.base import HarnessPlugin
+class DomainHermesStateFts5Plugin(HarnessPlugin):
+    """Hermes SQLite WAL state storage with FTS5 search, parent-child session compression splitting, and cross-session recall"""
+
+    name = "domain.hermes_state_fts5"
+    version = "1.0.0"
+    description = """Hermes SQLite WAL state storage with FTS5 search, parent-child session compression splitting, and cross-session recall"""
+    trusted = True
+
+
+plugin = DomainHermesStateFts5Plugin()

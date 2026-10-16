@@ -17,12 +17,15 @@ Knowledge graph indexer, semantic router, and visual topology generator for agen
 
 | Entrypoint | Parameters | Description |
 |---|---|---|
+| `select_skills_for_task` | `(task, max_skills, include_verifier)` | Select skills and compile a prerequisite-aware execution plan for an agent task using the skill knowledge graph |
+| `cluster_skill_graph` | `(min_cluster_size)` | Cluster workspace skills into functional capability domains and discover novel capabilities |
+| `discover_emergent_capabilities` | `(query)` | Search for emergent macro-capabilities formed by composite multi-skill pipelines |
+| `get_cross_cluster_bridges` | `()` | Discover cross-domain macro-bridges connecting distinct clusters |
 | `index_skill_catalog` | `(root_path)` | Scan workspace (.agents/skills and plugin directories) to build the in-memory skill knowledge graph |
 | `query_skill_router` | `(intent, top_k)` | Find the optimal skill or multi-skill execution chain for a given task description or intent |
 | `find_skill_chain` | `(start_skill, target_skill)` | Compute the shortest directed path or multi-skill pipeline from a start skill to a target objective |
 | `get_skill_topology` | `(skill_name)` | Retrieve upstream prerequisites, downstream handoffs, invariants, and mitigated anti-patterns for a given skill |
 | `export_skill_graph_visual` | `(output_path)` | Generate an interactive visual HTML brief in %TEMP% rendering the Mermaid DAG of all skills and category clusters |
-
 ---
 
 ## Key Modules & AST Symbols

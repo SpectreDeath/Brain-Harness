@@ -178,3 +178,6 @@ class ApiOpenapiPlugin(HarnessPlugin, OpenApiSpecService):
             mock_data=res.get("mock_data"),
             error=res.get("error"),
         )
+
+# Module-level plugin singleton (Rule 45)
+plugin = ApiOpenapiPlugin()

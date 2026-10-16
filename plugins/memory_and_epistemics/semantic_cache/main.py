@@ -83,3 +83,6 @@ class SemanticCachePlugin(HarnessPlugin):
 
     async def on_unload(self) -> None:
         logger.info("SemanticCachePlugin unloaded", plugin=self.name)
+
+# Module-level plugin singleton (Rule 45)
+plugin = SemanticCachePlugin()

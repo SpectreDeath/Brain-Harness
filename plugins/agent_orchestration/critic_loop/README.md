@@ -18,13 +18,12 @@ Authoritative critic, rubric evaluation, destructive command safety gate, and di
 | Entrypoint | Parameters | Description |
 |---|---|---|
 | `evaluate_rubric` | `(content, rubric)` | Evaluate draft text or code against a criteria checklist and produce itemized scoring |
-| `run_critic_loop` | `(task, draft, threshold, max_iterations)` | Run iterative multi-turn critique and refinement until threshold score is achieved |
+| `run_critic_loop` | `(task, draft, rubric, max_iterations, threshold, llm_service)` | Run iterative multi-turn critique and refinement until threshold score is achieved |
 | `critic_check_safety` | `(command)` | Scan a CLI shell command for dangerous, destructive, or irreversible operations |
 | `critic_evaluate_code` | `(code, language)` | Statically analyze code syntax, AST complexity, function docstrings, and potential anti-patterns |
 | `critic_review_plan` | `(goal, steps)` | Evaluate an execution plan for verification steps, risks, and missing safeguards |
 | `conduct_dialectical_debate` | `(topic, pro_arguments, con_arguments)` | Structure dialectical argument rounds between Proposer and Challenger |
 | `synthesize_debate_verdict` | `(debate_summary)` | Synthesize an impartial arbiter decision based on debate rounds |
-
 ---
 
 ## Key Modules & AST Symbols

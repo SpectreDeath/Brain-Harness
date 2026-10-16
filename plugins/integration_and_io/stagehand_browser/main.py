@@ -182,3 +182,6 @@ class StagehandBrowserPlugin(HarnessPlugin, StagehandBrowserService):
     ) -> StagehandSessionStatus:
         res = self._engine.control_session(action=action, url=url, script=script, provider=provider)
         return StagehandSessionStatus(**res)
+
+# Module-level plugin singleton (Rule 45)
+plugin = StagehandBrowserPlugin()

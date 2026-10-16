@@ -31,3 +31,15 @@ This plugin implements:
 ## Configuration
 
 Specified in `config.default.yaml`.
+
+
+---
+
+## Tools & Entrypoints
+
+| Entrypoint | Parameters | Description |
+|---|---|---|
+| `omarchy_list_themes` | `()` | List all bundled Omarchy desktop themes with metadata and color palette preview |
+| `omarchy_get_theme_palette` | `(theme_name)` | Retrieve fully resolved color palette for a theme, including ANSI and semantic aliases |
+| `omarchy_render_theme_template` | `(template_content, theme_name)` | Render a configuration template string using Omarchy theme tokens, mix functions, and gradient syntax |
+| `omarchy_validate_theme_contrast` | `(theme_name)` | Calculate WCAG 2.1 relative luminance and contrast ratios between text and background colors |

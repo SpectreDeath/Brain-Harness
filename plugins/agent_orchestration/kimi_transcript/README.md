@@ -21,8 +21,7 @@ Isomorphic 4-layer transcript data engine with granularity-gated telemetry filte
 | Entrypoint | Parameters | Description |
 |---|---|---|
 | `kimi_transcript_project` | `(frames, granularity, cursor, limit)` | Projects raw or normalized agent execution event frames at client-requested granularity (off, turn, block, delta) with cursor pagination. |
-| `kimi_scope_inspect` | `(depth_limit, include_services)` | Introspects the active ServiceContext parent-child hierarchy and annotates each context level with 4-tier scope roles (APP, WORKSPACE, SESSION, AGENT). |
-
+| `kimi_scope_inspect` | `(context, depth_limit, include_services)` | Introspects the active ServiceContext parent-child hierarchy and annotates each context level with 4-tier scope roles (APP, WORKSPACE, SESSION, AGENT). |
 ---
 
 ## Key Modules & AST Symbols

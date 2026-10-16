@@ -8,5 +8,61 @@
   "provides": [
     "service.openhands_bridge"
   ],
-  "requires": []
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "create_event_stream",
+      "description": "Create a new action-observation event stream.",
+      "parameters": [
+        {
+          "name": "stream_id",
+          "type": "string",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "record_action",
+      "description": "Record an agent action in the specified stream.",
+      "parameters": [
+        {
+          "name": "stream_id",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "action",
+          "type": "string",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "record_observation",
+      "description": "Record an environment observation in the specified stream.",
+      "parameters": [
+        {
+          "name": "stream_id",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "observation",
+          "type": "string",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "get_stream_events",
+      "description": "Retrieve all recorded events for a stream.",
+      "parameters": [
+        {
+          "name": "stream_id",
+          "type": "string",
+          "required": false
+        }
+      ]
+    }
+  ]
 }

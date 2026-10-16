@@ -1,13 +1,31 @@
-# God's Eye View Planetary OSINT & Spatial Intelligence Plugin
+# Skill Summary Card: `gods_eye_view`
 
-`plugin.gods_eye_view` delivers planetary-scale real-time open source intelligence (OSINT), high-performance spatial telemetry indexing, offline critical infrastructure lookups, and 3D globe visualization into the Brain Harness agent ecosystem.
+```
+┌────────────────────────────────────────────────────────┐
+│               SKILL SUMMARY CARD                       │
+├────────────────────────────────────────────────────────┤
+│ SKILL:        gods_eye_view                            │
+│ Category:    geospatial_and_osint                      │
+│ Invocation:  service.gods_eye_view                     │
+│ Version:     0.1.0                                     │
+│ Isolation:   subprocess                                │
+│ Upstream:    D:\GitHub\cloned\gods-eye-view            │
+│ Provides:    "service.gods_eye_view"                   │
+├────────────────────────────────────────────────────────┤
+│ Target:      Planetary-scale OSINT, spatial indexing,  │
+│              critical infrastructure lookups, and      │
+│              photorealistic 3D globe visualization.    │
+└────────────────────────────────────────────────────────┘
+```
+
+---
 
 ## Deepened Architecture
 
 - **Isolation Mode**: `IsolationMode.SUBPROCESS`
 - **Service Key**: `ServiceKey[GodsEyeViewService]("service.gods_eye_view")`
 - **Category**: `geospatial_and_osint`
-- **Upstream Repository**: `gods-eye-view` (`D:\GitHub\cloned\gods-eye-view-main`)
+- **Upstream Repository**: `D:\GitHub\cloned\gods-eye-view` (Commit `591f299`)
 
 ```
 [Agent Query / Workflow]
@@ -23,7 +41,7 @@
  • Vessels (30s TTL)             • k-NN Ring Expansion            • Statistical Aggregations
  • Earthquakes (60s TTL)         • Bounding Box & Polygon Filter  • RFC 7946 GeoJSON Exporter
  • NASA FIRMS (300s TTL)         • Subsea Cables & Datacenters    • Bounded Session Memory Store
- • Single-Flight Stampede Lock   • Dams & Defense Airbases
+ • Single-Flight Stampede Lock   • Dams & 36k+ Military Bases
 ```
 
 ---
@@ -41,13 +59,12 @@
    - Single-flight concurrency locking (`asyncio.Lock`) preventing upstream API rate limits (429).
    - Domain-specific TTLs with stale-while-revalidate background refresh and network error fallbacks.
 
-3. **`query_pipeline.py` (`SpatialQueryPipeline`)**:
-   - Composable multi-predicate engine (`eq`, `neq`, `gt`, `gte`, `lt`, `lte`, `contains`, `starts_with`, `in`, `between`, `regex`).
-   - Statistical aggregator (`count`, `avg`, `min`, `max`, `sum`, categorical distributions).
-   - `to_geojson()`: Standard RFC 7946 GeoJSON `FeatureCollection` generator.
+3. **`infrastructure_store.py` (`InfrastructureStore`)**:
+   - Indexed catalog of global infrastructure assets backed by `SpatialHashGrid`.
+   - Ingests real local datasets from `D:\GitHub\cloned\gods-eye-view\src\data\local_data`: TeleGeography subsea cables, landing stations, hyperscale datacenters, hydroelectric dams, and 36,000+ OSM military installations.
 
-4. **`async_runner.py` (`run_sync_safe`)**:
-   - Universal event-loop-safe coroutine runner preventing `RuntimeError` across CLI scripts, synchronous tool executors, and active async agent loops.
+4. **`cli_bridge.py` (`NodeCliBridge`)**:
+   - Headless subprocess invoker for upstream Node.js rendering tools (`sat-ortho.mjs`, `streetview-headings.mjs`, `cesium-render.mjs`) and MCP stdio server JSON-RPC.
 
 ---
 
@@ -66,34 +83,26 @@
 | `gev_render_sat_ortho` | `lat, lon, zoom?, size?, outdir?` | High-res satellite orthomosaic stitcher from 3D Map Tiles with GSD metrics |
 | `gev_capture_streetview_headings` | `lat, lon, fov?, pitch?, neighbors?, outdir?` | 8-compass-heading (360° ground view) capture with street graph traversal |
 | `gev_render_globe_snapshot` | `lat, lon, altitude_m?, pitch?, heading?, style?` | Photorealistic 3D Cesium globe snapshots with post-processing shaders |
+| `gev_get_weather` | `place?, lat?, lon?` | Current meteorological conditions (temperature, humidity, wind, sky condition) |
+| `gev_get_weather_map` | `map_type?, place?, bbox?, lat?, lon?, radius_km?` | Animated radar and infrared satellite clouds overlay product |
+| `gev_find_cctv_cameras` | `place?, bbox?, lat?, lon?, radius_km?, limit?` | Public traffic and municipal camera directory search |
+| `gev_get_cctv_snapshot` | `camera_id` | Still visual snapshot frame from target camera installation |
+| `gev_find_aircraft` | `callsign?, icao24?, registration?, limit?` | Worldwide aircraft locator by callsign, ICAO hex, or tail registration |
+| `gev_get_aircraft_track` | `icao24, military?` | Historical 4D flight path track and position sequence |
+| `gev_find_vessel` | `mmsi?, imo?, name?, limit?` | Global ship lookup by MMSI, IMO number, or vessel name substring |
+| `gev_get_vessel_track` | `mmsi` | Historical maritime AIS position trail and movement history |
+| `gev_situation_brief` | `place?, bbox?, lat?, lon?, radius_km?` | Composite multi-domain tactical intelligence overview for an area |
+| `gev_get_terrain_height` | `points` | High-resolution elevation queries above mean sea level |
+| `gev_get_cyclones` | `place?, bbox?, lat?, lon?, radius_km?` | Active tropical cyclone and hurricane advisories with pressure and wind speeds |
+| `gev_get_active_fires` | `place?, bbox?, lat?, lon?, radius_km?, limit?` | Active wildfire detection perimeters with Fire Radiative Power (MW) |
+| `gev_get_recent_imagery` | `place?, bbox?, lat?, lon?, radius_km?` | NASA/ESA Landsat and Sentinel-2 satellite imagery metadata and acquisition |
 
 ---
 
-## Usage Examples
+## Mandatory Invariants Checklist
 
-### 1. Spatial Analyst Query with RFC 7946 GeoJSON Export
-```python
-from harness.services.gods_eye_view import GODS_EYE_VIEW_SERVICE_KEY
-
-gev = context.resolve(GODS_EYE_VIEW_SERVICE_KEY)
-result = await gev.query_analyst(
-    layer="flights",
-    filters=[{"field": "altitude_m", "op": "gt", "value": 10000}],
-    lat=38.8951,
-    lon=-77.0364,
-    radius_km=150.0,
-)
-print(f"Matched {result.total_matched} high-altitude flights in corridor")
-# Directly send standard GeoJSON to map viewers
-geojson_payload = result.geojson
-```
-
-### 2. Tactical Military Awareness Corridor
-```python
-summary = await gev.query_military_awareness(
-    lat=49.4369,
-    lon=7.6003, # Ramstein Air Base region
-    radius_km=100.0,
-)
-print(f"Threat Level: {summary.threat_level}, Air Contacts: {len(summary.air_contacts)}")
-```
+- [ ] **Downward-Only Independence**: Tool execution must not depend on GUI, DOM, or Cesium browser globals.
+- [ ] **Offline Spatial Resilience**: Critical infrastructure and military awareness queries must resolve offline via SpatialHashGrid when external network APIs are restricted.
+- [ ] **Single-Flight Cache Concurrency**: Concurrent requests for the same telemetry layer must collapse to a single upstream network fetch.
+- [ ] **Safe Event Loop Delegation**: Synchronous callers must execute through `run_sync_safe` to avoid nested event loop deadlocks.
+- [ ] **Dual-File Knowledge Integrity**: Knowledge items distilled from the repository must persist as canonical dual-file directories (`metadata.json` + `summary.md`).

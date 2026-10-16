@@ -25,3 +25,15 @@ The `plugin.deterministic_validation_loop` plugin packages the spec-first 3-tier
 - `run_validation_loop(request, spec, max_attempts)`: Run state machine loop.
 - `get_preset_spec(name)`: Retrieve built-in preset specification.
 - `validation_visual_brief(output_path)`: Render interactive HTML review brief.
+
+
+---
+
+## Tools & Entrypoints
+
+| Entrypoint | Parameters | Description |
+|---|---|---|
+| `validate_payload` | `(payload, spec)` | Validate structured JSON payload against a preset or schema specification |
+| `run_validation_loop` | `(request, spec, max_attempts)` | Execute cyclic state machine loop with delta feedback injection and retry budget |
+| `get_preset_spec` | `(name)` | Retrieve schema dictionary for a built-in preset specification |
+| `validation_visual_brief` | `(output_path)` | Generate an interactive HTML visual brief for a validation run |

@@ -72,3 +72,18 @@ def list_pending_approvals() -> dict[str, Any]:
         "pending_count": len(pending),
         "pending_requests": pending,
     }
+
+# -----------------------------------------------------------------------------
+# Harness Plugin Class & IoC Singleton (Rule 45)
+# -----------------------------------------------------------------------------
+from harness.plugins.base import HarnessPlugin
+class DomainHumanInTheLoopPlugin(HarnessPlugin):
+    """Human-in-the-loop permission escalation gate, decision checkpoints, and approval audit ledger"""
+
+    name = "domain.human_in_the_loop"
+    version = "1.0.0"
+    description = """Human-in-the-loop permission escalation gate, decision checkpoints, and approval audit ledger"""
+    trusted = True
+
+
+plugin = DomainHumanInTheLoopPlugin()

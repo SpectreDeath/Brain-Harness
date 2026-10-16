@@ -23,7 +23,6 @@ Codebase coupling/cohesion analyzer, circular import detector, and clean archite
 | `detect_circular_imports` | `(root_path)` | Scan a Python directory, build the internal module import graph, and detect circular import cycles |
 | `compute_module_coupling` | `(root_path)` | Compute afferent (Ca) and efferent (Ce) coupling and instability metrics for package modules |
 | `verify_clean_boundaries` | `(root_path, layer_hierarchy)` | Verify that inner architectural layers (e.g. kernel, domain) do not import from outer layers (e.g. ui, cli) |
-
 ---
 
 ## Key Modules & AST Symbols

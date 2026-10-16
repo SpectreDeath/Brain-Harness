@@ -23,7 +23,6 @@ Neuro-symbolic constraint solver, safe arithmetic evaluation, and Horn-clause ru
 | `evaluate_math_expression` | `(expression)` | Safely evaluate mathematical and logic expressions without eval() vulnerability |
 | `solve_constraints` | `(variables, constraints)` | Find satisfiable assignments for variables across a set of mathematical constraints |
 | `verify_logic_query` | `(facts, rules, query)` | Verify whether a query statement holds given known facts and deduction rules |
-
 ---
 
 ## Key Modules & AST Symbols

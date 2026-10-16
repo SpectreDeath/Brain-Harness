@@ -150,3 +150,6 @@ class OpenClawA2APlugin(HarnessPlugin):
     async def openclaw_a2a_resolve_capabilities(self, agent_id: str) -> dict[str, Any]:
         """Tool handler for openclaw_a2a_resolve_capabilities."""
         return self.service.resolve_agent_capabilities(agent_id)
+
+# Module-level plugin singleton (Rule 45)
+plugin = OpenClawA2APlugin()

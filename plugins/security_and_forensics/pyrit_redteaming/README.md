@@ -19,3 +19,16 @@ The `domain.pyrit_redteaming` plugin integrates Microsoft PyRIT's AI red teaming
 - **Mode**: `IsolationMode.SUBPROCESS`
 - **Category**: `security_and_forensics`
 - **Trust Level**: Trusted external archetype
+
+
+---
+
+## Tools & Entrypoints
+
+| Entrypoint | Parameters | Description |
+|---|---|---|
+| `orchestrate_crescendo_attack` | `(objective, max_turns, adversarial_personas, temperature)` | Execute multi-turn crescendo red-teaming dialogue simulating incremental boundary testing |
+| `apply_prompt_converters` | `(prompt, converters, converter_args)` | Apply adversarial obfuscation, encoding, and character perturbation converters to a prompt |
+| `score_risk_and_harm` | `(prompt, response, harm_categories, scorer_type)` | Evaluate safety violations, toxicity, hate, violence, PII leak, and jailbreak success probability |
+| `generate_jailbreak_tree` | `(target_system, attack_goal, branching_factor, max_depth)` | Construct Tree-of-Attacks-with-Pruning (TAP) exploration graph with Mermaid diagram synthesis |
+| `audit_attack_trajectory` | `(conversation_id, trace_events)` | Audit multi-turn red teaming conversation logs, calculating cumulative risk exposure and policy violations |

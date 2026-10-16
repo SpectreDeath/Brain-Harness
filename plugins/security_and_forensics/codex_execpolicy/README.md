@@ -24,7 +24,6 @@ Deterministic AST-level shell command execution policy, approval elevation, and 
 | `amend_prefix_rule` | `(prefix_pattern, action, comment)` | Dynamically add or update an allowed/prompt/deny prefix rule in the active execution policy |
 | `tokenize_shell_ast` | `(command, shell_flavor)` | Parses a shell command string into structured AST components (binary, args, operators, redirections) without executing it |
 | `check_sandbox_requirements` | `(command, target_platform)` | Determines platform-native sandboxing requirements (Linux Landlock/Bwrap, macOS Seatbelt, Windows Tokens) for a command |
-
 ---
 
 ## Key Modules & AST Symbols

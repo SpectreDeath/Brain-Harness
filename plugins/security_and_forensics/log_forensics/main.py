@@ -135,3 +135,18 @@ def build_incident_timeline(log_events: list[dict[str, Any]]) -> dict[str, Any]:
         "timeline_events_count": len(timeline),
         "timeline": timeline,
     }
+
+# -----------------------------------------------------------------------------
+# Harness Plugin Class & IoC Singleton (Rule 45)
+# -----------------------------------------------------------------------------
+from harness.plugins.base import HarnessPlugin
+class DomainLogForensicsPlugin(HarnessPlugin):
+    """High-throughput SIEM log stream parser, anomaly detection, and incident timeline reconstructor"""
+
+    name = "domain.log_forensics"
+    version = "1.0.0"
+    description = """High-throughput SIEM log stream parser, anomaly detection, and incident timeline reconstructor"""
+    trusted = True
+
+
+plugin = DomainLogForensicsPlugin()

@@ -20,12 +20,33 @@ from plugins.geospatial_and_osint.gods_eye_view.main import (
     gev_fetch_earthquakes,
     gev_fetch_firms_hotspots,
     gev_fetch_live_flights,
+    gev_find_aircraft,
+    gev_find_cctv_cameras,
+    gev_find_vessel,
+    gev_get_active_fires,
+    gev_get_aircraft_track,
+    gev_get_cctv_snapshot,
+    gev_get_cyclones,
+    gev_get_recent_imagery,
+    gev_get_terrain_height,
+    gev_get_vessel_track,
+    gev_get_weather,
+    gev_get_weather_map,
     gev_query_infrastructure,
     gev_query_military_awareness,
     gev_render_globe_snapshot,
     gev_render_sat_ortho,
+    gev_situation_brief,
 )
-from plugins.geospatial_and_osint.gods_eye_view.models import FlightRecord, InfrastructureRecord
+from plugins.geospatial_and_osint.gods_eye_view.models import (
+    AircraftTrackRecord,
+    CctvCameraRecord,
+    FlightRecord,
+    InfrastructureRecord,
+    SituationBriefResult,
+    VesselTrackRecord,
+    WeatherResult,
+)
 from plugins.geospatial_and_osint.gods_eye_view.query_pipeline import QuerySessionStore, SpatialQueryPipeline
 from plugins.geospatial_and_osint.gods_eye_view.spatial_index import SpatialHashGrid, point_in_polygon
 from plugins.geospatial_and_osint.gods_eye_view.telemetry_cache import TelemetryCache
@@ -301,3 +322,145 @@ async def test_plugin_lifecycle_and_di() -> None:
 
     await plugin.on_disable()
     await plugin.on_unload()
+
+
+@pytest.mark.unit
+def test_real_local_infrastructure_datasets_ingested() -> None:
+    store = InfrastructureStore()
+    assert len(store.records) > 20, "Store should contain built-in and ingested records"
+    cables = store.query(infra_type="submarine_cable")
+    assert len(cables) > 0, "Submarine cables should be indexed"
+    landing = store.query(infra_type="landing_point")
+    assert len(landing) > 0, "Landing stations should be indexed"
+
+
+@pytest.mark.asyncio
+async def test_node_cli_bridge_mcp_query_fallback() -> None:
+    bridge = NodeCliBridge()
+    res = await bridge.query_mcp_tool("aircraftInArea", {"bbox": [40, 30, -80, -70]})
+    assert isinstance(res, dict)
+    assert res.get("status") in ("ok", "simulated", "error")
+    assert "source" in res
+
+
+@pytest.mark.unit
+def test_tier2_weather_and_weather_map() -> None:
+    weather = gev_get_weather(lat=40.71, lon=-74.00)
+    assert isinstance(weather, dict)
+    assert "status" in weather
+    assert "weather" in weather
+    assert "source" in weather
+    assert weather.get("source") in ("mcp_live", "simulated_fallback")
+
+    w_map = gev_get_weather_map(map_type="radar", place="United States")
+    assert isinstance(w_map, dict)
+    assert "status" in w_map
+    assert "map" in w_map
+
+
+@pytest.mark.unit
+def test_tier2_cctv_cameras_and_snapshot() -> None:
+    cams = gev_find_cctv_cameras(place="Austin")
+    assert isinstance(cams, dict)
+    assert "status" in cams
+    assert "rows" in cams
+    assert len(cams["rows"]) >= 1
+
+    snap = gev_get_cctv_snapshot(camera_id="cam_01")
+    assert isinstance(snap, dict)
+    assert snap.get("id") == "cam_01"
+
+
+@pytest.mark.unit
+def test_tier2_aircraft_and_vessel_tracks() -> None:
+    ac = gev_find_aircraft(callsign="AF1")
+    assert isinstance(ac, dict)
+    assert "rows" in ac
+
+    track = gev_get_aircraft_track(icao24="ae01cd")
+    assert isinstance(track, dict)
+    assert track.get("icao24") == "ae01cd"
+    assert "points" in track
+    assert len(track["points"]) >= 1
+
+    vs = gev_find_vessel(name="PACIFIC")
+    assert isinstance(vs, dict)
+    assert "rows" in vs
+
+    v_track = gev_get_vessel_track(mmsi="367123456")
+    assert isinstance(v_track, dict)
+    assert v_track.get("mmsi") == "367123456"
+    assert "points" in v_track
+
+
+@pytest.mark.unit
+def test_tier2_situation_brief_and_terrain_height() -> None:
+    brief = gev_situation_brief(place="Taiwan Strait")
+    assert isinstance(brief, dict)
+    assert "area_label" in brief
+    assert "summary_lines" in brief
+    assert len(brief["summary_lines"]) >= 1
+
+    heights = gev_get_terrain_height(points=[{"lat": 25.0, "lon": 121.5}])
+    assert isinstance(heights, dict)
+    assert "rows" in heights
+    assert len(heights["rows"]) == 1
+
+
+@pytest.mark.unit
+def test_tier2_cyclones_fires_and_imagery() -> None:
+    cyclones = gev_get_cyclones()
+    assert isinstance(cyclones, dict)
+    assert "storms" in cyclones or "status" in cyclones
+
+    fires = gev_get_active_fires(place="California")
+    assert isinstance(fires, dict)
+    assert "rows" in fires
+
+    imagery = gev_get_recent_imagery(place="Gibraltar")
+    assert isinstance(imagery, dict)
+    assert "status" in imagery
+
+
+@pytest.mark.asyncio
+async def test_plugin_tier2_service_methods() -> None:
+    plugin = GodsEyeViewPlugin()
+    ctx = ServiceContext()
+    await plugin.on_load(ctx)
+
+    w_res = await plugin.get_weather(lat=37.77, lon=-122.41)
+    assert isinstance(w_res, WeatherResult)
+    assert w_res.status in ("ok", "simulated")
+
+    c_res = await plugin.find_cctv_cameras(place="Seattle")
+    assert isinstance(c_res, list)
+    assert len(c_res) >= 1
+    assert isinstance(c_res[0], CctvCameraRecord)
+
+    a_track = await plugin.get_aircraft_track(icao24="ae01cd")
+    assert isinstance(a_track, AircraftTrackRecord)
+    assert a_track.icao24 == "ae01cd"
+
+    v_track = await plugin.get_vessel_track(mmsi="367123456")
+    assert isinstance(v_track, VesselTrackRecord)
+    assert v_track.mmsi == "367123456"
+
+    brief = await plugin.situation_brief(place="English Channel")
+    assert isinstance(brief, SituationBriefResult)
+    assert len(brief.summary_lines) >= 1
+
+
+@pytest.mark.asyncio
+async def test_plugin_config_budget_loading() -> None:
+    plugin = GodsEyeViewPlugin()
+    ctx = ServiceContext()
+    await plugin.on_load(ctx)
+
+    assert hasattr(plugin, "config")
+    assert isinstance(plugin.config, dict)
+    assert "operational_budgets" in plugin.config
+    budgets = plugin.config["operational_budgets"]
+    assert "timeouts" in budgets
+    assert budgets["timeouts"]["mcp_query_seconds"] == 20.0
+    assert "cache_ttl" in budgets
+

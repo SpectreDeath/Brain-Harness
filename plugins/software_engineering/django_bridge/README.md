@@ -41,7 +41,6 @@ The Django Bridge plugin is partitioned into specialized single-responsibility s
 | `django_query_simulator` | `(query_expr, model_name, project_path)` | Evaluates and compiles Django ORM query expressions into formatted SQL queries, parameters, and execution plans without executing destructive database mutations. |
 | `django_template_validator` | `(template_content, template_path, enable_partials)` | Validates syntax, tags, template partials ({% partialdef %}), and filter pipelines in Django HTML/DQL templates. |
 | `django_task_inspector` | `(project_path, backend)` | Introspects and verifies Django 6.x background task queues (django.tasks), task signatures, backends, and execution parameters. |
-
 ---
 
 ## Quickstart & Usage

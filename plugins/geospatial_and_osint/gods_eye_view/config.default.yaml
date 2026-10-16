@@ -6,8 +6,27 @@ operational_budgets:
   max_sat_pass_horizon_hours: 72
   default_search_radius_km: 250.0
   max_streetview_headings: 8
+  timeouts:
+    mcp_query_seconds: 20.0
+    imagery_render_seconds: 45.0
+    telemetry_fetch_seconds: 15.0
+  cache_ttl:
+    flights_seconds: 15.0
+    vessels_seconds: 30.0
+    earthquakes_seconds: 60.0
+    firms_seconds: 300.0
+  rate_limits:
+    max_concurrent_mcp_queries: 3
+    max_concurrent_imagery_renders: 1
+  retry:
+    max_retries: 2
+    backoff_base_seconds: 1.0
+  spatial_index:
+    cell_size_deg: 1.0
+    max_knn_rings: 10
 
 runtime:
   tools_dir: "tools"
   enable_offline_mock_fallback: true
   default_shader_style: "normal"
+

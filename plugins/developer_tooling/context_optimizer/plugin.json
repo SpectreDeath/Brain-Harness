@@ -31,7 +31,10 @@
             "description": "Optional maximum characters ceiling"
           }
         },
-        "required": ["action_name", "observation"]
+        "required": [
+          "action_name",
+          "observation"
+        ]
       }
     },
     {
@@ -49,8 +52,54 @@
             "description": "Maximum total messages before pruning triggers"
           }
         },
-        "required": ["messages"]
+        "required": [
+          "messages"
+        ]
       }
+    }
+  ],
+  "entrypoints": [
+    {
+      "name": "context_compact_observation",
+      "description": "Compact raw tool observation into a token-efficient string.",
+      "parameters": [
+        {
+          "name": "action_name",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "observation",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "max_chars",
+          "type": "string",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "context_optimize_messages",
+      "description": "Prune message sequence using registered optimization strategies.",
+      "parameters": [
+        {
+          "name": "messages",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "max_total_messages",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "recent_messages_preserve",
+          "type": "string",
+          "required": false
+        }
+      ]
     }
   ]
 }

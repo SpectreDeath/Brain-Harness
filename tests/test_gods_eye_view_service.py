@@ -6,7 +6,11 @@ import pytest
 from harness.kernel.context import ServiceContext
 from harness.services.gods_eye_view import (
     GODS_EYE_VIEW_SERVICE_KEY,
+    AircraftTrackRecord,
     AnalystQueryResult,
+    CctvCameraRecord,
+    CctvSnapshotResult,
+    CycloneRecord,
     EarthquakeRecord,
     FlightRecord,
     GodsEyeViewService,
@@ -14,8 +18,13 @@ from harness.services.gods_eye_view import (
     InfrastructureRecord,
     MilitaryAwarenessSummary,
     SatellitePassRecord,
+    SituationBriefResult,
+    TerrainHeightRecord,
     ThermalHotspotRecord,
     VesselRecord,
+    VesselTrackRecord,
+    WeatherMapResult,
+    WeatherResult,
 )
 
 
@@ -214,6 +223,107 @@ class MockGodsEyeViewService:
             tool_name="cesium-render",
             output_path="/tmp/globe.png",
         )
+
+    async def get_weather(
+        self,
+        place: str | None = None,
+        lat: float | None = None,
+        lon: float | None = None,
+    ) -> WeatherResult:
+        return WeatherResult(status="ok", place=place or "Mock City", temperature_c=20.0, humidity_pct=50.0, wind_speed_kmh=10.0, conditions="Clear")
+
+    async def get_weather_map(
+        self,
+        map_type: str = "radar",
+        place: str | None = None,
+        bbox: list[float] | None = None,
+        lat: float | None = None,
+        lon: float | None = None,
+        radius_km: float | None = None,
+    ) -> WeatherMapResult:
+        return WeatherMapResult(status="ok", map_type=map_type, frame_count=1)
+
+    async def find_cctv_cameras(
+        self,
+        place: str | None = None,
+        bbox: list[float] | None = None,
+        lat: float | None = None,
+        lon: float | None = None,
+        radius_km: float | None = None,
+        limit: int = 50,
+    ) -> list[CctvCameraRecord]:
+        return [CctvCameraRecord(camera_id="cam_mock", name="Mock Camera", lat=0.0, lon=0.0)]
+
+    async def get_cctv_snapshot(self, camera_id: str) -> CctvSnapshotResult:
+        return CctvSnapshotResult(camera_id=camera_id, status="ok", snapshot_url="https://example.com/cam.jpg")
+
+    async def find_aircraft(
+        self,
+        callsign: str | None = None,
+        icao24: str | None = None,
+        registration: str | None = None,
+        limit: int = 50,
+    ) -> list[FlightRecord]:
+        return [FlightRecord(icao24=icao24 or "mock_hex", callsign=callsign or "MOCK1", lat=0.0, lon=0.0)]
+
+    async def get_aircraft_track(self, icao24: str, military: bool = False) -> AircraftTrackRecord:
+        return AircraftTrackRecord(icao24=icao24, callsign="MOCK1", points=[])
+
+    async def find_vessel(
+        self,
+        mmsi: str | None = None,
+        imo: str | None = None,
+        name: str | None = None,
+        limit: int = 50,
+    ) -> list[VesselRecord]:
+        return [VesselRecord(mmsi=mmsi or "123456789", name=name or "Mock Ship", lat=0.0, lon=0.0)]
+
+    async def get_vessel_track(self, mmsi: str) -> VesselTrackRecord:
+        return VesselTrackRecord(mmsi=mmsi, name="Mock Ship", points=[])
+
+    async def situation_brief(
+        self,
+        place: str | None = None,
+        bbox: list[float] | None = None,
+        lat: float | None = None,
+        lon: float | None = None,
+        radius_km: float | None = None,
+    ) -> SituationBriefResult:
+        return SituationBriefResult(status="ok", area_label=place or "Global")
+
+    async def get_terrain_height(self, points: list[list[float]]) -> list[TerrainHeightRecord]:
+        return [TerrainHeightRecord(lat=p[0], lon=p[1], elevation_m=10.0) for p in points]
+
+    async def get_cyclones(
+        self,
+        place: str | None = None,
+        bbox: list[float] | None = None,
+        lat: float | None = None,
+        lon: float | None = None,
+        radius_km: float | None = None,
+    ) -> list[CycloneRecord]:
+        return [CycloneRecord(cyclone_id="CY01", name="Mock Cyclone", lat=0.0, lon=0.0)]
+
+    async def get_active_fires(
+        self,
+        place: str | None = None,
+        bbox: list[float] | None = None,
+        lat: float | None = None,
+        lon: float | None = None,
+        radius_km: float | None = None,
+        limit: int = 100,
+    ) -> list[ThermalHotspotRecord]:
+        return [ThermalHotspotRecord(lat=0.0, lon=0.0, frp=10.0)]
+
+    async def get_recent_imagery(
+        self,
+        place: str | None = None,
+        bbox: list[float] | None = None,
+        lat: float | None = None,
+        lon: float | None = None,
+        radius_km: float | None = None,
+    ) -> dict:
+        return {"status": "ok", "items": []}
 
 
 @pytest.mark.unit

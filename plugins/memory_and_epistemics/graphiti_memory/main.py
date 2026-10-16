@@ -276,3 +276,6 @@ class GraphitiMemoryPlugin(HarnessPlugin, GraphitiService):
     ) -> GraphitiStatusResult:
         res = graphiti_get_status(group_id)
         return GraphitiStatusResult(**res)
+
+# Module-level plugin singleton (Rule 45)
+plugin = GraphitiMemoryPlugin()

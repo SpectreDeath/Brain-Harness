@@ -202,3 +202,6 @@ class CodeRunnerPlugin(HarnessPlugin, CodeRunnerService):
         timeout: float = 15.0,
     ) -> ScriptRunResult:
         return await asyncio.to_thread(self.run_temp_script, script_content, args, timeout)
+
+# Module-level plugin singleton (Rule 45)
+plugin = CodeRunnerPlugin()

@@ -150,3 +150,18 @@ def sql_explain_query(
         }
     except Exception as e:
         return {"status": "error", "error": f"EXPLAIN failed: {e!s}"}
+
+# -----------------------------------------------------------------------------
+# Harness Plugin Class & IoC Singleton (Rule 45)
+# -----------------------------------------------------------------------------
+from harness.plugins.base import HarnessPlugin
+class PluginDatabaseSqlPlugin(HarnessPlugin):
+    """Universal SQL database schema inspector, query runner, and execution plan explainer"""
+
+    name = "plugin.database_sql"
+    version = "1.0.0"
+    description = """Universal SQL database schema inspector, query runner, and execution plan explainer"""
+    trusted = True
+
+
+plugin = PluginDatabaseSqlPlugin()

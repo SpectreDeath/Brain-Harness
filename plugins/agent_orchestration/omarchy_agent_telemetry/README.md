@@ -20,3 +20,14 @@ This plugin allows Harness agents to inspect skill documentation and analyze usa
 ## Configuration
 
 Specified in `config.default.yaml`.
+
+
+---
+
+## Tools & Entrypoints
+
+| Entrypoint | Parameters | Description |
+|---|---|---|
+| `omarchy_list_agent_skills` | `()` | List all agent skills, developer guides, and diagnostic runbooks bundled in Omarchy |
+| `omarchy_get_agent_skill` | `(skill_name)` | Retrieve full markdown documentation and structured section outline for an Omarchy agent skill |
+| `omarchy_inspect_agent_usage_scripts` | `()` | Introspect Omarchy's agent usage scripts (Claude, Codex, Fireworks) without local Linux execution |

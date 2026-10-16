@@ -28,7 +28,19 @@ Planetary intelligence, real-time OSINT feeds, spatial analytics engine, and 3D 
 | `gev_render_sat_ortho` | `(lat, lon, zoom, size, outdir)` | Stitch high-resolution satellite orthomosaic imagery from Google 3D Map Tiles with Ground Sample Distance georeferencing |
 | `gev_capture_streetview_headings` | `(lat, lon, fov, pitch, neighbors, outdir)` | Capture 8 compass headings (360 ground view) at target coordinates with optional street graph neighbor crawling |
 | `gev_render_globe_snapshot` | `(lat, lon, altitude_m, pitch, heading, style, outdir)` | Render photorealistic 3D Cesium globe snapshots with post-processing shaders (thermal, surveillance, noir, snow) |
-
+| `gev_get_weather` | `(place, lat, lon)` | Retrieve current meteorological weather conditions at target coordinate point or named place |
+| `gev_get_weather_map` | `(map_type, place, bbox, lat, lon, radius_km)` | Fetch precipitation radar or cloud satellite imagery overlay for an area |
+| `gev_find_cctv_cameras` | `(place, bbox, lat, lon, radius_km, limit)` | Search public city and traffic camera installations in an area |
+| `gev_get_cctv_snapshot` | `(camera_id)` | Retrieve latest still snapshot frame from public camera feed |
+| `gev_find_aircraft` | `(callsign, icao24, registration, limit)` | Search aircraft globally by callsign, ICAO hex, or tail registration |
+| `gev_get_aircraft_track` | `(icao24, military)` | Fetch recent position history track for an aircraft |
+| `gev_find_vessel` | `(mmsi, imo, name, limit)` | Search vessels globally by MMSI, IMO number, or vessel name |
+| `gev_get_vessel_track` | `(mmsi)` | Fetch recent position track history for an AIS vessel |
+| `gev_situation_brief` | `(place, bbox, lat, lon, radius_km)` | Generate composite multi-domain situation overview for an area |
+| `gev_get_terrain_height` | `(points)` | Query terrain ground elevation above sea level for coordinate points |
+| `gev_get_cyclones` | `(place, bbox, lat, lon, radius_km)` | Fetch active tropical cyclone and hurricane advisories |
+| `gev_get_active_fires` | `(place, bbox, lat, lon, radius_km, limit)` | Fetch NASA FIRMS active wildfire detections in an area |
+| `gev_get_recent_imagery` | `(place, bbox, lat, lon, radius_km)` | Fetch recent Landsat/Sentinel/VIIRS optical satellite imagery metadata |
 ---
 
 ## Key Modules & AST Symbols

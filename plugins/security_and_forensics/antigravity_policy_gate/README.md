@@ -19,7 +19,6 @@ Google Antigravity declarative security policy gate enforcing tri-state allow/de
 |---|---|---|
 | `evaluate_policy` | `(tool_name, arguments)` | Evaluate tool call against security baseline |
 | `add_policy_rule` | `(tool_pattern, decision, rationale)` | Register a new policy rule |
-
 ---
 
 ## Key Modules & AST Symbols

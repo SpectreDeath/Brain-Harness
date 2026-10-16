@@ -186,3 +186,6 @@ class EmbeddingClusterPlugin(HarnessPlugin, EmbeddingClusterService):
             keywords=res.get("keywords", []),
             error=res.get("error"),
         )
+
+# Module-level plugin singleton (Rule 45)
+plugin = EmbeddingClusterPlugin()

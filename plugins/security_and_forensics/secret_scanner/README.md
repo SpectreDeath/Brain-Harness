@@ -23,7 +23,6 @@ Pre-ingestion and on-demand credential & API key scanner with Shannon entropy an
 | `scan_text` | `(text)` | Scan raw text or code string for potential credentials, tokens, and private keys |
 | `scan_file` | `(file_path)` | Scan a specific file on disk for leaked credentials and keys |
 | `scan_directory` | `(dir_path, max_depth)` | Recursively scan a directory tree for leaked credentials and secret tokens |
-
 ---
 
 ## Key Modules & AST Symbols

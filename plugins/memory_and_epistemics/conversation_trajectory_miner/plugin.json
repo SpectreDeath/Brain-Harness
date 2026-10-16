@@ -10,5 +10,134 @@
   "provides": [
     "service.conversation_trajectory_miner"
   ],
-  "requires": []
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "connect_ro",
+      "description": "Executes the operation.",
+      "parameters": [
+        {
+          "name": "db_path",
+          "type": "string",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "inspect_conversation",
+      "description": "Executes the operation.",
+      "parameters": [
+        {
+          "name": "db_path",
+          "type": "string",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "scan_corpus",
+      "description": "Executes the operation.",
+      "parameters": [
+        {
+          "name": "corpus_dir",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "max_dbs",
+          "type": "string",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "compile_friction_scorecard",
+      "description": "Executes the operation.",
+      "parameters": [
+        {
+          "name": "manifests",
+          "type": "string",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "mine_failure_clusters",
+      "description": "Executes the operation.",
+      "parameters": [
+        {
+          "name": "corpus_dir",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "max_dbs",
+          "type": "string",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "bifurcate_distillation",
+      "description": "Executes the operation.",
+      "parameters": [
+        {
+          "name": "cid",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "db_path",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "output_vault_dir",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "output_skills_dir",
+          "type": "string",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "export_knowledge_item",
+      "description": "Executes the operation.",
+      "parameters": [
+        {
+          "name": "output_dir",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "ki_id",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "category",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "summary",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "claims",
+          "type": "string",
+          "required": false
+        }
+      ]
+    }
+  ]
 }

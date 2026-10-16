@@ -327,3 +327,6 @@ class VectorIndexPlugin(HarnessPlugin, VectorIndexService):
         top_k: int = 5,
     ) -> VectorHybridSearchResult:
         return await asyncio.to_thread(self.search_hybrid, query, keyword, top_k)
+
+# Module-level plugin singleton (Rule 45)
+plugin = VectorIndexPlugin()

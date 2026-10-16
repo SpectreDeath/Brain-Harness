@@ -107,3 +107,18 @@ def audit_action_pins(workflow_yaml: str) -> dict[str, Any]:
         "pinned_securely": len(unpinned) == 0,
         "unpinned_actions": unpinned,
     }
+
+# -----------------------------------------------------------------------------
+# Harness Plugin Class & IoC Singleton (Rule 45)
+# -----------------------------------------------------------------------------
+from harness.plugins.base import HarnessPlugin
+class DomainCiPipelinePlugin(HarnessPlugin):
+    """CI/CD pipeline workflow linter, circular job dependency detector, and action security auditor"""
+
+    name = "domain.ci_pipeline"
+    version = "1.0.0"
+    description = """CI/CD pipeline workflow linter, circular job dependency detector, and action security auditor"""
+    trusted = True
+
+
+plugin = DomainCiPipelinePlugin()

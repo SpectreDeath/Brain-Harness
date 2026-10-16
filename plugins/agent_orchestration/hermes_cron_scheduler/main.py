@@ -134,3 +134,18 @@ def manage_blueprint_catalog(
         return schedule_natural_cron(bp["schedule"], bp["description"], "cli:default")
 
     return {"status": "error", "error": f"Unknown action: {action}"}
+
+# -----------------------------------------------------------------------------
+# Harness Plugin Class & IoC Singleton (Rule 45)
+# -----------------------------------------------------------------------------
+from harness.plugins.base import HarnessPlugin
+class DomainHermesCronSchedulerPlugin(HarnessPlugin):
+    """Hermes unattended natural language cron scheduler, incident classification, and blueprint catalog manager"""
+
+    name = "domain.hermes_cron_scheduler"
+    version = "1.0.0"
+    description = """Hermes unattended natural language cron scheduler, incident classification, and blueprint catalog manager"""
+    trusted = True
+
+
+plugin = DomainHermesCronSchedulerPlugin()

@@ -1,0 +1,4 @@
+subprocess_timeout_s: 120
+firmware_max_input_bytes: 134217728
+adb_command_timeout_s: 30
+jadx_worker_count: 1

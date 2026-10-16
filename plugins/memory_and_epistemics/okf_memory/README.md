@@ -39,7 +39,6 @@ The OKF memory plugin engine is partitioned into dedicated domain submodules und
 | `okf_update` | `(concept_id, title, description, body, governance, code_refs, bundle_dir)` | Update an existing concept document with automatic parent index and audit log synchronization |
 | `okf_relate` | `(source_id, target_id, description, bundle_dir)` | Link two concepts together bidirectionally in frontmatter relations |
 | `okf_validate` | `(strict, bundle_dir)` | Validate knowledge bundle against OKF normative schema, link consistency, and actor trust ordering |
-
 ---
 
 ## Quickstart & Usage

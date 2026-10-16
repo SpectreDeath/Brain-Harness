@@ -23,7 +23,6 @@ Terraform / OpenTofu HCL parser, state drift detector, and cloud resource cost e
 | `parse_hcl_blocks` | `(hcl_content)` | Parse Terraform HCL blocks (resource, variable, provider, output, module) from text |
 | `detect_state_drift` | `(declared_state, actual_state)` | Compare declared Terraform resource attributes against actual cloud state |
 | `estimate_resource_costs` | `(resources)` | Estimate monthly cloud infrastructure costs based on resource type heuristics |
-
 ---
 
 ## Key Modules & AST Symbols

@@ -25,7 +25,6 @@ Browserbase's next-generation AI browser automation engine with Act, Extract, Ob
 | `stagehand_observe` | `(instruction, model, return_action)` | Inspect live DOM to return interactive elements, locators, and suggested next actions |
 | `stagehand_webmcp_tool_invoke` | `(tool_name, arguments, page_id)` | Discover and invoke WebMCP (Web Model Context Protocol) tools exposed by web pages |
 | `stagehand_session_control` | `(action, url, script, provider)` | Manage browser session lifecycle, navigation, JavaScript evaluation, and page capture |
-
 ---
 
 ## Key Modules & AST Symbols

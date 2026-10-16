@@ -23,7 +23,6 @@ Kubernetes manifest linter, resource request/limit validator, and pod security c
 | `lint_k8s_manifest` | `(manifest_yaml)` | Lint Kubernetes YAML manifests for missing labels, deprecations, and missing namespaces |
 | `validate_resource_limits` | `(manifest_yaml)` | Ensure CPU/memory requests and limits are explicitly declared on all container specs |
 | `check_security_context` | `(manifest_yaml)` | Audit securityContext (runAsNonRoot, allowPrivilegeEscalation, drop capabilities) |
-
 ---
 
 ## Key Modules & AST Symbols

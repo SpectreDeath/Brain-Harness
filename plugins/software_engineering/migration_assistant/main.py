@@ -159,3 +159,6 @@ class MigrationAssistantPlugin(HarnessPlugin, MigrationAssistantService):
             suggestions=res.get("suggestions", []),
             error=res.get("error"),
         )
+
+# Module-level plugin singleton (Rule 45)
+plugin = MigrationAssistantPlugin()

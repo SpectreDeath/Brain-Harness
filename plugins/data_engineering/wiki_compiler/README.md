@@ -25,7 +25,6 @@ Compiler-style dual in-memory / disk wiki builder with topological graph queries
 | `build_reference_graph` | `(raw_dir)` | Extract all entities and compute the full directional cross-reference graph |
 | `lint_wiki` | `(compiled_dir)` | Lint compiled wiki directory for broken [[wikilinks]] and unreferenced orphan pages |
 | `generate_synthetic_notes` | `(output_dir, num_files, seed)` | Generate a synthetic corpus of raw notes with embedded cross-mentions for benchmarking |
-
 ---
 
 ## Key Modules & AST Symbols

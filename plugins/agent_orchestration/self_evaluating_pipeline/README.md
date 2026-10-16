@@ -52,3 +52,15 @@ harness eval regression --golden golden_dataset.json
 # Stage 5 paired t-test release gate
 harness eval gate --before scores_v1.json --after scores_v2.json --alpha 0.05
 ```
+
+
+---
+
+## Tools & Entrypoints
+
+| Entrypoint | Parameters | Description |
+|---|---|---|
+| `evaluate_layer1` | `(output_text, expected_schema, min_len, max_len, allowed_domains, syntax_lang)` | Sub-millisecond zero-cost deterministic guardrails (schema, bounds, URLs, refusals, AST) |
+| `evaluate_layer2_judge` | `(prompt, response, model, num_judges, threshold)` | Semantic LLM-as-judge evaluation with anchored 1-to-5 rubric and median consensus |
+| `calculate_cohens_kappa` | `(annotations_a, annotations_b)` | Calculate Cohen's Kappa inter-annotator agreement corrected for chance |
+| `evaluate_statistical_significance_gate` | `(scores_before, scores_after, alpha)` | Paired Student's t-test release gate (p < 0.05 AND mean diff > 0) |

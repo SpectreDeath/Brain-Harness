@@ -219,3 +219,6 @@ class OpenClawToolRepairPlugin(HarnessPlugin):
             "promoted_blocks": [b.to_dict() for b in blocks],
             "count": len(blocks),
         }
+
+# Module-level plugin singleton (Rule 45)
+plugin = OpenClawToolRepairPlugin()

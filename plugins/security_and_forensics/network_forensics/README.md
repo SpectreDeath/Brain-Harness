@@ -36,16 +36,15 @@ The Network Forensics plugin is partitioned into specialized domain submodules u
 | Entrypoint | Parameters | Description |
 |---|---|---|
 | `audit_port_configuration` | `(open_ports)` | Audit open ports and exposed network services against security best practices |
-| `analyze_packet_summary` | `(flows)` | Analyze network flows for port scans, SYN floods, and anomalous traffic |
+| `analyze_packet_summary` | `(flows)` | Analyze network flows (IP source/dest, protocol, packet sizes, flags) for port scans and DDoS signatures |
 | `inspect_tls_certificate` | `(cert_info)` | Validate TLS/SSL certificate metadata (issuer, expiration, cipher suites) |
-| `analyze_traceroute_hops` | `(raw_output)` | Parse traceroute output, identify intermediate TTL-decrementing hops, and detect latency anomalies |
-| `evaluate_port_states` | `(port_probes)` | Classify port scan findings into tri-state reachability: open, closed, or filtered |
-| `decode_tcp_flags` | `(flags_hex)` | Decode hexadecimal TCP flags, evaluate handshake semantics, and detect scan evasion signatures |
-| `classify_cleartext_exposure` | `(protocol, port)` | Evaluate cleartext protocol exposure risk and unencrypted credential vulnerabilities |
+| `analyze_traceroute_hops` | `(raw_output)` | Parse traceroute output, identify intermediate TTL-decrementing hops, and detect latency anomalies or routing loops |
+| `evaluate_port_states` | `(scan_results, port_probes)` | Classify port scan findings into tri-state reachability: open (SYN/ACK), closed (RST), or filtered (drop/timeout) |
+| `decode_tcp_flags` | `(flags_hex)` | Decode hexadecimal TCP flags, evaluate handshake semantics, and detect scan evasion signatures (Null, Xmas, SYN-FIN) |
+| `classify_cleartext_exposure` | `(protocol, port)` | Evaluate cleartext protocol exposure risk and unencrypted credential vulnerabilities for HTTP, Telnet, FTP, etc. |
 | `run_7layer_diagnostic_chain` | `(target, port)` | Execute systematic 7-layer network fault isolation chain from physical to application layer |
 | `calculate_subnet_geometry` | `(cidr)` | Calculate bitwise network address, broadcast address, and host capacity for an IPv4 CIDR prefix |
 | `generate_visual_brief` | `(output_path)` | Generate interactive HTML visual brief with Mermaid diagrams in %TEMP% |
-
 ---
 
 ## Quickstart & Usage

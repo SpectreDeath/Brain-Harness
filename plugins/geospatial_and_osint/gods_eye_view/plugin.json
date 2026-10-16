@@ -4,7 +4,7 @@
   "description": "Planetary intelligence, real-time OSINT feeds, spatial analytics engine, and 3D globe rendering",
   "category": "geospatial_and_osint",
   "language": "python",
-  "entrypoint": "main.py",
+  "entrypoint": "tools.py",
   "isolation": "subprocess",
   "trusted": true,
   "dependencies": [
@@ -445,6 +445,384 @@
           "name": "outdir",
           "type": "string",
           "description": "Output directory path",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "gev_get_weather",
+      "description": "Retrieve current meteorological weather conditions at target coordinate point or named place",
+      "parameters": [
+        {
+          "name": "place",
+          "type": "string",
+          "description": "Named geographic location (e.g. 'Tokyo', 'London', 'Austin')",
+          "required": false
+        },
+        {
+          "name": "lat",
+          "type": "number",
+          "description": "Latitude coordinate",
+          "required": false
+        },
+        {
+          "name": "lon",
+          "type": "number",
+          "description": "Longitude coordinate",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "gev_get_weather_map",
+      "description": "Fetch precipitation radar or cloud satellite imagery overlay for an area",
+      "parameters": [
+        {
+          "name": "map_type",
+          "type": "string",
+          "description": "Map product: 'radar', 'satellite', 'global_satellite', 'lightning'",
+          "required": false,
+          "default": "radar"
+        },
+        {
+          "name": "place",
+          "type": "string",
+          "description": "Named geographic area",
+          "required": false
+        },
+        {
+          "name": "bbox",
+          "type": "array",
+          "description": "Bounding box coordinates [North, South, West, East]",
+          "required": false
+        },
+        {
+          "name": "lat",
+          "type": "number",
+          "description": "Center latitude",
+          "required": false
+        },
+        {
+          "name": "lon",
+          "type": "number",
+          "description": "Center longitude",
+          "required": false
+        },
+        {
+          "name": "radius_km",
+          "type": "number",
+          "description": "Radius in kilometers",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "gev_find_cctv_cameras",
+      "description": "Search public city and traffic camera installations in an area",
+      "parameters": [
+        {
+          "name": "place",
+          "type": "string",
+          "description": "City or area name",
+          "required": false
+        },
+        {
+          "name": "bbox",
+          "type": "array",
+          "description": "Bounding box coordinates [North, South, West, East]",
+          "required": false
+        },
+        {
+          "name": "lat",
+          "type": "number",
+          "description": "Center latitude",
+          "required": false
+        },
+        {
+          "name": "lon",
+          "type": "number",
+          "description": "Center longitude",
+          "required": false
+        },
+        {
+          "name": "radius_km",
+          "type": "number",
+          "description": "Search radius in km",
+          "required": false
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "description": "Maximum cameras to return",
+          "required": false,
+          "default": 50
+        }
+      ]
+    },
+    {
+      "name": "gev_get_cctv_snapshot",
+      "description": "Retrieve latest still snapshot frame from public camera feed",
+      "parameters": [
+        {
+          "name": "camera_id",
+          "type": "string",
+          "description": "Unique camera identifier",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "gev_find_aircraft",
+      "description": "Search aircraft globally by callsign, ICAO hex, or tail registration",
+      "parameters": [
+        {
+          "name": "callsign",
+          "type": "string",
+          "description": "Flight callsign (e.g. 'AF1', 'UAL123')",
+          "required": false
+        },
+        {
+          "name": "icao24",
+          "type": "string",
+          "description": "ICAO 24-bit hex address (e.g. 'a1b2c3')",
+          "required": false
+        },
+        {
+          "name": "registration",
+          "type": "string",
+          "description": "Tail registration mark (military feed)",
+          "required": false
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "description": "Maximum aircraft to return",
+          "required": false,
+          "default": 50
+        }
+      ]
+    },
+    {
+      "name": "gev_get_aircraft_track",
+      "description": "Fetch recent position history track for an aircraft",
+      "parameters": [
+        {
+          "name": "icao24",
+          "type": "string",
+          "description": "ICAO 24-bit hex address",
+          "required": true
+        },
+        {
+          "name": "military",
+          "type": "boolean",
+          "description": "Query military tracking feed",
+          "required": false,
+          "default": false
+        }
+      ]
+    },
+    {
+      "name": "gev_find_vessel",
+      "description": "Search vessels globally by MMSI, IMO number, or vessel name",
+      "parameters": [
+        {
+          "name": "mmsi",
+          "type": "string",
+          "description": "Maritime Mobile Service Identity",
+          "required": false
+        },
+        {
+          "name": "imo",
+          "type": "string",
+          "description": "7-digit IMO number",
+          "required": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "description": "Vessel name substring",
+          "required": false
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "description": "Maximum vessels to return",
+          "required": false,
+          "default": 50
+        }
+      ]
+    },
+    {
+      "name": "gev_get_vessel_track",
+      "description": "Fetch recent position track history for an AIS vessel",
+      "parameters": [
+        {
+          "name": "mmsi",
+          "type": "string",
+          "description": "Maritime Mobile Service Identity",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "gev_situation_brief",
+      "description": "Generate composite multi-domain situation overview for an area",
+      "parameters": [
+        {
+          "name": "place",
+          "type": "string",
+          "description": "Target place or region name",
+          "required": false
+        },
+        {
+          "name": "bbox",
+          "type": "array",
+          "description": "Bounding box coordinates [North, South, West, East]",
+          "required": false
+        },
+        {
+          "name": "lat",
+          "type": "number",
+          "description": "Center latitude",
+          "required": false
+        },
+        {
+          "name": "lon",
+          "type": "number",
+          "description": "Center longitude",
+          "required": false
+        },
+        {
+          "name": "radius_km",
+          "type": "number",
+          "description": "Radius in kilometers",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "gev_get_terrain_height",
+      "description": "Query terrain ground elevation above sea level for coordinate points",
+      "parameters": [
+        {
+          "name": "points",
+          "type": "array",
+          "description": "List of coordinate dicts with lat and lon",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "gev_get_cyclones",
+      "description": "Fetch active tropical cyclone and hurricane advisories",
+      "parameters": [
+        {
+          "name": "place",
+          "type": "string",
+          "description": "Geographic area name",
+          "required": false
+        },
+        {
+          "name": "bbox",
+          "type": "array",
+          "description": "Bounding box coordinates [North, South, West, East]",
+          "required": false
+        },
+        {
+          "name": "lat",
+          "type": "number",
+          "description": "Center latitude",
+          "required": false
+        },
+        {
+          "name": "lon",
+          "type": "number",
+          "description": "Center longitude",
+          "required": false
+        },
+        {
+          "name": "radius_km",
+          "type": "number",
+          "description": "Radius in kilometers",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "gev_get_active_fires",
+      "description": "Fetch NASA FIRMS active wildfire detections in an area",
+      "parameters": [
+        {
+          "name": "place",
+          "type": "string",
+          "description": "Area or state name",
+          "required": false
+        },
+        {
+          "name": "bbox",
+          "type": "array",
+          "description": "Bounding box coordinates [North, South, West, East]",
+          "required": false
+        },
+        {
+          "name": "lat",
+          "type": "number",
+          "description": "Center latitude",
+          "required": false
+        },
+        {
+          "name": "lon",
+          "type": "number",
+          "description": "Center longitude",
+          "required": false
+        },
+        {
+          "name": "radius_km",
+          "type": "number",
+          "description": "Radius in kilometers",
+          "required": false
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "description": "Maximum records to return",
+          "required": false,
+          "default": 100
+        }
+      ]
+    },
+    {
+      "name": "gev_get_recent_imagery",
+      "description": "Fetch recent Landsat/Sentinel/VIIRS optical satellite imagery metadata",
+      "parameters": [
+        {
+          "name": "place",
+          "type": "string",
+          "description": "Area name",
+          "required": false
+        },
+        {
+          "name": "bbox",
+          "type": "array",
+          "description": "Bounding box coordinates [North, South, West, East]",
+          "required": false
+        },
+        {
+          "name": "lat",
+          "type": "number",
+          "description": "Center latitude",
+          "required": false
+        },
+        {
+          "name": "lon",
+          "type": "number",
+          "description": "Center longitude",
+          "required": false
+        },
+        {
+          "name": "radius_km",
+          "type": "number",
+          "description": "Radius in kilometers",
           "required": false
         }
       ]

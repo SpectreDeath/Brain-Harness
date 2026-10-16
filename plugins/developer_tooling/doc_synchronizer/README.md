@@ -24,7 +24,6 @@ Repository documentation coverage auditing, AST code-to-doc symbol drift verific
 | `doc_drift_check` | `(docs_dir, check_symbols)` | Verify markdown documentation for broken relative file links and stale AST code symbols |
 | `doc_scaffold` | `(module_path, doc_type, output_path)` | Scaffold standardized Diataxis documentation using live Python module AST symbols |
 | `doc_visual_brief` | `(target_dir, output_path)` | Generate interactive HTML coverage brief and scorecard with Mermaid topology diagram |
-
 ---
 
 ## Key Modules & AST Symbols

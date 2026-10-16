@@ -81,3 +81,14 @@ Generate an interactive visual brief:
 ```bash
 harness gradio brief
 ```
+
+
+---
+
+## Tools & Entrypoints
+
+| Entrypoint | Parameters | Description |
+|---|---|---|
+| `audit_code` | `(source_code, file_path)` | Run AST static analysis against the 5 production Gradio rubrics |
+| `scaffold_app` | `(config)` | Generate a decoupled production Gradio application |
+| `generate_visual_brief` | `(output_path)` | Generate standalone HTML visual brief with telemetry and topology diagram |

@@ -185,3 +185,6 @@ class SecretScannerPlugin(HarnessPlugin):
     async def on_load(self, ctx: ServiceContext) -> None:
         ctx.provide(SECRET_SCANNER_KEY, SecretScannerService(), provider=self.name)
         logger.info("SecretScannerService provided", plugin=self.name)
+
+# Module-level plugin singleton (Rule 45)
+plugin = SecretScannerPlugin()

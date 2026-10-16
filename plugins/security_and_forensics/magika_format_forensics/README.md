@@ -11,3 +11,14 @@
 - `magika_audit_extension_mismatch`: Detect extension spoofing across files or directories.
 - `magika_polyglot_check`: Inspect files for polyglot markers and anomalous confidence scores.
 - `magika_quarantine_scan`: Evaluate files against quarantine rules.
+
+
+---
+
+## Tools & Entrypoints
+
+| Entrypoint | Parameters | Description |
+|---|---|---|
+| `magika_audit_extension_mismatch` | `(target_path, recursive)` | Scan files to detect extension spoofing where the deep learning content type contradicts the file extension |
+| `magika_polyglot_check` | `(file_path, threshold)` | Inspect a file for low prediction margins, ambiguous classifications, or composite headers characteristic of polyglots |
+| `magika_quarantine_scan` | `(file_path, blocked_groups)` | Evaluate a file against an untrusted upload policy, quarantining files belonging to prohibited content groups |

@@ -268,3 +268,6 @@ class MantisStructuralIndexPlugin(HarnessPlugin, MantisStructuralIndexService):
 
     def query_symbol(self, symbol_name: str, db_path: str = "structural_index.db", query_type: str = "definition") -> dict[str, Any]:
         return self._engine.query_symbol(symbol_name, db_path, query_type)
+
+# Module-level plugin singleton (Rule 45)
+plugin = MantisStructuralIndexPlugin()

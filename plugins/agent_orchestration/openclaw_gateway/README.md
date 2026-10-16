@@ -25,7 +25,6 @@ WebSocket JSON-RPC gateway bridge connecting Harness agents to OpenClaw control 
 | `openclaw_gateway_create_session` | `(channel, permission_mode, metadata)` | Creates a new session placement on OpenClaw Gateway with specified channel and permission mode. |
 | `openclaw_gateway_call_tool` | `(session_id, tool_name, arguments)` | Dispatches a tool execution request through the OpenClaw Gateway runtime. |
 | `openclaw_gateway_send_message` | `(channel, message, recipient_id)` | Routes a message to external messaging channels (Slack, Discord, Telegram, etc.) via OpenClaw Gateway. |
-
 ---
 
 ## Key Modules & AST Symbols

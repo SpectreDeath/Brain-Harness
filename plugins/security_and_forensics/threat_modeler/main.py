@@ -138,3 +138,18 @@ def generate_attack_tree(adversary_goal: str, attack_vectors: list[str]) -> dict
         "vectors_count": len(attack_vectors),
         "mermaid": mermaid_code,
     }
+
+# -----------------------------------------------------------------------------
+# Harness Plugin Class & IoC Singleton (Rule 45)
+# -----------------------------------------------------------------------------
+from harness.plugins.base import HarnessPlugin
+class DomainThreatModelerPlugin(HarnessPlugin):
+    """STRIDE threat modeling, MITRE ATT&CK taxonomy mapping, and attack graph generator"""
+
+    name = "domain.threat_modeler"
+    version = "1.0.0"
+    description = """STRIDE threat modeling, MITRE ATT&CK taxonomy mapping, and attack graph generator"""
+    trusted = True
+
+
+plugin = DomainThreatModelerPlugin()

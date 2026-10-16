@@ -23,7 +23,6 @@ Three-layer memory knowledge graph engine with conflict-aware graph construction
 | `memgraphrag_add_passage` | `(chunk_id, content, extracted_triples, schema_tuple, save_dir)` | Incrementally inject a passage chunk and factual relation triples into the active memory graph |
 | `memgraphrag_get_memory_summary` | `(save_dir)` | Inspect statistical distribution and count metrics for schema, fact, and passage layers |
 | `memgraphrag_detect_conflicts` | `(save_dir)` | Scan candidate facts for hard semantic contradictions with supporting passage evidence groups |
-
 ---
 
 ## Key Modules & AST Symbols

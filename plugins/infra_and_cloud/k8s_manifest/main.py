@@ -104,3 +104,18 @@ def check_security_context(manifest_yaml: str) -> dict[str, Any]:
         "findings_count": len(findings),
         "findings": findings,
     }
+
+# -----------------------------------------------------------------------------
+# Harness Plugin Class & IoC Singleton (Rule 45)
+# -----------------------------------------------------------------------------
+from harness.plugins.base import HarnessPlugin
+class DomainK8SManifestPlugin(HarnessPlugin):
+    """Kubernetes manifest linter, resource request/limit validator, and pod security context checker"""
+
+    name = "domain.k8s_manifest"
+    version = "1.0.0"
+    description = """Kubernetes manifest linter, resource request/limit validator, and pod security context checker"""
+    trusted = True
+
+
+plugin = DomainK8SManifestPlugin()

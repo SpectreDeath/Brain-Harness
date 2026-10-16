@@ -23,7 +23,6 @@ Hermes multi-platform gateway relay, WebSocket telemetry streamer, and scale-to-
 | `dispatch_platform_message` | `(platform, channel_id, text)` | Route formatted messages to external communication platforms (Telegram, Discord, Slack, WhatsApp, Signal) |
 | `stream_ws_telemetry` | `(session_id, event_payload)` | Publish real-time event telemetry to GUI/TUI WebSocket clients |
 | `manage_scale_to_zero` | `(idle_timeout_seconds)` | Evaluate idle timeout conditions to hibernate cloud containers or VPS compute |
-
 ---
 
 ## Key Modules & AST Symbols

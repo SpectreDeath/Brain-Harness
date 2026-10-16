@@ -80,3 +80,17 @@ harness pre-commit-security audit-ci --workflow .github/workflows/security.yml
 # Generate interactive HTML visual brief
 harness pre-commit-security brief
 ```
+
+
+---
+
+## Tools & Entrypoints
+
+| Entrypoint | Parameters | Description |
+|---|---|---|
+| `scan_staged_files` | `(files)` | Scan staged files or designated paths for SAST vulnerabilities and secret leaks |
+| `run_synthetic_smoke_tests` | `()` | Execute deliberate synthetic failure tests verifying that guardrails actively block commits |
+| `audit_suppression_hygiene` | `(root_dir)` | Audit repository for unjustified comment suppressions and blanket folder exclusions |
+| `audit_dual_gate_ci` | `(workflow_path)` | Audit GitHub Actions workflow configuration to guarantee dual-gate CI parity |
+| `export_sarif` | `(report)` | Format scan report findings into standard SARIF v2.1.0 schema |
+| `generate_visual_brief` | `(output_path)` | Generate interactive HTML visual brief with Mermaid diagrams |

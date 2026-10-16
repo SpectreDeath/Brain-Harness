@@ -63,7 +63,7 @@ def discover_tests(root_dir: str = ".") -> dict[str, Any]:
 
 
 async def run_tests(
-    target_path: str = "tests",
+    target_path: str = "tests/test_manifest.py",
     *,
     markers: str | None = None,
     keyword_filter: str | None = None,
@@ -71,6 +71,17 @@ async def run_tests(
     root_dir: str = ".",
 ) -> dict[str, Any]:
     """Execute pytest on target paths and parse results into structured feedback."""
+    if not target_path or not isinstance(target_path, str) or not target_path.strip():
+        return {
+            "status": "error",
+            "success": False,
+            "error": "A non-empty target_path string is required",
+            "duration": 0.0,
+        }
+
+    if not isinstance(timeout, (int, float)) or timeout <= 0:
+        timeout = 60.0
+
     root = Path(root_dir).resolve()
     start_time = time.time()
 
@@ -210,3 +221,6 @@ class TestRunnerPlugin(HarnessPlugin):
 
     async def on_unload(self) -> None:
         logger.info("TestRunnerPlugin unloaded", plugin=self.name)
+
+# Module-level plugin singleton (Rule 45)
+plugin = TestRunnerPlugin()

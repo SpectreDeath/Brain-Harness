@@ -355,3 +355,6 @@ class FilesystemGitPlugin(HarnessPlugin, FilesystemGitService):
             commits=res.get("commits", []),
             error=res.get("error"),
         )
+
+# Module-level plugin singleton (Rule 45)
+plugin = FilesystemGitPlugin()

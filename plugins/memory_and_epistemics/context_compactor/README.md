@@ -23,7 +23,6 @@ Agent trajectory summarization, context compaction, and persistent memory offloa
 | `compact_conversation` | `(messages, preserve_recent)` | Compact a message list by summarizing earlier history while preserving recent messages |
 | `offload_to_memory` | `(key, content, topic)` | Offload important notes, code snippets, or facts to Memtext persistent memory |
 | `recall_context` | `(query, limit)` | Recall stored memories and context matching a query |
-
 ---
 
 ## Key Modules & AST Symbols

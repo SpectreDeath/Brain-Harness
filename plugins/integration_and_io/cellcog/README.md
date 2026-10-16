@@ -23,7 +23,6 @@ Any-to-any multimodal sub-agent delegation via CellCog SDK — research, media, 
 | `cellcog_run` | `(prompt, chat_mode, chat_tier, timeout, task_label)` | Execute any-to-any multimodal task via CellCog (agent or creative mode) |
 | `cellcog_research` | `(topic, attachments, chat_tier, timeout)` | Deep multi-source research synthesis via CellCog team mode |
 | `cellcog_list_capabilities` | `()` | List available CellCog modality skills and their categories |
-
 ---
 
 ## Key Modules & AST Symbols

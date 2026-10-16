@@ -23,14 +23,9 @@ from harness.services.django_bridge import (
 )
 
 try:
-    from .engine import DjangoBridgeServiceImpl
+    from plugins.software_engineering.django_bridge.engine import DjangoBridgeServiceImpl
 except (ImportError, ValueError):
-    import sys
-    from pathlib import Path
-    _pkg_dir = Path(__file__).resolve().parent
-    if str(_pkg_dir) not in sys.path:
-        sys.path.insert(0, str(_pkg_dir))
-    from engine import DjangoBridgeServiceImpl
+    from .engine import DjangoBridgeServiceImpl
 
 logger = structlog.get_logger(__name__)
 

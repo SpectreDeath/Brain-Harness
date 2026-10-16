@@ -23,7 +23,6 @@ Webhook notification dispatcher, Slack & Discord card builder, and agent event b
 | `notify_webhook` | `(url, payload, timeout)` | Send a JSON payload to a generic HTTP/HTTPS webhook URL |
 | `notify_chat_channel` | `(platform, webhook_url, title, message, status, fields)` | Format and dispatch a rich message card to a Slack or Discord webhook |
 | `notify_task_event` | `(event_type, task_name, details, webhook_url)` | Format and broadcast a standardized agent task lifecycle event |
-
 ---
 
 ## Key Modules & AST Symbols

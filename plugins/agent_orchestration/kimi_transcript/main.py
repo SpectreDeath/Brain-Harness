@@ -245,3 +245,6 @@ class KimiTranscriptPlugin(HarnessPlugin):
     async def on_disable(self, context: ServiceContext) -> None:
         """Unregister service on disable."""
         logger.info("KimiTranscriptPlugin disabled")
+
+# Module-level plugin singleton (Rule 45)
+plugin = KimiTranscriptPlugin()

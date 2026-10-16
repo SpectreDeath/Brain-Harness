@@ -23,7 +23,6 @@ Universal SQL database schema inspector, query runner, and execution plan explai
 | `sql_inspect_schema` | `(db_path)` | Inspect all tables, columns, data types, primary keys, and row counts in a SQLite database |
 | `sql_execute_query` | `(query, db_path, read_only, limit)` | Execute a SQL query with read-only safety validation and result limits |
 | `sql_explain_query` | `(query, db_path)` | Get query execution plan (EXPLAIN QUERY PLAN) for a SQL statement |
-
 ---
 
 ## Key Modules & AST Symbols

@@ -22,7 +22,6 @@ Python AST refactoring engine, dead/unused code identifier, and function extract
 |---|---|---|
 | `find_unused_functions` | `(code)` | Find declared functions in Python source code that are never called internally within the module |
 | `extract_function_preview` | `(code, start_line, end_line, new_func_name)` | Preview extracting a block of lines into a new helper function with parameter discovery |
-
 ---
 
 ## Key Modules & AST Symbols

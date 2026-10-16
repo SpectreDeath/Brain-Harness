@@ -24,7 +24,6 @@ Hermes closed learning loop, autonomous skill formation, verification evidence e
 | `evaluate_verification_evidence` | `(session_id, executed_commands, file_mutations)` | Evaluate pre-commit verification evidence (tests run, lint output, file mutations) before allowing completion |
 | `scrub_think_stream` | `(raw_chunk, capture_telemetry)` | Parse streaming tokens to separate thinking blocks from user-visible response text and stream telemetry |
 | `nudge_learning_persistence` | `(turn_count, complexity_score)` | Calculate cognitive nudge urgency for persisting extracted learnings based on turn count and complexity |
-
 ---
 
 ## Key Modules & AST Symbols

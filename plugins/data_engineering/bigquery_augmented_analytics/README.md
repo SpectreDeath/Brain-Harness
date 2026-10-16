@@ -64,3 +64,17 @@ harness bq profile --table austin_bikeshare.trips --data-col trip_id --timestamp
 # Run full investigative pipeline and output visual brief
 harness bq pipeline --table austin_bikeshare.trips --metric-col trip_id --timestamp-col start_time --dims subscriber_type,bike_type --dry-run --brief report.html
 ```
+
+
+---
+
+## Tools & Entrypoints
+
+| Entrypoint | Parameters | Description |
+|---|---|---|
+| `bigquery_temporal_profile` | `(table, data_col, timestamp_col, seasonalities)` | Execute Stage 1 Temporal Profiling via ML.TREND and ML.SEASONALITY BigQuery TVFs |
+| `bigquery_detect_change_points` | `(table, data_col, timestamp_col, min_probability)` | Execute Stage 2 Structural Shift Isolation via ML.DETECT_CHANGE_POINTS BigQuery TVF |
+| `bigquery_attribute_drivers` | `(table, metric_col, dimension_cols, interest_condition, min_apriori_support, top_k)` | Execute Stage 3 Combinatorial Attribution via AI.KEY_DRIVERS Apriori BigQuery TVF |
+| `bigquery_causal_lift` | `(table, data_col, timestamp_col, intervention_timestamp, output_time_series)` | Execute Stage 4 Counterfactual Impact Modeling via AI.CAUSAL_EFFECT ARIMA_PLUS BigQuery TVF |
+| `bigquery_augmented_pipeline` | `(table, metric_col, timestamp_col, dimension_cols, intervention_timestamp, min_apriori_support, top_k, dry_run)` | Execute complete 5-Stage BigQuery Augmented Analytics pipeline end-to-end |
+| `bigquery_visual_brief` | `(table, metric_col, timestamp_col, dimension_cols, output_path)` | Generate interactive HTML visual brief with Tailwind and Mermaid TVF DAG |

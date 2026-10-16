@@ -201,3 +201,6 @@ class ContextCompactorPlugin(HarnessPlugin, ContextCompactorService):
             memories=res.get("memories", []),
             error=res.get("error"),
         )
+
+# Module-level plugin singleton (Rule 45)
+plugin = ContextCompactorPlugin()

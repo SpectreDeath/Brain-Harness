@@ -151,6 +151,116 @@ class ImageryRenderResult(BaseModel):
     metadata: dict[str, Any] = Field(default_factory=dict, description="Additional bounding box, heading, or rendering metadata")
 
 
+class WeatherResult(BaseModel):
+    """Current weather observations at target point."""
+
+    status: str = Field(default="ok", description="Status code")
+    source: str = Field(default="mcp_live", description="Data provenance: 'mcp_live' or 'simulated_fallback'")
+    is_live: bool = Field(default=True, description="Whether data came from live feed")
+    location: dict[str, Any] = Field(default_factory=dict, description="Resolved geographic point")
+    weather: dict[str, Any] = Field(default_factory=dict, description="Meteorological conditions")
+    summary: str = Field(default="", description="Human-readable conditions summary")
+
+
+class WeatherMapResult(BaseModel):
+    """Weather map radar/satellite product snapshot."""
+
+    status: str = Field(default="ok", description="Status code")
+    source: str = Field(default="mcp_live", description="Data provenance: 'mcp_live' or 'simulated_fallback'")
+    is_live: bool = Field(default=True, description="Whether data came from live feed")
+    map_type: str = Field(default="radar", description="Product type (radar, satellite, lightning)")
+    title: str = Field(default="", description="Product title")
+    coverage: str = Field(default="", description="Coverage extent description")
+    image_url_or_b64: str | None = Field(default=None, description="Image reference or encoded raster")
+
+
+class CctvCameraRecord(BaseModel):
+    """Public city or highway surveillance camera record."""
+
+    id: str = Field(default="", description="Unique camera identifier")
+    camera_id: str | None = Field(default=None, description="Camera identifier alias")
+    name: str | None = Field(default=None, description="Camera display name")
+    city: str | None = Field(default=None, description="City or jurisdiction")
+    provider: str | None = Field(default=None, description="Operating agency or provider")
+    lat: float = Field(..., description="Latitude")
+    lon: float = Field(..., description="Longitude")
+    heading_deg: float | None = Field(default=None, description="Camera viewing angle")
+    distance_km: float | None = Field(default=None, description="Distance from search center")
+
+    def model_post_init(self, __context: Any) -> None:
+        if not self.id and self.camera_id:
+            object.__setattr__(self, "id", self.camera_id)
+        elif self.id and not self.camera_id:
+            object.__setattr__(self, "camera_id", self.id)
+
+
+class CctvSnapshotResult(BaseModel):
+    """Still image frame from public camera feed."""
+
+    status: str = Field(default="ok", description="Status indicator")
+    source: str = Field(default="mcp_live", description="Data provenance")
+    is_live: bool = Field(default=True, description="Live frame status")
+    camera_id: str = Field(..., description="Camera identifier")
+    summary: str = Field(default="", description="Camera summary caption")
+    image_url_or_b64: str | None = Field(default=None, description="Snapshot raster data or link")
+
+
+class AircraftTrackRecord(BaseModel):
+    """Historical flight track position sequence."""
+
+    status: str = Field(default="ok", description="Status code")
+    source: str = Field(default="mcp_live", description="Data provenance")
+    is_live: bool = Field(default=True, description="Live feed status")
+    icao24: str = Field(..., description="ICAO24 transponder address")
+    points: list[dict[str, Any]] = Field(default_factory=list, description="Ordered time-series points [time, lat, lon, alt]")
+    total_points: int = Field(default=0, description="Total sampled track positions")
+    summary: str = Field(default="", description="Track summary sentence")
+
+
+class VesselTrackRecord(BaseModel):
+    """Historical maritime vessel position trail."""
+
+    status: str = Field(default="ok", description="Status code")
+    source: str = Field(default="mcp_live", description="Data provenance")
+    is_live: bool = Field(default=True, description="Live feed status")
+    mmsi: str = Field(..., description="Maritime Mobile Service Identity")
+    points: list[dict[str, Any]] = Field(default_factory=list, description="Chronological track points")
+    total_points: int = Field(default=0, description="Total recorded positions")
+    summary: str = Field(default="", description="Vessel track summary")
+
+
+class CycloneRecord(BaseModel):
+    """Tropical cyclone or hurricane advisory."""
+
+    id: str = Field(..., description="Storm identifier")
+    name: str = Field(..., description="Storm name")
+    classification: str = Field(default="Tropical Storm", description="Classification (Hurricane, Typhoon, Depression)")
+    basin: str = Field(default="Atlantic", description="Ocean basin")
+    lat: float = Field(..., description="Current center latitude")
+    lon: float = Field(..., description="Current center longitude")
+    wind_kt: float | None = Field(default=None, description="Maximum sustained winds in knots")
+    pressure_hpa: float | None = Field(default=None, description="Central pressure in hPa")
+
+
+class TerrainHeightRecord(BaseModel):
+    """Elevation query point with surface altitude metrics."""
+
+    lat: float = Field(..., description="Latitude")
+    lon: float = Field(..., description="Longitude")
+    elevation_m: float = Field(..., description="Height above mean sea level in meters")
+
+
+class SituationBriefResult(BaseModel):
+    """Multi-domain situational awareness brief."""
+
+    status: str = Field(default="ok", description="Status indicator")
+    source: str = Field(default="mcp_live", description="Data provenance")
+    is_live: bool = Field(default=True, description="Live feed flag")
+    area_label: str = Field(default="", description="Analyzed area description")
+    summary_lines: list[str] = Field(default_factory=list, description="High-level bullet summaries")
+    sections: dict[str, Any] = Field(default_factory=dict, description="Domain section responses (weather, flights, ships, hazards)")
+
+
 @runtime_checkable
 class GodsEyeViewService(Protocol):
     """Protocol for the God's Eye View Planetary Intelligence Service."""
@@ -277,6 +387,134 @@ class GodsEyeViewService(Protocol):
         outdir: str | None = None,
     ) -> ImageryRenderResult:
         """Render photorealistic 3D Cesium globe snapshots with post-processing shaders."""
+        ...
+
+    # Tier 2 Pass-Through Tools
+    async def get_weather(
+        self,
+        place: str | None = None,
+        lat: float | None = None,
+        lon: float | None = None,
+    ) -> WeatherResult:
+        """Retrieve current weather conditions at point or named place."""
+        ...
+
+    async def get_weather_map(
+        self,
+        map_type: str = "radar",
+        place: str | None = None,
+        bbox: list[float] | None = None,
+        lat: float | None = None,
+        lon: float | None = None,
+        radius_km: float | None = None,
+    ) -> WeatherMapResult:
+        """Fetch precipitation radar or cloud satellite imagery overlay."""
+        ...
+
+    async def find_cctv_cameras(
+        self,
+        place: str | None = None,
+        bbox: list[float] | None = None,
+        lat: float | None = None,
+        lon: float | None = None,
+        radius_km: float | None = None,
+        limit: int = 50,
+    ) -> list[CctvCameraRecord]:
+        """Search public camera installations in an area."""
+        ...
+
+    async def get_cctv_snapshot(
+        self,
+        camera_id: str,
+    ) -> CctvSnapshotResult:
+        """Retrieve latest still snapshot frame from public camera."""
+        ...
+
+    async def find_aircraft(
+        self,
+        callsign: str | None = None,
+        icao24: str | None = None,
+        registration: str | None = None,
+        limit: int = 50,
+    ) -> list[FlightRecord]:
+        """Search aircraft globally by callsign, ICAO hex, or tail registration."""
+        ...
+
+    async def get_aircraft_track(
+        self,
+        icao24: str,
+        military: bool = False,
+    ) -> AircraftTrackRecord:
+        """Fetch recent position history track for an aircraft."""
+        ...
+
+    async def find_vessel(
+        self,
+        mmsi: str | None = None,
+        imo: str | None = None,
+        name: str | None = None,
+        limit: int = 50,
+    ) -> list[VesselRecord]:
+        """Search vessels globally by MMSI, IMO number, or vessel name."""
+        ...
+
+    async def get_vessel_track(
+        self,
+        mmsi: str,
+    ) -> VesselTrackRecord:
+        """Fetch recent position track history for an AIS vessel."""
+        ...
+
+    async def situation_brief(
+        self,
+        place: str | None = None,
+        bbox: list[float] | None = None,
+        lat: float | None = None,
+        lon: float | None = None,
+        radius_km: float | None = None,
+    ) -> SituationBriefResult:
+        """Generate composite multi-domain situation overview for an area."""
+        ...
+
+    async def get_terrain_height(
+        self,
+        points: list[dict[str, float]],
+    ) -> list[TerrainHeightRecord]:
+        """Query terrain ground elevation above sea level for coordinate points."""
+        ...
+
+    async def get_cyclones(
+        self,
+        place: str | None = None,
+        bbox: list[float] | None = None,
+        lat: float | None = None,
+        lon: float | None = None,
+        radius_km: float | None = None,
+    ) -> list[CycloneRecord]:
+        """Fetch active tropical cyclone and hurricane advisories."""
+        ...
+
+    async def get_active_fires(
+        self,
+        place: str | None = None,
+        bbox: list[float] | None = None,
+        lat: float | None = None,
+        lon: float | None = None,
+        radius_km: float | None = None,
+        limit: int = 100,
+    ) -> list[ThermalHotspotRecord]:
+        """Fetch NASA FIRMS active fires in an area."""
+        ...
+
+    async def get_recent_imagery(
+        self,
+        place: str | None = None,
+        bbox: list[float] | None = None,
+        lat: float | None = None,
+        lon: float | None = None,
+        radius_km: float | None = None,
+    ) -> dict[str, Any]:
+        """Fetch recent Landsat/Sentinel/VIIRS optical satellite imagery metadata."""
         ...
 
 

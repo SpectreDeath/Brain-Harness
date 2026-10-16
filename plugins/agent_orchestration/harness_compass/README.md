@@ -25,3 +25,16 @@ The `harness_compass` plugin elevates the 5-stage closed-loop HarnessCompass eng
 - `merge_r3`: Execute R3 integration (Revision, Recombination, Occam's Razor).
 - `run_evolution_round`: Simulate a full 5-stage closed loop evolution and acceptance round.
 - `harness_compass_visual_brief`: Generate interactive standalone HTML visual brief.
+
+
+---
+
+## Tools & Entrypoints
+
+| Entrypoint | Parameters | Description |
+|---|---|---|
+| `validate_gate` | `(id, surface, description, target_file, content, is_advisory, is_code_executable)` | Validate candidate harness edit against Content and Placement invariants |
+| `ground_feedback` | `(kind, component, friction, desired_change, trace_refs, attribution, trajectory_turns)` | Ground agent usability feedback and check trace citations |
+| `merge_r3` | `(winner_name, winner_score, winner_edits, loser_name, loser_score, loser_edits)` | Execute R3 integration: Revision, Recombination, and Occam's Razor Refinement |
+| `run_evolution_round` | `(round_num, baseline_score, structural_edits, guidance_edits, structural_score, guidance_score)` | Simulate a complete 5-stage closed loop evolution and acceptance round |
+| `harness_compass_visual_brief` | `(output_path)` | Generate interactive HTML visual brief with telemetry and Mermaid DAG |

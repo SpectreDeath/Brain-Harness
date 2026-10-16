@@ -263,3 +263,6 @@ class MagikaFormatForensicsPlugin(HarnessPlugin, MagikaFormatForensicsService):
 
     def quarantine_scan(self, file_path: str, blocked_groups: list[str] | None = None) -> dict[str, Any]:
         return self._engine.quarantine_scan(file_path=file_path, blocked_groups=blocked_groups)
+
+# Module-level plugin singleton (Rule 45)
+plugin = MagikaFormatForensicsPlugin()

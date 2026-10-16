@@ -23,7 +23,6 @@ Clean web page fetcher, automated HTML-to-Markdown distillation, and custom HTTP
 | `web_fetch_url` | `(url, timeout)` | Fetch a remote web page by URL and return status, response headers, and raw text body |
 | `web_fetch_markdown` | `(url, timeout)` | Fetch a URL and automatically distill HTML layout and styling into clean Markdown |
 | `web_http_request` | `(url, method, headers, json_data, timeout)` | Perform custom HTTP requests (GET, POST, PUT, DELETE, PATCH) with custom headers and JSON payloads |
-
 ---
 
 ## Key Modules & AST Symbols

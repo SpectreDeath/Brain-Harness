@@ -19,7 +19,6 @@ Hierarchical multi-agent supervisor, token budget allocator, and consensus votin
 |---|---|---|
 | `coordinate_swarm_tasks` | `(objective, agents, max_total_tokens)` | Decompose a swarm objective into worker agent assignments with assigned token budgets and roles |
 | `tally_consensus_votes` | `(votes, threshold)` | Aggregate and tally multi-agent votes on proposals with configurable quorum and consensus threshold |
-
 ---
 
 ## Key Modules & AST Symbols

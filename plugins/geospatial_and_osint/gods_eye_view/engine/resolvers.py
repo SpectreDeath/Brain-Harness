@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:
     from harness.kernel.context import ServiceContext
@@ -12,7 +12,13 @@ from .core import GodsEyeViewEngine
 _GLOBAL_ENGINE: GodsEyeViewEngine | None = None
 
 
-def resolve_gods_eye_view_engine(context: ServiceContext | None = None) -> GodsEyeViewEngine:
+_GLOBAL_BRIDGE: Any | None = None
+
+
+def resolve_gods_eye_view_engine(
+    context: ServiceContext | None = None,
+    data_dir: str | None = None,
+) -> GodsEyeViewEngine:
     """Resolve GodsEyeViewEngine from IoC context or fallback to singleton instance."""
     global _GLOBAL_ENGINE
     if context is not None:
@@ -25,10 +31,20 @@ def resolve_gods_eye_view_engine(context: ServiceContext | None = None) -> GodsE
             pass
 
     if _GLOBAL_ENGINE is None:
-        _GLOBAL_ENGINE = GodsEyeViewEngine()
+        _GLOBAL_ENGINE = GodsEyeViewEngine(data_dir=data_dir)
     return _GLOBAL_ENGINE
+
+
+def resolve_node_cli_bridge() -> Any:
+    """Resolve singleton NodeCliBridge instance for subprocess execution."""
+    global _GLOBAL_BRIDGE
+    if _GLOBAL_BRIDGE is None:
+        from ..cli_bridge import NodeCliBridge
+        _GLOBAL_BRIDGE = NodeCliBridge()
+    return _GLOBAL_BRIDGE
 
 
 __all__ = [
     "resolve_gods_eye_view_engine",
+    "resolve_node_cli_bridge",
 ]

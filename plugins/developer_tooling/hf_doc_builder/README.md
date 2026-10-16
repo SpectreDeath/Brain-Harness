@@ -23,6 +23,18 @@ The `plugin.hf_doc_builder` plugin provides deep integration with Hugging Face d
 
 ---
 
+## Tools & Entrypoints
+
+| Entrypoint | Parameters | Description |
+|---|---|---|
+| `doc_autodoc_inspect` | `(package_name, object_name, mock_heavy_deps, source_file)` | Extract structured signatures, type hints, parameter docs, and markdown from Python objects |
+| `doc_link_verify` | `(docs_dir, check_anchors, check_toc)` | Verify internal relative links, anchors, and cross-references across documentation files |
+| `doc_format_convert` | `(source_path, target_format)` | Transpile Markdown, RST, or Jupyter Notebooks into MDX with Svelte tags |
+| `doc_style_lint` | `(file_path, fix)` | Lint and format code examples inside docstrings and MDX files |
+| `doc_chunk_indexer` | `(markdown_text, page_title, max_chunk_size)` | Hierarchically partition documentation by headings with breadcrumbs for vector indexing |
+
+---
+
 ## Key Modules & Classes
 
 | Module | Core Classes | Description |

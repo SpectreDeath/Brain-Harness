@@ -50,11 +50,12 @@ class TestMantisSandboxVerifierPlugin:
         assert res["exit_code"] == 0
         assert "HELLO_SANDBOX" in res["stdout"]
 
-    def test_reproduce_crash_detection(self) -> None:
+    @pytest.mark.asyncio
+    async def test_reproduce_crash_detection(self) -> None:
         """Verify reproducer detects crashes and handles normal exit codes."""
         # 1. Script that raises an exception / crash
         crashing_script = "raise ValueError('Simulated vulnerability crash!')"
-        repro_res = mantis_reproduce_crash(
+        repro_res = await mantis_reproduce_crash(
             reproducer_script=crashing_script,
             target_file="app.py",
             sanitizers=["asan"]
@@ -65,14 +66,15 @@ class TestMantisSandboxVerifierPlugin:
 
         # 2. Script that exits cleanly
         clean_script = "print('All checks pass cleanly'); import sys; sys.exit(0)"
-        clean_res = mantis_reproduce_crash(
+        clean_res = await mantis_reproduce_crash(
             reproducer_script=clean_script,
             target_file="app.py"
         )
         assert clean_res["crashed"] is False
         assert clean_res["verdict"] == "CRASH_NOT_REPRODUCED"
 
-    def test_patch_verify_lifecycle(self) -> None:
+    @pytest.mark.asyncio
+    async def test_patch_verify_lifecycle(self) -> None:
         """Verify transactional patch verification gate and re-attack checks."""
         diff = """--- app.py
 +++ app.py
@@ -82,7 +84,7 @@ class TestMantisSandboxVerifierPlugin:
 """
         # Reproducer fails to crash after patch is applied
         safe_reproducer = "import sys; sys.exit(0)"
-        patch_res = mantis_patch_verify(
+        patch_res = await mantis_patch_verify(
             diff_content=diff,
             reproducer_script=safe_reproducer,
             run_bypass_reattack=False

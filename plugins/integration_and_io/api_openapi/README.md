@@ -23,7 +23,6 @@ OpenAPI / Swagger 3.0 specification synthesis, schema validation, and mock respo
 | `generate_openapi_spec` | `(title, version, routes)` | Synthesize a valid OpenAPI 3.0 JSON specification from route definitions |
 | `validate_openapi_spec` | `(spec_dict)` | Validate OpenAPI 3.0 specification structure against spec requirements |
 | `generate_mock_endpoint_response` | `(response_schema)` | Generate mock JSON response conforming to a route schema |
-
 ---
 
 ## Key Modules & AST Symbols

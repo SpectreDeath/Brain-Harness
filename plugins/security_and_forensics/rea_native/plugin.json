@@ -1,0 +1,193 @@
+{
+  "name": "plugin.rea_native",
+  "version": "1.0.0",
+  "description": "REA native binary reverse engineering: Ghidra/Hopper/IDA decompilation, call graphs, pwntools ELF layout, WABT 1.0.42 WASM inspection, and EVM interface parsing.",
+  "language": "python",
+  "entrypoint": "main.py",
+  "isolation": "subprocess",
+  "trusted": true,
+  "source_repo": "https://github.com/morluto/rea",
+  "verified_commit": "ffaf2c12f1793c7c451e66dc09c3074544a4c086",
+  "isnad_lineage": {
+    "source_url": "https://github.com/morluto/rea",
+    "commit_hash": "ffaf2c12f1793c7c451e66dc09c3074544a4c086",
+    "anchors": [
+      "src/wasm/WabtRelease.ts",
+      "src/contracts/nativeToolContracts.ts",
+      "src/contracts/officialToolContracts.ts"
+    ]
+  },
+  "dependencies": [
+    "pydantic>=2.0",
+    "structlog"
+  ],
+  "provides": [
+    "service.rea_native"
+  ],
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "rea_native_batch_decompile",
+      "description": "Decompile one or more procedure symbols concurrently via headless Ghidra, Hopper, or IDA.",
+      "parameters": [
+        {
+          "name": "target_path",
+          "type": "string",
+          "description": "Path to binary target",
+          "required": true
+        },
+        {
+          "name": "symbols",
+          "type": "array",
+          "description": "List of procedure symbol names to decompile",
+          "required": true
+        },
+        {
+          "name": "provider",
+          "type": "string",
+          "description": "Decompiler provider: ghidra, hopper, or ida",
+          "required": false,
+          "default": "ghidra"
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "rea_native_call_graph",
+      "description": "Traverse caller or callee relationships from a procedure entrypoint.",
+      "parameters": [
+        {
+          "name": "target_path",
+          "type": "string",
+          "description": "Path to binary target",
+          "required": true
+        },
+        {
+          "name": "entry_symbol",
+          "type": "string",
+          "description": "Procedure entrypoint symbol",
+          "required": true
+        },
+        {
+          "name": "depth",
+          "type": "number",
+          "description": "Traversal depth (default: 3)",
+          "required": false,
+          "default": 3
+        },
+        {
+          "name": "direction",
+          "type": "string",
+          "description": "Direction of traversal: callee or caller",
+          "required": false,
+          "default": "callee"
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "rea_native_elf_layout",
+      "description": "Offline static binary inspection via pwntools: section map, imported/exported symbols, and exploit mitigations (checksec).",
+      "parameters": [
+        {
+          "name": "target_path",
+          "type": "string",
+          "description": "Path to ELF/PE binary target",
+          "required": true
+        },
+        {
+          "name": "checksec",
+          "type": "boolean",
+          "description": "Whether to check binary exploit mitigations",
+          "required": false,
+          "default": true
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "rea_native_wasm_inspect",
+      "description": "Validate and inspect WebAssembly binaries via WABT 1.0.42: sections, imports/exports, and optional WAT disassembly.",
+      "parameters": [
+        {
+          "name": "wasm_path",
+          "type": "string",
+          "description": "Path to WASM binary file",
+          "required": true
+        },
+        {
+          "name": "emit_wat",
+          "type": "boolean",
+          "description": "Whether to emit WAT disassembly",
+          "required": false,
+          "default": true
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "rea_native_evm_interface",
+      "description": "Parse flat EVM bytecode, extract 4-byte dispatch selectors, disassemble opcodes, and resolve public ABI signatures.",
+      "parameters": [
+        {
+          "name": "bytecode_hex",
+          "type": "string",
+          "description": "Hex-encoded EVM bytecode string",
+          "required": true
+        },
+        {
+          "name": "resolve_signatures",
+          "type": "boolean",
+          "description": "Whether to resolve 4-byte selectors to known function signatures",
+          "required": false,
+          "default": true
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "rea_native_annotate_function",
+      "description": "Atomically update a function name and/or entry comment in the Ghidra session database.",
+      "parameters": [
+        {
+          "name": "target_path",
+          "type": "string",
+          "description": "Path to binary target",
+          "required": true
+        },
+        {
+          "name": "address",
+          "type": "string",
+          "description": "Function entrypoint address in hex or decimal",
+          "required": true
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "description": "New function name",
+          "required": false
+        },
+        {
+          "name": "comment",
+          "type": "string",
+          "description": "Function comment or annotation",
+          "required": false
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "rea_native_inspect_load_image",
+      "description": "Verify a loaded DOS MZ or COM image against its immutable target snapshot: byte digests, header mappings, and relocations.",
+      "parameters": [
+        {
+          "name": "target_path",
+          "type": "string",
+          "description": "Path to DOS MZ/COM binary target",
+          "required": true
+        }
+      ],
+      "returns": "object"
+    }
+  ]
+}

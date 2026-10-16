@@ -54,3 +54,18 @@ def manage_scale_to_zero(idle_timeout_seconds: int = 300) -> dict[str, Any]:
         "hibernation_eligible": False,
         "policy": "SERVERLESS_HIBERNATE_ON_IDLE",
     }
+
+# -----------------------------------------------------------------------------
+# Harness Plugin Class & IoC Singleton (Rule 45)
+# -----------------------------------------------------------------------------
+from harness.plugins.base import HarnessPlugin
+class DomainHermesGatewayRelayPlugin(HarnessPlugin):
+    """Hermes multi-platform gateway relay, WebSocket telemetry streamer, and scale-to-zero lifecycle manager"""
+
+    name = "domain.hermes_gateway_relay"
+    version = "1.0.0"
+    description = """Hermes multi-platform gateway relay, WebSocket telemetry streamer, and scale-to-zero lifecycle manager"""
+    trusted = True
+
+
+plugin = DomainHermesGatewayRelayPlugin()

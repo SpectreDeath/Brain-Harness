@@ -83,3 +83,18 @@ def synthesize_recovery_prompt(
         "status": "ok",
         "recovery_prompt": "\n".join(prompt_lines),
     }
+
+# -----------------------------------------------------------------------------
+# Harness Plugin Class & IoC Singleton (Rule 45)
+# -----------------------------------------------------------------------------
+from harness.plugins.base import HarnessPlugin
+class DomainTrajectoryAuditorPlugin(HarnessPlugin):
+    """Agent trajectory step auditor, repetitive loop / stuck detector, and recovery prompt synthesizer"""
+
+    name = "domain.trajectory_auditor"
+    version = "1.0.0"
+    description = """Agent trajectory step auditor, repetitive loop / stuck detector, and recovery prompt synthesizer"""
+    trusted = True
+
+
+plugin = DomainTrajectoryAuditorPlugin()

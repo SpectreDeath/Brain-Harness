@@ -24,7 +24,6 @@ Mounts, inspects, and federates external agent brains, Git/GitHub repositories, 
 | `brain_query` | `(query, brain_alias, include_trajectories, top_k)` | Query across one or all mounted external brains/repos for knowledge, code, solutions, or trajectories |
 | `brain_list_attached` | `()` | List all currently mounted external brains and repositories, their detected formats, and index statistics |
 | `brain_detach` | `(brain_alias)` | Unmount a foreign brain or repository and release its memory indexes |
-
 ---
 
 ## Key Modules & AST Symbols

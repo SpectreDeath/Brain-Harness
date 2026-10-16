@@ -144,3 +144,29 @@ class TauHarnessBridgePlugin(HarnessPlugin, TauBridgeService):
 
 # Module-level singleton provider required by Rule 45
 plugin = TauHarnessBridgePlugin()
+
+
+# Top-level tool entrypoints matching plugin.json
+def tau_session_fork(entries: list[dict[str, Any]], target_id: str) -> dict[str, Any]:
+    """Traverse branchable session tree DAG entries and resolve linear ancestry path from root to target entry."""
+    res = plugin.resolve_session_path(entries, target_id)
+    return {"path": [e.__dict__ if hasattr(e, "__dict__") else e for e in res.path], "divergence_node": res.divergence_node}
+
+
+def tau_tool_history_repair(messages: list[dict[str, Any]]) -> dict[str, Any]:
+    """Normalize message history in-flight to repair orphan tool responses or unresponded assistant tool calls."""
+    res = plugin.repair_tool_history(messages)
+    return {"repaired_messages": res.repaired_messages, "repairs_applied": res.repairs_applied, "valid": res.valid}
+
+
+def tau_project_trust_eval(project_path: str, trusted_roots: list[str] | None = None) -> dict[str, Any]:
+    """Evaluate workspace trust boundaries, git root inheritance, and protected resource access."""
+    res = plugin.evaluate_project_trust(project_path, trusted_roots)
+    return {"is_trusted": res.is_trusted, "trust_root": res.trust_root, "reason": res.reason}
+
+
+def tau_rpc_session_dispatch(request_id: str | int | None = None, result: Any = None, error: dict[str, Any] | None = None) -> dict[str, Any]:
+    """Format and dispatch a Pi-compatible JSONL RPC message envelope."""
+    res = plugin.format_rpc_envelope(request_id, result=result, error=error)
+    return {"id": res.id, "result": res.result, "error": res.error}
+

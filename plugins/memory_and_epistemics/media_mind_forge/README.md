@@ -21,7 +21,6 @@ Cognitive analysis, epistemic distillation, and skill forging engine combining b
 | `media_mind_forge_distill_kis` | `(transcript, file_path, video_url, video_id, persist_to_storage)` | Extract Knowledge Items (KIs) with epistemic isnad chains from video transcripts |
 | `media_mind_forge_craft_skill` | `(transcript, file_path, video_url, video_id, skill_name, output_dir)` | Synthesize complete, validated agent skill package (SKILL.md + CARD.md) from media transcript |
 | `media_mind_forge_visual_brief` | `(transcript, file_path, video_url, video_id)` | Generate self-contained HTML visual brief report in %TEMP% with Mermaid cognitive topology |
-
 ---
 
 ## Key Modules & AST Symbols
