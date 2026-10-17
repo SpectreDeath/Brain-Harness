@@ -70,7 +70,7 @@ Agent MUST STOP and wait for explicit human approval before deploying boundary g
 
 ---
 
-## Verification & Quality Checklist
+## Mandatory Invariants Checklist
 
 - [ ] **Positive Phrasing**: Instructions state direct target actions instead of negative prohibitions.
 - [ ] **Leading Words**: Employs compact domain vocabulary (*boundary*, *centroid*, *cosine*, *logprob*, *perplexity*, *escalation*).

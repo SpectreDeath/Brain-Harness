@@ -100,6 +100,19 @@ Diagram walkthroughs must present architectures progressively—starting from hi
 
 ---
 
+## The Visual Brief Pillar
+
+When completing PR diff visualization sessions or architecture SVG rendering runs, synthesize the generated SVG graph structure, node/edge counts, and XML schema validation results into a standalone interactive HTML visual brief written to `%TEMP%\pr-lens-<timestamp>.html`. Embed the rendered SVG inline with annotated diff edge highlights and a containment status badge per subgraph.
+
+## Mandatory Checkpoint Gates
+
+Before publishing any generated SVG or composing PR comments:
+1. **Gate 1 (SVG Schema Validity)**: Assert all generated SVG output passes XML well-formedness validation (zero malformed tags or unclosed elements).
+2. **Gate 2 (PR Diff Containment)**: Assert all visualized nodes and edges are traceable to actual diff hunks (zero phantom nodes from non-diff content).
+3. **Gate 3 (Self-Contained)**: Assert rendered SVG files load correctly in isolation without external CDN dependencies.
+
+---
+
 ## Anti-Patterns
 
 - **External Dependency Leaks** — Referencing CDN scripts or remote styles that fail inside sanitized GitHub PR comments.

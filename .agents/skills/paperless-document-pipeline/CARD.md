@@ -33,7 +33,7 @@
 
 ---
 
-## Invariants & Guardrails
+## Mandatory Invariants Checklist
 
 - [ ] **Slotted Domain Models**: Enforce immutable `@dataclass(slots=True, frozen=True)` for all document and task records (Rule 12).
 - [ ] **3-Tier Zero-Fork Configuration**: Read defaults from `config.default.yaml` with project override support (Rule 44).

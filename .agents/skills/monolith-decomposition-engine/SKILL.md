@@ -55,6 +55,21 @@ domain_group.add_command(cmd_action)
 domain_group.add_command(cmd_inspect)
 ```
 
+---
+
+## The Visual Brief Pillar
+
+When completing monolithic factorization sessions, synthesize the decomposition call tree, per-submodule LOC counts, and single-seam resolver coverage into a standalone interactive HTML visual brief written to `%TEMP%\monolith-decompose-<timestamp>.html`. Render the before/after module dependency graph as a Mermaid `graph TD` with LOC annotations per node.
+
+## Mandatory Checkpoint Gates
+
+Before committing any factored submodule output:
+1. **Gate 1 (LOC Enforcement)**: Assert every generated submodule is ≤ 200 lines (zero violations under `check-lines`).
+2. **Gate 2 (Single-Seam Resolver)**: Assert each slotted domain model exposes exactly one typed resolution entry point with no duplicate service keys.
+3. **Gate 3 (Lint Clean)**: Assert `ruff check` returns zero errors across all factored subpackage files before staging.
+
+---
+
 ## Anti-Patterns
 
 - **Shallow Delegation Wrappers** — Creating submodules that only wrap another function without meaningful interface depth.

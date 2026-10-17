@@ -45,7 +45,7 @@
 
 ---
 
-## Anti-Pattern Invariants Checklist
+## Mandatory Invariants Checklist
 
 - [ ] **Token Budget Bound**: `AGENTS.md` is strictly under 300 lines (target: 80–150 lines).
 - [ ] **No Generic Tutorials**: Zero explanations of standard Python/JS/framework concepts.

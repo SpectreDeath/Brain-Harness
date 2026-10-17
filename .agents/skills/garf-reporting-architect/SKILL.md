@@ -113,6 +113,20 @@ Finalize data products by computing derived KPIs and conducting structural telem
 
 ---
 
+## The Visual Brief Pillar
+
+When completing analytical DAG pipeline designs or reporting workflow executions, synthesize the DAG dependency graph, step timing breakdowns, and output schema coverage into a standalone interactive HTML visual brief written to `%TEMP%\garf-report-<timestamp>.html`. Render the DAG as a Mermaid `graph TD` with node execution times annotated.
+
+## Mandatory Checkpoint Gates
+
+Before publishing or deploying any reporting DAG pipeline:
+1. **Gate 1 (SQL Validation)**: Assert all generated SQL statements parse successfully (zero syntax errors via `EXPLAIN` or dry-run).
+2. **Gate 2 (Timeout Bounds)**: Assert all query nodes declare explicit `query_timeout` values ≤ 300s.
+3. **Gate 3 (Schema Coverage)**: Assert all declared output columns resolve against source schemas with zero dangling field references.
+4. **Gate 4 (User Approval)**: When automating reports against production databases, request explicit user review via `RequestFeedback: true`.
+
+---
+
 ## Anti-Patterns
 
 - **Ad-Hoc Endpoint Hardcoding** — Writing manual HTTP requests and JSON parsing loops instead of compiling declarative SQL queries over reporting APIs.

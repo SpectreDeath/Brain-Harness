@@ -127,6 +127,19 @@ All domain models use `slots=True` and `frozen=True` (Rule 12):
 
 ---
 
+## The Visual Brief Pillar
+
+When completing multi-package documentation compilation runs or MDX transpilation sessions, synthesize anchor graph coverage, broken cross-reference counts, and mock virtualization pass rates into a standalone interactive HTML visual brief written to `%TEMP%\hf-doc-builder-<timestamp>.html`. Render the AST anchor dependency graph as a Mermaid `graph LR`.
+
+## Mandatory Checkpoint Gates
+
+Before publishing any compiled documentation or committing MDX transforms:
+1. **Gate 1 (Anchor Integrity)**: Assert zero broken internal `[anchor](#heading)` links in the compiled documentation output.
+2. **Gate 2 (Mock Virtualization)**: Assert all zero-dependency mock stubs pass without importing live packages during build.
+3. **Gate 3 (Cross-Package Links)**: Assert all cross-package references resolve to existing anchors in the target package documentation.
+
+---
+
 ## Anti-Patterns
 
 - **Environment-Coupled Inspection** — Requiring full CUDA / GPU machine learning environments to extract docstrings instead of utilizing PEP 302/451 meta-path mock virtualization.

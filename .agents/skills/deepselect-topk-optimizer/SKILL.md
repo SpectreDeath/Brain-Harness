@@ -91,6 +91,19 @@ Never allow GPU Streaming Multiprocessors to sit idle during tail execution wave
 
 ---
 
+## The Visual Brief Pillar
+
+When completing TopK selection benchmark runs or Sparse Attention (DSA) tuning sessions, synthesize throughput comparisons, denormal FP32 boundary test results, and Threadblock Cluster performance matrices into a standalone interactive HTML visual brief written to `%TEMP%\deepselect-topk-<timestamp>.html`. Render performance curves as inline SVG bar charts with P50/P99 latency annotations.
+
+## Mandatory Checkpoint Gates
+
+Before finalizing any TopK kernel implementation or DSA configuration:
+1. **Gate 1 (Correctness)**: Assert TopK selection results match reference brute-force output on all randomized test vectors (tolerance ≤ 1e-5).
+2. **Gate 2 (Denormal FP32 Guard)**: Assert zero denormal float inputs reach the hot selection loop (flush-to-zero confirmed).
+3. **Gate 3 (Timeout Bound)**: Assert no single benchmark run exceeds declared async timeout (≤ 5.0s per vector by default).
+
+---
+
 ## Anti-Patterns
 
 - **Global Heap Exhaustion** — Inserting all elements of an N-element vector into a global priority queue or heap causing O(N log k) branch-divergent memory access.

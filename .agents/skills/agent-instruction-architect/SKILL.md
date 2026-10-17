@@ -166,6 +166,15 @@ Synthesize instruction smell findings and seam boundary diagrams into a self-con
 
 ---
 
+## Mandatory Checkpoint Gates
+
+Before publishing or committing any agent instruction file changes, assert all gates:
+1. **Gate 1 (Line Limit)**: Assert final instruction file is ≤ 150 lines (ideal) and strictly ≤ 300 lines.
+2. **Gate 2 (Lint Command Verification)**: Verify all declared execution commands (`pytest`, `ruff`, etc.) return exit code 0 in the actual repository.
+3. **Gate 3 (User Approval for Sweeping Changes)**: When restructuring an existing `AGENTS.md` or adding new architectural invariants, request explicit user review via `RequestFeedback: true` before writing to disk.
+
+---
+
 ## Anti-Patterns
 
 - **Instruction Flooding** — Writing 600+ line instruction files that exhaust model context and cause instruction dilution.

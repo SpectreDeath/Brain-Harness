@@ -201,6 +201,15 @@ harness uncertainty pipeline -q "Configure VPN" -c "VPN setup doc" -l -0.1
 harness uncertainty calibrate -q "401k match policy" -q "401k contribution limits"
 ```
 
+---
+
+## Mandatory Checkpoint Gates
+
+Before deploying or modifying any uncertainty-aware verification pipeline, assert all gates:
+1. **Gate 1 (Boundary Pre-Gating)**: Assert Layer 1 domain boundary cosine similarity threshold ≥ 0.45 on all test queries before retrieval invocation.
+2. **Gate 2 (Retrieval Sufficiency)**: Assert Layer 2 context scoring ≥ 0.60 on representative held-out verification set before production integration.
+3. **Gate 3 (Logprob Calibration)**: Assert Layer 3 average log-probability ≥ −0.35 with entropy below threshold on benchmark outputs.
+4. **Gate 4 (Escalation Routing)**: Assert HITL escalation dispatch emits well-formed payloads (non-500 responses) for all intercepted queries in test suite.
 
 ---
 

@@ -142,6 +142,19 @@ Audit execution risks, verify supply-chain invariants, and graduate the skill to
 
 ---
 
+## The Visual Brief Pillar
+
+When completing discovery index catalog scans or open record retrieval sessions, synthesize index coverage metrics, source registry health, and query rate limit status into a standalone interactive HTML visual brief written to `%TEMP%\discovery-index-<timestamp>.html`. Render source registry as a paginated table with availability badges.
+
+## Mandatory Checkpoint Gates
+
+Before committing new index entries or publishing retrieval results:
+1. **Gate 1 (Schema Validation)**: Assert all catalog entries conform to the registry schema before insertion (zero malformed entries).
+2. **Gate 2 (Rate Limit Compliance)**: Assert all HTTP queries respect declared per-source rate limits with exponential backoff verified.
+3. **Gate 3 (User Approval for New Sources)**: When registering new curated data sources, request explicit user review via `RequestFeedback: true`.
+
+---
+
 ## Anti-Patterns
 
 - **Prompt Sprawl** — Inlining 46+ discovery repository URLs directly into model context instead of querying `scripts/search_index.py` on demand.

@@ -125,6 +125,19 @@ Query the `paperless_ai` vector RAG engine to answer complex domain questions gr
 
 ---
 
+## The Visual Brief Pillar
+
+When completing document ingestion pipelines or hybrid search index builds, synthesize document classification confidence distributions, Tantivy lexical index coverage, and SQLite-Vec semantic embedding status into a standalone interactive HTML visual brief written to `%TEMP%\paperless-pipeline-<timestamp>.html`. Render classification confidence as a histogram with threshold boundary overlays.
+
+## Mandatory Checkpoint Gates
+
+Before finalizing any document ingestion run or publishing search index updates:
+1. **Gate 1 (Classification Confidence)**: Assert classification confidence ≥ 0.70 for all processed documents before committing to the index.
+2. **Gate 2 (Hybrid Search Latency)**: Assert combined Tantivy + SQLite-Vec query latency ≤ 200ms on the benchmark query set.
+3. **Gate 3 (User Approval for Schema Changes)**: When modifying document type schemas or index configurations, request explicit user review via `RequestFeedback: true`.
+
+---
+
 ## Anti-Patterns
 
 - **Unbounded Task Polling** — Polling the Celery task queue in an infinite loop without bounded timeout thresholds.

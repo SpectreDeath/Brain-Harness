@@ -109,6 +109,19 @@ Verify transformation integrity and record epistemic provenance:
 
 ---
 
+## The Visual Brief Pillar
+
+When completing large-scale dataset ingestion pipelines or Arrow memory-mapping operations, synthesize shard coverage, memory footprint per split, and streaming iterator throughput into a standalone interactive HTML visual brief written to `%TEMP%\hf-datasets-<timestamp>.html`. Render per-split memory usage as a horizontal bar chart with Arrow zero-copy annotations.
+
+## Mandatory Checkpoint Gates
+
+Before finalizing any dataset pipeline or publishing transformed splits:
+1. **Gate 1 (Memory Mapping)**: Assert Arrow zero-copy memory mapping is active (confirm no fallback to in-memory pandas loading) for datasets > 1GB.
+2. **Gate 2 (Slice Bounds)**: Assert all `select()` and `take()` slice indices are within declared split bounds (zero index out of range errors).
+3. **Gate 3 (Streaming Correctness)**: Assert lazy streaming iterator produces correct sample count on a held-out shard before full ingestion.
+
+---
+
 ## Anti-Patterns
 
 - **Eager Memory Blowout** — Calling `list(iterable_dataset)` or `to_pandas()` on multi-gigabyte datasets, causing out-of-memory kernel kills.

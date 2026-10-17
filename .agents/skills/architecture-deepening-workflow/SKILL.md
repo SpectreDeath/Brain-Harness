@@ -51,6 +51,18 @@ python scripts/deepen_cycle.py regression --script scratch/run_full_cycle_regres
 python scripts/deepen_cycle.py push --cycle 71 --message "refactor(cycle-71): decompose plugin commands" --files src/harness/commands/plugins/ tests/test_plugins_decomposition.py
 ```
 
+---
+
+## Mandatory Checkpoint Gates
+
+Before committing or staging any architecture deepening cycle artifacts, assert all gates:
+1. **Gate 1 (LOC Enforcement)**: Assert every factored submodule file is ≤ 200 lines with `check-lines` subcommand.
+2. **Gate 2 (Contract Test Pass)**: Assert all `tests/test_*_decomposition.py` contracts pass with zero failures.
+3. **Gate 3 (Regression Gate)**: Execute the full cumulative multi-cycle regression suite before push. Do not bypass via `--no-tests`.
+4. **Gate 4 (User Approval for Push)**: Request explicit user review via `RequestFeedback: true` before executing the secure token-redacted git push step.
+
+---
+
 ## Anti-Patterns
 
 - **Premature Submodule Bloat** — Leaving factored submodules above 200 lines in violation of Rule 11.

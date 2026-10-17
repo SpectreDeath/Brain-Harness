@@ -128,6 +128,20 @@ Decouple agent reasoning from monitoring. Use asynchronous lifecycle hooks to st
 
 ---
 
+## The Visual Brief Pillar
+
+When completing context engineering design or 6-layer staging architecture sessions, synthesize the context staging DAG, token budget allocations per tier, and safe-path confinement boundaries into a standalone interactive HTML visual brief written to `%TEMP%\context-engineering-<timestamp>.html`. Render the 6-layer tier diagram as a Mermaid flowchart with per-tier token budget annotations.
+
+## Mandatory Checkpoint Gates
+
+Before finalizing any 6-layer context stack configuration or deploying ReAct agent loops:
+1. **Gate 1 (Path Confinement)**: Assert all `safe_path()` assertions pass with zero `PermissionError` escapes on test traversal vectors.
+2. **Gate 2 (Token Budget)**: Assert per-tier token allocations do not exceed declared budgets at Tier 1 (catalog), Tier 2 (skill instructions), and Tier 3 (FastMCP tools).
+3. **Gate 3 (ReAct Step Limit)**: Assert agent loop terminates within ≤ 30 steps on all benchmark tasks.
+4. **Gate 4 (User Approval)**: When scaffolding new plugin subagent configurations, request explicit user review via `RequestFeedback: true`.
+
+---
+
 ## Anti-Patterns
 
 - **Context Window Bloat** — Ingesting dozens of raw files into the main agent context instead of partitioning tasks across subagents via the 10+ files rule.

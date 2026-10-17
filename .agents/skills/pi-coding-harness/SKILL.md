@@ -112,6 +112,19 @@ Protect host workspaces and expose standardized headless remote control seams:
 
 ---
 
+## The Visual Brief Pillar
+
+When completing coding agent harness sessions or multi-turn trajectory evaluations, synthesize the agent step timeline, tool-call auto-repair event log, and subprocess sandbox status into a standalone interactive HTML visual brief written to `%TEMP%\pi-harness-<timestamp>.html`. Render the agent step trajectory as a sequential timeline with tool-call status badges (safe / repaired / failed).
+
+## Mandatory Checkpoint Gates
+
+Before finalizing any coding agent configuration or committing harness modifications:
+1. **Gate 1 (Sandbox Isolation)**: Assert all tool executions run inside designated subprocess sandboxes with no direct in-process I/O leakage.
+2. **Gate 2 (Auto-Repair Coverage)**: Assert in-flight tool-call stream normalization intercepts and repairs at least the 4 canonical malformed formats (trailing commas, unclosed brackets, XML tags, bare JSON).
+3. **Gate 3 (Trajectory Settlement)**: Assert every benchmark task reaches terminal settlement (answer or explicit failure) within the declared step limit.
+
+---
+
 ## Anti-Patterns
 
 - **Loop UI Coupling** — Importing terminal renderers, CLI widgets, or interactive prompts directly into core agent loop modules.

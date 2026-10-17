@@ -69,7 +69,7 @@ Related skills: `/hf-datasets-engineer` for large-scale Hugging Face dataset ext
 
 ---
 
-## Invariants & Pre-Flight Verification Checklist
+## Mandatory Invariants Checklist
 
 - [ ] `SKILL.md` contains valid YAML frontmatter with `name:`, `description:` (100-350 chars), `provides:`, and `requires:`.
 - [ ] `SKILL.md` body is bounded strictly under 500 lines (`line_budget_limit`).
