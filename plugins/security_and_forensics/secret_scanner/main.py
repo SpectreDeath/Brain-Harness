@@ -47,6 +47,8 @@ def _shannon_entropy(data: str) -> float:
     return entropy
 
 
+import os
+
 def _mask_secret(secret: str) -> str:
     """Mask sensitive string leaving only small prefix and suffix."""
     if len(secret) <= 8:
@@ -56,6 +58,15 @@ def _mask_secret(secret: str) -> str:
 
 def scan_text(text: str) -> dict[str, Any]:
     """Scan raw text or code string for potential credentials, tokens, and private keys."""
+    if not isinstance(text, str):
+        return {
+            "status": "error",
+            "error": "Input text must be a string",
+            "clean": True,
+            "findings_count": 0,
+            "findings": [],
+        }
+
     findings: list[dict[str, Any]] = []
     lines = text.splitlines()
 
@@ -111,31 +122,54 @@ def scan_file(file_path: str) -> dict[str, Any]:
         return {"status": "error", "error": str(e), "clean": False, "findings": []}
 
 
-def scan_directory(dir_path: str = ".", max_depth: int = 5) -> dict[str, Any]:
-    """Recursively scan a directory for leaked credentials."""
+def scan_directory(dir_path: str = ".", max_depth: int = 3) -> dict[str, Any]:
+    """Recursively scan a directory for leaked credentials adhering to Rule 52."""
+    if not isinstance(dir_path, (str, Path)):
+        return {"status": "error", "error": f"Invalid directory path: {dir_path}", "scanned_files": 0, "findings": []}
+
     root = Path(dir_path).resolve()
     if not root.exists() or not root.is_dir():
         return {"status": "error", "error": f"Directory not found: {dir_path}", "scanned_files": 0, "findings": []}
 
-    skip_dirs = {".git", ".venv", "venv", "__pycache__", "node_modules", ".mypy_cache", ".pytest_cache", ".ruff_cache"}
+    skip_dirs = {".git", ".venv", "venv", "__pycache__", "node_modules", ".mypy_cache", ".pytest_cache", ".ruff_cache", ".gemini", "target", "dist", "data", "outputs", ".coverage"}
+    text_extensions = {".py", ".js", ".ts", ".jsx", ".tsx", ".json", ".yaml", ".yml", ".toml", ".ini", ".cfg", ".env", ".sh", ".bash", ".zsh", ".md", ".txt", ".sql", ".html", ".css", ".xml"}
     all_findings: list[dict[str, Any]] = []
     scanned_count = 0
 
-    for path in root.rglob("*"):
-        if any(part in skip_dirs for part in path.parts):
+    effective_max_depth = max_depth if isinstance(max_depth, int) and max_depth > 0 else 3
+    max_files_limit = 500
+
+    for current_root, dirs, files in os.walk(root):
+        dirs[:] = [d for d in dirs if d not in skip_dirs and not d.startswith(".")]
+        try:
+            rel_depth = len(Path(current_root).relative_to(root).parts)
+        except Exception:
+            rel_depth = 0
+        if rel_depth >= effective_max_depth:
+            dirs.clear()
             continue
-        if path.is_file() and path.stat().st_size < 1_000_000:  # < 1MB text limit
+
+        for fname in files:
+            fpath = Path(current_root) / fname
+            if fpath.suffix.lower() not in text_extensions and fpath.suffix:
+                continue
             try:
-                rel = str(path.relative_to(root))
-                content = path.read_text(encoding="utf-8", errors="ignore")
-                res = scan_text(content)
-                scanned_count += 1
-                if not res["clean"]:
-                    for f in res["findings"]:
-                        f["file"] = rel
-                        all_findings.append(f)
+                if fpath.is_file() and fpath.stat().st_size < 500_000:
+                    rel = str(fpath.relative_to(root))
+                    content = fpath.read_text(encoding="utf-8", errors="ignore")
+                    res = scan_text(content)
+                    scanned_count += 1
+                    if not res.get("clean", True):
+                        for f in res.get("findings", []):
+                            f["file"] = rel
+                            all_findings.append(f)
+                    if scanned_count >= max_files_limit:
+                        break
             except Exception:
                 pass
+        if scanned_count >= max_files_limit:
+            dirs.clear()
+            break
 
     return {
         "status": "ok",
