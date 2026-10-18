@@ -1,0 +1,67 @@
+{
+  "name": "plugin.differential_facet_verifier",
+  "version": "1.0.0",
+  "description": "Multi-provider differential facet comparison, absence claimability gates, and 3-valued differential outcome synthesis from REA (morluto/rea).",
+  "language": "python",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "source_repo": "https://github.com/morluto/rea",
+  "verified_commit": "701695139490777ece7a3ccb8508b6215a11c0fe",
+  "isnad_lineage": {
+    "source_url": "https://github.com/morluto/rea",
+    "commit_hash": "701695139490777ece7a3ccb8508b6215a11c0fe",
+    "anchors": [
+      "src/domain/comparisonSemantics.ts",
+      "src/domain/functionComparisonDimensions.ts",
+      "src/domain/functionComparison.ts",
+      "docs/mcp-contracts.md"
+    ]
+  },
+  "dependencies": [
+    "structlog"
+  ],
+  "provides": [
+    "service.differential_facet"
+  ],
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "facet_compare",
+      "description": "Compare two multi-provider observation dossiers and emit a 3-valued DifferentialReport.",
+      "parameters": [
+        {
+          "name": "left",
+          "type": "object",
+          "description": "Left observation record with facet availability",
+          "required": true
+        },
+        {
+          "name": "right",
+          "type": "object",
+          "description": "Right observation record with facet availability",
+          "required": true
+        },
+        {
+          "name": "providers_differ",
+          "type": "boolean",
+          "description": "Whether observations come from differing providers",
+          "required": false,
+          "default": false
+        }
+      ]
+    },
+    {
+      "name": "facet_claim_absence",
+      "description": "Evaluate whether an absence claim is valid under declared traversal coverage.",
+      "parameters": [
+        {
+          "name": "coverage",
+          "type": "object",
+          "description": "Coverage declaration object with status, truncated, and omitted_count",
+          "required": true
+        }
+      ]
+    }
+  ]
+}

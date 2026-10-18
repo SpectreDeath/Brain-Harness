@@ -1,0 +1,27 @@
+# Differential Facet Verifier — Operational Budgets & Zero-Fork Configuration
+facet_verifier:
+  # Operational Budgets
+  max_dimensions: 8
+  digest_algorithm: sha256
+  subprocess_timeout_seconds: 300
+
+  # Enforcement Flags
+  strict_absence_enforcement: true
+  require_explicit_reasons: true
+  provider_syntax_decoupling: true
+  strict_unknown_propagation: true
+
+  # Output Formatting
+  default_scope: dossier
+  audit_table_format: rich
+
+  # Supported Dimension Catalog
+  supported_dimensions:
+    - identity
+    - pseudocode
+    - assembly
+    - comments
+    - calls
+    - references
+    - strings_names
+    - cfg

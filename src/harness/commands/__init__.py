@@ -74,6 +74,13 @@ from .events import (
     EventQueryResult,
     get_events_cmd,
 )
+from .facet import (
+    facet_claim_absence_cmd,
+    facet_compare_cmd,
+    facet_export_cmd,
+    facet_group,
+    facet_verify_cmd,
+)
 from .garf import (
     garf_export_cmd,
     garf_group,
@@ -502,6 +509,11 @@ __all__ = [
     "export_session_cmd",
     "export_skill_graph_visual_cmd",
     "find_skill_chain_cmd",
+    "facet_claim_absence_cmd",
+    "facet_compare_cmd",
+    "facet_export_cmd",
+    "facet_group",
+    "facet_verify_cmd",
     "garf_export_cmd",
     "garf_group",
     "garf_parse_cmd",

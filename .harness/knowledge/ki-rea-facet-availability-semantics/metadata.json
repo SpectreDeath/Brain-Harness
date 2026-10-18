@@ -1,0 +1,31 @@
+{
+  "id": "ki-rea-facet-availability-semantics",
+  "title": "Differential Facet Availability Semantics & Multi-Provider Comparison",
+  "source_uri": "D:\\GitHub\\cloned\\rea-main",
+  "source_commit": "701695139490777ece7a3ccb8508b6215a11c0fe",
+  "created_at": "2026-10-17T18:00:00Z",
+  "category": "reverse-engineering / differential-analysis / facet-semantics",
+  "claims": [
+    {
+      "claim_id": "claim_001",
+      "assertion": "Multi-provider function comparison must force dimension status to 'unknown' with null counts when either side declares a required facet unavailable or when an empty facet lacks an explicit coverage declaration.",
+      "evidence_quote": "const availability = dossier.facet_availability?.[field]; if (availability?.available === false) return [`${field}: ${availability.reason}`]; return availability === undefined && count === 0 ? [`${field}: Provider did not declare coverage for this empty facet.`] : [];",
+      "source_file": "src/domain/functionComparisonDimensions.ts",
+      "source_lines": "L108-L115"
+    },
+    {
+      "claim_id": "claim_002",
+      "assertion": "Absence of an artifact, entry, or property can only be formally claimed when the provider's inventory declares complete coverage, is not truncated, and omits zero entries; any other coverage state must yield 'unknown' rather than absence.",
+      "evidence_quote": "export const absenceClaimable = (coverage: { readonly status: string; readonly truncated?: boolean; readonly omitted_count?: number | null; }): boolean => coverage.status === 'complete' && coverage.truncated !== true && (coverage.omitted_count === undefined || coverage.omitted_count === 0);",
+      "source_file": "src/domain/comparisonSemantics.ts",
+      "source_lines": "L3-L11"
+    },
+    {
+      "claim_id": "claim_003",
+      "assertion": "Comparing evidence produced by providers with differing representation formats (e.g. Ghidra vs Hopper assembly syntax) must record a 'providersDiffer' limitation and equate only structurally normalized projections, not raw provider text.",
+      "evidence_quote": "const providersDiffer = canonicalJson(left.evidence.provider, 'Function comparison') !== canonicalJson(right.evidence.provider, 'Function comparison'); ... conclusion_kind: input.providersDiffer ? 'contradiction' : 'derived_relationship'",
+      "source_file": "src/domain/functionComparison.ts",
+      "source_lines": "L16-L18"
+    }
+  ]
+}

@@ -55,6 +55,7 @@ from harness.commands.datasets import datasets_group
 from harness.commands.doc import doc_group
 from harness.commands.doc_builder import doc_builder_group
 from harness.commands.events import events_cli
+from harness.commands.facet import facet_group
 from harness.commands.garf import garf_group
 from harness.commands.gate import gate_group
 from harness.commands.gemini_vercel import gemini_vercel_group
@@ -68,6 +69,7 @@ from harness.commands.network_forensics import network_forensics_group
 from harness.commands.plugins import plugin_group
 from harness.commands.pre_commit_security import pre_commit_security_group
 from harness.commands.reflection import knowledge_group, reflect_cli
+from harness.commands.rol import rol_group
 from harness.commands.runtime import (
     apply_cli,
     config_group,
@@ -178,6 +180,10 @@ main.add_command(trajectory_group, name="conversation-miner")
 main.add_command(temp_miner_group, name="temp")
 main.add_command(temp_miner_group, name="temp-miner")
 main.add_command(temp_miner_group, name="ephemeral-miner")
+main.add_command(rol_group, name="rol")
+main.add_command(rol_group, name="obligation-ledger")
+main.add_command(facet_group, name="facet")
+main.add_command(facet_group, name="differential-facet")
 
 # --- Register Standalone Commands ---
 main.add_command(init_cli, name="init")

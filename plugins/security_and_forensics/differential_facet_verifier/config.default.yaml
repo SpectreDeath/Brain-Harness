@@ -1,0 +1,11 @@
+# Differential Facet Verifier — Plugin Operational Budgets
+facet_verifier:
+  max_dimensions: 8
+  digest_algorithm: sha256
+  subprocess_timeout_seconds: 300
+  strict_absence_enforcement: true
+  require_explicit_reasons: true
+  provider_syntax_decoupling: true
+  strict_unknown_propagation: true
+  default_scope: dossier
+  audit_table_format: rich

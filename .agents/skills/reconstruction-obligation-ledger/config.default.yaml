@@ -1,0 +1,19 @@
+# 3-Tier Zero-Fork Configuration for reconstruction-obligation-ledger
+# Layered override: Project Override (.agents/skills.config.yaml) -> Skill Default -> System Fallback
+
+operational_budgets:
+  max_turns: 25
+  max_obligations: 10000
+  subprocess_timeout_seconds: 300
+  retry_limit: 3
+
+streaming_config:
+  chunk_size_bytes: 65536
+  flush_interval_ms: 100
+
+rol_engine:
+  closure_digest_algorithm: sha256
+  strict_facet_enforcement: true
+  contradiction_quarantine: true
+  default_layer: application
+  audit_table_format: rich

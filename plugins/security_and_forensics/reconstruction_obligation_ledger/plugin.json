@@ -1,0 +1,67 @@
+{
+  "name": "plugin.reconstruction_obligation_ledger",
+  "version": "1.0.0",
+  "description": "Evidence canonicalization, 8-state FSM obligation tracking, and cryptographic reconstruction closure proofs synthesized from REA (morluto/rea).",
+  "language": "python",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "source_repo": "https://github.com/morluto/rea",
+  "verified_commit": "701695139490777ece7a3ccb8508b6215a11c0fe",
+  "isnad_lineage": {
+    "source_url": "https://github.com/morluto/rea",
+    "commit_hash": "701695139490777ece7a3ccb8508b6215a11c0fe",
+    "anchors": [
+      "src/domain/evidence.ts",
+      "src/domain/reconstructionObligationLedgerSchemas.ts",
+      "docs/reconstruction-obligation-ledgers.md",
+      "docs/tool-design.md"
+    ]
+  },
+  "dependencies": [
+    "structlog"
+  ],
+  "provides": [
+    "service.reconstruction_obligation"
+  ],
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "rol_ingest_evidence",
+      "description": "Ingest tool observation, calculate deterministic SHA-256 canonical digest, and store CanonicalEvidence record.",
+      "parameters": [
+        {
+          "name": "provider_id",
+          "type": "string",
+          "description": "Provider tool identifier",
+          "required": true
+        },
+        {
+          "name": "subject_format",
+          "type": "string",
+          "description": "Subject binary or document format",
+          "required": true
+        },
+        {
+          "name": "normalized_result",
+          "type": "object",
+          "description": "Normalized observation payload",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "rol_verify_ledger",
+      "description": "Verify reconstruction completeness and compute cryptographic closure digest.",
+      "parameters": [
+        {
+          "name": "strict",
+          "type": "boolean",
+          "description": "Whether to enforce complete closure",
+          "required": false,
+          "default": false
+        }
+      ]
+    }
+  ]
+}

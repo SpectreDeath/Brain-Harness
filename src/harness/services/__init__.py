@@ -824,6 +824,16 @@ __all__ = [
     "FirmwareRegionsReport",
     "FirmwareExtractReport",
     "resolve_rea_mobile_firmware",
+    "DIFFERENTIAL_FACET_SERVICE_KEY",
+    "FACET_AVAILABILITY_SERVICE_KEY",
+    "DifferentialFacetService",
+    "StandardDifferentialFacetService",
+    "DifferentialFacetAvailability",
+    "CoverageDeclaration",
+    "DimensionOutcome",
+    "DifferentialReport",
+    "VALID_DIMENSIONS",
+    "resolve_differential_facet",
 ]
 
 
@@ -1139,4 +1149,27 @@ from harness.services.rea_mobile_firmware import (
     ReaMobileFirmwareService,
     resolve_rea_mobile_firmware,
 )
+from harness.services.reconstruction_obligation import (
+    RECONSTRUCTION_OBLIGATION_SERVICE_KEY,
+    CanonicalEvidence,
+    FacetAvailability,
+    ObligationItem,
+    ReconstructionObligationService,
+    ReconstructionProof,
+    StandardReconstructionObligationService,
+    resolve_reconstruction_obligation,
+)
+from harness.services.differential_facet import (
+    DIFFERENTIAL_FACET_SERVICE_KEY,
+    FACET_AVAILABILITY_SERVICE_KEY,
+    DifferentialFacetService,
+    StandardDifferentialFacetService,
+    DifferentialFacetAvailability,
+    CoverageDeclaration,
+    DimensionOutcome,
+    DifferentialReport,
+    VALID_DIMENSIONS,
+    resolve_differential_facet,
+)
+
 
