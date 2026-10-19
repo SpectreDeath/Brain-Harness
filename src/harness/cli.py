@@ -68,6 +68,7 @@ from harness.commands.okf import okf_group
 from harness.commands.network_forensics import network_forensics_group
 from harness.commands.plugins import plugin_group
 from harness.commands.pre_commit_security import pre_commit_security_group
+from harness.commands.redteam import redteam_group
 from harness.commands.reflection import knowledge_group, reflect_cli
 from harness.commands.rol import rol_group
 from harness.commands.runtime import (
@@ -184,6 +185,7 @@ main.add_command(rol_group, name="rol")
 main.add_command(rol_group, name="obligation-ledger")
 main.add_command(facet_group, name="facet")
 main.add_command(facet_group, name="differential-facet")
+main.add_command(redteam_group, name="redteam")
 
 # --- Register Standalone Commands ---
 main.add_command(init_cli, name="init")

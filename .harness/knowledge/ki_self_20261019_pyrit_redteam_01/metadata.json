@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0.0",
+  "id": "ki_self_20261019_pyrit_redteam_01",
+  "title": "Subprocess Venv Staging and Adversarial GenAI Red-Teaming Architecture",
+  "category": "security_and_forensics",
+  "source_target": "Brain Harness (src/harness/services/pyrit_scanner/)",
+  "detected_format": "harness_endogenous_reflection",
+  "timestamp": "2026-10-19T18:30:00Z",
+  "tags": [
+    "pyrit",
+    "red_teaming",
+    "adversarial_safety",
+    "lazy_staging",
+    "rule_7",
+    "rule_14",
+    "rule_56"
+  ],
+  "anchors": {
+    "source_asset": "PyRIT-main",
+    "service_key": "service.pyrit_scanner",
+    "cli_command": "harness redteam scan",
+    "target_skill": "ai-red-teaming-architect"
+  },
+  "isnad": {
+    "decision_id": "decision-self-20261019-pyrit-01",
+    "timestamp": "2026-10-19T18:30:00Z",
+    "status": "VERIFIED",
+    "claims": [
+      {
+        "claim_id": "isnad-self-20261019-pyrit-01-a",
+        "assertion": "External frameworks with heavy optional ML dependencies (pyrit, azure-ai) must remain uninstalled in core env and staged lazily via subprocess runners (Rule 7).",
+        "evidence": "PyritSubprocessRunner stays in DISCOVERED/simulation mode without cold-start timeouts or module import crashes in CI.",
+        "verified_by": "pytest tests/test_pyrit_red_teaming.py"
+      },
+      {
+        "claim_id": "isnad-self-20261019-pyrit-01-b",
+        "assertion": "Subprocess transports must drain stderr ring buffers and close stdin pipes inside finally blocks to prevent proactor pipe exhaustion and OS buffer deadlocks (Rule 14, Rule 56).",
+        "evidence": "PyritSubprocessRunner.execute_probe implements asynchronous stderr drainage task with bounded ring buffer and loopback preservation.",
+        "verified_by": "pytest tests/test_pyrit_red_teaming.py::TestPyritScannerService::test_scan_target_simulation"
+      }
+    ]
+  }
+}

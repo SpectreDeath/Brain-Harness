@@ -498,4 +498,13 @@ __all__ = [
     "MemoryDecayService",
     "MemoryNode",
     "resolve_memory_decay",
+    # PyRIT GenAI Red-Teaming Scanner
+    "PYRIT_SCANNER_SERVICE_KEY",
+    "AttackVector",
+    "DefaultPyritScannerService",
+    "PyritScannerService",
+    "PyritSubprocessRunner",
+    "RedTeamTarget",
+    "VulnerabilityScorecard",
+    "resolve_pyrit_scanner",
 ]

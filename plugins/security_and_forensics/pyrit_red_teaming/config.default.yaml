@@ -1,0 +1,5 @@
+# Operational budgets and default parameters for PyRIT Red-Teaming (Rule 44)
+venv_path: ".venv-pyrit"
+subprocess_timeout_s: 300
+max_turns: 10
+attack_intensity: 3

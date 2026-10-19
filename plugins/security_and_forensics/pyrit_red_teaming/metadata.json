@@ -1,0 +1,7 @@
+{
+  "schema_version": "1.0.0",
+  "name": "domain.pyrit_red_teaming",
+  "category": "security_and_forensics",
+  "author": "Antigravity Team",
+  "license": "MIT"
+}

@@ -57,3 +57,14 @@ from harness.services.rea_mobile_firmware import (
     ReaMobileFirmwareService,
     resolve_rea_mobile_firmware,
 )
+
+from harness.services.pyrit_scanner import (
+    PYRIT_SCANNER_SERVICE_KEY,
+    AttackVector,
+    DefaultPyritScannerService,
+    PyritScannerService,
+    PyritSubprocessRunner,
+    RedTeamTarget,
+    VulnerabilityScorecard,
+    resolve_pyrit_scanner,
+)

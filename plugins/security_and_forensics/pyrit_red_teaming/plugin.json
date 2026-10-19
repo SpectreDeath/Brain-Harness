@@ -1,0 +1,83 @@
+{
+  "name": "domain.pyrit_red_teaming",
+  "version": "1.0.0",
+  "description": "Microsoft PyRIT GenAI adversarial red-teaming scanner with lazy subprocess venv isolation",
+  "category": "security_and_forensics",
+  "language": "python",
+  "entrypoint": "main.py",
+  "isolation": "subprocess",
+  "trusted": true,
+  "dependencies": [],
+  "entrypoints": [
+    {
+      "name": "redteam_fuzz_prompt",
+      "description": "Fuzz system or user prompt with adversarial mutations to detect leakage",
+      "parameters": [
+        {
+          "name": "prompt",
+          "type": "string",
+          "description": "Target prompt to evaluate",
+          "required": true
+        },
+        {
+          "name": "intensity",
+          "type": "integer",
+          "description": "Attack intensity from 1 to 5",
+          "required": false,
+          "default": 3
+        }
+      ]
+    },
+    {
+      "name": "redteam_jailbreak_audit",
+      "description": "Execute structured jailbreak evaluation (crescendo, roleplay, injection)",
+      "parameters": [
+        {
+          "name": "target_type",
+          "type": "string",
+          "description": "Target type: agent_loop, system_prompt, tool_interface",
+          "required": false,
+          "default": "agent_loop"
+        },
+        {
+          "name": "technique",
+          "type": "string",
+          "description": "Technique: crescendo, roleplay_jailbreak, encoding_fuzz",
+          "required": false,
+          "default": "crescendo"
+        }
+      ]
+    },
+    {
+      "name": "redteam_tool_tampering_check",
+      "description": "Check whether untrusted tool outputs can hijack agent execution flow",
+      "parameters": [
+        {
+          "name": "tool_name",
+          "type": "string",
+          "description": "Target tool identifier",
+          "required": true
+        },
+        {
+          "name": "payload",
+          "type": "string",
+          "description": "Injected payload text",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "redteam_scorecard_report",
+      "description": "Generate risk classification and vulnerability scorecard from recent scan",
+      "parameters": [
+        {
+          "name": "session_id",
+          "type": "string",
+          "description": "Session identifier",
+          "required": false,
+          "default": "default"
+        }
+      ]
+    }
+  ]
+}
