@@ -1,0 +1,6 @@
+# Operational budgets and default parameters for Prompt Pruning Layer (Rule 44)
+jaccard_dedup_threshold: 0.90
+enable_pass1: true
+enable_pass2: true
+enable_pass3: true
+max_resource_keys: 512

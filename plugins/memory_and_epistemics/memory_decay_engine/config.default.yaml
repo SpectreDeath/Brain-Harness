@@ -1,0 +1,6 @@
+# Operational budgets and default parameters for Ebbinghaus Memory Decay Engine (Rule 44)
+half_life_turns: 20
+retention_threshold: 0.35
+max_nodes: 256
+stability_boost_alpha: 0.5
+reinforcement_mode: "logarithmic"

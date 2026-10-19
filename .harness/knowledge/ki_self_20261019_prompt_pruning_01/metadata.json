@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0.0",
+  "id": "ki_self_20261019_prompt_pruning_01",
+  "title": "Deterministic 3-Pass Prompt Pruning with Fixed-Point Idempotence",
+  "category": "agent_orchestration",
+  "source_target": "Brain Harness (src/harness/services/context_optimizer/)",
+  "detected_format": "harness_endogenous_reflection",
+  "timestamp": "2026-10-19T18:00:00Z",
+  "tags": [
+    "prompt_pruning",
+    "compiler_passes",
+    "context_optimization",
+    "idempotence",
+    "rule_19"
+  ],
+  "anchors": {
+    "source_asset": "prompt-pruning-layer-main",
+    "strategy_name": "deterministic_prompt_pruner",
+    "target_skill": "prompt-pruning-architect"
+  },
+  "isnad": {
+    "decision_id": "decision-self-20261019-pruning-01",
+    "timestamp": "2026-10-19T18:00:00Z",
+    "status": "VERIFIED",
+    "claims": [
+      {
+        "claim_id": "isnad-self-20261019-pruning-01-a",
+        "assertion": "A 3-pass compiler pipeline (expired tool drop -> duplicate dedup -> dependency restore) satisfies fixed-point idempotence f(f(x)) == f(x).",
+        "evidence": "Contract verification test test_fixed_point_idempotence verifies zero additional message removals on repeated passes.",
+        "verified_by": "pytest tests/test_prompt_pruning_layer.py::TestDeterministic3PassPruner::test_fixed_point_idempotence"
+      },
+      {
+        "claim_id": "isnad-self-20261019-pruning-01-b",
+        "assertion": "Non-invasive strategy injection via DefaultContextOptimizerService.register_strategy() preserves micro-kernel constructor contracts (Rule 19).",
+        "evidence": "PromptPruningPlugin registers strategy at IoC load without modifying StepExecutionEngine contracts.",
+        "verified_by": "pytest tests/test_prompt_pruning_layer.py::TestPromptPruningPluginLifecycle"
+      }
+    ]
+  }
+}

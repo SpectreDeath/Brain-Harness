@@ -171,3 +171,13 @@ from harness.services.reconstruction_obligation import (
     StandardReconstructionObligationService,
     resolve_reconstruction_obligation,
 )
+
+from harness.services.memory_decay import (
+    MEMORY_DECAY_SERVICE_KEY,
+    DecayConfig,
+    DefaultMemoryDecayService,
+    EvictionDecision,
+    MemoryDecayService,
+    MemoryNode,
+    resolve_memory_decay,
+)

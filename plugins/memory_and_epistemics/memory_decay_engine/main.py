@@ -1,240 +1,45 @@
-"""Main entrypoint and typed tool registrations for Ebbinghaus Memory Decay Engine plugin."""
+"""Main entrypoint and plugin registration for Ebbinghaus Memory Decay Engine."""
 
 from __future__ import annotations
 
+import sys
 from typing import Any
 
 import structlog
 
-from harness.kernel.context import ServiceKey
-from plugins.memory_and_epistemics.memory_decay_engine.decay_core import (
-    DecaySessionStore,
-    EbbinghausMemoryEngine,
-    SessionConfig,
-    run_simulation,
+from harness.kernel.context import ServiceContext, ServiceKey
+from harness.plugins.base import HarnessPlugin
+from harness.services.memory_decay import (
+    MEMORY_DECAY_SERVICE_KEY as MICRO_KEY,
+    DefaultMemoryDecayService,
+    MemoryDecayService as MicroService,
+)
+from plugins.memory_and_epistemics.memory_decay_engine.tools import (
+    export_memory_session,
+    import_memory_session,
+    memory_query_working_set,
+    memory_recall,
+    memory_register,
+    memory_step,
+    rank_working_set,
+    simulate_session_benchmark,
 )
 
-logger = structlog.get_logger()
+# Windows UTF-8 Stream Codec Entrypoint Invariant (Rule 23)
+if sys.platform == "win32":
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8")
+    if hasattr(sys.stderr, "reconfigure"):
+        sys.stderr.reconfigure(encoding="utf-8")
 
-# Global authoritative session store
-_STORE = DecaySessionStore()
-
-
-def memory_register(
-    key: str,
-    content: str,
-    session_id: str = "default",
-    stability: float = 5.0,
-    is_foundational: bool = False,
-    channel: str = "memory",
-) -> dict[str, Any]:
-    """Register a new memory item into the Ebbinghaus memory session.
-
-    Args:
-        key: Unique identifier for the memory item.
-        content: Text content or representation of the memory.
-        session_id: Session namespace (default: 'default').
-        stability: Initial stability parameter in turns (default: 5.0).
-        is_foundational: If True, item is immune to decay eviction.
-        channel: Channel profile ('instruction', 'foundational', 'memory', 'evidence', 'tool_output').
-
-    Returns:
-        Structured item dictionary with initial retention and stability metrics.
-    """
-    try:
-        engine = _STORE.get_or_create(session_id)
-        item = engine.register(
-            key=key,
-            content=content,
-            stability=stability,
-            is_foundational=is_foundational,
-            channel=channel,
-        )
-        return {
-            "status": "ok",
-            "session_id": session_id,
-            "item": item.to_dict(engine.current_turn),
-        }
-    except Exception as e:
-        logger.error("memory_register_failed", error=str(e))
-        return {"status": "error", "error": str(e)}
-
-
-def memory_recall(key: str, session_id: str = "default") -> dict[str, Any]:
-    """Recall a memory item, reinforcing its stability and resetting its elapsed decay clock.
-
-    Args:
-        key: Memory key to recall.
-        session_id: Session namespace.
-
-    Returns:
-        Recalled item dictionary with reinforced stability, or not_found/evicted status.
-    """
-    try:
-        engine = _STORE.get_or_create(session_id)
-        item = engine.recall(key)
-        if item is None:
-            return {
-                "status": "not_found",
-                "key": key,
-                "session_id": session_id,
-                "message": "Item does not exist or has been evicted due to decay",
-            }
-        return {
-            "status": "ok",
-            "session_id": session_id,
-            "item": item.to_dict(engine.current_turn),
-        }
-    except Exception as e:
-        logger.error("memory_recall_failed", error=str(e))
-        return {"status": "error", "error": str(e)}
-
-
-def memory_step(session_id: str = "default") -> dict[str, Any]:
-    """Advance session time by one turn, applying decay and evicting items below retention threshold.
-
-    Args:
-        session_id: Session namespace.
-
-    Returns:
-        Turn transition summary, evicted keys list, and active working set count.
-    """
-    try:
-        engine = _STORE.get_or_create(session_id)
-        evicted = engine.step_turn()
-        return {
-            "status": "ok",
-            "session_id": session_id,
-            "current_turn": engine.current_turn,
-            "evicted_count": len(evicted),
-            "evicted_keys": evicted,
-            "active_working_set_count": len(engine.working_set()),
-        }
-    except Exception as e:
-        logger.error("memory_step_failed", error=str(e))
-        return {"status": "error", "error": str(e)}
-
-
-def memory_query_working_set(
-    session_id: str = "default",
-    include_evicted: bool = False,
-) -> dict[str, Any]:
-    """Query all active items currently residing in the working memory set.
-
-    Args:
-        session_id: Session namespace.
-        include_evicted: Whether to include evicted items.
-
-    Returns:
-        List of memory items with retention and recall statistics.
-    """
-    try:
-        engine = _STORE.get_or_create(session_id)
-        items = list(engine.items.values()) if include_evicted else engine.working_set()
-        return {
-            "status": "ok",
-            "session_id": session_id,
-            "current_turn": engine.current_turn,
-            "total_items": len(items),
-            "items": [item.to_dict(engine.current_turn) for item in items],
-        }
-    except Exception as e:
-        logger.error("query_working_set_failed", error=str(e))
-        return {"status": "error", "error": str(e)}
-
-
-def rank_working_set(
-    session_id: str = "default",
-    w_retention: float = 0.5,
-    w_stability: float = 0.3,
-    w_foundational: float = 0.2,
-    limit: int | None = None,
-) -> dict[str, Any]:
-    """Query working memory set sorted by multi-criteria composite score."""
-    try:
-        engine = _STORE.get_or_create(session_id)
-        ranked = engine.query_ranked_working_set(
-            w_retention=w_retention,
-            w_stability=w_stability,
-            w_foundational=w_foundational,
-            limit=limit,
-        )
-        return {
-            "status": "ok",
-            "session_id": session_id,
-            "current_turn": engine.current_turn,
-            "ranked_count": len(ranked),
-            "items": ranked,
-        }
-    except Exception as e:
-        logger.error("rank_working_set_failed", error=str(e))
-        return {"status": "error", "error": str(e)}
-
-
-def export_memory_session(session_id: str = "default") -> dict[str, Any]:
-    """Export snapshot serialization of an active memory session."""
-    try:
-        snapshot = _STORE.export_session(session_id)
-        if not snapshot:
-            return {"status": "error", "error": f"Session {session_id} not found"}
-        return {"status": "ok", "snapshot": snapshot}
-    except Exception as e:
-        logger.error("export_session_failed", error=str(e))
-        return {"status": "error", "error": str(e)}
-
-
-def import_memory_session(session_id: str, snapshot: dict[str, Any]) -> dict[str, Any]:
-    """Import snapshot serialization to restore a memory session."""
-    try:
-        engine = _STORE.import_session(session_id, snapshot)
-        return {
-            "status": "ok",
-            "session_id": session_id,
-            "current_turn": engine.current_turn,
-            "total_items": len(engine.items),
-            "working_set_count": len(engine.working_set()),
-        }
-    except Exception as e:
-        logger.error("import_session_failed", error=str(e))
-        return {"status": "error", "error": str(e)}
-
-
-def simulate_session_benchmark(
-    num_turns: int = 100,
-    total_memories: int = 30,
-    recall_probability: float = 0.35,
-    seed: int = 42,
-) -> dict[str, Any]:
-    """Run comparative simulation between Ebbinghaus memory decay and a fixed-window recency baseline.
-
-    Args:
-        num_turns: Number of interaction turns to simulate.
-        total_memories: Total memory items registered over the session.
-        recall_probability: Per-turn probability of memory access.
-        seed: Random seed for deterministic simulation.
-
-    Returns:
-        Comparison metrics including missed recalls, working set size, and foundational memory loss.
-    """
-    try:
-        cfg = SessionConfig(
-            num_turns=num_turns,
-            total_memories=total_memories,
-            recall_probability=recall_probability,
-            seed=seed,
-        )
-        res = run_simulation(cfg)
-        return {
-            "status": "ok",
-            "simulation": res,
-        }
-    except Exception as e:
-        logger.error("simulation_benchmark_failed", error=str(e))
-        return {"status": "error", "error": str(e)}
+logger = structlog.get_logger("harness.plugins.memory_decay_engine")
 
 
 class MemoryDecayService:
-    """Service provider for Ebbinghaus Memory Decay and Retention Management."""
+    """Service facade for backward compatibility and domain calls."""
+
+    def __init__(self, micro_service: MicroService | None = None) -> None:
+        self._micro_service = micro_service or DefaultMemoryDecayService()
 
     def register(
         self,
@@ -301,3 +106,57 @@ class MemoryDecayService:
 
 
 MEMORY_DECAY_SERVICE_KEY = ServiceKey[MemoryDecayService]("domain.memory_decay_engine")
+
+
+class MemoryDecayPlugin(HarnessPlugin):
+    """Harness Plugin for cognitive Ebbinghaus memory decay (Rules 1, 3, 45)."""
+
+    name = "domain.memory_decay_engine"
+    version = "1.2.0"
+    description = "Ebbinghaus memory decay with non-linear recall reinforcement and cognitive eviction"
+    trusted = True
+
+    def __init__(self, service: MemoryDecayService | None = None) -> None:
+        self._service = service or MemoryDecayService()
+        self._micro_service = DefaultMemoryDecayService()
+
+    @property
+    def provides(self) -> list[ServiceKey[Any]]:
+        return [MEMORY_DECAY_SERVICE_KEY, MICRO_KEY]
+
+    @property
+    def requires(self) -> list[ServiceKey[Any]]:
+        return []
+
+    async def on_load(self, ctx: ServiceContext) -> None:
+        ctx.provide(MEMORY_DECAY_SERVICE_KEY, self._service, provider=self.name)
+        ctx.provide(MICRO_KEY, self._micro_service, provider=self.name)
+        logger.info("MemoryDecayService registered into IoC context", plugin=self.name)
+
+    async def on_enable(self) -> None:
+        logger.info("MemoryDecayPlugin enabled", plugin=self.name)
+
+    async def on_disable(self) -> None:
+        logger.info("MemoryDecayPlugin disabled", plugin=self.name)
+
+    async def on_unload(self) -> None:
+        logger.info("MemoryDecayPlugin unloaded", plugin=self.name)
+
+
+# Authoritative module singleton export (Rule 45)
+plugin = MemoryDecayPlugin()
+
+__all__ = [
+    "MEMORY_DECAY_SERVICE_KEY",
+    "MemoryDecayService",
+    "MemoryDecayPlugin",
+    "plugin",
+    "memory_register",
+    "memory_recall",
+    "memory_step",
+    "memory_query_working_set",
+    "rank_working_set",
+    "export_memory_session",
+    "import_memory_session",
+    "simulate_session_benchmark",
+]

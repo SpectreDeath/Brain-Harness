@@ -215,6 +215,9 @@ __all__ = [
     "DefaultArchLinterService",
     "DefaultChatbotXService",
     "DefaultContextOptimizerService",
+    "DeterministicPromptPruner",
+    "PrunableMessage",
+    "PruningAuditReport",
     "DefaultPaperlessNgxService",
     "DefaultRepoMapService",
     "DefaultUnifiedContextPipeline",
@@ -487,4 +490,12 @@ __all__ = [
     "DifferentialReport",
     "VALID_DIMENSIONS",
     "resolve_differential_facet",
+    # Ebbinghaus Memory Decay Engine
+    "MEMORY_DECAY_SERVICE_KEY",
+    "DecayConfig",
+    "DefaultMemoryDecayService",
+    "EvictionDecision",
+    "MemoryDecayService",
+    "MemoryNode",
+    "resolve_memory_decay",
 ]

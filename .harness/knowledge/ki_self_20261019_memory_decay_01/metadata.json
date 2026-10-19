@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0.0",
+  "id": "ki_self_20261019_memory_decay_01",
+  "title": "Ebbinghaus Forgetting Curves and Cognitive Working Memory Retention",
+  "category": "memory_and_epistemics",
+  "source_target": "Brain Harness (src/harness/services/memory_decay/)",
+  "detected_format": "harness_endogenous_reflection",
+  "timestamp": "2026-10-19T18:00:00Z",
+  "tags": [
+    "memory_decay",
+    "ebbinghaus",
+    "cognitive_governance",
+    "slotted_dataclass",
+    "rule_12"
+  ],
+  "anchors": {
+    "source_asset": "memory-decay-engine-main",
+    "service_key": "service.memory_decay",
+    "target_skill": "ebbinghaus-memory-governor"
+  },
+  "isnad": {
+    "decision_id": "decision-self-20261019-decay-01",
+    "timestamp": "2026-10-19T18:00:00Z",
+    "status": "VERIFIED",
+    "claims": [
+      {
+        "claim_id": "isnad-self-20261019-decay-01-a",
+        "assertion": "Mathematical forgetting curves R(t) = exp(-delta_t / S) prevent context blowout while preserving foundational rules.",
+        "evidence": "DefaultMemoryDecayService tests prove exponential eviction of unreinforced nodes while foundational items remain protected.",
+        "verified_by": "pytest tests/test_memory_decay_engine.py"
+      },
+      {
+        "claim_id": "isnad-self-20261019-decay-01-b",
+        "assertion": "Non-linear recall stability reinforcement S_new = S_old * (1 + alpha * ln(1 + n)) guarantees monotonic stability growth.",
+        "evidence": "Contract verification test test_monotonic_stability_reinforcement demonstrates S0 < S1 < S2 across successive turns.",
+        "verified_by": "pytest tests/test_memory_decay_engine.py::TestEbbinghausMemoryDecayService::test_monotonic_stability_reinforcement"
+      }
+    ]
+  }
+}

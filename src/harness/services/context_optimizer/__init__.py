@@ -33,6 +33,13 @@ from harness.services.context_optimizer.protocols import (
     ContextPruningStrategy,
     ObservationCompactorStrategy,
 )
+from harness.services.context_optimizer.deterministic_pruner import (
+    DeterministicPromptPruner,
+)
+from harness.services.context_optimizer.pruning_models import (
+    PrunableMessage,
+    PruningAuditReport,
+)
 from harness.services.context_optimizer.resolvers import resolve_context_optimizer
 from harness.services.context_optimizer.service import DefaultContextOptimizerService
 from harness.services.context_optimizer.strategies import (
@@ -50,8 +57,11 @@ __all__ = [
     "ContextOptimizerService",
     "ContextPruningStrategy",
     "DefaultContextOptimizerService",
+    "DeterministicPromptPruner",
     "MiddleOutObservationCompactor",
     "ObservationCompactorStrategy",
+    "PrunableMessage",
+    "PruningAuditReport",
     "PruningMetric",
     "RepoMapInjectionStrategy",
     "SlidingWindowPruner",
