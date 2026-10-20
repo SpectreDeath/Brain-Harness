@@ -1,3 +1,4 @@
+# ruff: noqa: F403, F405
 """Bounded Domain Service Exports: Brain Harness Service Layer.
 
 Partitioned across 7 cohesive domain contexts (AGENTS.md Rule 18 & 19):

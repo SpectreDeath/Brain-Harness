@@ -7,6 +7,7 @@ from typing import Any
 from harness.kernel.context import ServiceContext
 from harness.plugins.base import HarnessPlugin
 from harness.services.hyperframes.keys import HYPERFRAMES_SERVICE_KEY
+from harness.services.hyperframes.protocols import HyperFramesService
 from harness.services.hyperframes.service import DefaultHyperFramesService
 from plugins.developer_tooling.hyperframes_renderer.tools import (
     hyperframes_preview_html,

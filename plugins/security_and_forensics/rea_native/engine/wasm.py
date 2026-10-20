@@ -201,12 +201,12 @@ class WasmEngine:
             if wat_disasm is None:
                 exp_names = ", ".join(f'"{e["name"]}"' for e in exports)
                 wat_disasm = (
-                    f"(module\n"
-                    f"  (type (;0;) (func (result i32)))\n"
-                    f"  (func (;0;) (type 0) (result i32)\n"
-                    f"    i32.const 42)\n"
-                    f'  (export "main" (func 0))\n'
-                    f")"
+                    "(module\n"
+                    "  (type (;0;) (func (result i32)))\n"
+                    "  (func (;0;) (type 0) (result i32)\n"
+                    "    i32.const 42)\n"
+                    '  (export "main" (func 0))\n'
+                    ")"
                 )
 
         return {

@@ -1027,7 +1027,7 @@ def main() -> None:
     # Command Execution
     if args.command == "dag":
         res = audit_dag(targets)
-        print(f"=== IoC DEPENDENCY DAG AUDIT ===")
+        print("=== IoC DEPENDENCY DAG AUDIT ===")
         print(f"Total Plugins:          {res.total_plugins}")
         print(f"Total Services:         {res.total_services_provided}")
         print(f"Cycles Detected:        {len(res.cycles_detected)}")
