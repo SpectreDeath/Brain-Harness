@@ -27,7 +27,7 @@ from harness.services.garf_reporting import (
 
 def test_garf_reporting_subpackage_line_bounds() -> None:
     """Enforce Rule 11: All files in src/harness/services/garf_reporting must be strictly < 200 lines."""
-    pkg_dir = Path(r"D:\GitHub\projects\Brain Harness\src\harness\services\garf_reporting")
+    pkg_dir = Path(__file__).resolve().parent.parent / "src" / "harness" / "services" / "garf_reporting"
     assert pkg_dir.is_dir()
 
     for p in pkg_dir.glob("*.py"):

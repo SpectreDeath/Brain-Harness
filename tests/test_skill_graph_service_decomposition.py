@@ -35,7 +35,7 @@ from harness.services.skill_graph.service import (
 
 def test_subpackage_line_bounds() -> None:
     """Verify all Python submodules in skill_graph/service are strictly < 200 lines (Rule 11)."""
-    pkg_dir = Path(r"D:\GitHub\projects\Brain Harness\src\harness\services\skill_graph\service")
+    pkg_dir = Path(__file__).resolve().parent.parent / "src" / "harness" / "services" / "skill_graph" / "service"
     assert pkg_dir.exists() and pkg_dir.is_dir()
 
     py_files = list(pkg_dir.glob("*.py"))

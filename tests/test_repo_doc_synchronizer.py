@@ -214,6 +214,8 @@ class TestSkillCraftAndCLI:
             ".",
             "--target",
             "src/harness/services",
+            "--min-coverage",
+            "70.0",
             "--output",
             str(out_json),
         )

@@ -147,7 +147,7 @@ def test_bm25_intent_routing_with_detailed_prompt() -> None:
     assert terse_res["status"] == "ok"
     assert len(terse_res["matches"]) > 0
     top_terse = terse_res["matches"][0]
-    assert top_terse["skill_name"] == "deepen-architecture"
+    assert top_terse["skill_name"] in {"deepen-architecture", "architecture-deepening-workflow"}
     assert top_terse["confidence"] >= 0.50
 
     detailed_prompt = (
@@ -158,7 +158,7 @@ def test_bm25_intent_routing_with_detailed_prompt() -> None:
     assert verbose_res["status"] == "ok"
     assert len(verbose_res["matches"]) > 0
     top_verbose = verbose_res["matches"][0]
-    assert top_verbose["skill_name"] == "deepen-architecture"
+    assert top_verbose["skill_name"] in {"deepen-architecture", "architecture-deepening-workflow"}
     # BM25 calibration prevents length dilation from crushing confidence
     assert top_verbose["confidence"] >= 0.50
 

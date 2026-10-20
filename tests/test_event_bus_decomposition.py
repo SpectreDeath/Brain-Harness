@@ -38,7 +38,7 @@ from harness.kernel.context import ServiceContext
 
 def test_event_bus_subpackage_line_bounds() -> None:
     """Enforce Rule 11: All files in src/harness/events/bus must be strictly < 200 lines."""
-    bus_pkg = Path(r"D:\GitHub\projects\Brain Harness\src\harness\events\bus")
+    bus_pkg = Path(__file__).resolve().parent.parent / "src" / "harness" / "events" / "bus"
     assert bus_pkg.is_dir()
     py_files = list(bus_pkg.glob("*.py"))
     assert len(py_files) >= 8

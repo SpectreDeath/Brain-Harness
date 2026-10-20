@@ -103,40 +103,41 @@ async def test_chatbotx_service_operations() -> None:
 
 
 @pytest.mark.unit
-def test_chatbotx_module_tool_wrappers() -> None:
-    """Verify synchronous tool wrappers exported by the plugin module."""
+@pytest.mark.asyncio
+async def test_chatbotx_module_tool_wrappers() -> None:
+    """Verify tool wrappers exported by the plugin module."""
     # List contacts
-    res_list = chatbotx_list_contacts(limit=5)
+    res_list = await chatbotx_list_contacts(limit=5)
     assert res_list["status"] == "ok"
     assert res_list["count"] >= 1
 
     # Send message
-    res_send = chatbotx_send_message(contact_id="cnt_001", text="Automated test message")
+    res_send = await chatbotx_send_message(contact_id="cnt_001", text="Automated test message")
     assert res_send["status"] == "ok"
     assert "msg_" in res_send["message_id"]
 
     # Trigger flow
-    res_flow = chatbotx_trigger_flow(contact_id="cnt_001", flow_id="flow_sync")
+    res_flow = await chatbotx_trigger_flow(contact_id="cnt_001", flow_id="flow_sync")
     assert res_flow["status"] == "ok"
     assert res_flow["flow_status"] == "enqueued"
 
     # Manage tags
-    res_tag = chatbotx_manage_tags(contact_id="cnt_001", action="add", tag="test_tag")
+    res_tag = await chatbotx_manage_tags(contact_id="cnt_001", action="add", tag="test_tag")
     assert res_tag["status"] == "ok"
     assert "test_tag" in res_tag["tags"]
 
     # Query conversations
-    res_conv = chatbotx_query_conversations()
+    res_conv = await chatbotx_query_conversations()
     assert res_conv["status"] == "ok"
     assert res_conv["count"] >= 1
 
     # Broadcast
-    res_bcast = chatbotx_broadcast(audience_tag="vip", message_text="Special VIP Offer")
+    res_bcast = await chatbotx_broadcast(audience_tag="vip", message_text="Special VIP Offer")
     assert res_bcast["status"] == "ok"
     assert res_bcast["recipients_count"] >= 1
 
     # Execute dynamic tool
-    res_tool = chatbotx_execute_tool(operation_id="list_contacts", parameters={"limit": 5})
+    res_tool = await chatbotx_execute_tool(operation_id="list_contacts", parameters={"limit": 5})
     assert res_tool["status"] == "success"
 
 

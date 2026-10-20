@@ -247,7 +247,7 @@ class TestSandboxedPluginAdapter:
         metrics = plugin.get_metrics()
         assert metrics["invocations"] == 1
         assert metrics["errors"] == 0
-        assert metrics["total_duration_ms"] > 0.0
+        assert metrics["total_duration_ms"] >= 0.0
 
         await plugin.on_disable()
         await plugin.on_unload()

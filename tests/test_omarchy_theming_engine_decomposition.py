@@ -33,7 +33,7 @@ from plugins.developer_tooling.omarchy_theming_engine.main import (
 
 def test_omarchy_subpackage_line_bounds() -> None:
     """Enforce Rule 11: All files in omarchy_theming_engine must be strictly < 200 lines."""
-    base_dir = Path(r"D:\GitHub\projects\Brain Harness\plugins\developer_tooling\omarchy_theming_engine")
+    base_dir = Path(__file__).resolve().parent.parent / "plugins" / "developer_tooling" / "omarchy_theming_engine"
     engine_dir = base_dir / "engine"
     assert engine_dir.is_dir()
 
