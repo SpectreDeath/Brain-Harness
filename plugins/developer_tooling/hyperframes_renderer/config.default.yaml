@@ -1,0 +1,6 @@
+# HyperFrames Programmatic Video Renderer configuration
+node_timeout_s: 120
+default_fps: 30
+default_resolution: [1280, 720]
+simulate_headless: false
+max_scenes: 50

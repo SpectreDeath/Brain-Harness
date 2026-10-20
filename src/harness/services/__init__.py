@@ -515,4 +515,13 @@ __all__ = [
     "MetricSample",
     "PrometheusExporterService",
     "resolve_prometheus_exporter",
+    # HyperFrames Video Renderer
+    "HYPERFRAMES_SERVICE_KEY",
+    "DefaultHyperFramesService",
+    "HyperFramesService",
+    "RenderOutput",
+    "RenderRequest",
+    "VideoScene",
+    "check_node_available",
+    "resolve_hyperframes",
 ]

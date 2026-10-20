@@ -1,0 +1,17 @@
+{
+  "name": "hyperframes_renderer",
+  "version": "0.1.0",
+  "description": "Programmatic multimedia video rendering via HeyGen HyperFrames Node.js/GSAP engine.",
+  "category": "developer_tooling",
+  "author": "SpectreDeath/Brain-Harness",
+  "license": "MIT",
+  "entrypoint": "main:plugin",
+  "tags": [
+    "multimedia",
+    "video",
+    "hyperframes",
+    "gsap",
+    "tailwind",
+    "developer_tooling"
+  ]
+}\n

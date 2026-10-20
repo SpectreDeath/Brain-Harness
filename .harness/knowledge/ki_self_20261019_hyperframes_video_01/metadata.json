@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0.0",
+  "id": "ki_self_20261019_hyperframes_video_01",
+  "title": "Programmatic Motion Graphics Rendering via Node.js Subprocess JSON-RPC and Slotted Models",
+  "category": "developer_tooling",
+  "source_target": "Brain Harness (src/harness/services/hyperframes/)",
+  "detected_format": "harness_endogenous_reflection",
+  "timestamp": "2026-10-19T21:00:00Z",
+  "tags": [
+    "hyperframes",
+    "multimedia",
+    "video_rendering",
+    "json_rpc",
+    "subprocess_bridge",
+    "gsap",
+    "rule_12",
+    "rule_14",
+    "rule_56"
+  ],
+  "anchors": {
+    "source_asset": "hyperframes",
+    "service_key": "service.hyperframes",
+    "target_skill": "hyperframes-video-architect"
+  },
+  "isnad": {
+    "decision_id": "decision-self-20261019-hf-01",
+    "timestamp": "2026-10-19T21:00:00Z",
+    "status": "VERIFIED",
+    "claims": [
+      {
+        "claim_id": "isnad-self-20261019-hf-01-a",
+        "assertion": "Node.js/TypeScript rendering runtimes must be isolated behind headless JSON-RPC subprocess transports adhering to Rule 14 and Rule 56.",
+        "evidence": "HyperFramesSubprocessBridge drains stderr ring buffers, cleans stdin pipes in finally blocks, preserves loopback sockets, and falls back to headless simulation for CI.",
+        "verified_by": "pytest -k hyperframes"
+      },
+      {
+        "claim_id": "isnad-self-20261019-hf-01-b",
+        "assertion": "Slotted frozen dataclasses with validation assertions enforce valid video resolution, non-zero durations, and valid transition types before dispatching subprocess commands.",
+        "evidence": "VideoScene, RenderRequest, and RenderOutput enforce post-init guards and raise AttributeError upon direct attribute assignment under Rule 43.",
+        "verified_by": "pytest tests/test_hyperframes_renderer.py::test_video_scene_immutability_and_validation"
+      }
+    ]
+  }
+}

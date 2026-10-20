@@ -1,0 +1,10 @@
+{
+  "name": "hyperframes_renderer",
+  "version": "0.1.0",
+  "category": "developer_tooling",
+  "isolation": "subprocess",
+  "provides": [
+    "service.hyperframes"
+  ],
+  "requires": []
+}\n

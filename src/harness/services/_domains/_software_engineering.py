@@ -142,3 +142,14 @@ from harness.services.repo_triad_forge import (
     TriadPlanData,
     TriadRunData,
 )
+
+from harness.services.hyperframes import (
+    HYPERFRAMES_SERVICE_KEY,
+    DefaultHyperFramesService,
+    HyperFramesService,
+    RenderOutput,
+    RenderRequest,
+    VideoScene,
+    check_node_available,
+    resolve_hyperframes,
+)
