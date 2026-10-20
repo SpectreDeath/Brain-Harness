@@ -1,0 +1,7 @@
+{
+  "schema_version": "1.0.0",
+  "name": "domain.prometheus_exporter",
+  "category": "infra_and_cloud",
+  "author": "Antigravity Team",
+  "license": "MIT"
+}

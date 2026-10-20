@@ -507,4 +507,12 @@ __all__ = [
     "RedTeamTarget",
     "VulnerabilityScorecard",
     "resolve_pyrit_scanner",
+    # Prometheus Metric Exporter
+    "DEFAULT_BUCKETS",
+    "PROMETHEUS_EXPORTER_SERVICE_KEY",
+    "DefaultPrometheusExporterService",
+    "MetricDefinition",
+    "MetricSample",
+    "PrometheusExporterService",
+    "resolve_prometheus_exporter",
 ]

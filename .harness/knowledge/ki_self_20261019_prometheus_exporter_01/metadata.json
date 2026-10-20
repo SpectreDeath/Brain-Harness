@@ -1,0 +1,42 @@
+{
+  "schema_version": "1.0.0",
+  "id": "ki_self_20261019_prometheus_exporter_01",
+  "title": "Zero-Dependency Prometheus Text Exposition Architecture and Observability Seams",
+  "category": "infra_and_cloud",
+  "source_target": "Brain Harness (src/harness/services/prometheus/)",
+  "detected_format": "harness_endogenous_reflection",
+  "timestamp": "2026-10-19T19:00:00Z",
+  "tags": [
+    "prometheus",
+    "observability",
+    "metrics_exposition",
+    "fastapi",
+    "thread_safety",
+    "rule_12"
+  ],
+  "anchors": {
+    "source_asset": "prometheus",
+    "service_key": "service.prometheus_exporter",
+    "route": "/metrics",
+    "target_skill": "cloud-infrastructure-architect"
+  },
+  "isnad": {
+    "decision_id": "decision-self-20261019-prom-01",
+    "timestamp": "2026-10-19T19:00:00Z",
+    "status": "VERIFIED",
+    "claims": [
+      {
+        "claim_id": "isnad-self-20261019-prom-01-a",
+        "assertion": "A pure-Python thread-safe registry can emit compliant Prometheus 0.0.4 text exposition without external C or pip dependencies.",
+        "evidence": "DefaultPrometheusExporterService formats counters, gauges, and cumulative histogram buckets passing all syntax assertions.",
+        "verified_by": "pytest tests/test_prometheus_exporter.py"
+      },
+      {
+        "claim_id": "isnad-self-20261019-prom-01-b",
+        "assertion": "Exposing /metrics on FastAPI app factory via non-invasive service resolution enables Prometheus scrapers without coupling to specific kernel instances.",
+        "evidence": "FastAPI TestClient verifies HTTP 200 with text/plain content-type and valid formatted metric lines.",
+        "verified_by": "pytest tests/test_prometheus_exporter.py::TestPrometheusIntegrationAndRoutes::test_metrics_http_route"
+      }
+    ]
+  }
+}

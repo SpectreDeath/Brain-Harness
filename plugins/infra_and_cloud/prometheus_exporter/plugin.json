@@ -1,0 +1,53 @@
+{
+  "name": "domain.prometheus_exporter",
+  "version": "1.0.0",
+  "description": "Zero-dependency Prometheus text exposition format metric exporter and telemetry aggregator",
+  "category": "infra_and_cloud",
+  "language": "python",
+  "entrypoint": "main.py",
+  "isolation": "subprocess",
+  "trusted": true,
+  "dependencies": [],
+  "entrypoints": [
+    {
+      "name": "prometheus_record_metric",
+      "description": "Record a counter, gauge, or histogram observation into the Prometheus registry",
+      "parameters": [
+        {
+          "name": "metric_type",
+          "type": "string",
+          "description": "Type: counter, gauge, or histogram",
+          "required": true
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "description": "Metric name",
+          "required": true
+        },
+        {
+          "name": "value",
+          "type": "number",
+          "description": "Metric value or observation",
+          "required": true
+        },
+        {
+          "name": "labels",
+          "type": "object",
+          "description": "Optional label key-value dictionary",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "prometheus_get_text_metrics",
+      "description": "Export active metrics in Prometheus 0.0.4 text format",
+      "parameters": []
+    },
+    {
+      "name": "prometheus_reset_metrics",
+      "description": "Reset all active metrics in the exporter registry",
+      "parameters": []
+    }
+  ]
+}

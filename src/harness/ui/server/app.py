@@ -79,6 +79,18 @@ def create_app(
             return index_file.read_text(encoding="utf-8")
         return "<h1>Harness Dashboard</h1><p>Static index.html not found.</p>"
 
+    @app.get("/metrics")
+    async def metrics_endpoint():
+        from fastapi.responses import PlainTextResponse
+        from harness.services.prometheus import resolve_prometheus_exporter
+
+        ctx = adapter.context if hasattr(adapter, "context") else None
+        exporter = resolve_prometheus_exporter(ctx)
+        return PlainTextResponse(
+            exporter.generate_text_export(),
+            media_type="text/plain; version=0.0.4; charset=utf-8",
+        )
+
     return app
 
 
