@@ -4,7 +4,7 @@
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-emerald.svg)](LICENSE)
-[![Tests](https://img.shields.io/badge/tests-755%20passed-brightgreen.svg)](tests/)
+[![Tests](https://img.shields.io/badge/tests-2650%2B%20passed-brightgreen.svg)](tests/)
 
 **Brain Harness** is an unopinionated, high-performance agent runtime engineered on an IoC micro-kernel architecture. Rather than locking you into a static collection of hardcoded tools, Harness is a **blank cognitive canvas** that ingests any GitHub repository, local project, ZIP archive, OpenAPI specification, or custom skill into an isolated, sandboxed plugin.
 

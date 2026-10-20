@@ -29,9 +29,10 @@
    - [Agent Skill Knowledge Graph & Intent Routing (`skills`)](#agent-skill-knowledge-graph--intent-routing)
    - [Dynamic Plugin Creator & Archetype Scaffolding (`creator`, `scaffold`, `validate`)](#dynamic-plugin-creator--archetype-scaffolding)
    - [Knowledge Vault & Autobiographical Reflection (`knowledge`, `reflect`)](#knowledge-vault--autobiographical-reflection)
+   - [GenAI Red-Teaming & Adversarial Probing (`redteam`)](#genai-red-teaming--adversarial-probing)
    - [Model Context Protocol (MCP) Server (`mcp`)](#model-context-protocol-mcp-server)
    - [Ecosystem Bridge Management (`bridge`)](#ecosystem-bridge-management)
-   - [Runtime Introspection, Telemetry & Web Dashboard (`introspect`, `services`, `events`, `run`, `ui`)](#runtime-introspection-telemetry--web-dashboard)
+   - [Runtime Introspection, Telemetry & Web Dashboard (`introspect`, `services`, `events`, `run`, `ui`, `/metrics`)](#runtime-introspection-telemetry--web-dashboard)
 5. [Plugin Developer Guide](#5-plugin-developer-guide)
    - [Plugin Structure & Manifest (`plugin.json`)](#plugin-structure--manifest-pluginjson)
    - [Archetype Presets](#archetype-presets)
@@ -554,6 +555,37 @@ harness knowledge verify ki_self_20260826_01
 
 ---
 
+### GenAI Red-Teaming & Adversarial Probing
+
+Execute automated and manual adversarial safety evaluations using Microsoft PyRIT patterns, jailbreak trees, and vulnerability scoring:
+
+#### `harness redteam scan <target_url> [OPTIONS]`
+Scans an agent or LLM target endpoint against adversarial attack vectors.
+```bash
+# Scan local endpoint with default technique
+harness redteam scan http://127.0.0.1:8080/agent --name "LocalAgent"
+
+# Scan with Crescendo multi-turn escalation
+harness redteam scan http://127.0.0.1:8080/agent --technique crescendo --turns 5
+
+# Output scored vulnerability report as JSON
+harness redteam scan http://127.0.0.1:8080/agent --format json
+```
+
+#### `harness redteam techniques`
+Lists all available PyRIT attack vectors, including Single-Turn Jailbreak, Crescendo, Tree of Attacks (TAP), and Prompt Leaking.
+```bash
+harness redteam techniques
+```
+
+#### `harness redteam status`
+Checks the PyRIT subprocess runtime and lazy virtual environment staging status.
+```bash
+harness redteam status
+```
+
+---
+
 ### Model Context Protocol (MCP) Server
 
 #### `harness mcp serve`
@@ -636,6 +668,7 @@ Open [http://127.0.0.1:8080](http://127.0.0.1:8080) in your browser to inspect:
 - **Live Agent Execution & Step Stream**: Real-time event streams, reasoning traces, and token usage rollups.
 - **Interactive Graph Canvas**: Toggle between **Kernel Architecture** (plugin dependencies and service IoC graph) and **Skill Clusters** (Leiden/Louvain cluster partitions, modularity scores, cross-cluster bridges, and emergent capabilities).
 - **REST APIs**: Query `/api/skills/clusters` for raw clustering data and `/api/skills/clusters/mermaid` for pre-rendered Mermaid DAG diagrams.
+- **Prometheus Metrics**: Scrape runtime metrics at `/metrics` conforming to Prometheus 0.0.4 text exposition format (`harness_agent_steps_total`, `harness_step_duration_seconds`, `harness_events_published_total`, `harness_active_sessions`).
 
 ---
 

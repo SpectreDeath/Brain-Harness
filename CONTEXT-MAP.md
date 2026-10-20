@@ -18,7 +18,9 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - `orca_bridge` — Multi-agent Git worktree isolation, FIFO coordinator inboxes, injected preambles, and worker settlement.
   - `context_course_bridge` — 6-layer context engineering stack auditor, FastMCP validator, subagent swarm planner, and sandboxed Nano Harness ReAct loop.
   - `tau_harness_bridge` — Pi-style minimalist coding agent harness bridge with branchable session tree DAGs, append-only locked JSONL journal, in-flight tool repair, and project-trust security gates.
+  - `prompt_pruning_layer` — Deterministic 3-pass context optimization, whitespace deduplication, middle-out tool reduction, and tabular JSON truncation.
 - **Member Skills**:
+  - [`prompt-pruning-architect`](.agents/skills/prompt-pruning-architect/SKILL.md) — Architect, audit, and tune deterministic 3-pass context pruning (whitespace normalization, middle-out truncation, tabular compression).
   - [`context-engineering-architect`](.agents/skills/context-engineering-architect/SKILL.md) — Architect, audit, compose, and govern autonomous code agent context using the 6-layer stack (skills, FastMCP, plugins, subagents, hooks, nano harness) and path confinement.
   - [`pi-coding-harness`](.agents/skills/pi-coding-harness/SKILL.md) — Architect, construct, sandbox, and evaluate portable terminal coding agents using decoupled 3-tier layering, branchable session tree DAGs, append-only JSONL storage, provider-safe tool history repair, and project-trust security gates.
   - [`agent-harness-architect`](.agents/skills/agent-harness-architect/SKILL.md) — Architect, evaluate, select, and sandbox production-grade AI agent harnesses and runtime loops using 5-part harness architecture, 4-mechanism validation, and 4-layer stack partitioning.
@@ -50,7 +52,9 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - `brain_artifact_miner` — Filesystem-native workspace archaeology, scratch tool salvage, and dual-transcript introspection.
   - `conversation_trajectory_miner` — Autobiographical trajectory archaeology, failure cluster detection, and dual-lens cognitive bifurcation.
   - `temp_artifact_miner` — Ephemeral workspace archaeology, HTML visual brief extraction, test sandbox triage, and dual-lens cognitive bifurcation.
+  - `memory_decay_engine` — Ebbinghaus cognitive forgetting curve, turn-decay modeling, observation reinforcement, and probabilistic eviction.
 - **Member Skills**:
+  - [`ebbinghaus-memory-governor`](.agents/skills/ebbinghaus-memory-governor/SKILL.md) — Govern agent episodic memory using Ebbinghaus decay curve, half-life retention modeling, and reinforcement scoring.
   - [`epistemic-isnad-audit`](.agents/skills/epistemic-isnad-audit/SKILL.md) — Unbroken chain-of-custody lineage verification for facts and decisions.
   - [`mind-reader`](.agents/skills/mind-reader/SKILL.md) — Introspection and heuristic extraction from attached brain trajectories.
   - [`repo-reader`](.agents/skills/repo-reader/SKILL.md) — Architectural pattern and commit trajectory introspection from Git repositories.
@@ -101,7 +105,9 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - `pr_lens_graph` — Standalone animated SVG architecture diagrams, graph validation, and diff visualization.
   - `repo_triad_forge` — Authoritative repository triad pipeline: 5-stage cognitive audit, visual brief generation, Knowledge Vault commits, and verification orchestration.
   - `hf_doc_builder` — Hugging Face doc-builder integration for AST autodoc inspection, deterministic link checking, MDX transpilation, and semantic chunking.
+  - `hyperframes_renderer` — Programmatic multimedia video rendering via HeyGen HyperFrames Node.js/GSAP engine.
 - **Member Skills**:
+  - [`hyperframes-video-architect`](.agents/skills/hyperframes-video-architect/SKILL.md) — Architect, generate, and compose programmatic motion graphics and video timelines from code, diffs, and agent trajectories using HyperFrames and GSAP.
   - [`architecture-deepening-workflow`](.agents/skills/architecture-deepening-workflow/SKILL.md) — Orchestrate the 7-phase architecture deepening cycle to decompose monolithic hotspots into subpackages <= 200 lines with contract tests and visual briefs.
   - [`monolith-decomposition-engine`](.agents/skills/monolith-decomposition-engine/SKILL.md) — Factor monolithic codebases into slotted domain models, single-seam resolvers, and Click command groups strictly bounded to <= 200 lines.
   - [`crafting-skills`](.agents/skills/crafting-skills/SKILL.md) — High-precision agent skill authoring, refactoring, and companion card generation.
@@ -131,7 +137,9 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - `log_forensics` — Structured log pattern extraction and anomaly hunting.
   - `network_forensics` — Port security audit, TTL hop discovery, tri-state port evaluation, TCP flag deconstruction, cleartext exposure analysis, and 7-layer fault isolation.
   - `trajectory_auditor` — Execution step replay and invariant trajectory verification.
+  - `pyrit_red_teaming` — GenAI red-teaming orchestrator bridging Microsoft PyRIT attack vectors, jailbreak probes, and vulnerability scorecards.
 - **Member Skills**:
+  - [`ai-red-teaming-architect`](.agents/skills/ai-red-teaming-architect/SKILL.md) — Orchestrate automated and manual red-teaming assessments of AI systems using Microsoft PyRIT patterns, jailbreak trees, and scored vulnerability reports.
   - [`pre-commit-security-guard`](.agents/skills/pre-commit-security-guard/SKILL.md) — Shift security left by intercepting vulnerabilities and secrets before pull requests using Git pre-commit hooks, multi-file DevSkim SAST, Gitleaks, deliberate failure injection, and dual-gate CI enforcement.
   - [`ethical-hacker-networking`](.agents/skills/ethical-hacker-networking/SKILL.md) — Protocol-level network reconnaissance, packet capture inspection, tri-state port evaluation, TCP flag state machine analysis, and systematic 7-layer fault isolation.
 
@@ -143,8 +151,10 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - `k8s_manifest` — Kubernetes YAML schema validation and resource scaffolding.
   - `terraform_iac` — Terraform HCL syntax validation and plan checking.
   - `ci_pipeline` — CI/CD pipeline definition and automated workflow validation.
+  - `prometheus_exporter` — Prometheus text format metric exporter and runtime telemetry aggregator.
 - **Member Skills**:
-  - *(Inherits infrastructure tooling; domain skills scaffolded on demand)*
+  - [`cloud-infrastructure-architect`](.agents/skills/cloud-infrastructure-architect/SKILL.md) — Architect, audit, and govern cloud infrastructure, container sandboxing, and Terraform state.
+  - [`kubernetes-drift-guardian`](.agents/skills/kubernetes-drift-guardian/SKILL.md) — Detect and reconcile Kubernetes manifest drift, audit RBAC policies, and enforce Pod Security Standards.
 
 ### 7. [Integration & I/O](./docs/domains/integration-and-io/EXPLANATION.md)
 
