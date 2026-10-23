@@ -1,0 +1,5 @@
+subprocess_timeout_s: 120
+max_records_per_section: 100
+max_preview_tensors: 50
+model_header_max_bytes: 104857600
+pyc_max_disassembly_instructions: 500

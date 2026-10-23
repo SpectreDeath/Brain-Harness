@@ -1,0 +1,32 @@
+{
+  "id": "ki_20261023_opencode_03",
+  "title": "Persistent PTY Multiplexing Daemon for Long-Running Agents",
+  "context": "Decoupled terminal process execution across transient user interfaces and live reconnects.",
+  "distilled_learning": "Multiplexing shell processes across a daemonized PTY background server prevents child process termination when UI clients detach, enabling resilient session recovery and live inspection.",
+  "source_target": "D:\\GitHub\\cloned\\opencode",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_20261023_opencode_03",
+    "claims": [
+      {
+        "assertion": "Multiplexing shell processes across a daemonized PTY background server prevents child process termination when UI clients detach, enabling resilient session recovery and live inspection.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "packages/core/src/persistent-pty/index.ts",
+            "sha256_hash": "080e92d40a",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "pty",
+    "terminal_multiplexing",
+    "background_daemon",
+    "agent_resilience",
+    "session_recovery"
+  ]
+}

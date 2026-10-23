@@ -68,3 +68,18 @@ from harness.services.pyrit_scanner import (
     VulnerabilityScorecard,
     resolve_pyrit_scanner,
 )
+
+from harness.services.rea_managed_runtime import (
+    REA_MANAGED_RUNTIME_KEY,
+    Il2cppMetadataReport,
+    ManagedArtifactReport,
+    ManagedBoundariesReport,
+    ManagedMember,
+    ModelArtifactReport,
+    ModelTensorDescriptor,
+    PInvokeDeclaration,
+    PycInspectReport,
+    ReaManagedRuntimeService,
+    resolve_rea_managed_runtime,
+)
+

@@ -1,0 +1,58 @@
+{
+  "id": "ki_hira_python_system_design_diagrams",
+  "title": "Diagram-as-Code for Cloud Architecture: Provider Node Hierarchies, Context Canvases, Fan-Out Grouping, Nested Clusters, and Typed Edge Protocols",
+  "category": "visualization_and_architecture_modeling",
+  "created_at": "2026-10-22T19:00:00Z",
+  "author": "Zaira Hira (freeCodeCamp.org, 2026; synthesized by Brain Harness)",
+  "source": {
+    "title": "How to Create System Design Diagrams using Python",
+    "url": "https://www.freecodecamp.org/news/how-to-create-system-design-diagrams-using-python/",
+    "sha256": "5aaf2fd9cb9a4c0268f99d736b9e39648cf1448feed3fdb598fd5560fc74e4fd",
+    "size_bytes": 15128
+  },
+  "tags": [
+    "diagrams_as_code",
+    "system_design",
+    "cloud_architecture",
+    "graphviz",
+    "mingrammer_diagrams",
+    "cluster_hierarchy",
+    "fan_out_grouping",
+    "typed_edges",
+    "headless_ci"
+  ],
+  "isnad": {
+    "claims": [
+      {
+        "assertion": "Architecture diagrams must be declared as code in version control rather than manually drawn in canvas tools, eliminating documentation drift and enabling automated CI/CD artifact generation.",
+        "evidence_type": "architectural_axiom",
+        "source": "Zaira Hira: 'Benefits of Diagram-as-Code' (2026)",
+        "verified": true
+      },
+      {
+        "assertion": "A node object represents one discrete architectural component defined by a 3-part hierarchy: provider (e.g. aws, gcp, azure, k8s, onprem), resource_type (e.g. compute, database, network), and component name.",
+        "evidence_type": "conceptual_taxonomy",
+        "source": "Zaira Hira: 'What is Diagrams?' & 'Your First Diagram' (2026)",
+        "verified": true
+      },
+      {
+        "assertion": "Data flow directionality is represented via operator overloading: >> for forward/downstream flow, << for reverse/upstream flow, and - for undirected or symmetric peering/replication.",
+        "evidence_type": "procedural_standard",
+        "source": "Zaira Hira: 'How to Connect Nodes and Data Flow' (2026)",
+        "verified": true
+      },
+      {
+        "assertion": "Homogeneous horizontally-scaled nodes must be batched using Python lists to construct clean fan-out and fan-in data flow pipelines (e.g. lb >> [w1, w2, w3] >> db) without code redundancy or layout clutter.",
+        "evidence_type": "optimization_heuristic",
+        "source": "Zaira Hira: 'Grouping Data Flows' (2026)",
+        "verified": true
+      },
+      {
+        "assertion": "Semantic isolation boundaries (tiers, regions, availability zones, microservices) must be modeled using Cluster context managers, with nesting achieved through Python block indentation.",
+        "evidence_type": "architectural_pattern",
+        "source": "Zaira Hira: 'Clusters' & 'Edges' (2026)",
+        "verified": true
+      }
+    ]
+  }
+}

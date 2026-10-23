@@ -1,0 +1,38 @@
+# Baseline Operational Configuration for python-diagrams-architect (Rule 44)
+version: "1.0.0"
+
+# Global Diagram Canvas Defaults
+canvas:
+  default_direction: "LR"        # "LR", "TB", "RL", "BT"
+  default_outformat: "png"       # "png", "jpg", "svg", "pdf"
+  headless_show: false           # Must be false for CI/CD and agent runners
+  graph_attr:
+    pad: "0.5"
+    splines: "ortho"
+    nodesep: "0.6"
+    ranksep: "0.8"
+
+# Architectural Scale & Complexity Budgets
+budgets:
+  max_nodes: 50
+  max_cluster_depth: 3
+  render_timeout_sec: 30
+  max_edge_labels_len: 64
+
+# AST Code Linting & Hygiene Rules
+linting:
+  enforce_headless_show: true
+  require_cluster_for_multi_tier: true
+  flag_orphan_nodes: true
+  disallow_mystery_edges: true
+  enforce_batch_list_threshold: 2
+
+# Supported Cloud Providers
+providers:
+  - "aws"
+  - "gcp"
+  - "azure"
+  - "k8s"
+  - "onprem"
+  - "openstack"
+  - "saas"

@@ -1,0 +1,38 @@
+{
+  "id": "ki_20261023_opencode_01",
+  "title": "Unidirectional Layered Monorepo Architecture in AI Harnesses",
+  "context": "Monorepo architectural partitioning across CLI, TUI, background daemons, and client SDKs in AI agent harnesses.",
+  "distilled_learning": "Enforcing a strict unidirectional acyclic dependency graph (Schema -> Core & Protocol -> Server -> Client/CLI/SDK) prevents client runtime and presentation layers from leaking core engine dependencies, database credentials, or server secrets.",
+  "source_target": "D:\\GitHub\\cloned\\opencode",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_20261023_opencode_01",
+    "claims": [
+      {
+        "assertion": "Acyclic layering Schema -> Core & Protocol -> Server -> Client/CLI/SDK strictly prevents client runtime and presentation layers from leaking core engine dependencies, database credentials, or server secrets.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "packages/schema/src/index.ts -> packages/core/src/index.ts",
+            "sha256_hash": "bc3a709bd1",
+            "verified": true
+          },
+          {
+            "node_type": "specification",
+            "uri": "AGENTS.md#L1-L4",
+            "sha256_hash": "bc3a709bd1",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "architecture",
+    "monorepo",
+    "layering",
+    "isolation",
+    "ai_harness"
+  ]
+}

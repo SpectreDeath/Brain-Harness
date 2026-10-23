@@ -1,0 +1,7 @@
+# Operational budgets and baseline settings for OpenCode Bridge Plugin (AGENTS.md Rule 44)
+opencode:
+  timeout_seconds: 120
+  default_format: "json"
+  auto_approve: true
+  max_sessions_listed: 50
+  isolation: "subprocess"

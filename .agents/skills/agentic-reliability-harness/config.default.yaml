@@ -1,0 +1,49 @@
+# Baseline Operational Configuration for agentic-reliability-harness (Rule 44)
+version: "1.0.0"
+
+# Watchdog Execution Budgets
+budgets:
+  max_steps: 10
+  max_tool_calls: 15
+  wall_clock_ms: 30000
+  watchdog_extra_ms: 5000
+  watchdog_extra_actions: 2
+
+# Behavioral Loop & Non-Progress Detection Thresholds
+loop_detection:
+  max_identical_actions: 3
+  max_ping_pong_cycles: 2
+  semantic_stagnation_limit: 3
+
+# Security & Policy Enforcement Point (PEP)
+authorization:
+  default_effect: "deny"
+  fail_closed: true
+  sensitive_tools:
+    - "apply_credit"
+    - "delete_resource"
+    - "escalate_privilege"
+    - "transfer_funds"
+
+# 5-Level Evaluation Thresholds
+evaluation:
+  groundedness_threshold: 0.90
+  uncertainty_calibration_min: 0.85
+  retry_amplification_max: 3.0
+
+# Release Gate & Statistical Confidence Standards
+release_gate:
+  decision_mode: "three_state" # pass, fail, inconclusive
+  on_missing_evidence: "block" # block -> inconclusive
+  confidence_level: 0.95
+  minimum_trials: 10
+  rule_of_three_required: true
+  regression_non_inferiority_margin: 0.02
+  enforce_zero_false_success: true
+
+# Fault Injection Presets
+fault_injection:
+  enabled: true
+  timeout_ms: 1000
+  corrupt_response_ratio: 0.10
+  auth_outage_probability: 0.05

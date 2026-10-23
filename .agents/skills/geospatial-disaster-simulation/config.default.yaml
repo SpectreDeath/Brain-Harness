@@ -1,0 +1,46 @@
+# Zero-Fork Configuration Defaults for Geospatial Disaster Simulation Skill
+# Overridable via .agents/skills.config.yaml or runtime parameters
+
+grid:
+  max_width_px: 780
+  max_cells: 620000
+  default_zoom_start: 15
+  default_zoom_min: 8
+  snap_to_tiles: true
+
+elevation:
+  source_type: "terrarium"  # "terrarium" (AWS Open Data) or "terrain-rgb" (Mapbox)
+  filter_spikes: true
+  median_filter_size: 3
+  sea_level_threshold_m: 0.0
+
+ground_simulation:
+  raster_opacity: 0.94
+  raster_resampling: "linear"
+  raster_fade_duration_ms: 0
+  canvas_animate: true
+  seaward_search_radius_m: 2500
+  shoreline_camera_inland_offset_m: 900
+  shoreline_camera_pitch_deg: 72
+
+height_simulation:
+  promote_id_property: "i"
+  hypocenter_depth_km: 10.0
+  quality_factor: "avg"  # "strict" (0.2), "avg" (1.0), "poor" (3.0)
+  max_threejs_instances:
+    slabs: 30000
+    walls: 1500
+    rebar: 20000
+    rubble_rocks: 9000
+  physics_clamps:
+    max_detachment_velocity_mps: 18.0
+    max_angular_velocity_radps: 2.5
+    max_frame_dt_s: 0.04
+    min_frame_dt_s: 0.008
+
+camera_shake:
+  buildup_ratio: 0.35
+  decay_ratio: 0.65
+  min_omega_radps: 7.0
+  max_omega_radps: 46.0
+  max_amplitude_px: 28.0

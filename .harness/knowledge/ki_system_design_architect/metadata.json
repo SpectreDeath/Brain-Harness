@@ -1,0 +1,52 @@
+{
+  "id": "ki_system_design_architect",
+  "title": "Senior Software System Design: The 5-Step Architecture Progression, 5-Dimension Evaluation Matrix, and Distributed Production Case Studies",
+  "category": "software_architecture",
+  "created_at": "2026-10-21T13:00:00Z",
+  "author": "Hike Simon & Beau Carnes (freeCodeCamp.org, synthesized by Brain Harness)",
+  "tags": [
+    "system_design",
+    "distributed_systems",
+    "architecture_interview",
+    "capacity_estimation",
+    "concurrency_control",
+    "case_studies",
+    "spotify",
+    "booking_com",
+    "whatsapp"
+  ],
+  "isnad": {
+    "claims": [
+      {
+        "assertion": "System design evaluations primarily test structured communication, technical judgment, and practical production depth across ambiguous requirements rather than rote memorization of static diagrams.",
+        "evidence_type": "literature_extraction",
+        "source": "Hike Simon & Beau Carnes: 'Design Software Systems Like a Senior Engineer' (freeCodeCamp.org, Oct 2026, YouTube: soTfFFIQQ8U)",
+        "verified": true
+      },
+      {
+        "assertion": "The 5-Step System Design progression (Requirements Clarification -> Data/API Modeling -> High-Level Architecture -> Scalability/Reliability Deep Dive -> Trade-off Reflection) provides an exhaustive, repeatable pacing structure for 45-60 minute engineering design sessions.",
+        "evidence_type": "methodology_standard",
+        "source": "freeCodeCamp System Design Curriculum (Oct 2026, segments 120-450)",
+        "verified": true
+      },
+      {
+        "assertion": "Distributed reservation and inventory systems require two-phase booking state machines with distributed leases (Redis Redlock with 10-15m TTL) paired with database optimistic locking (version column) to guarantee zero double bookings under peak concurrency.",
+        "evidence_type": "architectural_seam",
+        "source": "Booking.com Case Study, freeCodeCamp System Design Masterclass (segments 1100-1850)",
+        "verified": true
+      },
+      {
+        "assertion": "Global real-time messaging platforms maximize infrastructure efficiency by decoupling stateful connection gateways (WebSockets) from transient mailbox storage (Cassandra) that purges messages immediately upon recipient delivery ACK, while enforcing Signal Protocol E2EE double ratchets on client endpoints.",
+        "evidence_type": "architectural_seam",
+        "source": "WhatsApp Architecture Deep Dive, freeCodeCamp System Design Masterclass (segments 2400-3900)",
+        "verified": true
+      },
+      {
+        "assertion": "High-scale audio streaming architectures rely on HTTP Range requests and global CDN edge caching for multi-bitrate audio chunks to achieve > 95% edge cache hit ratios, decoupling audio ingestion via asynchronous transcoding worker queues.",
+        "evidence_type": "architectural_seam",
+        "source": "Spotify Architecture Case Study, freeCodeCamp System Design Masterclass (segments 520-1080)",
+        "verified": true
+      }
+    ]
+  }
+}

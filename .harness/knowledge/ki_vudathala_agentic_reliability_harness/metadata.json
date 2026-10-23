@@ -1,0 +1,62 @@
+{
+  "id": "ki_vudathala_agentic_reliability_harness",
+  "title": "Agentic AI Reliability Testing Harness: Asymmetric Trust Boundaries, Five Structural Evaluation Levels, PEP Gateways, Behavioral Invariants, and Three-State Release Gates",
+  "category": "verification_and_harness_architecture",
+  "created_at": "2026-10-21T18:30:00Z",
+  "author": "Vasuki Uday Kiran Vudathala (freeCodeCamp.org, 2026; synthesized by Brain Harness)",
+  "source": {
+    "title": "Agentic AI Reliability: Build a Testing Harness for Tool Use, Guardrails, Loops, & Workflow Outcomes [Full Book]",
+    "url": "https://www.freecodecamp.org/news/agentic-ai-reliability-book-build-a-testing-harness/",
+    "sha256": "bc120e2f318a3f7a80818229622854ca544f7948310cf88d6f615c5caa547ebe",
+    "size_bytes": 342117
+  },
+  "tags": [
+    "agentic_ai_reliability",
+    "testing_harness",
+    "asymmetric_trust_boundary",
+    "policy_enforcement_point",
+    "five_evaluation_levels",
+    "six_evaluation_activities",
+    "outcome_correctness",
+    "loop_detection",
+    "chaos_fault_injection",
+    "three_state_release_gate",
+    "rule_of_three",
+    "wilson_score_interval",
+    "write_idempotence"
+  ],
+  "isnad": {
+    "claims": [
+      {
+        "assertion": "A polite, fluent conversational response is not evidence that an agentic workflow succeeded; outcome correctness must be verified directly from authoritative world state, completely independent of the agent's narration.",
+        "evidence_type": "architectural_axiom",
+        "source": "Vasuki Uday Kiran Vudathala: 'The Demo That Lied' & Chapter 1 (2026)",
+        "verified": true
+      },
+      {
+        "assertion": "Evaluation requires two distinct orthogonal taxonomies: Six Evaluation Activities (when and why evidence is gathered) and Five Evaluation Levels (what structural component of an execution is judged: Response, Step, Action, Workflow, System).",
+        "evidence_type": "conceptual_taxonomy",
+        "source": "Vasuki Uday Kiran Vudathala: Chapters 2 & 3 (2026)",
+        "verified": true
+      },
+      {
+        "assertion": "The agent must never supply its own identity, tenant, or scopes; SecurityContext must be bound to the Policy Enforcement Point (PEP) Gateway at request initialization, and the gateway must fail closed.",
+        "evidence_type": "security_standard",
+        "source": "Vasuki Uday Kiran Vudathala: Chapter 14 (2026)",
+        "verified": true
+      },
+      {
+        "assertion": "Safety guardrail evaluation must distinguish four discrete outcomes: pass (control blocked forbidden action), fail/bypass (control breached), not_exercised (action never attempted), and indeterminate.",
+        "evidence_type": "verification_rule",
+        "source": "Vasuki Uday Kiran Vudathala: Chapter 11 (2026)",
+        "verified": true
+      },
+      {
+        "assertion": "Release gates must be three-state (pass, fail, inconclusive); missing or ambiguous telemetry must block releases without dishonesty, and critical safety metrics must enforce the Rule of Three upper bound with zero observed false successes under fault.",
+        "evidence_type": "release_governance",
+        "source": "Vasuki Uday Kiran Vudathala: Chapters 17 & 18 (2026)",
+        "verified": true
+      }
+    ]
+  }
+}

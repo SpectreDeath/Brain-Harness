@@ -1,0 +1,59 @@
+# Default zero-fork operational configuration for system-design-architect (Rule 44)
+version: "1.0.0"
+
+pacing_budgets:
+  session_duration_minutes: 60
+  stage_1_requirements_minutes: 10
+  stage_2_data_and_api_minutes: 15
+  stage_3_high_level_architecture_minutes: 15
+  stage_4_scalability_and_reliability_minutes: 15
+  stage_5_tradeoffs_and_extension_minutes: 5
+
+capacity_estimation_defaults:
+  peak_traffic_multiplier: 3.0
+  storage_projection_years: 5
+  default_read_write_ratio: 10.0
+  default_read_payload_bytes: 4096
+  default_write_payload_bytes: 1024
+  seconds_per_day: 86400
+
+latency_slos_ms:
+  cdn_cache_hit_ttfb: 30
+  in_memory_cache_read: 5
+  primary_db_read_p99: 50
+  primary_db_write_p99: 100
+  end_to_end_api_read_p99: 150
+  end_to_end_api_write_p99: 250
+
+evaluation_weights:
+  communication_and_collaboration: 0.20
+  structured_thinking_and_decomposition: 0.20
+  technical_judgment_and_justification: 0.25
+  practical_depth_and_failure_modes: 0.25
+  time_management_and_pacing: 0.10
+
+scoring_thresholds:
+  strong_hire_min_score: 85.0
+  hire_min_score: 70.0
+  leaning_hire_min_score: 55.0
+  no_hire_max_score: 54.9
+
+case_studies:
+  spotify:
+    domain: "audio_streaming"
+    primary_storage: "s3_and_cdn"
+    catalog_db: "postgresql"
+    cache_tier: "redis"
+    target_cache_hit_ratio: 0.95
+  booking_com:
+    domain: "hotel_reservations"
+    inventory_db: "postgresql"
+    distributed_lock: "redis_redlock"
+    reservation_lease_ttl_minutes: 15
+    search_engine: "opensearch"
+  whatsapp:
+    domain: "real_time_messaging"
+    gateway_protocol: "websocket"
+    session_registry: "redis"
+    message_storage: "cassandra"
+    encryption: "signal_protocol_double_ratchet"

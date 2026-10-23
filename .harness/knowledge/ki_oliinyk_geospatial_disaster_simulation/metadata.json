@@ -1,0 +1,76 @@
+{
+  "id": "ki_oliinyk_geospatial_disaster_simulation",
+  "title": "Geospatial Disaster Simulation on Real Maps: Tile-Aligned Canvas Draping, Elevation Inundation, Three.js Shared WebGL Context, and Feature-State Building Collapse Physics",
+  "category": "geospatial_simulation_and_computer_graphics",
+  "created_at": "2026-10-23T10:45:00Z",
+  "author": "Alex Oliinyk (freeCodeCamp.org / HazardSim; synthesized by Brain Harness)",
+  "source": {
+    "title": "How to Build Disaster Simulations on a Real Map: Animated Canvas Layers and Collapsing 3D Buildings with Mapbox GL JS and Three.js",
+    "url": "https://www.freecodecamp.org/news/disaster-simulation-real-map-mapbox-three-js/",
+    "sha256": "b6a59e018125e33a84cc7e92cf823cd709c96726f54fcd1b6ab076c41cc79964",
+    "size_bytes": 77233
+  },
+  "tags": [
+    "geospatial_simulation",
+    "mapbox_gl_js",
+    "maplibre_gl",
+    "threejs",
+    "web_mercator",
+    "terrarium_elevation",
+    "terrain_rgb",
+    "canvas_raster_source",
+    "fill_extrusion",
+    "feature_state",
+    "promote_id",
+    "instanced_mesh",
+    "seismic_fragility",
+    "rigid_body_physics",
+    "container_shake"
+  ],
+  "isnad": {
+    "claims": [
+      {
+        "assertion": "Ground simulations must be computed in map coordinates rather than screen coordinates; drawing on an overlay screen-space canvas produces visible edges, artificial clipping, and perspective desynchronization when the map tilts or rotates (the 'Sticker Problem').",
+        "evidence_type": "architectural_axiom",
+        "source": "Alex Oliinyk: 'The Core Idea: Map Space, Not Screen Space' (2026)",
+        "verified": true
+      },
+      {
+        "assertion": "Aligning simulation grids to Web Mercator tile pyramids allows direct ingestion and decoding of elevation tiles (AWS Open Data Terrarium or Mapbox Terrain-RGB) into contiguous 1D Float32Array grids without data resampling.",
+        "evidence_type": "procedural_standard",
+        "source": "Alex Oliinyk: 'Step 1: Choose a Grid Aligned to Map Tiles' & 'Step 2: Load Real Elevation Into the Grid' (2026)",
+        "verified": true
+      },
+      {
+        "assertion": "Ground fluid textures composite seamlessly over terrain when an offscreen canvas is registered as a map canvas raster source with animate: true, raster-resampling: linear, and raster-fade-duration: 0.",
+        "evidence_type": "rendering_protocol",
+        "source": "Alex Oliinyk: 'Step 3: Attach a Canvas as a Map Source' & 'Step 6: Layer Video Textures' (2026)",
+        "verified": true
+      },
+      {
+        "assertion": "Mapbox Streets vector tile buildings lack native feature IDs; calling setFeatureState() on vector tiles silently fails. Buildings must be copied into a GeoJSON source with promoteId: 'i' to animate extrusion collapse via feature-state height multipliers without layer rebuilding.",
+        "evidence_type": "field_tested_gotcha",
+        "source": "Alex Oliinyk: 'Step 11: Animate Collapse Without Rebuilding Layers' & 'Gotchas: Nothing Happened When I Set Feature State' (2026)",
+        "verified": true
+      },
+      {
+        "assertion": "Foreground 3D structural objects and debris must be rendered via a Three.js custom layer configured with renderingMode: '3d' in Mapbox's WebGL context to share the depth buffer with extruded buildings.",
+        "evidence_type": "architectural_pattern",
+        "source": "Alex Oliinyk: 'Step 12: A Three.js Scene Inside the Map' (2026)",
+        "verified": true
+      },
+      {
+        "assertion": "Three.js InstancedMesh instanceColor must be pre-allocated for full capacity at initialization; instancing starting at count=0 lazily allocates zero entries, causing all debris instances to render completely black.",
+        "evidence_type": "field_tested_gotcha",
+        "source": "Alex Oliinyk: 'Gotchas: Every Instance Was Black' (2026)",
+        "verified": true
+      },
+      {
+        "assertion": "Earthquake camera shaking must be applied via CSS transform to the map DOM container rather than the map camera matrix; camera jitter triggers continuous vector and raster tile re-fetching.",
+        "evidence_type": "optimization_heuristic",
+        "source": "Alex Oliinyk: 'Step 15: The Camera Has to Shake' (2026)",
+        "verified": true
+      }
+    ]
+  }
+}

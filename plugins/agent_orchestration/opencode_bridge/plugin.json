@@ -1,0 +1,84 @@
+{
+  "name": "plugin.opencode_bridge",
+  "version": "1.0.0",
+  "description": "OpenCode Bridge plugin providing CLI status, headless prompt execution, session inspection, and tool cataloging",
+  "entrypoint": "main.py",
+  "trusted": true,
+  "author": "Brain Harness Authors",
+  "provides": [
+    "service.opencode_bridge"
+  ],
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "opencode_status",
+      "description": "Inspect OpenCode CLI availability, version, background server daemon status, and active port.",
+      "parameters": []
+    },
+    {
+      "name": "opencode_run_prompt",
+      "description": "Execute a headless non-interactive instruction through OpenCode CLI with working directory isolation.",
+      "parameters": [
+        {
+          "name": "message",
+          "type": "string",
+          "required": true,
+          "description": "Instruction or prompt to execute in OpenCode."
+        },
+        {
+          "name": "directory",
+          "type": "string",
+          "required": false,
+          "description": "Working directory context for execution."
+        },
+        {
+          "name": "model",
+          "type": "string",
+          "required": false,
+          "description": "Model override string (e.g. anthropic/claude-3-7-sonnet)."
+        },
+        {
+          "name": "format",
+          "type": "string",
+          "required": false,
+          "description": "Output format ('default' or 'json')."
+        },
+        {
+          "name": "auto_approve",
+          "type": "boolean",
+          "required": false,
+          "description": "Automatically approve tool operations not explicitly denied."
+        },
+        {
+          "name": "dangerously_skip_permissions",
+          "type": "boolean",
+          "required": false,
+          "description": "Bypass permission confirmation prompts."
+        }
+      ]
+    },
+    {
+      "name": "opencode_session_info",
+      "description": "Enumerate active/past OpenCode sessions or inspect session status.",
+      "parameters": [
+        {
+          "name": "action",
+          "type": "string",
+          "required": false,
+          "description": "Action to perform ('list' or 'status')."
+        },
+        {
+          "name": "session_id",
+          "type": "string",
+          "required": false,
+          "description": "Specific session ID to query."
+        }
+      ]
+    },
+    {
+      "name": "opencode_tool_catalog",
+      "description": "List built-in OpenCode tools (edit, patch, persistent-pty, codemode) and active MCP servers.",
+      "parameters": []
+    }
+  ]
+}

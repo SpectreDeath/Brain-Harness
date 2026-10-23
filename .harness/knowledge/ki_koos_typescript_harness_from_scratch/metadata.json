@@ -1,0 +1,66 @@
+{
+  "id": "ki_koos_typescript_harness_from_scratch",
+  "title": "Zero-Dependency AI Agent Harness Construction in TypeScript: Provider-Agnostic Loops, Workspace Jailing, Atomic Batch Budgets, and Seeded Failure Testing",
+  "category": "agent_orchestration",
+  "created_at": "2026-10-20T21:00:00Z",
+  "author": "Gabor Koos (freeCodeCamp, 2026; synthesized by Brain Harness)",
+  "tags": [
+    "typescript",
+    "agent_harness",
+    "react_loop",
+    "workspace_confinement",
+    "ancestor_lstat_walk",
+    "atomic_batch_budget",
+    "context_windowing",
+    "scripted_model",
+    "prng_failure_testing",
+    "observer_isolation",
+    "provider_adapter"
+  ],
+  "isnad": {
+    "claims": [
+      {
+        "assertion": "A production-grade AI agent harness can be constructed with zero framework dependencies in TypeScript using a provider-agnostic Model interface, structured run outcomes, and strict ReAct loop boundaries.",
+        "evidence_type": "architectural_seam",
+        "source": "Gabor Koos: 'How to Build an AI Agent Harness from Scratch in TypeScript' (freeCodeCamp, 2026)",
+        "verified": true
+      },
+      {
+        "assertion": "Passing unvalidated LLM-generated arguments directly to tools is a severe vulnerability; tool arguments must undergo pre-dispatch schema validation, and tool runtime errors must be strictly bifurcated from terminal model provider failures.",
+        "evidence_type": "security_standard",
+        "source": "Gabor Koos: Tool Registry & Validation (2026)",
+        "verified": true
+      },
+      {
+        "assertion": "Filesystem sandboxing cannot rely solely on the final target path; robust path confinement requires canonical realpath resolution, lexical boundary checking, component-by-component ancestor lstat walking to reject intermediate symlinks, and O_NOFOLLOW file open flags.",
+        "evidence_type": "security_standard",
+        "source": "Gabor Koos: Workspace Isolation (2026)",
+        "verified": true
+      },
+      {
+        "assertion": "Allowing models to formulate raw shell command strings or select arbitrary executables permits command injection; agent command execution must be locked to developer-defined presets with shell: false and bounded output buffers.",
+        "evidence_type": "security_standard",
+        "source": "Gabor Koos: Hardened Command Execution (2026)",
+        "verified": true
+      },
+      {
+        "assertion": "Tool invocation budget enforcement must occur atomically before conversation transcript mutation; admitting partial tool batches or appending assistant calls before budget verification creates orphaned, unfulfilled tool calls.",
+        "evidence_type": "architectural_seam",
+        "source": "Gabor Koos: Batch Budgeting Section (2026)",
+        "verified": true
+      },
+      {
+        "assertion": "Sliding context windowing must treat each assistant turn and all its corresponding tool result messages as an indivisible atomic unit, preventing conversational incoherence from orphaned results or broken tool-call links.",
+        "evidence_type": "architectural_seam",
+        "source": "Gabor Koos: Context Window Management (2026)",
+        "verified": true
+      },
+      {
+        "assertion": "Telemetry and observer listeners must be wrapped in isolated try-catch boundaries so that non-essential reporting errors never fail or alter the outcome of an otherwise successful agent execution.",
+        "evidence_type": "reliability_pattern",
+        "source": "Gabor Koos: Telemetry and Observability (2026)",
+        "verified": true
+      }
+    ]
+  }
+}

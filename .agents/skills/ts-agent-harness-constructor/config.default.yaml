@@ -1,0 +1,21 @@
+# .agents/skills/ts-agent-harness-constructor/config.default.yaml
+version: "1.0.0"
+skill: ts-agent-harness-constructor
+
+timeouts:
+  command_process_ms: 10000       # Child process kill timeout (Stage 3)
+  model_generate_ms: 30000        # Per-turn model generation timeout
+
+budgets:
+  max_steps: 25                   # Maximum model turns (Stage 4)
+  max_tool_calls: 75              # Cumulative tool invocations per run (Stage 4)
+  max_context_chars: 80000        # selectContext window ceiling in JS chars (Stage 5)
+  max_command_output_bytes: 65536 # stdout+stderr cap per command (Stage 3)
+
+retry:
+  model_error_retries: 0          # Terminal model errors do not retry by default
+
+evaluation:
+  seeded_prng_scenarios: 150      # Batch property test iterations (Stage 4)
+  exception_recovery_runs: 60     # Tool exception recovery test runs (Stage 6)
+  seeded_prng_seed: "0x12345678"  # Deterministic PRNG seed

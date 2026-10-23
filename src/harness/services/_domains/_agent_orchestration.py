@@ -205,3 +205,16 @@ from harness.services.tau_bridge import (
     TrustScope,
     resolve_tau_bridge,
 )
+
+from harness.services.opencode_bridge import (
+    BUILTIN_OPENCODE_TOOLS,
+    DefaultOpenCodeBridgeService,
+    OPENCODE_BRIDGE_KEY,
+    OpenCodeBridgeService,
+    OpenCodeCatalogResult,
+    OpenCodeRunResult,
+    OpenCodeSessionResult,
+    OpenCodeStatusResult,
+    resolve_opencode_bridge,
+)
+

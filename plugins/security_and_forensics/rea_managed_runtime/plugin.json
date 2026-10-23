@@ -1,0 +1,123 @@
+{
+  "name": "plugin.rea_managed_runtime",
+  "version": "1.0.0",
+  "description": "REA managed runtime & bytecode forensics: .NET PE/CLI headers, Unity IL2CPP global-metadata.dat, zero-allocation GGUF/safetensors inspection, and CPython bytecode disassembly.",
+  "language": "python",
+  "entrypoint": "main.py",
+  "isolation": "subprocess",
+  "trusted": true,
+  "source_repo": "https://github.com/morluto/rea",
+  "verified_commit": "34563fcc9",
+  "isnad_lineage": {
+    "source_url": "https://github.com/morluto/rea",
+    "commit_hash": "34563fcc9",
+    "anchors": [
+      "src/domain/il2cpp/il2cppMetadata.ts",
+      "src/domain/model/modelArtifact.ts",
+      "src/contracts/managed/managedToolContracts.ts",
+      "src/domain/python/pythonPyc.ts"
+    ]
+  },
+  "dependencies": [
+    "structlog"
+  ],
+  "provides": [
+    "service.rea_managed_runtime"
+  ],
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "rea_inspect_managed_artifact",
+      "description": "Inspect an explicit Windows PE/CLI or .NET DLL without loading it as a live assembly.",
+      "parameters": [
+        {
+          "name": "target_path",
+          "type": "string",
+          "description": "Path to binary target",
+          "required": true
+        },
+        {
+          "name": "extract_members",
+          "type": "boolean",
+          "description": "Extract declared classes and methods",
+          "required": false,
+          "default": true
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "rea_inspect_managed_native_boundaries",
+      "description": "Inspect PE/CLI ModuleRef, ImplMap, and P/Invoke declarations.",
+      "parameters": [
+        {
+          "name": "target_path",
+          "type": "string",
+          "description": "Path to binary target",
+          "required": true
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "rea_inspect_il2cpp_metadata",
+      "description": "Parse Unity IL2CPP global-metadata.dat (versions 24, 27, 29, 31, 39).",
+      "parameters": [
+        {
+          "name": "metadata_path",
+          "type": "string",
+          "description": "Path to global-metadata.dat",
+          "required": true
+        },
+        {
+          "name": "max_records",
+          "type": "integer",
+          "description": "Maximum records to extract per section",
+          "required": false,
+          "default": 100
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "rea_inspect_model_artifact",
+      "description": "Inspect local GGUF v2/v3 or safetensors headers using direct byte seeks.",
+      "parameters": [
+        {
+          "name": "model_path",
+          "type": "string",
+          "description": "Path to .gguf or .safetensors model file",
+          "required": true
+        },
+        {
+          "name": "preview_tensors",
+          "type": "integer",
+          "description": "Maximum tensor descriptors to return in header summary",
+          "required": false,
+          "default": 50
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "rea_inspect_python_pyc",
+      "description": "Inspect local CPython 3.7-3.13 .pyc bytecode files and disassemble opcodes.",
+      "parameters": [
+        {
+          "name": "pyc_path",
+          "type": "string",
+          "description": "Path to .pyc bytecode file",
+          "required": true
+        },
+        {
+          "name": "disassemble",
+          "type": "boolean",
+          "description": "Whether to disassemble code object opcodes",
+          "required": false,
+          "default": true
+        }
+      ],
+      "returns": "object"
+    }
+  ]
+}
