@@ -145,20 +145,22 @@ class WorkspaceSandboxPolicy:
         """Validate path confinement and assert zero ancestor symlinks."""
         try:
             canonical_root = self.root.resolve()
-            resolved_target = (canonical_root / target).resolve()
+            unresolved_target = canonical_root / target
 
-            # 1. Lexical boundary containment
+            # 1. Ancestor symlink check on un-resolved path hierarchy
+            if not self.allow_ancestor_symlinks:
+                curr = unresolved_target.parent
+                while curr != canonical_root and curr != curr.parent:
+                    if curr.is_symlink() or os.path.islink(curr):
+                        return False, f"Ancestor directory is a symbolic link: '{curr}'"
+                    curr = curr.parent
+
+            resolved_target = unresolved_target.resolve()
+
+            # 2. Lexical boundary containment
             rel = os.path.relpath(resolved_target, canonical_root)
             if rel == ".." or rel.startswith(".." + os.sep) or resolved_target == canonical_root:
                 return False, f"Path traversal escape detected: '{target}' resolves outside workspace"
-
-            # 2. Ancestor symlink check
-            if not self.allow_ancestor_symlinks:
-                curr = resolved_target.parent
-                while curr != canonical_root and curr != curr.parent:
-                    if curr.is_symlink():
-                        return False, f"Ancestor directory is a symbolic link: '{curr}'"
-                    curr = curr.parent
 
             return True, None
         except Exception as exc:

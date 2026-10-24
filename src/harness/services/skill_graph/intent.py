@@ -16,7 +16,7 @@ def _trigram_overlap(s1: str, s2: str) -> float:
     tri2 = {s2[i : i + 3] for i in range(len(s2) - 2)}
     if not tri1 or not tri2:
         return 0.0
-    return len(tri1 & tri2) / min(len(tri1), len(tri2))
+    return len(tri1 & tri2) / len(tri1 | tri2)
 
 
 def route_skill_intent(

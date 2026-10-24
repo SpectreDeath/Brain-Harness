@@ -64,6 +64,8 @@ def extract_ascii_card(content: str) -> dict[str, Any]:
         elif clean.startswith("Target:"):
             meta["target"] = clean.split(":", 1)[1].strip()
             last_field = "target"
+        elif last_field == "target" and not clean.startswith(("├", "─", "└")):
+            meta["target"] = (meta.get("target", "") + " " + clean).strip()
         elif last_field == "triggers" and '"' in clean:
             extracted = re.findall(r'"([^"]+)"', clean)
             if extracted:
@@ -73,6 +75,8 @@ def extract_ascii_card(content: str) -> dict[str, Any]:
             req_list = [t[0] or t[1] for t in extracted if (t[0] or t[1])]
             if req_list:
                 meta.setdefault("requires", []).extend(req_list)
+        elif clean.startswith(("├", "─", "└", "```", "#")):
+            last_field = None
         else:
             table_match = re.match(
                 r"^\|\s*\*{0,2}([a-zA-Z]+)\*{0,2}\s*\|\s*(.*?)\s*\|?$", clean
