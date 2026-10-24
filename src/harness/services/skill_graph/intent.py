@@ -52,18 +52,23 @@ def route_skill_intent(
             matched_triggers.append(skill.invocation)
 
         # Trigger phrase match
+        covered_trig_tokens: set[str] = set()
         for trigger in skill.triggers:
             trig_lower = trigger.lower()
             if trig_lower in intent_lower:
                 score += 2.0
                 matched_triggers.append(trigger)
+                covered_trig_tokens.update(re.findall(r"\w+", trig_lower))
             else:
                 trig_tokens = set(re.findall(r"\w+", trig_lower))
                 overlap = intent_tokens.intersection(trig_tokens)
-                if overlap:
-                    idf_trigger_score = sum(idf_table.get(t, 1.0) for t in overlap)
-                    score += 0.5 * idf_trigger_score
-                    matched_triggers.extend(list(overlap)[:2])
+                new_overlap = overlap - covered_trig_tokens
+                if new_overlap:
+                    idf_trigger_score = sum(idf_table.get(t, 1.0) for t in new_overlap)
+                    precision = len(overlap) / max(1.0, float(len(trig_tokens)))
+                    score += 0.5 * idf_trigger_score * (0.5 + 0.5 * precision)
+                    covered_trig_tokens.update(new_overlap)
+                    matched_triggers.extend(list(new_overlap)[:2])
 
         # Description / target token overlap
         text_corpus = f"{skill.target} {skill.category}".lower()

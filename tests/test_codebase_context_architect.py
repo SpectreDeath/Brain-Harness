@@ -122,7 +122,7 @@ class TestCodebaseContextEngineDeepened:
         """Assert slotted and frozen dataclass invariants (Rule 12 & Rule 43)."""
         import sys
         sys.path.insert(0, str(skill_dir / "scripts"))
-        from engine import TokenBudgetCheck, ContextLintReport
+        from codebase_context_engine import TokenBudgetCheck, ContextLintReport
 
         check = TokenBudgetCheck(
             file_path="AGENTS.md",
@@ -150,7 +150,7 @@ class TestCodebaseContextEngineDeepened:
         """Assert manifest inspector handles package.json, pyproject.toml, and Makefile."""
         import sys
         sys.path.insert(0, str(skill_dir / "scripts"))
-        from engine import ManifestScriptInspector
+        from codebase_context_engine import ManifestScriptInspector
 
         # Node package.json
         (tmp_path / "package.json").write_text(json.dumps({"scripts": {"build:prod": "vite build"}}), encoding="utf-8")
@@ -170,7 +170,7 @@ class TestCodebaseContextEngineDeepened:
         """Assert 3-tier zero-fork configuration precedence (Rule 44)."""
         import sys
         sys.path.insert(0, str(skill_dir / "scripts"))
-        from engine import ConfigResolver
+        from codebase_context_engine import ConfigResolver
 
         # Project override config
         agents_dir = tmp_path / ".agents"

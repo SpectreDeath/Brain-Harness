@@ -26,7 +26,7 @@ _script_dir = Path(__file__).resolve().parent
 if str(_script_dir) not in sys.path:
     sys.path.insert(0, str(_script_dir))
 
-from engine import (
+from codebase_context_engine import (
     CodebaseContextEngine,
     ContextLintReport,
     TokenBudgetCheck,

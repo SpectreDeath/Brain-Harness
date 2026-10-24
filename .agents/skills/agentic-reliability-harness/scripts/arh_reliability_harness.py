@@ -201,7 +201,7 @@ def format_scorecard_ascii(scorecard: GateScorecard) -> str:
         f"│ False-Success Under Fault:   {scorecard.false_success_under_fault_count:<37d}│",
         f"│ Unexercised Controls:        {scorecard.unexercised_controls_count:<37d}│",
         f"├{border}┤",
-        f"│ FIVE-LEVEL STRUCTURAL VERDICTS:                                    │",
+        "│ FIVE-LEVEL STRUCTURAL VERDICTS:                                    │",
     ]
     for v in scorecard.verdicts:
         status_tag = f"[{v.status.upper()}]"
