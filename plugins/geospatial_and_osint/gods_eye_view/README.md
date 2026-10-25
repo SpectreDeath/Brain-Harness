@@ -80,7 +80,7 @@ Wraps tools/ scripts from gods-eye-view:
   - `def render_globe_snapshot(lat, lon, altitude_m, pitch, heading, style, outdir) -> ImageryRenderResult`
 
 
-### Module [`engine.py`](engine.py)
+### Subpackage [`engine/`](engine/__init__.py)
 
 Core Planetary OSINT, Geospatial Intelligence, and Analyst Query Engine.
 

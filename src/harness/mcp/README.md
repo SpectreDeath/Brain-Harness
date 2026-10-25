@@ -38,5 +38,5 @@ harness mcp tools --server "http://localhost:8080/mcp"
 ---
 
 ## Related Documentation
-- [Tool Registry Service](../services/tools.py)
+- [Tool Registry Service](../services/tools/registry.py)
 - [CLI Commands Suite](../commands/mcp.py)

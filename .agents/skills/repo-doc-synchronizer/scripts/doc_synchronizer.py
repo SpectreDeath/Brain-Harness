@@ -535,9 +535,14 @@ class DocSynchronizerEngine:
             elif md.with_suffix(".py").exists():
                 associated_py_files.add(md.with_suffix(".py"))
             elif md.name.lower() in ("readme.md", "index.md"):
-                for p in md.parent.glob("*.py"):
-                    if not p.name.startswith("test_"):
-                        associated_py_files.add(p)
+                if md.parent != self.root_dir:
+                    for p in md.parent.rglob("*.py"):
+                        if not p.name.startswith("test_") and "tests" not in p.parts and ".pytest_cache" not in p.parts:
+                            associated_py_files.add(p)
+                else:
+                    for p in md.parent.glob("*.py"):
+                        if not p.name.startswith("test_"):
+                            associated_py_files.add(p)
 
             # Code-to-Doc Symbol Drift Verification
             if check_symbols and associated_py_files:
@@ -556,6 +561,9 @@ class DocSynchronizerEngine:
                             class_to_methods[c.name] = m_set
                         for fn in insp.functions:
                             valid_functions.add(fn.name)
+                        for exp in insp.exported_names:
+                            valid_classes.add(exp)
+                            valid_functions.add(exp)
 
                 common_allowed = {
                     "__init__",

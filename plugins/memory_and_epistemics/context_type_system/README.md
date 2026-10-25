@@ -70,7 +70,7 @@ Context Type System Plugin & HarnessPlugin Service Implementation.
 ### Module [__init__.py](__init__.py)
 
 Context Type System Plugin for Brain Harness.
-### Module [engine.py](engine.py)
+### Subpackage [engine/](engine/__init__.py)
 
 Core engine for Context Type System provenance, ledger verification, token budgeting, and prompt assembly.
 

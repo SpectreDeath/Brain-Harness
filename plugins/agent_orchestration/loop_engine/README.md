@@ -27,7 +27,7 @@ Goal-directed agent loop state machine with tri-state resource polling, decision
 
 ## Key Modules & AST Symbols
 
-### Module [`loop_core.py`](loop_core.py)
+### Subpackage [`loop_core/`](loop_core/__init__.py)
 
 Core Goal-Directed Loop Engine: Task Graph DAG, Tri-State Polling, Stepwise Control, and Checkpointing.
 

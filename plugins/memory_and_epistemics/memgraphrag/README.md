@@ -27,7 +27,7 @@ Three-layer memory knowledge graph engine with conflict-aware graph construction
 
 ## Key Modules & AST Symbols
 
-### Module [`engine.py`](engine.py)
+### Subpackage [`engine/`](engine/__init__.py)
 
 Core Three-Layer Memory & Hybrid Graph Retrieval Engine for MemGraphRAG.
 
