@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from harness.plugins.loader import ManifestPlugin, PluginLoader
+from harness.plugins.loader import ManifestPlugin, PluginLoadError, PluginLoader
 
 
 @pytest.mark.unit
@@ -110,6 +110,33 @@ class UntrustedExternalPlugin(HarnessPlugin):
         # So ManifestPlugin won't be found by directory scan
         # But the extraction should succeed
         assert extract_dir.exists()
+
+    def test_load_from_zip_rejects_traversal(self, tmp_path: Path) -> None:
+        import zipfile
+
+        zip_path = tmp_path / "evil.zip"
+        with zipfile.ZipFile(zip_path, "w") as zf:
+            zf.writestr("../evil.txt", "escaped")
+
+        loader = PluginLoader()
+        with pytest.raises(PluginLoadError):
+            loader.load_from_zip(zip_path, tmp_path / "extracted")
+
+        assert not (tmp_path / "evil.txt").exists()
+
+    def test_load_from_zip_rejects_symlink_member(self, tmp_path: Path) -> None:
+        import zipfile
+
+        zip_path = tmp_path / "evil.zip"
+        with zipfile.ZipFile(zip_path, "w") as zf:
+            info = zipfile.ZipInfo("link")
+            info.create_system = 3
+            info.external_attr = 0o120777 << 16
+            zf.writestr(info, "../outside")
+
+        loader = PluginLoader()
+        with pytest.raises(PluginLoadError):
+            loader.load_from_zip(zip_path, tmp_path / "extracted")
 
     def test_list_catalog_and_manifest_lookups(self, tmp_path: Path) -> None:
         p1 = tmp_path / "alpha-plugin"

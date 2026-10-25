@@ -18,6 +18,8 @@ from typing import Any
 import httpx
 import structlog
 
+from harness.plugins.loader import validate_zip_members
+
 logger = structlog.get_logger()
 
 # Matches:
@@ -310,6 +312,10 @@ class RepoFetcher:
         """Extract a ZIP archive, flattening single top-level directories."""
         try:
             with zipfile.ZipFile(zip_path, "r") as zf:
+                try:
+                    validate_zip_members(zf, target_dir)
+                except ValueError as e:
+                    raise FetchError(str(zip_path), f"Unsafe ZIP member: {e}") from e
                 zf.extractall(target_dir)
         except zipfile.BadZipFile as e:
             raise FetchError(str(zip_path), f"Invalid ZIP: {e}") from e

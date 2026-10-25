@@ -43,3 +43,28 @@ class TestRepoFetcher:
         fetcher = RepoFetcher(plugin_dir=tmp_path)
         with pytest.raises(FetchError):
             await fetcher.fetch("not a valid url or repo")
+
+    async def test_fetch_local_zip_rejects_traversal_member(self, tmp_path: Path) -> None:
+        zip_path = tmp_path / "evil.zip"
+        with zipfile.ZipFile(zip_path, "w") as zf:
+            zf.writestr("../evil.txt", "escaped")
+            zf.writestr("good.txt", "ok")
+
+        fetcher = RepoFetcher(plugin_dir=tmp_path / "cache")
+        with pytest.raises(FetchError):
+            await fetcher.fetch(str(zip_path))
+
+        # Nothing escaped the target directory, and nothing was planted in it.
+        assert not (tmp_path / "evil.txt").exists()
+        assert not (tmp_path / "cache" / "evil" / "evil.txt").exists()
+
+    async def test_fetch_local_zip_rejects_absolute_member(self, tmp_path: Path) -> None:
+        zip_path = tmp_path / "evil.zip"
+        with zipfile.ZipFile(zip_path, "w") as zf:
+            zf.writestr("/tmp/evil.txt", "escaped")
+
+        fetcher = RepoFetcher(plugin_dir=tmp_path / "cache")
+        with pytest.raises(FetchError):
+            await fetcher.fetch(str(zip_path))
+
+        assert not (tmp_path / "cache" / "evil" / "tmp" / "evil.txt").exists()

@@ -9,6 +9,7 @@ Sources:
 from __future__ import annotations
 
 import importlib.util
+import stat
 import threading
 import zipfile
 from pathlib import Path
@@ -34,6 +35,37 @@ class PluginLoadError(Exception):
         self.source = source
         self.reason = reason
         super().__init__(f"Failed to load plugin from {source!r}: {reason}")
+
+
+def validate_zip_members(zip_file: zipfile.ZipFile, target_dir: Path) -> None:
+    """Reject archives containing members that would escape ``target_dir``.
+
+    CPython's ``ZipFile.extractall`` silently rewrites traversal members
+    (``../evil`` lands as ``evil`` inside the target), so a crafted archive
+    can plant files in surprising locations within a plugin directory even
+    though nothing escapes it. Reject such archives loudly instead of
+    relying on that implicit sanitization. Symlink members are rejected
+    outright: a future extractor (or a later copy step) could honor them.
+
+    Raises:
+        ValueError: Naming the first offending member.
+    """
+    target = target_dir.resolve()
+    for info in zip_file.infolist():
+        name = info.filename
+        # Treat backslashes as separators too: on Windows they are, and a
+        # member like ``..\\evil`` must not slip past a forward-slash check.
+        parts = [p for p in name.replace("\\", "/").split("/") if p not in ("", ".")]
+        if not parts or any(part == ".." for part in parts):
+            raise ValueError(f"ZIP member escapes target directory: {name!r}")
+        if name.startswith("/") or (len(name) >= 2 and name[1] == ":" and name[0].isalpha()):
+            raise ValueError(f"ZIP member has absolute path: {name!r}")
+        mode = (info.external_attr >> 16) & 0o170000
+        if stat.S_ISLNK(mode):
+            raise ValueError(f"ZIP member is a symlink: {name!r}")
+        dest = target.joinpath(*parts).resolve()
+        if not dest.is_relative_to(target):
+            raise ValueError(f"ZIP member escapes target directory: {name!r}")
 
 
 class PluginLoader:
@@ -161,6 +193,10 @@ class PluginLoader:
 
         try:
             with zipfile.ZipFile(zip_path, "r") as zf:
+                try:
+                    validate_zip_members(zf, extract_to)
+                except ValueError as e:
+                    raise PluginLoadError(str(zip_path), f"Unsafe ZIP member: {e}") from e
                 zf.extractall(extract_to)
         except zipfile.BadZipFile as e:
             raise PluginLoadError(str(zip_path), f"Invalid ZIP: {e}") from e
