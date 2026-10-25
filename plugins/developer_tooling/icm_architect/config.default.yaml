@@ -1,0 +1,26 @@
+# Default operational parameters for plugin.icm_architect (Rule 44)
+budgets:
+  max_step_tokens: 8000
+  entry_file_max_lines: 60
+  subprocess_timeout_s: 60
+  max_unresolved_placeholders: 0
+
+forms:
+  supported_forms:
+    - pipeline
+    - record_library
+    - knowledge_bundle
+    - context_map
+    - system_map
+
+templates:
+  canonical_templates:
+    - workspace-builder
+    - script-to-animation
+    - voice-driven-animation
+    - course-deck-production
+
+verification:
+  require_stage_check: true
+  enforce_keep_out_patterns: true
+  auto_generate_indexes: true

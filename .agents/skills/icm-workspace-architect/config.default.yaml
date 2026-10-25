@@ -1,0 +1,30 @@
+# Default 3-tier zero-fork operational configuration for icm-workspace-architect
+# Precedence: Project Override (.agents/skills.config.yaml) -> Skill Default -> Fallback
+
+budgets:
+  max_step_tokens: 8000
+  entry_file_max_lines: 60
+  max_walk_depth: 4
+  audit_timeout_seconds: 60
+
+forms:
+  default_form: "pipeline"
+  supported_forms:
+    - "pipeline"
+    - "record_library"
+    - "knowledge_bundle"
+    - "context_map"
+    - "system_map"
+
+verification:
+  require_check_md: true
+  enforce_keep_outs: true
+  check_dropped_negations: true
+  skip_folders:
+    - ".git"
+    - "node_modules"
+    - "__pycache__"
+    - ".venv"
+    - "_archive"
+    - "_templates"
+    - "raw"

@@ -1,0 +1,187 @@
+{
+  "name": "plugin.icm_architect",
+  "version": "1.0.0",
+  "description": "Interpretable Context Methodology (ICM, arXiv:2603.16021) workspace architecture, contract auditing, link verification, quote verification, and index generation",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "category": "developer_tooling",
+  "author": "Brain Harness",
+  "provides": [
+    "harness.services.icm_architect"
+  ],
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "icm_audit_workspace",
+      "description": "Audit an ICM workspace against the 10 mandatory invariants, classify files into 5 roles, and estimate per-step token loads",
+      "parameters": [
+        {
+          "name": "root",
+          "type": "string",
+          "description": "Path to workspace root directory",
+          "required": false,
+          "default": "."
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "icm_verify_links",
+      "description": "Verify that all relative markdown links, contract inputs, and pointer lines resolve cleanly without breaking",
+      "parameters": [
+        {
+          "name": "root",
+          "type": "string",
+          "description": "Path to workspace root directory",
+          "required": false,
+          "default": "."
+        },
+        {
+          "name": "skip_folders",
+          "type": "array",
+          "description": "Optional list of folder names to skip",
+          "required": false,
+          "default": []
+        },
+        {
+          "name": "graph_file",
+          "type": "string",
+          "description": "Optional output path to write JSONL node/edge graph file",
+          "required": false,
+          "default": null
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "icm_verify_quotes",
+      "description": "Verify that quoted text appears verbatim in raw sources and enforce keep-out phrase defenses",
+      "parameters": [
+        {
+          "name": "root",
+          "type": "string",
+          "description": "Path to workspace root directory",
+          "required": false,
+          "default": "."
+        },
+        {
+          "name": "show_cuts",
+          "type": "boolean",
+          "description": "Whether to list text dropped by cuts",
+          "required": false,
+          "default": false
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "icm_rebuild_index",
+      "description": "Rebuild _index.md files across shelves and record folders from frontmatter metadata",
+      "parameters": [
+        {
+          "name": "folders",
+          "type": "array",
+          "description": "List of folder paths to re-index",
+          "required": true
+        },
+        {
+          "name": "root",
+          "type": "string",
+          "description": "Root workspace directory anchor",
+          "required": false,
+          "default": "."
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "icm_scaffold_form",
+      "description": "Scaffold a new production-ready ICM workspace from one of the 5 canonical forms",
+      "parameters": [
+        {
+          "name": "target_dir",
+          "type": "string",
+          "description": "Directory path to scaffold the workspace in",
+          "required": true
+        },
+        {
+          "name": "form",
+          "type": "string",
+          "description": "ICM form: pipeline, record_library, knowledge_bundle, context_map, or system_map",
+          "required": false,
+          "default": "pipeline"
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "description": "Workspace name or title",
+          "required": false,
+          "default": null
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "icm_scaffold_workspace",
+      "description": "Scaffold a full production workspace from canonical templates (arXiv:2603.16021)",
+      "parameters": [
+        {
+          "name": "target_dir",
+          "type": "string",
+          "description": "Directory path to scaffold the workspace in",
+          "required": true
+        },
+        {
+          "name": "template_name",
+          "type": "string",
+          "description": "Canonical template: workspace-builder, script-to-animation, voice-driven-animation, course-deck-production",
+          "required": false,
+          "default": "workspace-builder"
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "description": "Workspace name or title",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "variables",
+          "type": "object",
+          "description": "Dictionary of variables to interpolate into markdown templates",
+          "required": false,
+          "default": null
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "icm_interpolate_template",
+      "description": "Substitute {{VARIABLE}} tags and resolve conditionals per _core/placeholder-syntax.md",
+      "parameters": [
+        {
+          "name": "template_path",
+          "type": "string",
+          "description": "Path to template markdown file",
+          "required": true
+        },
+        {
+          "name": "variables",
+          "type": "object",
+          "description": "Dictionary of variable replacements and conditional toggles",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "output_path",
+          "type": "string",
+          "description": "Optional path to write output file (defaults to overwriting template_path)",
+          "required": false,
+          "default": null
+        }
+      ],
+      "returns": "object"
+    }
+  ]
+}

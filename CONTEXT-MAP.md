@@ -109,7 +109,9 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - `repo_triad_forge` — Authoritative repository triad pipeline: 5-stage cognitive audit, visual brief generation, Knowledge Vault commits, and verification orchestration.
   - `hf_doc_builder` — Hugging Face doc-builder integration for AST autodoc inspection, deterministic link checking, MDX transpilation, and semantic chunking.
   - `hyperframes_renderer` — Programmatic multimedia video rendering via HeyGen HyperFrames Node.js/GSAP engine.
+  - `plugin.icm_architect` — Interpretable Context Methodology (ICM, arXiv:2603.16021) workspace architecture, contract auditing, link verification, quote verification, index generation, production workspace instantiation, and placeholder interpolation.
 - **Member Skills**:
+  - [`icm-workspace-architect`](.agents/skills/icm-workspace-architect/SKILL.md) — Design, scaffold, audit, and restructure workspaces using Interpretable Context Methodology (ICM, arXiv:2603.16021). Binds folder hierarchy to context scoping (L0-L4), replaces framework code with plain contracts, and validates with the walk test.
   - [`hyperframes-video-architect`](.agents/skills/hyperframes-video-architect/SKILL.md) — Architect, generate, and compose programmatic motion graphics and video timelines from code, diffs, and agent trajectories using HyperFrames and GSAP.
   - [`architecture-deepening-workflow`](.agents/skills/architecture-deepening-workflow/SKILL.md) — Orchestrate the 7-phase architecture deepening cycle to decompose monolithic hotspots into subpackages <= 200 lines with contract tests and visual briefs.
   - [`monolith-decomposition-engine`](.agents/skills/monolith-decomposition-engine/SKILL.md) — Factor monolithic codebases into slotted domain models, single-seam resolvers, and Click command groups strictly bounded to <= 200 lines.

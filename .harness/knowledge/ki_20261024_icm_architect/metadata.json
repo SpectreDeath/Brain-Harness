@@ -1,0 +1,72 @@
+{
+  "id": "ki_20261024_icm_architect",
+  "title": "Interpretable Context Methodology (ICM): Folder Structure as Agent Architecture, Five-Layer Hierarchy, Three Primitives, and Verified Stage Checks",
+  "category": "agent_architecture_and_context_engineering",
+  "created_at": "2026-10-24T16:00:00Z",
+  "author": "Van Clief & McDermott (arXiv:2603.16021, 2026; synthesized by Brain Harness)",
+  "source": {
+    "title": "Interpretable Context Methodology: Folder Structure as Agent Architecture",
+    "url": "https://arxiv.org/abs/2603.16021",
+    "git_origin": "https://github.com/RinDig/Interpretable-Context-Methodology.git",
+    "git_commit": "02ba5d8",
+    "upstream_reference": "https://github.com/RinDig/icm-architect.git (commit: 8bc2f56)"
+  },
+  "tags": [
+    "interpretable_context_methodology",
+    "icm_architecture",
+    "folder_structure_as_agent_architecture",
+    "five_layer_context_hierarchy",
+    "three_primitives",
+    "five_forms",
+    "pipeline_production_line",
+    "record_library",
+    "knowledge_bundle",
+    "context_map",
+    "system_map",
+    "cold_walk_test",
+    "token_bounding",
+    "auditable_stage_checks",
+    "placeholder_syntax",
+    "production_workspaces"
+  ],
+  "isnad": {
+    "claims": [
+      {
+        "assertion": "Folder hierarchy carries context scoping and execution order, replacing complex multi-agent orchestration frameworks with auditable filesystem contracts.",
+        "evidence_type": "architectural_axiom",
+        "source": "Van Clief & McDermott: arXiv:2603.16021 (2026), Section 1 & 2",
+        "verified": true
+      },
+      {
+        "assertion": "The five-layer context hierarchy (L0 AGENTS.md, L1 root CONTEXT.md, L2 stage CONTEXT.md, L3 factory references, L4 product outputs) bounds per-step agent context to strictly <8,000 tokens.",
+        "evidence_type": "context_engineering_rule",
+        "source": "icm-architect: references/core.md & arXiv:2603.16021",
+        "verified": true
+      },
+      {
+        "assertion": "All production workspaces compose over three core primitives: Sequence (numbered stages, handoffs), Shelf (uniform records), and Catalog (small, stable routing pointers <60 lines).",
+        "evidence_type": "structural_taxonomy",
+        "source": "icm-architect: SKILL.md & commit 0cb7604d",
+        "verified": true
+      },
+      {
+        "assertion": "Every execution step must terminate at an explicit check (person, script, or small model check.md pass/fail) before downstream consumption, arresting error cascades at the earliest boundary.",
+        "evidence_type": "verification_rule",
+        "source": "Van Clief & McDermott: arXiv:2603.16021 & Invariant #6",
+        "verified": true
+      },
+      {
+        "assertion": "Restructuring existing legacy codebases into ICM requires non-destructive classification into five file roles (catalog, contract, factory, product, dead) with external referrer verification before moving.",
+        "evidence_type": "refactoring_methodology",
+        "source": "icm-architect: SKILL.md Restructure Mode",
+        "verified": true
+      },
+      {
+        "assertion": "The onboarding questionnaire system uses double-brace SCREAMING_SNAKE_CASE placeholders ({{VARIABLE}}) and conditional sections ({{?SECTION}}...{{/SECTION}}) to configure reusable production workspaces without modifying execution logic.",
+        "evidence_type": "template_syntax_standard",
+        "source": "Interpretable-Context-Methodology: _core/placeholder-syntax.md & commit 02ba5d8",
+        "verified": true
+      }
+    ]
+  }
+}

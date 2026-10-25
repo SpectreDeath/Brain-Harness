@@ -153,3 +153,21 @@ from harness.services.hyperframes import (
     check_node_available,
     resolve_hyperframes,
 )
+
+from harness.services.icm_architect import (
+    ICM_ARCHITECT_SERVICE_KEY,
+    DefaultIcmArchitectService,
+    IcmArchitectService,
+    IcmFormType,
+    IcmIndexReport,
+    IcmInvariantViolation,
+    IcmInventoryItem,
+    IcmLinkCheckReport,
+    IcmQuoteCheckReport,
+    IcmScaffoldResult,
+    IcmTemplateInterpolateResult,
+    IcmWorkspaceAuditReport,
+    IcmWorkspaceRole,
+    resolve_icm_architect_service,
+)
+

@@ -62,6 +62,7 @@ from harness.commands.gemini_vercel import gemini_vercel_group
 from harness.commands.gis import gis_group
 from harness.commands.gradio_app import gradio_group
 from harness.commands.harness_architect import architect_group
+from harness.commands.icm import icm_group
 from harness.commands.mcp import mcp_group
 from harness.commands.model_router import model_router_group
 from harness.commands.okf import okf_group
@@ -186,6 +187,8 @@ main.add_command(rol_group, name="obligation-ledger")
 main.add_command(facet_group, name="facet")
 main.add_command(facet_group, name="differential-facet")
 main.add_command(redteam_group, name="redteam")
+main.add_command(icm_group, name="icm")
+main.add_command(icm_group, name="icm-architect")
 
 # --- Register Standalone Commands ---
 main.add_command(init_cli, name="init")

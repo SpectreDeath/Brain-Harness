@@ -93,6 +93,16 @@ from .gis import (
     get_open_source_gis_service,
     gis_group,
 )
+from .icm import (
+    icm_audit_cmd,
+    icm_group,
+    icm_index_cmd,
+    icm_interpolate_cmd,
+    icm_links_cmd,
+    icm_quotes_cmd,
+    icm_scaffold_cmd,
+    icm_scaffold_workspace_cmd,
+)
 from .mcp import (
     McpServeResult,
     serve_mcp_cmd,
@@ -526,6 +536,14 @@ __all__ = [
     "get_session_tree_cmd",
     "get_skill_topology_cmd",
     "gis_group",
+    "icm_audit_cmd",
+    "icm_group",
+    "icm_index_cmd",
+    "icm_interpolate_cmd",
+    "icm_links_cmd",
+    "icm_quotes_cmd",
+    "icm_scaffold_cmd",
+    "icm_scaffold_workspace_cmd",
     "index_skills_cmd",
     "init_workspace_cmd",
     "inspect_autodoc_cmd",
