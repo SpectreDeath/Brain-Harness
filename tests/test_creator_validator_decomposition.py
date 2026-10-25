@@ -191,6 +191,32 @@ class TestCreatorValidatorEngineAndRules:
         assert any(c.name == "Manifest Schema" and c.passed for c in report.checks)
         assert any(c.name == "AST Function Inspection" and c.passed for c in report.checks)
 
+    def test_dual_mode_validation_sync_direct_call(self, tmp_path: Path) -> None:
+        """Verify calling PluginValidator.validate directly in sync context without await (Track 0 P2)."""
+        from harness.creator.validator.engine import DualModeValidationReport, PluginValidator
+        from harness.creator.validator.models import ValidationReport
+
+        target = tmp_path / "test_dual_sync_plugin"
+        target.mkdir()
+        manifest_data = {
+            "name": "dual-sync-plugin",
+            "version": "0.1.0",
+            "language": "python",
+            "entrypoint": "main.py",
+            "entrypoints": [{"name": "process", "parameters": []}],
+        }
+        (target / "plugin.json").write_text(json.dumps(manifest_data), encoding="utf-8")
+        (target / "main.py").write_text("def process():\n    return {'status': 'ok'}\n", encoding="utf-8")
+
+        # Call validate directly without await or validate_sync
+        report = PluginValidator.validate(target, dry_run=False)
+        assert isinstance(report, ValidationReport)
+        assert isinstance(report, DualModeValidationReport)
+        assert report.valid is True
+        assert report.plugin_path == str(target.resolve())
+        assert any(c.name == "Manifest Schema" and c.passed for c in report.checks)
+        assert report.to_dict()["valid"] is True
+
     def test_single_seam_resolver(self) -> None:
         """Verify single-seam resolver function (Rule 58)."""
         from harness.creator.validator.engine import (

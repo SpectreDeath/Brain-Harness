@@ -60,30 +60,107 @@ class ValidationPipeline:
         return ctx.report
 
 
+class DualModeValidationReport(ValidationReport):
+    """Awaitable and synchronous proxy wrapper for ValidationReport.
+
+    Eliminates the async/sync footgun (Track 0 P2):
+    Can be awaited (`await PluginValidator.validate(...)`) in asynchronous
+    contexts, or accessed directly (`report.valid`, `report.checks`) in synchronous
+    contexts without raising unawaited coroutine errors.
+    """
+
+    __slots__ = ("_coro_fn", "_report")
+
+    def __init__(self, coro_fn: Any) -> None:
+        object.__setattr__(self, "_coro_fn", coro_fn)
+        object.__setattr__(self, "_report", None)
+
+    def _resolve(self) -> ValidationReport:
+        report = object.__getattribute__(self, "_report")
+        if report is None:
+            coro_fn = object.__getattribute__(self, "_coro_fn")
+            report = cast(ValidationReport, _run_coro_sync(coro_fn()))
+            object.__setattr__(self, "_report", report)
+        return report
+
+    def __await__(self) -> Any:
+        async def _await_inner() -> ValidationReport:
+            report = object.__getattribute__(self, "_report")
+            if report is None:
+                coro_fn = object.__getattribute__(self, "_coro_fn")
+                report = await coro_fn()
+                object.__setattr__(self, "_report", report)
+            return report
+
+        return _await_inner().__await__()
+
+    @property
+    def plugin_path(self) -> str:
+        return self._resolve().plugin_path
+
+    @property
+    def valid(self) -> bool:
+        return self._resolve().valid
+
+    @property
+    def checks(self) -> list[Any]:
+        return self._resolve().checks
+
+    @property
+    def errors(self) -> list[str]:
+        return self._resolve().errors
+
+    @property
+    def warnings(self) -> list[str]:
+        return self._resolve().warnings
+
+    @property
+    def remediations(self) -> list[str]:
+        return self._resolve().remediations
+
+    @property
+    def manifest(self) -> Any:
+        return self._resolve().manifest
+
+    def to_dict(self) -> dict[str, Any]:
+        return self._resolve().to_dict()
+
+    def format_cli(self) -> str:
+        return self._resolve().format_cli()
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._resolve(), name)
+
+
 class ValidationFixer:
     """Authoritative auto-remediation engine for fixing plugin structure issues."""
 
     @classmethod
-    async def remediate(cls, plugin_dir: Path | str) -> ValidationReport:
+    def remediate(cls, plugin_dir: Path | str) -> DualModeValidationReport:
         """Run validation pipeline in remediation mode to auto-repair issues."""
-        pipeline = ValidationPipeline()
-        return await pipeline.execute(plugin_dir, remediate=True)
+        async def _exec() -> ValidationReport:
+            pipeline = ValidationPipeline()
+            return await pipeline.execute(plugin_dir, remediate=True)
+
+        return DualModeValidationReport(_exec)
 
     @classmethod
     def remediate_sync(cls, plugin_dir: Path | str) -> ValidationReport:
         """Synchronously auto-repair plugin issues."""
-        return cast(ValidationReport, _run_coro_sync(cls.remediate(plugin_dir)))
+        return cls.remediate(plugin_dir)._resolve()
 
 
 class PluginValidator:
     """Authoritative validation facade for plugin directories.
 
-    Follows Rule 38: provides both asynchronous coroutine `validate()` and
-    synchronous `validate_sync()` invocation entrypoints.
+    Follows Rule 38 & Track 0 P2: provides dual-mode invocation where `validate()`
+    can be awaited asynchronously (`await PluginValidator.validate(...)`) or accessed
+    directly synchronously (`report = PluginValidator.validate(...)`), as well as
+    the explicit synchronous `validate_sync()` invocation entrypoint.
     """
 
     @classmethod
-    async def validate(
+    def validate(
         cls,
         plugin_dir: Path | str,
         *,
@@ -91,15 +168,18 @@ class PluginValidator:
         timeout: float = 15.0,
         remediate: bool = False,
         pipeline: ValidationPipeline | None = None,
-    ) -> ValidationReport:
+    ) -> DualModeValidationReport:
         """Run all pre-flight and runtime diagnostic checks on a plugin directory."""
-        active_pipeline = pipeline or ValidationPipeline()
-        return await active_pipeline.execute(
-            plugin_dir,
-            dry_run=dry_run,
-            timeout=timeout,
-            remediate=remediate,
-        )
+        async def _exec() -> ValidationReport:
+            active_pipeline = pipeline or ValidationPipeline()
+            return await active_pipeline.execute(
+                plugin_dir,
+                dry_run=dry_run,
+                timeout=timeout,
+                remediate=remediate,
+            )
+
+        return DualModeValidationReport(_exec)
 
     @classmethod
     def validate_sync(
@@ -112,23 +192,18 @@ class PluginValidator:
         pipeline: ValidationPipeline | None = None,
     ) -> ValidationReport:
         """Synchronous helper for validating a plugin directory."""
-        return cast(
-            ValidationReport,
-            _run_coro_sync(
-                cls.validate(
-                    plugin_dir,
-                    dry_run=dry_run,
-                    timeout=timeout,
-                    remediate=remediate,
-                    pipeline=pipeline,
-                )
-            ),
-        )
+        return cls.validate(
+            plugin_dir,
+            dry_run=dry_run,
+            timeout=timeout,
+            remediate=remediate,
+            pipeline=pipeline,
+        )._resolve()
 
     @classmethod
-    async def remediate(cls, plugin_dir: Path | str) -> ValidationReport:
+    def remediate(cls, plugin_dir: Path | str) -> DualModeValidationReport:
         """Run validation pipeline in remediation mode."""
-        return await cls.validate(plugin_dir, remediate=True)
+        return cls.validate(plugin_dir, remediate=True)
 
 
 def resolve_plugin_validator(context: Any = None) -> type[PluginValidator] | PluginValidator:

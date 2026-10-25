@@ -16,6 +16,7 @@ from __future__ import annotations
 
 from harness.creator.validator.base import ValidationRule, _run_coro_sync
 from harness.creator.validator.engine import (
+    DualModeValidationReport,
     PluginValidator,
     ValidationFixer,
     ValidationPipeline,
@@ -43,6 +44,7 @@ __all__ = [
     "AstSignatureMatchingRule",
     "DependencyManifestRule",
     "DirectoryExistenceRule",
+    "DualModeValidationReport",
     "EntrypointFileRule",
     "JavaScriptStaticAnalysisRule",
     "ManifestSchemaRule",
