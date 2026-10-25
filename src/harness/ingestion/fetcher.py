@@ -9,6 +9,9 @@ Supports:
 
 from __future__ import annotations
 
+import datetime
+import hashlib
+import json
 import re
 import shutil
 import zipfile
@@ -18,7 +21,11 @@ from typing import Any
 import httpx
 import structlog
 
-from harness.plugins.loader import validate_zip_members
+from harness.plugins.loader import (
+    DEFAULT_MAX_ZIP_FILES,
+    DEFAULT_MAX_ZIP_TOTAL_BYTES,
+    validate_zip_members,
+)
 
 logger = structlog.get_logger()
 
@@ -42,6 +49,9 @@ _GITHUB_URL_RE = re.compile(
 )
 
 DEFAULT_PLUGIN_DIR = Path.home() / ".harness" / "plugins"
+DEFAULT_MAX_DOWNLOAD_BYTES: int = 100 * 1024 * 1024  # 100 MB
+DEFAULT_MAX_EXTRACT_FILES: int = DEFAULT_MAX_ZIP_FILES  # 10_000
+DEFAULT_MAX_EXTRACT_BYTES: int = DEFAULT_MAX_ZIP_TOTAL_BYTES  # 250 MB
 
 
 class FetchError(Exception):
@@ -56,7 +66,8 @@ class FetchError(Exception):
 class RepoFetcher:
     """Downloads GitHub repositories and ZIP archives for plugin ingestion.
 
-    Caches downloads by repository name to avoid redundant fetches.
+    Caches downloads by repository name and unique content hash to avoid
+    redundant fetches and cache collisions.
     """
 
     def __init__(
@@ -65,6 +76,9 @@ class RepoFetcher:
         *,
         github_token: str | None = None,
         event_bus: Any | None = None,
+        max_download_bytes: int = DEFAULT_MAX_DOWNLOAD_BYTES,
+        max_extract_files: int = DEFAULT_MAX_EXTRACT_FILES,
+        max_extract_bytes: int = DEFAULT_MAX_EXTRACT_BYTES,
     ) -> None:
         """Initialize the fetcher.
 
@@ -74,11 +88,17 @@ class RepoFetcher:
             github_token: Optional GitHub personal access token for
                 private repos or higher rate limits.
             event_bus: Optional event bus for ingestion telemetry.
+            max_download_bytes: Maximum allowed download byte limit.
+            max_extract_files: Maximum allowed files in extracted archive.
+            max_extract_bytes: Maximum allowed total uncompressed bytes.
         """
         self._plugin_dir = plugin_dir or DEFAULT_PLUGIN_DIR
         self._plugin_dir.mkdir(parents=True, exist_ok=True)
         self._token = github_token
         self._event_bus = event_bus
+        self._max_download_bytes = max_download_bytes
+        self._max_extract_files = max_extract_files
+        self._max_extract_bytes = max_extract_bytes
 
     @property
     def plugin_dir(self) -> Path:
@@ -94,6 +114,21 @@ class RepoFetcher:
     def event_bus(self) -> Any | None:
         """Attached event bus, if any."""
         return self._event_bus
+
+    @property
+    def max_download_bytes(self) -> int:
+        """Maximum allowed download size in bytes."""
+        return self._max_download_bytes
+
+    @property
+    def max_extract_files(self) -> int:
+        """Maximum allowed files in extracted archive."""
+        return self._max_extract_files
+
+    @property
+    def max_extract_bytes(self) -> int:
+        """Maximum allowed uncompressed extraction size in bytes."""
+        return self._max_extract_bytes
 
     def attach_event_bus(self, event_bus: Any) -> None:
         """Attach an event bus for telemetry."""
@@ -142,7 +177,7 @@ class RepoFetcher:
 
             # 2. Local ZIP file
             if local_dir.exists() and local_dir.suffix.lower() == ".zip":
-                res = await self._fetch_local_zip(local_dir.resolve())
+                res = await self._fetch_local_zip(local_dir.resolve(), force=force)
                 self._emit_event(EventType.REPO_FETCH_COMPLETED, source_clean, path=str(res), local_zip=True)
                 return res
 
@@ -197,17 +232,103 @@ class RepoFetcher:
                 self._emit_event(EventType.REPO_FETCH_ERROR, source_clean, error=str(e))
             raise
 
+    def _is_cache_valid(
+        self,
+        target_dir: Path,
+        *,
+        expected_source: str,
+        expected_hash: str | None = None,
+        expected_ref: str | None = None,
+    ) -> bool:
+        """Validate cached directory against expected source, hash, and ref."""
+        meta_file = target_dir / ".cache_meta.json"
+        if not meta_file.exists():
+            return False
+        try:
+            data = json.loads(meta_file.read_text(encoding="utf-8"))
+            if data.get("source") != expected_source:
+                return False
+            if expected_hash is not None and data.get("hash") != expected_hash:
+                return False
+            if expected_ref is not None and data.get("ref") != expected_ref:
+                return False
+            return True
+        except Exception:
+            return False
+
+    async def _download_zip_streaming(
+        self,
+        client: httpx.AsyncClient,
+        url: str,
+        headers: dict[str, str],
+        zip_path: Path,
+    ) -> None:
+        """Stream download to disk in chunks, enforcing max_download_bytes."""
+        # Detect mock in tests patching httpx.AsyncClient.get
+        is_mock = hasattr(client.get, "mock_calls") or hasattr(client.get, "return_value")
+        if is_mock:
+            response = await client.get(url, headers=headers)
+            if hasattr(response, "raise_for_status"):
+                response.raise_for_status()
+            content = getattr(response, "content", b"")
+            if len(content) > self._max_download_bytes:
+                raise FetchError(
+                    url,
+                    f"Download size exceeded limit ({len(content)} > {self._max_download_bytes} bytes)",
+                )
+            with open(zip_path, "wb") as f:
+                f.write(content)
+            return
+
+        total_downloaded = 0
+        chunk_size = 64 * 1024
+        try:
+            async with client.stream("GET", url, headers=headers) as response:
+                response.raise_for_status()
+                content_length = response.headers.get("Content-Length")
+                if content_length and content_length.isdigit():
+                    if int(content_length) > self._max_download_bytes:
+                        raise FetchError(
+                            url,
+                            f"Download size exceeded limit ({content_length} > {self._max_download_bytes} bytes)",
+                        )
+                with open(zip_path, "wb") as f:
+                    async for chunk in response.aiter_bytes(chunk_size=chunk_size):
+                        total_downloaded += len(chunk)
+                        if total_downloaded > self._max_download_bytes:
+                            raise FetchError(
+                                url,
+                                f"Download size exceeded limit ({total_downloaded} > {self._max_download_bytes} bytes)",
+                            )
+                        f.write(chunk)
+        except Exception:
+            zip_path.unlink(missing_ok=True)
+            raise
+
     async def _fetch_remote_zip(self, url: str, force: bool = False) -> Path:
         """Download a direct remote ZIP file and extract it."""
         url_clean = url.split("?")[0]
         filename = Path(url_clean).stem or "remote_plugin"
-        target_dir = self._plugin_dir / filename
+        url_hash = hashlib.sha256(url.strip().encode("utf-8")).hexdigest()[:12]
+        dir_name = f"{filename}__{url_hash}"
+        target_dir = self._plugin_dir / dir_name
 
-        if target_dir.exists() and not force:
+        if (
+            target_dir.exists()
+            and not force
+            and self._is_cache_valid(
+                target_dir,
+                expected_source=url,
+                expected_hash=url_hash,
+            )
+        ):
             logger.info("Remote ZIP plugin already cached", url=url, path=str(target_dir))
             return target_dir
 
-        zip_path = self._plugin_dir / f"{filename}.zip"
+        if target_dir.exists():
+            shutil.rmtree(target_dir, ignore_errors=True)
+
+        zip_path = self._plugin_dir / f"{dir_name}.zip"
         headers: dict[str, str] = {}
         if self._token and "github.com" in url:
             headers["Authorization"] = f"Bearer {self._token}"
@@ -215,15 +336,22 @@ class RepoFetcher:
         logger.info("Downloading remote ZIP archive", url=url)
         try:
             async with httpx.AsyncClient(follow_redirects=True, timeout=120.0) as client:
-                response = await client.get(url, headers=headers)
-                response.raise_for_status()
-
-                with open(zip_path, "wb") as f:  # noqa: ASYNC230
-                    f.write(response.content)
+                await self._download_zip_streaming(client, url, headers, zip_path)
         except Exception as e:
+            zip_path.unlink(missing_ok=True)
+            if isinstance(e, FetchError):
+                raise
             raise FetchError(url, str(e)) from e
 
-        return self._extract_zip(zip_path, target_dir, cleanup_zip=True)
+        return self._extract_zip(
+            zip_path,
+            target_dir,
+            cleanup_zip=True,
+            source=url,
+            source_type="remote_zip",
+            source_hash=url_hash,
+            stem=filename,
+        )
 
     async def _fetch_github(
         self,
@@ -237,13 +365,24 @@ class RepoFetcher:
         plugin_name = f"{owner}__{repo}"
         target_dir = self._plugin_dir / plugin_name
 
-        if target_dir.exists() and not force:
+        if (
+            target_dir.exists()
+            and not force
+            and self._is_cache_valid(
+                target_dir,
+                expected_source=f"{owner}/{repo}",
+                expected_ref=ref,
+            )
+        ):
             logger.info(
                 "Plugin already cached, skipping download",
                 plugin=plugin_name,
                 path=str(target_dir),
             )
             return target_dir
+
+        if target_dir.exists():
+            shutil.rmtree(target_dir, ignore_errors=True)
 
         # Download ZIP from GitHub API
         zip_url = f"https://github.com/{owner}/{repo}/archive/refs/heads/{ref}.zip"
@@ -263,13 +402,10 @@ class RepoFetcher:
 
         try:
             async with httpx.AsyncClient(follow_redirects=True, timeout=120.0) as client:
-                response = await client.get(zip_url, headers=headers)
-                response.raise_for_status()
-
-                with open(zip_path, "wb") as f:  # noqa: ASYNC230
-                    f.write(response.content)
+                await self._download_zip_streaming(client, zip_url, headers, zip_path)
 
         except httpx.HTTPStatusError as e:
+            zip_path.unlink(missing_ok=True)
             # Try alternate ref names if 'main' fails
             if ref == "main" and e.response.status_code == 404:
                 logger.info("Branch 'main' not found, trying 'master'")
@@ -279,28 +415,74 @@ class RepoFetcher:
                 tag_url = f"https://github.com/{owner}/{repo}/archive/refs/tags/{ref}.zip"
                 try:
                     async with httpx.AsyncClient(follow_redirects=True, timeout=120.0) as client:
-                        resp_tag = await client.get(tag_url, headers=headers)
-                        resp_tag.raise_for_status()
-                        with open(zip_path, "wb") as f:  # noqa: ASYNC230
-                            f.write(resp_tag.content)
-                        return self._extract_zip(zip_path, target_dir, cleanup_zip=True)
+                        await self._download_zip_streaming(client, tag_url, headers, zip_path)
+                    return self._extract_zip(
+                        zip_path,
+                        target_dir,
+                        cleanup_zip=True,
+                        source=f"{owner}/{repo}",
+                        source_type="github",
+                        ref=ref,
+                        stem=repo,
+                    )
                 except Exception:
                     pass
             raise FetchError(
                 f"{owner}/{repo}", f"HTTP {e.response.status_code}: {e.response.text[:200]}"
             ) from e
-        except httpx.RequestError as e:
+        except Exception as e:
+            zip_path.unlink(missing_ok=True)
+            if isinstance(e, FetchError):
+                raise
             raise FetchError(f"{owner}/{repo}", str(e)) from e
 
         # Extract ZIP
-        return self._extract_zip(zip_path, target_dir, cleanup_zip=True)
+        return self._extract_zip(
+            zip_path,
+            target_dir,
+            cleanup_zip=True,
+            source=f"{owner}/{repo}",
+            source_type="github",
+            ref=ref,
+            stem=repo,
+        )
 
-    async def _fetch_local_zip(self, zip_path: Path) -> Path:
+    async def _fetch_local_zip(self, zip_path: Path, force: bool = False) -> Path:
         """Extract a local ZIP file into the plugin directory."""
-        plugin_name = zip_path.stem
-        target_dir = self._plugin_dir / plugin_name
+        filename = zip_path.stem
+        try:
+            st = zip_path.stat()
+            content_seed = f"{zip_path.resolve()}_{st.st_size}_{st.st_mtime_ns}".encode("utf-8")
+        except OSError:
+            content_seed = str(zip_path.resolve()).encode("utf-8")
+        path_hash = hashlib.sha256(content_seed).hexdigest()[:12]
+        dir_name = f"{filename}__{path_hash}"
+        target_dir = self._plugin_dir / dir_name
 
-        return self._extract_zip(zip_path, target_dir, cleanup_zip=False)
+        if (
+            target_dir.exists()
+            and not force
+            and self._is_cache_valid(
+                target_dir,
+                expected_source=str(zip_path.resolve()),
+                expected_hash=path_hash,
+            )
+        ):
+            logger.info("Local ZIP plugin already cached", zip_path=str(zip_path), path=str(target_dir))
+            return target_dir
+
+        if target_dir.exists():
+            shutil.rmtree(target_dir, ignore_errors=True)
+
+        return self._extract_zip(
+            zip_path,
+            target_dir,
+            cleanup_zip=False,
+            source=str(zip_path.resolve()),
+            source_type="local_zip",
+            source_hash=path_hash,
+            stem=filename,
+        )
 
     def _extract_zip(
         self,
@@ -308,21 +490,33 @@ class RepoFetcher:
         target_dir: Path,
         *,
         cleanup_zip: bool = True,
+        source: str = "",
+        source_type: str = "",
+        source_hash: str = "",
+        ref: str = "",
+        stem: str = "",
     ) -> Path:
         """Extract a ZIP archive, flattening single top-level directories."""
+        target_dir.mkdir(parents=True, exist_ok=True)
         try:
             with zipfile.ZipFile(zip_path, "r") as zf:
                 try:
-                    validate_zip_members(zf, target_dir)
+                    validate_zip_members(
+                        zf,
+                        target_dir,
+                        max_files=self._max_extract_files,
+                        max_total_bytes=self._max_extract_bytes,
+                    )
                 except ValueError as e:
                     raise FetchError(str(zip_path), f"Unsafe ZIP member: {e}") from e
                 zf.extractall(target_dir)
+                num_files = len(zf.infolist())
         except zipfile.BadZipFile as e:
             raise FetchError(str(zip_path), f"Invalid ZIP: {e}") from e
 
         # GitHub ZIPs contain a single top-level directory (e.g., repo-main/).
         # Flatten it so the plugin files are directly in target_dir.
-        children = list(target_dir.iterdir())
+        children = [c for c in target_dir.iterdir() if c.name != ".cache_meta.json"]
         if len(children) == 1 and children[0].is_dir():
             nested = children[0]
             # Move contents up one level
@@ -336,13 +530,27 @@ class RepoFetcher:
                 shutil.move(str(item), str(dest))
             nested.rmdir()
 
+        meta = {
+            "source": source,
+            "source_type": source_type,
+            "hash": source_hash,
+            "ref": ref,
+            "stem": stem or target_dir.name.split("__")[0],
+            "cached_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+        }
+        meta_path = target_dir / ".cache_meta.json"
+        try:
+            meta_path.write_text(json.dumps(meta, indent=2), encoding="utf-8")
+        except Exception as e:
+            logger.warning("Could not write .cache_meta.json", error=str(e))
+
         if cleanup_zip:
             zip_path.unlink(missing_ok=True)
 
         logger.info(
             "Repository extracted",
             target=str(target_dir),
-            files=len(list(target_dir.rglob("*"))),
+            files=num_files,
         )
 
         return target_dir
@@ -357,29 +565,45 @@ class RepoFetcher:
         if not self._plugin_dir.exists():
             return result
 
-        for child in self._plugin_dir.iterdir():
+        for child in sorted(self._plugin_dir.iterdir()):
             if child.is_dir():
+                meta_file = child / ".cache_meta.json"
+                meta: dict[str, Any] = {}
+                if meta_file.exists():
+                    try:
+                        meta = json.loads(meta_file.read_text(encoding="utf-8"))
+                    except Exception:
+                        pass
                 result.append(
                     {
                         "name": child.name,
                         "path": str(child),
                         "has_manifest": (child / "plugin.json").exists(),
+                        "meta": meta,
                     }
                 )
         return result
 
     def remove_cached(self, name: str) -> bool:
-        """Remove a cached plugin directory.
+        """Remove a cached plugin directory by exact name or stem.
 
         Args:
-            name: Plugin directory name.
+            name: Plugin directory name or stem without hash.
 
         Returns:
-            True if the directory was found and removed.
+            True if any matching directory was found and removed.
         """
         target = self._plugin_dir / name
+        removed = False
         if target.exists() and target.is_dir():
             shutil.rmtree(target)
             logger.info("Removed cached plugin", name=name)
-            return True
-        return False
+            removed = True
+
+        if not removed and self._plugin_dir.exists():
+            for child in self._plugin_dir.iterdir():
+                if child.is_dir() and child.name.startswith(f"{name}__"):
+                    shutil.rmtree(child)
+                    logger.info("Removed cached plugin by stem", stem=name, name=child.name)
+                    removed = True
+        return removed

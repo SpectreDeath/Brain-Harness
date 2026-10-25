@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 from typing import Callable
 
@@ -16,6 +17,20 @@ from harness.plugins.manifest import (
 )
 
 logger = structlog.get_logger()
+
+
+def derive_plugin_name(repo_dir: Path) -> str:
+    """Derive human-readable plugin name from directory name and cache metadata."""
+    meta_path = repo_dir / ".cache_meta.json"
+    if meta_path.exists():
+        try:
+            data = json.loads(meta_path.read_text(encoding="utf-8"))
+            if data.get("stem"):
+                return data["stem"]
+        except Exception:
+            pass
+    m = re.match(r"^(.+)__[0-9a-f]{12}$", repo_dir.name)
+    return m.group(1) if m else repo_dir.name
 
 
 def try_plugin_json(repo_dir: Path) -> PluginManifest | None:
@@ -62,7 +77,7 @@ def convert_mcp_json(path: Path, repo_dir: Path) -> PluginManifest:
         )
 
     return PluginManifest(
-        name=data.get("name", repo_dir.name),
+        name=data.get("name", derive_plugin_name(repo_dir)),
         version=data.get("version", "0.0.0"),
         description=data.get("description", ""),
         entrypoints=entrypoints,

@@ -138,6 +138,29 @@ class UntrustedExternalPlugin(HarnessPlugin):
         with pytest.raises(PluginLoadError):
             loader.load_from_zip(zip_path, tmp_path / "extracted")
 
+    def test_load_from_zip_rejects_exceeded_file_count(self, tmp_path: Path) -> None:
+        import zipfile
+
+        zip_path = tmp_path / "files.zip"
+        with zipfile.ZipFile(zip_path, "w") as zf:
+            for i in range(5):
+                zf.writestr(f"p_{i}.txt", "content")
+
+        loader = PluginLoader()
+        with pytest.raises(PluginLoadError, match="too many members"):
+            loader.load_from_zip(zip_path, tmp_path / "extracted", max_files=3)
+
+    def test_load_from_zip_rejects_exceeded_total_bytes(self, tmp_path: Path) -> None:
+        import zipfile
+
+        zip_path = tmp_path / "large.zip"
+        with zipfile.ZipFile(zip_path, "w") as zf:
+            zf.writestr("test.bin", b"0" * 2000)
+
+        loader = PluginLoader()
+        with pytest.raises(PluginLoadError, match="exceeds total uncompressed size limit"):
+            loader.load_from_zip(zip_path, tmp_path / "extracted", max_total_bytes=1000)
+
     def test_list_catalog_and_manifest_lookups(self, tmp_path: Path) -> None:
         p1 = tmp_path / "alpha-plugin"
         p1.mkdir()

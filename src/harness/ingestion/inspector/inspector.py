@@ -15,6 +15,7 @@ from harness.ingestion.inspector.ast_extractor import (
 from harness.ingestion.inspector.exceptions import InspectionError
 from harness.ingestion.inspector.manifest_strategies import (
     convert_mcp_json,
+    derive_plugin_name,
     try_mcp_json,
     try_package_json,
     try_plugin_json,
@@ -78,7 +79,7 @@ class RepoInspector:
         if manifest is None:
             logger.warning("No metadata found, creating minimal manifest", directory=str(repo_dir))
             manifest = PluginManifest.minimal(
-                name=repo_dir.name,
+                name=derive_plugin_name(repo_dir),
                 entrypoint=guess_entrypoint(repo_dir),
             )
 

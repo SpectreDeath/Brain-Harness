@@ -5,6 +5,7 @@ from __future__ import annotations
 import ast
 from pathlib import Path
 
+from harness.ingestion.inspector.manifest_strategies import derive_plugin_name
 from harness.plugins.manifest import (
     EntrypointSpec,
     IsolationMode,
@@ -128,10 +129,11 @@ def try_python_ast(repo_dir: Path) -> PluginManifest | None:
     deps = read_requirements(repo_dir)
     ep = guess_entrypoint(repo_dir)
 
+    plugin_name = derive_plugin_name(repo_dir)
     return PluginManifest(
-        name=repo_dir.name,
+        name=plugin_name,
         version="0.0.0",
-        description=f"Auto-discovered plugin from {repo_dir.name}",
+        description=f"Auto-discovered plugin from {plugin_name}",
         language="python",
         entrypoint=ep,
         entrypoints=entrypoints,

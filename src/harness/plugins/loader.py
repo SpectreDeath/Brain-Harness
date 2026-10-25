@@ -37,8 +37,19 @@ class PluginLoadError(Exception):
         super().__init__(f"Failed to load plugin from {source!r}: {reason}")
 
 
-def validate_zip_members(zip_file: zipfile.ZipFile, target_dir: Path) -> None:
-    """Reject archives containing members that would escape ``target_dir``.
+DEFAULT_MAX_ZIP_FILES: int = 10_000
+DEFAULT_MAX_ZIP_TOTAL_BYTES: int = 250 * 1024 * 1024  # 250 MB
+MAX_COMPRESSION_RATIO: float = 100.0  # 100:1 for files > 1 MB
+
+
+def validate_zip_members(
+    zip_file: zipfile.ZipFile,
+    target_dir: Path,
+    *,
+    max_files: int | None = DEFAULT_MAX_ZIP_FILES,
+    max_total_bytes: int | None = DEFAULT_MAX_ZIP_TOTAL_BYTES,
+) -> None:
+    """Reject archives containing members that would escape ``target_dir`` or exceed limits.
 
     CPython's ``ZipFile.extractall`` silently rewrites traversal members
     (``../evil`` lands as ``evil`` inside the target), so a crafted archive
@@ -46,13 +57,34 @@ def validate_zip_members(zip_file: zipfile.ZipFile, target_dir: Path) -> None:
     though nothing escapes it. Reject such archives loudly instead of
     relying on that implicit sanitization. Symlink members are rejected
     outright: a future extractor (or a later copy step) could honor them.
+    Also bounds total member count, total uncompressed size, and flags
+    extreme compression ratios on files > 1 MB (ZIP bomb defense).
 
     Raises:
-        ValueError: Naming the first offending member.
+        ValueError: Naming the offending member or bound exceeded.
     """
+    members = zip_file.infolist()
+    if max_files is not None and len(members) > max_files:
+        raise ValueError(
+            f"ZIP archive contains too many members ({len(members)} > {max_files})"
+        )
+
     target = target_dir.resolve()
-    for info in zip_file.infolist():
+    total_bytes = 0
+    for info in members:
         name = info.filename
+        if info.file_size > 1024 * 1024 and info.compress_size > 0:
+            ratio = info.file_size / info.compress_size
+            if ratio > MAX_COMPRESSION_RATIO:
+                raise ValueError(
+                    f"ZIP member has suspicious compression ratio ({ratio:.1f}:1 > {MAX_COMPRESSION_RATIO}:1): {name!r}"
+                )
+        total_bytes += info.file_size
+        if max_total_bytes is not None and total_bytes > max_total_bytes:
+            raise ValueError(
+                f"ZIP archive exceeds total uncompressed size limit ({total_bytes} > {max_total_bytes} bytes)"
+            )
+
         # Treat backslashes as separators too: on Windows they are, and a
         # member like ``..\\evil`` must not slip past a forward-slash check.
         parts = [p for p in name.replace("\\", "/").split("/") if p not in ("", ".")]
@@ -178,12 +210,21 @@ class PluginLoader:
 
         return plugins
 
-    def load_from_zip(self, zip_path: Path, extract_to: Path) -> list[HarnessPlugin]:
+    def load_from_zip(
+        self,
+        zip_path: Path,
+        extract_to: Path,
+        *,
+        max_files: int | None = DEFAULT_MAX_ZIP_FILES,
+        max_total_bytes: int | None = DEFAULT_MAX_ZIP_TOTAL_BYTES,
+    ) -> list[HarnessPlugin]:
         """Extract a ZIP archive and load plugins from it.
 
         Args:
             zip_path: Path to the ZIP file.
             extract_to: Directory to extract into.
+            max_files: Maximum number of files permitted in the archive.
+            max_total_bytes: Maximum total uncompressed byte size permitted.
 
         Returns:
             List of plugins found in the archive.
@@ -194,7 +235,12 @@ class PluginLoader:
         try:
             with zipfile.ZipFile(zip_path, "r") as zf:
                 try:
-                    validate_zip_members(zf, extract_to)
+                    validate_zip_members(
+                        zf,
+                        extract_to,
+                        max_files=max_files,
+                        max_total_bytes=max_total_bytes,
+                    )
                 except ValueError as e:
                     raise PluginLoadError(str(zip_path), f"Unsafe ZIP member: {e}") from e
                 zf.extractall(extract_to)

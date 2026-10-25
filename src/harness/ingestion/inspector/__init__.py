@@ -13,6 +13,7 @@ from harness.ingestion.inspector.exceptions import InspectionError
 from harness.ingestion.inspector.inspector import RepoInspector
 from harness.ingestion.inspector.manifest_strategies import (
     convert_mcp_json,
+    derive_plugin_name,
     try_mcp_json,
     try_package_json,
     try_plugin_json,
@@ -27,6 +28,7 @@ __all__ = [
     "InspectionError",
     "RepoInspector",
     "convert_mcp_json",
+    "derive_plugin_name",
     "extract_function_params",
     "extract_python_entrypoints",
     "guess_entrypoint",

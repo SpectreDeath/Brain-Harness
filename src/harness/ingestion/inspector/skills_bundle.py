@@ -8,6 +8,7 @@ from pathlib import Path
 
 import structlog
 
+from harness.ingestion.inspector.manifest_strategies import derive_plugin_name
 from harness.plugins.manifest import (
     EntrypointSpec,
     IsolationMode,
@@ -59,7 +60,7 @@ def try_skills_bundle(repo_dir: Path) -> PluginManifest | None:
             except Exception:
                 pass
 
-    name = data.get("name", repo_dir.name)
+    name = data.get("name", derive_plugin_name(repo_dir))
     version = data.get("version", "1.0.0")
     description = data.get("description", f"Agent skills plugin bundle from {name}")
 
