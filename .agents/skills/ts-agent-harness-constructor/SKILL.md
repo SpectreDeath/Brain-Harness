@@ -32,9 +32,7 @@ This skill provides an authoritative, zero-dependency engineering standard for c
 
 ## Interactive Visual Brief
 
-An interactive visual architecture brief has been rendered for this construction workflow:
-- **Interactive Brief**: [book-to-skill-forge-20261020-170234.html](file:///C:/Users/spectre/AppData/Local/Temp/book-to-skill-forge-20261020-170234.html) (also accessible via `%TEMP%\book-to-skill-forge-20261020-170234.html`).
-- Inspect the brief for animated ReAct turn transitions, symlink walk diagrams, atomic batch budget timelines, and context window sliding group animations.
+> Note: the interactive visual brief for this workflow was rendered to a local temp file at generation time and is not shipped with the skill, so the original link (which pointed at a `file:///` temp path) has been removed. The brief covered animated ReAct turn transitions, symlink walk diagrams, atomic batch budget timelines, and context window sliding group animations.
 
 ---
 
