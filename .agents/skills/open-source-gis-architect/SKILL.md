@@ -102,7 +102,7 @@ Deliver architectural transparency and quality assurance through an interactive 
    - **Routing Path**: `lidar_hydrology_whitebox_gat`
    - **CRS Transformation**: `EPSG:4326` → `EPSG:32632 (UTM Zone 32N)`
    - **Topology Health**: [PASSED] 0 self-intersections, 0 sliver polygons
-   - **Visual Brief**: file:///C:/Users/.../AppData/Local/Temp/gis-architect-*.html
+   - **Visual Brief**: <path-to-rendered-brief.html>
    ```
 4. Pause for user sign-off (`RequestFeedback: true`) prior to long-running raster crunching or batch cloud execution.
 
