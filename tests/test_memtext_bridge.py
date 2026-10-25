@@ -60,3 +60,35 @@ class TestMemtextBridge:
         assert "memory.store" not in tool_reg
 
         await bridge.on_unload()
+
+    async def test_memtext_interface_conformance(self, tmp_path: Path) -> None:
+        """Conformance test asserting LocalMemtextService implements MemtextService guarantees."""
+        from harness.bridges.memtext import MemtextService
+
+        service = LocalMemtextService(db_dir=tmp_path)
+        assert isinstance(service, MemtextService)
+
+        # Check return types and invariants
+        res = await service.remember("k", "val", {"tag": "test"})
+        assert res is True
+
+        recalled = await service.recall("val", limit=1)
+        assert isinstance(recalled, list)
+        assert len(recalled) == 1
+        assert recalled[0]["key"] == "k"
+        assert recalled[0]["content"] == "val"
+        assert recalled[0]["metadata"] == {"tag": "test"}
+
+        # Empty query handling and limit
+        assert await service.remember("k2", "val2")
+        all_recalled = await service.recall("val", limit=10)
+        assert len(all_recalled) == 2
+
+        limit_recalled = await service.recall("val", limit=1)
+        assert len(limit_recalled) == 1
+
+        # Decision logging
+        await service.log_decision("agent", "action", {"step": 1})
+        assert len(service._ledger) == 1
+        assert service._ledger[0]["agent"] == "agent"
+        assert service._ledger[0]["decision"] == "action"

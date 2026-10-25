@@ -19,6 +19,15 @@ from harness.plugins.manifest import EntrypointSpec, IsolationMode, ParameterSpe
 logger = structlog.get_logger()
 
 
+class PyPIFetchError(Exception):
+    """Raised when fetching package metadata from PyPI fails."""
+
+    def __init__(self, package_name: str, reason: str) -> None:
+        self.package_name = package_name
+        self.reason = reason
+        super().__init__(f"Failed to fetch PyPI metadata for {package_name!r}: {reason}")
+
+
 class PyPIConverter:
     """Converts PyPI packages into isolated, dependency-managed harness plugins."""
 
@@ -32,7 +41,11 @@ class PyPIConverter:
         return clean
 
     async def fetch_metadata(self, package_name: str) -> dict[str, Any]:
-        """Fetch package metadata from PyPI JSON API."""
+        """Fetch package metadata from PyPI JSON API.
+
+        Raises:
+            PyPIFetchError: If package metadata cannot be retrieved or does not exist.
+        """
         clean_name = package_name.replace("pypi:", "").strip()
         url = f"https://pypi.org/pypi/{clean_name}/json"
 
@@ -41,19 +54,12 @@ class PyPIConverter:
                 res = await client.get(url)
                 if res.status_code == 200:
                     return cast(dict[str, Any], res.json())
-        except Exception as e:
+                if res.status_code == 404:
+                    raise PyPIFetchError(clean_name, "Package not found on PyPI (HTTP 404)")
+                raise PyPIFetchError(clean_name, f"HTTP {res.status_code}: {res.text[:200]}")
+        except httpx.RequestError as e:
             logger.warning("Could not fetch PyPI API metadata", package=clean_name, error=str(e))
-
-        # Fallback offline metadata
-        return {
-            "info": {
-                "name": clean_name,
-                "version": "1.0.0",
-                "summary": f"PyPI package plugin for {clean_name}",
-                "author": "PyPI Package Author",
-                "requires_dist": [],
-            }
-        }
+            raise PyPIFetchError(clean_name, f"Network error contacting PyPI: {e}") from e
 
     async def convert(
         self,

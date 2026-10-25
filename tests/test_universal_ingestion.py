@@ -10,7 +10,7 @@ import pytest
 
 from harness.ingestion.openapi_converter import OpenAPIConverter
 from harness.ingestion.pipeline import PluginIngestionPipeline
-from harness.ingestion.pypi_converter import PyPIConverter
+from harness.ingestion.pypi_converter import PyPIConverter, PyPIFetchError
 from harness.plugins.manifest import IsolationMode
 
 
@@ -86,6 +86,25 @@ class TestPyPIConverter:
             assert manifest_data["name"] == "sample_math"
             assert manifest_data["isolation"] == IsolationMode.VENV.value
             assert "sample_math" in manifest_data["dependencies"]
+
+    async def test_fetch_metadata_fails_loudly_on_404(self, tmp_path: Path) -> None:
+        from unittest.mock import AsyncMock
+        converter = PyPIConverter(output_base_dir=tmp_path)
+
+        mock_resp = AsyncMock()
+        mock_resp.status_code = 404
+
+        with patch("httpx.AsyncClient.get", return_value=mock_resp):
+            with pytest.raises(PyPIFetchError, match="not found on PyPI"):
+                await converter.fetch_metadata("nonexistent_package_12345")
+
+    async def test_fetch_metadata_fails_loudly_on_network_error(self, tmp_path: Path) -> None:
+        import httpx
+        converter = PyPIConverter(output_base_dir=tmp_path)
+
+        with patch("httpx.AsyncClient.get", side_effect=httpx.ConnectError("Connection refused")):
+            with pytest.raises(PyPIFetchError, match="Network error contacting PyPI"):
+                await converter.fetch_metadata("some_pkg")
 
 
 @pytest.mark.unit

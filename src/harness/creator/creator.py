@@ -177,15 +177,17 @@ class PluginCreator:
         *,
         version: str = "0.1.0",
         description: str = "",
+        trusted: bool = True,
     ) -> DynamicPythonPlugin:
-        """Create a live in-memory plugin by executing raw Python source code."""
-        _, tools = _compile_dynamic_module(name, code)
-        return DynamicPythonPlugin(
+        """Create a live in-memory plugin by executing raw Python source code (trusted in-process only)."""
+        from harness.creator.dynamic.builder import DynamicPluginBuilder
+
+        return DynamicPluginBuilder.from_code(
             name=name,
+            code=code,
             version=version,
             description=description,
-            tools=tools,
-            code=code,
+            trusted=trusted,
         )
 
     # 3. Validation & Remediation

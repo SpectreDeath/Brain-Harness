@@ -151,6 +151,8 @@ class ContainerExecutor(SandboxExecutor):
             f"--memory={memory}",
             f"--cpus={cpu_limit}",
             f"--network={network}",
+            "--security-opt=no-new-privileges",
+            "--cap-drop=ALL",
             "-v",
             f"{self._plugin_dir!s}:/app:ro",
             "-w",

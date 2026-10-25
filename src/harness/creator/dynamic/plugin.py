@@ -10,7 +10,7 @@ from harness.creator.dynamic.compiler import _compile_dynamic_module
 from harness.creator.dynamic.inspector import ASTFunctionInspector
 from harness.kernel.context import ServiceContext, ServiceKey
 from harness.plugins.base import HarnessPlugin
-from harness.plugins.manifest import PluginManifest
+from harness.plugins.manifest import IsolationMode, PluginManifest
 from harness.plugins.tool_mount import TOOL_REGISTRY_KEY, ToolMountMixin
 from harness.services.tools import ToolSpec
 
@@ -30,6 +30,8 @@ class DynamicPythonPlugin(ToolMountMixin, HarnessPlugin):
         provides: list[ServiceKey[Any]] | None = None,
         requires: list[ServiceKey[Any]] | None = None,
         code: str | None = None,
+        *,
+        trusted: bool = True,
     ) -> None:
         self._name = name
         self._version = version
@@ -38,6 +40,7 @@ class DynamicPythonPlugin(ToolMountMixin, HarnessPlugin):
         self._provides = provides or []
         self._requires = requires or (ToolMountMixin.tool_mount_requires() if self._tools else [])
         self._code = code
+        self._trusted = trusted
         self._ctx: ServiceContext | None = None
         self._tool_specs: list[ToolSpec] = []
 
@@ -73,7 +76,12 @@ class DynamicPythonPlugin(ToolMountMixin, HarnessPlugin):
 
     @property
     def trusted(self) -> bool:
-        return True
+        return self._trusted
+
+    @property
+    def isolation(self) -> IsolationMode:
+        """In-memory plugins execute in-process and require trusted=True."""
+        return IsolationMode.IN_PROCESS
 
     @property
     def source_code(self) -> str | None:

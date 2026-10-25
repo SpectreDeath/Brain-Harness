@@ -4,6 +4,7 @@ from .converter import ConversionError, ConvertedPlugin, RepoConverter
 from .fetcher import DEFAULT_PLUGIN_DIR, FetchError, RepoFetcher
 from .inspector import InspectionError, RepoInspector
 from .pipeline import PluginIngestionEngine, PluginIngestionPipeline
+from .pypi_converter import PyPIConverter, PyPIFetchError
 from .resolvers import (
     GitHubSourceResolver,
     LocalDirectorySourceResolver,
@@ -25,6 +26,8 @@ __all__ = [
     "OpenAPISourceResolver",
     "PluginIngestionEngine",
     "PluginIngestionPipeline",
+    "PyPIConverter",
+    "PyPIFetchError",
     "PyPISourceResolver",
     "RepoConverter",
     "RepoFetcher",

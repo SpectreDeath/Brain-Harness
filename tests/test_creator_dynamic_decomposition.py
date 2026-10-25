@@ -11,6 +11,7 @@ Verifies:
 
 from __future__ import annotations
 
+from pathlib import Path
 from typing import Any
 import pytest
 
@@ -172,3 +173,44 @@ class TestCreatorDynamicPluginAndBuilder:
 
         builder_cls = resolve_dynamic_builder(None)
         assert builder_cls is DynamicPluginBuilder or isinstance(builder_cls, DynamicPluginBuilder)
+
+    def test_dynamic_plugin_trusted_isolation_enforcement(self) -> None:
+        """Verify dynamic in-process plugins enforce trusted=True and block untrusted code."""
+        from harness.creator.dynamic.builder import DynamicPluginBuilder
+        from harness.plugins.manifest import IsolationMode
+
+        # Untrusted execution in-process must be rejected loudly
+        with pytest.raises(ValueError, match="trusted=False"):
+            DynamicPluginBuilder.from_code(
+                name="untrusted-plug",
+                code="def run(): pass",
+                trusted=False,
+            )
+
+        # Trusted dynamic plugin succeeds and advertises IN_PROCESS isolation
+        trusted_plug = DynamicPluginBuilder.from_code(
+            name="trusted-plug",
+            code="def run(): return 'ok'",
+            trusted=True,
+        )
+        assert trusted_plug.trusted is True
+        assert trusted_plug.isolation == IsolationMode.IN_PROCESS
+
+    def test_sandbox_factory_demotes_untrusted_in_process_request(self, tmp_path: Path) -> None:
+        """Verify SandboxExecutorFactory demotes untrusted IN_PROCESS requests to SubprocessExecutor."""
+        from harness.plugins.manifest import IsolationMode, PluginManifest
+        from harness.plugins.sandbox.factory import SandboxExecutorFactory
+        from harness.plugins.sandbox.in_process import InProcessExecutor
+        from harness.plugins.sandbox.subprocess import SubprocessExecutor
+
+        ep = tmp_path / "main.py"
+        ep.write_text("def run(): return 'hello'")
+
+        manifest = PluginManifest.minimal(name="test_untrusted", entrypoint="main.py")
+        manifest.isolation = IsolationMode.IN_PROCESS
+        manifest.trusted = False
+
+        executor = SandboxExecutorFactory.create(manifest, tmp_path)
+        assert executor is not None
+        assert not isinstance(executor, InProcessExecutor)
+        assert isinstance(executor, SubprocessExecutor)

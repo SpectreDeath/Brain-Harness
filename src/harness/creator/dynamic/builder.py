@@ -37,8 +37,30 @@ class DynamicPluginBuilder:
         code: str,
         version: str = "0.1.0",
         description: str = "",
+        *,
+        trusted: bool = True,
     ) -> DynamicPythonPlugin:
-        """Create a live in-memory plugin by executing raw Python code in a namespace."""
+        """Create a live in-memory plugin by executing raw Python code in a namespace.
+
+        Intended Mode: In-process (IsolationMode.IN_PROCESS).
+        Security Invariant: Untrusted, external, or agent-generated code must never
+        execute in-process. Untrusted plugins must run in subprocess sandboxes (Rule 5).
+
+        Args:
+            name: Plugin name.
+            code: Python source code.
+            version: Plugin semantic version.
+            description: Plugin description.
+            trusted: Explicit declaration that code is trusted to execute in-process.
+
+        Raises:
+            ValueError: If trusted is False, preventing untrusted in-process execution.
+        """
+        if not trusted:
+            raise ValueError(
+                f"Cannot create in-process dynamic plugin '{name}' with trusted=False. "
+                "Untrusted code must use sandboxed subprocess isolation (Rule 5)."
+            )
         _, tools = _compile_dynamic_module(name, code)
         return DynamicPythonPlugin(
             name=name,
@@ -46,6 +68,7 @@ class DynamicPluginBuilder:
             description=description,
             tools=tools,
             code=code,
+            trusted=True,
         )
 
     @staticmethod
