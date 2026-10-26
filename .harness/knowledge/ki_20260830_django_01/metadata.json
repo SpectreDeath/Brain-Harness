@@ -29,5 +29,7 @@
     "thread_safety"
   ],
   "context": "In modular architectures and extensible agent harnesses with dozens of independent plugins and services, naive eager initialization causes circular import deadlocks, race conditions during multi-threaded startup, and uncoordinated model registration.",
-  "distilled_learning": "Implement an Apps/Plugin registry that operates in three distinct topological lifecycle phases: 1) Instantiation & Discovery, 2) Model/Service Registration (setting models_ready=True under threading.RLock), and 3) Post-Ready hook invocation (setting ready=True). Use a two-tiered dictionary cache (app_configs by label, models by (app_label, model_name)) with lazy resolution proxies so plugins can reference foreign dependencies before all sub-modules are fully imported."
+  "distilled_learning": "Implement an Apps/Plugin registry that operates in three distinct topological lifecycle phases: 1) Instantiation & Discovery, 2) Model/Service Registration (setting models_ready=True under threading.RLock), and 3) Post-Ready hook invocation (setting ready=True). Use a two-tiered dictionary cache (app_configs by label, models by (app_label, model_name)) with lazy resolution proxies so plugins can reference foreign dependencies before all sub-modules are fully imported.",
+  "retrieval_count": 2,
+  "last_retrieved_at": "2026-10-26T19:42:44.700038+00:00"
 }

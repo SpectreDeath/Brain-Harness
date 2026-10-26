@@ -4,17 +4,18 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 import structlog
 
 from harness.services.storage.isnad import IsnadAuditMixin
 from harness.services.storage.models import IsnadLineageBlock, KnowledgeItemRecord
+from harness.services.storage.vault_retrieval import KnowledgeRetrievalMixin
 
 logger = structlog.get_logger()
 
 
-class KnowledgeVaultMixin(IsnadAuditMixin):
+class KnowledgeVaultMixin(KnowledgeRetrievalMixin, IsnadAuditMixin):
     """Provides high-level Knowledge Item and Isnad provenance methods over key-value storage."""
 
     async def get(self, key: str) -> Any | None:
@@ -81,6 +82,11 @@ class KnowledgeVaultMixin(IsnadAuditMixin):
                     detected_format=meta.get("detected_format", "raw_docs"),
                     isnad=meta.get("isnad", {}),
                     tags=meta.get("tags", []),
+                    category=meta.get("category", "general"),
+                    retrieval_count=int(meta.get("retrieval_count", 0)),
+                    success_count=int(meta.get("success_count", 0)),
+                    last_retrieved_at=meta.get("last_retrieved_at"),
+                    status=meta.get("status", "ACTIVE"),
                     summary=meta.get("summary", summary_text),
                 )
                 await self.save_knowledge_item(ki)
@@ -110,6 +116,11 @@ class KnowledgeVaultMixin(IsnadAuditMixin):
                 "detected_format": item.detected_format,
                 "isnad": item.isnad.model_dump() if isinstance(item.isnad, IsnadLineageBlock) else item.isnad,
                 "tags": item.tags,
+                "category": item.category,
+                "retrieval_count": item.retrieval_count,
+                "success_count": item.success_count,
+                "last_retrieved_at": item.last_retrieved_at,
+                "status": item.status,
                 "context": getattr(item, "context", f"Knowledge item {item.id}"),
                 "distilled_learning": item.summary.split("\n")[0] if item.summary else item.title,
             }

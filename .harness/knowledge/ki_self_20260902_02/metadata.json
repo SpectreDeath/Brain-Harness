@@ -15,5 +15,7 @@
     "transcript.jsonl#task-102",
     "AGENTS.md#Rule30"
   ],
-  "created_at": "2026-09-02T11:58:36Z"
+  "created_at": "2026-09-02T11:58:36Z",
+  "retrieval_count": 2,
+  "last_retrieved_at": "2026-10-26T19:42:44.294653+00:00"
 }

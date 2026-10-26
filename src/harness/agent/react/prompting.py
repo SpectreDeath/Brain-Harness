@@ -7,10 +7,14 @@ import json
 import re
 from typing import Any
 
+import structlog
+
 from harness.agent.context_optimizer import AgentContextOptimizer
 from harness.kernel.context import ServiceContext
 from harness.services.llm import LLMMessage
 from harness.services.tools import ToolRegistry
+
+logger = structlog.get_logger()
 
 
 def build_react_initial_messages(
@@ -18,10 +22,12 @@ def build_react_initial_messages(
     tools: ToolRegistry,
     optimizer: AgentContextOptimizer | None = None,
     context: ServiceContext | None = None,
+    state_holder: Any = None,
 ) -> tuple[list[LLMMessage], list[str]]:
     """Construct the standard ReAct system prompt and user task message.
 
-    Applies dynamic AST RepoMap injection (Rule 9) and skill intelligence guidance.
+    Applies dynamic AST RepoMap injection (Rule 9), skill intelligence guidance,
+    and Knowledge Vault heuristic retrieval (Track 1A P0).
     Returns (messages, active_skills).
     """
     schemas = tools.get_schemas()
@@ -41,6 +47,8 @@ def build_react_initial_messages(
     ]
 
     active_skills: list[str] = []
+    active_knowledge_items: list[str] = []
+    guidance_degraded: bool = False
 
     # Rule 9: Deterministic AST RepoMap injection if configured
     if optimizer is not None:
@@ -60,8 +68,41 @@ def build_react_initial_messages(
             if guidance and guidance.should_inject:
                 active_skills = list(guidance.selected_skills)
                 messages[0] = guidance.inject_into_message(messages[0])
-        except Exception:
-            pass
+        except Exception as e:
+            logger.warning(
+                "Failed to compile skill intelligence guidance",
+                task=task[:50],
+                error=str(e),
+            )
+            guidance_degraded = True
+
+        # Track 1A: Knowledge Vault Retrieval into step context (P0)
+        try:
+            from harness.creator.validator.base import _run_coro_sync
+            from harness.services.storage import resolve_knowledge_vault
+
+            vault = resolve_knowledge_vault(context)
+            retrieved_kis = vault.retrieve_relevant_knowledge_sync(task, max_items=3)
+            if retrieved_kis:
+                active_knowledge_items = [ki.id for ki in retrieved_kis]
+                block = vault.format_knowledge_prompt_block(retrieved_kis)
+                if block:
+                    messages[0] = LLMMessage(
+                        role="system",
+                        content=messages[0].content + block,
+                    )
+                _run_coro_sync(vault.record_knowledge_retrieval(active_knowledge_items))
+        except Exception as e:
+            logger.warning(
+                "Failed to retrieve knowledge vault items",
+                task=task[:50],
+                error=str(e),
+            )
+
+    if state_holder is not None:
+        state_holder.active_skills = active_skills
+        state_holder.active_knowledge_items = active_knowledge_items
+        state_holder.guidance_degraded = guidance_degraded
 
     return messages, active_skills
 

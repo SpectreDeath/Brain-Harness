@@ -24,6 +24,7 @@ from harness.services.storage.resolvers import (
 )
 from harness.services.storage.sqlite import SQLiteStorageService
 from harness.services.storage.vault_operations import KnowledgeVaultMixin
+from harness.services.storage.vault_retrieval import KnowledgeRetrievalMixin
 
 __all__ = [
     "KNOWLEDGE_VAULT_KEY",
@@ -32,6 +33,7 @@ __all__ = [
     "IsnadLineageBlock",
     "IsnadLineageNode",
     "KnowledgeItemRecord",
+    "KnowledgeRetrievalMixin",
     "KnowledgeVaultMixin",
     "SQLiteStorageService",
     "StoragePlugin",

@@ -37,5 +37,7 @@
     "trajectory_memory"
   ],
   "context": "External agent brains and IDE session archives rapidly grow to tens of thousands of JSONL log lines, overwhelming standard linear scans or heavy LLM context windows.",
-  "distilled_learning": "Use in-memory sliding-window tokenization and precomputed TF-IDF document vectors to provide instant search retrieval across conversational transcripts without external vector database dependencies."
+  "distilled_learning": "Use in-memory sliding-window tokenization and precomputed TF-IDF document vectors to provide instant search retrieval across conversational transcripts without external vector database dependencies.",
+  "retrieval_count": 2,
+  "last_retrieved_at": "2026-10-26T19:42:44.003014+00:00"
 }

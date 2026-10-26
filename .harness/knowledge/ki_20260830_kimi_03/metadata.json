@@ -29,5 +29,7 @@
     "command_parsing"
   ],
   "context": "Regular expression and simple whitespace splitting fail on complex shell commands involving subshells `$(...)`, environment variable prefixes `FOO=bar rm -rf /`, chained commands `cmd1 && cmd2`, or process substitutions `<(...)`, enabling malicious command injection or bypass of agent safety guardrails. Furthermore, native C bindings for Tree-Sitter fail to compile in minimal Docker/serverless environments.",
-  "distilled_learning": "Implement or adopt a pure-managed language (TypeScript / Python) port of the Tree-Sitter Bash grammar that outputs 1:1 identical AST nodes (`command`, `pipeline`, `subshell`, `redirect`, `declaration_command`). Traverse the AST to decompose compound pipelines into individual executable units and analyze arguments, variables, and flags deterministically against security permission policies (`allow`, `deny`, `ask_user`)."
+  "distilled_learning": "Implement or adopt a pure-managed language (TypeScript / Python) port of the Tree-Sitter Bash grammar that outputs 1:1 identical AST nodes (`command`, `pipeline`, `subshell`, `redirect`, `declaration_command`). Traverse the AST to decompose compound pipelines into individual executable units and analyze arguments, variables, and flags deterministically against security permission policies (`allow`, `deny`, `ask_user`).",
+  "retrieval_count": 2,
+  "last_retrieved_at": "2026-10-26T19:42:43.427927+00:00"
 }

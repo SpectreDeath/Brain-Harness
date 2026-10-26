@@ -37,5 +37,7 @@
     "ptx",
     "hardware_optimization",
     "alu_throughput"
-  ]
+  ],
+  "retrieval_count": 2,
+  "last_retrieved_at": "2026-10-26T19:42:43.427927+00:00"
 }

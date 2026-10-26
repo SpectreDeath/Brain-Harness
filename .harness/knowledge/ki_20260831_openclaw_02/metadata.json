@@ -40,5 +40,7 @@
     "repo_introspection"
   ],
   "context": "Trusted Gateway Control Plane & Deterministic Sandboxed Execution",
-  "distilled_learning": "# KI: Trusted Gateway Control Plane & Deterministic Sandboxed Execution\n\n## Operational Summary\nConnecting external chat channels (Telegram, Discord, Slack, WhatsApp) directly to agent tool executors exposes the host system to arbitrary code execution via untrusted inbound messages. Establishing a unified JSON-RPC WebSocket Gateway with pairing codes, session placement policies, and deterministic execution approval gates enforces a strict boundary between untrusted ingress and sandboxed tool runtimes."
+  "distilled_learning": "# KI: Trusted Gateway Control Plane & Deterministic Sandboxed Execution\n\n## Operational Summary\nConnecting external chat channels (Telegram, Discord, Slack, WhatsApp) directly to agent tool executors exposes the host system to arbitrary code execution via untrusted inbound messages. Establishing a unified JSON-RPC WebSocket Gateway with pairing codes, session placement policies, and deterministic execution approval gates enforces a strict boundary between untrusted ingress and sandboxed tool runtimes.",
+  "retrieval_count": 2,
+  "last_retrieved_at": "2026-10-26T19:42:43.139234+00:00"
 }

@@ -1,13 +1,13 @@
 {
   "id": "ki_20260824_repo_03",
-  "title": "Embedded In-Process Graph Database Drivers with Kùzu",
+  "title": "Embedded In-Process Graph Database Drivers with K\u00f9zu",
   "source_target": "https://github.com/getzep/graphiti",
   "detected_format": "git_repository",
   "isnad": {
     "decision_id": "dec_20260824_graphiti_03",
     "claims": [
       {
-        "assertion": "Providing an embedded in-process graph engine driver (Kùzu) behind standard graph operations interfaces enables zero-infrastructure local execution and rapid unit testing without external database containers",
+        "assertion": "Providing an embedded in-process graph engine driver (K\u00f9zu) behind standard graph operations interfaces enables zero-infrastructure local execution and rapid unit testing without external database containers",
         "lineage": [
           {
             "node_type": "primary_code",
@@ -34,5 +34,7 @@
     "in_process"
   ],
   "context": "Requiring a running Neo4j or Memgraph instance for development, integration testing, and local CLI tools introduces high friction, slow CI pipelines, and external dependency failures.",
-  "distilled_learning": "Encapsulate graph persistence behind an abstract GraphDriver interface that exposes domain operations (EntityNodeOperations, EntityEdgeOperations, SearchOperations). Implement an in-process adapter using Kùzu (an embedded C++ Cypher-compatible columnar graph database), allowing developers to run full graph queries directly within the Python process or against local files."
+  "distilled_learning": "Encapsulate graph persistence behind an abstract GraphDriver interface that exposes domain operations (EntityNodeOperations, EntityEdgeOperations, SearchOperations). Implement an in-process adapter using K\u00f9zu (an embedded C++ Cypher-compatible columnar graph database), allowing developers to run full graph queries directly within the Python process or against local files.",
+  "retrieval_count": 2,
+  "last_retrieved_at": "2026-10-26T19:42:44.700038+00:00"
 }

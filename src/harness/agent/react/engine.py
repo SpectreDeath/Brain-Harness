@@ -27,13 +27,22 @@ from .transactions import invoke_tool_transactional
 logger = structlog.get_logger()
 
 
-class StepExecutionEngine:
-    """Atomic step execution engine for Reason + Act reasoning loops.
+async def _sync_knowledge_outcome(
+    context: ServiceContext | None, items: list[str], success: bool
+) -> None:
+    if not items or context is None:
+        return
+    try:
+        from harness.services.storage import resolve_knowledge_vault
 
-    Encapsulates prompt construction, action extraction (native structured tool
-    calls and markdown JSON fallback), tool dispatch with transactional boundaries,
-    context budgeting/pruning, and observation synchronization.
-    """
+        vault = resolve_knowledge_vault(context)
+        await vault.record_knowledge_outcome(items, success=success)
+    except Exception as ex:
+        logger.debug("Failed to record knowledge outcome", error=str(ex))
+
+
+class StepExecutionEngine:
+    """Atomic step execution engine for Reason + Act reasoning loops."""
 
     def __init__(
         self,
@@ -46,20 +55,15 @@ class StepExecutionEngine:
         self.llm = llm  # type: ignore[assignment]
         self.tools = tools if tools is not None else ToolRegistry()
         self.event_bus = event_bus
-        self.context: ServiceContext = (
-            context if context is not None else ServiceContext()
-        )
-        self.optimizer: AgentContextOptimizer = optimizer or DefaultContextOptimizer(
-            context=self.context
-        )
+        self.context: ServiceContext = context if context is not None else ServiceContext()
+        self.optimizer: AgentContextOptimizer = optimizer or DefaultContextOptimizer(context=self.context)
         self._step_count: int = 0
         self._context_rotation_cadence: int = 25
         self.active_skills: list[str] = []
+        self.active_knowledge_items: list[str] = []
+        self.guidance_degraded: bool = False
 
-    async def _invoke_tool_safely(
-        self, action_name: str, action_input: dict[str, Any]
-    ) -> Any:
-        """Invoke tool inside a transactional boundary if context supports transactions."""
+    async def _invoke_tool_safely(self, action_name: str, action_input: dict[str, Any]) -> Any:
         return await invoke_tool_transactional(
             context=self.context,
             tools=self.tools,
@@ -70,28 +74,23 @@ class StepExecutionEngine:
         )
 
     def build_initial_messages(self, task: str) -> list[LLMMessage]:
-        """Construct the standard ReAct system prompt and user task message."""
         messages, skills = build_react_initial_messages(
             task=task,
             tools=self.tools,
             optimizer=self.optimizer,
             context=self.context,
+            state_holder=self,
         )
         if skills:
             self.active_skills = skills
         return messages
 
     def extract_action(self, thought: str) -> tuple[str | None, dict[str, Any]]:
-        """Extract action name and input parameters from thought text."""
         return extract_action_from_thought(thought)
 
     async def _rotate_context_if_needed(self) -> None:
-        """Rotate session child context to bound inverse accumulator size."""
         self._step_count += 1
-        if (
-            self._step_count % self._context_rotation_cadence == 0
-            and self.context.parent is not None
-        ):
+        if self._step_count % self._context_rotation_cadence == 0 and self.context.parent is not None:
             parent = self.context.parent
             await self.context.dispose()
             self.context = parent.child()
@@ -104,46 +103,37 @@ class StepExecutionEngine:
         action_name: str | None = None,
         action_input: dict[str, Any] | None = None,
     ) -> Any:
-        """Execute a single atomic ReAct step or direct action invocation."""
         if action_name is not None:
-            return await self._invoke_tool_safely(
-                action_name, action_input if action_input is not None else {}
-            )
+            return await self._invoke_tool_safely(action_name, action_input if action_input is not None else {})
 
         if trajectory is None:
-            raise ValueError(
-                "trajectory must be provided when action_name is not specified"
-            )
+            raise ValueError("trajectory must be provided when action_name is not specified")
 
         logger.info("Agent iteration", step=step_idx, task=trajectory.task[:50])
         await self._rotate_context_if_needed()
 
         if self.event_bus:
             await self.event_bus.emit(
-                llm_event(
-                    EventType.LLM_REQUEST,
-                    source="agent.react",
-                    step=step_idx,
-                    message_count=len(trajectory.messages),
-                )
+                llm_event(EventType.LLM_REQUEST, source="agent.react", step=step_idx, message_count=len(trajectory.messages))
             )
 
-        # Context optimization & Rule 9 dynamic AST RepoMap injection
         effective = self.optimizer.optimize_messages(trajectory.messages)
         cfg = getattr(self.optimizer, "config", None)
         if cfg and cfg.repo_map_root:
-            effective = self.optimizer.inject_repo_map(
-                effective, query_context=trajectory.task, config=cfg
-            )
+            effective = self.optimizer.inject_repo_map(effective, query_context=trajectory.task, config=cfg)
+
+        if self.active_knowledge_items and "retrieved_knowledge_items" not in trajectory.metadata:
+            trajectory.metadata["retrieved_knowledge_items"] = list(self.active_knowledge_items)
+        if self.guidance_degraded and "skill_guidance_degraded" not in trajectory.metadata:
+            trajectory.metadata["skill_guidance_degraded"] = True
 
         tool_schemas = self.tools.get_schemas()
         try:
-            response = await self.llm.complete(
-                effective, tools=tool_schemas if tool_schemas else None
-            )
+            response = await self.llm.complete(effective, tools=tool_schemas if tool_schemas else None)
         except Exception as e:
             logger.error("LLM call failed during agent loop", error=str(e))
             trajectory.mark_error(f"Error communicating with LLM: {e}")
+            await _sync_knowledge_outcome(self.context, self.active_knowledge_items, False)
             return False
 
         thought = response.content.strip()
@@ -162,6 +152,7 @@ class StepExecutionEngine:
             final_text = thought.split("FINAL ANSWER:", 1)[1].strip()
             trajectory.add_step(AgentStep(step_number=step_idx, thought=thought))
             trajectory.mark_completed(final_text)
+            await _sync_knowledge_outcome(self.context, self.active_knowledge_items, True)
             return False
 
         if response.tool_calls:
