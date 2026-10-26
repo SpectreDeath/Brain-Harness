@@ -128,3 +128,30 @@ async def dispatch_text_fallback_action(
         trajectory.messages.append(LLMMessage(role="assistant", content=thought))
 
     trajectory.add_step(step)
+
+
+def maybe_reroute_skills(
+    context: Any,
+    trajectory: AgentTrajectory,
+    step_idx: int,
+    current_skills: list[str],
+    cadence: int = 5,
+) -> list[str]:
+    """Dynamically re-evaluate skill routing if step count hits cadence (Track 1A P2)."""
+    if step_idx <= 1 or step_idx % cadence != 0 or context is None:
+        return current_skills
+    try:
+        from harness.services.skill_graph import resolve_skill_intelligence
+
+        recent = trajectory.task
+        if trajectory.steps and trajectory.steps[-1].observation:
+            obs = str(trajectory.steps[-1].observation)
+            recent = f"{trajectory.task}\n{obs[:300]}"
+        intel = resolve_skill_intelligence(context)
+        guidance = intel.compile_execution_guidance(recent, max_skills=4)
+        if guidance and guidance.should_inject:
+            merged = list(dict.fromkeys(current_skills + list(guidance.selected_skills)))[-4:]
+            return merged
+    except Exception:
+        pass
+    return current_skills

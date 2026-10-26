@@ -20,7 +20,11 @@ from harness.kernel.context import ServiceContext
 from harness.services.llm import LLMMessage, LLMService
 from harness.services.tools import ToolRegistry
 
-from .dispatch import dispatch_native_tool_calls, dispatch_text_fallback_action
+from .dispatch import (
+    dispatch_native_tool_calls,
+    dispatch_text_fallback_action,
+    maybe_reroute_skills,
+)
 from .prompting import build_react_initial_messages, extract_action_from_thought
 from .transactions import invoke_tool_transactional
 
@@ -111,6 +115,7 @@ class StepExecutionEngine:
 
         logger.info("Agent iteration", step=step_idx, task=trajectory.task[:50])
         await self._rotate_context_if_needed()
+        self.active_skills = maybe_reroute_skills(self.context, trajectory, step_idx, self.active_skills)
 
         if self.event_bus:
             await self.event_bus.emit(

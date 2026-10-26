@@ -118,16 +118,22 @@ class SkillScaffoldEngine:
         }
         vocab_block = "\n".join(f"- **{k}**: {v}" for k, v in vocab.items())
 
+        prov_row = ""
+        if options.generated_by:
+            prov_str = ", ".join(options.generated_by)
+            prov_row = f"│ Provenance: {prov_str[:56]:<56} │\n"
+
         return (
             f"```\n"
-            f"╔══════════════════════════════════════════════════════════════════════╗\n"
-            f"║ SKILL: {clean_name:<61} ║\n"
-            f"║ Category: {options.category:<58} ║\n"
-            f"║ Version:  {options.version:<58} ║\n"
-            f"║ Invocation: /{clean_name:<56} ║\n"
-            f"║ Triggers: {triggers_formatted[:58]:<58} ║\n"
-            f"║ Target:   {target_str[:58]:<58} ║\n"
-            f"╚══════════════════════════════════════════════════════════════════════╝\n"
+            f"┌──────────────────────────────────────────────────────────────────────┐\n"
+            f"│ SKILL: {clean_name:<61} │\n"
+            f"│ Category: {options.category:<58} │\n"
+            f"│ Version:  {options.version:<58} │\n"
+            f"│ Invocation: /{clean_name:<56} │\n"
+            f"│ Triggers: {triggers_formatted[:58]:<58} │\n"
+            f"│ Target:   {target_str[:58]:<58} │\n"
+            f"{prov_row}"
+            f"└──────────────────────────────────────────────────────────────────────┘\n"
             f"```\n\n"
             f"# {title} — Companion Summary Card\n\n"
             f"## Stage Progression Table\n\n"
@@ -203,6 +209,20 @@ class SkillScaffoldEngine:
             readme_path = out_dir / "README.md"
             readme_path.write_text(cls.generate_readme_md(opts), encoding="utf-8")
             generated_files.append(readme_path)
+
+        # 4. .provenance.json (Track 1A P2)
+        if opts.generated_by or opts.source_ki_id:
+            import json
+            from datetime import datetime, timezone
+            prov_path = out_dir / ".provenance.json"
+            prov_data = {
+                "skill_name": opts.name,
+                "generated_by": opts.generated_by,
+                "source_ki_id": opts.source_ki_id,
+                "created_at": datetime.now(timezone.utc).isoformat(),
+            }
+            prov_path.write_text(json.dumps(prov_data, indent=2), encoding="utf-8")
+            generated_files.append(prov_path)
 
         validation_report = None
         if opts.auto_validate:

@@ -69,14 +69,10 @@ class HarnessReflectorEngine:
             ki = EpisodicMemoryReflector.to_knowledge_item(h, index=idx)
             kis.append(ki)
 
-        # 4. Commit to storage vault if available
+        # 4. Commit to storage vault if available (single write seam)
         if commit_to_vault and self.storage is not None:
             for ki in kis:
-                await self.storage.save_knowledge_item(ki)
-            try:
-                await self.storage.export_knowledge_vault(vault_dir=vault_dir)
-            except Exception as e:
-                logger.warning("Failed exporting knowledge vault to disk", error=str(e))
+                await self.storage.save_knowledge_item(ki, vault_dir=vault_dir)
 
         # 5. Generate Visual Brief
         html_path: Path | None = None
