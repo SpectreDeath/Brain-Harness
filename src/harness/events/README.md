@@ -22,6 +22,24 @@ The event subsystem provides real-time pub/sub telemetry and an unalterable flig
 
 ---
 
+## Durability & Backpressure Guarantees
+
+1. **Persistent JSONL Append-Only Storage (`Rule 4`)**:
+   - When configured with a log file path, events are serialized as JSON Lines using atomic append mode (`open(..., "a", encoding="utf-8")`).
+   - The bus provides zero API methods to delete, mutate, or truncate persistent JSONL log records.
+   - Stream iterators (`EventBus.iter_log_file()`) parse events lazily line-by-line without loading entire files into memory.
+
+2. **In-Memory Ring Buffer vs. Disk Persistence**:
+   - In-memory event history is buffered in an `EventLedger` bounded deque (default: 10,000 entries).
+   - The `EventBus.clear()` and `EventLedger.clear()` methods reset **only** the in-memory deque for test harness isolation. They never truncate or alter persistent JSONL disk files.
+
+3. **Subscriber Backpressure & Isolation**:
+   - Asynchronous live streaming (`EventBus.stream()`) routes events through bounded `asyncio.Queue` instances (default: 1,000 capacity).
+   - If a slow subscriber's queue fills, `queue.put_nowait(event)` raises `asyncio.QueueFull`. The bus logs a warning (`"Event stream queue full, dropping event"`) and drops the queue event rather than blocking publisher threads or proactor loops.
+   - Subscriber handlers execute inside isolated try/except blocks (`SubscriptionRegistry.safe_call()`), guaranteeing that slow or failing handlers cannot crash publisher transactions.
+
+---
+
 ## Key Modules & Symbols
 
 | Module | Core Classes / Symbols | Description |

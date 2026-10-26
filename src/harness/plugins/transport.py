@@ -2,6 +2,13 @@
 
 Unified inter-process communication layer underlying both SubprocessExecutor
 (Python sandbox plugins) and MCPClientPlugin (Model Context Protocol clients).
+
+Architectural Role:
+- This file (`transport.py`) is the host-side IPC client (`StdioJsonRpcTransport`).
+- It spawns isolated child processes, drains stderr into bounded ring buffers (Rule 53),
+  and serializes/deserializes requests over stdin/stdout.
+- It differs from `plugins/bridge_runner.py`, which is the guest-side script that executes
+  inside the spawned child process to serve requests.
 """
 
 from __future__ import annotations

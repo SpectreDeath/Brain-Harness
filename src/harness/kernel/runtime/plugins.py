@@ -1,4 +1,11 @@
-"""Plugin ingestion and batch lifecycle coordination for Harness Runtime."""
+"""Plugin ingestion and batch lifecycle coordination for Harness Runtime.
+
+Architectural Role (Functional Operations vs Runtime Mixin):
+- This module (`harness.kernel.runtime.plugins`) provides the standalone, functional
+  operations for plugin enabling, disabling, and source ingestion.
+- `harness.kernel.runtime.plugin_ops` (`RuntimePluginOpsMixin`) exposes these operations
+  as methods on `HarnessRuntime`, delegating directly to this module.
+"""
 
 from __future__ import annotations
 

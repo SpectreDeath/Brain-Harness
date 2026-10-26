@@ -6,6 +6,13 @@ Realizes Section 5.2 of the Spatiotemporal Composability framework:
   them incrementally without tearing down untouched plugins.
 - By Theorem 73 (Confluence), the quiescent state reached by incremental reconciliation
   is identical to that of a from-scratch static assembly.
+
+Architectural Contract (Engine vs Runtime Adapter):
+- `ConfigurationReconciler` (this module) is the authoritative, declarative reconciliation
+  engine operating solely on structured `HarnessConfigTree` schemas and computing topological diffs.
+- `harness.kernel.runtime.reconcile` is the runtime adapter layer that ingests polymorphic
+  configuration inputs (YAML/JSON paths, raw dicts, lists) and delegates to this engine
+  via `runtime._reconciler.reconcile(config_tree)`.
 """
 
 from __future__ import annotations

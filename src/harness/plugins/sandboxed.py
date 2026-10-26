@@ -3,6 +3,13 @@
 Binds a PluginManifest, filesystem root, and SandboxExecutor into a
 full-fledged HarnessPlugin implementation with structured invocation results,
 categorized error handling, and runtime telemetry.
+
+Architectural Role:
+- This file (`sandboxed.py`) is the host-side adapter wrapper (`SandboxedPlugin`).
+- It differs from the `plugins/sandbox/` package, which contains concrete sandbox
+  executors (`SubprocessExecutor`, `InProcessExecutor`, `VenvExecutor`, etc.).
+- `SandboxedPlugin` wraps any executor provided by `SandboxExecutorFactory` into a
+  standard `HarnessPlugin` subclass with IoC lifecycle integration.
 """
 
 from __future__ import annotations

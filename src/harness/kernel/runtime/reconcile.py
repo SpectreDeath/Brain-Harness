@@ -1,4 +1,15 @@
-"""Declarative configuration parsing and runtime state reconciliation."""
+"""Declarative configuration parsing and runtime state reconciliation.
+
+Architectural Contract (Runtime Adapter vs Engine):
+- This module (`harness.kernel.runtime.reconcile`) serves as the runtime adapter layer:
+  it parses polymorphic inputs (file paths, JSON strings, Python dicts or lists) into
+  a canonical `HarnessConfigTree` (Definition 74).
+- It binds to the running `HarnessRuntime` instance and invokes the declarative engine
+  `ConfigurationReconciler` defined in `harness.kernel.reconciler`.
+- The separation between declarative engine (`reconciler.py`) and runtime ingestion adapter
+  (`runtime/reconcile.py`) ensures that configuration parsing remains decoupled from
+  graph reconciliation mechanics.
+"""
 
 from __future__ import annotations
 

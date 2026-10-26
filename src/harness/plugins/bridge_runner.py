@@ -2,6 +2,13 @@
 
 Staged entrypoint runner executing plugin modules in isolated subprocesses.
 Eliminates inline -c strings (Rule 29) and enforces UTF-8 stream encoding (Rule 23).
+
+Architectural Role:
+- This file (`bridge_runner.py`) is the guest-side subprocess entrypoint script.
+- It runs inside the spawned child process, loading the target plugin module and
+  serving JSON-RPC 2.0 requests over stdin/stdout.
+- It differs from `plugins/transport.py` (`StdioJsonRpcTransport`), which is the
+  host-side async client that spawns child processes, monitors stderr, and issues RPCs.
 """
 
 from __future__ import annotations

@@ -12,7 +12,7 @@ Welcome to the Brain Harness Plugin Architecture Hub. The Brain Harness micro-ke
 flowchart TD
     User([Developer / AI Agent]) -->|CLI / API / MCP| Kernel[Brain Harness Micro-Kernel]
     Kernel -->|IoC Registration & Lifecycle| Registry[Plugin Registry & ServiceContext]
-    Registry -->|Topological Resolution| Plugins[11 Domain Plugin Categories / 95 Plugins]
+    Registry -->|Topological Resolution| Plugins[11 Domain Plugin Categories / 146 Plugins]
     Plugins -->|Subprocess RPC stdio| Sandbox[Subprocess Sandbox Transports]
     Plugins -->|In-Process Execution| CoreServices[Trusted Kernel In-Memory Services]
     Plugins -->|Network / External APIs| External[(External APIs: LLMs, OSINT, Cloud, Databases)]
@@ -48,23 +48,47 @@ flowchart LR
 
 ---
 
+## Plugin Handling Layers & Architecture Seams
+
+The plugin handling subsystem is organized into 3 cleanly partitioned, non-duplicative layers:
+
+1. **Layer 1: Discovery & Manifest Loading (`src/harness/plugins/loader.py`, `catalog.py`)**
+   - Manifest parsing (`plugin.json`), filesystem path scanning, zip archive loading, and remote repository fetch caching.
+   - Evaluates declared capabilities (`provides`, `requires`, `isolation`, `trusted`, `dependencies`).
+2. **Layer 2: Lifecycle Management & DAG Resolution (`src/harness/kernel/lifecycle/manager/`)**
+   - Implements Kahn's topological sort on plugin dependencies to resolve activation orders.
+   - Coordinates discrete state transitions (`DISCOVERED` → `VALIDATED` → `INITIALIZING` → `ACTIVE` → `STOPPED` → `ERROR`).
+   - Enforces lazy staging for subprocess venvs (Rule 7) to eliminate startup latency.
+3. **Layer 3: Runtime Operations & Ingestion Mixins (`src/harness/kernel/runtime/plugin_ops.py`, `plugins.py`)**
+   - `plugins.py` provides standalone functional operations for batch enabling, disabling, and source ingestion.
+   - `plugin_ops.py` (`RuntimePluginOpsMixin`) exposes these operations as typed coordinator methods on `HarnessRuntime`.
+
+### Naming Disambiguation & Role Separation
+
+- **`plugins/sandboxed.py` vs `plugins/sandbox/`**:
+  `sandboxed.py` is the host-side plugin adapter wrapper (`SandboxedPlugin`), implementing `HarnessPlugin` by delegating to any `SandboxExecutor`. In contrast, `plugins/sandbox/` is the subpackage of concrete executor implementations (`SubprocessExecutor`, `InProcessExecutor`, `VenvExecutor`, `ContainerExecutor`, `WasmSandboxExecutor`) instantiated via `SandboxExecutorFactory`.
+- **`plugins/bridge_runner.py` vs `plugins/transport.py`**:
+  `bridge_runner.py` is the guest-side entrypoint script executed inside child subprocesses, serving JSON-RPC requests over stdin/stdout. In contrast, `transport.py` is the host-side asynchronous IPC client (`StdioJsonRpcTransport`) managing subprocess lifetime, pipes, and stderr ring buffer drainage (Rule 53).
+
+---
+
 ## Plugin Categories Directory
 
 The plugin ecosystem is cleanly partitioned into 11 single-responsibility domain categories (Rule 18):
 
 | Category | Plugins Count | Domain Focus | Scope Summary |
 |---|---|---|---|
-| [agent_orchestration](agent_orchestration/README.md) | 20 | Agent Orchestration & Multi-Agent Swarms | Multi-agent coordination loops, supervisor/worker hierarchies, debater pairs, ReAct step execution engines, tool repair, and autonomous cognitive execution workflows. |
-| [data_engineering](data_engineering/README.md) | 8 | Data Engineering & High-Throughput Analytics | High-throughput array operations, DeepSelect TopK selection, compiler-style Markdown wiki generation, SQL database integrations, synthetic data generation, and dataset profiling. |
-| [developer_tooling](developer_tooling/README.md) | 5 | Developer Tooling & Docs-as-Code Automation | Automated repository documentation synchronization, AST linter engines, modular CLI command routing, and developer experience theming. |
-| [external](external/README.md) | 1 | External Plugins & Sandboxed Ecosystem Bridges | Subprocess-sandboxed external community plugins, third-party agent skills, and isolated Python virtual environment execution boundaries. |
-| [geospatial_and_osint](geospatial_and_osint/README.md) | 3 | Geospatial Intelligence & OSINT Reconnaissance | Google Earth Engine satellite imagery processing, multi-source open-source intelligence aggregation, and planetary spatial analytics. |
-| [infra_and_cloud](infra_and_cloud/README.md) | 4 | Infrastructure, Containers & Cloud Automation | Declarative CI/CD pipeline scaffolding, Docker container runtimes, Kubernetes deployment manifests, and Terraform infrastructure-as-code automation. |
-| [integration_and_io](integration_and_io/README.md) | 11 | Integration, External APIs & Multi-Modal I/O | External API integrations, OpenRouter LLM gateway with Context Epoch caching, Stagehand & WebWright browser automation, AgentWikis documentation routers, and multimedia YouTube dialogue extractors. |
-| [machine_learning](machine_learning/README.md) | 1 | Machine Learning & Model Post-Training | Supervised fine-tuning harnesses, post-training optimization pipelines, and model evaluation telemetry using Tunix. |
-| [memory_and_epistemics](memory_and_epistemics/README.md) | 16 | Memory, Epistemics & Context Engineering | Multi-store autobiographical memory federation, OKF memory governance, Graphiti knowledge graphs, MemGraphRAG, context compactor/compiler pipelines, decay scoring, and prompt pruning layers. |
-| [security_and_forensics](security_and_forensics/README.md) | 14 | Security, Forensics & Execution Policy Gates | Codex execution policies, runtime policy gates, Vibe dynamic security scanners, secret leak detection, network/log forensic analysis, and trajectory audits. |
-| [software_engineering](software_engineering/README.md) | 13 | Software Engineering & Code Archaeology | Architectural linting, isolated code execution, transactional Git filesystem checkpoints, automated refactoring engines, PR lens architectural diff visualizers, and repo triad forge pipelines. |
+| [agent_orchestration](agent_orchestration/README.md) | 34 | Agent Orchestration & Multi-Agent Swarms | Multi-agent coordination loops, supervisor/worker hierarchies, debater pairs, ReAct step execution engines, tool repair, and autonomous cognitive execution workflows. |
+| [data_engineering](data_engineering/README.md) | 15 | Data Engineering & High-Throughput Analytics | High-throughput array operations, DeepSelect TopK selection, compiler-style Markdown wiki generation, SQL database integrations, synthetic data generation, and dataset profiling. |
+| [developer_tooling](developer_tooling/README.md) | 11 | Developer Tooling & Docs-as-Code Automation | Automated repository documentation synchronization, AST linter engines, modular CLI command routing, and developer experience theming. |
+| [external](external/README.md) | 2 | External Plugins & Sandboxed Ecosystem Bridges | Subprocess-sandboxed external community plugins, third-party agent skills, and isolated Python virtual environment execution boundaries. |
+| [geospatial_and_osint](geospatial_and_osint/README.md) | 5 | Geospatial Intelligence & OSINT Reconnaissance | Google Earth Engine satellite imagery processing, multi-source open-source intelligence aggregation, and planetary spatial analytics. |
+| [infra_and_cloud](infra_and_cloud/README.md) | 6 | Infrastructure, Containers & Cloud Automation | Declarative CI/CD pipeline scaffolding, Docker container runtimes, Kubernetes deployment manifests, and Terraform infrastructure-as-code automation. |
+| [integration_and_io](integration_and_io/README.md) | 14 | Integration, External APIs & Multi-Modal I/O | External API integrations, OpenRouter LLM gateway with Context Epoch caching, Stagehand & WebWright browser automation, AgentWikis documentation routers, and multimedia YouTube dialogue extractors. |
+| [machine_learning](machine_learning/README.md) | 2 | Machine Learning & Model Post-Training | Supervised fine-tuning harnesses, post-training optimization pipelines, and model evaluation telemetry using Tunix. |
+| [memory_and_epistemics](memory_and_epistemics/README.md) | 20 | Memory, Epistemics & Context Engineering | Multi-store autobiographical memory federation, OKF memory governance, Graphiti knowledge graphs, MemGraphRAG, context compactor/compiler pipelines, decay scoring, and prompt pruning layers. |
+| [security_and_forensics](security_and_forensics/README.md) | 22 | Security, Forensics & Execution Policy Gates | Codex execution policies, runtime policy gates, Vibe dynamic security scanners, secret leak detection, network/log forensic analysis, and trajectory audits. |
+| [software_engineering](software_engineering/README.md) | 15 | Software Engineering & Code Archaeology | Architectural linting, isolated code execution, transactional Git filesystem checkpoints, automated refactoring engines, PR lens architectural diff visualizers, and repo triad forge pipelines. |
 
 ---
 
