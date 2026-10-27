@@ -9,7 +9,7 @@ from harness.agent.base import (
     AgentTaskResult,
     AgentTrajectory,
 )
-from harness.agent.context_optimizer import AgentContextOptimizer
+from harness.services.context_optimizer import AgentContextOptimizer
 from harness.agent.session import AgentSessionManager
 from harness.events.bus import EventBus
 from harness.events.types import (

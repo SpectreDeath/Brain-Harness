@@ -19,7 +19,7 @@ from harness.plugins.base import HarnessPlugin
 
 logger = structlog.get_logger()
 
-from harness.services.compute_assessor import (
+from harness.services.compute import (
     ComputeAssessment,
     ComputeRouter,
     ModelTier,

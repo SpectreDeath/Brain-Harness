@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING, Any
 import structlog
 
 if TYPE_CHECKING:
-    from harness.services.compute_assessor import ComputeAssessment, ModelTier
+    from harness.services.compute import ComputeAssessment, ModelTier
 
 logger = structlog.get_logger()
 
@@ -54,7 +54,7 @@ def assess_compute_cmd(
     Returns:
         ComputeAssessmentResult containing assessment and optional HTML report path.
     """
-    from harness.services.compute_assessor import ComputeRouter, ModelTier
+    from harness.services.compute import ComputeRouter, ModelTier
 
     tier_enum = None
     if override_tier:

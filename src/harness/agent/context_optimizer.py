@@ -1,13 +1,20 @@
 """Agent context optimization, message budgeting, and compaction facade (Rule 57).
 
-Re-exports slotted domain models, composable pruning strategies, and the
-DefaultContextOptimizerService from the authoritative micro-kernel service
-harness.services.context_optimizer (Rule 49 & Rule 58).
+.. deprecated:: 2.0.0
+   This facade module is deprecated. The canonical import path for all context
+   optimization protocols and services is ``harness.services.context_optimizer``.
 """
 
 from __future__ import annotations
 
 import sys
+import warnings
+
+warnings.warn(
+    "harness.agent.context_optimizer is deprecated; import directly from harness.services.context_optimizer instead.",
+    DeprecationWarning,
+    stacklevel=2,
+)
 
 # Rule 23: Windows UTF-8 Stream Codec Entrypoint Invariant
 if sys.platform == "win32":

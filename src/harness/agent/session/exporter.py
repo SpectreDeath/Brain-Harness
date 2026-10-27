@@ -1,6 +1,12 @@
 """Session and Execution Tree rendering, transcript generation, and schema export engine.
 
 Provides Markdown transcripts, JSON exports, and hierarchical ASCII tree representations.
+
+Architectural Layering:
+- `SessionTreeExporter` (this module) is the pure stateless renderer/serializer for sessions
+  and execution trees (`to_markdown`, `to_json`, `to_ascii_tree`).
+- `SessionExportMixin` in `harness.agent.session.manager.export` is the stateful manager
+  mixin that resolves sessions from `AgentSessionStore` and delegates to this serializer.
 """
 
 from __future__ import annotations

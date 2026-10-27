@@ -9,7 +9,7 @@ from typing import Any
 
 import structlog
 
-from harness.agent.context_optimizer import AgentContextOptimizer
+from harness.services.context_optimizer import AgentContextOptimizer
 from harness.kernel.context import ServiceContext
 from harness.services.llm import LLMMessage
 from harness.services.tools import ToolRegistry

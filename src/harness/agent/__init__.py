@@ -7,7 +7,7 @@ from harness.agent.base import (
     AgentTaskResult,
     AgentTrajectory,
 )
-from harness.agent.context_optimizer import (
+from harness.services.context_optimizer import (
     AGENT_CONTEXT_OPTIMIZER_KEY,
     AgentContextOptimizer,
     ContextOptimizationConfig,

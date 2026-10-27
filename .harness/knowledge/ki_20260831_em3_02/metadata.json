@@ -37,6 +37,6 @@
   ],
   "context": "Zero-Copy Polyglot Memory Substrate via PyArrow IPC Streams",
   "distilled_learning": "# KI: Zero-Copy Polyglot Memory Substrate via PyArrow IPC Streams\n\n## Operational Summary\nIn polyglot multi-agent systems where tasks span Python, SQL/DuckDB, Rust, and WASM surfaces, transferring large structured datasets via JSON causes quadratic serialization bottlenecks. Em-Cubed introduces `ArrowSharedSubstrate`, an in-memory dataset manager that holds datasets as `pyarrow.Table` / `RecordBatch` instances and streams them across execution boundaries using PyArrow IPC byte streams (`ipc.new_stream`), with graceful dictionary fallbacks for non-Arrow runtimes.",
-  "retrieval_count": 2,
-  "last_retrieved_at": "2026-10-26T19:42:44.700038+00:00"
+  "retrieval_count": 4,
+  "last_retrieved_at": "2026-10-27T23:06:28.169144+00:00"
 }

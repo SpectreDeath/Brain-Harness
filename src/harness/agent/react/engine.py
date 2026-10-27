@@ -7,7 +7,7 @@ from typing import Any
 import structlog
 
 from harness.agent.base import AgentStep, AgentTrajectory
-from harness.agent.context_optimizer import (
+from harness.services.context_optimizer import (
     AgentContextOptimizer,
     DefaultContextOptimizer,
 )

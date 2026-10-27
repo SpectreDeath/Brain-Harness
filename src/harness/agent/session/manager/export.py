@@ -1,4 +1,10 @@
-"""Session export mixin for JSON and Markdown serialization."""
+"""Session export mixin for JSON and Markdown serialization.
+
+Architectural Layering:
+- This mixin (`SessionExportMixin`) binds `export_session` to `AgentSessionManager`.
+- It fetches the session from `self.store` and delegates formatting to the pure
+  stateless serializer `SessionTreeExporter` in `harness.agent.session.exporter`.
+"""
 
 from __future__ import annotations
 

@@ -48,14 +48,20 @@ from harness.services.context_optimizer.strategies import (
     SlidingWindowPruner,
 )
 
+# Backward-compatibility aliases for legacy agent loops
+AgentContextOptimizer = ContextOptimizerService
+DefaultContextOptimizer = DefaultContextOptimizerService
+
 __all__ = [
     "AGENT_CONTEXT_OPTIMIZER_KEY",
+    "AgentContextOptimizer",
     "CONTEXT_OPTIMIZER_SERVICE_KEY",
     "CompositeContextStrategy",
     "ContextOptimizationConfig",
     "ContextOptimizationResult",
     "ContextOptimizerService",
     "ContextPruningStrategy",
+    "DefaultContextOptimizer",
     "DefaultContextOptimizerService",
     "DeterministicPromptPruner",
     "MiddleOutObservationCompactor",

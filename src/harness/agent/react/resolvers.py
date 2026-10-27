@@ -19,7 +19,7 @@ def resolve_react_agent_loop(context: ServiceContext) -> ReActAgentLoop:
     llm: LLMService = context.require(LLM_SERVICE_KEY)
     tools: ToolRegistry = context.require(TOOL_REGISTRY_KEY)
 
-    from harness.agent.context_optimizer import (
+    from harness.services.context_optimizer import (
         AGENT_CONTEXT_OPTIMIZER_KEY,
         AgentContextOptimizer,
     )

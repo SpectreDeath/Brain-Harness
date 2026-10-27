@@ -42,6 +42,14 @@ __all__ = [
     "BRAIN_ARTIFACT_MINER_KEY",
     "BRAIN_BRIDGE_KEY",
     "CELLCOG_SERVICE_KEY",
+    # Foreign Agent Bridge Scaffold
+    "BaseForeignAgentBridge",
+    "BridgeAuthConfig",
+    "BridgeAuthMethod",
+    "BridgeError",
+    "BridgeErrorCode",
+    "BridgeToolMapping",
+    "BridgeTransportKind",
     # ChatbotX
     "CHATBOTX_SERVICE_KEY",
     "CLAUDE_CODE_BRIDGE_KEY",

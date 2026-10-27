@@ -1,4 +1,13 @@
-"""Test Runner and TDD Execution Service protocol, models, and ServiceKey."""
+"""Test Runner and TDD Execution Service protocol, models, and ServiceKey.
+
+Architectural Pattern (Kernel Protocol vs Plugin Provider per Rule 1 & Rule 49):
+- This module defines the authoritative typed protocol (`TestRunnerService`), result
+  models (`TestDiscoverResult`, `TestRunResult`), and typed IoC key (`TEST_RUNNER_KEY`).
+- Following Rule 1 ("Everything is a plugin"), no execution logic is hardcoded into the kernel.
+- The concrete execution implementation is provided by the domain-partitioned plugin
+  `plugins/software_engineering/test_runner/main.py`, which implements the protocol and
+  registers into the IoC container via `context.provide(TEST_RUNNER_KEY, instance)`.
+"""
 
 from __future__ import annotations
 

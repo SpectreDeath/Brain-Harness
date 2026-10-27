@@ -7,7 +7,7 @@ from typing import Any
 import structlog
 
 from harness.agent.base import AGENT_LOOP_KEY
-from harness.agent.context_optimizer import (
+from harness.services.context_optimizer import (
     AGENT_CONTEXT_OPTIMIZER_KEY,
     AgentContextOptimizer,
 )

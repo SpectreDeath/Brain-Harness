@@ -45,7 +45,7 @@ from harness.agent.swarm.plugin import SwarmCoordinatorPlugin
 
 # 7. Re-exports for backward compatibility
 from harness.agent.base import AgentTaskResult
-from harness.agent.context_optimizer import (
+from harness.services.context_optimizer import (
     AGENT_CONTEXT_OPTIMIZER_KEY,
     AgentContextOptimizer,
 )

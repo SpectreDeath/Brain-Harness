@@ -6,7 +6,7 @@ import json
 from typing import Any, Awaitable, Callable
 
 from harness.agent.base import AgentStep, AgentTrajectory
-from harness.agent.context_optimizer import AgentContextOptimizer
+from harness.services.context_optimizer import AgentContextOptimizer
 from harness.services.llm import LLMMessage
 from harness.services.tools import ToolRegistry
 

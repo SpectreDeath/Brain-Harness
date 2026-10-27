@@ -73,6 +73,84 @@ Brain Harness implements an extensible micro-kernel architecture with strict con
 | [`tau_bridge/`](tau_bridge/) | `TAU_BRIDGE_SERVICE_KEY` | `TauBridgeService` | Bidirectional integration with HuggingFace Tau coding agent harness. |
 | [`claude_code.py`](claude_code.py) | `CLAUDE_CODE_BRIDGE_KEY` | `ClaudeCodeBridgeService` | Claude Code prompt compaction and dangerous bash command guardrails. |
 | [`stagehand_browser.py`](stagehand_browser.py) | `STAGEHAND_BROWSER_KEY` | `StagehandBrowserService` | Autonomous headless browser orchestration and DOM extraction. |
+| [`bridge_base.py`](bridge_base.py) | *N/A (Scaffold)* | `BaseForeignAgentBridge` | Shared foreign-agent bridge scaffold (auth, tool mapping, error taxonomy, latency). |
+| [`skills.py`](skills.py) | `SKILL_INTELLIGENCE_KEY` | `SkillIntelligenceService` | Unified facade unifying skill parser, knowledge graph, clustering, pipeline, and visualizer. |
+
+---
+
+## DAG Models Architecture & Keying Discipline (Rule 17 & Rule 36)
+
+The harness maintains three distinct but mapped DAG models across different phases of execution:
+
+1. **Pre-Execution Planning DAG (`harness.agent.swarm.models.SwarmDAG`)**:
+   - **Phase**: Static task breakdown and dependency declaration prior to execution.
+   - **Core Entity**: `SwarmNode` (id, role, task, dependencies, tools, allocated_tokens).
+   - **Topology**: Evaluates concurrent task waves (Wave 0, 1, 2) using Kahn's topological sort via `DependencyGraph`.
+
+2. **Hierarchical Runtime Session Tree (`harness.agent.session.models.AgentSession` & `SessionTreeNode`)**:
+   - **Phase**: Runtime step execution, intermediate reasoning, tool calls, and observations.
+   - **Core Entity**: `AgentSession` & `SessionTreeNode` (session_id, task, steps, tokens, parent_session_id, children_session_ids).
+   - **Topology**: Hierarchical parent-child agent trees capturing recursive sub-agent delegations and full conversational transcripts.
+
+3. **Authoritative Execution Thread Graph (`harness.services.agent_graph.AgentExecutionGraphService`)**:
+   - **Phase**: Global cross-agent execution lifecycle, token telemetry rollups, and thread spawn tracking.
+   - **Core Entity**: `ExecutionGraphNode` (node_id, role, task, status, tokens_used, parent_id) & `ExecutionGraphEdge`.
+   - **Keying Discipline (Rule 36)**: To prevent cross-run collisions when multiple swarm executions run concurrently or sequentially, nodes are keyed with the composite identifier `f"{run_id}_{node_id}"`.
+
+### Execution Mapping Flow:
+```mermaid
+flowchart LR
+    SwarmDAG["1. SwarmDAG (Plan)<br>SwarmNode(id)"] -->|Waves Compilation| Coordinator[SwarmCoordinator]
+    Coordinator -->|Creates Sessions| Session["2. AgentSession (Runtime)<br>session_id"]
+    Coordinator -->|Registers Threads| AgentGraph["3. AgentExecutionGraph<br>key = f'{run_id}_{node_id}'"]
+    Session -->|Final Answer & Tokens| AgentGraph
+```
+
+---
+
+## Bridge Layering Rules & Shared Scaffold
+
+Integrations with external agents and tools adhere to four cleanly defined layers:
+
+1. **Kernel Service Layer (`src/harness/services/<name>_bridge.py`)**:
+   - Authoritative protocol (`@runtime_checkable class <Name>BridgeService(Protocol)`), slotted domain models (`Rule 12`), and typed IoC key (`<NAME>_BRIDGE_KEY`).
+   - Foreign-agent bridges subclass `BaseForeignAgentBridge` (`harness.services.bridge_base`), utilizing `BridgeAuthConfig`, `BridgeToolMapping`, and standardized `BridgeError` taxonomy.
+2. **Domain Plugin Layer (`plugins/<category>/<name>_bridge/main.py`)**:
+   - Concrete plugin implementation (`HarnessPlugin`) that provides the service into IoC (`context.provide()`) and exports the instantiated module singleton `plugin = MyPlugin()` (`Rule 45`).
+3. **Ecosystem Substrate Adapters (`src/harness/bridges/`)**:
+   - High-throughput direct bindings to peer ecosystem repositories (Em-Cubed, Memtext, Skill Flywheel) inheriting from `EcosystemBridgePlugin[TSubstrate]`.
+4. **MCP Client/Server Bridges (`src/harness/mcp/`)**:
+   - Model Context Protocol bridges translating external JSONSchema tool specs and transports into native `HarnessPlugin` tool mounts.
+
+---
+
+## Subsystem Boundaries & Overlap Audits
+
+### 1. Memory & Epistemics Subsystem
+- **`vector_index.py` & `embedding_cluster.py`**: Pure substrate vector indexing and embedding clustering.
+- **`semantic_cache.py`**: Prompt-level embedding similarity cache to eliminate duplicate model API requests.
+- **`memory_decay/`**: Working memory retention and Ebbinghaus forgetting curve simulation.
+- **`okf_memory.py`**: Git-native versioned concepts, pre-edit scoping, and schema validation.
+- **`graphiti.py`**: Bitemporal property graph tracking entities, relationships, and validity time intervals.
+- **`memgraphrag.py`**: Hybrid retrieval combining property graphs with dense text retrieval.
+- **`.harness/knowledge/` (Knowledge Vault)**: Persistent, ground-truth dual-file store (`metadata.json` + `summary.md`) with Isnad claims lifecycle.
+
+### 2. Harness Evaluation Subsystem
+- **`agent_harness.py`**: Static architecture evaluation against 5-part harness framework.
+- **`ai_native_harness.py`**: Behavioral runtime policy gating and credential-free security audits.
+- **`coding_harness_calibrator.py`**: Empirical calibration of context staging (T0-T4) and action spaces.
+- **`harness_compass.py`**: Evolutionary Pareto-frontier optimization of prompt and tool configurations.
+- **`self_evaluating_pipeline.py`**: Automated qualitative rubric evaluations against held-out golden references.
+- **`prompt_benchmark.py`**: Quantitative latency, token cost, and regression benchmarks.
+
+### 3. Unified Skill Subsystem (`harness.services.skills`)
+- All skill capabilities are unified under `harness.services.skills`:
+  - `skill_parser`: `CARD.md` single-pipe boxes and `SKILL.md` frontmatter/anti-patterns.
+  - `skill_graph`: DAG topology, intent routing, guidance compilation.
+  - `skill_clustering`: Emergent capability clustering and macro-bridges.
+  - `skill_visualizer`: Interactive dark-mode HTML visual briefs in %TEMP%.
+  - `skill_pipeline`: Base pipeline driver execution engine.
+  - `SkillIntelligenceService`: Unifying composite protocol implemented via `SkillIntelligenceAdapter` (Rule 58).
 
 ---
 

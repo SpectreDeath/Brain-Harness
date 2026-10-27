@@ -67,3 +67,14 @@ from harness.services.gradio_app import (
     DiagnosticReportData,
     GradioAppArchitectService,
 )
+
+from harness.services.bridge_base import (
+    BaseForeignAgentBridge,
+    BridgeAuthConfig,
+    BridgeAuthMethod,
+    BridgeError,
+    BridgeErrorCode,
+    BridgeToolMapping,
+    BridgeTransportKind,
+)
+

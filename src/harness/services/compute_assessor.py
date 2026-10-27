@@ -1,10 +1,19 @@
 """Compute & Model Assessor Subsystem — Backward-compatible facade module.
 
-All implementation has been decomposed into modular components in ``harness.services.compute``.
-This module re-exports the complete public interface for 100% backward compatibility.
+.. deprecated:: 2.0.0
+   This facade module is deprecated. The canonical import path for all compute
+   and model assessment symbols is ``harness.services.compute``.
 """
 
 from __future__ import annotations
+
+import warnings
+
+warnings.warn(
+    "harness.services.compute_assessor is deprecated; import directly from harness.services.compute instead.",
+    DeprecationWarning,
+    stacklevel=2,
+)
 
 from harness.services.compute import (
     COMPUTE_ASSESSOR_SERVICE,
