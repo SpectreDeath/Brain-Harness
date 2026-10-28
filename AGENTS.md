@@ -87,7 +87,7 @@
 
 ## Testing
 
-- Tests live in `tests/` mirroring `src/harness/` structure.
+- Tests live in `tests/` with domain prefixes (`test_kernel_*`, `test_service_*`, `test_plugin_*`, `test_command_*`, `test_agent_*`, `test_ingestion_*`).
 - Use `pytest` with `pytest-asyncio` for async tests.
 - Mark tests: `@pytest.mark.unit`, `@pytest.mark.integration`, `@pytest.mark.slow`.
 - Aim for ≥80% coverage on kernel and plugin system.

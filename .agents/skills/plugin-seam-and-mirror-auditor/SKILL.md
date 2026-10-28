@@ -1,10 +1,6 @@
 ---
 name: plugin-seam-and-mirror-auditor
-description: >-
-  Audit, stress-test, and auto-synchronize plugin codebases across IoC DAG
-  topology, adversarial parameter fuzzing, and AST documentation mirroring on
-  any target directory. Do not use for generic prose copyediting or
-  unstructured markdown note-taking.
+description: Audit, stress-test, and auto-synchronize plugin codebases across IoC DAG topology, adversarial parameter fuzzing, and AST documentation mirroring on any target directory. Do not use for generic prose copyediting or unstructured markdown note-taking.
 ---
 
 # Plugin Seam & Mirror Auditor

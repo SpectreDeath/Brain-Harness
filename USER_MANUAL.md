@@ -25,6 +25,7 @@
    - [Autonomous Agent Task Execution (`agent`)](#autonomous-agent-task-execution)
    - [Hierarchical Session Introspection & Trajectory Export (`session`)](#hierarchical-session-introspection--trajectory-export)
    - [3-Tier AST Context Compilation & Code Skeletonization (`context`)](#3-tier-ast-context-compilation--code-skeletonization)
+   - [Interpretable Context Methodology (ICM) Workspace Architecture (`icm`)](#interpretable-context-methodology-icm-workspace-architecture)
    - [Compute Budget & Model Tier Assessment (`assess-compute`)](#compute-budget--model-tier-assessment)
    - [Agent Skill Knowledge Graph & Intent Routing (`skills`)](#agent-skill-knowledge-graph--intent-routing)
    - [Dynamic Plugin Creator & Archetype Scaffolding (`creator`, `scaffold`, `validate`)](#dynamic-plugin-creator--archetype-scaffolding)
@@ -367,6 +368,34 @@ harness context compile src/harness/kernel/runtime.py --repo-root . --max-hops 2
 Extracts a structural interface skeleton from any Python source file, stripping internal function bodies while preserving type signatures and docstrings.
 ```bash
 harness context skeletonize src/harness/agent/engine.py
+```
+
+---
+
+### Interpretable Context Methodology (ICM) Workspace Architecture
+
+The `harness icm` command group provides formal verification and scaffolding for Interpretable Context Methodology (ICM) architectures, ensuring codebase boundaries, context trees, and token budgets are formally bounded:
+
+#### `harness icm verify [OPTIONS]`
+Verifies workspace conformance against ICM invariants, context budget allocations, and architectural boundary fences.
+```bash
+# Verify entire workspace against ICM rules
+harness icm verify --root .
+
+# Output verification report in JSON format
+harness icm verify --root . --json
+```
+
+#### `harness icm scaffold [OPTIONS]`
+Scaffolds standardized ICM context trees, boundary definitions, and prompt fences for a target module.
+```bash
+harness icm scaffold --target src/harness/agent --output-dir context/
+```
+
+#### `harness icm brief [OPTIONS]`
+Generates an interactive HTML visual brief with layered ICM topology diagrams and context budget gauges.
+```bash
+harness icm brief --output icm_brief.html
 ```
 
 ---
