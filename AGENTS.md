@@ -72,7 +72,7 @@
 
 ## Negative Boundaries & Safety Guardrails
 
-- **What NOT to Touch**: Never edit generated cache files in `.pytest_cache/`, `src/harness/ui/static/vendor/`, or persistent SQLite memory stores without transactions.
+- **What NOT to Touch**: Never edit generated cache files in `.pytest_cache/`, `src/harness/ui/static/`, or persistent SQLite memory stores without transactions.
 - **Dependency Guardrail**: Do not introduce new third-party dependencies into `pyproject.toml` without explicit user approval.
 - **Execution Safety**: Never execute destructive git operations (`git push --force`, `git reset --hard`, `git clean -fd`) or unredacted credential commands in terminal sessions.
 

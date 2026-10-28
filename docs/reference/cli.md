@@ -259,3 +259,73 @@ Packet capture dissection and network isolation audits.
 - `harness network-forensics cleartext --pcap <pcap_file>`: Audits packet captures for unencrypted secrets.
 - `harness network-forensics diagnose-7layer --target <host>`: Performs systematic 7-layer fault isolation.
 - `harness network-forensics brief`: Generates network diagnostics visual brief.
+
+### `harness icm` (Aliases: `icm-architect`)
+Interpretable Context Methodology (ICM) workspace architecture and formal verification.
+- `harness icm verify`: Verifies workspace conformance against ICM invariants.
+- `harness icm scaffold`: Scaffolds ICM context trees and boundary definitions.
+- `harness icm brief`: Renders an interactive HTML visual brief for ICM workspace state.
+
+### `harness brain-miner` (Aliases: `miner`, `artifact-miner`)
+Brain workspace archaeology, scratch tool salvage, and transcript introspection.
+- `harness brain-miner scan [--root DIR]`: Scans and catalogs reusable Python scratch tools.
+- `harness brain-miner triage [--dir DIR]`: Triages background task logs for exit failures.
+- `harness brain-miner step <step_id>`: Fetches specific steps via O(1) binary seek.
+- `harness brain-miner brief [--output FILE]`: Generates an HTML visual brief summarizing scratch tools.
+
+### `harness trajectory` (Aliases: `trajectory-miner`, `conversation-miner`)
+Autobiographical execution trajectory archaeology, friction metrics, and cognitive bifurcation.
+- `harness trajectory analyze <conv_id>`: Calculates friction metrics, error loops, and tool recovery rates.
+- `harness trajectory bifurcate <conv_id>`: Separates epistemic learnings from procedural tool execution.
+- `harness trajectory export <conv_id>`: Exports normalized trajectory steps to JSONL.
+- `harness trajectory brief`: Generates an interactive HTML visual brief.
+
+### `harness temp` (Aliases: `temp-miner`, `ephemeral-miner`)
+Ephemeral workspace archaeology, HTML visual brief extraction, and sandbox triage.
+- `harness temp scan [--dir DIR]`: Scans temporary directories and sandboxes for architecture records.
+- `harness temp triage [--pattern PATTERN]`: Triages failed test outputs and proactor crash logs.
+- `harness temp brief`: Extracts and aggregates ephemeral HTML visual briefs.
+
+### `harness rol` (Aliases: `obligation-ledger`)
+Reconstruction Obligation Ledger — Software reverse-engineering evidence proof system.
+- `harness rol verify <ledger_path>`: Validates reconstruction claims and cryptographic hashes.
+- `harness rol audit <ledger_path>`: Checks isnad provenance and evidence completeness.
+- `harness rol brief`: Synthesizes visual ledger graphs and completion status.
+
+### `harness facet` (Aliases: `differential-facet`)
+Differential Facet Verifier — Multi-provider evidence comparison and facet availability semantics.
+- `harness facet compare --p1 <p1> --p2 <p2>`: Performs 3-valued differential outcome evaluation.
+- `harness facet gate --claim <claim>`: Assesses absence claimability gates.
+- `harness facet brief`: Generates differential facet visualization briefs.
+
+### `harness redteam`
+Microsoft PyRIT AI Red Teaming & Harm Evaluation Engine.
+- `harness redteam fuzz --prompt "<text>"`: Fuzzes prompts with adversarial mutations.
+- `harness redteam audit`: Executes structured jailbreak evaluations (crescendo, TAP).
+- `harness redteam report`: Generates vulnerability scorecards from recent red-team scans.
+
+---
+
+## Overlapping Domain Boundaries & Substrate Partitioning
+
+To maintain clean single-responsibility boundaries (Rule 18), several specialized groups operate on distinct physical substrates:
+
+### 1. Workspace Archaeology & Mining Substrates
+- **`brain-miner`**: Operates strictly on persistent user brain artifacts (`<appDataDir>/brain/<cid>/`), salvaging reusable Python scripts from `scratch/` and extracting walkthrough briefs.
+- **`trajectory`**: Operates on relational SQLite conversation stores (`conversations/<cid>.db`), inspecting protobuf step payloads, friction metrics, and cognitive bifurcation logs.
+- **`temp`**: Operates on ephemeral system temporary directories and pytest sandboxes (`AppData/Local/Temp/pytest-*`), triaging crash logs and ephemeral HTML visual briefs.
+
+### 2. Documentation Engineering
+- **`doc`**: Repository codebase documentation hygiene (`repo-doc-synchronizer`), auditing AST docstring coverage, detecting stale code symbols, and updating relative links.
+- **`doc-builder`**: Multi-package documentation suite compilation using Hugging Face doc-builder patterns (`hf-doc-builder-architect`), verifying anchor graphs and transpiling MDX.
+
+### 3. Harness Architecture vs. Compass Evolution
+- **`architect`**: Static structural evaluation of agent harnesses using 5-part architecture and 4-mechanism reliability gates (`agent-harness-architect`).
+- **`compass`**: Dynamic empirical multi-armed benchmark discovery, constrained harness mutation, and R3 integration (`harness-compass`).
+
+### 4. Data & Analytics Engines
+- **`gis`**: Coordinate reference systems (CRS), spatial topology, and geometry analysis across 14 dedicated GIS libraries (`open-source-gis-architect`).
+- **`datasets`**: Zero-copy Arrow memory mapping and streaming iteration for massive datasets (`hf-datasets-engineer`).
+- **`data`**: Enterprise data lifecycles, Open Data Contracts (ODCS), quality profiling, and Medallion lakehouses (`data-management-architect`).
+- **`bigquery`**: Google BigQuery table-valued functions (TVFs) and in-database machine learning queries (`bigquery-augmented-analytics`).
+

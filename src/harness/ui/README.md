@@ -57,6 +57,23 @@ if __name__ == "__main__":
 
 ---
 
+## Dual-Mode Frontend Packaging Story
+
+The dashboard operates in two decoupled modes depending on the runtime environment:
+1. **Full React Vite SPA (`frontend/dist`)**: When developing from source or running the production build (`npm run build` in `frontend/`), FastAPI serves the compiled React 19 + TypeScript SPA from `frontend/dist/` with full interactive modals, Mermaid charts, and 8 dedicated views (Overview, Agent, Graph, Plugins, Sandboxes, Skills, Swarm, Timeline).
+2. **Embedded Standalone Fallback (`static/index.html`)**: When installed as a package via `pip install` without compiled node artifacts, the server automatically falls back to `src/harness/ui/static/index.html`. This lightweight, zero-dependency dashboard is packaged directly into Python wheels via `[tool.setuptools.package-data]` in `pyproject.toml`, providing essential lifecycle management and event monitoring out-of-the-box.
+
+---
+
+## CLI ↔ UI Architecture & Shared Service Reuse
+
+The UI server does **not** fork subprocess CLI commands or duplicate command logic:
+- **`RuntimeAdapter` Normalization**: All REST routes in `src/harness/ui/server/routes/` interact directly with `RuntimeAdapter` (`server/adapter.py`).
+- **Direct IoC Kernel Invocations**: Plugin registration, lifecycle toggles, autonomous agent execution, and skill lookups resolve directly from the unified `HarnessRuntime` or underlying `ServiceContext`, invoking the exact same slotted domain engines as the Click CLI handlers in `src/harness/commands/`.
+- **Zero Drift**: Because both Click CLI commands and FastAPI routes consume the identical typed service protocols, updates to kernel behaviors immediately reflect across both headless CLI and web control room surfaces.
+
+---
+
 ## Related Documentation
 
 - [User Manual](../../../USER_MANUAL.md)

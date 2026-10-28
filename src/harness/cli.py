@@ -1,21 +1,4 @@
-"""CLI entry point — simple commands for managing the harness.
-
-Commands:
-    harness init                      Initialize a workspace
-    harness plugin add <url>          Fetch, inspect, and register a GitHub repo
-    harness plugin list               List all installed plugins
-    harness plugin enable <name>      Enable a plugin
-    harness plugin disable <name>     Disable a plugin
-    harness plugin remove <name>      Remove a cached plugin
-    harness events [--type TYPE]      Show the event log
-    harness services                  List registered services
-    harness run                       Start the harness (interactive)
-    harness agent run "<task>"        Execute an autonomous agent task
-    harness introspect                Show live system diagnostics & graph
-    harness bridge status             Check ecosystem bridges
-    harness creator build <name>      Scaffold a new plugin project
-"""
-# ruff: noqa: E402
+"""CLI entry point — canonical commands and declared alias routing for Brain Harness."""
 
 from __future__ import annotations
 
@@ -34,11 +17,15 @@ import structlog
 
 from harness.commands._utils import _run_async
 from harness.commands.agent import agent_group
+from harness.commands.aliases import (
+    CLI_ALIASES,
+    AliasedGroup,
+    generate_cli_docstring,
+    get_command_catalog,
+)
 from harness.commands.antigravity import antigravity_group
 from harness.commands.bigquery import bigquery_group
 from harness.commands.brain_miner import brain_miner_group
-from harness.commands.trajectory_miner import trajectory_group
-from harness.commands.temp_miner import temp_miner_group
 from harness.commands.bridges import bridge_group
 from harness.commands.calibrator import calibrator_group
 from harness.commands.compass import compass_group
@@ -65,25 +52,22 @@ from harness.commands.harness_architect import architect_group
 from harness.commands.icm import icm_group
 from harness.commands.mcp import mcp_group
 from harness.commands.model_router import model_router_group
-from harness.commands.okf import okf_group
 from harness.commands.network_forensics import network_forensics_group
+from harness.commands.okf import okf_group
 from harness.commands.plugins import plugin_group
 from harness.commands.pre_commit_security import pre_commit_security_group
 from harness.commands.redteam import redteam_group
 from harness.commands.reflection import knowledge_group, reflect_cli
 from harness.commands.rol import rol_group
-from harness.commands.runtime import (
-    apply_cli,
-    config_group,
-    run_cli,
-    ui_cli,
-)
+from harness.commands.runtime import apply_cli, config_group, run_cli, ui_cli
 from harness.commands.self_eval import eval_group
 from harness.commands.session import session_group
 from harness.commands.skills import skills_group
 from harness.commands.system import introspect_cli, services_cli
 from harness.commands.tau import tau_group
+from harness.commands.temp_miner import temp_miner_group
 from harness.commands.tools import tool_group
+from harness.commands.trajectory_miner import trajectory_group
 from harness.commands.uncertainty import uncertainty_group
 from harness.commands.validation_loop import validation_loop_group
 from harness.commands.workspace import init_cli, watch_cli
@@ -91,7 +75,7 @@ from harness.commands.workspace import init_cli, watch_cli
 logger = structlog.get_logger()
 
 
-@click.group()
+@click.group(cls=AliasedGroup)
 @click.version_option(version="0.1.0", prog_name="harness")
 @click.option("--debug", is_flag=True, help="Enable verbose debug logging")
 def main(debug: bool) -> None:
@@ -108,10 +92,9 @@ def main(debug: bool) -> None:
     import logging
 
     log_level = logging.DEBUG if debug else logging.WARNING
-
     structlog.configure(
         processors=[
-            structlog.stdlib.add_log_level,
+            structlog.stdlib.add_level_to_event_dict if hasattr(structlog.stdlib, "add_level_to_event_dict") else structlog.stdlib.add_log_level,
             structlog.dev.ConsoleRenderer(),
         ],
         wrapper_class=structlog.make_filtering_bound_logger(log_level),
@@ -119,98 +102,90 @@ def main(debug: bool) -> None:
     )
 
 
-# --- Register Command Groups ---
-main.add_command(plugin_group, name="plugin")
-main.add_command(tool_group, name="tool")
-main.add_command(bridge_group, name="bridge")
-main.add_command(agent_group, name="agent")
-main.add_command(creator_group, name="creator")
-main.add_command(mcp_group, name="mcp")
-main.add_command(config_group, name="config")
-main.add_command(skills_group, name="skills")
-main.add_command(okf_group, name="okf")
-main.add_command(knowledge_group, name="knowledge")
-main.add_command(session_group, name="session")
-main.add_command(context_group, name="context")
-main.add_command(antigravity_group, name="antigravity")
-main.add_command(data_group, name="data")
-main.add_command(datasets_group, name="datasets")
-main.add_command(doc_group, name="doc")
-main.add_command(doc_builder_group, name="doc-builder")
-main.add_command(doc_builder_group, name="hf-doc-builder")
-main.add_command(architect_group, name="architect")
-main.add_command(architect_group, name="harness-architect")
-main.add_command(gate_group, name="gate")
-main.add_command(gate_group, name="ai-native-harness")
-main.add_command(bigquery_group, name="bigquery")
-main.add_command(bigquery_group, name="bq")
-main.add_command(calibrator_group, name="calibrate")
-main.add_command(calibrator_group, name="calibrator")
-main.add_command(validation_loop_group, name="validation-loop")
-main.add_command(validation_loop_group, name="validate-loop")
-main.add_command(model_router_group, name="router")
-main.add_command(model_router_group, name="model-router")
-main.add_command(compass_group, name="compass")
-main.add_command(compass_group, name="harness-compass")
-main.add_command(gradio_group, name="gradio")
-main.add_command(gradio_group, name="gradio-app")
-main.add_command(gemini_vercel_group, name="gemini-vercel")
-main.add_command(gemini_vercel_group, name="streaming-chatbot")
-main.add_command(gemini_vercel_group, name="gemini-chat")
-main.add_command(pre_commit_security_group, name="pre-commit-security")
-main.add_command(pre_commit_security_group, name="security-guard")
-main.add_command(pre_commit_security_group, name="shift-left")
-main.add_command(eval_group, name="eval")
-main.add_command(eval_group, name="self-eval")
-main.add_command(uncertainty_group, name="uncertainty")
-main.add_command(uncertainty_group, name="uncertainty-guard")
-main.add_command(garf_group, name="garf")
-main.add_command(garf_group, name="garf-reporting")
-main.add_command(gis_group, name="gis")
-main.add_command(gis_group, name="open-source-gis")
-main.add_command(tau_group, name="tau")
-main.add_command(tau_group, name="coding-harness")
-main.add_command(network_forensics_group, name="network-forensics")
-main.add_command(network_forensics_group, name="network")
-main.add_command(network_forensics_group, name="net-diag")
-main.add_command(brain_miner_group, name="brain-miner")
-main.add_command(brain_miner_group, name="miner")
-main.add_command(brain_miner_group, name="artifact-miner")
-main.add_command(trajectory_group, name="trajectory")
-main.add_command(trajectory_group, name="trajectory-miner")
-main.add_command(trajectory_group, name="conversation-miner")
-main.add_command(temp_miner_group, name="temp")
-main.add_command(temp_miner_group, name="temp-miner")
-main.add_command(temp_miner_group, name="ephemeral-miner")
-main.add_command(rol_group, name="rol")
-main.add_command(rol_group, name="obligation-ledger")
-main.add_command(facet_group, name="facet")
-main.add_command(facet_group, name="differential-facet")
-main.add_command(redteam_group, name="redteam")
-main.add_command(icm_group, name="icm")
-main.add_command(icm_group, name="icm-architect")
+# --- Register Canonical Command Groups (Rule 6: Single-Source Co-located Block) ---
+_CANONICAL_GROUPS = [
+    ("agent", agent_group),
+    ("antigravity", antigravity_group),
+    ("architect", architect_group),
+    ("bigquery", bigquery_group),
+    ("brain-miner", brain_miner_group),
+    ("bridge", bridge_group),
+    ("calibrate", calibrator_group),
+    ("compass", compass_group),
+    ("config", config_group),
+    ("context", context_group),
+    ("creator", creator_group),
+    ("data", data_group),
+    ("datasets", datasets_group),
+    ("doc", doc_group),
+    ("doc-builder", doc_builder_group),
+    ("eval", eval_group),
+    ("facet", facet_group),
+    ("garf", garf_group),
+    ("gate", gate_group),
+    ("gemini-vercel", gemini_vercel_group),
+    ("gis", gis_group),
+    ("gradio", gradio_group),
+    ("icm", icm_group),
+    ("knowledge", knowledge_group),
+    ("mcp", mcp_group),
+    ("network-forensics", network_forensics_group),
+    ("okf", okf_group),
+    ("plugin", plugin_group),
+    ("pre-commit-security", pre_commit_security_group),
+    ("redteam", redteam_group),
+    ("rol", rol_group),
+    ("router", model_router_group),
+    ("session", session_group),
+    ("skills", skills_group),
+    ("tau", tau_group),
+    ("temp", temp_miner_group),
+    ("tool", tool_group),
+    ("trajectory", trajectory_group),
+    ("uncertainty", uncertainty_group),
+    ("validation-loop", validation_loop_group),
+]
+
+for name, grp in _CANONICAL_GROUPS:
+    main.add_command(grp, name=name)
 
 # --- Register Standalone Commands ---
-main.add_command(init_cli, name="init")
-main.add_command(services_cli, name="services")
-main.add_command(events_cli, name="events")
-main.add_command(introspect_cli, name="introspect")
-main.add_command(run_cli, name="run")
-main.add_command(ui_cli, name="ui")
-main.add_command(watch_cli, name="watch")
-main.add_command(apply_cli, name="apply")
-main.add_command(assess_compute_cli, name="assess-compute")
-main.add_command(reflect_cli, name="reflect")
+_STANDALONE_COMMANDS = [
+    ("apply", apply_cli),
+    ("assess-compute", assess_compute_cli),
+    ("events", events_cli),
+    ("init", init_cli),
+    ("introspect", introspect_cli),
+    ("reflect", reflect_cli),
+    ("run", run_cli),
+    ("services", services_cli),
+    ("ui", ui_cli),
+    ("watch", watch_cli),
+]
 
-# --- Register Top-Level Aliases ---
-main.add_command(creator_build, name="create")
-main.add_command(creator_build, name="scaffold")
-main.add_command(creator_validate, name="validate")
-main.add_command(creator_archetypes, name="archetypes")
+for name, cmd in _STANDALONE_COMMANDS:
+    main.add_command(cmd, name=name)
+
+# --- Register Declared Aliases & Top-Level Shortcuts ---
+for alias, target in CLI_ALIASES.items():
+    main.add_alias(alias, target)
+
+# Top-level direct shortcuts
+main.add_alias("create", creator_build)
+main.add_alias("scaffold", creator_build)
+main.add_alias("validate", creator_validate)
+main.add_alias("archetypes", creator_archetypes)
+
+# Update docstring with dynamically formatted command catalog
+main.__doc__ = generate_cli_docstring(main)
 
 
 __all__ = [
+    "CLI_ALIASES",
+    "AliasedGroup",
     "_run_async",
+    "generate_cli_docstring",
+    "get_command_catalog",
     "main",
 ]
 
