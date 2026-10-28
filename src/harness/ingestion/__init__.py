@@ -3,6 +3,7 @@
 from .converter import ConversionError, ConvertedPlugin, RepoConverter
 from .fetcher import DEFAULT_PLUGIN_DIR, FetchError, RepoFetcher
 from .inspector import InspectionError, RepoInspector
+from .monorepo import detect_monorepo_subprojects, partition_monorepo
 from .pipeline import PluginIngestionEngine, PluginIngestionPipeline
 from .pypi_converter import PyPIConverter, PyPIFetchError
 from .resolvers import (
@@ -35,4 +36,6 @@ __all__ = [
     "ResolvedSource",
     "SourceResolver",
     "UniversalSourceRegistry",
+    "detect_monorepo_subprojects",
+    "partition_monorepo",
 ]

@@ -13,6 +13,10 @@ from harness.ingestion.inspector.ast_extractor import (
     try_python_ast,
 )
 from harness.ingestion.inspector.exceptions import InspectionError
+from harness.ingestion.inspector.js_ts_extractor import (
+    extract_js_ts_entrypoints,
+    try_js_ts_inspection,
+)
 from harness.ingestion.inspector.manifest_strategies import (
     convert_mcp_json,
     derive_plugin_name,
@@ -63,11 +67,11 @@ class RepoInspector:
             if manifest:
                 logger.info("Synthesized manifest from pyproject.toml", plugin=manifest.name)
 
-        # Strategy 5: package.json
+        # Strategy 5: JavaScript / TypeScript deep AST inspection & package.json
         if manifest is None:
-            manifest = try_package_json(repo_dir)
+            manifest = try_js_ts_inspection(repo_dir) or try_package_json(repo_dir)
             if manifest:
-                logger.info("Synthesized manifest from package.json", plugin=manifest.name)
+                logger.info("Synthesized manifest from JS/TS inspection", plugin=manifest.name, entrypoints=len(manifest.entrypoints))
 
         # Strategy 6: requirements.txt + AST extraction
         if manifest is None:

@@ -14,6 +14,15 @@ from harness.services.pyrit_scanner import (
     DefaultPyritScannerService,
     PyritScannerService,
 )
+from plugins.security_and_forensics.pyrit_red_teaming.algorithms import (
+    audit_attack_trajectory,
+    generate_jailbreak_tree,
+    orchestrate_crescendo_attack,
+    score_risk_and_harm,
+)
+from plugins.security_and_forensics.pyrit_red_teaming.converters import (
+    apply_prompt_converters,
+)
 from plugins.security_and_forensics.pyrit_red_teaming.tools import (
     redteam_fuzz_prompt,
     redteam_jailbreak_audit,
@@ -70,9 +79,14 @@ plugin = PyritRedTeamPlugin()
 __all__ = [
     "PYRIT_SCANNER_SERVICE_KEY",
     "PyritRedTeamPlugin",
+    "apply_prompt_converters",
+    "audit_attack_trajectory",
+    "generate_jailbreak_tree",
+    "orchestrate_crescendo_attack",
     "plugin",
     "redteam_fuzz_prompt",
     "redteam_jailbreak_audit",
     "redteam_scorecard_report",
     "redteam_tool_tampering_check",
+    "score_risk_and_harm",
 ]

@@ -29,11 +29,14 @@ class TestFlywheelBridge:
 
         bridge = FlywheelBridgePlugin(flywheel_path=tmp_path)
         assert bridge.provides == [FLYWHEEL_BRIDGE_KEY]
+        assert bridge.skill_count == 0
 
         await bridge.on_load(ctx)
         assert ctx.has(FLYWHEEL_BRIDGE_KEY)
+        assert bridge.skill_count == 2
 
         await bridge.on_enable()
+        assert bridge.skill_count == 2
         tool_reg: ToolRegistry = ctx.require(TOOL_REGISTRY_KEY)
 
         assert "skill.code_reviewer" in tool_reg
@@ -45,5 +48,7 @@ class TestFlywheelBridge:
 
         await bridge.on_disable()
         assert "skill.code_reviewer" not in tool_reg
+        assert bridge.skill_count == 2
 
         await bridge.on_unload()
+        assert bridge.skill_count == 0

@@ -1,10 +1,10 @@
-"""Unit tests for domain.pyrit_redteaming plugin."""
+"""Unit tests for domain.pyrit_red_teaming plugin."""
 
 from __future__ import annotations
 
 import pytest
 
-from plugins.security_and_forensics.pyrit_redteaming.main import (
+from plugins.security_and_forensics.pyrit_red_teaming.main import (
     apply_prompt_converters,
     audit_attack_trajectory,
     generate_jailbreak_tree,

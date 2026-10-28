@@ -20,7 +20,7 @@ Ecosystem bridges are specialized `HarnessPlugin` implementations that wrap exte
 | --- | --- | --- |
 | [`base.py`](base.py) | `EcosystemBridgePlugin` | Abstract base class establishing bridge lifecycle and status reporting. |
 | [`em_cubed.py`](em_cubed.py) | `EmCubedPlugin` (`EM_CUBED_BRIDGE_KEY`) | Bridges Em-Cubed neuro-symbolic OS, Prolog theorem provers, and Z3 solvers. |
-| [`flywheel.py`](flywheel.py) | `FlywheelBridgePlugin` (`FLYWHEEL_BRIDGE_KEY`) | Discovers and indexes 800+ domain skills from the local or shared Skill Flywheel catalog. |
+| [`flywheel.py`](flywheel.py) | `FlywheelBridgePlugin` (`FLYWHEEL_BRIDGE_KEY`) | Discovers and indexes domain skills from the local or shared Skill Flywheel catalog. |
 | [`locator.py`](locator.py) | `EcosystemLocator` | Multi-strategy filesystem locator for discovery of sibling projects. |
 | [`memtext.py`](memtext.py) | `MemtextServicePlugin` (`MEMORY_SERVICE_KEY`) | Bridges Memtext persistent episodic memory and autobiographical retrieval. |
 

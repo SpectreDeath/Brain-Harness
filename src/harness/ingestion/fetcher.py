@@ -9,6 +9,7 @@ Supports:
 
 from __future__ import annotations
 
+import asyncio
 import datetime
 import hashlib
 import json
@@ -21,6 +22,7 @@ from typing import Any
 import httpx
 import structlog
 
+from harness.ingestion.providers import RepoProvider, parse_repo_source
 from harness.plugins.loader import (
     DEFAULT_MAX_ZIP_FILES,
     DEFAULT_MAX_ZIP_TOTAL_BYTES,
@@ -190,41 +192,38 @@ class RepoFetcher:
                 self._emit_event(EventType.REPO_FETCH_COMPLETED, source_clean, path=str(res), remote_zip=True)
                 return res
 
-            # 4. GitHub Tree URL (e.g. https://github.com/owner/repo/tree/my-branch)
-            tree_match = _GITHUB_TREE_RE.match(source_clean)
-            if tree_match:
-                owner, repo, tree_ref = tree_match.group(1), tree_match.group(2), tree_match.group(3)
-                effective_ref = tree_ref if ref == "main" else ref
-                res = await self._fetch_github(owner, repo, ref=effective_ref, force=force)
-                self._emit_event(EventType.REPO_FETCH_COMPLETED, source_clean, path=str(res), owner=owner, repo=repo)
+            # 4. Multi-provider URL or shorthand (GitHub, GitLab, Codeberg, Bitbucket, Generic Git)
+            parsed = parse_repo_source(source_clean, default_ref=ref)
+            if parsed is not None:
+                if parsed.provider == RepoProvider.GENERIC_GIT:
+                    res = await self._fetch_git_clone(
+                        parsed.clone_url or source_clean,
+                        parsed.repo,
+                        ref=ref,
+                        force=force,
+                    )
+                    self._emit_event(EventType.REPO_FETCH_COMPLETED, source_clean, path=str(res), provider=parsed.provider.value)
+                    return res
+
+                res = await self._fetch_remote_repo_archive(
+                    parsed.provider.value,
+                    parsed.owner,
+                    parsed.repo,
+                    ref=parsed.ref or ref,
+                    zip_url=parsed.zip_url,
+                    force=force,
+                )
+                self._emit_event(
+                    EventType.REPO_FETCH_COMPLETED,
+                    source_clean,
+                    path=str(res),
+                    owner=parsed.owner,
+                    repo=parsed.repo,
+                    provider=parsed.provider.value,
+                )
                 return res
 
-            # 5. GitHub Archive URL (e.g. https://github.com/owner/repo/archive/refs/tags/v1.0.zip)
-            archive_match = _GITHUB_ARCHIVE_RE.match(source_clean)
-            if archive_match:
-                owner, repo, archive_ref = archive_match.group(1), archive_match.group(2), archive_match.group(3)
-                effective_ref = archive_ref if ref == "main" else ref
-                res = await self._fetch_github(owner, repo, ref=effective_ref, force=force)
-                self._emit_event(EventType.REPO_FETCH_COMPLETED, source_clean, path=str(res), owner=owner, repo=repo)
-                return res
-
-            # 6. GitHub SSH URL (e.g. git@github.com:owner/repo.git)
-            ssh_match = _GITHUB_SSH_RE.match(source_clean)
-            if ssh_match:
-                owner, repo = ssh_match.group(1), ssh_match.group(2)
-                res = await self._fetch_github(owner, repo, ref=ref, force=force)
-                self._emit_event(EventType.REPO_FETCH_COMPLETED, source_clean, path=str(res), owner=owner, repo=repo)
-                return res
-
-            # 7. Standard GitHub URL or owner/repo shorthand
-            match = _GITHUB_URL_RE.match(source_clean)
-            if match:
-                owner, repo = match.group(1), match.group(2)
-                res = await self._fetch_github(owner, repo, ref=ref, force=force)
-                self._emit_event(EventType.REPO_FETCH_COMPLETED, source_clean, path=str(res), owner=owner, repo=repo)
-                return res
-
-            err = FetchError(source, "Not a valid GitHub URL, remote ZIP URL, or local path")
+            err = FetchError(source, "Not a valid repository URL, remote ZIP URL, or local path")
             self._emit_event(EventType.REPO_FETCH_ERROR, source_clean, error=str(err))
             raise err
         except Exception as e:
@@ -353,24 +352,28 @@ class RepoFetcher:
             stem=filename,
         )
 
-    async def _fetch_github(
+    async def _fetch_remote_repo_archive(
         self,
+        provider: str,
         owner: str,
         repo: str,
         *,
         ref: str = "main",
+        zip_url: str | None = None,
         force: bool = False,
     ) -> Path:
-        """Download a GitHub repository as a ZIP and extract it."""
-        plugin_name = f"{owner}__{repo}"
+        """Download a remote repository archive (GitHub, GitLab, Codeberg, Bitbucket) and extract it."""
+        clean_owner = owner.replace("/", "_")
+        plugin_name = f"{clean_owner}__{repo}" if provider == "github" else f"{provider}__{clean_owner}__{repo}"
         target_dir = self._plugin_dir / plugin_name
+        expected_src = f"{owner}/{repo}" if provider == "github" else f"{provider}:{owner}/{repo}"
 
         if (
             target_dir.exists()
             and not force
             and self._is_cache_valid(
                 target_dir,
-                expected_source=f"{owner}/{repo}",
+                expected_source=expected_src,
                 expected_ref=ref,
             )
         ):
@@ -384,16 +387,30 @@ class RepoFetcher:
         if target_dir.exists():
             shutil.rmtree(target_dir, ignore_errors=True)
 
-        # Download ZIP from GitHub API
-        zip_url = f"https://github.com/{owner}/{repo}/archive/refs/heads/{ref}.zip"
-        zip_path = self._plugin_dir / f"{plugin_name}.zip"
+        if not zip_url:
+            if provider == "gitlab":
+                zip_url = f"https://gitlab.com/{owner}/{repo}/-/archive/{ref}/{repo}-{ref}.zip"
+            elif provider == "codeberg":
+                zip_url = f"https://codeberg.org/{owner}/{repo}/archive/{ref}.zip"
+            elif provider == "bitbucket":
+                zip_url = f"https://bitbucket.org/{owner}/{repo}/get/{ref}.zip"
+            else:
+                zip_url = f"https://github.com/{owner}/{repo}/archive/refs/heads/{ref}.zip"
 
-        headers: dict[str, str] = {"Accept": "application/vnd.github+json"}
-        if self._token:
+        zip_path = self._plugin_dir / f"{plugin_name}.zip"
+        headers: dict[str, str] = {}
+        if provider == "github":
+            headers["Accept"] = "application/vnd.github+json"
+            if self._token:
+                headers["Authorization"] = f"Bearer {self._token}"
+        elif provider == "gitlab" and self._token:
+            headers["PRIVATE-TOKEN"] = self._token
+        elif self._token:
             headers["Authorization"] = f"Bearer {self._token}"
 
         logger.info(
-            "Downloading repository",
+            "Downloading repository archive",
+            provider=provider,
             owner=owner,
             repo=repo,
             ref=ref,
@@ -409,9 +426,11 @@ class RepoFetcher:
             # Try alternate ref names if 'main' fails
             if ref == "main" and e.response.status_code == 404:
                 logger.info("Branch 'main' not found, trying 'master'")
-                return await self._fetch_github(owner, repo, ref="master", force=force)
-            # Try tag download if heads failed
-            if e.response.status_code == 404:
+                return await self._fetch_remote_repo_archive(
+                    provider, owner, repo, ref="master", force=force
+                )
+            # Try tag download if heads failed on GitHub
+            if provider == "github" and e.response.status_code == 404:
                 tag_url = f"https://github.com/{owner}/{repo}/archive/refs/tags/{ref}.zip"
                 try:
                     async with httpx.AsyncClient(follow_redirects=True, timeout=120.0) as client:
@@ -420,8 +439,8 @@ class RepoFetcher:
                         zip_path,
                         target_dir,
                         cleanup_zip=True,
-                        source=f"{owner}/{repo}",
-                        source_type="github",
+                        source=expected_src,
+                        source_type=provider,
                         ref=ref,
                         stem=repo,
                     )
@@ -441,11 +460,94 @@ class RepoFetcher:
             zip_path,
             target_dir,
             cleanup_zip=True,
-            source=f"{owner}/{repo}",
-            source_type="github",
+            source=expected_src,
+            source_type=provider,
             ref=ref,
             stem=repo,
         )
+
+    async def _fetch_github(
+        self,
+        owner: str,
+        repo: str,
+        *,
+        ref: str = "main",
+        force: bool = False,
+    ) -> Path:
+        """Download a GitHub repository as a ZIP and extract it."""
+        return await self._fetch_remote_repo_archive("github", owner, repo, ref=ref, force=force)
+
+    async def _fetch_git_clone(
+        self,
+        clone_url: str,
+        repo_name: str,
+        *,
+        ref: str = "main",
+        force: bool = False,
+    ) -> Path:
+        """Clone generic Git repository via local git binary."""
+        plugin_name = f"git__{repo_name}"
+        target_dir = self._plugin_dir / plugin_name
+
+        if (
+            target_dir.exists()
+            and not force
+            and self._is_cache_valid(
+                target_dir,
+                expected_source=clone_url,
+                expected_ref=ref,
+            )
+        ):
+            logger.info("Generic git repo already cached", repo=repo_name, path=str(target_dir))
+            return target_dir
+
+        if target_dir.exists():
+            shutil.rmtree(target_dir, ignore_errors=True)
+
+        git_bin = shutil.which("git")
+        if not git_bin:
+            raise FetchError(clone_url, "git executable not found on PATH for generic git clone")
+
+        target_dir.mkdir(parents=True, exist_ok=True)
+        cmd = [git_bin, "clone", "--depth", "1", "-b", ref, clone_url, str(target_dir)]
+        try:
+            proc = await asyncio.create_subprocess_exec(
+                *cmd,
+                stdout=asyncio.subprocess.PIPE,
+                stderr=asyncio.subprocess.PIPE,
+            )
+            _, stderr = await proc.communicate()
+            if proc.returncode != 0:
+                shutil.rmtree(target_dir, ignore_errors=True)
+                cmd = [git_bin, "clone", "--depth", "1", clone_url, str(target_dir)]
+                proc = await asyncio.create_subprocess_exec(
+                    *cmd,
+                    stdout=asyncio.subprocess.PIPE,
+                    stderr=asyncio.subprocess.PIPE,
+                )
+                _, stderr = await proc.communicate()
+                if proc.returncode != 0:
+                    raise FetchError(clone_url, f"git clone failed: {stderr.decode('utf-8', errors='ignore')[:200]}")
+        except Exception as e:
+            shutil.rmtree(target_dir, ignore_errors=True)
+            if isinstance(e, FetchError):
+                raise
+            raise FetchError(clone_url, f"git subprocess failed: {e}") from e
+
+        git_dir = target_dir / ".git"
+        if git_dir.exists():
+            shutil.rmtree(git_dir, ignore_errors=True)
+
+        meta = {
+            "source": clone_url,
+            "source_type": "generic_git",
+            "hash": hashlib.sha256(clone_url.encode("utf-8")).hexdigest()[:12],
+            "ref": ref,
+            "stem": repo_name,
+            "cached_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+        }
+        (target_dir / ".cache_meta.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
+        return target_dir
 
     async def _fetch_local_zip(self, zip_path: Path, force: bool = False) -> Path:
         """Extract a local ZIP file into the plugin directory."""

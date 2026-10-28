@@ -144,6 +144,37 @@ class PluginIngestionPipeline:
         )
         return plugin
 
+    async def ingest_monorepo(
+        self,
+        source: str | Path,
+        *,
+        ref: str = "main",
+        force: bool = False,
+        isolation: IsolationMode | None = None,
+        force_isolation: IsolationMode | None = None,
+    ) -> list[HarnessPlugin]:
+        """Download, detect subprojects, and synthesize domain-partitioned plugins per Rule 18."""
+        from harness.ingestion.monorepo import partition_monorepo
+
+        source_str = str(source)
+        logger.info("Ingesting monorepo source", source=source_str)
+
+        resolved: ResolvedSource = await self.registry.resolve(
+            source_str,
+            target_base_dir=self.plugin_dir,
+            ref=ref,
+            force=force,
+            github_token=self.fetcher.github_token,
+            event_bus=self.event_bus,
+        )
+        eff_isolation = isolation if isolation is not None else force_isolation
+        return partition_monorepo(
+            resolved.directory,
+            inspector=self.inspector,
+            converter=self.converter,
+            force_isolation=eff_isolation,
+        )
+
     async def validate(
         self,
         source: str | Path,
@@ -184,6 +215,12 @@ class PluginIngestionPipeline:
         path = Path(source).resolve()
         if not path.exists():
             path = self.fetcher.plugin_dir / source
+
+        if not path.exists() and self.fetcher.plugin_dir.exists():
+            for child in self.fetcher.plugin_dir.iterdir():
+                if child.is_dir() and (child.name == source or child.name.startswith(f"{source}__")):
+                    path = child
+                    break
 
         if not path.exists():
             raise FileNotFoundError(f"Plugin directory not found: {source}")

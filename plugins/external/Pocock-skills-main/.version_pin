@@ -1,0 +1,9 @@
+{
+  "name": "mattpocock-skills",
+  "upstream_url": "https://github.com/mattpocock/skills",
+  "version": "1.2.3",
+  "ref": "v1.2.3",
+  "commit_hash": "2181519d5b7a1e0eb7dfd67f56cf33bcbe292db3",
+  "pinned_at": "2026-10-25T11:00:00Z",
+  "update_procedure": "harness ingest https://github.com/mattpocock/skills --ref vX.Y.Z --force"
+}

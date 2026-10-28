@@ -35,6 +35,7 @@ class TestMCPServer:
         init_req = {"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {}}
         init_resp = await server.handle_request(init_req)
         assert init_resp["result"]["serverInfo"]["name"] == "harness-mcp"
+        assert init_resp["result"]["protocolVersion"] == "2024-11-05"
 
         # 2. Tools List
         list_req = {"jsonrpc": "2.0", "id": 2, "method": "tools/list", "params": {}}
@@ -58,3 +59,27 @@ class TestMCPServer:
         bad_req = {"jsonrpc": "2.0", "id": 4, "method": "unknown/method"}
         bad_resp = await server.handle_request(bad_req)
         assert "error" in bad_resp
+
+    async def test_protocol_version_pinning_and_negotiation(self) -> None:
+        from harness.mcp.protocol import (
+            DEFAULT_PROTOCOL_VERSION,
+            LATEST_PROTOCOL_VERSION,
+            SUPPORTED_PROTOCOL_VERSIONS,
+            negotiate_protocol_version,
+            validate_protocol_version,
+        )
+
+        assert DEFAULT_PROTOCOL_VERSION == "2024-11-05"
+        assert LATEST_PROTOCOL_VERSION == "2026-07-28"
+        assert "2024-11-05" in SUPPORTED_PROTOCOL_VERSIONS
+        assert "2026-07-28" in SUPPORTED_PROTOCOL_VERSIONS
+
+        assert validate_protocol_version("2024-11-05") is True
+        assert validate_protocol_version("2026-07-28") is True
+        assert validate_protocol_version("1999-01-01") is False
+
+        assert negotiate_protocol_version("2026-07-28") == "2026-07-28"
+        assert negotiate_protocol_version("2024-11-05") == "2024-11-05"
+        assert negotiate_protocol_version(None) == "2024-11-05"
+        assert negotiate_protocol_version("unsupported") == "2024-11-05"
+

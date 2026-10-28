@@ -1,6 +1,6 @@
 """Skill Flywheel bridge — mounts catalog skills as Harness tools.
 
-Connects to Skill Flywheel's catalog (839+ domain skills) and makes them
+Connects to Skill Flywheel's catalog and makes domain skills
 discoverable and invokable directly from Harness agents.
 """
 
@@ -54,6 +54,11 @@ class FlywheelBridgePlugin(EcosystemBridgePlugin[Any]):
     @property
     def description(self) -> str:
         return "Skill Flywheel Unified MCP Skill Server & Catalog Bridge"
+
+    @property
+    def skill_count(self) -> int:
+        """Return the number of currently discovered/mounted flywheel skills."""
+        return len(self._discovered_skills)
 
     async def init_substrate(self, root_path: Path) -> dict[str, dict[str, Any]]:
         self._discovered_skills = {}

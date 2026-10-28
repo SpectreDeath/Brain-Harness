@@ -98,3 +98,14 @@ class RepoConverter:
         )
 
         return plugin
+
+    def convert_monorepo(
+        self,
+        repo_dir: Path,
+        *,
+        force_isolation: IsolationMode | None = None,
+    ) -> list[HarnessPlugin]:
+        """Convert a monorepo into domain-partitioned plugins per Rule 18."""
+        from harness.ingestion.monorepo import partition_monorepo
+
+        return partition_monorepo(repo_dir, converter=self, force_isolation=force_isolation)

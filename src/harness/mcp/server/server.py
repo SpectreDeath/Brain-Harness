@@ -12,6 +12,7 @@ from harness.mcp.server.interceptors import (
     MCPTelemetryInterceptor,
 )
 from harness.mcp.server.registry import MCPRegistry
+from harness.mcp.server.http_transport import StreamableHttpServerTransport
 from harness.mcp.server.router import MCPMethodRouter
 from harness.mcp.server.transport import AsyncStdioServerTransport
 from harness.services.tools import ToolRegistry
@@ -25,7 +26,7 @@ if sys.platform == "win32":
 
 
 class HarnessMCPServer:
-    """STDIO-based Model Context Protocol server."""
+    """STDIO and Streamable HTTP Model Context Protocol server."""
 
     def __init__(
         self,
@@ -48,11 +49,25 @@ class HarnessMCPServer:
         self.router = router or MCPMethodRouter(
             self.registry, pipeline=self.pipeline, codec=self.codec
         )
+        event_bus = getattr(context, "event_bus", None) if context else None
         self.transport = AsyncStdioServerTransport(
             self.router,
             codec=self.codec,
-            event_bus=getattr(context, "event_bus", None) if context else None,
+            event_bus=event_bus,
         )
+        self.http_transport = StreamableHttpServerTransport(
+            self.router,
+            codec=self.codec,
+            event_bus=event_bus,
+        )
+
+    async def handle_http_post(
+        self,
+        body: str | bytes,
+        headers: dict[str, str] | None = None,
+    ) -> tuple[int, dict[str, str], str]:
+        """Process incoming HTTP POST payload via streamable HTTP transport."""
+        return await self.http_transport.handle_post(body, headers=headers)
 
     async def handle_request(self, request: dict[str, Any]) -> dict[str, Any]:
         """Process an incoming JSON-RPC MCP request dictionary."""

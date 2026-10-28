@@ -25,6 +25,20 @@ JSONRPC_INVALID_PARAMS = -32602
 JSONRPC_INTERNAL_ERROR = -32603
 
 DEFAULT_PROTOCOL_VERSION = "2024-11-05"
+LATEST_PROTOCOL_VERSION = "2026-07-28"
+SUPPORTED_PROTOCOL_VERSIONS: tuple[str, ...] = ("2024-11-05", "2026-07-28")
+
+
+def validate_protocol_version(version: str) -> bool:
+    """Return True if the requested protocol version is recognized and supported."""
+    return version in SUPPORTED_PROTOCOL_VERSIONS
+
+
+def negotiate_protocol_version(requested_version: str | None) -> str:
+    """Negotiate a mutually supported protocol version, defaulting to 2024-11-05."""
+    if requested_version and requested_version in SUPPORTED_PROTOCOL_VERSIONS:
+        return requested_version
+    return DEFAULT_PROTOCOL_VERSION
 
 
 @dataclass(frozen=True)
@@ -345,4 +359,23 @@ class MCPPrompt:
             "description": self.description,
             "arguments": self.arguments or [],
         }
+
+
+__all__ = [
+    "DEFAULT_PROTOCOL_VERSION",
+    "JSONRPC_INTERNAL_ERROR",
+    "JSONRPC_INVALID_PARAMS",
+    "JSONRPC_INVALID_REQUEST",
+    "JSONRPC_METHOD_NOT_FOUND",
+    "JSONRPC_PARSE_ERROR",
+    "LATEST_PROTOCOL_VERSION",
+    "MCPNotification",
+    "MCPPrompt",
+    "MCPProtocolCodec",
+    "MCPRequest",
+    "MCPResource",
+    "SUPPORTED_PROTOCOL_VERSIONS",
+    "negotiate_protocol_version",
+    "validate_protocol_version",
+]
 

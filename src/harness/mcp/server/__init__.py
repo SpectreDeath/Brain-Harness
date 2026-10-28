@@ -26,6 +26,7 @@ from harness.mcp.server.interceptors import (
     MCPInterceptorPipeline,
     MCPTelemetryInterceptor,
 )
+from harness.mcp.server.http_transport import StreamableHttpServerTransport
 from harness.mcp.server.registry import MCPRegistry
 from harness.mcp.server.router import MCPMethodRouter
 from harness.mcp.server.server import HarnessMCPServer
@@ -43,4 +44,5 @@ __all__ = [
     "MCPRequestContext",
     "MCPTelemetryInterceptor",
     "MCP_REGISTRY_KEY",
+    "StreamableHttpServerTransport",
 ]

@@ -748,8 +748,11 @@
   "dependencies": [],
   "metadata": {
     "source_format": "agent_skills_bundle",
-    "skills_count": 35
+    "skills_count": 35,
+    "pinned_version": "1.2.3",
+    "pinned_at": "2026-10-25T11:00:00Z",
+    "update_procedure": "harness ingest https://github.com/mattpocock/skills --ref vX.Y.Z --force"
   },
-  "source_url": null,
-  "source_commit": null
+  "source_url": "https://github.com/mattpocock/skills",
+  "source_commit": "2181519d5b7a1e0eb7dfd67f56cf33bcbe292db3"
 }

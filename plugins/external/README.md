@@ -24,7 +24,19 @@ flowchart TD
 
 | Plugin | Isolation | Provided Services | Summary |
 |---|---|---|---|
-| [Pocock-skills-main](Pocock-skills-main/README.md) | `subprocess` | None | Matt Pocock's agent skills for real engineering — grilling, spec/ticket flows, TDD, code review, domain modelling and... |
+| [Pocock-skills-main](Pocock-skills-main/README.md) | `subprocess` | None | Pinned v1.2.3 (`2181519d`). Matt Pocock's agent skills for real engineering — grilling, spec/ticket flows, TDD, code review, domain modelling. |
+
+---
+
+## Vendored Upstream Update Procedure
+
+Vendored external snapshots maintain a co-located `.version_pin` recording upstream repository provenance, Git commit hash, and semantic release tag.
+
+To update a vendored snapshot to a newer upstream release:
+```bash
+# Ingest upstream release and re-sandbox
+harness ingest https://github.com/mattpocock/skills --ref v1.3.0 --force
+```
 
 ---
 
@@ -34,3 +46,5 @@ flowchart TD
 2. Typed Service Registration (Rule 2): All services register using typed `ServiceKey[T]` contracts.
 3. Subprocess Isolation (Rule 5 & 7): Untrusted and heavy external dependencies execute in isolated subprocess sandboxes with lazy venv provisioning.
 4. Zero-Fork Config (Rule 44): Baseline operational budgets reside in co-located `config.default.yaml`.
+5. Version Pinning: All vendored external snapshots must carry a `.version_pin` and declared `source_commit`.
+
