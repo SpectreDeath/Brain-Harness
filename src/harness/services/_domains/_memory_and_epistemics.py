@@ -181,3 +181,13 @@ from harness.services.memory_decay import (
     MemoryNode,
     resolve_memory_decay,
 )
+
+from harness.services.headroom_optimizer import (
+    HEADROOM_CONTEXT_OPTIMIZER_KEY,
+    CacheDriftResult,
+    ContentCompressResult,
+    DedupTurnsResult,
+    HeadroomContextOptimizerService,
+    SavingsLedger,
+    ThinkingCompactResult,
+)

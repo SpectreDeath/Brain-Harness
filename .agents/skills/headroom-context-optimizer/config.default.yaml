@@ -1,0 +1,22 @@
+# Headroom Context Optimizer Operational Budgets
+version: "1.0.0"
+
+# Operational thresholds
+min_dedup_lines: 3
+min_dedup_chars: 40
+keep_last_thinking_turns: 2
+preserve_recent_messages: 4
+max_json_array_rows: 50
+cache_warning_threshold: 1
+target_compression_ratio: 0.60
+
+# Strategy enable flags
+enable_content_router: true
+enable_smart_crusher: true
+enable_ccr_dedup: true
+enable_cache_alignment_check: true
+enable_thinking_compaction: true
+
+# Zero-fork extension lists
+extra_preserve_keys: []
+extra_volatile_patterns: []

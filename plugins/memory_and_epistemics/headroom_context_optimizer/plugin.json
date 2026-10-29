@@ -1,0 +1,111 @@
+{
+  "name": "plugin.headroom_context_optimizer",
+  "version": "1.0.0",
+  "description": "Adaptive context optimization layer for autonomous agent steps with content routing, SmartCrusher, CCR deduplication, and cache drift detection",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "category": "memory_and_epistemics",
+  "author": "Brain Harness Forge Engine",
+  "provides": [
+    "memory.headroom_context_optimizer"
+  ],
+  "entrypoints": [
+    {
+      "name": "headroom_compress_content",
+      "description": "Route and compress arbitrary content (code, JSON, logs, diffs, text) using AST and format-aware compressors",
+      "parameters": [
+        {
+          "name": "content",
+          "type": "string",
+          "description": "Raw string content to compress",
+          "required": true
+        },
+        {
+          "name": "content_type",
+          "type": "string",
+          "description": "Optional content type hint (code, json, log, diff, search, text)",
+          "required": false
+        },
+        {
+          "name": "target_ratio",
+          "type": "number",
+          "description": "Target compression ratio between 0.1 and 1.0 (default: 0.6)",
+          "required": false
+        },
+        {
+          "name": "preserve_keys",
+          "type": "array",
+          "description": "Keys to unconditionally preserve when compacting JSON",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "headroom_dedup_turns",
+      "description": "Cross-Context Retrieval (CCR): Deduplicate repeating tool returns and observations across conversation turns",
+      "parameters": [
+        {
+          "name": "messages",
+          "type": "array",
+          "description": "List of conversation messages ({role, content})",
+          "required": true
+        },
+        {
+          "name": "min_lines",
+          "type": "integer",
+          "description": "Minimum line count threshold to fold into a digest marker (default: 3)",
+          "required": false
+        },
+        {
+          "name": "min_chars",
+          "type": "integer",
+          "description": "Minimum character threshold to fold (default: 40)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "headroom_detect_cache_drift",
+      "description": "Inspect system prompt for volatile elements (UUIDs, timestamps, hashes) that bust prompt cache prefixes",
+      "parameters": [
+        {
+          "name": "system_prompt",
+          "type": "string",
+          "description": "System prompt text to analyze",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "headroom_compact_thinking",
+      "description": "Compact prior-turn extended thinking reasoning blocks into deterministic summarized markers",
+      "parameters": [
+        {
+          "name": "messages",
+          "type": "array",
+          "description": "List of conversation messages containing thinking blocks",
+          "required": true
+        },
+        {
+          "name": "keep_last_turns",
+          "type": "integer",
+          "description": "Number of recent assistant turns to leave thinking blocks intact (default: 2)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "headroom_savings_metrics",
+      "description": "Inspect session context savings, trimmed tokens, and compression ledger",
+      "parameters": [
+        {
+          "name": "reset",
+          "type": "boolean",
+          "description": "Whether to reset the active session savings ledger (default: false)",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

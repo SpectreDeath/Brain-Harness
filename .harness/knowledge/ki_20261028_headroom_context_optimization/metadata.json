@@ -1,0 +1,89 @@
+{
+  "id": "ki_20261028_headroom_context_optimization",
+  "title": "Headroom Context Optimization Layer: Content Routing, SmartCrusher, Cross-Context Retrieval (CCR), and Detector-Only Cache Alignment",
+  "category": "memory_and_epistemics",
+  "created_at": "2026-10-28T19:00:00Z",
+  "author": "Headroom Contributors (v0.41.0, Apache-2.0; synthesized by Brain Harness)",
+  "source": {
+    "title": "Headroom: The Context Optimization Layer for LLM Applications",
+    "url": "https://github.com/headroom-ai/headroom",
+    "git_origin": "D:/GitHub/cloned/headroom",
+    "git_commit": "d75a8a1",
+    "upstream_reference": "headroom-ai v0.41.0"
+  },
+  "tags": [
+    "context_optimization",
+    "token_budgeting",
+    "content_router",
+    "smart_crusher",
+    "cross_context_retrieval",
+    "ccr_markers",
+    "cache_alignment",
+    "prompt_cache_hotzone",
+    "thinking_compactor",
+    "lossless_vs_lossy_compaction",
+    "structural_parsers"
+  ],
+  "edges": [
+    {
+      "type": "references_code",
+      "target": "D:/GitHub/cloned/headroom/headroom/transforms",
+      "target_kind": "source",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Primary transform implementations for ContentRouter, SmartCrusher, CCR, and CacheAligner"
+    },
+    {
+      "type": "became_plugin",
+      "target": "plugins/memory_and_epistemics/headroom_context_optimizer",
+      "target_kind": "plugin",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "IoC plugin registering HeadroomContextOptimizerService and 5 ReAct tools"
+    },
+    {
+      "type": "became_skill",
+      "target": "headroom-context-optimizer",
+      "target_kind": "skill",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Operational agent skill providing 5-stage context optimization pipeline"
+    },
+    {
+      "type": "same_domain",
+      "target": "ki_20260913_context_types_04",
+      "target_kind": "ki",
+      "derived": true,
+      "confidence": 0.95,
+      "description": "Context compilation and type governance in memory_and_epistemics"
+    }
+  ],
+  "isnad": {
+    "claims": [
+      {
+        "assertion": "Format-aware syntactic content routing (ContentRouter) achieves 50-90% token reduction without semantic degradation, whereas blind uniform summarization destroys tabular structure and syntax boundaries.",
+        "evidence_type": "empirical_benchmark",
+        "source": "headroom: README.md & transforms/content_router.py",
+        "verified": true
+      },
+      {
+        "assertion": "Cross-Context Retrieval (CCR) deduplication replaces multi-turn repeated tool observations with deterministic SHA-256 digest markers ([CCR tool digest: <hash>]), stopping redundant observation bloat across multi-turn reasoning loops.",
+        "evidence_type": "architectural_axiom",
+        "source": "headroom: transforms/cross_turn_dedup.py & ccr/tool_injection.py",
+        "verified": true
+      },
+      {
+        "assertion": "The prompt cache hot zone (system prompt) must NEVER be mutated in place; dynamic UUIDs/timestamps must be surfaced via detector-only checks rather than dynamic in-place rewriting to prevent prompt cache prefix busts (PR-A2 invariant).",
+        "evidence_type": "prompt_caching_invariant",
+        "source": "headroom: transforms/cache_aligner.py PR-A2 / P2-23",
+        "verified": true
+      },
+      {
+        "assertion": "On Claude 4.6+ models, prior-turn extended thinking reasoning blocks are billed as input tokens; converting them deterministically into compressed text markers stops compounding billing costs without affecting active reasoning.",
+        "evidence_type": "cost_optimization_rule",
+        "source": "headroom: transforms/thinking_compactor.py",
+        "verified": true
+      }
+    ]
+  }
+}

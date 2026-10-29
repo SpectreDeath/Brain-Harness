@@ -58,6 +58,14 @@ __all__ = [
     "CODING_HARNESS_CALIBRATOR_SERVICE_KEY",
     "CONTEXT_COMPACTOR_KEY",
     "CONTEXT_OPTIMIZER_SERVICE_KEY",
+    # Headroom Context Optimizer
+    "HEADROOM_CONTEXT_OPTIMIZER_KEY",
+    "HeadroomContextOptimizerService",
+    "ContentCompressResult",
+    "DedupTurnsResult",
+    "CacheDriftResult",
+    "ThinkingCompactResult",
+    "SavingsLedger",
     "CONTEXT_TYPE_SYSTEM_KEY",
     "DATA_MANAGEMENT_SERVICE_KEY",
     # DeepSelect TopK
