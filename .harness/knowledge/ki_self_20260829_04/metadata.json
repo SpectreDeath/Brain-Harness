@@ -6,6 +6,7 @@
   "timestamp": "2026-08-29T15:17:00Z",
   "isnad": {
     "decision_id": "dec_20260829_04",
+    "timestamp": "2026-10-30T18:40:41.426947+00:00",
     "claims": [
       {
         "assertion": "Pre-LLM context optimizations must be strictly typed via ServiceKey[UnifiedContextPipelineService] and multi-agent swarm execution trees must be tracked via AgentExecutionGraphService with deterministic ASCII/JSON export seams and automated token rollups.",
@@ -55,5 +56,16 @@
     "self_reflection"
   ],
   "context": "Typed IoC Context Pipeline & Authoritative Swarm DAG Store",
-  "distilled_learning": "# KI: Typed IoC Context Pipeline & Authoritative Swarm DAG Store\n\n## Operational Summary\nPre-LLM context transformations and multi-agent swarm coordinate trees require deep, unified IoC service seams. Context pruning and AST RepoMap injection must be encapsulated behind strongly-typed service protoc"
+  "distilled_learning": "# KI: Typed IoC Context Pipeline & Authoritative Swarm DAG Store",
+  "schema_version": "1.0.0",
+  "category": "agent_orchestration",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-08-29T15:17:00Z"
 }

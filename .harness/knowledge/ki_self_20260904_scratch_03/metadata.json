@@ -1,7 +1,7 @@
 {
   "id": "ki_self_20260904_scratch_03",
   "title": "Typed ServiceContext Container Guarantee over Duck-Typed Introspection",
-  "category": "kernel_architecture",
+  "category": "developer_experience/architecture",
   "tags": [
     "ioc",
     "service-context",
@@ -17,5 +17,18 @@
     "src/harness/agent/context_optimizer.py",
     "AGENTS.md#Rule2"
   ],
-  "created_at": "2026-09-04T15:04:00Z"
+  "created_at": "2026-09-04T15:04:00Z",
+  "schema_version": "1.0.0",
+  "source_target": "Brain Harness Execution History",
+  "detected_format": "raw_docs",
+  "anchors": {},
+  "edges": [],
+  "isnad": {},
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "distilled_learning": "# Typed ServiceContext Container Guarantee over Duck-Typed Introspection"
 }

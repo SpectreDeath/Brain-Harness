@@ -6,6 +6,7 @@
   "timestamp": "2026-09-08T17:30:00Z",
   "isnad": {
     "decision_id": "dec_20260908_mantis_01",
+    "timestamp": "2026-10-30T18:40:39.522258+00:00",
     "claims": [
       {
         "assertion": "Decoupled sequential security review skills with isolated verification stages prevent model hallucination cascades and bound LLM reasoning budgets compared to single-prompt audits.",
@@ -72,5 +73,16 @@
     "repo_bridge"
   ],
   "context": "Google Mantis Decoupled Security Review Pipeline & Sandboxed Crash Verification",
-  "distilled_learning": "# KI: Google Mantis Decoupled Security Review Pipeline & Sandboxed Crash Verification\n\n## Operational Summary\nGoogle Mantis provides a battle-tested architecture for autonomous security review harnesses. Key insights bridged into Brain Harness include:\n1. **Decoupled Sequential Skills:** Rather than asking an LLM to find, verify, and fix bugs in a single prompt, Mantis breaks the review into distinct, verifiable phases (History, Summary, Plan, Research, Dedupe, Review, Critic, Reproduce, Chain, Patch, Calibrate, Report).\n2. **Empirical Crash Reproduction:** Flaws are not accepted as valid until a sandbox reproducer triggers a verifiable crash or sanitizer alert (ASAN/UBSAN).\n3. **Transactional Patch Isolation:** Candidate security fixes are tested in shadow directories against the reproducer; a patch is only certified if re-attack variants fail to bypass it.\n4. **OKF v0.2 & Content-Addressed Signatures:** Stable hashing across filepaths, CWEs, and symbol locations prevents redundant multi-agent reporting."
+  "distilled_learning": "# Knowledge Item: Google Mantis Decoupled Security Review Pipeline & Sandboxed Crash Verification",
+  "schema_version": "1.0.0",
+  "category": "security_and_forensics",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-09-08T17:30:00Z"
 }

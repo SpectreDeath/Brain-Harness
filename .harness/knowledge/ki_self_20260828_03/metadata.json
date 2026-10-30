@@ -37,5 +37,16 @@
     "self_reflection"
   ],
   "context": "Knowledge item ki_self_20260828_03: Inspect-Before-Edit Seam QA & Adversarial Diff Verification",
-  "distilled_learning": "### Distilled Heuristic\nAgents must never prematurely modify code without first mapping DAG component seams, authoring failing test contracts, and validating changes against strict git diffs."
+  "distilled_learning": "# Knowledge Item: Inspect-Before-Edit Seam QA & Adversarial Diff Verification",
+  "schema_version": "1.0.0",
+  "category": "agent_orchestration",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-08-28T18:46:00.000000+00:00"
 }

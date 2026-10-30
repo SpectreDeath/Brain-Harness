@@ -6,6 +6,7 @@
   "timestamp": "2026-09-08T18:13:00Z",
   "isnad": {
     "decision_id": "dec_20260908_magika_01",
+    "timestamp": "2026-10-30T18:40:39.504903+00:00",
     "claims": [
       {
         "assertion": "Deep learning inference over header, center, and footer byte chunks enables content type classification (~5ms) with 216 distinct model labels, overcoming heuristic magic byte collisions in libmagic.",
@@ -67,5 +68,16 @@
     "repo_bridge"
   ],
   "context": "Google Magika Deep Learning Content Type & MIME Detection Architecture",
-  "distilled_learning": "# KI: Google Magika Deep Learning Content Type & MIME Detection Architecture\\n\\n## Operational Summary\\nGoogle Magika provides an AI-powered alternative to classic `file`/`libmagic` utilities. Key architectural lessons bridged into Brain Harness include:\\n1. **Compact On-Device Neural Networks:** Rather than large generative LLMs, small 3MB CNN/MLP models provide deterministic, sub-10ms classification with high fidelity.\\n2. **Three-Chunk File Slicing:** Extracting 512 bytes from the head, center, and tail of a file reliably captures magic prefixes, structural syntax, and trailer metadata without reading gigabyte-scale files into memory.\\n3. **Domain Partitioning (Rule 18):** Decoupling the raw MIME detector from the defensive format forensics engine prevents monolithic tool sprawl.\\n4. **Empirical Polyglot Auditing:** Inspecting confidence margins and trailing byte blocks catches disguised zip slip and executable injection vectors."
+  "distilled_learning": "# Knowledge Item: Google Magika Deep Learning Content Type & MIME Detection",
+  "schema_version": "1.0.0",
+  "category": "developer_experience",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-09-08T18:13:00Z"
 }

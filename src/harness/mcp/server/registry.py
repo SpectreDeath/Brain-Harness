@@ -52,18 +52,10 @@ class MCPRegistry:
     def list_resources(self) -> list[dict[str, Any]]:
         """List all available MCP resources."""
         resources: list[dict[str, Any]] = [
-            {
-                "uri": "harness://plugins/catalog",
-                "name": "Harness Plugin Catalog",
-                "description": "Complete catalog of installed and cached plugins",
-                "mimeType": "application/json",
-            },
-            {
-                "uri": "harness://system/status",
-                "name": "Harness System Diagnostics",
-                "description": "Live active services and tool provider mappings",
-                "mimeType": "application/json",
-            },
+            {"uri": "harness://plugins/catalog", "name": "Harness Plugin Catalog", "description": "Complete catalog of installed and cached plugins", "mimeType": "application/json"},
+            {"uri": "harness://system/status", "name": "Harness System Diagnostics", "description": "Live active services and tool provider mappings", "mimeType": "application/json"},
+            {"uri": "harness://knowledge/graph", "name": "Knowledge Graph Topology", "description": "Authoritative derived knowledge graph topology, nodes, edges, and census summary", "mimeType": "application/json"},
+            {"uri": "harness://knowledge/contradictions", "name": "Knowledge Vault Contradiction Queue", "description": "Flagged antinomies, polarity conflicts, and candidate supersessions", "mimeType": "application/json"},
         ]
         if self.loader is not None:
             catalog = self.loader.list_catalog()
@@ -102,6 +94,24 @@ class MCPRegistry:
             if self.context and hasattr(self.context, "list_services"):
                 status_data["services"] = self.context.list_services()
             return status_data, "application/json"
+
+        if uri == "harness://knowledge/graph":
+            from harness.services.storage import SQLiteStorageService, resolve_knowledge_graph_service
+            storage = SQLiteStorageService(":memory:")
+            await storage.sync_knowledge_vault()
+            items = await storage.list_knowledge_items()
+            graph = resolve_knowledge_graph_service(self.context).derive_graph(items)
+            storage.close()
+            return graph.to_dict(), "application/json"
+
+        if uri == "harness://knowledge/contradictions":
+            from dataclasses import asdict
+            from harness.services.storage import SQLiteStorageService
+            storage = SQLiteStorageService(":memory:")
+            await storage.sync_knowledge_vault()
+            conflicts = await storage.audit_contradictions()
+            storage.close()
+            return [asdict(c) if hasattr(c, "__dataclass_fields__") else c.model_dump() for c in conflicts], "application/json"
 
         if uri.startswith("harness://plugins/") and uri.endswith("/guide"):
             plugin_name = uri.split("harness://plugins/")[1].split("/guide")[0]

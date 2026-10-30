@@ -1,7 +1,7 @@
 {
   "id": "ki_hf_nano_harness_react_sandboxing",
   "title": "Minimal ReAct Autonomous Loops, Safe-Path Sandboxing & Bounded Error Self-Repair",
-  "category": "software_engineering",
+  "category": "developer_experience/software_engineering",
   "tags": [
     "nano_harness",
     "react_loop",
@@ -17,5 +17,18 @@
     "D:/GitHub/cloned/context-course/units/en/unit6/tools-and-sandboxing.mdx#L1-L100",
     "D:/GitHub/cloned/context-course/units/en/unit6/hands-on.mdx#L1-L156"
   ],
-  "created_at": "2026-09-21T18:00:00Z"
+  "created_at": "2026-09-21T18:00:00Z",
+  "schema_version": "1.0.0",
+  "source_target": "huggingface/context-course",
+  "detected_format": "raw_docs",
+  "anchors": {},
+  "edges": [],
+  "isnad": {},
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "distilled_learning": "# Minimal ReAct Autonomous Loops, Safe-Path Sandboxing & Bounded Error Self-Repair"
 }

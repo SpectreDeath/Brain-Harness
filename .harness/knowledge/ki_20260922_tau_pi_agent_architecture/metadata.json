@@ -47,5 +47,70 @@
       "lines": "1-703",
       "confidence": "VERIFIED"
     }
-  ]
+  ],
+  "schema_version": "1.0.0",
+  "category": "agent_orchestration",
+  "source_target": "",
+  "detected_format": "raw_docs",
+  "tags": [
+    "pi_agent",
+    "minimalist_harness",
+    "coding_agent",
+    "terminal"
+  ],
+  "anchors": {},
+  "edges": [
+    {
+      "type": "became_skill",
+      "target": "pi-coding-harness",
+      "target_kind": "skill",
+      "derived": false,
+      "confidence": 1.0,
+      "description": null
+    },
+    {
+      "type": "references_code",
+      "target": "plugins/agent_orchestration/tau_harness_bridge/README.md",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    }
+  ],
+  "isnad": {
+    "claims": [
+      {
+        "claim": "Core agent loops must maintain strict zero-dependency decoupling from CLI and TUI rendering packages to remain portable.",
+        "source_file": "D:/GitHub/cloned/tau/AGENTS.md",
+        "lines": "25-35",
+        "confidence": "VERIFIED"
+      },
+      {
+        "claim": "Conversation sessions should be modeled as immutable DAG entries with parent pointers, enabling branching without journal rewrites.",
+        "source_file": "D:/GitHub/cloned/tau/src/tau_agent/session/tree.py",
+        "lines": "1-40",
+        "confidence": "VERIFIED"
+      },
+      {
+        "claim": "Interleaved tool call transcripts must be repaired in-flight to prevent HTTP 400 Bad Request errors across Anthropic and OpenAI.",
+        "source_file": "D:/GitHub/cloned/tau/src/tau_agent/tool_history.py",
+        "lines": "1-169",
+        "confidence": "VERIFIED"
+      },
+      {
+        "claim": "Workspace execution requires hierarchical project trust verification to isolate sensitive credentials and SSH keys.",
+        "source_file": "D:/GitHub/cloned/tau/src/tau_coding/project_trust.py",
+        "lines": "1-703",
+        "confidence": "VERIFIED"
+      }
+    ]
+  },
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-09-22T06:23:00-04:00",
+  "distilled_learning": "Authoritative engineering heuristics, mental models, and architectural invariants for building portable terminal coding agents. Distills the Tau repository (huggingface/tau v0.4.4) into strict 3-tier decoupling (tau_ai / tau_agent / tau_coding), immutable branchable session tree DAGs with O(N) ancestry traversal, advisory file-locked append-only JSONL journal storage, in-flight provider-safe tool history normalization, and hierarchical project-trust security perimeters."
 }

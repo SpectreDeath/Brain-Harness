@@ -47,5 +47,16 @@
         "verified": true
       }
     ]
-  }
+  },
+  "schema_version": "1.0.0",
+  "source_target": "",
+  "detected_format": "raw_docs",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "distilled_learning": "# Knowledge Item: HarnessCompass \u2014 Generalizable Automatic Harness Evolution"
 }

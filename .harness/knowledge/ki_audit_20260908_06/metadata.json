@@ -3,7 +3,11 @@
   "title": "Frontend Integration Gap \u2014 Vite App Unconnected to Harness CLI",
   "created_at": "2026-09-08T19:45:00Z",
   "source": "deep-repo-auditor",
-  "isnad": "deep-repo-auditor axis 1 seam scan 2026-09-08",
+  "isnad": {
+    "status": "VERIFIED",
+    "notes": "deep-repo-auditor axis 1 seam scan 2026-09-08",
+    "claims": []
+  },
   "tags": [
     "frontend",
     "ui",
@@ -16,5 +20,35 @@
     "src/harness/ui/",
     "src/harness/commands/__init__.py"
   ],
-  "vault_version": "1.0"
+  "vault_version": "1.0",
+  "schema_version": "1.0.0",
+  "category": "developer_experience",
+  "source_target": "deep-repo-auditor",
+  "detected_format": "raw_docs",
+  "anchors": {},
+  "edges": [
+    {
+      "type": "references_code",
+      "target": "src/harness/ui/",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    },
+    {
+      "type": "references_code",
+      "target": "src/harness/commands/__init__.py",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    }
+  ],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "distilled_learning": "## Frontend Integration Gap"
 }

@@ -1,7 +1,7 @@
 {
   "id": "ki_20261010_gev_wasm_eccodes_wind_decoding",
   "title": "Zero-Copy WebAssembly GRIB Meteorological Grid Decoding via eccodes-wasm",
-  "category": "geospatial_and_osint",
+  "category": "scientific_computing/geospatial",
   "created_at": "2026-10-10T19:43:52Z",
   "author": "God's Eye View / Antigravity Cognitive Audit",
   "tags": [
@@ -15,6 +15,7 @@
   ],
   "isnad": {
     "decision_id": "dec_20261010_gev_04",
+    "timestamp": "2026-10-30T18:40:39.847794+00:00",
     "claims": [
       {
         "assertion": "Raw GRIB2 atmospheric forecast grids from NOAA GFS and ECMWF IFS can be unpacked client-side in sub-100ms via WebAssembly-compiled ECMWF eccodes without native C binary dependencies.",
@@ -22,6 +23,18 @@
         "source": "D:\\GitHub\\cloned\\gods-eye-view\\server\\providers\\wind\\",
         "verified": true
       }
-    ]
-  }
+    ],
+    "status": "VERIFIED"
+  },
+  "schema_version": "1.0.0",
+  "source_target": "",
+  "detected_format": "raw_docs",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "distilled_learning": "# Zero-Copy WebAssembly GRIB Meteorological Grid Decoding via eccodes-wasm"
 }

@@ -4,7 +4,7 @@
   "source_uri": "https://agentwikis.com/for-agents",
   "sha256": "b9c01867195ab7748b7db654ffbc7b76857b6e468456915843eb486685fb38bf",
   "created_at": "2026-09-11T20:33:59.110625+00:00",
-  "category": "integration_and_knowledge",
+  "category": "memory_and_epistemics/integration",
   "claims": [
     {
       "claim_id": "claim_001_trust_semantics_scope",
@@ -30,5 +30,51 @@
       "evidence_quote": "four read-only tools shaped for an agent's loop: list_wikis (discover + scope), open_wiki (orient: metadata + document map), search (ranked pages + a calibrated confident flag), read_document (full page or a single section, with provenance).",
       "line_number": 87
     }
-  ]
+  ],
+  "schema_version": "1.0.0",
+  "source_target": "https://agentwikis.com/for-agents",
+  "detected_format": "raw_docs",
+  "tags": [
+    "agentwikis",
+    "documentation",
+    "trust_semantics",
+    "data_governance"
+  ],
+  "anchors": {},
+  "edges": [],
+  "isnad": {
+    "claims": [
+      {
+        "claim_id": "claim_001_trust_semantics_scope",
+        "assertion": "Every wiki declares covers, notCovered, and currentAs to prevent hallucinations and establish definitive knowledge boundaries.",
+        "evidence_quote": "scope \u2014 every wiki declares covers / notCovered / currentAs (freshness is derived from the wiki itself, never hand-typed). If your question is out of scope, use the web instead.",
+        "line_number": 110
+      },
+      {
+        "claim_id": "claim_002_calibrated_confidence_abstention",
+        "assertion": "Search returns a calibrated confident flag that achieves ~94% correct abstention when coverage is missing.",
+        "evidence_quote": "confident \u2014 MCP search returns a calibrated flag; when false, the wiki likely lacks the answer (measured ~94% correct abstention). Fall back to web search rather than trusting a weak match.",
+        "line_number": 111
+      },
+      {
+        "claim_id": "claim_003_offline_and_raw_markdown",
+        "assertion": "The corpus is consumable offline as single full-text (llms-full.txt) or via raw markdown endpoints with ETag/Last-Modified caching.",
+        "evidence_quote": "llms-full.txt \u2014 the entire corpus in one fetch ... Every page is served as its exact on-disk Markdown \u2014 YAML frontmatter included",
+        "line_number": 75
+      },
+      {
+        "claim_id": "claim_004_mcp_four_tools",
+        "assertion": "AgentWikis exposes four read-only MCP tools: list_wikis, open_wiki, search, and read_document.",
+        "evidence_quote": "four read-only tools shaped for an agent's loop: list_wikis (discover + scope), open_wiki (orient: metadata + document map), search (ranked pages + a calibrated confident flag), read_document (full page or a single section, with provenance).",
+        "line_number": 87
+      }
+    ]
+  },
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "distilled_learning": "# AgentWikis Corpus Architecture, Trust Semantics & Data Governance"
 }

@@ -14,5 +14,18 @@
     "google/antigravity/hooks/hook_runner.py",
     "google/antigravity/hooks/policy.py"
   ],
-  "created_at": "2026-09-02T19:23:41Z"
+  "created_at": "2026-09-02T19:23:41Z",
+  "schema_version": "1.0.0",
+  "source_target": "google-antigravity-sdk",
+  "detected_format": "raw_docs",
+  "anchors": {},
+  "edges": [],
+  "isnad": {},
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "distilled_learning": "# 4-Stage Hook Lifecycle & Tri-State Policy Evaluation"
 }

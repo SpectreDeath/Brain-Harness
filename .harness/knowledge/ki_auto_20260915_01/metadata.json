@@ -16,7 +16,6 @@
   "isnad": {
     "decision_id": "dec_auto_20260915_01",
     "timestamp": "2026-09-15T16:45:00+00:00",
-    "status": "VERIFIED",
     "claims": [
       {
         "assertion": "When IDE filesystem inspection tools encounter system protection boundary denials on the brain directory, falling back to decoupled relational conversation databases in conversations/*.db via read-only SQLite URIs (file:...?mode=ro) recovers full execution telemetry and step history.",
@@ -35,6 +34,25 @@
         ],
         "verified": true
       }
-    ]
-  }
+    ],
+    "status": "VERIFIED"
+  },
+  "schema_version": "1.0.0",
+  "anchors": {},
+  "edges": [
+    {
+      "type": "same_domain",
+      "target": "ki_mindreader_20260911_01",
+      "target_kind": "ki",
+      "derived": true,
+      "confidence": 0.8,
+      "description": null
+    }
+  ],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "distilled_learning": "# Dual-Store Autobiographical Memory Federation & SQLite Fallback"
 }

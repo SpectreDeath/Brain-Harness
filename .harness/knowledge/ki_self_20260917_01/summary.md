@@ -16,7 +16,11 @@ Every production agent harness implements five essential components:
 5. **Sandbox Boundary**: Enforces execution containment, preventing unapproved host filesystem mutations.
 
 The standard execution loop executes five sequential steps:
-`Prompt Assembly` $ightarrow$ `Model Prediction` $ightarrow$ `Sandbox Tool Execution` $ightarrow$ `Context Observation Append` $ightarrow$ `Termination Evaluation`.
+`Prompt Assembly` $
+ightarrow$ `Model Prediction` $
+ightarrow$ `Sandbox Tool Execution` $
+ightarrow$ `Context Observation Append` $
+ightarrow$ `Termination Evaluation`.
 
 ### 3. The Four Reliability Mechanisms
 As reverse-engineered by LangChain's Deep Agents from Claude Code, reliable multi-turn execution depends on four critical mechanisms:

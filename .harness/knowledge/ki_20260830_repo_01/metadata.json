@@ -5,16 +5,52 @@
   "detected_format": "git_repository",
   "isnad": {
     "decision_id": "dec_20260830_repo_01",
+    "timestamp": "2026-10-30T18:40:39.089125+00:00",
     "claims": [
       {
         "assertion": "Extract distinct agent capabilities (MCP, LSP, Sandbox) into isolated monorepo packages",
         "lineage": [
-          {"node_type": "primary_code", "uri": "packages/mcp", "sha256_hash": "N/A", "verified": true},
-          {"node_type": "primary_code", "uri": "packages/sandbox", "sha256_hash": "N/A", "verified": true}
+          {
+            "node_type": "primary_code",
+            "uri": "packages/mcp",
+            "sha256_hash": "N/A",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "packages/sandbox",
+            "sha256_hash": "N/A",
+            "verified": true
+          }
         ]
       }
     ],
     "status": "VERIFIED"
   },
-  "tags": ["architecture", "monorepo", "tool_isolation"]
+  "tags": [
+    "architecture",
+    "monorepo",
+    "tool_isolation"
+  ],
+  "schema_version": "1.0.0",
+  "category": "agent_orchestration",
+  "anchors": {},
+  "edges": [
+    {
+      "type": "same_domain",
+      "target": "ki_20261023_opencode_01",
+      "target_kind": "ki",
+      "derived": true,
+      "confidence": 0.8,
+      "description": null
+    }
+  ],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-08-30T00:00:00Z",
+  "distilled_learning": "# Tool Package Decoupling"
 }

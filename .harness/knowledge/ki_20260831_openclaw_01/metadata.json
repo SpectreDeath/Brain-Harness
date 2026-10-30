@@ -6,6 +6,7 @@
   "timestamp": "2026-08-31T14:15:00Z",
   "isnad": {
     "decision_id": "dec_20260831_openclaw_01",
+    "timestamp": "2026-10-30T18:40:39.255543+00:00",
     "claims": [
       {
         "assertion": "Streaming LLM outputs that emit plain-text JSON tool call blocks instead of structured API tool calls can be recovered without re-prompting via deterministic AST regex parsing and stream event promotion.",
@@ -39,5 +40,33 @@
     "repo_introspection"
   ],
   "context": "In-Flight Plain-Text Tool-Call Stream Normalization & Repair",
-  "distilled_learning": "# KI: In-Flight Plain-Text Tool-Call Stream Normalization & Repair\n\n## Operational Summary\nLLMs frequently emit tool calls as plain-text JSON codeblocks (e.g. ```json { \"tool\": ... } ``` or raw function call syntax) instead of native provider tool call events, particularly during streaming or when models experience slight instruction drift. Intercepting these plain-text blocks in-flight and promoting them into validated structured tool events eliminates downstream agent failure loops without requiring expensive LLM re-prompting."
+  "distilled_learning": "# In-Flight Plain-Text Tool-Call Stream Normalization & Repair",
+  "schema_version": "1.0.0",
+  "category": "agent_orchestration",
+  "anchors": {},
+  "edges": [
+    {
+      "type": "same_domain",
+      "target": "ki_20260831_openclaw_03",
+      "target_kind": "ki",
+      "derived": true,
+      "confidence": 0.8,
+      "description": null
+    },
+    {
+      "type": "same_domain",
+      "target": "ki_20260831_openclaw_04",
+      "target_kind": "ki",
+      "derived": true,
+      "confidence": 0.8,
+      "description": null
+    }
+  ],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-08-31T14:15:00Z"
 }

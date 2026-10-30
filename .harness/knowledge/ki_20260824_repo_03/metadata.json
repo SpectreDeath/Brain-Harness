@@ -5,6 +5,7 @@
   "detected_format": "git_repository",
   "isnad": {
     "decision_id": "dec_20260824_graphiti_03",
+    "timestamp": "2026-10-30T18:40:38.775984+00:00",
     "claims": [
       {
         "assertion": "Providing an embedded in-process graph engine driver (K\u00f9zu) behind standard graph operations interfaces enables zero-infrastructure local execution and rapid unit testing without external database containers",
@@ -34,7 +35,16 @@
     "in_process"
   ],
   "context": "Requiring a running Neo4j or Memgraph instance for development, integration testing, and local CLI tools introduces high friction, slow CI pipelines, and external dependency failures.",
-  "distilled_learning": "Encapsulate graph persistence behind an abstract GraphDriver interface that exposes domain operations (EntityNodeOperations, EntityEdgeOperations, SearchOperations). Implement an in-process adapter using K\u00f9zu (an embedded C++ Cypher-compatible columnar graph database), allowing developers to run full graph queries directly within the Python process or against local files.",
+  "distilled_learning": "# KI-3: Embedded In-Process Graph Database Drivers with K\u00f9zu",
   "retrieval_count": 4,
-  "last_retrieved_at": "2026-10-27T23:06:28.169144+00:00"
+  "last_retrieved_at": "2026-10-27T23:06:28.169144+00:00",
+  "schema_version": "1.0.0",
+  "category": "memory_and_epistemics",
+  "anchors": {},
+  "edges": [],
+  "success_count": 0,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-08-24T00:00:00Z"
 }

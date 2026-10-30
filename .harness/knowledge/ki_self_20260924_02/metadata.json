@@ -15,10 +15,10 @@
     "self_reflection"
   ],
   "context": "Agent skills scaffolding multiple CLI utilities often develop fragmented data silos. In discovery-index-scout, search_index.py maintained a hardcoded static list of 46 curated sources while catalog_registry.py read and wrote to a local JSON registry file. ReAct agent step loops were forced to fork external subprocesses to search the catalog, and config overrides were ignored.",
-  "distilled_learning": "Multi-script CLI skills must eliminate dual data silos by consolidating sources into a unified, slotted domain engine (DiscoveryCatalogEngine) supporting weighted multi-field search and faceted filtering. CLI frontends must be reduced to thin delegator wrappers, and capabilities elevated to a typed micro-kernel service protocol (DiscoveryIndexService) co-located under plugins/ (Rules 18, 44, 45, and 49) for zero-subprocess in-memory agent tool execution.",
+  "distilled_learning": "# Dual-Silo CLI Consolidation, Slotted Domain Engine Architecture, and IoC Service Elevation (discovery-index-scout)",
   "isnad": {
     "decision_id": "dec_20260924_self_02",
-    "status": "VERIFIED",
+    "timestamp": "2026-10-30T18:40:42.757767+00:00",
     "claims": [
       {
         "assertion": "Disparate CLI scripts with fragmented data stores produce data drift and prevent ReAct agent step loops from resolving tools in-memory.",
@@ -60,6 +60,17 @@
           }
         ]
       }
-    ]
-  }
+    ],
+    "status": "VERIFIED"
+  },
+  "schema_version": "1.0.0",
+  "source_target": "",
+  "detected_format": "raw_docs",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null
 }

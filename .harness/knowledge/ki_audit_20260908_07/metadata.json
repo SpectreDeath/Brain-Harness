@@ -3,7 +3,11 @@
   "title": "Delta Innovation Summary \u2014 8 Novel Architectural Patterns",
   "created_at": "2026-09-08T19:45:00Z",
   "source": "deep-repo-auditor",
-  "isnad": "deep-repo-auditor full 4-axis audit 2026-09-08; direct code inspection",
+  "isnad": {
+    "status": "VERIFIED",
+    "notes": "deep-repo-auditor full 4-axis audit 2026-09-08; direct code inspection",
+    "claims": []
+  },
   "tags": [
     "innovation",
     "architecture",
@@ -18,5 +22,59 @@
     "src/harness/services/cellcog.py",
     "src/harness/services/agent_graph.py"
   ],
-  "vault_version": "1.0"
+  "vault_version": "1.0",
+  "schema_version": "1.0.0",
+  "category": "security_and_forensics",
+  "source_target": "deep-repo-auditor",
+  "detected_format": "raw_docs",
+  "anchors": {},
+  "edges": [
+    {
+      "type": "references_code",
+      "target": "src/harness/events/bus.py#L630",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    },
+    {
+      "type": "references_code",
+      "target": "src/harness/services/data_management.py",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    },
+    {
+      "type": "references_code",
+      "target": "src/harness/services/repomap.py",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    },
+    {
+      "type": "references_code",
+      "target": "src/harness/services/cellcog.py",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    },
+    {
+      "type": "references_code",
+      "target": "src/harness/services/agent_graph.py",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    }
+  ],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "distilled_learning": "## Delta Innovation Summary \u2014 8 Novel Architectural Patterns"
 }

@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "id": "ki_self_20261014_01",
   "title": "Skill CLI Script Single-File Self-Containment and Language Server Isolation",
-  "category": "architecture_and_deepening",
+  "category": "developer_experience/architecture",
   "source_target": "Brain Harness (.agents/skills/*/scripts/)",
   "detected_format": "harness_endogenous_reflection",
   "timestamp": "2026-10-14T11:00:00Z",
@@ -22,7 +22,6 @@
   "isnad": {
     "decision_id": "decision-self-20261014-01",
     "timestamp": "2026-10-14T11:00:00Z",
-    "status": "VERIFIED",
     "claims": [
       {
         "claim_id": "isnad-self-20261014-01-a",
@@ -36,6 +35,25 @@
         "evidence": "deepen_cycle.py orchestrates 4 subcommands across 189 lines while passing all contract tests.",
         "verified_by": "pytest tests/test_architecture_deepening_skills.py -k test_cli_script_subcommands"
       }
-    ]
-  }
+    ],
+    "status": "VERIFIED"
+  },
+  "edges": [
+    {
+      "type": "became_skill",
+      "target": "architecture-deepening-workflow",
+      "target_kind": "skill",
+      "derived": false,
+      "confidence": 1.0,
+      "description": null
+    }
+  ],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-10-14T11:00:00Z",
+  "distilled_learning": "# Skill CLI Script Single-File Self-Containment and Language Server Isolation"
 }

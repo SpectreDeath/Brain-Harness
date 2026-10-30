@@ -5,6 +5,7 @@
   "detected_format": "git_repository",
   "isnad": {
     "decision_id": "dec_20260830_django_03",
+    "timestamp": "2026-10-30T18:40:38.898258+00:00",
     "claims": [
       {
         "assertion": "Domain models should bind fields via metaclass descriptor synthesis to defer SQL AST generation until terminal execution methods (iteration, slicing, aggregation) are explicitly invoked",
@@ -35,5 +36,16 @@
     "ast_compiler"
   ],
   "context": "Eager database evaluation couples business logic tightly to physical I/O boundaries and prevents query optimizations like filter chaining, predicate pushdowns, and deferred column loading.",
-  "distilled_learning": "Model classes use `ModelBase` metaclass to inspect class attributes, contribute fields into an internal `_meta` options registry (`Options`), and replace raw values with descriptor getters/setters. QuerySet instances represent pure immutable ASTs that clone on every chaining method (`.filter()`, `.exclude()`, `.select_related()`). Physical database queries only execute when the QuerySet is evaluated (`__iter__`, `__len__`, `__getitem__`, `count()`, `exists()`), allowing seamless composition across layers."
+  "distilled_learning": "# Declarative Metaclass Field Descriptors & Deferred QuerySet Compilation",
+  "schema_version": "1.0.0",
+  "category": "data_engineering",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-08-30T00:00:00Z"
 }

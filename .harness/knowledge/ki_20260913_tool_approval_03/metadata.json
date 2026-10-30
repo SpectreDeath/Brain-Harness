@@ -5,6 +5,7 @@
   "detected_format": "git_repository",
   "isnad": {
     "decision_id": "dec_20260913_tool_approval_03",
+    "timestamp": "2026-10-30T18:40:39.691730+00:00",
     "claims": [
       {
         "assertion": "Executing untrusted shell commands and filesystem mutations requires fine-grained tool approval middleware with command pattern matching, risk scoring, and interactive user prompts.",
@@ -32,5 +33,17 @@
     "sandbox",
     "safety_gates",
     "bash_hooks"
-  ]
+  ],
+  "schema_version": "1.0.0",
+  "category": "security_and_forensics",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-09-13T00:00:00Z",
+  "distilled_learning": "# Interactive Tool Approval Middleware & Security Sandboxing"
 }

@@ -1,7 +1,7 @@
 {
   "id": "ki_mindreader_20260911_02",
   "title": "External Ingestion Security Boundary Shell Pivot Pattern",
-  "category": "security_and_execution",
+  "category": "security_and_forensics",
   "created_at": "2026-09-11T22:10:16.386237+00:00",
   "author": "Brain Harness Mind Reader",
   "source_target": "C:/Users/spectre/.gemini/antigravity-ide/brain",
@@ -15,7 +15,6 @@
   "isnad": {
     "decision_id": "dec_mindreader_20260911_02",
     "timestamp": "2026-09-11T22:10:16.386250+00:00",
-    "status": "VERIFIED",
     "claims": [
       {
         "assertion": "Autonomous agents inspecting repositories outside the active workspace directory encounter system security boundary denials on view_file and must deterministically pivot to non-modifying shell reads.",
@@ -44,6 +43,16 @@
         ],
         "verified": true
       }
-    ]
-  }
+    ],
+    "status": "VERIFIED"
+  },
+  "schema_version": "1.0.0",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "distilled_learning": "# External Ingestion Security Boundary Shell Pivot Pattern"
 }

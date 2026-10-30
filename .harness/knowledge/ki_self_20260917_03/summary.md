@@ -94,8 +94,10 @@ Systems must execute 3-part triage upon reaching attempt ceiling:
 Before architecting an agent loop, evaluate the deterministic feasibility question:
 > **"Can you write a function that returns `true` or `false` with specific error strings for this output?"**
 
-- **YES** (JSON payloads, deployment YAML, SQL queries, code files, data schemas) $ightarrow$ **Mandate Deterministic Validation Loop**. Build the validator first; the validator *is* the specification.
-- **NO** (Email sentiment, creative marketing copy, essay tone, subjective summarization) $ightarrow$ **Use Semantic LLM Judge or Human-in-the-Loop Review** (see `self-evaluating-ai-pipeline`).
+- **YES** (JSON payloads, deployment YAML, SQL queries, code files, data schemas) $
+ightarrow$ **Mandate Deterministic Validation Loop**. Build the validator first; the validator *is* the specification.
+- **NO** (Email sentiment, creative marketing copy, essay tone, subjective summarization) $
+ightarrow$ **Use Semantic LLM Judge or Human-in-the-Loop Review** (see `self-evaluating-ai-pipeline`).
 
 ---
 

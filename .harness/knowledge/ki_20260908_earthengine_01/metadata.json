@@ -6,6 +6,7 @@
   "timestamp": "2026-09-08T18:30:00Z",
   "isnad": {
     "decision_id": "dec_20260908_earthengine_01",
+    "timestamp": "2026-10-30T18:40:39.490877+00:00",
     "claims": [
       {
         "assertion": "Deferred server-side DAG execution decouples client-side Python expression construction from cloud compute, preventing gigabyte raster transfers into agent working memory.",
@@ -70,5 +71,16 @@
     "subprocess_isolation"
   ],
   "context": "Google Earth Engine Planetary Geospatial Processing & Domain Partitioning Architecture",
-  "distilled_learning": "# KI: Google Earth Engine Planetary Geospatial Processing & Domain Partitioning Architecture\n\n## Operational Summary\nGoogle Earth Engine (`earthengine-api`) provides planetary-scale Earth science observation. Key architectural principles bridged into Brain Harness include:\n1. **Deferred Expression DAGs:** Rather than transferring multi-gigabyte satellite rasters into local Python memory, Earth Engine operations build deferred functional JSON DAGs evaluated server-side.\n2. **Domain Partitioning (Rule 18):** Separating the raster processing engine (`plugin.earth_engine_imagery`) from the vector/catalog analytics engine (`plugin.earth_engine_spatial_analytics`) bounds tool scopes and clarifies agent planning.\n3. **Subprocess Sandboxing (Rule 5 & 7):** Isolate heavy geospatial bindings in subprocess workers with clean pipe disposal (Rule 14) and lazy venv staging.\n4. **Adaptive Simulation Fallback:** Offline deterministic spatial geometry and index math enables hermetic test suites and zero-credential CI execution."
+  "distilled_learning": "# Knowledge Item: Google Earth Engine Planetary Geospatial Processing & Domain Partitioning",
+  "schema_version": "1.0.0",
+  "category": "infrastructure_and_runtime",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-09-08T18:30:00Z"
 }

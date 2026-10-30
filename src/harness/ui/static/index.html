@@ -1082,6 +1082,12 @@
           <span>Skill Knowledge Graph</span>
         </div>
       </button>
+      <button class="sidebar-btn" onclick="switchView('knowledge')" id="nav-knowledge">
+        <div class="sidebar-btn-content">
+          <span class="sidebar-icon">📚</span>
+          <span>Knowledge Vault Graph</span>
+        </div>
+      </button>
 
       <div class="nav-section-title">Extensibility & Security</div>
       <button class="sidebar-btn" onclick="switchView('plugins')" id="nav-plugins">
@@ -1511,6 +1517,38 @@
         </div>
       </div>
 
+      <!-- VIEW: KNOWLEDGE VAULT GRAPH -->
+      <div class="view-panel" id="view-knowledge">
+        <div class="grid-container">
+          <div class="card col-8">
+            <div class="card-title">
+              <div class="card-title-icon">
+                <span>📚</span>
+                <span>Knowledge Vault Inter-Domain Graph</span>
+              </div>
+              <div style="display:flex; gap:0.4rem;">
+                <a href="/api/knowledge/graph/html" target="_blank" class="btn btn-outline btn-xs">Open Canvas Brief ↗</a>
+                <button class="btn btn-outline btn-xs" onclick="loadKnowledgeView()">Refresh</button>
+              </div>
+            </div>
+            <div id="knowledgeMermaidContainer" style="background:#040711; border-radius:8px; padding:1rem; min-height:460px; overflow:auto;">
+              <div style="padding:2rem; text-align:center; color:var(--text-muted);">Loading knowledge graph...</div>
+            </div>
+          </div>
+          <div class="card col-4">
+            <div class="card-title">
+              <div class="card-title-icon">
+                <span>🔍</span>
+                <span>Vault Census & Contradictions</span>
+              </div>
+            </div>
+            <div id="knowledgeMetricsPanel" style="display:flex; flex-direction:column; gap:0.75rem;">
+              <div class="text-muted-sm">Loading census...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- VIEW 7: PLUGINS & TOOL MATRIX -->
       <div class="view-panel" id="view-plugins">
         <div class="grid-container">
@@ -1780,6 +1818,7 @@
       agent: { title: '🤖 Autonomous Agent Missions', sub: 'Multi-step autonomous execution and session transcripts' },
       swarm: { title: '🐝 Multi-Agent Swarm Mission Control', sub: 'Distributed agent deliberation, debate, and consensus' },
       skills: { title: '🧠 Skill Knowledge Graph & Router', sub: 'Topological agent capability graph and intent routing' },
+      knowledge: { title: '📚 Knowledge Vault Graph', sub: 'Inter-domain knowledge topology, census metrics & contradictions' },
       plugins: { title: '🧩 Plugin Ecosystem & Tools', sub: 'Dynamic registration and tool enablement matrix' },
       sandboxes: { title: '🛡️ Sandboxes & Process Isolation', sub: 'Subprocess and venv execution security monitor' }
     };
@@ -1805,6 +1844,7 @@
       else if (viewName === 'plugins') loadPluginsAndTools();
       else if (viewName === 'swarm') loadSwarmRuns();
       else if (viewName === 'skills') loadSkillGraph();
+      else if (viewName === 'knowledge') loadKnowledgeView();
     }
 
     // WebSocket Telemetry
@@ -2741,6 +2781,80 @@
         resDiv.innerHTML = `<div class="pill enabled" style="width:100%; justify-content:center;">Path: ${esc((data.chain || [start, target]).join(' → '))}</div>`;
       } catch (err) {
         resDiv.innerHTML = `<div style="color:var(--accent-rose);">Path calculation failed: ${esc(err)}</div>`;
+      }
+    }
+
+    async function loadKnowledgeView() {
+      const container = document.getElementById('knowledgeMermaidContainer');
+      const metricsPanel = document.getElementById('knowledgeMetricsPanel');
+      if (!container || !metricsPanel) return;
+      container.innerHTML = '<div style="padding:2rem; text-align:center; color:var(--text-muted);">Compiling knowledge graph...</div>';
+      metricsPanel.innerHTML = '<div class="text-muted-sm">Auditing vault...</div>';
+      try {
+        const [graphRes, conflictsRes] = await Promise.all([
+          fetch('/api/knowledge/graph').then(r => r.json()),
+          fetch('/api/knowledge/contradictions').then(r => r.json())
+        ]);
+        const s = graphRes.summary || {};
+        metricsPanel.innerHTML = `
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem;">
+            <div style="background:rgba(255,255,255,0.03); padding:0.5rem; border-radius:6px; border:1px solid var(--border-color);">
+              <div style="font-size:10px; color:var(--text-muted);">Total Nodes</div>
+              <div style="font-size:16px; font-weight:700; color:var(--accent-emerald);">${s.total_nodes || 0}</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.03); padding:0.5rem; border-radius:6px; border:1px solid var(--border-color);">
+              <div style="font-size:10px; color:var(--text-muted);">Total Edges</div>
+              <div style="font-size:16px; font-weight:700; color:var(--accent-cyan);">${s.total_edges || 0}</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.03); padding:0.5rem; border-radius:6px; border:1px solid var(--border-color);">
+              <div style="font-size:10px; color:var(--text-muted);">Asserted</div>
+              <div style="font-size:14px; font-weight:600; color:#cbd5e1;">${s.asserted_edge_count || 0}</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.03); padding:0.5rem; border-radius:6px; border:1px solid var(--border-color);">
+              <div style="font-size:10px; color:var(--text-muted);">Derived</div>
+              <div style="font-size:14px; font-weight:600; color:#94a3b8;">${s.derived_edge_count || 0}</div>
+            </div>
+          </div>
+          <div style="margin-top:0.5rem; font-size:11px; color:var(--text-muted);">
+            Components: <b>${s.component_count || 0}</b> • Largest: <b>${s.largest_component_size || 0}</b>
+          </div>
+        `;
+
+        if (conflictsRes.contradictions && conflictsRes.contradictions.length > 0) {
+          const conflictsHtml = conflictsRes.contradictions.map(c => `
+            <div style="background:rgba(234,179,8,0.08); border:1px solid rgba(234,179,8,0.25); border-radius:6px; padding:0.5rem; font-size:11px; margin-top:0.4rem;">
+              <div><b>${esc(c.ki_a)}</b> vs <b>${esc(c.ki_b)}</b></div>
+              <div style="color:var(--text-muted); font-size:10px; margin:2px 0;">${esc(c.reason)}</div>
+              <div style="display:flex; gap:4px; margin-top:4px;">
+                <button class="btn btn-outline btn-xs" onclick="resolveConflictFromUI('${esc(c.ki_a)}', '${esc(c.ki_b)}', 'supersede')">Supersede</button>
+                <button class="btn btn-outline btn-xs" onclick="resolveConflictFromUI('${esc(c.ki_a)}', '${esc(c.ki_b)}', 'contradict')">Conflict</button>
+              </div>
+            </div>
+          `).join('');
+          metricsPanel.innerHTML += `<div style="margin-top:0.75rem; font-size:11px; font-weight:600; color:var(--accent-amber);">Contradictions (${conflictsRes.contradictions.length})</div>${conflictsHtml}`;
+        }
+
+        const mermaidCode = graphRes.mermaid || 'flowchart TD\n  Empty[No Data]';
+        container.innerHTML = `<div class="mermaid">${mermaidCode}</div>`;
+        if (window.mermaid) {
+          window.mermaid.run({ nodes: container.querySelectorAll('.mermaid') });
+        }
+      } catch (err) {
+        container.innerHTML = `<div style="padding:2rem; color:var(--accent-rose);">Failed to load knowledge graph: ${esc(err)}</div>`;
+      }
+    }
+
+    async function resolveConflictFromUI(kiA, kiB, action) {
+      try {
+        await fetch('/api/knowledge/contradictions/resolve', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ki_a: kiA, ki_b: kiB, action: action })
+        });
+        showToast(`Resolved contradiction: ${action}`, 'success');
+        loadKnowledgeView();
+      } catch (e) {
+        showToast(`Failed to resolve contradiction: ${e}`, 'error');
       }
     }
 

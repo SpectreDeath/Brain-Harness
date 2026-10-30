@@ -6,6 +6,7 @@
   "timestamp": "2026-08-29T14:08:45Z",
   "isnad": {
     "decision_id": "dec_20260829_01",
+    "timestamp": "2026-10-30T18:40:41.371963+00:00",
     "claims": [
       {
         "assertion": "Pre-LLM context optimization must execute deterministically across 5 discrete stages behind a strictly typed ServiceKey seam",
@@ -33,5 +34,16 @@
     "service_key"
   ],
   "context": "Unified 5-Stage Pre-LLM Context Pipeline Seam",
-  "distilled_learning": "# KI: Unified 5-Stage Pre-LLM Context Pipeline Seam\n\n## Operational Summary\nPre-LLM context compilation must not rely on fragmented, duck-typed string lookups or simple head/tail string chopping. All token governance, code structure injection, and middle-out compaction are encapsulated inside `Unifi"
+  "distilled_learning": "# KI: Unified 5-Stage Pre-LLM Context Pipeline Seam",
+  "schema_version": "1.0.0",
+  "category": "context_engineering",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-08-29T14:08:45Z"
 }

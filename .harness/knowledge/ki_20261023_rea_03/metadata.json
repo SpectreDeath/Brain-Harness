@@ -4,7 +4,7 @@
   "source_uri": "D:\\GitHub\\cloned\\rea-main",
   "source_commit": "34563fcc9",
   "created_at": "2026-10-23T16:20:00Z",
-  "category": "runtime-governance / ipc-supervision",
+  "category": "infrastructure_and_runtime",
   "claims": [
     {
       "claim_id": "claim_001",
@@ -14,5 +14,33 @@
       "source_lines": "L1-L85"
     }
   ],
-  "tags": ["process-supervision", "ipc", "pipe-deadlock-prevention", "nul-framing"]
+  "tags": [
+    "process-supervision",
+    "ipc",
+    "pipe-deadlock-prevention",
+    "nul-framing"
+  ],
+  "schema_version": "1.0.0",
+  "source_target": "D:\\GitHub\\cloned\\rea-main",
+  "detected_format": "raw_docs",
+  "anchors": {},
+  "edges": [],
+  "isnad": {
+    "claims": [
+      {
+        "claim_id": "claim_001",
+        "assertion": "Long-running binary reversing sub-processes (Ghidra, Rizin, Hopper) must enforce bounded line buffers and NUL-delimited/length-prefixed message boundaries to prevent pipe buffer deadlocks.",
+        "evidence_quote": "fix(process): own bounded worker control framing",
+        "source_file": "src/process/BoundedControlLines.ts",
+        "source_lines": "L1-L85"
+      }
+    ]
+  },
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "distilled_learning": "# Bounded Worker Control Framing and NUL-Delimited IPC Streams"
 }

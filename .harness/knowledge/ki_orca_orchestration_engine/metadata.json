@@ -5,6 +5,7 @@
   "detected_format": "git_repository",
   "isnad": {
     "decision_id": "dec_orca_orchestration_engine",
+    "timestamp": "2026-10-30T18:40:41.096261+00:00",
     "claims": [
       {
         "assertion": "Autonomous coding agents operating concurrently require isolated Git worktrees addressed strictly via composite keys (<repoId>::<worktreePath>) to prevent file locking and branch collision.",
@@ -56,5 +57,17 @@
     "multi_agent",
     "injected_preamble",
     "fifo_mailbox"
-  ]
+  ],
+  "schema_version": "1.0.0",
+  "category": "agent_orchestration",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-09-16T15:35:03.874670+00:00",
+  "distilled_learning": "# Orca Multi-Agent Orchestration Engine & Worktree Sandboxing"
 }

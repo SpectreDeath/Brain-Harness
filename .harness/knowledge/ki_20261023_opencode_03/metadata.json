@@ -2,11 +2,12 @@
   "id": "ki_20261023_opencode_03",
   "title": "Persistent PTY Multiplexing Daemon for Long-Running Agents",
   "context": "Decoupled terminal process execution across transient user interfaces and live reconnects.",
-  "distilled_learning": "Multiplexing shell processes across a daemonized PTY background server prevents child process termination when UI clients detach, enabling resilient session recovery and live inspection.",
+  "distilled_learning": "# Persistent PTY Multiplexing Daemon for Long-Running Agents",
   "source_target": "D:\\GitHub\\cloned\\opencode",
   "detected_format": "git_repository",
   "isnad": {
     "decision_id": "dec_20261023_opencode_03",
+    "timestamp": "2026-10-30T18:40:39.910076+00:00",
     "claims": [
       {
         "assertion": "Multiplexing shell processes across a daemonized PTY background server prevents child process termination when UI clients detach, enabling resilient session recovery and live inspection.",
@@ -28,5 +29,16 @@
     "background_daemon",
     "agent_resilience",
     "session_recovery"
-  ]
+  ],
+  "schema_version": "1.0.0",
+  "category": "agent_orchestration",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-10-23T00:00:00Z"
 }

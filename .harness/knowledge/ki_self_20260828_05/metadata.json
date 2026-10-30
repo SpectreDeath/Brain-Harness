@@ -37,5 +37,16 @@
     "self_reflection"
   ],
   "context": "Knowledge item ki_self_20260828_05: Dual-Mode UI Serving & Zero-Build SPA Fallback",
-  "distilled_learning": "### Distilled Heuristic\nWeb dashboard servers in developer tooling must support dual-mode static asset serving: auto-detecting and mounting modern compiled SPAs (e.g. React 19 / Vite in `frontend/dist`) while guaranteeing a zero-dependency, zero-build fallback (`static/index.html`) so headless and minimal environments never break."
+  "distilled_learning": "# Knowledge Item: Dual-Mode UI Serving & Zero-Build SPA Fallback",
+  "schema_version": "1.0.0",
+  "category": "agent_orchestration",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-08-28T18:46:00.000000+00:00"
 }

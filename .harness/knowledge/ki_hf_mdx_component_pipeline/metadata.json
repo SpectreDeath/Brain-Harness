@@ -5,6 +5,7 @@
   "detected_format": "git_repository",
   "isnad": {
     "decision_id": "dec_ki_hf_mdx_component_pipeline",
+    "timestamp": "2026-10-30T18:40:40.854888+00:00",
     "claims": [
       {
         "assertion": "Transpiling heterogeneous documentation sources (standard Markdown, reStructuredText, and Jupyter Notebooks) into a unified Svelte-enhanced MDX dialect paired with heading-bounded AST chunking provides optimal semantic boundaries for hybrid vector and full-text search indexing.",
@@ -39,5 +40,17 @@
     "chunking",
     "search",
     "embeddings"
-  ]
+  ],
+  "schema_version": "1.0.0",
+  "category": "developer_experience",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-09-21T21:24:13.630718+00:00",
+  "distilled_learning": "# Multi-Dialect Unified MDX Transpilation & Hierarchical Search Chunking"
 }

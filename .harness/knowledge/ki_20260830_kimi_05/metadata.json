@@ -5,6 +5,7 @@
   "detected_format": "git_repository",
   "isnad": {
     "decision_id": "dec_20260830_kimi_05",
+    "timestamp": "2026-10-30T18:40:39.075080+00:00",
     "claims": [
       {
         "assertion": "Terminal-based agent interfaces must utilize synchronized output escape sequences (CSI ? 2026 h/l) combined with differential line-diff renderers to achieve flicker-free streaming UI updates at 60+ FPS",
@@ -29,5 +30,16 @@
     "csi_2026"
   ],
   "context": "Rapid token streaming in terminal agent interfaces causes severe visual flicker, cursor jitter, and tearing when naive full-screen re-renders or unbounded raw stdout writes are used.",
-  "distilled_learning": "Wrap all terminal frame writes inside synchronized output escape delimiters (`\\x1b[?2026h` begin sync, `\\x1b[?2026l` end sync). The TUI engine maintains an in-memory virtual terminal buffer representing the desired screen state and computes a minimal differential patch (only modified lines and character ranges) against the current physical terminal buffer before flushing."
+  "distilled_learning": "# Differential Terminal Rendering & Synchronized Output Protocol for Agent TUIs",
+  "schema_version": "1.0.0",
+  "category": "agent_orchestration",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-08-30T00:00:00Z"
 }

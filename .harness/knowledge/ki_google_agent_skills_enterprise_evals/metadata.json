@@ -16,5 +16,18 @@
   "provenance": [
     "Google Cloud Blog: Behind the scenes: How we build, test, and scale Google Agent Skills (2026-09-06)"
   ],
-  "created_at": "2026-09-06T15:10:00Z"
+  "created_at": "2026-09-06T15:10:00Z",
+  "schema_version": "1.0.0",
+  "source_target": "Behind the scenes: How we build, test, and scale Google Agent Skills (Remigiusz Samborski, Google Cloud)",
+  "detected_format": "raw_docs",
+  "anchors": {},
+  "edges": [],
+  "isnad": {},
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "distilled_learning": "# Google Enterprise Agent Skills: Continuous Evals & Product Governance"
 }

@@ -3,7 +3,11 @@
   "title": "Bounded Directory Traversal & Noise-Root Pruning Invariant",
   "created_at": "2026-09-15T17:30:00Z",
   "source": "deep-repo-auditor",
-  "isnad": "deep-repo-auditor audit on 2026-09-15; identified during Stage 1 surface scanning and verified in AGENTS.md Rule 52.",
+  "isnad": {
+    "status": "VERIFIED",
+    "notes": "deep-repo-auditor audit on 2026-09-15; identified during Stage 1 surface scanning and verified in AGENTS.md Rule 52.",
+    "claims": []
+  },
   "tags": [
     "directory-traversal",
     "deep-scan-hygiene",
@@ -15,5 +19,27 @@
     "AGENTS.md#L54",
     "src/harness/plugins/loader.py#L71-L110"
   ],
-  "vault_version": "1.0"
+  "vault_version": "1.0",
+  "schema_version": "1.0.0",
+  "category": "infrastructure_and_runtime",
+  "source_target": "deep-repo-auditor",
+  "detected_format": "raw_docs",
+  "anchors": {},
+  "edges": [
+    {
+      "type": "references_code",
+      "target": "src/harness/plugins/loader.py#L71-L110",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    }
+  ],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "distilled_learning": "## Bounded Directory Traversal & Noise-Root Pruning Invariant"
 }

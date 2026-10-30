@@ -15,5 +15,18 @@
     ".agents/skills/epistemic-memory-lifecycle/SKILL.md",
     "book-to-skill-forge-20260903_174549.html"
   ],
-  "created_at": "2026-09-03T19:46:00Z"
+  "created_at": "2026-09-03T19:46:00Z",
+  "schema_version": "1.0.0",
+  "source_target": "Brain Harness Execution History",
+  "detected_format": "raw_docs",
+  "anchors": {},
+  "edges": [],
+  "isnad": {},
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "distilled_learning": "# Epistemic Memory Promotion Pipeline & Held-Out Judge Invariant"
 }

@@ -6,6 +6,7 @@
   "timestamp": "2026-08-31T23:15:00Z",
   "isnad": {
     "decision_id": "dec_20260831_strategify_04",
+    "timestamp": "2026-10-30T18:40:39.432299+00:00",
     "claims": [
       {
         "assertion": "StrategifySwarm coordinates specialized domain minister personas across live LLM providers (Ollama, OpenAI, Anthropic) or heuristic rule fallbacks, synthesizing consensus actions and deliberating payoff matrices via Borda count, majority, or unanimous voting rules.",
@@ -34,5 +35,25 @@
     "strategify"
   ],
   "context": "Multi-Persona LLM Swarm Orchestration with Game-Theoretic Voting",
-  "distilled_learning": "# KI: Multi-Persona LLM Swarm Orchestration with Game-Theoretic Voting\n\n## Operational Summary\nSingle-agent LLM prompts struggle to balance multi-domain strategic priorities (defense readiness, public health, economic preservation, diplomacy). Partitioning roles into specialized domain personas (Defense Minister, Chief Epidemiologist, Finance Minister, Diplomatic Envoy) with distinct priority weights allows parallel deliberation. Aggregating candidate payoff matrices via formal voting rules (Borda count rank weighting, weighted majority, unanimous consensus) produces resilient strategic decisions with graceful heuristic fallbacks when LLM APIs fail."
+  "distilled_learning": "# Multi-Persona LLM Swarm Orchestration with Game-Theoretic Voting",
+  "schema_version": "1.0.0",
+  "category": "agent_orchestration",
+  "anchors": {},
+  "edges": [
+    {
+      "type": "same_domain",
+      "target": "ki_self_20260831_01",
+      "target_kind": "ki",
+      "derived": true,
+      "confidence": 0.8,
+      "description": null
+    }
+  ],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-08-31T23:15:00Z"
 }

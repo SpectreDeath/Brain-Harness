@@ -64,5 +64,16 @@
     "self_reflection"
   ],
   "context": "Knowledge item ki_self_20260826_01",
-  "distilled_learning": "### Distilled Heuristic"
+  "distilled_learning": "### Distilled Heuristic",
+  "schema_version": "1.0.0",
+  "category": "developer_experience",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-08-26T21:01:20.758130+00:00"
 }

@@ -1,7 +1,7 @@
 {
   "id": "ki_hf_autoresearch_multi_worker_lab",
   "title": "Multi-Agent Autoresearch AI Lab Architecture & Heterogeneous Model Workers",
-  "category": "machine_learning",
+  "category": "scientific_computing/machine_learning",
   "tags": [
     "autoresearch",
     "multi_worker",
@@ -18,5 +18,18 @@
     "D:/GitHub/cloned/context-course/projects/pre-training/scripts/hermes_worker.py#L1-L100",
     "D:/GitHub/cloned/context-course/projects/pre-training/scripts/pi_worker.py#L1-L100"
   ],
-  "created_at": "2026-09-21T18:00:00Z"
+  "created_at": "2026-09-21T18:00:00Z",
+  "schema_version": "1.0.0",
+  "source_target": "huggingface/context-course",
+  "detected_format": "raw_docs",
+  "anchors": {},
+  "edges": [],
+  "isnad": {},
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "distilled_learning": "# Multi-Agent Autoresearch AI Lab Architecture & Heterogeneous Model Workers"
 }

@@ -3,7 +3,11 @@
   "title": "Authoritative Critic Seam Consolidation & Adapter Pattern",
   "created_at": "2026-09-09T21:40:00Z",
   "source": "harness-reflector",
-  "isnad": "Session 2a0477d5 architecture deepening cycle 2026-09-09; plugins/agent_orchestration audit; architecture-review-20260909-164500.html; harness-reflection-20260909-173500.html Axis 1; Rule 2, Rule 18, Rule 20, Rule 44",
+  "isnad": {
+    "status": "VERIFIED",
+    "notes": "Session 2a0477d5 architecture deepening cycle 2026-09-09; plugins/agent_orchestration audit; architecture-review-20260909-164500.html; harness-reflection-20260909-173500.html Axis 1; Rule 2, Rule 18, Rule 20, Rule 44",
+    "claims": []
+  },
   "tags": [
     "architecture",
     "plugins",
@@ -21,5 +25,51 @@
     "plugins/agent_orchestration/critic_loop/config.default.yaml"
   ],
   "vault_version": "1.0",
-  "reflection_brief": "harness-reflection-20260909-173500.html"
+  "reflection_brief": "harness-reflection-20260909-173500.html",
+  "schema_version": "1.0.0",
+  "category": "agent_orchestration",
+  "source_target": "harness-reflector",
+  "detected_format": "raw_docs",
+  "anchors": {},
+  "edges": [
+    {
+      "type": "references_code",
+      "target": "plugins/agent_orchestration/critic_loop/main.py",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    },
+    {
+      "type": "references_code",
+      "target": "plugins/agent_orchestration/evaluator_critic/main.py",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    },
+    {
+      "type": "references_code",
+      "target": "plugins/agent_orchestration/agent_debater/main.py",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    },
+    {
+      "type": "references_code",
+      "target": "plugins/agent_orchestration/critic_loop/config.default.yaml",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    }
+  ],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "distilled_learning": "## Authoritative Critic Seam Consolidation & Adapter Pattern"
 }

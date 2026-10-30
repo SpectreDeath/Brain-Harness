@@ -5,6 +5,7 @@
   "detected_format": "harness_instance",
   "isnad": {
     "decision_id": "dec_20260823_02",
+    "timestamp": "2026-10-30T18:40:38.633337+00:00",
     "claims": [
       {
         "assertion": "Overlapping window chunking (30-line chunks with step size of 25) combined with TF-IDF subword tokenization enables sub-second lexical and semantic search across massive (>80,000) conversational transcript steps",
@@ -37,7 +38,25 @@
     "trajectory_memory"
   ],
   "context": "External agent brains and IDE session archives rapidly grow to tens of thousands of JSONL log lines, overwhelming standard linear scans or heavy LLM context windows.",
-  "distilled_learning": "Use in-memory sliding-window tokenization and precomputed TF-IDF document vectors to provide instant search retrieval across conversational transcripts without external vector database dependencies.",
+  "distilled_learning": "# High-Scale Trajectory Ingestion & Overlapping Token Indexing",
   "retrieval_count": 2,
-  "last_retrieved_at": "2026-10-26T19:42:44.003014+00:00"
+  "last_retrieved_at": "2026-10-26T19:42:44.003014+00:00",
+  "schema_version": "1.0.0",
+  "category": "agent_orchestration",
+  "anchors": {},
+  "edges": [
+    {
+      "type": "references_code",
+      "target": "d:/GitHub/projects/Brain Harness/plugins/memory_and_epistemics/brain_bridge/main.py",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    }
+  ],
+  "success_count": 0,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-08-23T00:00:00Z"
 }

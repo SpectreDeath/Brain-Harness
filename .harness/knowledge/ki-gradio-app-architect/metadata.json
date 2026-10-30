@@ -17,5 +17,35 @@
       "path": ".agents/skills/gradio-app-architect/CARD.md",
       "description": "Companion summary card, stage matrix, and verification checklist"
     }
-  ]
+  ],
+  "schema_version": "1.0.0",
+  "category": "developer_experience",
+  "source_target": "",
+  "detected_format": "raw_docs",
+  "tags": [
+    "gradio",
+    "ui",
+    "ai_interface",
+    "blocks"
+  ],
+  "anchors": {},
+  "edges": [
+    {
+      "type": "became_skill",
+      "target": "gradio-app-architect",
+      "target_kind": "skill",
+      "derived": false,
+      "confidence": 1.0,
+      "description": null
+    }
+  ],
+  "isnad": {},
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-09-20T15:43:00-04:00",
+  "distilled_learning": "Authoritative engineering heuristics, mental models, and production guardrails for building interactive AI web applications and agent interfaces with Gradio. Distills Eva J Patel's 2026 comprehensive literature into a 3-layer decoupled architecture, isolated per-session gr.State management, positional arity contracts, module-scope singleton warm-loading, queued websocket concurrency (demo.queue), generator token streaming, and Hugging Face Spaces deployment manifests."
 }

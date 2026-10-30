@@ -3,7 +3,11 @@
   "title": "Dynamic 5D Compute Complexity & Reasoning Budget Escalation",
   "created_at": "2026-09-15T17:30:00Z",
   "source": "deep-repo-auditor",
-  "isnad": "deep-repo-auditor multi-axis audit on 2026-09-15; verified via compute-assessor-20260915-172943.html, src/harness/services/compute_assessor.py, and tests/test_compute_assessor.py.",
+  "isnad": {
+    "status": "VERIFIED",
+    "notes": "deep-repo-auditor multi-axis audit on 2026-09-15; verified via compute-assessor-20260915-172943.html, src/harness/services/compute_assessor.py, and tests/test_compute_assessor.py.",
+    "claims": []
+  },
   "tags": [
     "compute-budget",
     "5d-complexity",
@@ -16,5 +20,35 @@
     "tests/test_compute_assessor.py",
     "AGENTS.md#L27"
   ],
-  "vault_version": "1.0"
+  "vault_version": "1.0",
+  "schema_version": "1.0.0",
+  "category": "security_and_forensics",
+  "source_target": "deep-repo-auditor",
+  "detected_format": "raw_docs",
+  "anchors": {},
+  "edges": [
+    {
+      "type": "references_code",
+      "target": "src/harness/services/compute_assessor.py",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    },
+    {
+      "type": "references_code",
+      "target": "tests/test_compute_assessor.py",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    }
+  ],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "distilled_learning": "## Dynamic 5D Compute Complexity & Reasoning Budget Escalation"
 }

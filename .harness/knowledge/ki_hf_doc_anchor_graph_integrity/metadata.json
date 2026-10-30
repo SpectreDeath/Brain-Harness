@@ -5,6 +5,7 @@
   "detected_format": "git_repository",
   "isnad": {
     "decision_id": "dec_ki_hf_doc_anchor_graph_integrity",
+    "timestamp": "2026-10-30T18:40:40.798201+00:00",
     "claims": [
       {
         "assertion": "Fast single-pass AST tokenization stripping inline code blocks, HTML comments, and blockquotes enables deterministic anchor graph extraction across Markdown headings, HTML IDs, and autodoc components, resolving extensionless relative links and cross-version documentation routes without external web servers.",
@@ -32,5 +33,17 @@
     "markdown",
     "anchors",
     "verification"
-  ]
+  ],
+  "schema_version": "1.0.0",
+  "category": "developer_experience",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-09-21T21:24:13.618172+00:00",
+  "distilled_learning": "# Deterministic Markdown Anchor Graph & Cross-Reference Link Verification"
 }

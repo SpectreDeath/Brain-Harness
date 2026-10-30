@@ -6,6 +6,7 @@
   "timestamp": "2026-08-31T11:00:00Z",
   "isnad": {
     "decision_id": "dec_20260831_cellcog_03",
+    "timestamp": "2026-10-30T18:40:39.152052+00:00",
     "claims": [
       {
         "assertion": "SDK tool invocations that upload files to paid cloud endpoints must perform pre-flight local file existence checks and raise immediate client-side exceptions (FileUploadError) before network calls to prevent billing waste on invalid references.",
@@ -40,5 +41,25 @@
     "repo_introspection"
   ],
   "context": "Pre-Flight File Integrity Verification & Transparent Blob Path Translation",
-  "distilled_learning": "# KI: Pre-Flight File Integrity Verification & Transparent Blob Path Translation\n\n## Operational Summary\nWhen AI agents invoke external multimodal or document generation services with referenced local files, referencing missing or non-existent files burns API credits on doomed remote workflows. Performing strict pre-flight existence checks and annotating transformed payload tags with external_local_path metadata prevents billing loss and enables transparent bi-directional path restoration."
+  "distilled_learning": "# KI: Pre-Flight File Integrity Verification & Transparent Blob Path Translation",
+  "schema_version": "1.0.0",
+  "category": "developer_experience",
+  "anchors": {},
+  "edges": [
+    {
+      "type": "same_domain",
+      "target": "ki_20260831_cellcog_04",
+      "target_kind": "ki",
+      "derived": true,
+      "confidence": 0.8,
+      "description": null
+    }
+  ],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-08-31T11:00:00Z"
 }

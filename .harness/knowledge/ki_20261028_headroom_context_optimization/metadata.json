@@ -85,5 +85,15 @@
         "verified": true
       }
     ]
-  }
+  },
+  "schema_version": "1.0.0",
+  "source_target": "https://github.com/headroom-ai/headroom",
+  "detected_format": "raw_docs",
+  "anchors": {},
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "distilled_learning": "# Headroom Context Optimization Architecture"
 }

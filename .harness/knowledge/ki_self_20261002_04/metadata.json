@@ -1,7 +1,7 @@
 {
   "id": "ki_self_20261002_04",
   "title": "Continuous Reflection Daemon, JUnit Test Trajectory Harvesting & CI Distillation",
-  "category": "reflection_and_daemon",
+  "category": "memory_and_epistemics/reflection",
   "created_at": "2026-10-02T19:20:00Z",
   "author": "Brain Harness Autobiographical Reflection Engine (harness-reflector)",
   "tags": [
@@ -13,10 +13,10 @@
     "self_reflection"
   ],
   "context": "In autonomous agent harnesses, execution knowledge is often lost as ephemeral residue once a process exits. When CI runs execute test suites, rich diagnostics (failures, errors, and fixes) are discarded upon runner shutdown. Manually running reflection CLI commands is insufficient for unattended multi-day developmental velocity.",
-  "distilled_learning": "Continuous autobiographical reflection must operate across two distinct modes: an interactive CLI inspection seam (harness reflect) and an asynchronous background daemon (ReflectionDaemonWorker) wired directly into CI test runs via JUnit XML report ingestion (--test-report). Test execution pattern extractors must defensively parse heterogeneous testsuite hierarchies and distinguish transient timeouts from structural architecture regressions.",
+  "distilled_learning": "# Continuous Reflection Daemon, JUnit Test Trajectory Harvesting & CI Distillation",
   "isnad": {
     "decision_id": "dec_20261002_self_04",
-    "status": "VERIFIED",
+    "timestamp": "2026-10-30T18:40:42.855389+00:00",
     "claims": [
       {
         "assertion": "ReflectionDaemonWorker executes recurring autobiographical distillation loops in background tasks.",
@@ -68,6 +68,17 @@
           }
         ]
       }
-    ]
-  }
+    ],
+    "status": "VERIFIED"
+  },
+  "schema_version": "1.0.0",
+  "source_target": "",
+  "detected_format": "raw_docs",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null
 }

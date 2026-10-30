@@ -5,12 +5,111 @@
   "updated": "2026-09-01T18:56:00-04:00",
   "summary": "Brain Harness employs a hybrid topology: Graph-of-Trees (plugin dependency DAG managing service hierarchies via ScopedServiceContext parent-child chains) composed with Hash-Indexed O(1) Dispatchers (IoC ServiceContext._entries, EventBus._handlers, ToolRegistry._tools) and a DAG Execution Scheduler (DependencyGraph.execution_waves() for lifecycle ordering and swarm parallel execution). Blast radius matrix covers 11 core vertices.",
   "references": [
-    {"path": "src/harness/kernel/context.py", "description": "ServiceContext IoC container with typed keys, realms, interceptors, transactions"},
-    {"path": "src/harness/kernel/graph.py", "description": "Generic DependencyGraph DAG with execution waves, cycle detection, transitive closure"},
-    {"path": "src/harness/kernel/lifecycle.py", "description": "7-state plugin lifecycle FSM with topological dependency ordering"},
-    {"path": "src/harness/kernel/runtime.py", "description": "HarnessRuntime unified orchestrator"},
-    {"path": "src/harness/events/bus.py", "description": "EventBus append-only event stream with JSONL persistence"},
-    {"path": "src/harness/agent/swarm.py", "description": "SwarmDAG multi-agent parallel wave scheduler"},
-    {"path": "src/harness/plugins/catalog.py", "description": "PluginCatalog indexed repository with O(1) lookups"}
-  ]
+    {
+      "path": "src/harness/kernel/context.py",
+      "description": "ServiceContext IoC container with typed keys, realms, interceptors, transactions"
+    },
+    {
+      "path": "src/harness/kernel/graph.py",
+      "description": "Generic DependencyGraph DAG with execution waves, cycle detection, transitive closure"
+    },
+    {
+      "path": "src/harness/kernel/lifecycle.py",
+      "description": "7-state plugin lifecycle FSM with topological dependency ordering"
+    },
+    {
+      "path": "src/harness/kernel/runtime.py",
+      "description": "HarnessRuntime unified orchestrator"
+    },
+    {
+      "path": "src/harness/events/bus.py",
+      "description": "EventBus append-only event stream with JSONL persistence"
+    },
+    {
+      "path": "src/harness/agent/swarm.py",
+      "description": "SwarmDAG multi-agent parallel wave scheduler"
+    },
+    {
+      "path": "src/harness/plugins/catalog.py",
+      "description": "PluginCatalog indexed repository with O(1) lookups"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "category": "agent_orchestration",
+  "source_target": "",
+  "detected_format": "raw_docs",
+  "tags": [
+    "topology",
+    "graph_of_trees",
+    "ioc_container",
+    "plugin_architecture"
+  ],
+  "anchors": {},
+  "edges": [
+    {
+      "type": "references_code",
+      "target": "src/harness/kernel/context.py",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    },
+    {
+      "type": "references_code",
+      "target": "src/harness/kernel/graph.py",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    },
+    {
+      "type": "references_code",
+      "target": "src/harness/kernel/lifecycle.py",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    },
+    {
+      "type": "references_code",
+      "target": "src/harness/kernel/runtime.py",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    },
+    {
+      "type": "references_code",
+      "target": "src/harness/events/bus.py",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    },
+    {
+      "type": "references_code",
+      "target": "src/harness/agent/swarm.py",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    },
+    {
+      "type": "references_code",
+      "target": "src/harness/plugins/catalog.py",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    }
+  ],
+  "isnad": {},
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-09-01T18:56:00-04:00",
+  "distilled_learning": "Brain Harness employs a hybrid topology: Graph-of-Trees (plugin dependency DAG managing service hierarchies via ScopedServiceContext parent-child chains) composed with Hash-Indexed O(1) Dispatchers (IoC ServiceContext._entries, EventBus._handlers, ToolRegistry._tools) and a DAG Execution Scheduler (DependencyGraph.execution_waves() for lifecycle ordering and swarm parallel execution). Blast radius matrix covers 11 core vertices."
 }

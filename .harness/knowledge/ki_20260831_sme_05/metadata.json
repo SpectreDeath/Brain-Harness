@@ -6,6 +6,7 @@
   "timestamp": "2026-08-31T16:20:00Z",
   "isnad": {
     "decision_id": "dec_20260831_sme_05",
+    "timestamp": "2026-10-30T18:40:39.371690+00:00",
     "claims": [
       {
         "assertion": "Validating plugin manifests against strict JSON schemas with permission boundaries combined with automated 3-failure circuit breaker wrapping provides robust sandboxing for untrusted dynamic extensions.",
@@ -39,5 +40,16 @@
     "repo_introspection"
   ],
   "context": "Circuit-Breaker Sandboxing & Manifest Schema Verification for Dynamic Plugin Ecosystems",
-  "distilled_learning": "# KI: Circuit-Breaker Sandboxing & Manifest Schema Verification for Dynamic Plugin Ecosystems\n\n## Operational Summary\nDynamic extension systems must prevent untrusted or failing plugins from crashing the host gateway. Enforcing manifest JSON Schema validation, explicit permissions gating (network_access, filesystem_read/write, subprocess), path traversal defenses, and wrapping every tool handler in a 3-strike circuit breaker isolates rogue extensions safely."
+  "distilled_learning": "# Circuit-Breaker Sandboxing & Manifest Schema Verification for Dynamic Plugin Ecosystems",
+  "schema_version": "1.0.0",
+  "category": "security_and_forensics",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-08-31T16:20:00Z"
 }

@@ -2,109 +2,177 @@
 
 from __future__ import annotations
 
+from pathlib import Path
 from typing import Any, Sequence
 
+from harness.kernel.context import ServiceContext, ServiceKey
 from harness.services.storage.models import KnowledgeEdge, KnowledgeItemRecord
+from harness.services.storage.vault_backfill import (
+    backfill_edges_mechanically as _backfill_edges_mechanically,
+    propose_links as _propose_links,
+)
+from harness.services.storage.vault_derivation import derive_knowledge_graph
+from harness.services.storage.vault_traversal import (
+    bfs_shortest_path,
+    find_node_neighbors,
+    find_vault_orphans,
+)
+from harness.services.storage.vault_graph_models import (
+    DerivedKnowledgeGraph,
+    KnowledgeGraphEdge,
+    KnowledgeGraphNode,
+    KnowledgeGraphSummary,
+)
 from harness.services.storage.vault_taxonomy import get_taxonomy_domain
+
+KNOWLEDGE_GRAPH_SERVICE_KEY: ServiceKey[KnowledgeGraphQueryService] = ServiceKey("service.knowledge_graph_query")
+
+
+def resolve_knowledge_graph_service(context: ServiceContext | None = None) -> KnowledgeGraphQueryService:
+    """Resolve KnowledgeGraphQueryService from IoC container or instantiate default fallback (Rule 58)."""
+    if context is not None:
+        service = context.optional(KNOWLEDGE_GRAPH_SERVICE_KEY)
+        if service is not None:
+            return service
+    return KnowledgeGraphQueryService()
+
+
+def validate_export_path(out_path: Path | str, vault_dir: Path | str = ".harness/knowledge") -> Path:
+    """Enforce export path guardrail: reject outputs resolving inside vault root (Rule 40)."""
+    target = Path(out_path).resolve()
+    vault = Path(vault_dir).resolve()
+    try:
+        target.relative_to(vault)
+        raise ValueError(
+            f"Export target path '{out_path}' resolves inside knowledge vault directory '{vault}'. "
+            "Flat export files inside .harness/knowledge/ are forbidden by Rule 40."
+        )
+    except ValueError as e:
+        if "forbidden by Rule 40" in str(e):
+            raise
+    return target
 
 
 class KnowledgeGraphQueryService:
     """Provides topological traversal and edge-based queries over Knowledge Vault items."""
 
+    def derive_graph(
+        self,
+        items: Sequence[KnowledgeItemRecord],
+        *,
+        nodes_filter: str = "all",
+        include_single_tag_edges: bool = False,
+        include_shared_source: bool = False,
+        max_tag_freq: float = 0.15,
+        min_confidence: float = 0.0,
+    ) -> DerivedKnowledgeGraph:
+        """Derive authoritative knowledge graph across items, skills, code paths, and taxonomic links."""
+        return derive_knowledge_graph(
+            items,
+            nodes_filter=nodes_filter,
+            include_single_tag_edges=include_single_tag_edges,
+            include_shared_source=include_shared_source,
+            max_tag_freq=max_tag_freq,
+            min_confidence=min_confidence,
+        )
+
     def get_skill_lineage(self, skill_name: str, items: Sequence[KnowledgeItemRecord]) -> list[str]:
-        """Return list of KI IDs that fed into or were distilled to form the specified skill."""
-        lineage: list[str] = []
         target = skill_name.lower().strip()
-        for ki in items:
-            has_edge = any(e.type == "became_skill" and e.target.lower() == target for e in ki.edges)
-            if has_edge or ki.anchors.get("target_skill", "").lower() == target or f"skill:{target}" in [t.lower() for t in ki.tags]:
-                lineage.append(ki.id)
+        lineage = [
+            ki.id for ki in items
+            if any(e.type == "became_skill" and e.target.lower() == target for e in ki.edges)
+            or ki.anchors.get("target_skill", "").lower() == target
+            or f"skill:{target}" in [t.lower() for t in ki.tags]
+        ]
         return sorted(set(lineage))
 
     def get_dependents(self, node_id: str, items: Sequence[KnowledgeItemRecord]) -> list[dict[str, Any]]:
-        """Return all items, skills, or plugins that point to or depend upon node_id."""
-        dependents: list[dict[str, Any]] = []
         target = node_id.lower().strip()
-        for ki in items:
-            for edge in ki.edges:
-                if edge.target.lower() == target:
-                    dependents.append({"source_ki": ki.id, "edge_type": edge.type, "target_kind": edge.target_kind, "confidence": edge.confidence})
-        return dependents
+        return [
+            {"source_ki": ki.id, "edge_type": e.type, "target_kind": e.target_kind, "confidence": e.confidence}
+            for ki in items for e in ki.edges if e.target.lower() == target
+        ]
 
     def get_contradictions(self, ki_id: str, items: Sequence[KnowledgeItemRecord]) -> list[str]:
-        """Return list of KI IDs that contradict or supersede the given item."""
         conflicting: list[str] = []
         for ki in items:
             if ki.id == ki_id:
-                for edge in ki.edges:
-                    if edge.type in ("contradicts", "supersedes"):
-                        conflicting.append(edge.target)
+                conflicting.extend(e.target for e in ki.edges if e.type in ("contradicts", "supersedes"))
             else:
-                for edge in ki.edges:
-                    if edge.target == ki_id and edge.type in ("contradicts", "supersedes"):
-                        conflicting.append(ki.id)
-                if ki.superseded_by == ki_id:
+                if any(e.target == ki_id and e.type in ("contradicts", "supersedes") for e in ki.edges):
+                    conflicting.append(ki.id)
+                elif ki.superseded_by == ki_id:
                     conflicting.append(ki.id)
         return sorted(set(conflicting))
 
     def get_topic_neighborhood(self, topic: str, items: Sequence[KnowledgeItemRecord]) -> dict[str, Any]:
-        """Return subgraph of KIs, skills, and code references related to a topic or domain."""
         t_norm = topic.lower().strip()
-        matched_kis: list[str] = []
-        skills: set[str] = set()
-        paths: set[str] = set()
-
+        matched, skills, paths = [], set(), set()
         for ki in items:
             domain = get_taxonomy_domain(ki.category)
             if t_norm in domain or t_norm in ki.category.lower() or t_norm in [t.lower() for t in ki.tags] or t_norm in ki.title.lower():
-                matched_kis.append(ki.id)
-                for edge in ki.edges:
-                    if edge.target_kind == "skill":
-                        skills.add(edge.target)
-                    elif edge.target_kind == "path":
-                        paths.add(edge.target)
+                matched.append(ki.id)
+                for e in ki.edges:
+                    if e.target_kind == "skill":
+                        skills.add(e.target)
+                    elif e.target_kind == "path":
+                        paths.add(e.target)
+        return {"topic": topic, "matched_kis": matched, "skills": sorted(skills), "paths": sorted(paths)}
 
-        return {"topic": topic, "matched_kis": matched_kis, "skills": sorted(skills), "paths": sorted(paths)}
+    def propose_links(
+        self,
+        ki: KnowledgeItemRecord,
+        existing: Sequence[KnowledgeItemRecord],
+        *,
+        max_tag_freq: float = 0.15,
+    ) -> list[KnowledgeEdge]:
+        return _propose_links(ki, existing, max_tag_freq=max_tag_freq)
 
-    def propose_links(self, ki: KnowledgeItemRecord, existing: Sequence[KnowledgeItemRecord]) -> list[KnowledgeEdge]:
-        """Propose candidate relationship edges for a new or unlinked Knowledge Item."""
-        proposed: list[KnowledgeEdge] = []
-        domain = get_taxonomy_domain(ki.category)
-        tags = set(ki.tags)
+    def backfill_edges_mechanically(
+        self,
+        items: Sequence[KnowledgeItemRecord],
+        vault_dir: Path | str = ".harness/knowledge",
+        max_tag_freq: float = 0.15,
+        dry_run: bool = False,
+    ) -> int:
+        res = _backfill_edges_mechanically(items, vault_dir=vault_dir, max_tag_freq=max_tag_freq, dry_run=dry_run)
+        return int(res["total_added"])
 
-        if ki.source_target and ("src/" in ki.source_target or "plugins/" in ki.source_target):
-            proposed.append(KnowledgeEdge(type="references_code", target=ki.source_target, target_kind="path", derived=True, confidence=0.95))
+    def backfill_edges_report(
+        self,
+        items: Sequence[KnowledgeItemRecord],
+        vault_dir: Path | str = ".harness/knowledge",
+        max_tag_freq: float = 0.15,
+        dry_run: bool = False,
+    ) -> dict[str, Any]:
+        return _backfill_edges_mechanically(items, vault_dir=vault_dir, max_tag_freq=max_tag_freq, dry_run=dry_run)
 
-        target_skill = ki.anchors.get("target_skill")
-        if target_skill:
-            proposed.append(KnowledgeEdge(type="became_skill", target=target_skill, target_kind="skill", confidence=1.0))
+    def find_path(
+        self,
+        from_id: str,
+        to_id: str,
+        graph: DerivedKnowledgeGraph,
+        *,
+        max_depth: int = 6,
+        exclude_derived: bool = False,
+        directed: bool = False,
+    ) -> dict[str, Any]:
+        return bfs_shortest_path(from_id, to_id, graph, max_depth=max_depth, exclude_derived=exclude_derived, directed=directed)
 
-        for other in existing:
-            if other.id == ki.id:
-                continue
-            if other.id == ki.superseded_by:
-                proposed.append(KnowledgeEdge(type="superseded_by", target=other.id, target_kind="ki", derived=True, confidence=0.99))
-            elif len(tags & set(other.tags)) >= 2 and domain == get_taxonomy_domain(other.category) and domain != "general":
-                proposed.append(KnowledgeEdge(type="same_domain", target=other.id, target_kind="ki", derived=True, confidence=0.80))
+    def get_neighbors(
+        self,
+        node_id: str,
+        graph: DerivedKnowledgeGraph,
+        *,
+        depth: int = 1,
+        edge_type: str | None = None,
+        exclude_derived: bool = False,
+    ) -> list[dict[str, Any]]:
+        return find_node_neighbors(node_id, graph, max_depth=depth, edge_type=edge_type, exclude_derived=exclude_derived)
 
-        return proposed
-
-    def backfill_edges_mechanically(self, items: Sequence[KnowledgeItemRecord]) -> int:
-        """Derive and attach mechanical lineage edges across existing Knowledge Items in-place."""
-        added = 0
-        for ki in items:
-            if ki.source_target and ("src/" in ki.source_target or "plugins/" in ki.source_target):
-                if not any(e.type == "references_code" and e.target == ki.source_target for e in ki.edges):
-                    ki.add_edge("references_code", ki.source_target, target_kind="path", derived=True, confidence=0.95)
-                    added += 1
-
-            target_skill = ki.anchors.get("target_skill")
-            if target_skill and not any(e.type == "became_skill" for e in ki.edges):
-                ki.add_edge("became_skill", target_skill, target_kind="skill", derived=True, confidence=0.95)
-                added += 1
-
-            if ki.superseded_by and not any(e.type == "supersedes" and e.target == ki.superseded_by for e in ki.edges):
-                ki.add_edge("supersedes", ki.superseded_by, target_kind="ki", derived=True, confidence=1.0)
-                added += 1
-        return added
-
+    def get_orphans(
+        self,
+        graph: DerivedKnowledgeGraph,
+        items: Sequence[KnowledgeItemRecord],
+    ) -> dict[str, Any]:
+        return find_vault_orphans(graph, items)

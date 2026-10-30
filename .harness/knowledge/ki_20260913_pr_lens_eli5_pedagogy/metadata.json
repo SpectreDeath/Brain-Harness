@@ -5,6 +5,7 @@
   "detected_format": "git_repository",
   "isnad": {
     "decision_id": "dec_20260913_pr_lens_eli5_01",
+    "timestamp": "2026-10-30T18:40:39.590715+00:00",
     "claims": [
       {
         "assertion": "Presenting complex PR architectures through progressive disclosure (growing from a 2-node minimal mental model to full system complexity via ordered walkthrough steps) maximizes reviewer comprehension and reduces cognitive fatigue.",
@@ -32,5 +33,26 @@
     "progressive_disclosure",
     "eli5",
     "agent_skills"
-  ]
+  ],
+  "schema_version": "1.0.0",
+  "category": "agent_orchestration",
+  "anchors": {},
+  "edges": [
+    {
+      "type": "same_domain",
+      "target": "ki_agent_skills_progressive_disclosure",
+      "target_kind": "ki",
+      "derived": true,
+      "confidence": 0.8,
+      "description": null
+    }
+  ],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-09-13T00:00:00Z",
+  "distilled_learning": "# Progressive Disclosure Diagram Generation Pedagogy (ELI5)"
 }

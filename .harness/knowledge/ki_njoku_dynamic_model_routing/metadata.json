@@ -15,5 +15,18 @@
     "https://www.freecodecamp.org/news/build-ai-applications-that-switch-models-automatically/",
     "outputs/articles/switch_models_automatically.md"
   ],
-  "created_at": "2026-09-06T14:15:00Z"
+  "created_at": "2026-09-06T14:15:00Z",
+  "schema_version": "1.0.0",
+  "source_target": "How to Build AI Applications That Switch Models Automatically (Chidiebere Njoku, freeCodeCamp)",
+  "detected_format": "raw_docs",
+  "anchors": {},
+  "edges": [],
+  "isnad": {},
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "distilled_learning": "# Three-Tier Dynamic Model Switching & Resilient Fallbacks"
 }

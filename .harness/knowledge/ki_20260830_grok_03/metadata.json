@@ -5,6 +5,7 @@
   "detected_format": "git_repository",
   "isnad": {
     "decision_id": "dec_20260830_grok_03",
+    "timestamp": "2026-10-30T18:40:38.972069+00:00",
     "claims": [
       {
         "assertion": "Kernel sandbox capability sets that automatically enforce write-deny on global and project lifecycle hook configurations prevent running models or untrusted subprocesses from disabling safety gates or tampering with audit interceptors",
@@ -26,5 +27,32 @@
     ],
     "status": "VERIFIED"
   },
-  "tags": ["sandbox", "security", "lifecycle_hooks", "write_deny", "kernel_isolation"]
+  "tags": [
+    "sandbox",
+    "security",
+    "lifecycle_hooks",
+    "write_deny",
+    "kernel_isolation"
+  ],
+  "schema_version": "1.0.0",
+  "category": "security_and_forensics",
+  "anchors": {},
+  "edges": [
+    {
+      "type": "same_domain",
+      "target": "ki_20260913_tool_approval_03",
+      "target_kind": "ki",
+      "derived": true,
+      "confidence": 0.8,
+      "description": null
+    }
+  ],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-08-30T00:00:00Z",
+  "distilled_learning": "# Sandbox Hook Write-Deny Security Boundary"
 }

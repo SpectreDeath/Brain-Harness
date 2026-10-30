@@ -5,6 +5,7 @@
   "detected_format": "git_repository",
   "isnad": {
     "decision_id": "dec_ki_deepselect_denormal_fp32",
+    "timestamp": "2026-10-30T18:40:40.557636+00:00",
     "claims": [
       {
         "assertion": "For non-negative integers x, y <= 2^22, the bitwise integer addition result x + y is identical to treating their 32-bit patterns as IEEE-754 denormal floats and executing a floating-point addition: __float_as_uint(__uint_as_float(x) + __uint_as_float(y)). DeepSelect uses this to replace integer additions, bypassing ALU resource contention with bitwise/comparison instructions and achieving 2x throughput over integer multiply-add.",
@@ -39,5 +40,15 @@
     "alu_throughput"
   ],
   "retrieval_count": 2,
-  "last_retrieved_at": "2026-10-26T19:42:43.427927+00:00"
+  "last_retrieved_at": "2026-10-26T19:42:43.427927+00:00",
+  "schema_version": "1.0.0",
+  "category": "scientific_computing",
+  "anchors": {},
+  "edges": [],
+  "success_count": 0,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-10-28T16:34:56.574890+00:00",
+  "distilled_learning": "# Denormal IEEE-754 FP32 Simulated Addition Bypassing CUDA Core ALU Contention"
 }

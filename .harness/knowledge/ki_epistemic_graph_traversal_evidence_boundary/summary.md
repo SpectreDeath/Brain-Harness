@@ -54,7 +54,8 @@ Autonomous knowledge graph exploration requires four deterministic architectural
 
 Static binary edges (`Subject -[:PREDICATE]-> Object`) fail in evolving, contested, or multi-agent domains. All dynamic or disputed relations must be modeled as a reified **7-tuple temporal evidence object**:
 
-$$\mathcal{E} = \langle s, p, o, t, \sigma, c, \sigma_{status} angle$$
+$$\mathcal{E} = \langle s, p, o, t, \sigma, c, \sigma_{status} 
+angle$$
 
 - **$s$ (Subject)**: Origin node identifier.
 - **$p$ (Predicate)**: Semantic relationship verb.

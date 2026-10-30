@@ -4,7 +4,7 @@
   "source_uri": "D:\\GitHub\\cloned\\rea-main",
   "source_commit": "701695139490777ece7a3ccb8508b6215a11c0fe",
   "created_at": "2026-10-17T18:16:00Z",
-  "category": "reverse-engineering / evidence / obligation-tracking",
+  "category": "security_and_forensics/reverse_engineering",
   "claims": [
     {
       "claim_id": "claim_001",
@@ -27,5 +27,47 @@
       "source_file": "src/domain/reconstructionObligationLedgerSchemas.ts",
       "source_lines": "L45-L120"
     }
-  ]
+  ],
+  "schema_version": "1.0.0",
+  "source_target": "D:\\GitHub\\cloned\\rea-main",
+  "detected_format": "raw_docs",
+  "tags": [
+    "reverse_engineering",
+    "reconstruction_obligation",
+    "evidence_ledger"
+  ],
+  "anchors": {},
+  "edges": [],
+  "isnad": {
+    "claims": [
+      {
+        "claim_id": "claim_001",
+        "assertion": "Evidence-producing tools must return canonical Evidence records keyed by deterministic SHA-256 digests containing both normalized results and provider raw output.",
+        "evidence_quote": "import { digestCanonicalValue } from './canonicalDigest.js'; ... export const providerSchema = z.strictObject({ id: z.string().min(1), name: z.string().min(1), version: z.string().nullable() });",
+        "source_file": "src/domain/evidence.ts",
+        "source_lines": "L1-L100"
+      },
+      {
+        "claim_id": "claim_002",
+        "assertion": "Comparing reverse-engineered artifacts requires explicit facet availability declarations; unobserved facets must not be treated as empty collections.",
+        "evidence_quote": "compare_functions keeps a dimension unknown with null counts when either side declares a required facet unavailable. An empty legacy facet without a coverage declaration is also unknown.",
+        "source_file": "docs/mcp-contracts.md",
+        "source_lines": "L40-L70"
+      },
+      {
+        "claim_id": "claim_003",
+        "assertion": "Reconstruction completeness requires a verified obligation closure digest proving zero unowned or contradicted behavioral surfaces across all 10 architecture layers.",
+        "evidence_quote": "export const obligationStatusSchema = z.enum(['unowned','characterized','implemented','verified','contradicted','blocked','out-of-scope','unknown']); export const obligationLayerSchema = z.enum(['cli','protocol','electron','persistence','process','runtime','packaging','native-abi','application','other']);",
+        "source_file": "src/domain/reconstructionObligationLedgerSchemas.ts",
+        "source_lines": "L45-L120"
+      }
+    ]
+  },
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "distilled_learning": "# Reconstruction Obligation Ledgers & Canonical Evidence Records"
 }

@@ -16,5 +16,18 @@
     "D:/GitHub/cloned/context-course/units/en/unit5/hook-events.mdx#L1-L120",
     "D:/GitHub/cloned/context-course/units/en/unit5/hands-on.mdx#L1-L150"
   ],
-  "created_at": "2026-09-21T18:00:00Z"
+  "created_at": "2026-09-21T18:00:00Z",
+  "schema_version": "1.0.0",
+  "source_target": "huggingface/context-course",
+  "detected_format": "raw_docs",
+  "anchors": {},
+  "edges": [],
+  "isnad": {},
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "distilled_learning": "# Bidirectional Agent Lifecycle Hook Events & Live Gradio Observability Telemetry"
 }

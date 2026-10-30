@@ -27,6 +27,7 @@
   ],
   "isnad": {
     "decision_id": "dec_20260922_gis_01",
+    "timestamp": "2026-10-30T18:40:39.736681+00:00",
     "claims": [
       {
         "assertion": "Whitebox GAT succeeded Terrain Analysis System (TAS) for hydro-geomorphic DEM applications and is the leading free LiDAR tool with 410+ tools and native LAS-to-shapefile extraction.",
@@ -76,6 +77,18 @@
         "source": "https://gisgeography.com/free-gis-software/#12-falconview",
         "verified": true
       }
-    ]
-  }
+    ],
+    "status": "VERIFIED"
+  },
+  "schema_version": "1.0.0",
+  "source_target": "",
+  "detected_format": "raw_docs",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "distilled_learning": "# Open-Source GIS Architecture & Multicriteria Software Benchmarking"
 }

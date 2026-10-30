@@ -17,5 +17,18 @@
     "D:/GitHub/cloned/context-course/units/en/unit3/anatomy.mdx#L1-L50",
     "D:/GitHub/cloned/context-course/units/en/unit6/agent-loop.mdx#L1-L70"
   ],
-  "created_at": "2026-09-21T18:00:00Z"
+  "created_at": "2026-09-21T18:00:00Z",
+  "schema_version": "1.0.0",
+  "source_target": "huggingface/context-course",
+  "detected_format": "raw_docs",
+  "anchors": {},
+  "edges": [],
+  "isnad": {},
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "distilled_learning": "# The Six-Layer Context Engineering Stack for Autonomous Code Agents"
 }

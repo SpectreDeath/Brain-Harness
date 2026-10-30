@@ -5,6 +5,7 @@
   "detected_format": "git_repository",
   "isnad": {
     "decision_id": "dec_20260823_repo_01",
+    "timestamp": "2026-10-30T18:40:38.665353+00:00",
     "claims": [
       {
         "assertion": "Agent execution engines require platform-native sandboxing abstractions to enforce filesystem and network restrictions across Linux, macOS, and Windows",
@@ -29,7 +30,50 @@
     ],
     "status": "VERIFIED"
   },
-  "tags": ["sandboxing", "security", "process_isolation", "landlock", "seatbelt", "windows_tokens"],
+  "tags": [
+    "sandboxing",
+    "security",
+    "process_isolation",
+    "landlock",
+    "seatbelt",
+    "windows_tokens"
+  ],
   "context": "Executing arbitrary code or CLI tools in agent loops requires containment to prevent accidental destruction or unauthorized exfiltration.",
-  "distilled_learning": "Abstract high-level permission profiles (PermissionProfile) into platform-specific native sandbox managers: Linux (Bubblewrap namespace unshare + Landlock ABI rules), macOS (Seatbelt SBPL compiled profiles), and Windows (Restricted Token + Job Object Read Grants)."
+  "distilled_learning": "# Multi-Tier OS Process Sandboxing & Policy Transforms",
+  "schema_version": "1.0.0",
+  "category": "security_and_forensics",
+  "anchors": {},
+  "edges": [
+    {
+      "type": "same_domain",
+      "target": "ki_20260831_em3_01",
+      "target_kind": "ki",
+      "derived": true,
+      "confidence": 0.8,
+      "description": null
+    },
+    {
+      "type": "same_domain",
+      "target": "ki_self_20260827_02",
+      "target_kind": "ki",
+      "derived": true,
+      "confidence": 0.8,
+      "description": null
+    },
+    {
+      "type": "same_domain",
+      "target": "ki_self_20261002_05",
+      "target_kind": "ki",
+      "derived": true,
+      "confidence": 0.8,
+      "description": null
+    }
+  ],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-08-23T00:00:00Z"
 }

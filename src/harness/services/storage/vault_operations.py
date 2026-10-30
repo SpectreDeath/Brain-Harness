@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 import json
+from datetime import datetime, timezone
 from pathlib import Path
+import re
 from typing import Any
 
 import structlog
@@ -13,7 +15,12 @@ from harness.services.storage.models import IsnadLineageBlock, KnowledgeEdge, Kn
 from harness.services.storage.vault_contradiction import ContradictionDetector, ContradictionReviewItem
 from harness.services.storage.vault_graph import KnowledgeGraphQueryService
 from harness.services.storage.vault_retrieval import KnowledgeRetrievalMixin
-from harness.services.storage.vault_taxonomy import normalize_category
+from harness.services.storage.vault_taxonomy import (
+    normalize_category,
+    normalize_isnad,
+    resolve_created_at,
+    resolve_source_target,
+)
 
 logger = structlog.get_logger()
 
@@ -75,13 +82,18 @@ class KnowledgeVaultMixin(KnowledgeRetrievalMixin, IsnadAuditMixin):
                 summary_text = summary_file.read_text(encoding="utf-8") if summary_file.exists() else ""
                 edges = [KnowledgeEdge.model_validate(e) for e in meta.get("edges", [])]
 
+                ki_id = meta.get("id") or meta.get("ki_id") or ki_dir.name
+                source_target = resolve_source_target(meta)
+                created_at = resolve_created_at(meta, ki_dir)
+                isnad = normalize_isnad(meta)
+
                 ki = KnowledgeItemRecord(
                     schema_version=meta.get("schema_version", "1.0.0"),
-                    id=meta.get("id", ki_dir.name),
-                    title=meta.get("title", ki_dir.name),
-                    source_target=meta.get("source_target") or meta.get("source_brain", ""),
+                    id=ki_id,
+                    title=meta.get("title", ki_id),
+                    source_target=source_target,
                     detected_format=meta.get("detected_format", "raw_docs"),
-                    isnad=meta.get("isnad", {}),
+                    isnad=isnad,
                     tags=meta.get("tags", []),
                     category=normalize_category(meta.get("category")),
                     edges=edges,
@@ -93,6 +105,7 @@ class KnowledgeVaultMixin(KnowledgeRetrievalMixin, IsnadAuditMixin):
                     status=meta.get("status", "ACTIVE"),
                     superseded_by=meta.get("superseded_by"),
                     summary=meta.get("summary") or summary_text,
+                    created_at=created_at,
                 )
                 if not ki.edges:
                     graph_service.backfill_edges_mechanically([ki])
@@ -103,14 +116,26 @@ class KnowledgeVaultMixin(KnowledgeRetrievalMixin, IsnadAuditMixin):
         return synced_count
 
     async def export_single_item(self, item: KnowledgeItemRecord, vault_dir: Path | str = ".harness/knowledge") -> None:
-        """Export a single Knowledge Item to canonical dual-file format on disk (Rule 40)."""
+        """Export a single Knowledge Item to canonical dual-file format on disk (Rule 40).
+
+        Performs a non-destructive read-modify-write merge if metadata.json exists to preserve
+        historical keys (context, provenance, references, source_repo, etc.).
+        """
         root = Path(vault_dir).resolve()
         ki_dir = root / item.id
         ki_dir.mkdir(parents=True, exist_ok=True)
         meta_file = ki_dir / "metadata.json"
         summary_file = ki_dir / "summary.md"
 
-        meta_data = {
+        if meta_file.exists():
+            try:
+                meta_data = json.loads(meta_file.read_text(encoding="utf-8"))
+            except Exception:
+                meta_data = {}
+        else:
+            meta_data = {}
+
+        canonical_updates = {
             "schema_version": item.schema_version,
             "id": item.id,
             "title": item.title,
@@ -130,6 +155,7 @@ class KnowledgeVaultMixin(KnowledgeRetrievalMixin, IsnadAuditMixin):
             "created_at": item.created_at,
             "distilled_learning": item.summary.split("\n")[0] if item.summary else item.title,
         }
+        meta_data.update(canonical_updates)
         meta_file.write_text(json.dumps(meta_data, indent=2), encoding="utf-8")
         if item.summary:
             summary_file.write_text(item.summary, encoding="utf-8")

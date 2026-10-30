@@ -13,6 +13,7 @@ from harness.kernel.lifecycle import PluginLifecycle
 from harness.kernel.runtime import HarnessRuntime
 from harness.ui.server.adapter import RuntimeAdapter
 from harness.ui.server.routes.creator import router as creator_router
+from harness.ui.server.routes.knowledge import router as knowledge_router
 from harness.ui.server.routes.plugins import router as plugins_router
 from harness.ui.server.routes.sessions import router as sessions_router
 from harness.ui.server.routes.skills import router as skills_router
@@ -48,6 +49,7 @@ def create_app(
     app.include_router(sessions_router)
     app.include_router(swarm_router)
     app.include_router(skills_router)
+    app.include_router(knowledge_router)
 
     # Real-time WebSocket event streaming
     @app.websocket("/ws/events")

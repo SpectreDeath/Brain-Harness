@@ -21,7 +21,6 @@
   "isnad": {
     "decision_id": "decision-self-20261019-decay-01",
     "timestamp": "2026-10-19T18:00:00Z",
-    "status": "VERIFIED",
     "claims": [
       {
         "claim_id": "isnad-self-20261019-decay-01-a",
@@ -35,6 +34,33 @@
         "evidence": "Contract verification test test_monotonic_stability_reinforcement demonstrates S0 < S1 < S2 across successive turns.",
         "verified_by": "pytest tests/test_memory_decay_engine.py::TestEbbinghausMemoryDecayService::test_monotonic_stability_reinforcement"
       }
-    ]
-  }
+    ],
+    "status": "VERIFIED"
+  },
+  "edges": [
+    {
+      "type": "references_code",
+      "target": "Brain Harness (src/harness/services/memory_decay/)",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    },
+    {
+      "type": "became_skill",
+      "target": "ebbinghaus-memory-governor",
+      "target_kind": "skill",
+      "derived": false,
+      "confidence": 1.0,
+      "description": null
+    }
+  ],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-10-19T18:00:00Z",
+  "distilled_learning": "# Ebbinghaus Forgetting Curves & Cognitive Working Memory Retention"
 }

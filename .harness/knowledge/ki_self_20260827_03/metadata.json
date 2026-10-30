@@ -31,5 +31,16 @@
     "self_reflection"
   ],
   "context": "Knowledge item ki_self_20260827_03",
-  "distilled_learning": "### Distilled Heuristic\nAll session trees, execution traces, and context compilation graphs must expose pure headless CLI subcommands (e.g. `harness session tree`, `harness session export`) alongside MCP endpoints for automated tooling."
+  "distilled_learning": "# Headless CLI Session DAG Inspection & Export (`ki_self_20260827_03`)",
+  "schema_version": "1.0.0",
+  "category": "developer_experience",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-08-27T22:51:00.000000+00:00"
 }

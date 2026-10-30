@@ -6,6 +6,7 @@
   "timestamp": "2026-09-13T14:30:00Z",
   "isnad": {
     "decision_id": "dec_20260913_okf_01",
+    "timestamp": "2026-10-30T18:40:41.036029+00:00",
     "claims": [
       {
         "assertion": "Pre-edit governance scoping via SearchForPath() matches file prefixes in code_refs before code modification to prevent architectural drift and negative boundary violations.",
@@ -23,7 +24,7 @@
         ]
       },
       {
-        "assertion": "In-memory BM25 lexical ranking achieves sub-300µs retrieval with governance weight boosting, eliminating external vector database hosting and recurring embedding API costs.",
+        "assertion": "In-memory BM25 lexical ranking achieves sub-300\u00b5s retrieval with governance weight boosting, eliminating external vector database hosting and recurring embedding API costs.",
         "lineage": [
           {
             "node_type": "primary_code",
@@ -80,5 +81,16 @@
     "git-native"
   ],
   "context": "Google OKF Agent Memory v0.2 Protocol & Architecture",
-  "distilled_learning": "# KI: Open Knowledge Framework (OKF v0.2)\n\n## Operational Summary\nOKF v0.2 establishes a Git-native agent memory specification using plain-text Markdown files with YAML frontmatter. It replaces heavy vector databases and recurring embedding API calls with in-memory BM25 lexical ranking and pre-edit governance scoping (`SearchForPath`). Autonomous agents check target file paths against concept `code_refs` prior to proposing edits, preventing architectural regressions and enforcing invariants. Mutations automatically maintain parent `index.md` tables and immutable `log.md` audit ledgers while strictly prohibiting AI self-attestation as human verified."
+  "distilled_learning": "# Open Knowledge Framework (OKF v0.2): Git-Native Agent Memory & Governance",
+  "schema_version": "1.0.0",
+  "category": "memory_and_epistemics",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-09-13T14:30:00Z"
 }

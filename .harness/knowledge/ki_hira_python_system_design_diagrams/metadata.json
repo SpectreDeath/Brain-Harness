@@ -1,7 +1,7 @@
 {
   "id": "ki_hira_python_system_design_diagrams",
   "title": "Diagram-as-Code for Cloud Architecture: Provider Node Hierarchies, Context Canvases, Fan-Out Grouping, Nested Clusters, and Typed Edge Protocols",
-  "category": "visualization_and_architecture_modeling",
+  "category": "developer_experience/architecture",
   "created_at": "2026-10-22T19:00:00Z",
   "author": "Zaira Hira (freeCodeCamp.org, 2026; synthesized by Brain Harness)",
   "source": {
@@ -54,5 +54,16 @@
         "verified": true
       }
     ]
-  }
+  },
+  "schema_version": "1.0.0",
+  "source_target": "https://www.freecodecamp.org/news/how-to-create-system-design-diagrams-using-python/",
+  "detected_format": "raw_docs",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "distilled_learning": "# Knowledge Item: Diagram-as-Code for Cloud Architecture"
 }

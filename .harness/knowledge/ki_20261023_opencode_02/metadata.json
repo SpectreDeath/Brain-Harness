@@ -2,11 +2,12 @@
   "id": "ki_20261023_opencode_02",
   "title": "Dual-Runtime Plugin Interface Architecture (Effect & Promise)",
   "context": "Plugin authoring SDKs bridging functional effect systems and mainstream async/await developer interfaces.",
-  "distilled_learning": "Providing both monadic effect layers and standard async/await promise facades eliminates plugin developer friction while preserving cancellation tokens and fiber concurrency in the internal kernel.",
+  "distilled_learning": "# Dual-Runtime Plugin Interface Architecture (Effect & Promise)",
   "source_target": "D:\\GitHub\\cloned\\opencode",
   "detected_format": "git_repository",
   "isnad": {
     "decision_id": "dec_20261023_opencode_02",
+    "timestamp": "2026-10-30T18:40:39.895738+00:00",
     "claims": [
       {
         "assertion": "Providing both monadic effect layers and standard async/await promise facades eliminates plugin developer friction while preserving cancellation tokens and fiber concurrency in the internal kernel.",
@@ -28,5 +29,16 @@
     "async_await",
     "api_design",
     "developer_experience"
-  ]
+  ],
+  "schema_version": "1.0.0",
+  "category": "infrastructure_and_runtime",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-10-23T00:00:00Z"
 }

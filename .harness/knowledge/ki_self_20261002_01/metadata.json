@@ -1,7 +1,7 @@
 {
   "id": "ki_self_20261002_01",
   "title": "Copy-on-Write (COW) Lock-Free Context Registry & Transaction Inverse Compaction",
-  "category": "architecture",
+  "category": "developer_experience/architecture",
   "created_at": "2026-10-02T19:20:00Z",
   "author": "Brain Harness Autobiographical Reflection Engine (harness-reflector)",
   "tags": [
@@ -12,10 +12,10 @@
     "self_reflection"
   ],
   "context": "In high-throughput ReAct multi-agent swarms, hundreds of concurrent agent step loops query the IoC container (context.require(), context.optional()) while background workers register plugins or execute interceptor injections. Traditional readers-writer locks introduce synchronization latency and thread starvation under high read pressure. Furthermore, multi-step agent tool execution transactions (async with context.transaction()) accumulating rollbacks into the parent _dispose_stack cause unbounded closure accumulation and redundant inverse invocations.",
-  "distilled_learning": "IoC context reads must be completely lock-free via atomic dictionary reference swapping under the GIL with root/local epoch tracking (_interceptor_epoch). Furthermore, context transaction commits must compact inverse closures in reversed order to retain only the latest inverse per _realm_key, eliminating memory bloat and duplicate rollback execution across multi-step transactions.",
+  "distilled_learning": "# Copy-on-Write (COW) Lock-Free Context Registry & Transaction Inverse Compaction",
   "isnad": {
     "decision_id": "dec_20261002_self_01",
-    "status": "VERIFIED",
+    "timestamp": "2026-10-30T18:40:42.799090+00:00",
     "claims": [
       {
         "assertion": "Lock-free COW registry allows concurrent readers to achieve zero lock contention during high-frequency writer mutations.",
@@ -62,6 +62,17 @@
           }
         ]
       }
-    ]
-  }
+    ],
+    "status": "VERIFIED"
+  },
+  "schema_version": "1.0.0",
+  "source_target": "",
+  "detected_format": "raw_docs",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null
 }

@@ -1,7 +1,7 @@
 {
   "id": "ki_ontological_engineering_gruber_criteria",
   "title": "Gruber's 5 Criteria for Robust Knowledge Modeling",
-  "category": "data_modeling",
+  "category": "data_engineering/modeling",
   "tags": [
     "ontology",
     "knowledge_graphs",
@@ -15,5 +15,18 @@
     "Prof. Dr. Harald Sack",
     "outputs/transcripts/RHjoCpNj3KQ_transcript.json"
   ],
-  "created_at": "2026-09-04T21:31:16Z"
+  "created_at": "2026-09-04T21:31:16Z",
+  "schema_version": "1.0.0",
+  "source_target": "https://www.youtube.com/watch?v=RHjoCpNj3KQ",
+  "detected_format": "raw_docs",
+  "anchors": {},
+  "edges": [],
+  "isnad": {},
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "distilled_learning": "# Gruber's 5 Criteria for Robust Knowledge Modeling"
 }

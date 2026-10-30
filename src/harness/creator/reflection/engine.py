@@ -21,7 +21,7 @@ from harness.creator.reflection.models import (
 )
 from harness.creator.reflection.visualizer import generate_reflection_html_brief
 from harness.kernel.context import ServiceContext, ServiceKey
-from harness.services.storage import KnowledgeItemRecord, StorageService
+from harness.services.storage import KnowledgeItemRecord, StorageService, propose_links
 
 logger = structlog.get_logger(__name__)
 
@@ -71,7 +71,12 @@ class HarnessReflectorEngine:
 
         # 4. Commit to storage vault if available (single write seam)
         if commit_to_vault and self.storage is not None:
+            existing_items = await self.storage.list_knowledge_items()
             for ki in kis:
+                proposed = propose_links(ki, existing_items)
+                for p in proposed:
+                    if not any(e.type == p.type and e.target == p.target for e in ki.edges):
+                        ki.edges.append(p)
                 await self.storage.save_knowledge_item(ki, vault_dir=vault_dir)
 
         # 5. Generate Visual Brief

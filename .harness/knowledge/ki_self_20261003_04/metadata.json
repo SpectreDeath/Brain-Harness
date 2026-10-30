@@ -1,7 +1,7 @@
 {
   "id": "ki_self_20261003_04",
   "title": "Dual-Store Autobiographical Memory Federation Architecture",
-  "category": "epistemic_architecture",
+  "category": "developer_experience/architecture",
   "created_at": "2026-10-03T17:15:00Z",
   "author": "Harness Reflector (harness-reflector)",
   "tags": [
@@ -12,10 +12,10 @@
     "brain_workspace"
   ],
   "context": "Autonomous coding agent sessions generate two fundamentally orthogonal memory surfaces: relational SQLite databases under active WAL journaling (conversations/*.db) and filesystem-native epistemic workspace trees (brain/<cid>/) containing ephemeral scratch scripts, strategic plans, and task logs.",
-  "distilled_learning": "Memory archaeology must be federated into two decoupled, single-responsibility skills: (1) conversation-trajectory-miner for proactor-safe read-only SQLite URI connections (?mode=ro, Rule 22) extracting relational step payloads and friction metrics; and (2) brain-artifact-miner for bounded filesystem traversal (depth <= 3, Rule 52) with AST scratch tool classification, dual-transcript dereferencing (Rule 22), and subprocess stderr triage (Rule 53). This satisfies Rule 20 by providing orthogonal tools for orthogonal storage tiers without tool sprawl or lock contention.",
+  "distilled_learning": "# Dual-Store Autobiographical Memory Federation Architecture",
   "isnad": {
     "decision_id": "dec_20261003_refl_04",
-    "status": "VERIFIED",
+    "timestamp": "2026-10-30T18:40:42.949595+00:00",
     "claims": [
       {
         "assertion": "conversations/*.db contains relational execution telemetry under active WAL locks requiring ?mode=ro to prevent worker contention (Rule 22).",
@@ -47,6 +47,17 @@
           }
         ]
       }
-    ]
-  }
+    ],
+    "status": "VERIFIED"
+  },
+  "schema_version": "1.0.0",
+  "source_target": "",
+  "detected_format": "raw_docs",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null
 }

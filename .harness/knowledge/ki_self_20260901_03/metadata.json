@@ -6,6 +6,7 @@
   "timestamp": "2026-09-01T17:35:00Z",
   "isnad": {
     "decision_id": "dec_20260901_self_03",
+    "timestamp": "2026-10-30T18:40:41.598547+00:00",
     "claims": [
       {
         "assertion": "Heavy scientific and simulation domain capabilities (e.g. SEIR ODE parameter estimation, federal CDC/NIH data querying, SWI-Prolog epistemic validation, Clojure MCTS branching) must be encapsulated behind stateless Model Context Protocol (MCP 2026-07-28) servers with JSONSchema validation to prevent state mutation leaks and bounded token bloat in core agent loops.",
@@ -40,5 +41,16 @@
     "self_reflection"
   ],
   "context": "Stateless Model Context Protocol (MCP) Scientific Bridge & Simulation Isolation",
-  "distilled_learning": "# KI: Stateless MCP Scientific Bridge Isolation\n\n## Operational Summary\nCoupling heavy scientific packages (SciPy ODE integrators, NetworkX flow algorithms, PySwip Prolog bindings, Leiningen Clojure MCTS subprocesses, CDC/NIH REST clients) directly into the agent kernel or ReAct step loops introduces fatal architectural friction:\n- State mutation across sequential steps leads to unpredictable model observations.\n- Heavy C-extensions or external interpreters can destabilize asynchronous Python runtimes.\n\nExposing these domain subsystems via stateless Model Context Protocol (MCP spec version 2026-07-28) servers provides:\n1. **Stateless Tool Invocations**: Input payloads are strictly validated against typed JSONSchema contracts.\n2. **Subprocess Sandboxing**: Heavy computational solvers execute in dedicated subprocesses, returning serializable observation payloads.\n3. **Cross-Language Interoperability**: Language-agnostic bridges (Prolog, Clojure, TypeScript) integrate seamlessly into Python agent loops without shared memory hazards.\n\n## Invariant Rule\nAll heavy scientific pipelines, foreign language interpreters, and external API gateways must be exposed via stateless MCP 2026-07-28 tool servers with strict JSONSchema validation rather than in-process stateful singleton bindings."
+  "distilled_learning": "# Stateless MCP Scientific Bridge Isolation",
+  "schema_version": "1.0.0",
+  "category": "agent_orchestration",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-09-01T17:35:00Z"
 }

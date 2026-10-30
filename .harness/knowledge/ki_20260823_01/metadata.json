@@ -5,6 +5,7 @@
   "detected_format": "harness_instance",
   "isnad": {
     "decision_id": "dec_20260823_01",
+    "timestamp": "2026-10-30T18:40:38.618280+00:00",
     "claims": [
       {
         "assertion": "Untrusted or externally ingested plugins must execute in isolated subprocess sandboxes via JSON-RPC over stdin/stdout, reserving in-process execution strictly for trusted core plugins",
@@ -32,5 +33,41 @@
     "security"
   ],
   "context": "Executing dynamically loaded plugins, third-party GitHub tools, or untrusted code in the primary agent process risks catastrophic kernel crashes, memory leaks, and state pollution.",
-  "distilled_learning": "Enforce SubprocessExecutor as the default sandbox strategy for all dynamic plugins. Communicate with the child process exclusively via line-delimited JSON-RPC over stdin/stdout with strict asyncio timeout guards (30s default) and automated teardown lifecycle management."
+  "distilled_learning": "# Subprocess Sandbox Boundary & Dynamic Plugin Isolation",
+  "schema_version": "1.0.0",
+  "category": "security_and_forensics",
+  "anchors": {},
+  "edges": [
+    {
+      "type": "references_code",
+      "target": "d:/GitHub/projects/Brain Harness/src/harness/plugins/sandbox.py",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    },
+    {
+      "type": "same_domain",
+      "target": "ki_20260830_grok_03",
+      "target_kind": "ki",
+      "derived": true,
+      "confidence": 0.8,
+      "description": null
+    },
+    {
+      "type": "same_domain",
+      "target": "ki_20260913_tool_approval_03",
+      "target_kind": "ki",
+      "derived": true,
+      "confidence": 0.8,
+      "description": null
+    }
+  ],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-08-23T00:00:00Z"
 }

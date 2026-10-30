@@ -5,6 +5,7 @@
   "detected_format": "git_repository",
   "isnad": {
     "decision_id": "dec_20260830_django_05",
+    "timestamp": "2026-10-30T18:40:38.927364+00:00",
     "claims": [
       {
         "assertion": "Background task execution subsystems must decouple task definition decorators from pluggable backend engines (immediate, DB, Redis) with standardized TaskResult lifecycle state machines",
@@ -29,7 +30,16 @@
     "task_result"
   ],
   "context": "Traditional web frameworks rely on heavy external third-party task queues (Celery, Dramatiq) with inconsistent configuration semantics, impeding lightweight background execution and unit testability.",
-  "distilled_learning": "Django 6.0 introduces a standardized `django.tasks` subsystem featuring `@task(queue='default', priority=1)` decorators returning executable `Task` objects. Tasks accept keyword arguments and return `TaskResult` futures with standard status transitions: `PENDING` -> `RUNNING` -> `SUCCESS` | `FAILED`. Pluggable task backends (`ImmediateBackend`, `DatabaseBackend`, `RedisBackend`) allow synchronous execution in test suites and distributed async queues in production without changing application task definitions.",
+  "distilled_learning": "# Django 6.x Native Background Tasks Architecture & Result Backend Contracts",
   "retrieval_count": 2,
-  "last_retrieved_at": "2026-10-26T19:42:44.294653+00:00"
+  "last_retrieved_at": "2026-10-26T19:42:44.294653+00:00",
+  "schema_version": "1.0.0",
+  "category": "data_engineering",
+  "anchors": {},
+  "edges": [],
+  "success_count": 0,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-08-30T00:00:00Z"
 }

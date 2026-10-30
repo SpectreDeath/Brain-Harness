@@ -51,5 +51,99 @@
       "source": "src/datasets/features/features.py",
       "line_range": "1877-1910"
     }
-  ]
+  ],
+  "schema_version": "1.0.0",
+  "category": "data_engineering",
+  "source_target": "",
+  "detected_format": "raw_docs",
+  "tags": [
+    "pyarrow",
+    "datasets",
+    "streaming",
+    "caching",
+    "zero_copy"
+  ],
+  "anchors": {},
+  "edges": [
+    {
+      "type": "references_code",
+      "target": "D:/GitHub/cloned/datasets/src/datasets/arrow_dataset.py",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    },
+    {
+      "type": "references_code",
+      "target": "D:/GitHub/cloned/datasets/src/datasets/iterable_dataset.py",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    },
+    {
+      "type": "references_code",
+      "target": "D:/GitHub/cloned/datasets/src/datasets/fingerprint.py",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    },
+    {
+      "type": "references_code",
+      "target": "D:/GitHub/cloned/datasets/src/datasets/features/features.py",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    },
+    {
+      "type": "references_code",
+      "target": "D:/GitHub/cloned/datasets/src/datasets/features/bio_structure.py",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    },
+    {
+      "type": "references_code",
+      "target": "D:/GitHub/cloned/datasets/src/datasets/packaged_modules/",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    }
+  ],
+  "isnad": {
+    "claims": [
+      {
+        "claim": "Dataset wraps PyArrow tables with memory-mapped backing files, enabling terabyte-scale tabular indexing, zero-copy column slicing, and batch mapping without loading entire datasets into RAM.",
+        "source": "src/datasets/arrow_dataset.py",
+        "line_range": "709-850"
+      },
+      {
+        "claim": "IterableDataset implements lazy generator pipelines with shard-level parallel prefetching, buffer-windowed shuffling, and dynamic interleave combinators for unbounded data streams.",
+        "source": "src/datasets/iterable_dataset.py",
+        "line_range": "2592-2650"
+      },
+      {
+        "claim": "Deterministic transform caching hashes dataset internal state, function bytecode, and execution kwargs using Hasher (xxhash + dill), preventing redundant re-computation of dataset transforms across sessions.",
+        "source": "src/datasets/fingerprint.py",
+        "line_range": "235-270"
+      },
+      {
+        "claim": "Features provides polymorphic schema validation and decoding for multimodal data (Audio, Image, Video, Mesh, PDF, NIfTI) and biological structures (BioSequence, BioStructure).",
+        "source": "src/datasets/features/features.py",
+        "line_range": "1877-1910"
+      }
+    ]
+  },
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-09-22T07:20:00-04:00",
+  "distilled_learning": "Epistemic architectural distillation of Hugging Face datasets (v5.0.2.dev0). Details the dual-backed Arrow Dataset and IterableDataset engines, C++ PyArrow zero-copy memory mapping, lazy sharded streaming pipelines with generator evaluation, xxhash+dill deterministic transformation cache fingerprinting, 30+ lakehouse and scientific biostructure (mmCIF/PDB/FASTQ/GenBank) packaged modules, and declarative Features schema system."
 }

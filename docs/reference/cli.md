@@ -246,6 +246,26 @@ Applies a declarative workspace configuration manifest.
 Executes endogenous autobiographical memory distillation into verified Knowledge Items.
 - `harness reflect [--vault-dir DIR] [--conv-id ID] [--category CAT]`
 
+### `harness knowledge`
+Autonomous Knowledge Graph inspection, export, query traversal, and vault lifecycle governance.
+- `harness knowledge sync`: Scans on-disk dual-file knowledge vault and syncs to SQLite storage.
+- `harness knowledge list [--tag TAG]`: Lists all Knowledge Items in the vault.
+- `harness knowledge query "<query>" [--limit N]`: Full-text BM25 search over Knowledge Items.
+- `harness knowledge verify [--fix]`: Validates dual-file integrity and schema conformance.
+- `harness knowledge export [--format json|gexf|graphml|html|cypher] [--out FILE] [--dynamic]`: Exports derived knowledge graph to open formats.
+- `harness knowledge stats [--json]`: Displays full entity census metrics, components, and edge breakdowns.
+- `harness knowledge neighbors <node_id> [--depth N] [--edge-type TYPE] [--exclude-derived]`: Lists adjacent entities in the graph.
+- `harness knowledge path <from_id> <to_id> [--max-depth N] [--exclude-derived]`: Finds cycle-safe BFS shortest path between entities.
+- `harness knowledge topic <topic>`: Inspects topic neighborhood, matched KIs, linked skills, and code paths.
+- `harness knowledge dependents <node_id>`: Lists inbound dependents pointing to a specific entity.
+- `harness knowledge orphans [--json]`: Identifies isolated KIs and reports missing-field triage profiles.
+- `harness knowledge backfill [--dry-run] [--commit]`: Mechanically backfills code references, skills, plugins, and domain edges.
+- `harness knowledge hygiene [--suggest-categories] [--suggest-tags] [--apply]`: Triages uncategorized and untagged items.
+- `harness knowledge timeline [--json]`: Reports temporal growth velocity, weekly rates, and domain emergence order.
+- `harness knowledge lifecycle [--apply-contradictions]`: Evaluates retrieval success rates and updates item statuses.
+- `harness knowledge contradictions`: Lists detected conflicts and antinomies between Knowledge Items.
+- `harness knowledge resolve <ki_a> <ki_b> --action supersede|contradict|dismiss`: Resolves an epistemic contradiction.
+
 ### `harness bridge`
 Diagnostics for external ecosystem bridges (Em-Cubed, Memtext, Skill Flywheel).
 - `harness bridge list`: Lists active bridges.

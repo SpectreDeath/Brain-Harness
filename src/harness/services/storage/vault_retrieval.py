@@ -57,7 +57,7 @@ class KnowledgeRetrievalMixin:
 
         scored_items: list[tuple[float, KnowledgeItemRecord]] = []
         for item in items:
-            if item.status == "ARCHIVED":
+            if item.status in ("ARCHIVED", "SUPERSEDED"):
                 continue
 
             tag_score = sum(
@@ -79,7 +79,10 @@ class KnowledgeRetrievalMixin:
             if base_score <= 0.0:
                 continue
 
-            status_mult = 1.25 if item.status == "PROMOTED" else (0.5 if item.status == "DEMOTED" else 1.0)
+            status_mult = (
+                1.25 if item.status == "PROMOTED"
+                else (0.25 if item.status == "CHALLENGED" else (0.5 if item.status == "DEMOTED" else 1.0))
+            )
             utility_boost = (item.success_count / item.retrieval_count * 1.5) if item.retrieval_count > 0 else 0.0
 
             total_score = (base_score * status_mult) + utility_boost

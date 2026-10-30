@@ -39,5 +39,14 @@
     ]
   },
   "retrieval_count": 2,
-  "last_retrieved_at": "2026-10-26T19:42:44.294653+00:00"
+  "last_retrieved_at": "2026-10-26T19:42:44.294653+00:00",
+  "schema_version": "1.0.0",
+  "source_target": "",
+  "detected_format": "raw_docs",
+  "anchors": {},
+  "edges": [],
+  "success_count": 0,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "distilled_learning": "# Knowledge Item: Three-Layer LLM Evaluation Architecture, Golden Regression Suites, and Paired T-Test Significance Gating"
 }

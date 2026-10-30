@@ -1,7 +1,7 @@
 {
   "id": "ki_self_20260914_06",
   "title": "Micro-Kernel ServiceContext Typed Key Provider Contract & Singleton Export",
-  "category": "kernel",
+  "category": "infrastructure_and_runtime/kernel",
   "created_at": "2026-09-14T22:20:00Z",
   "author": "deep-repo-auditor",
   "tags": [
@@ -34,5 +34,16 @@
         "verified": true
       }
     ]
-  }
+  },
+  "schema_version": "1.0.0",
+  "source_target": "",
+  "detected_format": "raw_docs",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "distilled_learning": "# Micro-Kernel ServiceContext Typed Key Provider Contract & Singleton Export"
 }

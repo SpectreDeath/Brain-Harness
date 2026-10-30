@@ -55,5 +55,83 @@
     "Rule 18: Domain-partitioned plugin synthesis across 4 categories",
     "Rule 38: PluginValidator dual-mode / async validation compliance",
     "Rule 40: Canonical dual-file knowledge item directory format"
-  ]
+  ],
+  "schema_version": "1.0.0",
+  "id": "ki_google_repos_bridge",
+  "category": "developer_experience",
+  "source_target": "",
+  "detected_format": "raw_docs",
+  "tags": [
+    "google_repos",
+    "bridge",
+    "plugin_suite",
+    "architecture"
+  ],
+  "anchors": {},
+  "edges": [
+    {
+      "type": "became_plugin",
+      "target": "plugin.google_adk_runtime",
+      "target_kind": "plugin",
+      "derived": false,
+      "confidence": 1.0,
+      "description": null
+    },
+    {
+      "type": "became_plugin",
+      "target": "plugin.google_adk_optimizer",
+      "target_kind": "plugin",
+      "derived": false,
+      "confidence": 1.0,
+      "description": null
+    },
+    {
+      "type": "became_plugin",
+      "target": "plugin.google_adk_docs_navigator",
+      "target_kind": "plugin",
+      "derived": false,
+      "confidence": 1.0,
+      "description": null
+    },
+    {
+      "type": "became_plugin",
+      "target": "plugin.google_adk_web_bridge",
+      "target_kind": "plugin",
+      "derived": false,
+      "confidence": 1.0,
+      "description": null
+    },
+    {
+      "type": "became_plugin",
+      "target": "plugin.google_styleguide_auditor",
+      "target_kind": "plugin",
+      "derived": false,
+      "confidence": 1.0,
+      "description": null
+    },
+    {
+      "type": "became_plugin",
+      "target": "plugin.google_tunix_posttraining",
+      "target_kind": "plugin",
+      "derived": false,
+      "confidence": 1.0,
+      "description": null
+    },
+    {
+      "type": "became_plugin",
+      "target": "plugin.perfetto_trace_processor",
+      "target_kind": "plugin",
+      "derived": false,
+      "confidence": 1.0,
+      "description": null
+    }
+  ],
+  "isnad": {},
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "distilled_learning": "# Knowledge Item: Google Multi-Repository Bridge & Architectural Suite"
 }

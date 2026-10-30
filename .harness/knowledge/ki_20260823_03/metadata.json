@@ -5,6 +5,7 @@
   "detected_format": "harness_instance",
   "isnad": {
     "decision_id": "dec_20260823_03",
+    "timestamp": "2026-10-30T18:40:38.650359+00:00",
     "claims": [
       {
         "assertion": "Command chaining using POSIX '&&' fails unconditionally in Windows PowerShell environments with ParserError; automated CLI runners and scripts must normalize command chains to semicolons ';' or isolated subprocess arrays",
@@ -32,5 +33,33 @@
     "windows"
   ],
   "context": "Agents generating shell execution plans often default to Unix POSIX conventions (&&, /tmp, export), which crash when dispatched directly to Windows PowerShell runners.",
-  "distilled_learning": "Sanitize all multi-command CLI sequences for Windows hosts: replace '&&' with ';', use platform-agnostic path resolvers (Pathlib or %TEMP%), and prefer Python script runners for complex chained logic."
+  "distilled_learning": "# Windows PowerShell Command Delimiter Normalization",
+  "schema_version": "1.0.0",
+  "category": "infrastructure_and_runtime",
+  "anchors": {},
+  "edges": [
+    {
+      "type": "references_code",
+      "target": "d:/GitHub/projects/Brain Harness/src/harness/cli.py",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    },
+    {
+      "type": "same_domain",
+      "target": "ki_self_20260907_02",
+      "target_kind": "ki",
+      "derived": true,
+      "confidence": 0.8,
+      "description": null
+    }
+  ],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-08-23T00:00:00Z"
 }

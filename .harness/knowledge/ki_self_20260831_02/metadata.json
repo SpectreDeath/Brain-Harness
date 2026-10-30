@@ -6,6 +6,7 @@
   "timestamp": "2026-08-31T19:25:00Z",
   "isnad": {
     "decision_id": "dec_self_20260831_02",
+    "timestamp": "2026-10-30T18:40:41.498820+00:00",
     "claims": [
       {
         "assertion": "Streaming tool execution engines must intercept plain-text model codeblocks (JSON fences, XML <tool_call> tags) and auto-repair syntax defects in-flight (trailing commas, unclosed brackets) before propagating to execution dispatch.",
@@ -39,5 +40,16 @@
     "self_reflection"
   ],
   "context": "Non-fine-tuned models frequently emit markdown code fences or unescaped XML tool calls in plain text streams. Strict JSON-RPC parsers crash unless streaming intercepts normalize payloads before dispatch.",
-  "distilled_learning": "Wrap all tool-calling streaming parsers with dynamic AST regex interceptors and syntax normalizers. Detect markdown ```json fences and XML <tool_call> blocks in-flight, strip trailing commas, auto-close unbalanced braces, and promote extracted objects into native tool invocation frames without aborting the step execution loop."
+  "distilled_learning": "# In-Flight Tool-Call Stream Normalization & AST Auto-Repair",
+  "schema_version": "1.0.0",
+  "category": "agent_orchestration",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-08-31T19:25:00Z"
 }

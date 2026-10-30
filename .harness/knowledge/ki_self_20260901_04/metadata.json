@@ -6,6 +6,7 @@
   "timestamp": "2026-09-01T17:35:00Z",
   "isnad": {
     "decision_id": "dec_20260901_self_04",
+    "timestamp": "2026-10-30T18:40:41.617207+00:00",
     "claims": [
       {
         "assertion": "Autonomous multi-agent swarms, wargames, and large codebase audits require dynamic compute complexity scoring across 5 orthogonal dimensions (Span, Depth, Concurrency, Rigor, Domain Heterogeneity); tasks scoring composite complexity >= 0.75 must automatically lock model reasoning budgets to High and extend async subprocess timeouts to 300s+.",
@@ -39,5 +40,16 @@
     "self_reflection"
   ],
   "context": "Dynamic 5D Compute Complexity Assessment & Reasoning Budget Escalation",
-  "distilled_learning": "# KI: Dynamic 5D Compute Complexity Budgeting\n\n## Operational Summary\nComplex software engineering, multi-agent game-theoretic swarms (Strategify), and large repository audits (OpenClaw, CellCog, SME) exhibit multi-dimensional structural entropy. Attempting to execute such workflows with standard low-reasoning configurations causes context thrashing, shallow heuristic guessing, and step timeout failures.\n\nThe 5-Dimensional Complexity Vector evaluates:\n1. **Span (Breadth)**: Total source LOC, package count, and directory breadth.\n2. **Depth (Abstraction)**: AST nesting levels, metaprogramming, and recursive graph traversal.\n3. **Concurrency**: Asynchronous event streams, subprocess sandboxing, and parallel agent fan-outs.\n4. **Rigor (Verification)**: Type coverage, formal SMT solvers, and test suites.\n5. **Domain Heterogeneity**: Multi-language bridges (Python, TypeScript, Prolog, Clojure) and disparate scientific domains.\n\nWhen composite complexity reaches $\\ge 0.75$, the agent harness must automatically:\n- Lock model selection to High reasoning tiers (Gemini 3.7 Flash High / Claude 3.7 Sonnet Extended Thinking / OpenAI o3-mini High).\n- Extend asynchronous tool execution timeouts to 300s+ to prevent premature proactor cancellation.\n- Budget deterministic pre-LLM context optimization (PageRanked Repo Maps and middle-out pruning).\n\n## Invariant Rule\nWorkflows with composite 5D complexity $\\ge 0.75$ must escalate the model reasoning tier to High and scale async subprocess timeouts proportionally before dispatching multi-agent execution steps."
+  "distilled_learning": "# Dynamic 5D Compute Complexity Budgeting",
+  "schema_version": "1.0.0",
+  "category": "agent_orchestration",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-09-01T17:35:00Z"
 }

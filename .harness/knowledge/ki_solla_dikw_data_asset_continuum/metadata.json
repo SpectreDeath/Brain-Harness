@@ -10,11 +10,33 @@
     "solla",
     "dmbok"
   ],
-  "source_repo": "From Data to Value: Understanding Data Management Through a Real World Use Case (Daniel García Solla, freeCodeCamp)",
+  "source_repo": "From Data to Value: Understanding Data Management Through a Real World Use Case (Daniel Garc\u00eda Solla, freeCodeCamp)",
   "provenance": [
     "Section: Data Management Fundamentals",
     "https://www.freecodecamp.org/news/understanding-data-management-with-a-real-world-use-case-book/#heading-data-management-fundamentals",
     "DAMA-DMBOK Chapter 1: Data Management"
   ],
-  "created_at": "2026-09-06T18:40:00Z"
+  "created_at": "2026-09-06T18:40:00Z",
+  "schema_version": "1.0.0",
+  "source_target": "From Data to Value: Understanding Data Management Through a Real World Use Case (Daniel Garc\u00eda Solla, freeCodeCamp)",
+  "detected_format": "raw_docs",
+  "anchors": {},
+  "edges": [
+    {
+      "type": "same_domain",
+      "target": "ki_solla_dmbok_governance_decision_rights",
+      "target_kind": "ki",
+      "derived": true,
+      "confidence": 0.8,
+      "description": null
+    }
+  ],
+  "isnad": {},
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "distilled_learning": "# The DIKW Pyramid & Data Lifecycle Asset Progression"
 }

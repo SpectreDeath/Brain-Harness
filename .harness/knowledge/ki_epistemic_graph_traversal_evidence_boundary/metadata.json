@@ -16,5 +16,18 @@
     "How to Build a Knowledge Graph with Python and Neo4j [Full Handbook].md",
     "Perplexity Epistemic Browsing Dialogue"
   ],
-  "created_at": "2026-09-07T15:20:00Z"
+  "created_at": "2026-09-07T15:20:00Z",
+  "schema_version": "1.0.0",
+  "source_target": "D:\\markdown from chrome\\perplexity\\KG",
+  "detected_format": "raw_docs",
+  "anchors": {},
+  "edges": [],
+  "isnad": {},
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "distilled_learning": "# Epistemic Graph Traversal and the Relation-vs-Inference Boundary"
 }

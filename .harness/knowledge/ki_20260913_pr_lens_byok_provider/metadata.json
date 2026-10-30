@@ -5,6 +5,7 @@
   "detected_format": "git_repository",
   "isnad": {
     "decision_id": "dec_20260913_pr_lens_byok_01",
+    "timestamp": "2026-10-30T18:40:39.575933+00:00",
     "claims": [
       {
         "assertion": "A standardized provider adapter contract (generateContent / streamText) decouples high-level graph analysis logic from proprietary model APIs (Gemini, OpenAI, Anthropic, Custom HTTP), enabling zero-dependency runtime provider substitution.",
@@ -33,5 +34,17 @@
     "openai",
     "abstraction_seam",
     "pr_lens"
-  ]
+  ],
+  "schema_version": "1.0.0",
+  "category": "developer_experience",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-09-13T00:00:00Z",
+  "distilled_learning": "# Normalized BYOK Multi-LLM Provider Architecture"
 }

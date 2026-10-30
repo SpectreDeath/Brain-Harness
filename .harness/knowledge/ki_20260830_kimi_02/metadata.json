@@ -5,6 +5,7 @@
   "detected_format": "git_repository",
   "isnad": {
     "decision_id": "dec_20260830_kimi_02",
+    "timestamp": "2026-10-30T18:40:39.031952+00:00",
     "claims": [
       {
         "assertion": "Transcript streaming systems should separate normalized storage (L1), idempotent state operations (L2), granularity-gated event filtering (L3), and framework-free view projection (L4) to deliver zero-overhead telemetry across diverse UI consumers",
@@ -29,5 +30,16 @@
     "telemetry"
   ],
   "context": "Agent UI interfaces (CLI, Web, IDE sidecar) require different levels of detail from the execution stream: some need raw streaming token deltas, others need completed tool blocks, while background evaluators only need turn summaries.",
-  "distilled_learning": "Implement a 4-layer isomorphic transcript architecture: 1) L1 Store (agent-granular normalized in-memory record of frames and turns), 2) L2 Operations (idempotent delta ops and turn-cursor pagination), 3) L3 Subscriptions (granularity-gated filtering supporting 'off' | 'turn' | 'block' | 'delta'), and 4) L4 View Registry (pure TypeScript view renderers completely decoupled from the agent runtime engine). Consumers declare their required granularity upon subscription, eliminating redundant serialization and frontend rendering churn."
+  "distilled_learning": "# 4-Layer Isomorphic Transcript Data Engine with Granularity Subscriptions",
+  "schema_version": "1.0.0",
+  "category": "developer_experience",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-08-30T00:00:00Z"
 }

@@ -6,6 +6,7 @@
   "timestamp": "2026-09-01T17:35:00Z",
   "isnad": {
     "decision_id": "dec_20260901_self_01",
+    "timestamp": "2026-10-30T18:40:41.553635+00:00",
     "claims": [
       {
         "assertion": "Antigravity IDE partitions session state into ACID SQLite WAL databases (.db) and streaming JSONL step logs (transcript.jsonl). Agents querying SQLite databases during active sessions must use explicit read-only URI mode (file:...?mode=ro) to eliminate lock contention with live IDE worker proactors while federating streaming JSONL parsers for multi-turn step transcripts.",
@@ -39,5 +40,16 @@
     "self_reflection"
   ],
   "context": "Multi-Store Autobiographical Memory Federation & Read-Only SQLite WAL Access",
-  "distilled_learning": "# KI: Multi-Store Autobiographical Memory Federation\n\n## Operational Summary\nAntigravity IDE maintains two distinct storage layers for session execution:\n1. **Binary SQLite ACID Stores (`.db`)**: Holds structured tables (`trajectory_meta`, `steps`, `gen_metadata`, `executor_metadata`, `trajectory_metadata_blob`) managed with Write-Ahead Logging (WAL) and shared memory (`.db-shm`, `.db-wal`) by active worker proactors.\n2. **Streaming JSONL Transcripts (`transcript.jsonl`)**: Holds append-only, human-readable line-delimited records in the brain trajectory directory.\n\nWhen extracting endogenous memories or conducting introspective reflection loops across active IDE sessions, attempting direct write or exclusive locking connections against `.db` files can cause SQLite locking contention (`sqlite3.OperationalError: database is locked`). Agents must unconditionally connect using read-only URI mode (`sqlite3.connect('file:' + path + '?mode=ro', uri=True)`) and stream JSONL step lines for large historical trajectory audits.\n\n## Invariant Rule\nAlways federate memory queries across read-only SQLite URIs and streaming JSONL parsers; never execute synchronous blocking writes or acquire write locks on active conversation databases during agent reflection."
+  "distilled_learning": "# Multi-Store Autobiographical Memory Federation",
+  "schema_version": "1.0.0",
+  "category": "data_engineering",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-09-01T17:35:00Z"
 }

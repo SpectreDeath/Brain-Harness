@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "id": "ki_self_20261014_02",
   "title": "Markdown Document Structural Formatting and Unified Unordered List Hygiene",
-  "category": "documentation_hygiene",
+  "category": "developer_experience/documentation",
   "source_target": "Brain Harness (CONTEXT-MAP.md, CARD.md, docs/)",
   "detected_format": "harness_endogenous_reflection",
   "timestamp": "2026-10-14T11:00:00Z",
@@ -22,7 +22,6 @@
   "isnad": {
     "decision_id": "decision-self-20261014-02",
     "timestamp": "2026-10-14T11:00:00Z",
-    "status": "VERIFIED",
     "claims": [
       {
         "claim_id": "isnad-self-20261014-02-a",
@@ -36,6 +35,16 @@
         "evidence": "Commit 6e43ba7 unified all list markers to '-' in CONTEXT-MAP.md, resolving all MD004 warnings.",
         "verified_by": "markdownlint inspection, test_context_map_registration"
       }
-    ]
-  }
+    ],
+    "status": "VERIFIED"
+  },
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-10-14T11:00:00Z",
+  "distilled_learning": "# Markdown Document Structural Formatting and Unified Unordered List Hygiene"
 }

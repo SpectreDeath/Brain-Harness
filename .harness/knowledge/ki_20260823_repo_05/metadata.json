@@ -5,6 +5,7 @@
   "detected_format": "git_repository",
   "isnad": {
     "decision_id": "dec_20260823_repo_05",
+    "timestamp": "2026-10-30T18:40:38.727422+00:00",
     "claims": [
       {
         "assertion": "Agent daemons serving diverse clients (CLI, TUI, IDE) should enforce strict RPC wire protocols with automated cross-language type export to prevent wire drift",
@@ -29,7 +30,25 @@
     ],
     "status": "VERIFIED"
   },
-  "tags": ["app_server", "json_rpc", "ipc", "schema_sync", "typescript_export", "ts_rs"],
+  "tags": [
+    "app_server",
+    "json_rpc",
+    "ipc",
+    "schema_sync",
+    "typescript_export",
+    "ts_rs"
+  ],
   "context": "Maintaining multiple client interfaces (CLI, Web, VS Code, JetBrains) against a core agent daemon frequently results in silent schema drift and broken deserialization.",
-  "distilled_learning": "Route all client interactions through an IPC daemon using a typed JSON-RPC 2.0 protocol (*Params, *Response, *Notification) with camelCase wire formats, mandatory cursor pagination, and automated TypeScript type generation (ts-rs)."
+  "distilled_learning": "# App-Server Daemon RPC Gate & Automated Rust-to-TS Schema Synchronization",
+  "schema_version": "1.0.0",
+  "category": "infrastructure_and_runtime",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-08-23T00:00:00Z"
 }

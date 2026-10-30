@@ -2,11 +2,12 @@
   "id": "ki_20261023_opencode_04",
   "title": "AST-Grep Structural Pattern Enforcement over Generic Linters",
   "context": "Automated architectural boundary and concurrency pattern enforcement in multi-agent repositories.",
-  "distilled_learning": "Combining ultra-fast syntax scanning (oxlint) with declarative AST-grep rule configurations prevents concurrency bypasses, untyped promise coercions, and package boundary violations in CI.",
+  "distilled_learning": "# AST-Grep Structural Pattern Enforcement over Generic Linters",
   "source_target": "D:\\GitHub\\cloned\\opencode",
   "detected_format": "git_repository",
   "isnad": {
     "decision_id": "dec_20261023_opencode_04",
+    "timestamp": "2026-10-30T18:40:39.929507+00:00",
     "claims": [
       {
         "assertion": "Combining ultra-fast syntax scanning (oxlint) with declarative AST-grep rule configurations prevents concurrency bypasses, untyped promise coercions, and package boundary violations in CI.",
@@ -34,5 +35,16 @@
     "linting",
     "oxlint",
     "architecture_governance"
-  ]
+  ],
+  "schema_version": "1.0.0",
+  "category": "developer_experience",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-10-23T00:00:00Z"
 }

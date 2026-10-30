@@ -6,6 +6,7 @@
   "timestamp": "2026-09-01T18:45:00Z",
   "isnad": {
     "decision_id": "dec_20260901_scratch_02",
+    "timestamp": "2026-10-30T18:40:41.658179+00:00",
     "claims": [
       {
         "assertion": "Testing heavy forensic plugins requires lightweight mock contracts for central Nexus and Data Access Layer (DAL) APIs. Isolating plugins from live databases eliminates flaky socket timeouts and prevents test database pollution during rapid verification cycles.",
@@ -38,5 +39,16 @@
     "scratch_distillation"
   ],
   "context": "Isolated Forensic Extension Mock Contracts & DAX Seam Testing",
-  "distilled_learning": "# KI: Isolated Extension Mock Contracts for Forensic Pipelines\n\n## Operational Summary\nComplex forensic extensions (e.g. `FinancialForensicsExtension`) orchestrate cross-table audits, transaction graph walks, and temporal volatility calculations. Direct execution against live database endpoints introduces:\n- Flaky socket connection timeouts in CI environments.\n- Potential database mutation leaks across concurrent test runs.\n\nUsing structured mock contracts that instantiate isolated plugin wrappers with mocked Nexus/DAL handles allows:\n1. Verifying event dispatchers, rule assertions, and anomaly scoring algorithms entirely in-memory.\n2. Fast unit test execution (<50ms) without requiring persistent container infrastructure.\n3. Clean proactor resource disposal with zero open connection handles.\n\n## Invariant Rule\nForensic and security extensions must provide self-contained contract verification tests using mocked DAL/Nexus adapters before integration."
+  "distilled_learning": "# Isolated Extension Mock Contracts for Forensic Pipelines",
+  "schema_version": "1.0.0",
+  "category": "security_and_forensics",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-09-01T18:45:00Z"
 }

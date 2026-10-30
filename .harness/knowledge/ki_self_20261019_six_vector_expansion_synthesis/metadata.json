@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "id": "ki_self_20261019_six_vector_expansion_synthesis",
   "title": "Six-Vector Brain Harness Expansion Synthesis: Architectural Seams, Invariants, and Zero-Regression Governance",
-  "category": "architecture",
+  "category": "developer_experience/architecture",
   "source_target": "Brain Harness Master Expansion (Phases 1-6)",
   "detected_format": "harness_endogenous_reflection",
   "timestamp": "2026-10-19T22:00:00Z",
@@ -33,7 +33,6 @@
   "isnad": {
     "decision_id": "decision-self-20261019-synthesis-01",
     "timestamp": "2026-10-19T22:00:00Z",
-    "status": "VERIFIED",
     "claims": [
       {
         "claim_id": "isnad-self-20261019-synthesis-01-a",
@@ -53,6 +52,16 @@
         "evidence": "All 4 new plugins export instantiated module singletons and co-located zero-fork configs, passing full test suites.",
         "verified_by": "pytest -k 'prometheus or memory_decay or prompt_pruning' -v"
       }
-    ]
-  }
+    ],
+    "status": "VERIFIED"
+  },
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-10-19T22:00:00Z",
+  "distilled_learning": "# Six-Vector Brain Harness Expansion Synthesis"
 }

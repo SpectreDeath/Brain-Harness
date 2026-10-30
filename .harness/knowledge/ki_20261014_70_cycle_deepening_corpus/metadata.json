@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "id": "ki_20261014_70_cycle_deepening_corpus",
   "title": "Empirical 70-Cycle Architecture Deepening and Monolith Decomposition Corpus",
-  "category": "architecture_and_deepening",
+  "category": "developer_experience/architecture",
   "timestamp": "2026-10-14T09:30:00Z",
   "anchors": {
     "cycle_68_commit": "728caf7",
@@ -31,5 +31,44 @@
       "evidence": "Implemented across codebase_context, context_type_system, youtube_transcript_fetcher, and skill_graph.",
       "verified_by": "test_ioc_registration and resolve_* tests"
     }
-  ]
+  ],
+  "source_target": "",
+  "detected_format": "raw_docs",
+  "tags": [
+    "architecture_deepening",
+    "decomposition",
+    "monolith",
+    "slotted_models"
+  ],
+  "edges": [],
+  "isnad": {
+    "claims": [
+      {
+        "claim_id": "isnad-70c-001",
+        "assertion": "Monolithic Python files (> 200 LOC) can be partitioned into modular subpackages <= 200 LOC with zero functional regression using contract testing.",
+        "evidence": "Decomposed 70 monolithic hotspots into 100% passing subpackages with 1,008 cumulative regression tests passing in 94.28s.",
+        "verified_by": "pytest, ruff check, harness context govern"
+      },
+      {
+        "claim_id": "isnad-70c-002",
+        "assertion": "Click CLI command groups must register all subcommands in a single co-located block to prevent later definitions from shadowing subcommands (Rule 6).",
+        "evidence": "Demonstrated across commands/uncertainty/group.py and commands/plugins/group.py.",
+        "verified_by": "Click CLI runner contract tests"
+      },
+      {
+        "claim_id": "isnad-70c-003",
+        "assertion": "Single-seam resolver factories resolve_*(ctx) guarantee IoC micro-kernel compliance while providing deterministic in-process fallback (Rule 58).",
+        "evidence": "Implemented across codebase_context, context_type_system, youtube_transcript_fetcher, and skill_graph.",
+        "verified_by": "test_ioc_registration and resolve_* tests"
+      }
+    ]
+  },
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-10-14T09:30:00Z",
+  "distilled_learning": "# Empirical 70-Cycle Architecture Deepening and Monolith Decomposition Corpus"
 }

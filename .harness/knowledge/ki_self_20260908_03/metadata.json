@@ -3,7 +3,11 @@
   "title": "Deep-Module Monolithic CLI Extraction Pattern",
   "created_at": "2026-09-08T20:07:30Z",
   "source": "harness-reflector",
-  "isnad": "architecture-review-context-anti-rot-sync-20260908.html (Deep Domain Engine Decoupling); architecture-review-media-to-vault-pipeline-20260908.html (Typed Pipeline Seams); harness-reflection-20260907_095716.html Axis 1 (Script\u2192Engine\u2192Service 3-layer); harness-reflection-20260908-155800.html Axis 2 F5; Sessions 0ba8e765/walkthrough.md, ba193963/walkthrough.md",
+  "isnad": {
+    "status": "VERIFIED",
+    "notes": "architecture-review-context-anti-rot-sync-20260908.html (Deep Domain Engine Decoupling); architecture-review-media-to-vault-pipeline-20260908.html (Typed Pipeline Seams); harness-reflection-20260907_095716.html Axis 1 (Script\u2192Engine\u2192Service 3-layer); harness-reflection-20260908-155800.html Axis 2 F5; Sessions 0ba8e765/walkthrough.md, ba193963/walkthrough.md",
+    "claims": []
+  },
   "tags": [
     "deep-module",
     "cli",
@@ -17,5 +21,35 @@
     ".agents/skills/media-to-vault-pipeline/scripts/media_pipeline_cli.py"
   ],
   "vault_version": "1.0",
-  "reflection_brief": "harness-reflection-20260908-155800.html"
+  "reflection_brief": "harness-reflection-20260908-155800.html",
+  "schema_version": "1.0.0",
+  "category": "developer_experience",
+  "source_target": "harness-reflector",
+  "detected_format": "raw_docs",
+  "anchors": {},
+  "edges": [
+    {
+      "type": "became_skill",
+      "target": "context-anti-rot-sync",
+      "target_kind": "skill",
+      "derived": false,
+      "confidence": 1.0,
+      "description": null
+    },
+    {
+      "type": "became_skill",
+      "target": "media-to-vault-pipeline",
+      "target_kind": "skill",
+      "derived": false,
+      "confidence": 1.0,
+      "description": null
+    }
+  ],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "distilled_learning": "## Deep-Module Monolithic CLI Extraction Pattern"
 }

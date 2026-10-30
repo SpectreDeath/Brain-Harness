@@ -18,7 +18,7 @@
   "isnad": {
     "claims": [
       {
-        "assertion": "Context management value scales inversely with window budget: at 32k budget without management (T0), agents catastrophically collapse (6.4%–12.6% SR, median 20–30 turns, dying at localization); rule-based elision (T1) rescues success to 20.6%–64.4% by sustaining 50–180 turns into verification.",
+        "assertion": "Context management value scales inversely with window budget: at 32k budget without management (T0), agents catastrophically collapse (6.4%\u201312.6% SR, median 20\u201330 turns, dying at localization); rule-based elision (T1) rescues success to 20.6%\u201364.4% by sustaining 50\u2013180 turns into verification.",
         "evidence_type": "empirical_benchmark",
         "source": "Fan et al. (arXiv:2609.20804v1, 2026), Section 3.2, Table 3 & Figure 32",
         "verified": true
@@ -36,17 +36,28 @@
         "verified": true
       },
       {
-        "assertion": "Planning exhibits a capability duality: for weaker models (Nemotron-3 30B), it acts as an accuracy scaffold (raising SWE-Bench SR from 14% to 25% by preventing premature termination, dropping unedited runs from 68.6% to 27.8%); for stronger models (Nemotron-3 550B, Mistral-Medium-3.5), it acts as a cost saver (cutting trajectory length by 23%–31% and cost by 25%–48% by truncating redundant post-edit verification loops).",
+        "assertion": "Planning exhibits a capability duality: for weaker models (Nemotron-3 30B), it acts as an accuracy scaffold (raising SWE-Bench SR from 14% to 25% by preventing premature termination, dropping unedited runs from 68.6% to 27.8%); for stronger models (Nemotron-3 550B, Mistral-Medium-3.5), it acts as a cost saver (cutting trajectory length by 23%\u201331% and cost by 25%\u201348% by truncating redundant post-edit verification loops).",
         "evidence_type": "trajectory_analysis",
         "source": "Fan et al. (arXiv:2609.20804v1, 2026), Section 3.2, Table 5, Table 6, Figure 8 & Figure 9",
         "verified": true
       },
       {
-        "assertion": "Action space optimal boundary depends on model capability and workload shell-centricity: predefined tools prevent syntax/interface hallucinations for weaker models; bash-only enables capable models on terminal-centric tasks to compose dense scripts, cutting re-patches from 4.6 to 1.5 and costs by 30%–53%.",
+        "assertion": "Action space optimal boundary depends on model capability and workload shell-centricity: predefined tools prevent syntax/interface hallucinations for weaker models; bash-only enables capable models on terminal-centric tasks to compose dense scripts, cutting re-patches from 4.6 to 1.5 and costs by 30%\u201353%.",
         "evidence_type": "empirical_benchmark",
         "source": "Fan et al. (arXiv:2609.20804v1, 2026), Section 3.2, Table 4, Table 7 & Figure 7",
         "verified": true
       }
     ]
-  }
+  },
+  "schema_version": "1.0.0",
+  "source_target": "",
+  "detected_format": "raw_docs",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "distilled_learning": "# Knowledge Item: Empirical Harness Calibration for Coding Agents"
 }

@@ -5,8 +5,47 @@
   "updated": "2026-09-19T13:24:00-04:00",
   "summary": "Engineering heuristics and governance framework for prompt-driven AI web application generators (Lovable, v0, Bolt). Establishes data minimization filters, structured security-first prompt templates, bipartite authentication vs authorization testing (5 negative test cases including IDOR and privilege escalation), dependency pruning to eliminate digital souvenirs, WCAG AA accessibility, honest prototype labeling, and the Golden Rule of AI App Building.",
   "references": [
-    {"path": "D:/markdown from chrome/freeCodeCamp/How to Use Lovable Responsibly.md", "description": "Original article by Eva J Patel published on freeCodeCamp.org (2026-09-18)"},
-    {"path": ".agents/skills/responsible-ai-prototyping/SKILL.md", "description": "Executable deep-module agent skill for responsible AI prototyping"},
-    {"path": ".agents/skills/responsible-ai-prototyping/CARD.md", "description": "Companion summary card and diagnostic scorecards"}
-  ]
+    {
+      "path": "D:/markdown from chrome/freeCodeCamp/How to Use Lovable Responsibly.md",
+      "description": "Original article by Eva J Patel published on freeCodeCamp.org (2026-09-18)"
+    },
+    {
+      "path": ".agents/skills/responsible-ai-prototyping/SKILL.md",
+      "description": "Executable deep-module agent skill for responsible AI prototyping"
+    },
+    {
+      "path": ".agents/skills/responsible-ai-prototyping/CARD.md",
+      "description": "Companion summary card and diagnostic scorecards"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "category": "developer_experience",
+  "source_target": "",
+  "detected_format": "raw_docs",
+  "tags": [
+    "responsible_ai",
+    "lovable",
+    "prototyping",
+    "governance"
+  ],
+  "anchors": {},
+  "edges": [
+    {
+      "type": "became_skill",
+      "target": "responsible-ai-prototyping",
+      "target_kind": "skill",
+      "derived": false,
+      "confidence": 1.0,
+      "description": null
+    }
+  ],
+  "isnad": {},
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-09-19T13:24:00-04:00",
+  "distilled_learning": "Engineering heuristics and governance framework for prompt-driven AI web application generators (Lovable, v0, Bolt). Establishes data minimization filters, structured security-first prompt templates, bipartite authentication vs authorization testing (5 negative test cases including IDOR and privilege escalation), dependency pruning to eliminate digital souvenirs, WCAG AA accessibility, honest prototype labeling, and the Golden Rule of AI App Building."
 }

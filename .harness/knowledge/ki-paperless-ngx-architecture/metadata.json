@@ -5,11 +5,26 @@
   "updated": "2026-09-16T15:26:00-04:00",
   "summary": "Architectural distillation of Paperless-NGX (v3.1.3), a production document management system. Documents the multi-stage ingestion pipeline (consumer.py), pluggable parser system, file locking invariants (FileLock/ReadWriteLock), Celery asynchronous worker queue, post-consumption workflow engine, and real-time WebSocket status telemetry.",
   "references": [
-    {"path": "D:/GitHub/cloned/paperless-ngx/src/documents/consumer.py", "description": "Document consumer pipeline and stage coordinator"},
-    {"path": "D:/GitHub/cloned/paperless-ngx/src/documents/parsers/", "description": "Rasterised and Tika document parsers"},
-    {"path": "D:/GitHub/cloned/paperless-ngx/src/documents/models.py", "description": "Document, Tag, Correspondent, DocumentType, and CustomField models"},
-    {"path": "D:/GitHub/cloned/paperless-ngx/src/documents/workflows/", "description": "Trigger-action workflow automation engine"},
-    {"path": "D:/GitHub/cloned/paperless-ngx/src/paperless/consumers.py", "description": "StatusConsumer ASGI WebSocket for progress telemetry"}
+    {
+      "path": "D:/GitHub/cloned/paperless-ngx/src/documents/consumer.py",
+      "description": "Document consumer pipeline and stage coordinator"
+    },
+    {
+      "path": "D:/GitHub/cloned/paperless-ngx/src/documents/parsers/",
+      "description": "Rasterised and Tika document parsers"
+    },
+    {
+      "path": "D:/GitHub/cloned/paperless-ngx/src/documents/models.py",
+      "description": "Document, Tag, Correspondent, DocumentType, and CustomField models"
+    },
+    {
+      "path": "D:/GitHub/cloned/paperless-ngx/src/documents/workflows/",
+      "description": "Trigger-action workflow automation engine"
+    },
+    {
+      "path": "D:/GitHub/cloned/paperless-ngx/src/paperless/consumers.py",
+      "description": "StatusConsumer ASGI WebSocket for progress telemetry"
+    }
   ],
   "claims": [
     {
@@ -27,5 +42,85 @@
       "source": "src/paperless/urls.py",
       "line_range": "80-140"
     }
-  ]
+  ],
+  "schema_version": "1.0.0",
+  "category": "developer_experience",
+  "source_target": "",
+  "detected_format": "raw_docs",
+  "tags": [
+    "paperless",
+    "document_lifecycle",
+    "ingestion",
+    "celery"
+  ],
+  "anchors": {},
+  "edges": [
+    {
+      "type": "references_code",
+      "target": "D:/GitHub/cloned/paperless-ngx/src/documents/consumer.py",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    },
+    {
+      "type": "references_code",
+      "target": "D:/GitHub/cloned/paperless-ngx/src/documents/parsers/",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    },
+    {
+      "type": "references_code",
+      "target": "D:/GitHub/cloned/paperless-ngx/src/documents/models.py",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    },
+    {
+      "type": "references_code",
+      "target": "D:/GitHub/cloned/paperless-ngx/src/documents/workflows/",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    },
+    {
+      "type": "references_code",
+      "target": "D:/GitHub/cloned/paperless-ngx/src/paperless/consumers.py",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    }
+  ],
+  "isnad": {
+    "claims": [
+      {
+        "claim": "The consumer coordinates a 9-stage pipeline: pre-check duplicates, ASN uniqueness, pre-consume script, pluggable parser execution (OCRmyPDF/Tika), ML classification, unique filename generation, storage write, post-consume script, and workflow triggers.",
+        "source": "src/documents/consumer.py",
+        "line_range": "200-520"
+      },
+      {
+        "claim": "Concurrency safety during document ingestion and index updates is guaranteed by filelock FileLock and ReadWriteLock instances wrapping storage directories and vector indices.",
+        "source": "src/documents/consumer.py",
+        "line_range": "40-45"
+      },
+      {
+        "claim": "Client communication and UI telemetry is decoupled into 25+ DRF ViewSets under api/ with real-time asynchronous task progress piped through Channels WebSocket ws/status/.",
+        "source": "src/paperless/urls.py",
+        "line_range": "80-140"
+      }
+    ]
+  },
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-09-16T15:26:00-04:00",
+  "distilled_learning": "Architectural distillation of Paperless-NGX (v3.1.3), a production document management system. Documents the multi-stage ingestion pipeline (consumer.py), pluggable parser system, file locking invariants (FileLock/ReadWriteLock), Celery asynchronous worker queue, post-consumption workflow engine, and real-time WebSocket status telemetry."
 }

@@ -1,7 +1,7 @@
 {
   "id": "ki_self_20261002_02",
   "title": "Shared Memory (SHM) IPC Acceleration & Safe Native Engine Graceful Degradation",
-  "category": "sandboxing",
+  "category": "infrastructure_and_runtime/sandbox",
   "created_at": "2026-10-02T19:20:00Z",
   "author": "Brain Harness Autobiographical Reflection Engine (harness-reflector)",
   "tags": [
@@ -13,10 +13,10 @@
     "self_reflection"
   ],
   "context": "Passing large tool inputs and outputs (>64KB AST diffs, tabular datasets, repository maps) across subprocess pipes introduces JSON serialization and IPC buffer overhead, which can cause OS pipe deadlocks. In parallel, integrating native virtualization engines (like Wasmtime WASI runtimes) introduces platform dependency risks when host environments lack precompiled native wheels (ModuleNotFoundError: No module named 'wasmtime').",
-  "distilled_learning": "Sandboxed plugin transports handling high-throughput or large payloads (>64KB) must negotiate shared memory (multiprocessing.shared_memory.SharedMemory) capabilities during handshake, registering defensive atexit cleanup hooks while falling back seamlessly to standard stdio JSON-RPC. Similarly, native virtualization executors (such as Wasmtime WASI engines) must feature automatic, transparent degradation to subprocess sandboxing when native modules are unavailable on the host environment.",
+  "distilled_learning": "# Shared Memory (SHM) IPC Acceleration & Safe Native Engine Graceful Degradation",
   "isnad": {
     "decision_id": "dec_20261002_self_02",
-    "status": "VERIFIED",
+    "timestamp": "2026-10-30T18:40:42.816996+00:00",
     "claims": [
       {
         "assertion": "Handshake capability negotiation detects peer SHM support, routing large payloads (>64KB) through memory-mapped buffers with zero pipe copy.",
@@ -68,6 +68,17 @@
           }
         ]
       }
-    ]
-  }
+    ],
+    "status": "VERIFIED"
+  },
+  "schema_version": "1.0.0",
+  "source_target": "",
+  "detected_format": "raw_docs",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null
 }

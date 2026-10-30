@@ -3,7 +3,11 @@
   "title": "Micro-Kernel IoC Topo-Sort & Domain-Partitioned Plugin Synthesis",
   "created_at": "2026-09-15T17:30:00Z",
   "source": "deep-repo-auditor",
-  "isnad": "deep-repo-auditor multi-axis audit on 2026-09-15; verified in src/harness/kernel/lifecycle.py, src/harness/kernel/context.py, and 11 plugin domain directories.",
+  "isnad": {
+    "status": "VERIFIED",
+    "notes": "deep-repo-auditor multi-axis audit on 2026-09-15; verified in src/harness/kernel/lifecycle.py, src/harness/kernel/context.py, and 11 plugin domain directories.",
+    "claims": []
+  },
   "tags": [
     "architecture",
     "ioc-container",
@@ -17,5 +21,35 @@
     "AGENTS.md#L3-L7",
     "AGENTS.md#L20"
   ],
-  "vault_version": "1.0"
+  "vault_version": "1.0",
+  "schema_version": "1.0.0",
+  "category": "security_and_forensics",
+  "source_target": "deep-repo-auditor",
+  "detected_format": "raw_docs",
+  "anchors": {},
+  "edges": [
+    {
+      "type": "references_code",
+      "target": "src/harness/kernel/lifecycle.py#L45-L110",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    },
+    {
+      "type": "references_code",
+      "target": "src/harness/kernel/context.py#L25-L95",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    }
+  ],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "distilled_learning": "## Micro-Kernel IoC Topo-Sort & Domain-Partitioned Plugin Synthesis"
 }

@@ -1,7 +1,7 @@
 {
   "id": "ki_self_20261002_03",
   "title": "Stage Artifact Contracts, Dynamic Directed FEEDS Edge Synthesis & Cycle Prevention",
-  "category": "skill_graph",
+  "category": "agent_orchestration/skills",
   "created_at": "2026-10-02T19:20:00Z",
   "author": "Brain Harness Autobiographical Reflection Engine (harness-reflector)",
   "tags": [
@@ -12,10 +12,10 @@
     "self_reflection"
   ],
   "context": "Agent skills in modular agent architectures often produce intermediate artifacts consumed by sibling skills (e.g. AST diff generator producing an artifact consumed by an adversarial reviewer). Hardcoding these pipelines in static lists is brittle and prevents emergent skill combinations. However, automated graph edge synthesis based on artifact matching risks introducing cyclic dependencies in the skill DAG.",
-  "distilled_learning": "Agent skills must declare formal stage contracts via Produces artifact: and Consumes artifact(s):. The skill knowledge graph dynamically derives directed FEEDS edges between producer and consumer skills, verifying acyclicity via DFS reachability (_would_create_cycle) prior to edge insertion to prevent infinite cyclic execution in topological planners.",
+  "distilled_learning": "# Stage Artifact Contracts, Dynamic Directed FEEDS Edge Synthesis & Cycle Prevention",
   "isnad": {
     "decision_id": "dec_20261002_self_03",
-    "status": "VERIFIED",
+    "timestamp": "2026-10-30T18:40:42.835027+00:00",
     "claims": [
       {
         "assertion": "Skill parser parses Produces artifact: and Consumes artifact(s): from markdown stage headers.",
@@ -62,6 +62,17 @@
           }
         ]
       }
-    ]
-  }
+    ],
+    "status": "VERIFIED"
+  },
+  "schema_version": "1.0.0",
+  "source_target": "",
+  "detected_format": "raw_docs",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null
 }

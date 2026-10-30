@@ -6,6 +6,7 @@
   "timestamp": "2026-09-01T17:35:00Z",
   "isnad": {
     "decision_id": "dec_20260901_self_02",
+    "timestamp": "2026-10-30T18:40:41.575985+00:00",
     "claims": [
       {
         "assertion": "Python processes spawned on Windows without explicit stream reconfiguration fall back to legacy console code pages (cp1252) and crash with UnicodeEncodeError when emitting Unicode DAG symbols (\u2192, \u2794, \u2713, \u2211). All CLI scripts, reflection extractors, and test runners must unconditionally configure sys.stdout to UTF-8 at process entrypoints.",
@@ -39,5 +40,25 @@
     "self_reflection"
   ],
   "context": "Windows UTF-8 Stream Codec Isolation for Unicode DAG & Math Symbols",
-  "distilled_learning": "# KI: Windows UTF-8 Stream Codec Isolation\n\n## Operational Summary\nAcross Windows host systems, Python's default standard output and error streams initialize with the system active code page (`cp1252` or `windows-1252`). When agent reflection scripts, CLI tree formatters, or test reporters emit Unicode arrows (`\u2192`, `\u2794`), checkmarks (`\u2713`), or mathematical notation (`$\beta$`, `$\\gamma$`, `$\\sum$`), unconfigured stdout streams immediately raise:\n`UnicodeEncodeError: 'charmap' codec can't encode character ... character maps to <undefined>`.\n\nTo ensure complete terminal idempotency across operating systems without stripping rich visual artifacts:\n1. Reconfigure standard streams at module import: `sys.stdout.reconfigure(encoding='utf-8')` and `sys.stderr.reconfigure(encoding='utf-8')`.\n2. Explicitly set environment variable `PYTHONIOENCODING=utf-8` in subprocess runners and background tasks.\n\n## Invariant Rule\nAll CLI entrypoints, background task runners, and reflection extractors must explicitly enforce UTF-8 stream reconfiguration at module initialization to eliminate charmap encode crashes across Windows environments."
+  "distilled_learning": "# Windows UTF-8 Stream Codec Isolation",
+  "schema_version": "1.0.0",
+  "category": "infrastructure_and_runtime",
+  "anchors": {},
+  "edges": [
+    {
+      "type": "same_domain",
+      "target": "ki_self_20260901_scratch_03",
+      "target_kind": "ki",
+      "derived": true,
+      "confidence": 0.8,
+      "description": null
+    }
+  ],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-09-01T17:35:00Z"
 }

@@ -37,5 +37,16 @@
     "self_reflection"
   ],
   "context": "Knowledge item ki_self_20260828_06: Subprocess Pipe Transport Lifecycle & Windows Proactor Guard",
-  "distilled_learning": "### Distilled Heuristic\nAll asynchronous subprocess sandbox transports must explicitly drain and close stdin/stdout/stderr pipes inside finally blocks to guarantee clean proactor resource disposal and eliminate unraisable ResourceWarnings across operating systems."
+  "distilled_learning": "# Subprocess Pipe Transport Lifecycle & Windows Proactor Guard",
+  "schema_version": "1.0.0",
+  "category": "infrastructure_and_runtime",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-08-28T21:10:00.000000+00:00"
 }

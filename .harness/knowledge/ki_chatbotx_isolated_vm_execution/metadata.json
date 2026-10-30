@@ -25,5 +25,56 @@
       "source": "packages/javascript-sandbox/src/index.ts",
       "line_range": "1-3"
     }
-  ]
+  ],
+  "schema_version": "1.0.0",
+  "category": "security_and_forensics",
+  "source_target": "",
+  "detected_format": "raw_docs",
+  "tags": [
+    "isolated_vm",
+    "sandboxing",
+    "multitenancy",
+    "microservices"
+  ],
+  "anchors": {},
+  "edges": [
+    {
+      "type": "references_code",
+      "target": "D:/GitHub/cloned/ChatbotX/apps/javascript-executor/src/index.ts",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    },
+    {
+      "type": "references_code",
+      "target": "D:/GitHub/cloned/ChatbotX/packages/javascript-sandbox/src/index.ts",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    }
+  ],
+  "isnad": {
+    "claims": [
+      {
+        "claim": "Flow script execution is offloaded from main Next.js and BullMQ processes into a standalone microservice using isolated-vm to prevent prototype pollution and CPU thread locking.",
+        "source": "apps/javascript-executor/src/index.ts",
+        "line_range": "1-28"
+      },
+      {
+        "claim": "Client communication with the sandbox enforces strict timeout budgets, payload size limits, and sanitized global variable injection.",
+        "source": "packages/javascript-sandbox/src/index.ts",
+        "line_range": "1-3"
+      }
+    ]
+  },
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-09-16T16:42:00-04:00",
+  "distilled_learning": "ChatbotX architectural pattern isolating user-authored dynamic JavaScript flow step logic inside a decoupled HTTP microservice (apps/javascript-executor) utilizing isolated-vm for V8 heap boundary confinement, CPU execution bounds, and memory isolation."
 }

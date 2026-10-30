@@ -84,10 +84,46 @@
         "timestamp_start": 7122,
         "timestamp_end": 8014,
         "assertion": "Stateful firewalls track bidirectional TCP connection states (ESTABLISHED, RELATED) and dynamically allow return traffic, whereas stateless packet filters evaluate rules unidirectionally per packet without session memory.",
-        "quote": "A stateful firewall keeps a state table. It knows that you initiated an outbound connection on port 80 or 443, so it automatically allows the incoming response traffic back in. A stateless firewall doesn't remember anything—it inspects each packet in isolation, requiring explicit inbound and outbound rules.",
+        "quote": "A stateful firewall keeps a state table. It knows that you initiated an outbound connection on port 80 or 443, so it automatically allows the incoming response traffic back in. A stateless firewall doesn't remember anything\u2014it inspects each packet in isolation, requiring explicit inbound and outbound rules.",
         "evidence_type": "security_architecture",
         "verified": true
       }
     ]
-  }
+  },
+  "schema_version": "1.0.0",
+  "source_target": "https://www.youtube.com/watch?v=yjAG88KOyqM",
+  "detected_format": "raw_docs",
+  "anchors": {},
+  "edges": [
+    {
+      "type": "became_skill",
+      "target": "ethical-hacker-networking",
+      "target_kind": "skill",
+      "derived": false,
+      "confidence": 1.0,
+      "description": null
+    },
+    {
+      "type": "references_code",
+      "target": "plugins/security_and_forensics/network_forensics/main.py",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    },
+    {
+      "type": "references_code",
+      "target": "src/harness/services/network_forensics.py",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    }
+  ],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "distilled_learning": "# Knowledge Item: Practical Networking for Ethical Hacking"
 }

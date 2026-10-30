@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "id": "ki_self_20261019_hyperframes_video_01",
   "title": "Programmatic Motion Graphics Rendering via Node.js Subprocess JSON-RPC and Slotted Models",
-  "category": "developer_tooling",
+  "category": "developer_experience/tooling",
   "source_target": "Brain Harness (src/harness/services/hyperframes/)",
   "detected_format": "harness_endogenous_reflection",
   "timestamp": "2026-10-19T21:00:00Z",
@@ -25,7 +25,6 @@
   "isnad": {
     "decision_id": "decision-self-20261019-hf-01",
     "timestamp": "2026-10-19T21:00:00Z",
-    "status": "VERIFIED",
     "claims": [
       {
         "claim_id": "isnad-self-20261019-hf-01-a",
@@ -39,6 +38,33 @@
         "evidence": "VideoScene, RenderRequest, and RenderOutput enforce post-init guards and raise AttributeError upon direct attribute assignment under Rule 43.",
         "verified_by": "pytest tests/test_hyperframes_renderer.py::test_video_scene_immutability_and_validation"
       }
-    ]
-  }
+    ],
+    "status": "VERIFIED"
+  },
+  "edges": [
+    {
+      "type": "references_code",
+      "target": "Brain Harness (src/harness/services/hyperframes/)",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    },
+    {
+      "type": "became_skill",
+      "target": "hyperframes-video-architect",
+      "target_kind": "skill",
+      "derived": false,
+      "confidence": 1.0,
+      "description": null
+    }
+  ],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-10-19T21:00:00Z",
+  "distilled_learning": "# Programmatic Motion Graphics Rendering via Node.js Subprocess JSON-RPC"
 }

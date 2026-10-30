@@ -1,7 +1,7 @@
 {
   "id": "ki_20260918_gemini_vercel_streaming",
   "title": "Plain-Text Chunk Streaming Architecture for Gemini on Vercel Serverless",
-  "category": "integration_and_io",
+  "category": "infrastructure_and_runtime/integration",
   "created_at": "2026-09-18T05:50:00Z",
   "author": "Johnson Samuel / Book-to-Skill Forge",
   "tags": [
@@ -33,5 +33,16 @@
         "verified": true
       }
     ]
-  }
+  },
+  "schema_version": "1.0.0",
+  "source_target": "",
+  "detected_format": "raw_docs",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "distilled_learning": "# Plain-Text Chunk Streaming Architecture for Gemini on Vercel Serverless"
 }

@@ -13,10 +13,10 @@
     "epistemics"
   ],
   "context": "The Antigravity IDE maintains a primary filesystem-native workspace store at C:\\Users\\spectre\\.gemini\\antigravity-ide\\brain\\ spanning 343 conversation directories, 1,085 Python scratch tools, 530 strategic plans/walkthroughs, 1,655 subprocess task logs, and 243 dual-transcript streams. While conversations/*.db contains relational execution telemetry, the brain/ store constitutes the living epistemic workspace of the developer-agent partnership.",
-  "distilled_learning": "Mining filesystem-native workspace stores requires strict adherence to four operational invariants: (1) Protection Boundary Resilience (Rule 46) pivoting to non-modifying shell reads on permission denials; (2) O(1) Binary Byte-Offset Lookups (Rule 48) for transcripts exceeding 10 MB with automatic is_truncated dereferencing to transcript_full.jsonl; (3) AST-Based Scratch Tool Classification with Defensive Batch Exception Logging (Rule 32) reraising NameError/TypeError/AttributeError; and (4) Subprocess Stderr Drainage & Deadlock Triage (Rule 53) capturing trailing failure lines from task-*.log files.",
+  "distilled_learning": "# Antigravity IDE Brain Workspace Epistemic Topology and Scratch Salvage Invariants",
   "isnad": {
     "decision_id": "dec_20261003_brain_01",
-    "status": "VERIFIED",
+    "timestamp": "2026-10-30T18:40:40.407155+00:00",
     "claims": [
       {
         "assertion": "The Antigravity IDE brain/ store contains a massive reservoir of 1,085 domain-specialized Python scratch tools across 343 conversation workspaces that can be classified via AST inspection into seven cohesive functional categories.",
@@ -68,6 +68,17 @@
           }
         ]
       }
-    ]
-  }
+    ],
+    "status": "VERIFIED"
+  },
+  "schema_version": "1.0.0",
+  "source_target": "",
+  "detected_format": "raw_docs",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null
 }

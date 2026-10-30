@@ -5,6 +5,7 @@
   "detected_format": "git_repository",
   "isnad": {
     "decision_id": "dec_self_20260830_01",
+    "timestamp": "2026-10-30T18:40:41.445461+00:00",
     "claims": [
       {
         "assertion": "When introducing architectural or structural abstractions (such as 4-tier DI scopes), prefer non-invasive inspection adapters and read-only metadata annotators over mutating the core IoC kernel container constructor, preventing cascading breakage across registered plugins",
@@ -28,5 +29,16 @@
     "self_reflection"
   ],
   "context": "Grafting new domain concepts directly onto the core ServiceContext constructor breaks backwards compatibility with existing plugins, lifecycle tests, and transaction managers.",
-  "distilled_learning": "Implement structural analysis as a standalone inspector (e.g. ScopeInspector) that traverses the existing parent-child ServiceContext hierarchy without mutating core kernel classes. This provides full introspection capabilities while preserving 100% test and plugin backward compatibility."
+  "distilled_learning": "# Non-Invasive Scoped Metadata Annotations vs. Core Kernel Mutability",
+  "schema_version": "1.0.0",
+  "category": "agent_orchestration",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-08-30T00:00:00Z"
 }

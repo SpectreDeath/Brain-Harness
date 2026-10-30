@@ -5,6 +5,7 @@
   "detected_format": "git_repository",
   "isnad": {
     "decision_id": "dec_20260830_grok_01",
+    "timestamp": "2026-10-30T18:40:38.943903+00:00",
     "claims": [
       {
         "assertion": "Hashline-anchored file editing with multi-candidate anchor schemes (ContentOnly, ChunkFingerprint, CheckpointChain) and bounded radius shift recovery eliminates stale-line edit failures during autonomous multi-file refactors",
@@ -26,5 +27,23 @@
     ],
     "status": "VERIFIED"
   },
-  "tags": ["tools", "file_editing", "hashline_anchors", "shift_recovery", "robustness"]
+  "tags": [
+    "tools",
+    "file_editing",
+    "hashline_anchors",
+    "shift_recovery",
+    "robustness"
+  ],
+  "schema_version": "1.0.0",
+  "category": "developer_experience",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-08-30T00:00:00Z",
+  "distilled_learning": "# Hashline Anchoring with Bounded Shift Recovery"
 }

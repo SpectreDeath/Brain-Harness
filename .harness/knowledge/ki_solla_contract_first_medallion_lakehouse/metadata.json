@@ -12,11 +12,41 @@
     "solla",
     "dmbok"
   ],
-  "source_repo": "From Data to Value: Understanding Data Management Through a Real World Use Case (Daniel García Solla, freeCodeCamp)",
+  "source_repo": "From Data to Value: Understanding Data Management Through a Real World Use Case (Daniel Garc\u00eda Solla, freeCodeCamp)",
   "provenance": [
     "Section: Data Architecture & Data Engineering",
     "https://www.freecodecamp.org/news/understanding-data-management-with-a-real-world-use-case-book/#heading-data-contracts",
     "Bitol Open Data Contract Standard (ODCS v3.1)"
   ],
-  "created_at": "2026-09-06T18:40:00Z"
+  "created_at": "2026-09-06T18:40:00Z",
+  "schema_version": "1.0.0",
+  "source_target": "From Data to Value: Understanding Data Management Through a Real World Use Case (Daniel Garc\u00eda Solla, freeCodeCamp)",
+  "detected_format": "raw_docs",
+  "anchors": {},
+  "edges": [
+    {
+      "type": "same_domain",
+      "target": "ki_solla_dikw_data_asset_continuum",
+      "target_kind": "ki",
+      "derived": true,
+      "confidence": 0.8,
+      "description": null
+    },
+    {
+      "type": "same_domain",
+      "target": "ki_solla_dmbok_governance_decision_rights",
+      "target_kind": "ki",
+      "derived": true,
+      "confidence": 0.8,
+      "description": null
+    }
+  ],
+  "isnad": {},
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "distilled_learning": "# Open Data Contracts and Contract-First Medallion Lakehouse Engineering"
 }

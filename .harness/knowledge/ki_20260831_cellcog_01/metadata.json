@@ -6,6 +6,7 @@
   "timestamp": "2026-08-31T11:00:00Z",
   "isnad": {
     "decision_id": "dec_20260831_cellcog_01",
+    "timestamp": "2026-10-30T18:40:39.119148+00:00",
     "claims": [
       {
         "assertion": "SDK clients should launch an isolated background daemon (cellcog-daemon) that monitors asynchronous jobs via WebSockets with fallback polling, auto-terminating cleanly when 0 active chats remain to eliminate idle process footprint.",
@@ -41,5 +42,33 @@
     "repo_introspection"
   ],
   "context": "Zero-Footprint Asynchronous Daemon & WebSocket-to-Polling State Machine",
-  "distilled_learning": "# KI: Zero-Footprint Asynchronous Daemon & WebSocket-to-Polling State Machine\n\n## Operational Summary\nAsynchronous sub-agent operations requiring minutes or hours of cloud processing should not hold blocking client SDK sockets or maintain permanent host daemon processes. By separating the client interface from a transient background daemon that auto-terminates on empty queues, agent harnesses achieve non-blocking fire-and-forget concurrency without persistent memory leaks."
+  "distilled_learning": "# KI: Zero-Footprint Asynchronous Daemon & WebSocket-to-Polling State Machine",
+  "schema_version": "1.0.0",
+  "category": "developer_experience",
+  "anchors": {},
+  "edges": [
+    {
+      "type": "same_domain",
+      "target": "ki_20260831_cellcog_03",
+      "target_kind": "ki",
+      "derived": true,
+      "confidence": 0.8,
+      "description": null
+    },
+    {
+      "type": "same_domain",
+      "target": "ki_20260831_cellcog_04",
+      "target_kind": "ki",
+      "derived": true,
+      "confidence": 0.8,
+      "description": null
+    }
+  ],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-08-31T11:00:00Z"
 }

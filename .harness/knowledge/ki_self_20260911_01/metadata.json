@@ -1,7 +1,7 @@
 {
   "id": "ki_self_20260911_01",
   "title": "Dual-Kernel Micro-Kernel Seam Elevation & O(1) Binary Byte-Offset Seek Slicing",
-  "category": "architecture_and_performance",
+  "category": "developer_experience/architecture",
   "created_at": "2026-09-11T21:55:00Z",
   "author": "Brain Harness Reflector",
   "tags": [
@@ -26,5 +26,25 @@
         "verified": true
       }
     ]
-  }
+  },
+  "schema_version": "1.0.0",
+  "source_target": "",
+  "detected_format": "raw_docs",
+  "anchors": {},
+  "edges": [
+    {
+      "type": "same_domain",
+      "target": "ki_self_20260914_01",
+      "target_kind": "ki",
+      "derived": true,
+      "confidence": 0.8,
+      "description": null
+    }
+  ],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "distilled_learning": "# Dual-Kernel Micro-Kernel Seam Elevation & O(1) Binary Byte-Offset Seek Slicing"
 }

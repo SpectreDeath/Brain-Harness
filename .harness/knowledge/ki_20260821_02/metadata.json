@@ -7,7 +7,24 @@
     "primary_source": "4fcad908-fa51-4c99-add7-f65810123566.system_generated/logs/transcript.jsonl#L89",
     "verified": true
   },
-  "tags": ["debugging", "transcripts", "ci_cd", "agent_trajectories"],
+  "tags": [
+    "debugging",
+    "transcripts",
+    "ci_cd",
+    "agent_trajectories"
+  ],
   "context": "Multiple sessions show CI failures being diagnosed by querying transcript tool-call sequences rather than re-running commands.",
-  "distilled_learning": "When a build fails, inspect the agent's prior tool trajectories first—the failed command, the error output, and the recovery path are already encoded in the transcript JSONL."
+  "distilled_learning": "# Transcript-Trajectory Debugging Pattern",
+  "schema_version": "1.0.0",
+  "category": "agent_orchestration",
+  "source_target": "C:/Users/spectre/.gemini/antigravity-ide/brain",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-08-21T00:00:00Z"
 }

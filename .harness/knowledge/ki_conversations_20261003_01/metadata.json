@@ -13,10 +13,10 @@
     "epistemics"
   ],
   "context": "Autonomous coding agent sessions produce rich, high-volume execution histories across two decoupled stores: an append-only JSONL event stream in brain/<cid>/transcript.jsonl and a relational SQLite database in conversations/<cid>.db. Concurrently, IDE worker proactors maintain live WAL locks on active session databases. Mining these multi-gigabyte corpora for architectural friction, error clusters, and proven invariants risks lock starvation, file corruption, and memory exhaustion if opened in default read-write mode or scanned via full-corpus string iteration.",
-  "distilled_learning": "Autobiographical trajectory mining must enforce three non-negotiable architectural invariants: (1) Proactor-Safe Read-Only Handshake via SQLite URI mode ('file:<path>?mode=ro', Rule 22) to prevent lock contention with active IDE worker processes; (2) Binary Byte-Offset Seek Tables scanned once in binary mode ('rb') to map step indices to byte ranges, enabling O(1) random retrieval across multi-megabyte JSONL streams without loading entire files into memory (Rule 48); and (3) Relational Fallback to conversations/<cid>.db when brain/<cid>/ artifact directories encounter IDE system protection boundaries or permission restrictions (Rule 46).",
+  "distilled_learning": "# Multi-Store Autobiographical Trajectory Mining with Proactor-Safe Read-Only Handshake",
   "isnad": {
     "decision_id": "dec_20261003_conv_01",
-    "status": "VERIFIED",
+    "timestamp": "2026-10-30T18:40:40.483949+00:00",
     "claims": [
       {
         "assertion": "Connecting to active SQLite WAL databases using URI read-only mode ('file:<path>?mode=ro') prevents proactor lock contention and eliminates database corruption risks during concurrent session execution.",
@@ -63,8 +63,17 @@
           }
         ]
       }
-    ]
+    ],
+    "status": "VERIFIED"
   },
   "retrieval_count": 2,
-  "last_retrieved_at": "2026-10-26T19:42:44.003014+00:00"
+  "last_retrieved_at": "2026-10-26T19:42:44.003014+00:00",
+  "schema_version": "1.0.0",
+  "source_target": "",
+  "detected_format": "raw_docs",
+  "anchors": {},
+  "edges": [],
+  "success_count": 0,
+  "status": "ACTIVE",
+  "superseded_by": null
 }

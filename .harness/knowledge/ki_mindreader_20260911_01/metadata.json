@@ -1,7 +1,7 @@
 {
   "id": "ki_mindreader_20260911_01",
   "title": "Dual-Store Autobiographical Memory Federation & Anti-Contention SQLite Protocol",
-  "category": "memory_and_introspection",
+  "category": "memory_and_epistemics/reflection",
   "created_at": "2026-09-11T22:10:16.384832+00:00",
   "author": "Brain Harness Mind Reader",
   "source_target": "C:/Users/spectre/.gemini/antigravity-ide/conversations",
@@ -16,7 +16,6 @@
   "isnad": {
     "decision_id": "dec_mindreader_20260911_01",
     "timestamp": "2026-09-11T22:10:16.384850+00:00",
-    "status": "VERIFIED",
     "claims": [
       {
         "assertion": "Connecting to historical agent SQLite databases via read-only URI mode (file:...?mode=ro) prevents lock contention with active worker proactors while providing full multi-axis visibility.",
@@ -47,6 +46,16 @@
         ],
         "verified": true
       }
-    ]
-  }
+    ],
+    "status": "VERIFIED"
+  },
+  "schema_version": "1.0.0",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "distilled_learning": "# Dual-Store Autobiographical Memory Federation & Anti-Contention SQLite Protocol"
 }

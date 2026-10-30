@@ -3,7 +3,11 @@
   "title": "Plugin Module Singleton & IoC Container Dynamic Loader Invariant",
   "created_at": "2026-09-09T21:40:00Z",
   "source": "harness-reflector",
-  "isnad": "Session 2a0477d5 architecture deepening cycle 2026-09-09; Discovery audit across 11 plugins revealing detached entrypoint functions in evaluator_critic, agent_debater, and missing singletons; Codified as AGENTS.md Rule 45; harness-reflection-20260909-173500.html Axis 4",
+  "isnad": {
+    "status": "VERIFIED",
+    "notes": "Session 2a0477d5 architecture deepening cycle 2026-09-09; Discovery audit across 11 plugins revealing detached entrypoint functions in evaluator_critic, agent_debater, and missing singletons; Codified as AGENTS.md Rule 45; harness-reflection-20260909-173500.html Axis 4",
+    "claims": []
+  },
   "tags": [
     "ioc_container",
     "plugin_loader",
@@ -20,5 +24,43 @@
     "plugins/agent_orchestration/google_adk_runtime/main.py"
   ],
   "vault_version": "1.0",
-  "reflection_brief": "harness-reflection-20260909-173500.html"
+  "reflection_brief": "harness-reflection-20260909-173500.html",
+  "schema_version": "1.0.0",
+  "category": "agent_orchestration",
+  "source_target": "harness-reflector",
+  "detected_format": "raw_docs",
+  "anchors": {},
+  "edges": [
+    {
+      "type": "references_code",
+      "target": "src/harness/plugins/loader.py",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    },
+    {
+      "type": "references_code",
+      "target": "plugins/agent_orchestration/critic_loop/main.py",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    },
+    {
+      "type": "references_code",
+      "target": "plugins/agent_orchestration/google_adk_runtime/main.py",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    }
+  ],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "distilled_learning": "## Plugin Module Singleton & IoC Container Dynamic Loader Invariant"
 }

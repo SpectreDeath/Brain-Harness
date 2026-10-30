@@ -185,4 +185,42 @@ export const api = {
     const res = await fetch(`${API_BASE}/skills/${encodeURIComponent(skillName)}/topology`);
     return res.json();
   },
+
+  async getKnowledgeGraph(params?: {
+    includeDerived?: boolean;
+    domain?: string;
+    nodes?: string;
+  }): Promise<any> {
+    const query = new URLSearchParams();
+    if (params?.includeDerived !== undefined) query.set('include_derived', String(params.includeDerived));
+    if (params?.domain) query.set('domain', params.domain);
+    if (params?.nodes) query.set('nodes', params.nodes);
+    const qs = query.toString();
+    const res = await fetch(`${API_BASE}/knowledge/graph${qs ? `?${qs}` : ''}`);
+    return res.json();
+  },
+
+  async getKnowledgeContradictions(): Promise<any> {
+    const res = await fetch(`${API_BASE}/knowledge/contradictions`);
+    return res.json();
+  },
+
+  async resolveKnowledgeContradiction(params: {
+    kiA: string;
+    kiB: string;
+    action: string;
+    reason?: string;
+  }): Promise<any> {
+    const res = await fetch(`${API_BASE}/knowledge/contradictions/resolve`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        ki_a: params.kiA,
+        ki_b: params.kiB,
+        action: params.action,
+        reason: params.reason || '',
+      }),
+    });
+    return res.json();
+  },
 };

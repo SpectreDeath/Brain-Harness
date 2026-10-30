@@ -1,7 +1,7 @@
 {
   "id": "ki_hf_fastmcp_dynamic_tool_protocol",
   "title": "FastMCP Universal Adapter Pattern & JSON-RPC Client-Server Transport Seams",
-  "category": "integration_and_io",
+  "category": "infrastructure_and_runtime/integration",
   "tags": [
     "mcp",
     "fastmcp",
@@ -18,5 +18,18 @@
     "D:/GitHub/cloned/context-course/units/en/unit2/building-servers.mdx#L1-L90",
     "D:/GitHub/cloned/context-course/units/en/unit2/gradio-mcp.mdx#L1-L85"
   ],
-  "created_at": "2026-09-21T18:00:00Z"
+  "created_at": "2026-09-21T18:00:00Z",
+  "schema_version": "1.0.0",
+  "source_target": "huggingface/context-course",
+  "detected_format": "raw_docs",
+  "anchors": {},
+  "edges": [],
+  "isnad": {},
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "distilled_learning": "# FastMCP Universal Adapter Pattern & JSON-RPC Client-Server Transport Seams"
 }

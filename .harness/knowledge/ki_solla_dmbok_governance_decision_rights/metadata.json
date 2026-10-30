@@ -12,11 +12,24 @@
     "solla",
     "dmbok"
   ],
-  "source_repo": "From Data to Value: Understanding Data Management Through a Real World Use Case (Daniel García Solla, freeCodeCamp)",
+  "source_repo": "From Data to Value: Understanding Data Management Through a Real World Use Case (Daniel Garc\u00eda Solla, freeCodeCamp)",
   "provenance": [
     "Section: Data Governance & Data Security and Privacy",
     "https://www.freecodecamp.org/news/understanding-data-management-with-a-real-world-use-case-book/#heading-data-governance",
     "DAMA-DMBOK Chapter 3: Data Governance"
   ],
-  "created_at": "2026-09-06T18:40:00Z"
+  "created_at": "2026-09-06T18:40:00Z",
+  "schema_version": "1.0.0",
+  "source_target": "From Data to Value: Understanding Data Management Through a Real World Use Case (Daniel Garc\u00eda Solla, freeCodeCamp)",
+  "detected_format": "raw_docs",
+  "anchors": {},
+  "edges": [],
+  "isnad": {},
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "distilled_learning": "# Data Governance, Stewardship Roles, and RACI Decision Rights"
 }

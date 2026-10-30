@@ -14,5 +14,18 @@
     "Chapter 1.6: The Five Canonical Failure Modes",
     "Chapter 15: Patterns of Failure and Their Antidotes"
   ],
-  "created_at": "2026-09-06T14:15:00Z"
+  "created_at": "2026-09-06T14:15:00Z",
+  "schema_version": "1.0.0",
+  "source_target": "The AI Agent Engineer's Guide: 60 Patterns for Building Autonomous Systems (Vahe Aslanyan, LUNARTECH)",
+  "detected_format": "raw_docs",
+  "anchors": {},
+  "edges": [],
+  "isnad": {},
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "distilled_learning": "# The Five Canonical Agent Failure Modes & Architectural Antidotes"
 }

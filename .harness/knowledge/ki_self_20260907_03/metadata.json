@@ -1,7 +1,7 @@
 {
   "id": "ki_self_20260907_03",
   "title": "Click CLI Group Single-Source Co-Registration Invariant",
-  "category": "cli_architecture",
+  "category": "developer_experience/architecture",
   "tags": [
     "endogenous_memory",
     "self_reflection",
@@ -30,5 +30,14 @@
     "verification_status": "empirically_verified"
   },
   "created_at": "2026-09-07T10:20:00Z",
-  "distilled_learning": "Click CLI Group Single-Source Co-Registration Invariant"
+  "distilled_learning": "# Click CLI Group Single-Source Co-Registration Invariant",
+  "schema_version": "1.0.0",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null
 }

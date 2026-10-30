@@ -4,7 +4,7 @@
   "source_uri": "D:\\GitHub\\cloned\\rea-main",
   "source_commit": "34563fcc9",
   "created_at": "2026-10-23T16:20:00Z",
-  "category": "reverse-engineering / il2cpp-forensics",
+  "category": "security_and_forensics",
   "claims": [
     {
       "claim_id": "claim_001",
@@ -14,5 +14,34 @@
       "source_lines": "L1-L60"
     }
   ],
-  "tags": ["reverse-engineering", "unity", "il2cpp", "binary-headers", "metadata"]
+  "tags": [
+    "reverse-engineering",
+    "unity",
+    "il2cpp",
+    "binary-headers",
+    "metadata"
+  ],
+  "schema_version": "1.0.0",
+  "source_target": "D:\\GitHub\\cloned\\rea-main",
+  "detected_format": "raw_docs",
+  "anchors": {},
+  "edges": [],
+  "isnad": {
+    "claims": [
+      {
+        "claim_id": "claim_001",
+        "assertion": "Binary parsers for Unity IL2CPP global-metadata.dat must assert little-endian magic 0xfab11baf and dynamically adjust section descriptor offsets across metadata versions 24, 27, 29, 31, and 39.",
+        "evidence_quote": "export const IL2CPP_METADATA_MAGIC = 0xfab11baf; ... Header section order shared by global-metadata.dat versions 29, 31 and 39.",
+        "source_file": "src/domain/il2cpp/il2cppMetadata.ts",
+        "source_lines": "L1-L60"
+      }
+    ]
+  },
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "distilled_learning": "# Multi-Version Magic Header Parsing & Section Map Validation for Unity IL2CPP"
 }

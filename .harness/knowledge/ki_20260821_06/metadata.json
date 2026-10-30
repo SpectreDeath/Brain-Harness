@@ -1,13 +1,64 @@
 {
   "id": "ki_20260821_06",
-  "title": "Verification Standard — Isolated Plugin Sandboxing",
+  "title": "Verification Standard \u2014 Isolated Plugin Sandboxing",
   "source_brain": "C:/Users/spectre/.gemini/antigravity-ide/brain",
   "detected_format": "antigravity_brain",
   "isnad": {
     "primary_source": "df403b28-75e0-43d6-a678-3d15ad63e3bc.system_generated/logs/transcript_full.jsonl#L49",
     "verified": true
   },
-  "tags": ["plugin_system", "sandbox", "isolation", "security", "trust_boundary"],
+  "tags": [
+    "plugin_system",
+    "sandbox",
+    "isolation",
+    "security",
+    "trust_boundary"
+  ],
   "context": "AGENTS.md and plugin.json consistently enforce subprocess isolation for untrusted plugins and in_process only for trusted ones.",
-  "distilled_learning": "Plugin trust boundaries should be declared in plugin.json isolation and trusted fields, not inferred at runtime; this prevents accidental execution of external code in the kernel process."
+  "distilled_learning": "# Verification Standard \u2014 Isolated Plugin Sandboxing",
+  "schema_version": "1.0.0",
+  "category": "security_and_forensics",
+  "source_target": "C:/Users/spectre/.gemini/antigravity-ide/brain",
+  "anchors": {},
+  "edges": [
+    {
+      "type": "same_domain",
+      "target": "ki_20260823_01",
+      "target_kind": "ki",
+      "derived": true,
+      "confidence": 0.8,
+      "description": null
+    },
+    {
+      "type": "same_domain",
+      "target": "ki_20260830_grok_03",
+      "target_kind": "ki",
+      "derived": true,
+      "confidence": 0.8,
+      "description": null
+    },
+    {
+      "type": "same_domain",
+      "target": "ki_20260830_grok_04",
+      "target_kind": "ki",
+      "derived": true,
+      "confidence": 0.8,
+      "description": null
+    },
+    {
+      "type": "same_domain",
+      "target": "ki_20260913_tool_approval_03",
+      "target_kind": "ki",
+      "derived": true,
+      "confidence": 0.8,
+      "description": null
+    }
+  ],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "created_at": "2026-08-21T00:00:00Z"
 }

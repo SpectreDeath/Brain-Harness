@@ -73,5 +73,41 @@
         "verified": true
       }
     ]
-  }
+  },
+  "schema_version": "1.0.0",
+  "source_target": "https://www.freecodecamp.org/news/catch-security-vulnerabilities-code-pull-requests/",
+  "detected_format": "raw_docs",
+  "anchors": {},
+  "edges": [
+    {
+      "type": "became_skill",
+      "target": "pre-commit-security-guard",
+      "target_kind": "skill",
+      "derived": false,
+      "confidence": 1.0,
+      "description": null
+    },
+    {
+      "type": "references_code",
+      "target": "src/harness/services/pre_commit_security_guard.py",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    },
+    {
+      "type": "references_code",
+      "target": "plugins/security_and_forensics/pre_commit_security_guard/main.py",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    }
+  ],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "distilled_learning": "# Knowledge Item: Shift-Left Pre-Commit Security & Dual-Gate Defense"
 }
