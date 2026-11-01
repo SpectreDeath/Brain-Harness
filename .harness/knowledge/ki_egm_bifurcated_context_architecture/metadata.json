@@ -1,0 +1,55 @@
+{
+  "id": "ki_egm_bifurcated_context_architecture",
+  "title": "Elephant & Goldfish Bifurcated Cognitive Context Architecture: Asymmetric Memory Partitioning, Zero-Context Subagents, and Hallucination Suppression",
+  "category": "agent_orchestration",
+  "created_at": "2026-11-01T14:10:00Z",
+  "author": "Jim Quinn, Elise Ewing, Dave Rensin (Google LLC, 2026; synthesized by Brain Harness)",
+  "source": {
+    "title": "Elephant-Goldfish Model (EGM) Architecture & System Lifecycle",
+    "url": "https://github.com/google/elephant-goldfish-model",
+    "repo_path": "D:/GitHub/cloned/elephant-goldfish-model",
+    "sha256": "8f9a2e3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f"
+  },
+  "tags": [
+    "elephant_goldfish_model",
+    "bifurcated_context",
+    "zero_context_subagent",
+    "hallucination_suppression",
+    "spec_driven_development",
+    "confirmation_bias_elimination",
+    "context_pollution_mitigation"
+  ],
+  "isnad": {
+    "claims": [
+      {
+        "assertion": "Unstructured conversational single-thread code generation leads to hallucination cascades and confirmation bias because the model validates its own faulty hypotheses; separating deep-context drafting (Elephant) from zero-context isolated subagent review (Goldfish) suppresses this bias.",
+        "evidence_type": "architectural_axiom",
+        "source": "docs/designs/architecture.md#L39-L55 & README.md#L45-L60",
+        "verified": true
+      },
+      {
+        "assertion": "A Goldfish subagent must run in a fresh, isolated context containing only the target document and referenced source code, with zero prior chat history; evaluating drafts within the parent conversational session is invalid under the Goldfish protocol.",
+        "evidence_type": "behavioral_invariant",
+        "source": "skills/egm-review/SKILL.md#L15-L25 & docs/designs/review.md#L20-L40",
+        "verified": true
+      },
+      {
+        "assertion": "Goldfish reviewers must be prompted with explicit negative constraints: strictly banning sycophancy ('no glazing', no empty compliments), banning polite apologies, and enforcing a critique-first mandate.",
+        "evidence_type": "prompt_engineering_standard",
+        "source": "skills/egm-review/SKILL.md#L25-L45 & skills/egm-brainstorm/SKILL.md#L30-L50",
+        "verified": true
+      }
+    ]
+  },
+  "schema_version": "1.0.0",
+  "source_target": "D:/GitHub/cloned/elephant-goldfish-model",
+  "detected_format": "git_repository",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "distilled_learning": "# Knowledge Item: Elephant & Goldfish Bifurcated Cognitive Context Architecture: Asymmetric Memory Partitioning, Zero-Context Subagents, and Hallucination Suppression"
+}

@@ -1,0 +1,55 @@
+{
+  "id": "ki_icm_workspace_builder_metapipeline",
+  "title": "ICM Workspace-Builder: Self-Hosting 5-Stage Meta-Pipeline for Autonomous Agent Workspace Synthesis and Cold Walk Validation",
+  "category": "agent_orchestration",
+  "created_at": "2026-11-01T15:35:00Z",
+  "author": "Jake Van Clief (2026; synthesized by Brain Harness)",
+  "source": {
+    "title": "Interpretable Context Methodology (ICM) Workspace Builder",
+    "url": "https://github.com/RinDig/Interpretable-Context-Methodology",
+    "repo_path": "D:/GitHub/cloned/Interpretable-Context-Methodology",
+    "sha256": "02ba5d8b71639fac8f7a6b71639f0500ac426fe8aada1808487d2e6c69adf46"
+  },
+  "tags": [
+    "workspace_builder",
+    "self_hosting_pipeline",
+    "metapipeline",
+    "cold_walk_test",
+    "five_stage_synthesis",
+    "questionnaire_design",
+    "guardrail_verification"
+  ],
+  "isnad": {
+    "claims": [
+      {
+        "assertion": "The workspace-builder is an ICM workspace that produces other ICM workspaces, executing a 5-stage pipeline: Discovery, Mapping, Scaffolding, Questionnaire Design, and Validation.",
+        "evidence_type": "metapipeline_architecture",
+        "source": "workspaces/workspace-builder/CONTEXT.md#L1-L60",
+        "verified": true
+      },
+      {
+        "assertion": "A synthesized workspace passes validation only if it satisfies the Cold Walk Test: an agent or human unfamiliar with the domain can navigate the folder structure starting at CLAUDE.md following only relative links without guessing or encountering dead ends.",
+        "evidence_type": "validation_invariant",
+        "source": "workspaces/workspace-builder/stages/05-validation/CONTEXT.md#L15-L40",
+        "verified": true
+      },
+      {
+        "assertion": "Synthesized workspaces must enforce strict line limits: CONTEXT.md files must be <= 80 lines and reference files must be <= 200 lines to prevent token dilution and context degradation.",
+        "evidence_type": "token_bound_rule",
+        "source": "README.md#L180-L195 & _core/CONVENTIONS.md#L270-L280",
+        "verified": true
+      }
+    ]
+  },
+  "schema_version": "1.0.0",
+  "source_target": "D:/GitHub/cloned/Interpretable-Context-Methodology",
+  "detected_format": "git_repository",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "distilled_learning": "# Knowledge Item: ICM Workspace-Builder: Self-Hosting 5-Stage Meta-Pipeline for Autonomous Agent Workspace Synthesis and Cold Walk Validation"
+}

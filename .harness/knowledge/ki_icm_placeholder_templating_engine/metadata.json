@@ -1,0 +1,55 @@
+{
+  "id": "ki_icm_placeholder_templating_engine",
+  "title": "ICM Factory-Configuration Templating: Double-Brace Placeholders, Whole-Section Conditionals, and Questionnaire Onboarding",
+  "category": "context_engineering/templates",
+  "created_at": "2026-11-01T15:35:00Z",
+  "author": "Jake Van Clief (2026; synthesized by Brain Harness)",
+  "source": {
+    "title": "Interpretable Context Methodology (ICM) Placeholder Syntax",
+    "url": "https://github.com/RinDig/Interpretable-Context-Methodology",
+    "repo_path": "D:/GitHub/cloned/Interpretable-Context-Methodology",
+    "sha256": "02ba5d8b71639fac8f7a6b71639f0500ac426fe8aada1808487d2e6c69adf46"
+  },
+  "tags": [
+    "icm_templating",
+    "placeholder_syntax",
+    "screaming_snake_case",
+    "conditional_sections",
+    "factory_not_product",
+    "onboarding_questionnaire",
+    "whole_section_boundary"
+  ],
+  "isnad": {
+    "claims": [
+      {
+        "assertion": "Workspace templates configure the factory rather than the product; double-brace SCREAMING_SNAKE_CASE placeholders ({{VARIABLE}}) populate persistent brand, identity, and design system rules once during setup.",
+        "evidence_type": "templating_axiom",
+        "source": "_core/placeholder-syntax.md#L1-L25 & README.md#L80-L95",
+        "verified": true
+      },
+      {
+        "assertion": "Conditional template sections ({{?SECTION}}...{{/SECTION}}) must wrap strictly whole markdown sections from heading to next heading; inline or intra-sentence conditional blocks are prohibited because removal produces broken markdown and orphaned list tokens.",
+        "evidence_type": "syntax_standard",
+        "source": "_core/placeholder-syntax.md#L45-L85",
+        "verified": true
+      },
+      {
+        "assertion": "Placeholders are forbidden from appearing in Layer 0 (CLAUDE.md) or Layer 1 (top-level CONTEXT.md) routing tables; routing must be functional before onboarding runs.",
+        "evidence_type": "placement_invariant",
+        "source": "_core/placeholder-syntax.md#L35-L50",
+        "verified": true
+      }
+    ]
+  },
+  "schema_version": "1.0.0",
+  "source_target": "D:/GitHub/cloned/Interpretable-Context-Methodology",
+  "detected_format": "git_repository",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "distilled_learning": "# Knowledge Item: ICM Factory-Configuration Templating: Double-Brace Placeholders, Whole-Section Conditionals, and Questionnaire Onboarding"
+}

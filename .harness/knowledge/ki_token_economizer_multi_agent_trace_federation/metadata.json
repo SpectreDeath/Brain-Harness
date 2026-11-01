@@ -1,0 +1,35 @@
+{
+  "id": "ki_token_economizer_multi_agent_trace_federation",
+  "title": "Standardized Multi-Harness Session Trajectory & Cost Ledger Federation",
+  "source_target": "D:\\GitHub\\cloned\\TokenEconomizer",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_ki_token_economizer_multi_agent_trace_federation",
+    "claims": [
+      {
+        "assertion": "Decoupling token optimization mechanisms from proprietary agent harnesses via standardized DomainAdapter, Stage lifecycle, and unified pricing ledgers enables universal cross-agent cost control.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "tokeneconomizer/trace/catalog.py#L1-L80",
+            "sha256_hash": "N/A",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "tokeneconomizer/ledger.py#L1-L60",
+            "sha256_hash": "N/A",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "trace_federation",
+    "domain_adapter",
+    "pricing_ledger",
+    "multi_agent"
+  ]
+}

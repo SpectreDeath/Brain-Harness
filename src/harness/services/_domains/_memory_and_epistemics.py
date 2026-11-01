@@ -191,3 +191,13 @@ from harness.services.headroom_optimizer import (
     SavingsLedger,
     ThinkingCompactResult,
 )
+
+from harness.services.token_economizer import (
+    TOKEN_ECONOMIZER_SERVICE_KEY,
+    MicroSkillFact,
+    TokenEconomizerService,
+    TokenLedgerMetrics,
+    ToolPrunePolicy,
+    TrajectoryTrace,
+    TurnGuardDecision,
+)

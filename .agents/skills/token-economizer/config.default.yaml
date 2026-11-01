@@ -1,0 +1,47 @@
+# TokenEconomizer default operational budgets and thresholds (Rule 44)
+version: "1.0.0"
+
+microskills:
+  k_promote: 3                # Confirmations across sessions required to promote CANDIDATE -> ACTIVE
+  gamma_decay: 0.8            # Recency decay factor per task-ago
+  lambda_contradiction: 5.0   # Asymmetric contradiction weight
+  score_floor: 0.0            # Retire fact when recency score drops below floor
+  hard_kill_high_stakes: true # Single clean contradiction immediately retires high-stakes fact
+  firing_gate: 0.40           # Only inject fact if firing rate on this repo >= 40%
+  firing_min_sessions: 4      # Minimum exercised sessions before gating
+
+toolprune:
+  evidence_sessions: 2        # Consecutive unused sessions required to propose pruning
+  evidence_prompts: 10        # Unused prompts required across evidence sessions
+  evidence_sessions_any: 5    # Sessions of any length if unused throughout
+  evidence_reaudit: 5         # Periodically re-audit and test restoring pruned tools
+  estimated_tokens_per_tool: 350 # Conservative JSONSchema tokens saved per pruned tool definition
+  protected_tools:
+    - read_file
+    - edit_file
+    - run_command
+    - write_file
+    - view_file
+    - bash
+    - exec
+
+loopguard:
+  level: default              # conservative | default | aggressive
+  min_turns: 20               # Minimum turns before heuristic judgment
+  gate_min_turns: 18          # Tier-0 free gate turn threshold
+  gate_error_outputs: 8       # Tier-0 free gate error threshold
+  edit_churn: 4               # Edits to one file indicating thrashing
+  distinct_edit_files: 3      # File scatter indicating unfocused thrashing
+  error_outputs: 6            # Sustained error returns in active turn
+  stagnation_ratio: 0.20      # Ratio of errors that are exact repeats of earlier errors
+  envelope_margin: 1.25       # Turn margin over resolved-task p90 envelope before nudge
+  envelope_pct: 90            # Percentile used for resolved task turn length
+  envelope_min_samples: 5     # Minimum samples required before envelope is trusted
+  backstop_multiplier: 2.5    # Hard backstop: abort regardless of judge verdict beyond 2.5x
+  judge_confidence: 0.70      # LLM judge confidence required to confirm stuck state
+
+ledger:
+  pricing_tier: standard      # standard | cost_effective | high_performance
+  input_token_cost_per_m: 3.0 # Standard USD per 1M input tokens
+  output_token_cost_per_m: 15.0 # Standard USD per 1M output tokens
+

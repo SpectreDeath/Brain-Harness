@@ -19,7 +19,9 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - `context_course_bridge` — 6-layer context engineering stack auditor, FastMCP validator, subagent swarm planner, and sandboxed Nano Harness ReAct loop.
   - `tau_harness_bridge` — Pi-style minimalist coding agent harness bridge with branchable session tree DAGs, append-only locked JSONL journal, in-flight tool repair, and project-trust security gates.
   - `prompt_pruning_layer` — Deterministic 3-pass context optimization, whitespace deduplication, middle-out tool reduction, and tabular JSON truncation.
+  - `elephant_goldfish` — Bifurcated cognitive context spec drafting, 5-stage zero-context review pipeline, and AST codebase drift detection.
 - **Member Skills**:
+  - [`elephant-goldfish-governor`](.agents/skills/elephant-goldfish-governor/SKILL.md) — Govern AI agent design and review workflows using the Elephant-Goldfish bifurcated context architecture, artifact-first spec drafting, 5-stage antagonistic review gates, and living spec drift detection.
   - [`prompt-pruning-architect`](.agents/skills/prompt-pruning-architect/SKILL.md) — Architect, audit, and tune deterministic 3-pass context pruning (whitespace normalization, middle-out truncation, tabular compression).
   - [`context-engineering-architect`](.agents/skills/context-engineering-architect/SKILL.md) — Architect, audit, compose, and govern autonomous code agent context using the 6-layer stack (skills, FastMCP, plugins, subagents, hooks, nano harness) and path confinement.
   - [`pi-coding-harness`](.agents/skills/pi-coding-harness/SKILL.md) — Architect, construct, sandbox, and evaluate portable terminal coding agents using decoupled 3-tier layering, branchable session tree DAGs, append-only JSONL storage, provider-safe tool history repair, and project-trust security gates.
@@ -55,6 +57,7 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - `conversation_trajectory_miner` — Autobiographical trajectory archaeology, failure cluster detection, and dual-lens cognitive bifurcation.
   - `temp_artifact_miner` — Ephemeral workspace archaeology, HTML visual brief extraction, test sandbox triage, and dual-lens cognitive bifurcation.
   - `memory_decay_engine` — Ebbinghaus cognitive forgetting curve, turn-decay modeling, observation reinforcement, and probabilistic eviction.
+  - `token_economizer` — Experience-driven black-box cost control for coding agents with micro-skills lifecycle, dynamic tool pruning, and 3-tier failure-loop turn guard intervention.
 - **Member Skills**:
   - [`ebbinghaus-memory-governor`](.agents/skills/ebbinghaus-memory-governor/SKILL.md) — Govern agent episodic memory using Ebbinghaus decay curve, half-life retention modeling, and reinforcement scoring.
   - [`epistemic-isnad-audit`](.agents/skills/epistemic-isnad-audit/SKILL.md) — Unbroken chain-of-custody lineage verification for facts and decisions.
@@ -64,6 +67,7 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - [`epistemic-memory-lifecycle`](.agents/skills/epistemic-memory-lifecycle/SKILL.md) — Bounded 8-state knowledge item promotion pipeline, 6-class memory partitioning, and Theseus continuity audit.
   - [`okf-memory-governor`](.agents/skills/okf-memory-governor/SKILL.md) — Git-native OKF v0.2 agent memory governance, pre-edit path scoping, atomic mutations, and normative validation.
   - [`temp-artifact-miner`](.agents/skills/temp-artifact-miner/SKILL.md) — Ephemeral visual brief salvage, pytest sandbox triage, and Knowledge Vault cognitive bifurcation.
+  - [`token-economizer`](.agents/skills/token-economizer/SKILL.md) — Control coding agent token waste through experience-driven micro-skills lifecycle, empirical evidence-based tool pruning, and 3-tier failure-loop turn guard intervention.
 
 ### 3. [Data Engineering](./docs/domains/data-engineering/EXPLANATION.md)
 

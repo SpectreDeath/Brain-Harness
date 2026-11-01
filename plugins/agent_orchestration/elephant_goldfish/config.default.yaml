@@ -1,0 +1,14 @@
+# Default Plugin Configuration for plugin.elephant_goldfish
+version: "1.0.0"
+execution:
+  isolation: "subprocess"
+  timeout_seconds: 120
+  drain_pipes: true
+  max_retries: 3
+  model_reasoning_tier: "High"
+
+defaults:
+  default_stage: "all"
+  anti_sycophancy: true
+  chat_dumps_allowed: false
+

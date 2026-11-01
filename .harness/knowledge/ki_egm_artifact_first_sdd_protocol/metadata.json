@@ -1,0 +1,55 @@
+{
+  "id": "ki_egm_artifact_first_sdd_protocol",
+  "title": "Artifact-First Spec-Driven Development (SDD) & Altitude Boundary Protocol: Chat Dump Prohibition and Semantic Range Isolation",
+  "category": "software_engineering",
+  "created_at": "2026-11-01T14:10:00Z",
+  "author": "Jim Quinn, Elise Ewing, Dave Rensin (Google LLC, 2026; synthesized by Brain Harness)",
+  "source": {
+    "title": "Elephant-Goldfish Model (EGM) Architecture & System Lifecycle",
+    "url": "https://github.com/google/elephant-goldfish-model",
+    "repo_path": "D:/GitHub/cloned/elephant-goldfish-model",
+    "sha256": "8f9a2e3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f"
+  },
+  "tags": [
+    "spec_driven_development",
+    "artifact_first_ux",
+    "chat_dump_prohibition",
+    "semantic_boundary_isolation",
+    "altitude_control",
+    "anti_weeds",
+    "yagni_enforcement"
+  ],
+  "isnad": {
+    "claims": [
+      {
+        "assertion": "Dumping multi-page proposals, specs, or review findings directly into chat panes degrades LLM token context, causes conversational fatigue, and breaks reproducibility; all long-form assets must be emitted to dedicated workspace artifacts or files.",
+        "evidence_type": "ux_architecture_rule",
+        "source": "docs/designs/architecture.md#L115-L130 & skills/egm-review/SKILL.md#L20-L30",
+        "verified": true
+      },
+      {
+        "assertion": "Design specifications must strictly partition content into semantic altitude ranges: FeatureRange (high-level goals, architecture, YAGNI, alternatives) and DetailedRange (concrete file paths, function signatures, test scenarios, rollout phases).",
+        "evidence_type": "specification_taxonomy",
+        "source": "docs/designs/architecture.md#L80-L95 & resources/document_standards/zoom-out-standard.md#L30-L50",
+        "verified": true
+      },
+      {
+        "assertion": "Altitude violations must be audited separately: high-level architecture must not contain helper function implementations, and detailed implementation plans must not alter core system boundaries without upstream re-audit.",
+        "evidence_type": "quality_gate",
+        "source": "resources/document_standards/zoom-out-standard.md#L35-L48 & resources/document_standards/implementation-readiness-standard.md#L1-L40",
+        "verified": true
+      }
+    ]
+  },
+  "schema_version": "1.0.0",
+  "source_target": "D:/GitHub/cloned/elephant-goldfish-model",
+  "detected_format": "git_repository",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "distilled_learning": "# Knowledge Item: Artifact-First Spec-Driven Development (SDD) & Altitude Boundary Protocol: Chat Dump Prohibition and Semantic Range Isolation"
+}

@@ -1,0 +1,54 @@
+{
+  "id": "ki_egm_living_spec_drift_detection",
+  "title": "Living Specification Governance & Continuous Codebase Drift Detection: AST Differential Auditing across Implementations and Checked-In Specs",
+  "category": "software_engineering",
+  "created_at": "2026-11-01T14:10:00Z",
+  "author": "Jim Quinn, Elise Ewing, Dave Rensin (Google LLC, 2026; synthesized by Brain Harness)",
+  "source": {
+    "title": "Elephant-Goldfish Model (EGM) Architecture & System Lifecycle",
+    "url": "https://github.com/google/elephant-goldfish-model",
+    "repo_path": "D:/GitHub/cloned/elephant-goldfish-model",
+    "sha256": "8f9a2e3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f"
+  },
+  "tags": [
+    "living_specifications",
+    "drift_detection",
+    "ast_codebase_auditing",
+    "specification_governance",
+    "ground_truth_synchronization",
+    "drift_taxonomy"
+  ],
+  "isnad": {
+    "claims": [
+      {
+        "assertion": "Technical design specifications checked into source control (docs/designs/) must serve as living, verified contracts; periodic automated drift detection comparing specs to current source code prevents architectural rot.",
+        "evidence_type": "governance_standard",
+        "source": "docs/designs/architecture.md#L105-L115 & skills/egm-drift-report/SKILL.md#L1-L25",
+        "verified": true
+      },
+      {
+        "assertion": "Codebase drift must be categorized into four discrete divergence taxonomies: Missing Features (planned logic absent), Incomplete Models (missing fields in dataclasses/protos), Logic Shortcuts (hardcoded values replacing dynamic flows), and Architectural Divergence (unapproved patterns/libraries).",
+        "evidence_type": "drift_taxonomy",
+        "source": "skills/egm-drift-report/SKILL.md#L30-L55 & docs/designs/drift_report.md#L20-L50",
+        "verified": true
+      },
+      {
+        "assertion": "Drift reports must be differential and noise-free, reporting strictly divergences without reciting matching or conforming code, outputting 'No drift detected' when code perfectly satisfies specification.",
+        "evidence_type": "reporting_rule",
+        "source": "skills/egm-drift-report/SKILL.md#L45-L60",
+        "verified": true
+      }
+    ]
+  },
+  "schema_version": "1.0.0",
+  "source_target": "D:/GitHub/cloned/elephant-goldfish-model",
+  "detected_format": "git_repository",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "distilled_learning": "# Knowledge Item: Living Specification Governance & Continuous Codebase Drift Detection: AST Differential Auditing across Implementations and Checked-In Specs"
+}

@@ -1,0 +1,35 @@
+{
+  "id": "ki_token_economizer_microskills_lifecycle",
+  "title": "Experience-Driven Micro-Skills Lifecycle & Asymmetric Contradiction Eviction",
+  "source_target": "D:\\GitHub\\cloned\\TokenEconomizer",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_ki_token_economizer_microskills_lifecycle",
+    "claims": [
+      {
+        "assertion": "Candidate repository micro-skills require K=3 confirmations across distinct edited files, recency decay (gamma=0.8), asymmetric contradiction eviction (lambda=5.0), and a >=40% firing gate before prompt injection.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "tokeneconomizer/microskills/lifecycle.py#L1-L117",
+            "sha256_hash": "N/A",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "tokeneconomizer/microskills/envfacts.py#L1-L85",
+            "sha256_hash": "N/A",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "token_economy",
+    "micro_skills",
+    "context_optimization",
+    "cognitive_retention"
+  ]
+}

@@ -1,0 +1,138 @@
+{
+  "name": "plugin.token_economizer",
+  "version": "1.0.0",
+  "description": "Experience-driven black-box cost control for coding agents with micro-skills lifecycle, dynamic tool pruning, and 3-tier failure-loop turn guard intervention",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "category": "memory_and_epistemics",
+  "author": "Brain Harness Forge Engine",
+  "provides": [
+    "memory.token_economizer"
+  ],
+  "requires": [
+    "tools.registry"
+  ],
+  "entrypoints": [
+    {
+      "name": "te_record_micro_skill",
+      "description": "Record an observation of a repository micro-skill fact to update its lifecycle and firing gate",
+      "parameters": [
+        {
+          "name": "key",
+          "type": "string",
+          "description": "Unique identifier for the micro-skill fact (e.g. 'pytest_cmd')",
+          "required": true
+        },
+        {
+          "name": "success",
+          "type": "boolean",
+          "description": "Whether the fact was confirmed by successful execution or contradicted by failure",
+          "required": true
+        },
+        {
+          "name": "edited_files",
+          "type": "array",
+          "description": "List of files touched during this task to verify drift promotion",
+          "required": false
+        },
+        {
+          "name": "is_high_stakes",
+          "type": "boolean",
+          "description": "Whether this is a high-stakes fact retired immediately on a single clean contradiction",
+          "required": false
+        },
+        {
+          "name": "assertion",
+          "type": "string",
+          "description": "Human-readable description of the fact assertion",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "te_get_active_micro_skills",
+      "description": "Retrieve all active micro-skills that have passed confirmation and cleared the 40% firing gate",
+      "parameters": []
+    },
+    {
+      "name": "te_evaluate_tool_pruning",
+      "description": "Evaluate loaded tool definitions against session usage history and determine which tools to prune from prompt context",
+      "parameters": [
+        {
+          "name": "loaded_tools",
+          "type": "array",
+          "description": "List of tool names currently loaded by the agent",
+          "required": true
+        },
+        {
+          "name": "session_tool_history",
+          "type": "array",
+          "description": "Historical session tool usage dictionaries ({tool_name: count})",
+          "required": true
+        },
+        {
+          "name": "protected_tools",
+          "type": "array",
+          "description": "Optional additional tools that must never be pruned",
+          "required": false
+        },
+        {
+          "name": "inapplicable_tools",
+          "type": "array",
+          "description": "Tools that should be pruned by construction",
+          "required": false
+        },
+        {
+          "name": "evidence_sessions_threshold",
+          "type": "integer",
+          "description": "Number of consecutive unused sessions before pruning (default: 2)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "te_evaluate_turn_guard",
+      "description": "Evaluate ongoing turn trajectory against 3-tier failure-loop heuristics (edit churn, sustained errors, repeat stagnation, and envelope margin)",
+      "parameters": [
+        {
+          "name": "turn_history",
+          "type": "array",
+          "description": "List of step records in current turn ({tool, status, is_error, error_message, file_path})",
+          "required": true
+        },
+        {
+          "name": "envelope_turn_p90",
+          "type": "integer",
+          "description": "The p90 turn length of resolved tasks for this repository (default: 20)",
+          "required": false
+        },
+        {
+          "name": "envelope_margin",
+          "type": "number",
+          "description": "Margin multiplier over resolved envelope before intervening (default: 1.25)",
+          "required": false
+        },
+        {
+          "name": "level",
+          "type": "string",
+          "description": "Threshold tuning level: 'conservative', 'default', or 'aggressive'",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "te_get_token_ledger",
+      "description": "Retrieve cumulative token savings, net USD cost reduction, and intervention statistics",
+      "parameters": [
+        {
+          "name": "reset",
+          "type": "boolean",
+          "description": "Whether to reset metrics after retrieval",
+          "required": false
+        }
+      ]
+    }
+  ]
+}
+

@@ -1,0 +1,40 @@
+# Default Operational Configuration for elephant-goldfish-governor
+version: "1.0.0"
+execution_budgets:
+  review_timeout_seconds: 120
+  drift_timeout_seconds: 300
+  max_subagent_retries: 1
+  max_remediation_cycles: 3
+
+review_gates:
+  stages:
+    - name: "zoom_out_initial"
+      standard: "zoom-out-standard"
+      target_range: "FeatureRange"
+    - name: "comprehension"
+      standard: "none"
+      target_range: "FullDocument"
+    - name: "design_critic"
+      standard: "feature-spec-standard"
+      target_range: "FeatureRange"
+    - name: "zoom_out_intermediate"
+      standard: "zoom-out-standard"
+      target_range: "FeatureRange"
+    - name: "implementation_readiness"
+      standard: "implementation-readiness-standard"
+      target_range: "DetailedRange"
+
+drift_detection:
+  supported_extensions:
+    - ".py"
+    - ".ts"
+    - ".js"
+    - ".go"
+    - ".rs"
+    - ".cpp"
+  divergence_categories:
+    - "missing_features"
+    - "incomplete_models"
+    - "logic_shortcuts"
+    - "architectural_divergence"
+

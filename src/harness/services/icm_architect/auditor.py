@@ -69,32 +69,32 @@ class IcmAuditor:
 
         form_detected = self._detect_form(root_path)
 
-        # Invariant 2: Small, stable entry file (AGENTS.md <= 60 lines)
-        agents_file = root_path / "AGENTS.md"
-        if not agents_file.exists():
+        # Invariant 2: Small, stable entry file (AGENTS.md or CLAUDE.md <= 80 lines)
+        entry_file = root_path / "AGENTS.md" if (root_path / "AGENTS.md").exists() else root_path / "CLAUDE.md"
+        if not entry_file.exists():
             violations.append(
                 IcmInvariantViolation(
                     invariant_number=2,
                     name="Missing Root Entry File",
-                    description="Workspace must have an AGENTS.md entry file at the root (<60 lines).",
-                    path=str(agents_file),
+                    description="Workspace must have an AGENTS.md or CLAUDE.md entry file at the root (<80 lines).",
+                    path=str(entry_file),
                     severity="error",
                 )
             )
         else:
-            lines = agents_file.read_text(encoding="utf-8", errors="replace").splitlines()
-            if len(lines) > 60:
+            lines = entry_file.read_text(encoding="utf-8", errors="replace").splitlines()
+            if len(lines) > 80:
                 violations.append(
                     IcmInvariantViolation(
                         invariant_number=2,
                         name="Entry File Bloat",
-                        description=f"AGENTS.md has {len(lines)} lines; must stay under ~60 lines to serve purely as routing catalog.",
-                        path=str(agents_file),
+                        description=f"{entry_file.name} has {len(lines)} lines; must stay under ~80 lines to serve purely as routing catalog.",
+                        path=str(entry_file),
                         severity="warning",
                     )
                 )
 
-        # Invariant 4 & 6: Every working folder has a contract; every step ends at a check
+        # Invariant 4 & 6: Every working folder has a contract; every step ends at a check/audit
         stage_dir = root_path / "stages"
         estimated_step_tokens: dict[str, int] = {}
         if stage_dir.exists() and stage_dir.is_dir():
@@ -113,21 +113,48 @@ class IcmAuditor:
                         )
                     else:
                         text = contract.read_text(encoding="utf-8", errors="replace")
-                        if "## Check" not in text and "## check" not in text:
+                        text_lower = text.lower()
+                        has_check = any(h in text_lower for h in ("## check", "## audit", "## stage audit", "## checkpoints", "## verification"))
+                        if not has_check:
                             violations.append(
                                 IcmInvariantViolation(
                                     invariant_number=6,
                                     name="Stage Contract Missing Check",
-                                    description=f"Stage contract {contract.name} must declare a '## Check' section.",
+                                    description=f"Stage contract {contract.name} must declare a '## Check', '## Audit', or '## Checkpoints' section.",
                                     path=str(contract),
                                     severity="warning",
                                 )
                             )
+                        
+                        # Invariant: CONTEXT.md line count guardrail (Pattern Quality Guardrail: <= 80 lines)
+                        contract_lines = text.splitlines()
+                        if len(contract_lines) > 80:
+                            violations.append(
+                                IcmInvariantViolation(
+                                    invariant_number=4,
+                                    name="Stage Contract Line Bloat",
+                                    description=f"Stage contract {s.name}/CONTEXT.md has {len(contract_lines)} lines; must stay under <= 80 lines.",
+                                    path=str(contract),
+                                    severity="warning",
+                                )
+                            )
+
                         char_count = len(text)
                         ref_dir = s / "references"
                         if ref_dir.exists():
                             for rf in ref_dir.glob("*.md"):
                                 char_count += rf.stat().st_size
+                                rf_lines = len(rf.read_text(encoding="utf-8", errors="replace").splitlines())
+                                if rf_lines > 200:
+                                    violations.append(
+                                        IcmInvariantViolation(
+                                            invariant_number=5,
+                                            name="Reference File Line Bloat",
+                                            description=f"Reference file {rf.name} has {rf_lines} lines; must stay under <= 200 lines.",
+                                            path=str(rf),
+                                            severity="warning",
+                                        )
+                                    )
                         est_tokens = char_count // 4
                         estimated_step_tokens[s.name] = est_tokens
                         if est_tokens > 8000:

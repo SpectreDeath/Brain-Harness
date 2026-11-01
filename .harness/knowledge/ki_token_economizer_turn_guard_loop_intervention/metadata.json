@@ -1,0 +1,35 @@
+{
+  "id": "ki_token_economizer_turn_guard_loop_intervention",
+  "title": "3-Tier Failure-Loop Intervention & Conjunction Gating",
+  "source_target": "D:\\GitHub\\cloned\\TokenEconomizer",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_ki_token_economizer_turn_guard_loop_intervention",
+    "claims": [
+      {
+        "assertion": "Runaway agent context blowout from repetitive failure loops can be arrested using a 3-tier cascade: cheap Tier-0 gate, strict conjunction heuristics (churn, scatter, sustained errors, stagnation), and non-destructive action mirroring.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "tokeneconomizer/loopguard/rules.py#L1-L110",
+            "sha256_hash": "N/A",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "tokeneconomizer/loopguard/turn.py#L1-L125",
+            "sha256_hash": "N/A",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "loop_guard",
+    "failure_intervention",
+    "agentic_reliability",
+    "circuit_breaker"
+  ]
+}

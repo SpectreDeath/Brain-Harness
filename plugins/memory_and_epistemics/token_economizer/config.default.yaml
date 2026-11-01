@@ -1,0 +1,34 @@
+# TokenEconomizer Plugin configuration
+version: "1.0.0"
+
+microskills:
+  k_promote: 3
+  gamma_decay: 0.8
+  lambda_contradiction: 5.0
+  score_floor: 0.0
+  hard_kill_high_stakes: true
+  firing_gate: 0.40
+  firing_min_sessions: 4
+
+toolprune:
+  evidence_sessions: 2
+  evidence_prompts: 10
+  evidence_sessions_any: 5
+  evidence_reaudit: 5
+  estimated_tokens_per_tool: 350
+
+loopguard:
+  level: default
+  min_turns: 20
+  gate_min_turns: 18
+  gate_error_outputs: 8
+  edit_churn: 4
+  distinct_edit_files: 3
+  error_outputs: 6
+  stagnation_ratio: 0.20
+  envelope_margin: 1.25
+  envelope_pct: 90
+  envelope_min_samples: 5
+  backstop_multiplier: 2.5
+  judge_confidence: 0.70
+

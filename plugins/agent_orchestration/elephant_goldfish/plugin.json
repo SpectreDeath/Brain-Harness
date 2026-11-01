@@ -1,0 +1,64 @@
+{
+  "name": "plugin.elephant_goldfish",
+  "version": "1.0.0",
+  "description": "Authoritative Elephant-Goldfish Model plugin: bifurcated cognitive context spec drafting, 5-stage zero-context review, and AST codebase drift detection",
+  "entrypoint": "main.py",
+  "isolation": "subprocess",
+  "trusted": false,
+  "category": "agent_orchestration",
+  "author": "Brain Harness Forge Engine",
+  "provides": [
+    "service.elephant_goldfish"
+  ],
+  "entrypoints": [
+    {
+      "name": "egm_extract_boundaries",
+      "description": "Extract semantic altitude ranges (FeatureRange vs DetailedRange) from spec document",
+      "parameters": [
+        {
+          "name": "content",
+          "type": "string",
+          "description": "Markdown specification text content",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "egm_review_spec",
+      "description": "Execute Goldfish multi-stage zero-context review and return consolidated report",
+      "parameters": [
+        {
+          "name": "target_file",
+          "type": "string",
+          "description": "Path to target specification file",
+          "required": true
+        },
+        {
+          "name": "stage",
+          "type": "string",
+          "description": "Optional stage name or preset (zoom_out, comprehension, critic, readiness, all)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "egm_detect_drift",
+      "description": "Detect implementation drift between living specification and live codebase files",
+      "parameters": [
+        {
+          "name": "spec_content",
+          "type": "string",
+          "description": "Living specification markdown text content",
+          "required": true
+        },
+        {
+          "name": "source_root",
+          "type": "string",
+          "description": "Path to target source code repository root",
+          "required": true
+        }
+      ]
+    }
+  ]
+}
+

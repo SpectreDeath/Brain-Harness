@@ -1,0 +1,67 @@
+{
+  "id": "ki_icm_fifteen_conventions",
+  "title": "The 15 MWP/ICM Workspace Architecture Conventions: Stage Contracts, Output Handoffs, One-Way Dependencies, Checkpoints, and Stage Audits",
+  "category": "context_engineering/architecture",
+  "created_at": "2026-11-01T15:35:00Z",
+  "author": "Jake Van Clief (2026; synthesized by Brain Harness)",
+  "source": {
+    "title": "Interpretable Context Methodology (ICM) Conventions",
+    "url": "https://github.com/RinDig/Interpretable-Context-Methodology",
+    "repo_path": "D:/GitHub/cloned/Interpretable-Context-Methodology",
+    "sha256": "02ba5d8b71639fac8f7a6b71639f0500ac426fe8aada1808487d2e6c69adf46"
+  },
+  "tags": [
+    "interpretable_context_methodology",
+    "fifteen_conventions",
+    "stage_contracts",
+    "stage_handoffs",
+    "one_way_references",
+    "selective_section_routing",
+    "canonical_sources",
+    "specs_as_contracts",
+    "checkpoints",
+    "stage_audits",
+    "value_validation",
+    "docs_over_outputs",
+    "shared_constants"
+  ],
+  "isnad": {
+    "claims": [
+      {
+        "assertion": "Every stage CONTEXT.md must adhere strictly to the 3-section stage contract: Inputs table (Source, File, Scope, Why), Process steps, and Outputs table (Artifact, Location, Format); deviations break autonomous agent execution.",
+        "evidence_type": "contract_standard",
+        "source": "_core/CONVENTIONS.md#L45-L75 & Pattern 1",
+        "verified": true
+      },
+      {
+        "assertion": "Inter-stage communication must occur solely through files in output/ subfolders (stages/0N-name/output/artifact.md) without stateful orchestrators, ensuring every intermediate deliverable is a human-editable surface.",
+        "evidence_type": "architectural_axiom",
+        "source": "_core/CONVENTIONS.md#L78-L105 & Pattern 2",
+        "verified": true
+      },
+      {
+        "assertion": "All directory and stage references must be strictly one-way (if A references B, B must never reference A); bidirectional dependencies cause exponential reference growth as workspaces scale.",
+        "evidence_type": "dependency_invariant",
+        "source": "_core/CONVENTIONS.md#L108-L130 & Pattern 3",
+        "verified": true
+      },
+      {
+        "assertion": "Reference docs in the factory are authoritative; agents are strictly forbidden from reading prior run outputs to learn patterns because early outputs are the lowest quality and poison future generations.",
+        "evidence_type": "quality_governance_rule",
+        "source": "_core/CONVENTIONS.md#L235-L255 & Pattern 14",
+        "verified": true
+      }
+    ]
+  },
+  "schema_version": "1.0.0",
+  "source_target": "D:/GitHub/cloned/Interpretable-Context-Methodology",
+  "detected_format": "git_repository",
+  "anchors": {},
+  "edges": [],
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "distilled_learning": "# Knowledge Item: The 15 MWP/ICM Workspace Architecture Conventions: Stage Contracts, Output Handoffs, One-Way Dependencies, Checkpoints, and Stage Audits"
+}

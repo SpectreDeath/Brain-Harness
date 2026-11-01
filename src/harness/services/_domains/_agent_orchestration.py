@@ -218,3 +218,13 @@ from harness.services.opencode_bridge import (
     resolve_opencode_bridge,
 )
 
+
+from harness.services.elephant_goldfish import (
+    DriftDivergenceData,
+    DriftReportData,
+    ELEPHANT_GOLDFISH_SERVICE_KEY,
+    ElephantGoldfishService,
+    GoldfishFindingData,
+    GoldfishReviewReportData,
+    SemanticBoundaryData,
+)
