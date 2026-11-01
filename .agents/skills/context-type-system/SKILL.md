@@ -111,6 +111,6 @@ harness context ledger --session my-run --json
 ## Related Skills & Docs
 
 - [Ebbinghaus Memory Governor](../ebbinghaus-memory-governor/SKILL.md)
-- [Learning Core Lifecycle Narrative](../../docs/explanation/learning-core-lifecycle.md)
-- [Context Command Reference](../../docs/reference/cli.md)
+- [Learning Core Lifecycle Narrative](../../../docs/explanation/learning-core-lifecycle.md)
+- [Context Command Reference](../../../docs/reference/cli.md)
 

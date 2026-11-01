@@ -27,7 +27,7 @@ The event subsystem provides real-time pub/sub telemetry and an unalterable flig
 1. **Persistent JSONL Append-Only Storage (`Rule 4`)**:
    - When configured with a log file path, events are serialized as JSON Lines using atomic append mode (`open(..., "a", encoding="utf-8")`).
    - The bus provides zero API methods to delete, mutate, or truncate persistent JSONL log records.
-   - Stream iterators (`EventBus.iter_log_file()`) parse events lazily line-by-line without loading entire files into memory.
+   - Stream iterators (`iter_log_file()`) parse events lazily line-by-line without loading entire files into memory.
 
 2. **In-Memory Ring Buffer vs. Disk Persistence**:
    - In-memory event history is buffered in an `EventLedger` bounded deque (default: 10,000 entries).

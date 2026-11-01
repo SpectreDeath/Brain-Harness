@@ -117,5 +117,5 @@ harness memory working-set --include-evicted
 
 - [Context Type System](../context-type-system/SKILL.md)
 - [OKF Memory Governor](../okf-memory-governor/SKILL.md)
-- [Learning Core Lifecycle Narrative](../../docs/explanation/learning-core-lifecycle.md)
-- [Memory Architecture Explanation](../../docs/explanation/memory-architecture.md)
+- [Learning Core Lifecycle Narrative](../../../docs/explanation/learning-core-lifecycle.md)
+- [Memory Architecture Explanation](../../../docs/explanation/memory-architecture.md)

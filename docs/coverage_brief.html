@@ -1,0 +1,4658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Documentation Coverage Brief & Scorecard</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>mermaid.initialize({ startOnLoad: true, theme: 'dark' });</script>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --card-bg: #161b22;
+      --border: #30363d;
+      --accent: #58a6ff;
+      --text: #c9d1d9;
+      --heading: #f0f6fc;
+      --success: #3fb950;
+      --danger: #f85149;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 24px;
+    }
+    .container { max-width: 1200px; margin: 0 auto; }
+    h1, h2, h3 { color: var(--heading); }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .badge-pass { background: rgba(63, 185, 80, 0.2); color: var(--success); border: 1px solid var(--success); }
+    .badge-fail { background: rgba(248, 81, 73, 0.2); color: var(--danger); border: 1px solid var(--danger); }
+    table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+    th, td { padding: 10px; text-align: left; border-bottom: 1px solid var(--border); font-size: 14px; }
+    th { color: var(--heading); background: rgba(255, 255, 255, 0.02); }
+    .mermaid { margin-top: 16px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Documentation Coverage Brief & Scorecard</h1>
+    <p>Generated at: <code>2026-11-01T15:47:15.973709+00:00</code> | Root: <code>D:/GitHub/projects/Brain Harness/src</code></p>
+
+    <div class="card">
+      <h2>Overall Coverage Score</h2>
+      <p>
+        <span class="badge badge-pass">
+          ✓ PASSED (83.0%)
+        </span>
+        Target Threshold: <strong>80.0%</strong>
+      </p>
+      <ul>
+        <li>Total Scanned Modules: <strong>647</strong></li>
+        <li>Modules with Docstrings: <strong>646</strong></li>
+        <li>Total Public Symbols: <strong>1851</strong></li>
+        <li>Documented Symbols: <strong>3118</strong></li>
+        <li>Missing or Stale Documentation: <strong>400</strong></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Module Documentation Topology</h2>
+      <div class="mermaid">
+graph TD
+    m_0["cli (100%)"]:::covered
+    m_1["__init__ (70%)"]:::missing
+    m_2["base (100%)"]:::covered
+    m_3["context_optimizer (70%)"]:::missing
+    m_4["__init__ (70%)"]:::missing
+    m_5["base (100%)"]:::covered
+    m_6["em_cubed (100%)"]:::covered
+    m_7["flywheel (100%)"]:::covered
+    m_8["locator (100%)"]:::covered
+    m_9["memtext (100%)"]:::covered
+    m_10["__init__ (70%)"]:::missing
+    m_11["agent (100%)"]:::covered
+    m_12["aliases (100%)"]:::covered
+    m_13["antigravity (100%)"]:::covered
+    m_14["bigquery (100%)"]:::covered
+    m_15["brain_miner (100%)"]:::covered
+    m_16["bridges (100%)"]:::covered
+    m_17["compass (100%)"]:::covered
+    m_18["compute (100%)"]:::covered
+    m_19["context (100%)"]:::covered
+    m_20["creator (100%)"]:::covered
+    m_21["datasets (100%)"]:::covered
+    m_22["doc (100%)"]:::covered
+    m_23["dock (100%)"]:::covered
+    m_24["doc_builder (100%)"]:::covered
+    m_25["events (100%)"]:::covered
+    m_26["facet (100%)"]:::covered
+    m_27["garf (100%)"]:::covered
+    m_28["gate (100%)"]:::covered
+    m_29["gemini_vercel (100%)"]:::covered
+    classDef covered fill:#238636,stroke:#2ea043,color:#fff;
+    classDef missing fill:#da3633,stroke:#f85149,color:#fff;
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Module Detail Breakdown</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Module</th>
+            <th>Docstring</th>
+            <th>Symbols</th>
+            <th>Dedicated Doc</th>
+            <th>Coverage</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>src/harness/cli.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><code>src/harness/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><code>src/harness/README.md</code></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/agent/base.py</code></td>
+            <td>✓ Yes</td>
+            <td>14 / 4</td>
+            <td><code>src/harness/agent/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/agent/context_optimizer.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><code>src/harness/agent/README.md</code></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/agent/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><code>src/harness/agent/README.md</code></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/bridges/base.py</code></td>
+            <td>✓ Yes</td>
+            <td>22 / 3</td>
+            <td><code>src/harness/bridges/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/bridges/em_cubed.py</code></td>
+            <td>✓ Yes</td>
+            <td>3 / 1</td>
+            <td><code>src/harness/bridges/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/bridges/flywheel.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 1</td>
+            <td><code>src/harness/bridges/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/bridges/locator.py</code></td>
+            <td>✓ Yes</td>
+            <td>10 / 2</td>
+            <td><code>src/harness/bridges/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/bridges/memtext.py</code></td>
+            <td>✓ Yes</td>
+            <td>6 / 3</td>
+            <td><code>src/harness/bridges/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/bridges/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><code>src/harness/bridges/README.md</code></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/agent.py</code></td>
+            <td>✓ Yes</td>
+            <td>4 / 4</td>
+            <td><code>src/harness/commands/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/aliases.py</code></td>
+            <td>✓ Yes</td>
+            <td>6 / 3</td>
+            <td><code>src/harness/commands/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/antigravity.py</code></td>
+            <td>✓ Yes</td>
+            <td>4 / 4</td>
+            <td><code>src/harness/commands/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/bigquery.py</code></td>
+            <td>✓ Yes</td>
+            <td>8 / 8</td>
+            <td><code>src/harness/commands/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/brain_miner.py</code></td>
+            <td>✓ Yes</td>
+            <td>5 / 5</td>
+            <td><code>src/harness/commands/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/bridges.py</code></td>
+            <td>✓ Yes</td>
+            <td>5 / 5</td>
+            <td><code>src/harness/commands/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/compass.py</code></td>
+            <td>✓ Yes</td>
+            <td>7 / 7</td>
+            <td><code>src/harness/commands/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/compute.py</code></td>
+            <td>✓ Yes</td>
+            <td>3 / 3</td>
+            <td><code>src/harness/commands/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/context.py</code></td>
+            <td>✓ Yes</td>
+            <td>21 / 21</td>
+            <td><code>src/harness/commands/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/creator.py</code></td>
+            <td>✓ Yes</td>
+            <td>11 / 11</td>
+            <td><code>src/harness/commands/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/datasets.py</code></td>
+            <td>✓ Yes</td>
+            <td>8 / 8</td>
+            <td><code>src/harness/commands/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/doc.py</code></td>
+            <td>✓ Yes</td>
+            <td>9 / 9</td>
+            <td><code>src/harness/commands/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/dock.py</code></td>
+            <td>✓ Yes</td>
+            <td>6 / 6</td>
+            <td><code>src/harness/commands/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/doc_builder.py</code></td>
+            <td>✓ Yes</td>
+            <td>12 / 12</td>
+            <td><code>src/harness/commands/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/events.py</code></td>
+            <td>✓ Yes</td>
+            <td>3 / 3</td>
+            <td><code>src/harness/commands/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/facet.py</code></td>
+            <td>✓ Yes</td>
+            <td>5 / 5</td>
+            <td><code>src/harness/commands/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/garf.py</code></td>
+            <td>✓ Yes</td>
+            <td>10 / 10</td>
+            <td><code>src/harness/commands/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/gate.py</code></td>
+            <td>✓ Yes</td>
+            <td>8 / 8</td>
+            <td><code>src/harness/commands/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/gemini_vercel.py</code></td>
+            <td>✓ Yes</td>
+            <td>6 / 6</td>
+            <td><code>src/harness/commands/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/gev.py</code></td>
+            <td>✓ Yes</td>
+            <td>8 / 8</td>
+            <td><code>src/harness/commands/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/gis.py</code></td>
+            <td>✓ Yes</td>
+            <td>5 / 5</td>
+            <td><code>src/harness/commands/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/gradio_app.py</code></td>
+            <td>✓ Yes</td>
+            <td>5 / 5</td>
+            <td><code>src/harness/commands/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/harness_architect.py</code></td>
+            <td>✓ Yes</td>
+            <td>6 / 6</td>
+            <td><code>src/harness/commands/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/icm.py</code></td>
+            <td>✓ Yes</td>
+            <td>13 / 13</td>
+            <td><code>src/harness/commands/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/mantis.py</code></td>
+            <td>✓ Yes</td>
+            <td>11 / 11</td>
+            <td><code>src/harness/commands/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/mcp.py</code></td>
+            <td>✓ Yes</td>
+            <td>4 / 4</td>
+            <td><code>src/harness/commands/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/memory.py</code></td>
+            <td>✓ Yes</td>
+            <td>9 / 9</td>
+            <td><code>src/harness/commands/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/model_router.py</code></td>
+            <td>✓ Yes</td>
+            <td>6 / 6</td>
+            <td><code>src/harness/commands/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/network_forensics.py</code></td>
+            <td>✓ Yes</td>
+            <td>9 / 9</td>
+            <td><code>src/harness/commands/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/okf.py</code></td>
+            <td>✓ Yes</td>
+            <td>9 / 9</td>
+            <td><code>src/harness/commands/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/plugins.py</code></td>
+            <td>✓ Yes</td>
+            <td>24 / 24</td>
+            <td><code>src/harness/commands/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/pre_commit_security.py</code></td>
+            <td>✓ Yes</td>
+            <td>7 / 7</td>
+            <td><code>src/harness/commands/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/rea.py</code></td>
+            <td>✓ Yes</td>
+            <td>11 / 11</td>
+            <td><code>src/harness/commands/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/redteam.py</code></td>
+            <td>✓ Yes</td>
+            <td>4 / 4</td>
+            <td><code>src/harness/commands/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/reflection.py</code></td>
+            <td>✓ Yes</td>
+            <td>23 / 23</td>
+            <td><code>src/harness/commands/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/rol.py</code></td>
+            <td>✓ Yes</td>
+            <td>7 / 7</td>
+            <td><code>src/harness/commands/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/runtime.py</code></td>
+            <td>✓ Yes</td>
+            <td>12 / 12</td>
+            <td><code>src/harness/commands/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/session.py</code></td>
+            <td>✓ Yes</td>
+            <td>15 / 15</td>
+            <td><code>src/harness/commands/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/system.py</code></td>
+            <td>✓ Yes</td>
+            <td>4 / 4</td>
+            <td><code>src/harness/commands/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/tau.py</code></td>
+            <td>✓ Yes</td>
+            <td>12 / 12</td>
+            <td><code>src/harness/commands/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/temp_miner.py</code></td>
+            <td>✓ Yes</td>
+            <td>6 / 6</td>
+            <td><code>src/harness/commands/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/tools.py</code></td>
+            <td>✓ Yes</td>
+            <td>12 / 12</td>
+            <td><code>src/harness/commands/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/trajectory_miner.py</code></td>
+            <td>✓ Yes</td>
+            <td>5 / 5</td>
+            <td><code>src/harness/commands/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/validation_loop.py</code></td>
+            <td>✓ Yes</td>
+            <td>6 / 6</td>
+            <td><code>src/harness/commands/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/watch.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><code>src/harness/commands/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/workspace.py</code></td>
+            <td>✓ Yes</td>
+            <td>5 / 5</td>
+            <td><code>src/harness/commands/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/_utils.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><code>src/harness/commands/README.md</code></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>6 / 2</td>
+            <td><code>src/harness/commands/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/creator/creator.py</code></td>
+            <td>✓ Yes</td>
+            <td>20 / 1</td>
+            <td><code>src/harness/creator/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/creator/introspection.py</code></td>
+            <td>✓ Yes</td>
+            <td>6 / 1</td>
+            <td><code>src/harness/creator/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/creator/scaffold.py</code></td>
+            <td>✓ Yes</td>
+            <td>11 / 3</td>
+            <td><code>src/harness/creator/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/creator/schema.py</code></td>
+            <td>✓ Yes</td>
+            <td>6 / 1</td>
+            <td><code>src/harness/creator/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/creator/synthesis.py</code></td>
+            <td>✓ Yes</td>
+            <td>12 / 6</td>
+            <td><code>src/harness/creator/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/creator/__init__.py</code></td>
+            <td>✗ No</td>
+            <td>0 / 0</td>
+            <td><code>src/harness/creator/README.md</code></td>
+            <td><strong>30.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/events/types.py</code></td>
+            <td>✓ Yes</td>
+            <td>10 / 9</td>
+            <td><code>src/harness/events/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/events/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><code>src/harness/events/README.md</code></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/ingestion/converter.py</code></td>
+            <td>✓ Yes</td>
+            <td>4 / 2</td>
+            <td><code>src/harness/ingestion/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/ingestion/fetcher.py</code></td>
+            <td>✓ Yes</td>
+            <td>13 / 2</td>
+            <td><code>src/harness/ingestion/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/ingestion/monorepo.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 2</td>
+            <td><code>src/harness/ingestion/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/ingestion/openapi_converter.py</code></td>
+            <td>✓ Yes</td>
+            <td>3 / 1</td>
+            <td><code>src/harness/ingestion/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/ingestion/pipeline.py</code></td>
+            <td>✓ Yes</td>
+            <td>10 / 1</td>
+            <td><code>src/harness/ingestion/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/ingestion/providers.py</code></td>
+            <td>✓ Yes</td>
+            <td>3 / 3</td>
+            <td><code>src/harness/ingestion/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/ingestion/pypi_converter.py</code></td>
+            <td>✓ Yes</td>
+            <td>4 / 2</td>
+            <td><code>src/harness/ingestion/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/ingestion/resolvers.py</code></td>
+            <td>✓ Yes</td>
+            <td>14 / 7</td>
+            <td><code>src/harness/ingestion/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/ingestion/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><code>src/harness/ingestion/README.md</code></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/kernel/graph.py</code></td>
+            <td>✓ Yes</td>
+            <td>23 / 5</td>
+            <td><code>src/harness/kernel/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/kernel/reconciler.py</code></td>
+            <td>✓ Yes</td>
+            <td>7 / 5</td>
+            <td><code>src/harness/kernel/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/kernel/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><code>src/harness/kernel/README.md</code></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/mcp/client_plugin.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><code>src/harness/mcp/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/mcp/protocol.py</code></td>
+            <td>✓ Yes</td>
+            <td>22 / 7</td>
+            <td><code>src/harness/mcp/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/mcp/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><code>src/harness/mcp/README.md</code></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/plugins/base.py</code></td>
+            <td>✓ Yes</td>
+            <td>11 / 1</td>
+            <td><code>src/harness/plugins/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/plugins/bridge_runner.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 2</td>
+            <td><code>src/harness/plugins/README.md</code></td>
+            <td><strong>85.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/plugins/catalog.py</code></td>
+            <td>✓ Yes</td>
+            <td>16 / 2</td>
+            <td><code>src/harness/plugins/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/plugins/loader.py</code></td>
+            <td>✓ Yes</td>
+            <td>14 / 3</td>
+            <td><code>src/harness/plugins/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/plugins/manifest.py</code></td>
+            <td>✓ Yes</td>
+            <td>12 / 5</td>
+            <td><code>src/harness/plugins/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/plugins/sandboxed.py</code></td>
+            <td>✓ Yes</td>
+            <td>7 / 2</td>
+            <td><code>src/harness/plugins/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/plugins/tool_mount.py</code></td>
+            <td>✓ Yes</td>
+            <td>6 / 1</td>
+            <td><code>src/harness/plugins/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/plugins/transport.py</code></td>
+            <td>✓ Yes</td>
+            <td>11 / 2</td>
+            <td><code>src/harness/plugins/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/plugins/watcher.py</code></td>
+            <td>✓ Yes</td>
+            <td>8 / 6</td>
+            <td><code>src/harness/plugins/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/plugins/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><code>src/harness/plugins/README.md</code></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/agentwikis.py</code></td>
+            <td>✓ Yes</td>
+            <td>19 / 10</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/agent_graph.py</code></td>
+            <td>✓ Yes</td>
+            <td>11 / 6</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/agent_harness.py</code></td>
+            <td>✓ Yes</td>
+            <td>12 / 8</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/ai_native_harness.py</code></td>
+            <td>✓ Yes</td>
+            <td>16 / 10</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/arch_linter.py</code></td>
+            <td>✓ Yes</td>
+            <td>16 / 8</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/artifact_generator.py</code></td>
+            <td>✓ Yes</td>
+            <td>7 / 4</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/bigquery_augmented_analytics.py</code></td>
+            <td>✓ Yes</td>
+            <td>18 / 12</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/bridge_base.py</code></td>
+            <td>✓ Yes</td>
+            <td>13 / 7</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/chatbotx.py</code></td>
+            <td>✓ Yes</td>
+            <td>15 / 8</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/claude_code.py</code></td>
+            <td>✓ Yes</td>
+            <td>5 / 3</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/code_runner.py</code></td>
+            <td>✓ Yes</td>
+            <td>10 / 4</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/coding_harness_calibrator.py</code></td>
+            <td>✓ Yes</td>
+            <td>13 / 8</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/compute_assessor.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/context_compactor.py</code></td>
+            <td>✓ Yes</td>
+            <td>9 / 5</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/context_course.py</code></td>
+            <td>✓ Yes</td>
+            <td>9 / 5</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/context_type_system.py</code></td>
+            <td>✓ Yes</td>
+            <td>19 / 11</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/deepselect_topk.py</code></td>
+            <td>✓ Yes</td>
+            <td>5 / 1</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/deterministic_validation.py</code></td>
+            <td>✓ Yes</td>
+            <td>10 / 4</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/differential_facet.py</code></td>
+            <td>✓ Yes</td>
+            <td>14 / 9</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/discovery_index.py</code></td>
+            <td>✓ Yes</td>
+            <td>10 / 5</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/django_bridge.py</code></td>
+            <td>✓ Yes</td>
+            <td>22 / 9</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/dock.py</code></td>
+            <td>✓ Yes</td>
+            <td>33 / 21</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/doc_synchronizer.py</code></td>
+            <td>✓ Yes</td>
+            <td>11 / 6</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/dynamic_model_router.py</code></td>
+            <td>✓ Yes</td>
+            <td>10 / 5</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/embedding_cluster.py</code></td>
+            <td>✓ Yes</td>
+            <td>5 / 3</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/filesystem_git.py</code></td>
+            <td>✓ Yes</td>
+            <td>21 / 11</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/gemini_vercel.py</code></td>
+            <td>✓ Yes</td>
+            <td>10 / 6</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/gradio_app.py</code></td>
+            <td>✓ Yes</td>
+            <td>8 / 5</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/graphiti.py</code></td>
+            <td>✓ Yes</td>
+            <td>11 / 6</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/harness_compass.py</code></td>
+            <td>✓ Yes</td>
+            <td>13 / 8</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/headroom_optimizer.py</code></td>
+            <td>✓ Yes</td>
+            <td>11 / 6</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/kimi_bridge.py</code></td>
+            <td>✓ Yes</td>
+            <td>17 / 7</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/llm.py</code></td>
+            <td>✓ Yes</td>
+            <td>7 / 5</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/mantis_security_review.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 2</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/memgraphrag.py</code></td>
+            <td>✓ Yes</td>
+            <td>17 / 11</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/migration_assistant.py</code></td>
+            <td>✓ Yes</td>
+            <td>5 / 3</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/network_forensics.py</code></td>
+            <td>✓ Yes</td>
+            <td>21 / 11</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/notification.py</code></td>
+            <td>✓ Yes</td>
+            <td>9 / 3</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/okf_memory.py</code></td>
+            <td>✓ Yes</td>
+            <td>17 / 5</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/openapi.py</code></td>
+            <td>✓ Yes</td>
+            <td>7 / 4</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/openclaw_bridge.py</code></td>
+            <td>✓ Yes</td>
+            <td>23 / 7</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/openhands_bridge.py</code></td>
+            <td>✓ Yes</td>
+            <td>8 / 4</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/orca_bridge.py</code></td>
+            <td>✓ Yes</td>
+            <td>19 / 11</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/pre_commit_security_guard.py</code></td>
+            <td>✓ Yes</td>
+            <td>15 / 9</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/prompt_benchmark.py</code></td>
+            <td>✓ Yes</td>
+            <td>7 / 4</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/pr_lens.py</code></td>
+            <td>✓ Yes</td>
+            <td>11 / 6</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/rea_javascript.py</code></td>
+            <td>✓ Yes</td>
+            <td>17 / 12</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/rea_managed_runtime.py</code></td>
+            <td>✓ Yes</td>
+            <td>16 / 11</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/rea_mobile_firmware.py</code></td>
+            <td>✓ Yes</td>
+            <td>31 / 20</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/rea_native.py</code></td>
+            <td>✓ Yes</td>
+            <td>20 / 13</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/rea_toolkit.py</code></td>
+            <td>✓ Yes</td>
+            <td>22 / 10</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/reconstruction_obligation.py</code></td>
+            <td>✓ Yes</td>
+            <td>15 / 9</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/refactor_engine.py</code></td>
+            <td>✓ Yes</td>
+            <td>9 / 4</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/reflection_worker.py</code></td>
+            <td>✓ Yes</td>
+            <td>4 / 1</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/repomap.py</code></td>
+            <td>✓ Yes</td>
+            <td>8 / 4</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/repo_triad_forge.py</code></td>
+            <td>✓ Yes</td>
+            <td>12 / 6</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/self_evaluating_pipeline.py</code></td>
+            <td>✓ Yes</td>
+            <td>14 / 7</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/semantic_cache.py</code></td>
+            <td>✓ Yes</td>
+            <td>9 / 6</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/skills.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/skill_pipeline.py</code></td>
+            <td>✓ Yes</td>
+            <td>9 / 4</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/skill_visualizer.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 1</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/stagehand_browser.py</code></td>
+            <td>✓ Yes</td>
+            <td>12 / 7</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/symbolic_solver.py</code></td>
+            <td>✓ Yes</td>
+            <td>7 / 4</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/uncertainty_guard.py</code></td>
+            <td>✓ Yes</td>
+            <td>14 / 8</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/unified_context.py</code></td>
+            <td>✓ Yes</td>
+            <td>8 / 4</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/vector_index.py</code></td>
+            <td>✓ Yes</td>
+            <td>10 / 4</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/webwright_harness.py</code></td>
+            <td>✓ Yes</td>
+            <td>14 / 8</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/web_fetcher.py</code></td>
+            <td>✓ Yes</td>
+            <td>10 / 4</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><code>src/harness/services/README.md</code></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/ui/projection.py</code></td>
+            <td>✓ Yes</td>
+            <td>11 / 2</td>
+            <td><code>src/harness/ui/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/ui/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><code>src/harness/ui/README.md</code></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/ui/server/adapter.py</code></td>
+            <td>✓ Yes</td>
+            <td>9 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/ui/server/app.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/ui/server/models.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 8</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/ui/server/swarm_graph.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/ui/server/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/ui/server/routes/creator.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 3</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/ui/server/routes/knowledge.py</code></td>
+            <td>✓ Yes</td>
+            <td>4 / 5</td>
+            <td><em>None</em></td>
+            <td><strong>64.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/ui/server/routes/plugins.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 10</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/ui/server/routes/rea.py</code></td>
+            <td>✓ Yes</td>
+            <td>3 / 4</td>
+            <td><em>None</em></td>
+            <td><strong>62.5%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/ui/server/routes/sessions.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 11</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/ui/server/routes/skills.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 6</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/ui/server/routes/swarm.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 7</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/ui/server/routes/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/brain_artifact_miner/export.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 2</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/brain_artifact_miner/models.py</code></td>
+            <td>✓ Yes</td>
+            <td>6 / 6</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/brain_artifact_miner/protocols.py</code></td>
+            <td>✓ Yes</td>
+            <td>8 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/brain_artifact_miner/resolvers.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/brain_artifact_miner/scratch.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 2</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/brain_artifact_miner/service.py</code></td>
+            <td>✓ Yes</td>
+            <td>8 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/brain_artifact_miner/transcript.py</code></td>
+            <td>✓ Yes</td>
+            <td>3 / 3</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/brain_artifact_miner/triage.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><code>plugins/external/Pocock-skills-main/docs/engineering/triage.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/brain_artifact_miner/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/brain_bridge/core.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/brain_bridge/detector.py</code></td>
+            <td>✓ Yes</td>
+            <td>3 / 3</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/brain_bridge/indexers.py</code></td>
+            <td>✓ Yes</td>
+            <td>3 / 3</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/brain_bridge/models.py</code></td>
+            <td>✓ Yes</td>
+            <td>8 / 8</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/brain_bridge/protocols.py</code></td>
+            <td>✓ Yes</td>
+            <td>9 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/brain_bridge/resolvers.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/brain_bridge/tokenizers.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 2</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/brain_bridge/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/cellcog/catalog.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/cellcog/client.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 2</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/cellcog/compiler.py</code></td>
+            <td>✓ Yes</td>
+            <td>6 / 3</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/cellcog/execution.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 2</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/cellcog/models.py</code></td>
+            <td>✓ Yes</td>
+            <td>8 / 7</td>
+            <td><em>None</em></td>
+            <td><strong>74.3%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/cellcog/protocols.py</code></td>
+            <td>✓ Yes</td>
+            <td>5 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/cellcog/resolvers.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/cellcog/service.py</code></td>
+            <td>✓ Yes</td>
+            <td>5 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/cellcog/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/codebase_context/checks.py</code></td>
+            <td>✓ Yes</td>
+            <td>7 / 6</td>
+            <td><code>src/harness/services/codebase_context/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/codebase_context/classifier.py</code></td>
+            <td>✓ Yes</td>
+            <td>4 / 1</td>
+            <td><code>src/harness/services/codebase_context/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/codebase_context/config.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><code>src/harness/services/codebase_context/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/codebase_context/governor.py</code></td>
+            <td>✓ Yes</td>
+            <td>7 / 1</td>
+            <td><code>src/harness/services/codebase_context/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/codebase_context/linter.py</code></td>
+            <td>✓ Yes</td>
+            <td>6 / 1</td>
+            <td><code>src/harness/services/codebase_context/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/codebase_context/manifest.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 1</td>
+            <td><code>src/harness/services/codebase_context/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/codebase_context/models.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><code>src/harness/services/codebase_context/README.md</code></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/codebase_context/protocol.py</code></td>
+            <td>✓ Yes</td>
+            <td>5 / 1</td>
+            <td><code>src/harness/services/codebase_context/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/codebase_context/reports.py</code></td>
+            <td>✓ Yes</td>
+            <td>3 / 3</td>
+            <td><code>src/harness/services/codebase_context/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/codebase_context/resolvers.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><code>src/harness/services/codebase_context/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/codebase_context/service.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><code>src/harness/services/codebase_context/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/codebase_context/synchronizer.py</code></td>
+            <td>✓ Yes</td>
+            <td>4 / 1</td>
+            <td><code>src/harness/services/codebase_context/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/codebase_context/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><code>src/harness/services/codebase_context/README.md</code></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/compute/brief.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/compute/escalator.py</code></td>
+            <td>✓ Yes</td>
+            <td>5 / 2</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/compute/providers.py</code></td>
+            <td>✓ Yes</td>
+            <td>16 / 9</td>
+            <td><em>None</em></td>
+            <td><strong>93.3%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/compute/scorer.py</code></td>
+            <td>✓ Yes</td>
+            <td>3 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/compute/service.py</code></td>
+            <td>✓ Yes</td>
+            <td>10 / 3</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/compute/types.py</code></td>
+            <td>✓ Yes</td>
+            <td>18 / 13</td>
+            <td><em>None</em></td>
+            <td><strong>81.5%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/compute/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/context_optimizer/compactor.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/context_optimizer/deterministic_pruner.py</code></td>
+            <td>✓ Yes</td>
+            <td>3 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/context_optimizer/models.py</code></td>
+            <td>✓ Yes</td>
+            <td>4 / 4</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/context_optimizer/protocols.py</code></td>
+            <td>✓ Yes</td>
+            <td>12 / 3</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/context_optimizer/pruning_models.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 2</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/context_optimizer/resolvers.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/context_optimizer/service.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/context_optimizer/strategies.py</code></td>
+            <td>✓ Yes</td>
+            <td>3 / 3</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/context_optimizer/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/conversation_trajectory_miner/bifurcation.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 2</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/conversation_trajectory_miner/binary_seek.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/conversation_trajectory_miner/constants.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/conversation_trajectory_miner/friction.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 2</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/conversation_trajectory_miner/models.py</code></td>
+            <td>✓ Yes</td>
+            <td>6 / 6</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/conversation_trajectory_miner/resolvers.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/conversation_trajectory_miner/service.py</code></td>
+            <td>✓ Yes</td>
+            <td>9 / 2</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/conversation_trajectory_miner/sqlite_reader.py</code></td>
+            <td>✓ Yes</td>
+            <td>4 / 4</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/conversation_trajectory_miner/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/data_management/engine.py</code></td>
+            <td>✓ Yes</td>
+            <td>6 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/data_management/models.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 2</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/data_management/pipeline.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/data_management/plugin.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/data_management/protocols.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/data_management/resolvers.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/data_management/service.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/data_management/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/doc_builder/ast_analyzer.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 2</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/doc_builder/models.py</code></td>
+            <td>✓ Yes</td>
+            <td>8 / 8</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/doc_builder/service.py</code></td>
+            <td>✓ Yes</td>
+            <td>8 / 3</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/doc_builder/virtualizer.py</code></td>
+            <td>✓ Yes</td>
+            <td>4 / 4</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/doc_builder/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/garf_reporting/core.py</code></td>
+            <td>✓ Yes</td>
+            <td>6 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/garf_reporting/exporters.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/garf_reporting/models.py</code></td>
+            <td>✓ Yes</td>
+            <td>13 / 6</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/garf_reporting/parser.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 2</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/garf_reporting/resolvers.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/garf_reporting/simulator.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/garf_reporting/workflow.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/garf_reporting/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/gods_eye_view/imagery_models.py</code></td>
+            <td>✓ Yes</td>
+            <td>9 / 9</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/gods_eye_view/keys.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/gods_eye_view/models.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/gods_eye_view/protocols.py</code></td>
+            <td>✓ Yes</td>
+            <td>25 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/gods_eye_view/resolvers.py</code></td>
+            <td>✓ Yes</td>
+            <td>3 / 3</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/gods_eye_view/spatial_models.py</code></td>
+            <td>✓ Yes</td>
+            <td>10 / 10</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/gods_eye_view/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/hf_datasets/lakehouse.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 2</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/hf_datasets/models.py</code></td>
+            <td>✓ Yes</td>
+            <td>7 / 7</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/hf_datasets/profiler.py</code></td>
+            <td>✓ Yes</td>
+            <td>4 / 4</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/hf_datasets/protocol.py</code></td>
+            <td>✓ Yes</td>
+            <td>8 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/hf_datasets/resolvers.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/hf_datasets/service.py</code></td>
+            <td>✓ Yes</td>
+            <td>8 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/hf_datasets/streamer.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 2</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/hf_datasets/transforms.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/hf_datasets/vault.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/hf_datasets/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/hyperframes/bridge.py</code></td>
+            <td>✓ Yes</td>
+            <td>3 / 2</td>
+            <td><em>None</em></td>
+            <td><strong>85.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/hyperframes/keys.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/hyperframes/models.py</code></td>
+            <td>✓ Yes</td>
+            <td>3 / 3</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/hyperframes/protocols.py</code></td>
+            <td>✓ Yes</td>
+            <td>5 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/hyperframes/resolvers.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/hyperframes/runtime.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/hyperframes/service.py</code></td>
+            <td>✓ Yes</td>
+            <td>5 / 2</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/hyperframes/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/icm_architect/auditor.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/icm_architect/indexer.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/icm_architect/models.py</code></td>
+            <td>✓ Yes</td>
+            <td>10 / 10</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/icm_architect/protocol.py</code></td>
+            <td>✓ Yes</td>
+            <td>8 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/icm_architect/resolvers.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/icm_architect/scaffolder.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/icm_architect/service.py</code></td>
+            <td>✓ Yes</td>
+            <td>8 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/icm_architect/template_engine.py</code></td>
+            <td>✓ Yes</td>
+            <td>4 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/icm_architect/verifier.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/icm_architect/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/memory_decay/keys.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/memory_decay/models.py</code></td>
+            <td>✓ Yes</td>
+            <td>3 / 3</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/memory_decay/protocols.py</code></td>
+            <td>✓ Yes</td>
+            <td>9 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/memory_decay/resolvers.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/memory_decay/service.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/memory_decay/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/opencode_bridge/engine.py</code></td>
+            <td>✓ Yes</td>
+            <td>5 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/opencode_bridge/models.py</code></td>
+            <td>✓ Yes</td>
+            <td>4 / 4</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/opencode_bridge/protocols.py</code></td>
+            <td>✓ Yes</td>
+            <td>5 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/opencode_bridge/resolvers.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/opencode_bridge/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/openrouter_gateway/chat.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/openrouter_gateway/client.py</code></td>
+            <td>✓ Yes</td>
+            <td>3 / 3</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/openrouter_gateway/headers.py</code></td>
+            <td>✓ Yes</td>
+            <td>4 / 4</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/openrouter_gateway/jsonrpc.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 2</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/openrouter_gateway/models.py</code></td>
+            <td>✓ Yes</td>
+            <td>8 / 8</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/openrouter_gateway/protocols.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/openrouter_gateway/resolvers.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/openrouter_gateway/routing.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/openrouter_gateway/service.py</code></td>
+            <td>✓ Yes</td>
+            <td>6 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/openrouter_gateway/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/open_source_gis/models.py</code></td>
+            <td>✓ Yes</td>
+            <td>12 / 12</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/open_source_gis/service.py</code></td>
+            <td>✓ Yes</td>
+            <td>13 / 3</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/open_source_gis/validator.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 2</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/open_source_gis/visualizer.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/open_source_gis/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/paperless_ngx/ingestion.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 2</td>
+            <td><code>docs/reference/ingestion.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/paperless_ngx/models.py</code></td>
+            <td>✓ Yes</td>
+            <td>7 / 7</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/paperless_ngx/protocols.py</code></td>
+            <td>✓ Yes</td>
+            <td>8 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/paperless_ngx/rag.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 2</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/paperless_ngx/resolvers.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/paperless_ngx/search.py</code></td>
+            <td>✓ Yes</td>
+            <td>3 / 3</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/paperless_ngx/service.py</code></td>
+            <td>✓ Yes</td>
+            <td>9 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/paperless_ngx/transport.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 2</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/paperless_ngx/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/prometheus/keys.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/prometheus/models.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 2</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/prometheus/protocols.py</code></td>
+            <td>✓ Yes</td>
+            <td>7 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/prometheus/resolvers.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/prometheus/service.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/prometheus/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/pyrit_scanner/keys.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/pyrit_scanner/models.py</code></td>
+            <td>✓ Yes</td>
+            <td>3 / 3</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/pyrit_scanner/protocols.py</code></td>
+            <td>✓ Yes</td>
+            <td>5 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/pyrit_scanner/resolvers.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/pyrit_scanner/runner.py</code></td>
+            <td>✓ Yes</td>
+            <td>3 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/pyrit_scanner/service.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/pyrit_scanner/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/skill_clustering/models.py</code></td>
+            <td>✓ Yes</td>
+            <td>13 / 4</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/skill_clustering/patterns.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/skill_clustering/service.py</code></td>
+            <td>✓ Yes</td>
+            <td>10 / 2</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/skill_clustering/visualizer.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/skill_clustering/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/skill_graph/adapter.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><code>src/harness/services/skill_graph/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/skill_graph/card_parser.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><code>src/harness/services/skill_graph/README.md</code></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/skill_graph/guidance.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 2</td>
+            <td><code>src/harness/services/skill_graph/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/skill_graph/indexer.py</code></td>
+            <td>✓ Yes</td>
+            <td>5 / 1</td>
+            <td><code>src/harness/services/skill_graph/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/skill_graph/intent.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><code>src/harness/services/skill_graph/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/skill_graph/joint_query.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><code>src/harness/services/skill_graph/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/skill_graph/models.py</code></td>
+            <td>✓ Yes</td>
+            <td>23 / 12</td>
+            <td><code>src/harness/services/skill_graph/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/skill_graph/plugin.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><code>src/harness/services/skill_graph/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/skill_graph/protocols.py</code></td>
+            <td>✓ Yes</td>
+            <td>32 / 3</td>
+            <td><code>src/harness/services/skill_graph/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/skill_graph/routing.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 2</td>
+            <td><code>src/harness/services/skill_graph/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/skill_graph/scanner.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 2</td>
+            <td><code>src/harness/services/skill_graph/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/skill_graph/topology.py</code></td>
+            <td>✓ Yes</td>
+            <td>4 / 4</td>
+            <td><code>src/harness/services/skill_graph/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/skill_graph/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><code>src/harness/services/skill_graph/README.md</code></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/skill_parser/card_box.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/skill_parser/extractors.py</code></td>
+            <td>✓ Yes</td>
+            <td>5 / 5</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/skill_parser/frontmatter.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/skill_parser/parser.py</code></td>
+            <td>✓ Yes</td>
+            <td>3 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/skill_parser/protocols.py</code></td>
+            <td>✓ Yes</td>
+            <td>3 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/skill_parser/resolvers.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 2</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/skill_parser/scanner.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/skill_parser/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/storage/isnad.py</code></td>
+            <td>✓ Yes</td>
+            <td>3 / 1</td>
+            <td><code>src/harness/services/storage/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/storage/models.py</code></td>
+            <td>✓ Yes</td>
+            <td>9 / 6</td>
+            <td><code>src/harness/services/storage/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/storage/plugin.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><code>src/harness/services/storage/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/storage/protocols.py</code></td>
+            <td>✓ Yes</td>
+            <td>11 / 1</td>
+            <td><code>src/harness/services/storage/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/storage/resolvers.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 2</td>
+            <td><code>src/harness/services/storage/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/storage/sqlite.py</code></td>
+            <td>✓ Yes</td>
+            <td>4 / 1</td>
+            <td><code>src/harness/services/storage/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/storage/vault_backfill.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 2</td>
+            <td><code>src/harness/services/storage/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/storage/vault_contradiction.py</code></td>
+            <td>✓ Yes</td>
+            <td>3 / 2</td>
+            <td><code>src/harness/services/storage/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/storage/vault_cypher_exporter.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><code>src/harness/services/storage/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/storage/vault_derivation.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><code>src/harness/services/storage/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/storage/vault_exporters.py</code></td>
+            <td>✓ Yes</td>
+            <td>4 / 4</td>
+            <td><code>src/harness/services/storage/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/storage/vault_graph.py</code></td>
+            <td>✓ Yes</td>
+            <td>4 / 3</td>
+            <td><code>src/harness/services/storage/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/storage/vault_graph_models.py</code></td>
+            <td>✓ Yes</td>
+            <td>4 / 4</td>
+            <td><code>src/harness/services/storage/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/storage/vault_html_exporter.py</code></td>
+            <td>✓ Yes</td>
+            <td>4 / 4</td>
+            <td><code>src/harness/services/storage/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/storage/vault_html_template.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><code>src/harness/services/storage/README.md</code></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/storage/vault_hygiene.py</code></td>
+            <td>✓ Yes</td>
+            <td>3 / 3</td>
+            <td><code>src/harness/services/storage/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/storage/vault_operations.py</code></td>
+            <td>✓ Yes</td>
+            <td>10 / 1</td>
+            <td><code>src/harness/services/storage/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/storage/vault_retrieval.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 1</td>
+            <td><code>src/harness/services/storage/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/storage/vault_sqlite_graph.py</code></td>
+            <td>✓ Yes</td>
+            <td>4 / 4</td>
+            <td><code>src/harness/services/storage/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/storage/vault_taxonomy.py</code></td>
+            <td>✓ Yes</td>
+            <td>8 / 8</td>
+            <td><code>src/harness/services/storage/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/storage/vault_traversal.py</code></td>
+            <td>✓ Yes</td>
+            <td>3 / 3</td>
+            <td><code>src/harness/services/storage/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/storage/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><code>src/harness/services/storage/README.md</code></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/tau_bridge/engine.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/tau_bridge/journal.py</code></td>
+            <td>✓ Yes</td>
+            <td>4 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/tau_bridge/models.py</code></td>
+            <td>✓ Yes</td>
+            <td>11 / 10</td>
+            <td><em>None</em></td>
+            <td><strong>73.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/tau_bridge/repair.py</code></td>
+            <td>✓ Yes</td>
+            <td>3 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/tau_bridge/service.py</code></td>
+            <td>✓ Yes</td>
+            <td>21 / 3</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/tau_bridge/tree.py</code></td>
+            <td>✓ Yes</td>
+            <td>6 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/tau_bridge/trust.py</code></td>
+            <td>✓ Yes</td>
+            <td>3 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/tau_bridge/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/temp_artifact_miner/bifurcation.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/temp_artifact_miner/models.py</code></td>
+            <td>✓ Yes</td>
+            <td>9 / 9</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/temp_artifact_miner/parser.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/temp_artifact_miner/protocol.py</code></td>
+            <td>✓ Yes</td>
+            <td>7 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/temp_artifact_miner/resolvers.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/temp_artifact_miner/salvage.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 2</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/temp_artifact_miner/sandbox.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 2</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/temp_artifact_miner/scanner.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/temp_artifact_miner/service.py</code></td>
+            <td>✓ Yes</td>
+            <td>8 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/temp_artifact_miner/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/tools/interceptors.py</code></td>
+            <td>✓ Yes</td>
+            <td>10 / 7</td>
+            <td><em>None</em></td>
+            <td><strong>82.9%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/tools/models.py</code></td>
+            <td>✓ Yes</td>
+            <td>6 / 2</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/tools/pipeline.py</code></td>
+            <td>✓ Yes</td>
+            <td>4 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/tools/plugin.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/tools/registry.py</code></td>
+            <td>✓ Yes</td>
+            <td>23 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/tools/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/_domains/_agent_orchestration.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/_domains/_data_engineering.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/_domains/_infra_and_cloud.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/_domains/_integration_and_io.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/_domains/_memory_and_epistemics.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/_domains/_security_and_forensics.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/_domains/_software_engineering.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/_domains/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/skill_graph/guard/ast_scanner.py</code></td>
+            <td>✓ Yes</td>
+            <td>4 / 4</td>
+            <td><code>src/harness/services/skill_graph/guard/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/skill_graph/guard/formatter.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><code>src/harness/services/skill_graph/guard/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/skill_graph/guard/guard.py</code></td>
+            <td>✓ Yes</td>
+            <td>6 / 1</td>
+            <td><code>src/harness/services/skill_graph/guard/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/skill_graph/guard/invariants.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><code>src/harness/services/skill_graph/guard/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/skill_graph/guard/proposals.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><code>src/harness/services/skill_graph/guard/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/skill_graph/guard/rules.py</code></td>
+            <td>✓ Yes</td>
+            <td>8 / 8</td>
+            <td><code>src/harness/services/skill_graph/guard/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/skill_graph/guard/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><code>src/harness/services/skill_graph/guard/README.md</code></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/skill_graph/service/clustering.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><code>src/harness/services/skill_graph/service/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/skill_graph/service/gating.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><code>src/harness/services/skill_graph/service/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/skill_graph/service/graph.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><code>src/harness/services/skill_graph/service/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/skill_graph/service/registry.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><code>src/harness/services/skill_graph/service/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/skill_graph/service/resolvers.py</code></td>
+            <td>✓ Yes</td>
+            <td>3 / 3</td>
+            <td><code>src/harness/services/skill_graph/service/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/skill_graph/service/scanner_ops.py</code></td>
+            <td>✓ Yes</td>
+            <td>4 / 4</td>
+            <td><code>src/harness/services/skill_graph/service/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/skill_graph/service/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><code>src/harness/services/skill_graph/service/README.md</code></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/skill_clustering/engine/affinity.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/skill_clustering/engine/bridges.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/skill_clustering/engine/clusterer.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/skill_clustering/engine/core.py</code></td>
+            <td>✓ Yes</td>
+            <td>9 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/skill_clustering/engine/emergent.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 2</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/skill_clustering/engine/planner.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/skill_clustering/engine/resolvers.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/skill_clustering/engine/scoring.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 2</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/skill_clustering/engine/tokens.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/skill_clustering/engine/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/open_source_gis/catalog/core.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/open_source_gis/catalog/environmental_paths.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/open_source_gis/catalog/fallback.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/open_source_gis/catalog/loader.py</code></td>
+            <td>✓ Yes</td>
+            <td>3 / 3</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/open_source_gis/catalog/router.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/open_source_gis/catalog/statistical_paths.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/open_source_gis/catalog/vector_web_paths.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/open_source_gis/catalog/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/doc_builder/engine/autodoc.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/doc_builder/engine/chunker.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/doc_builder/engine/convert.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/doc_builder/engine/links.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/doc_builder/engine/linter.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/doc_builder/engine/service.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/services/doc_builder/engine/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/plugins/sandbox/base.py</code></td>
+            <td>✓ Yes</td>
+            <td>7 / 2</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/plugins/sandbox/container.py</code></td>
+            <td>✓ Yes</td>
+            <td>3 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/plugins/sandbox/factory.py</code></td>
+            <td>✓ Yes</td>
+            <td>4 / 2</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/plugins/sandbox/in_process.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/plugins/sandbox/subprocess.py</code></td>
+            <td>✓ Yes</td>
+            <td>3 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/plugins/sandbox/venv.py</code></td>
+            <td>✓ Yes</td>
+            <td>3 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/plugins/sandbox/wasm.py</code></td>
+            <td>✓ Yes</td>
+            <td>5 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/plugins/sandbox/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/mcp/server/context.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><code>plugins/external/Pocock-skills-main/skills-main/CONTEXT.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/mcp/server/http_transport.py</code></td>
+            <td>✓ Yes</td>
+            <td>6 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/mcp/server/interceptors.py</code></td>
+            <td>✓ Yes</td>
+            <td>7 / 4</td>
+            <td><em>None</em></td>
+            <td><strong>92.5%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/mcp/server/registry.py</code></td>
+            <td>✓ Yes</td>
+            <td>9 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/mcp/server/router.py</code></td>
+            <td>✓ Yes</td>
+            <td>5 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/mcp/server/server.py</code></td>
+            <td>✓ Yes</td>
+            <td>6 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/mcp/server/transport.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/mcp/server/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/kernel/context/core.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><code>src/harness/kernel/context/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/kernel/context/effects.py</code></td>
+            <td>✓ Yes</td>
+            <td>4 / 4</td>
+            <td><code>src/harness/kernel/context/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/kernel/context/interceptors.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 2</td>
+            <td><code>src/harness/kernel/context/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/kernel/context/lookup.py</code></td>
+            <td>✓ Yes</td>
+            <td>5 / 5</td>
+            <td><code>src/harness/kernel/context/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/kernel/context/models.py</code></td>
+            <td>✓ Yes</td>
+            <td>4 / 4</td>
+            <td><code>src/harness/kernel/context/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/kernel/context/mutations.py</code></td>
+            <td>✓ Yes</td>
+            <td>4 / 4</td>
+            <td><code>src/harness/kernel/context/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/kernel/context/realms.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 2</td>
+            <td><code>src/harness/kernel/context/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/kernel/context/resolvers.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><code>src/harness/kernel/context/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/kernel/context/scoped.py</code></td>
+            <td>✓ Yes</td>
+            <td>3 / 1</td>
+            <td><code>src/harness/kernel/context/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/kernel/context/transactions.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><code>src/harness/kernel/context/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/kernel/context/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><code>src/harness/kernel/context/README.md</code></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/kernel/lifecycle/models.py</code></td>
+            <td>✓ Yes</td>
+            <td>4 / 4</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/kernel/lifecycle/sorter.py</code></td>
+            <td>✓ Yes</td>
+            <td>3 / 3</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/kernel/lifecycle/transitions.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 2</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/kernel/lifecycle/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/kernel/runtime/coordinator.py</code></td>
+            <td>✓ Yes</td>
+            <td>12 / 1</td>
+            <td><code>src/harness/kernel/runtime/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/kernel/runtime/defaults.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><code>src/harness/kernel/runtime/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/kernel/runtime/factory.py</code></td>
+            <td>✓ Yes</td>
+            <td>3 / 3</td>
+            <td><code>src/harness/kernel/runtime/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/kernel/runtime/lifecycle_runner.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 2</td>
+            <td><code>src/harness/kernel/runtime/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/kernel/runtime/models.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><code>src/harness/kernel/runtime/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/kernel/runtime/plugins.py</code></td>
+            <td>✓ Yes</td>
+            <td>3 / 3</td>
+            <td><code>src/harness/kernel/runtime/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/kernel/runtime/plugin_ops.py</code></td>
+            <td>✓ Yes</td>
+            <td>12 / 1</td>
+            <td><code>src/harness/kernel/runtime/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/kernel/runtime/reconcile.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 2</td>
+            <td><code>src/harness/kernel/runtime/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/kernel/runtime/services.py</code></td>
+            <td>✓ Yes</td>
+            <td>10 / 1</td>
+            <td><code>src/harness/kernel/runtime/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/kernel/runtime/tools.py</code></td>
+            <td>✓ Yes</td>
+            <td>5 / 5</td>
+            <td><code>src/harness/kernel/runtime/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/kernel/runtime/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><code>src/harness/kernel/runtime/README.md</code></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/kernel/lifecycle/manager/activation.py</code></td>
+            <td>✓ Yes</td>
+            <td>6 / 6</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/kernel/lifecycle/manager/batch.py</code></td>
+            <td>✓ Yes</td>
+            <td>3 / 3</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/kernel/lifecycle/manager/core.py</code></td>
+            <td>✓ Yes</td>
+            <td>5 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/kernel/lifecycle/manager/graph_cache.py</code></td>
+            <td>✓ Yes</td>
+            <td>5 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/kernel/lifecycle/manager/resolvers.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/kernel/lifecycle/manager/teardown.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 2</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/kernel/lifecycle/manager/workflows.py</code></td>
+            <td>✓ Yes</td>
+            <td>3 / 3</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/kernel/lifecycle/manager/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/ingestion/inspector/ast_extractor.py</code></td>
+            <td>✓ Yes</td>
+            <td>5 / 5</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/ingestion/inspector/exceptions.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/ingestion/inspector/inspector.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/ingestion/inspector/js_ts_extractor.py</code></td>
+            <td>✓ Yes</td>
+            <td>3 / 3</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/ingestion/inspector/manifest_strategies.py</code></td>
+            <td>✓ Yes</td>
+            <td>6 / 6</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/ingestion/inspector/skills_bundle.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 2</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/ingestion/inspector/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/events/bus/core.py</code></td>
+            <td>✓ Yes</td>
+            <td>15 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/events/bus/ledger.py</code></td>
+            <td>✓ Yes</td>
+            <td>6 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/events/bus/models.py</code></td>
+            <td>✓ Yes</td>
+            <td>7 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/events/bus/persistence.py</code></td>
+            <td>✓ Yes</td>
+            <td>4 / 4</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/events/bus/projections.py</code></td>
+            <td>✓ Yes</td>
+            <td>11 / 4</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/events/bus/resolvers.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/events/bus/streaming.py</code></td>
+            <td>✓ Yes</td>
+            <td>3 / 3</td>
+            <td><code>.venv/Lib/site-packages/fastapi/.agents/skills/fastapi/references/streaming.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/events/bus/subscriptions.py</code></td>
+            <td>✓ Yes</td>
+            <td>9 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/events/bus/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/creator/archetypes/agentic_workflow.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/creator/archetypes/api_wrapper.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/creator/archetypes/base.py</code></td>
+            <td>✓ Yes</td>
+            <td>8 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/creator/archetypes/container.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/creator/archetypes/general.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 2</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/creator/archetypes/mcp_bridge.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/creator/archetypes/registry.py</code></td>
+            <td>✓ Yes</td>
+            <td>8 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/creator/archetypes/service.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/creator/archetypes/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/creator/dynamic/builder.py</code></td>
+            <td>✓ Yes</td>
+            <td>8 / 2</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/creator/dynamic/compiler.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/creator/dynamic/inspector.py</code></td>
+            <td>✓ Yes</td>
+            <td>3 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/creator/dynamic/models.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/creator/dynamic/plugin.py</code></td>
+            <td>✓ Yes</td>
+            <td>5 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/creator/dynamic/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/creator/reflection/distiller.py</code></td>
+            <td>✓ Yes</td>
+            <td>3 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/creator/reflection/engine.py</code></td>
+            <td>✓ Yes</td>
+            <td>3 / 2</td>
+            <td><em>None</em></td>
+            <td><strong>85.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/creator/reflection/extractors.py</code></td>
+            <td>✓ Yes</td>
+            <td>13 / 7</td>
+            <td><em>None</em></td>
+            <td><strong>95.7%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/creator/reflection/harvester.py</code></td>
+            <td>✓ Yes</td>
+            <td>4 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/creator/reflection/models.py</code></td>
+            <td>✓ Yes</td>
+            <td>8 / 5</td>
+            <td><em>None</em></td>
+            <td><strong>88.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/creator/reflection/visualizer.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/creator/reflection/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/creator/skills/models.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 2</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/creator/skills/rules.py</code></td>
+            <td>✓ Yes</td>
+            <td>4 / 4</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/creator/skills/scaffold.py</code></td>
+            <td>✓ Yes</td>
+            <td>6 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/creator/skills/validator.py</code></td>
+            <td>✓ Yes</td>
+            <td>6 / 2</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/creator/skills/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/creator/validator/base.py</code></td>
+            <td>✓ Yes</td>
+            <td>4 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/creator/validator/engine.py</code></td>
+            <td>✓ Yes</td>
+            <td>10 / 5</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/creator/validator/models.py</code></td>
+            <td>✓ Yes</td>
+            <td>6 / 4</td>
+            <td><em>None</em></td>
+            <td><strong>85.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/creator/validator/rules.py</code></td>
+            <td>✓ Yes</td>
+            <td>7 / 7</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/creator/validator/sandbox.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/creator/validator/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/calibrator/brief.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/calibrator/engine_adapter.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/calibrator/group.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/calibrator/recommend.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/calibrator/repatch.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/calibrator/resolver.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/calibrator/staging.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/calibrator/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/data/cli.py</code></td>
+            <td>✓ Yes</td>
+            <td>6 / 6</td>
+            <td><code>docs/reference/cli.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/data/contracts.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/data/golden_records.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/data/maturity.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/data/pipeline.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/data/quality.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/data/topk.py</code></td>
+            <td>✓ Yes</td>
+            <td>3 / 3</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/data/topk_cli.py</code></td>
+            <td>✓ Yes</td>
+            <td>4 / 4</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/data/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/self_eval/agreement.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 2</td>
+            <td><code>src/harness/commands/self_eval/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/self_eval/brief.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><code>src/harness/commands/self_eval/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/self_eval/brief_adapter.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><code>src/harness/commands/self_eval/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/self_eval/engine_adapter.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><code>src/harness/commands/self_eval/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/self_eval/group.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><code>src/harness/commands/self_eval/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/self_eval/judge.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><code>src/harness/commands/self_eval/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/self_eval/layer1.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><code>src/harness/commands/self_eval/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/self_eval/regression.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 2</td>
+            <td><code>src/harness/commands/self_eval/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/self_eval/resolver.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><code>src/harness/commands/self_eval/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/self_eval/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><code>src/harness/commands/self_eval/README.md</code></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/skills/cli.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><code>docs/reference/cli.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/skills/cli_discovery.py</code></td>
+            <td>✓ Yes</td>
+            <td>5 / 5</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/skills/cli_routing.py</code></td>
+            <td>✓ Yes</td>
+            <td>4 / 4</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/skills/cli_topology.py</code></td>
+            <td>✓ Yes</td>
+            <td>8 / 8</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/skills/discovery.py</code></td>
+            <td>✓ Yes</td>
+            <td>6 / 6</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/skills/routing.py</code></td>
+            <td>✓ Yes</td>
+            <td>4 / 4</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/skills/seams.py</code></td>
+            <td>✓ Yes</td>
+            <td>3 / 3</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/skills/topology.py</code></td>
+            <td>✓ Yes</td>
+            <td>8 / 8</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/skills/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/uncertainty/adapter.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><code>src/harness/commands/uncertainty/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/uncertainty/brief.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><code>src/harness/commands/uncertainty/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/uncertainty/calibrate.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><code>src/harness/commands/uncertainty/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/uncertainty/converters.py</code></td>
+            <td>✓ Yes</td>
+            <td>6 / 6</td>
+            <td><code>src/harness/commands/uncertainty/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/uncertainty/gate.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><code>src/harness/commands/uncertainty/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/uncertainty/group.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><code>src/harness/commands/uncertainty/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/uncertainty/logprobs.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><code>src/harness/commands/uncertainty/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/uncertainty/pipeline.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><code>src/harness/commands/uncertainty/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/uncertainty/resolver.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 2</td>
+            <td><code>src/harness/commands/uncertainty/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/uncertainty/retrieval.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><code>src/harness/commands/uncertainty/README.md</code></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/commands/uncertainty/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><code>src/harness/commands/uncertainty/README.md</code></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/agent/react/dispatch.py</code></td>
+            <td>✓ Yes</td>
+            <td>3 / 3</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/agent/react/engine.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/agent/react/loop.py</code></td>
+            <td>✓ Yes</td>
+            <td>5 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/agent/react/plugin.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/agent/react/prompting.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 2</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/agent/react/resolvers.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/agent/react/transactions.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/agent/react/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/agent/session/exporter.py</code></td>
+            <td>✓ Yes</td>
+            <td>4 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/agent/session/models.py</code></td>
+            <td>✓ Yes</td>
+            <td>15 / 3</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/agent/session/plugin.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/agent/session/scope.py</code></td>
+            <td>✓ Yes</td>
+            <td>6 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/agent/session/store.py</code></td>
+            <td>✓ Yes</td>
+            <td>7 / 3</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/agent/session/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/agent/swarm/consensus.py</code></td>
+            <td>✓ Yes</td>
+            <td>12 / 5</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/agent/swarm/governor.py</code></td>
+            <td>✓ Yes</td>
+            <td>4 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/agent/swarm/models.py</code></td>
+            <td>✓ Yes</td>
+            <td>14 / 7</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/agent/swarm/plugin.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/agent/swarm/tree_renderer.py</code></td>
+            <td>✓ Yes</td>
+            <td>3 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/agent/swarm/wave_scheduler.py</code></td>
+            <td>✓ Yes</td>
+            <td>3 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/agent/swarm/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/agent/swarm/coordinator/core.py</code></td>
+            <td>✓ Yes</td>
+            <td>12 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/agent/swarm/coordinator/decomposition.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 2</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/agent/swarm/coordinator/history.py</code></td>
+            <td>✓ Yes</td>
+            <td>7 / 7</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/agent/swarm/coordinator/node_runner.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/agent/swarm/coordinator/outcome.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/agent/swarm/coordinator/resolvers.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/agent/swarm/coordinator/wave_runner.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 2</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/agent/swarm/coordinator/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/agent/session/manager/creation.py</code></td>
+            <td>✓ Yes</td>
+            <td>4 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/agent/session/manager/export.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/agent/session/manager/hierarchy.py</code></td>
+            <td>✓ Yes</td>
+            <td>4 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/agent/session/manager/lifecycle.py</code></td>
+            <td>✓ Yes</td>
+            <td>4 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/agent/session/manager/protocols.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/agent/session/manager/query.py</code></td>
+            <td>✓ Yes</td>
+            <td>4 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/agent/session/manager/resolvers.py</code></td>
+            <td>✓ Yes</td>
+            <td>1 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>70.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/agent/session/manager/service.py</code></td>
+            <td>✓ Yes</td>
+            <td>2 / 1</td>
+            <td><em>None</em></td>
+            <td><strong>100.0%</strong></td>
+          </tr>
+          <tr>
+            <td><code>src/harness/agent/session/manager/__init__.py</code></td>
+            <td>✓ Yes</td>
+            <td>0 / 0</td>
+            <td><em>None</em></td>
+            <td><strong>40.0%</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>
