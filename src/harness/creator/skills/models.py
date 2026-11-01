@@ -27,6 +27,7 @@ class SkillOptions:
     references: list[str] = field(default_factory=list)
     generated_by: list[str] = field(default_factory=list)
     source_ki_id: str | None = None
+    vault_dir: Path | str | None = None
     include_card: bool = True
     include_readme: bool = True
     auto_validate: bool = False

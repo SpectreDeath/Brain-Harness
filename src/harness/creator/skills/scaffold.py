@@ -225,7 +225,16 @@ class SkillScaffoldEngine:
             generated_files.append(prov_path)
 
             if opts.source_ki_id:
-                vault_ki_meta = Path(".harness/knowledge") / opts.source_ki_id / "metadata.json"
+                if opts.vault_dir:
+                    vault_root = Path(opts.vault_dir).resolve()
+                else:
+                    vault_root = Path(".harness/knowledge").resolve()
+                    for parent_dir in out_dir.resolve().parents:
+                        cand = parent_dir / ".harness" / "knowledge"
+                        if cand.exists():
+                            vault_root = cand
+                            break
+                vault_ki_meta = vault_root / opts.source_ki_id / "metadata.json"
                 if vault_ki_meta.exists():
                     try:
                         ki_data = json.loads(vault_ki_meta.read_text(encoding="utf-8"))
@@ -241,7 +250,7 @@ class SkillScaffoldEngine:
                             ki_data["edges"] = edges
                             vault_ki_meta.write_text(json.dumps(ki_data, indent=2), encoding="utf-8")
                     except Exception as e:
-                        logger.debug("Failed to record became_skill edge in source KI", ki_id=opts.source_ki_id, error=str(e))
+                        logger.warning("Failed to record became_skill edge in source KI", ki_id=opts.source_ki_id, error=str(e))
 
         validation_report = None
         if opts.auto_validate:

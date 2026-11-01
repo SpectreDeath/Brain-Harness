@@ -54,7 +54,6 @@ from harness.services.storage.vault_graph_models import (
     KnowledgeGraphNode,
     KnowledgeGraphSummary,
 )
-from harness.services.storage.vault_html_exporter import export_html
 from harness.services.storage.vault_hygiene import (
     audit_vault_hygiene,
     suggest_category_for_item,

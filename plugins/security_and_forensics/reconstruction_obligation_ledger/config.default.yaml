@@ -1,0 +1,28 @@
+# Reconstruction Obligation Ledger — Plugin Operational Budgets (Rule 44)
+version: "1.0.0"
+
+obligation_ledger:
+  digest_algorithm: sha256
+  max_evidence_records: 1000
+  strict_closure_verification: true
+  allowed_layers:
+    - cli
+    - protocol
+    - electron
+    - persistence
+    - process
+    - runtime
+    - packaging
+    - native-abi
+    - application
+    - other
+  disposition_states:
+    - unowned
+    - claimed
+    - in_progress
+    - review
+    - closed
+    - waived
+    - superseded
+    - rejected
+

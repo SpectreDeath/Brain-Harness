@@ -85,6 +85,16 @@ class ReflectionDaemonWorker:
                 generate_html_brief=self.generate_html,
                 vault_dir=self.vault_dir,
             )
+            promoted_count = 0
+            demoted_count = 0
+            conflict_count = 0
+            if self.commit_to_vault:
+                promotions, demotions = await storage.evaluate_vault_lifecycle(vault_dir=self.vault_dir)
+                promoted_count = len(promotions)
+                demoted_count = len(demotions)
+                conflicts = await storage.audit_contradictions()
+                conflict_count = len(conflicts)
+
             self._cycle_count += 1
             self._last_report = report
             logger.info(
@@ -92,6 +102,9 @@ class ReflectionDaemonWorker:
                 cycle=self._cycle_count,
                 heuristics=len(report.heuristics),
                 kis=len(report.knowledge_items),
+                promoted=promoted_count,
+                demoted=demoted_count,
+                conflicts=conflict_count,
             )
             return report
         finally:

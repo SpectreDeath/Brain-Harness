@@ -25,3 +25,12 @@ Autonomous bridge and domain-partitioned reverse engineering plugin synthesized 
 5. `rea_inspect_python_pyc(pyc_path, disassemble=True)`
    - Validates 16-byte magic headers across Python 3.7–3.13.
    - Disassembles marshal code objects into structured instruction representations.
+
+---
+
+## Unified REA Toolkit Integration
+
+This plugin is integrated into the unified REA toolkit facade:
+- **CLI Commands:** `harness rea inspect`, `harness rea diff`, `harness rea learn`
+- **Agent Skill:** [rea-reverse-engineering](../../../.agents/skills/rea-reverse-engineering/SKILL.md)
+- **User Guide:** [How-To: Use REA Toolkit](../../../docs/how-to/use-rea-toolkit.md)

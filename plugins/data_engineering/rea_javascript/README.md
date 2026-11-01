@@ -39,3 +39,12 @@ Electron ASAR archive unpacking and IPC channel discovery, passive Chrome DevToo
 | `rea_javascript_web_observe` | `(cdp_endpoint, target_id, duration_ms)` | Passive Chrome DevTools Protocol observation of page DOM structure, loaded scripts, event listeners, and network activity. |
 | `rea_javascript_dotnet_inspect` | `(assembly_path, include_cil)` | Open a managed .NET PE/CLI image: inventory type hierarchies, CIL hashes, and P/Invoke declarations. |
 | `rea_javascript_har_inspect` | `(har_path, filter_status)` | Inspect offline HAR 1.2 or native mitmproxy capture records without contacting recorded servers. |
+
+---
+
+## Unified REA Toolkit Integration
+
+This plugin is integrated into the unified REA toolkit facade:
+- **CLI Commands:** `harness rea inspect`, `harness rea diff`, `harness rea learn`
+- **Agent Skill:** [rea-reverse-engineering](../../../.agents/skills/rea-reverse-engineering/SKILL.md)
+- **User Guide:** [How-To: Use REA Toolkit](../../../docs/how-to/use-rea-toolkit.md)

@@ -16,6 +16,7 @@ from harness.creator.reflection.models import (
 from harness.services.storage import (
     IsnadLineageBlock,
     KnowledgeItemRecord,
+    normalize_category,
 )
 
 
@@ -59,6 +60,7 @@ class EpisodicMemoryReflector:
         return KnowledgeItemRecord(
             id=ki_id,
             title=heuristic.title,
+            category=normalize_category(heuristic.category),
             source_target="internal://harness/history",
             detected_format="endogenous_reflection",
             isnad=isnad_block,

@@ -234,8 +234,7 @@ class TestKnowledgeExporters:
 class TestKnowledgeExportCLICommand:
     """Verifies Click CLI command invocation, option handling, and Rule 40 path protection."""
 
-    @pytest.mark.asyncio
-    async def test_cli_export_command_execution(self, tmp_path: Path) -> None:
+    def test_cli_export_command_execution(self, tmp_path: Path) -> None:
         vault_dir = tmp_path / ".harness" / "knowledge"
         vault_dir.mkdir(parents=True)
 
@@ -273,6 +272,9 @@ class TestKnowledgeExportCLICommand:
         assert res_json.exit_code == 0, res_json.output
         assert "Knowledge Graph Export (JSON)" in res_json.output
         assert out_json.exists()
+        data = json.loads(out_json.read_text(encoding="utf-8"))
+        assert len(data["nodes"]) == 3
+        assert len(data["edges"]) == 2
 
         # 2. Export GEXF
         out_gexf = tmp_path / "exports" / "graph.gexf"
@@ -283,6 +285,23 @@ class TestKnowledgeExportCLICommand:
         ])
         assert res_gexf.exit_code == 0
         assert out_gexf.exists()
+        gexf_root = ET.parse(out_gexf).getroot()
+        assert len(gexf_root.findall(".//{*}node")) == 3
+        assert len(gexf_root.findall(".//{*}edge")) == 2
+
+        # 2b. Export dynamic GEXF (no end == start)
+        out_gexf_dyn = tmp_path / "exports" / "graph_dyn.gexf"
+        res_gexf_dyn = runner.invoke(knowledge_export, [
+            "--format", "gexf",
+            "--dynamic",
+            "--out", str(out_gexf_dyn),
+            "--vault", str(vault_dir),
+        ])
+        assert res_gexf_dyn.exit_code == 0
+        dyn_root = ET.parse(out_gexf_dyn).getroot()
+        for n_elem in dyn_root.findall(".//{*}node"):
+            if "end" in n_elem.attrib:
+                assert n_elem.attrib.get("start") != n_elem.attrib.get("end")
 
         # 3. Export GraphML
         out_graphml = tmp_path / "exports" / "graph.graphml"
@@ -293,6 +312,14 @@ class TestKnowledgeExportCLICommand:
         ])
         assert res_graphml.exit_code == 0
         assert out_graphml.exists()
+        graphml_root = ET.parse(out_graphml).getroot()
+        assert len(graphml_root.findall(".//{*}node")) == 3
+        assert len(graphml_root.findall(".//{*}edge")) == 2
+        summary_elem = graphml_root.find(".//{*}graph/{*}data[@key='graph_summary']")
+        assert summary_elem is not None
+        summary_obj = json.loads(summary_elem.text or "{}")
+        assert summary_obj["total_nodes"] == 3
+        assert summary_obj["total_edges"] == 2
 
         # 4. Export HTML
         out_html = tmp_path / "exports" / "graph.html"
@@ -303,8 +330,30 @@ class TestKnowledgeExportCLICommand:
         ])
         assert res_html.exit_code == 0
         assert out_html.exists()
+        html_content = out_html.read_text(encoding="utf-8")
+        assert '"nodes":' in html_content
+        assert '"edges":' in html_content
+        assert "ki_alpha" in html_content
+        assert "ki_beta" in html_content
 
-        # 5. Rule 40 path rejection: target inside vault must fail with error code
+        # 5. Export Cypher
+        out_cypher = tmp_path / "exports" / "graph.cypher"
+        res_cypher = runner.invoke(knowledge_export, [
+            "--format", "cypher",
+            "--out", str(out_cypher),
+            "--vault", str(vault_dir),
+        ])
+        assert res_cypher.exit_code == 0
+        assert out_cypher.exists()
+        cypher_content = out_cypher.read_text(encoding="utf-8")
+        assert "// Summary: 3 nodes" in cypher_content
+        assert 'MERGE (n:KnowledgeItem {id: "ki_alpha"}' in cypher_content
+        assert 'MERGE (n:KnowledgeItem {id: "ki_beta"}' in cypher_content
+        assert 'MERGE (n:CodePath {id: "src/harness/service.py"}' in cypher_content
+        assert 'MERGE (s)-[r:REFERENCES_CODE]->(t)' in cypher_content
+        assert 'MERGE (s)-[r:SAME_DOMAIN]->(t)' in cypher_content
+
+        # 6. Rule 40 path rejection: target inside vault must fail with error code
         invalid_out = vault_dir / "illegal_export.json"
         res_invalid = runner.invoke(knowledge_export, [
             "--format", "json",

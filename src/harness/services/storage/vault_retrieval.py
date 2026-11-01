@@ -142,6 +142,16 @@ class KnowledgeRetrievalMixin:
                         meta_path.write_text(json.dumps(raw, indent=2), encoding="utf-8")
                     except Exception as e:
                         logger.debug("Failed to update disk metadata", ki_id=ki_id, error=str(e))
+            else:
+                meta_path = root / ki_id / "metadata.json"
+                if meta_path.exists():
+                    try:
+                        raw = json.loads(meta_path.read_text(encoding="utf-8"))
+                        raw["retrieval_count"] = int(raw.get("retrieval_count", 0)) + 1
+                        raw["last_retrieved_at"] = now_iso
+                        meta_path.write_text(json.dumps(raw, indent=2), encoding="utf-8")
+                    except Exception as e:
+                        logger.debug("Failed to update disk metadata fallback", ki_id=ki_id, error=str(e))
 
     async def record_knowledge_outcome(self, ki_ids: list[str], success: bool, vault_dir: Path | str = ".harness/knowledge") -> None:
         if not ki_ids:
@@ -161,6 +171,16 @@ class KnowledgeRetrievalMixin:
                         meta_path.write_text(json.dumps(raw, indent=2), encoding="utf-8")
                     except Exception as e:
                         logger.debug("Failed to update disk outcome", ki_id=ki_id, error=str(e))
+            else:
+                meta_path = root / ki_id / "metadata.json"
+                if meta_path.exists():
+                    try:
+                        raw = json.loads(meta_path.read_text(encoding="utf-8"))
+                        if success:
+                            raw["success_count"] = int(raw.get("success_count", 0)) + 1
+                        meta_path.write_text(json.dumps(raw, indent=2), encoding="utf-8")
+                    except Exception as e:
+                        logger.debug("Failed to update disk outcome fallback", ki_id=ki_id, error=str(e))
 
     async def evaluate_vault_lifecycle(
         self,

@@ -1,0 +1,51 @@
+name: brain-harness
+description: "Brain Harness agent dock — workstation port for inspecting, testing, and driving the micro-kernel"
+version: "0.1.0"
+
+permissions:
+  read: true
+  run: true
+  write: true
+  push: false
+
+boundaries:
+  paths:
+    - ".git/"
+    - ".env"
+    - ".pytest_cache/"
+    - "src/harness/ui/static/"
+  operations:
+    - "git push --force"
+    - "git reset --hard"
+    - "git clean -fd"
+
+tools:
+  - "fs_read_file"
+  - "fs_search_text"
+  - "fs_git_status"
+  - "fs_git_diff"
+  - "run_pytest"
+
+entrypoints:
+  vault-stats:
+    description: "Display knowledge graph and vault statistics"
+    write_path: false
+    steps:
+      - command: "python src/harness/cli.py knowledge stats"
+        workdir: "."
+        expected_output: "Active Knowledge Items"
+
+  verify-core:
+    description: "Run targeted dock verification tests"
+    write_path: false
+    steps:
+      - command: "pytest tests/test_service_dock.py tests/test_command_dock.py -v"
+        workdir: "."
+
+  sync-context:
+    description: "Lint and verify codebase context and instruction file hygiene"
+    write_path: true
+    steps:
+      - command: "python src/harness/cli.py context lint --root ."
+        workdir: "."
+

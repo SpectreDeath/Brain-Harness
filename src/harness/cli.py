@@ -41,21 +41,26 @@ from harness.commands.data import data_group
 from harness.commands.datasets import datasets_group
 from harness.commands.doc import doc_group
 from harness.commands.doc_builder import doc_builder_group
+from harness.commands.dock import dock_group
 from harness.commands.events import events_cli
 from harness.commands.facet import facet_group
 from harness.commands.garf import garf_group
 from harness.commands.gate import gate_group
 from harness.commands.gemini_vercel import gemini_vercel_group
+from harness.commands.gev import gev_group
 from harness.commands.gis import gis_group
 from harness.commands.gradio_app import gradio_group
 from harness.commands.harness_architect import architect_group
 from harness.commands.icm import icm_group
+from harness.commands.mantis import mantis_group
 from harness.commands.mcp import mcp_group
+from harness.commands.memory import memory_group
 from harness.commands.model_router import model_router_group
 from harness.commands.network_forensics import network_forensics_group
 from harness.commands.okf import okf_group
 from harness.commands.plugins import plugin_group
 from harness.commands.pre_commit_security import pre_commit_security_group
+from harness.commands.rea import rea_group
 from harness.commands.redteam import redteam_group
 from harness.commands.reflection import knowledge_group, reflect_cli
 from harness.commands.rol import rol_group
@@ -119,20 +124,25 @@ _CANONICAL_GROUPS = [
     ("datasets", datasets_group),
     ("doc", doc_group),
     ("doc-builder", doc_builder_group),
+    ("dock", dock_group),
     ("eval", eval_group),
     ("facet", facet_group),
     ("garf", garf_group),
     ("gate", gate_group),
     ("gemini-vercel", gemini_vercel_group),
+    ("gev", gev_group),
     ("gis", gis_group),
     ("gradio", gradio_group),
     ("icm", icm_group),
     ("knowledge", knowledge_group),
+    ("mantis", mantis_group),
     ("mcp", mcp_group),
+    ("memory", memory_group),
     ("network-forensics", network_forensics_group),
     ("okf", okf_group),
     ("plugin", plugin_group),
     ("pre-commit-security", pre_commit_security_group),
+    ("rea", rea_group),
     ("redteam", redteam_group),
     ("rol", rol_group),
     ("router", model_router_group),

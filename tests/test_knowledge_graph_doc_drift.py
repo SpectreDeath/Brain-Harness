@@ -36,10 +36,14 @@ def test_documented_cli_commands_match_live_registry() -> None:
     }
     assert core_commands.issubset(doc_commands), f"Missing core commands in documentation: {core_commands - doc_commands}"
 
-    # Also verify in cli.md reference
+    # Also verify that all 19 live subcommands appear in cli.md reference
     matches_ref = re.findall(r"harness knowledge ([a-z0-9_-]+)", cli_ref_content)
     ref_commands = set(matches_ref)
-    assert core_commands.issubset(ref_commands)
+    assert set(knowledge_group.commands.keys()) == ref_commands, (
+        f"Mismatch between live CLI commands and cli.md reference: "
+        f"missing={set(knowledge_group.commands.keys()) - ref_commands}, "
+        f"extra={ref_commands - set(knowledge_group.commands.keys())}"
+    )
 
 
 def test_documented_node_and_edge_attributes_match_dataclass_fields() -> None:
@@ -60,16 +64,20 @@ def test_documented_node_and_edge_attributes_match_dataclass_fields() -> None:
 
 
 def test_rule_47_markdown_codeblock_isolation_and_link_hygiene() -> None:
-    doc_path = Path("docs/how-to/explore-knowledge-graph.md")
-    content = doc_path.read_text(encoding="utf-8")
+    docs_dir = Path("docs")
+    md_files = list(docs_dir.glob("**/*.md"))
+    assert md_files, "No markdown files found under docs/"
 
-    # Strip fenced codeblocks per Rule 47
-    content_no_codeblocks = re.sub(r"```[\s\S]*?```", "", content)
+    for doc_path in md_files:
+        content = doc_path.read_text(encoding="utf-8")
+        # Strip fenced codeblocks per Rule 47
+        content_no_codeblocks = re.sub(r"```[\s\S]*?```", "", content)
 
-    # Assert no invalid workspace-absolute file:/// URIs
-    assert "file:///" not in content_no_codeblocks, "Rule 47 violation: workspace-absolute file:/// link found in docs"
+        # Assert no invalid workspace-absolute file:/// URIs across any doc (Rule 47)
+        assert "file:///" not in content_no_codeblocks, f"Rule 47 violation: workspace-absolute file:/// link found in {doc_path}"
 
-    # Assert no unescaped dollar signs causing KaTeX math corruption in prose
-    # (Literal dollar should not appear unescaped in text)
-    assert not re.search(r"(?<!\\)\$(?!\$)", content_no_codeblocks)
+    # Verify explore-knowledge-graph.md specifically has no unescaped dollar signs
+    explore_doc = Path("docs/how-to/explore-knowledge-graph.md")
+    explore_content = re.sub(r"```[\s\S]*?```", "", explore_doc.read_text(encoding="utf-8"))
+    assert not re.search(r"(?<!\\)\$(?!\$)", explore_content)
 

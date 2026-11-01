@@ -149,29 +149,35 @@ def resolve_source_target(meta: dict[str, Any]) -> str:
     return ""
 
 
-def resolve_created_at(meta: dict[str, Any], ki_dir: Path) -> str:
-    """Resolve ground-truth creation timestamp without clobbering historical dates."""
+def resolve_created_at_with_source(meta: dict[str, Any], ki_dir: Path) -> tuple[str, str]:
+    """Resolve ground-truth creation timestamp and identify the source waterfall tier."""
     for field in ("created_at", "timestamp", "created"):
         val = meta.get(field)
         if val and isinstance(val, str) and len(val) >= 4:
-            return val
+            return val, "metadata"
     isnad = meta.get("isnad")
     if isinstance(isnad, dict) and isnad.get("timestamp"):
-        return str(isnad["timestamp"])
+        return str(isnad["timestamp"]), "metadata"
     prov = meta.get("provenance")
     if isinstance(prov, dict):
         for field in ("timestamp", "extracted_at", "date"):
             if prov.get(field):
-                return str(prov[field])
+                return str(prov[field]), "metadata"
     m = re.search(r"(202\d{5}|202\d-\d{2}-\d{2})", ki_dir.name)
     if m:
         raw = m.group(1).replace("-", "")
-        return f"{raw[:4]}-{raw[4:6]}-{raw[6:8]}T00:00:00Z"
+        return f"{raw[:4]}-{raw[4:6]}-{raw[6:8]}T00:00:00Z", "dir_id"
     try:
         mtime = (ki_dir / "metadata.json").stat().st_mtime
-        return datetime.fromtimestamp(mtime, tz=timezone.utc).isoformat()
+        return datetime.fromtimestamp(mtime, tz=timezone.utc).isoformat(), "mtime_fallback"
     except Exception:
-        return datetime.now(timezone.utc).isoformat()
+        return datetime.now(timezone.utc).isoformat(), "mtime_fallback"
+
+
+def resolve_created_at(meta: dict[str, Any], ki_dir: Path) -> str:
+    """Resolve ground-truth creation timestamp without clobbering historical dates."""
+    date_val, _ = resolve_created_at_with_source(meta, ki_dir)
+    return date_val
 
 
 def normalize_isnad(meta: dict[str, Any]) -> dict[str, Any]:

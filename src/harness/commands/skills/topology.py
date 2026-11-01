@@ -125,3 +125,24 @@ def get_skill_topology_cmd(
         }
     except KeyError as e:
         return {"status": "error", "reason": str(e)}
+
+
+def get_cross_cluster_bridges_cmd(
+    root_path: str | Path = ".", context: Any = None
+) -> dict[str, Any]:
+    """Discover cross-domain macro-bridges connecting distinct skill clusters."""
+    from plugins.memory_and_epistemics.skill_knowledge_graph.clustering_tools import (
+        get_cross_cluster_bridges,
+    )
+
+    return get_cross_cluster_bridges()
+
+
+def index_skill_catalog_cmd(root_path: str = ".") -> dict[str, Any]:
+    """Scan and index all workspace skills into the knowledge graph (Rule 35)."""
+    from plugins.memory_and_epistemics.skill_knowledge_graph.tools import (
+        index_skill_catalog,
+    )
+
+    return index_skill_catalog(root_path=root_path)
+

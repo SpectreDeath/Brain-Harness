@@ -1,0 +1,31 @@
+# Integrated Toolkits Master Reference
+
+## Authoritative Reference Table
+
+The following master reference catalogs every major integrated toolkit within Brain Harness, including its micro-kernel `ServiceKey`, canonical Click CLI commands, companion skill specification in `.agents/skills/`, and runtime sandbox isolation mode.
+
+| Toolkit / Domain | Service Key | Canonical CLI Commands | Companion Skill Link | Isolation Mode | Description |
+|---|---|---|---|---|---|
+| **Reverse Engineering (`rea`)** | `service.rea` | `harness rea [dissect\|diff\|learn\|obligations\|report]` | [rea-reverse-engineering](../../.agents/skills/rea-reverse-engineering/SKILL.md) | `in_process` | Unified reverse engineering across binaries, bytecodes, assemblies, and differential evidence. |
+| **Dock Tooling (`dock`)** | `service.dock` | `harness dock [status\|mount\|unmount\|call\|export]` | [agent-harness-architect](../../.agents/skills/agent-harness-architect/SKILL.md) | `in_process` | Dynamic tool docking, mounting external CLI bridges, and isolated tool execution. |
+| **God's Eye View (`gev`)** | `service.gods_eye_view` | `harness gev [status\|brief\|flights\|vessels\|hazards\|spatial\|render]` | [gods-eye-view](../../.agents/skills/gods-eye-view/SKILL.md) | `in_process` | Multi-domain geospatial situational awareness, live telemetry, and simulated fallbacks. |
+| **Mantis Security Review (`mantis`)** | `service.mantis_security_review` | `harness mantis [history-scan\|dir-summary\|plan-review\|audit\|dedupe\|critic-filter\|gate\|chain-exploits\|calibrate-risk\|report]` | [mantis-security-review](../../.agents/skills/mantis-security-review/SKILL.md) | `in_process` | 10-stage autonomous security review, SAST auditing, exploit chaining, and gating. |
+| **Network Forensics (`network-forensics`)** | `service.network_forensics` | `harness network-forensics [dissect\|scan\|filter\|eval\|summary]` | [ethical-hacker-networking](../../.agents/skills/ethical-hacker-networking/SKILL.md) | `in_process` | Protocol-level packet analysis, tri-state port evaluation, and 7-layer fault isolation. |
+| **Skill Knowledge Graph (`skills`)** | `service.skill_graph` | `harness skills [list\|get\|route\|match\|export\|bridges\|index\|joint-query]` | [agent-skills-architect](../../.agents/skills/agent-skills-architect/SKILL.md) | `in_process` | Slotted skill catalog, Louvain clustering, intent routing, and cross-cluster bridges. |
+| **Epistemic Knowledge Vault (`knowledge`)** | `service.knowledge_vault` | `harness knowledge [query\|reflect\|contradictions\|lifecycle\|joint-query]` | [epistemic-memory-lifecycle](../../.agents/skills/epistemic-memory-lifecycle/SKILL.md) | `in_process` | Canonical dual-file knowledge items (`Rule 40`), Isnad provenance chains, and graph traversal. |
+| **Context Type System (`context`)** | `service.context_type_system` | `harness context [add\|transform\|validate-tool\|assemble\|ledger\|snapshot]` | [context-type-system](../../.agents/skills/context-type-system/SKILL.md) | `in_process` | 4-channel semantic segregation, origin provenance ledgers, and budgeted prompt assembly. |
+| **Memory Decay Engine (`memory`)** | `service.memory_decay` | `harness memory [register\|recall\|step\|working-set\|benchmark\|snapshot\|status\|route]` | [ebbinghaus-memory-governor](../../.agents/skills/ebbinghaus-memory-governor/SKILL.md) | `in_process` | Channel-weighted Ebbinghaus forgetting curves, soft eviction, and 5-store routing. |
+| **OKF Memory Governor (`okf`)** | `service.okf_memory` | `harness okf [scope\|search\|validate\|status]` | [okf-memory-governor](../../.agents/skills/okf-memory-governor/SKILL.md) | `in_process` | Git-native normative concept bundles, path-based editing governance, and trust tiers. |
+| **Wiki Compiler (`doc wiki-*`)** | `service.wiki_compiler` | `harness doc [wiki-compile\|wiki-lint]` | [paperless-document-pipeline](../../.agents/skills/paperless-document-pipeline/SKILL.md) | `in_process` | Automatic compilation of markdown notes into cross-referenced wikis with link linting. |
+| **Pocock Skills Bundle (`mattpocock-skills`)** | None | `harness tool info plugin.mattpocock-skills.<tool>` | [crafting-skills](../../.agents/skills/crafting-skills/SKILL.md) | `subprocess` | 35 read-only interactive engineering workflows and coaching interview rubrics. |
+
+---
+
+## Canonical CLI Invocation Standards
+
+Every integrated toolkit adheres to the following micro-kernel invariants:
+1. **Headless Introspection (`Rule 10`)**: Every command supports `--json` for machine readability and automated CI pipelines.
+2. **Deterministic Fallbacks (`Rule 58`)**: Single-seam resolvers fall back to instantiated domain singletons when IoC contexts are omitted.
+3. **Slotted Dataclasses (`Rule 12`)**: High-throughput telemetry and AST payloads use frozen, slotted dataclass schemas.
+4. **UTF-8 Standard Streams (`Rule 23`)**: All CLI entrypoints reconfigure output streams to UTF-8 to prevent Windows `cp1252` encoding failures.
+

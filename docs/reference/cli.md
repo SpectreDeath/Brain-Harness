@@ -30,12 +30,18 @@ Agent conversation DAG inspection and transcript export.
 - `harness session export <session_id> [--output FILE]`: Exports full JSON step transcripts.
 
 ### `harness context`
-Context compilation, skeletonization, and governance.
-- `harness context compile --prompt "<text>"`: Compiles context with deterministic pruning.
-- `harness context skeletonize [--root DIR]`: Generates a PageRanked AST repository skeleton map.
-- `harness context lint`: Lints codebase context files (AGENTS.md, CLAUDE.md) against line budgets.
-- `harness context sync`: Synchronizes context definitions across agent configurations.
-- `harness context govern`: Enforces context token boundaries and negative constraints.
+Context compilation, skeletonization, governance, and semantic type provenance.
+- `harness context compile <target_file> [--repo-root DIR] [--max-hops N]`: Compiles 3-tier AST reachability context.
+- `harness context skeletonize <target_file>`: Extracts structural interface skeleton stripping function bodies.
+- `harness context lint [--root DIR] [--json]`: Lints codebase context files against line budgets and leakages.
+- `harness context sync [--root DIR] [--source FILE] [--dry-run]`: Synchronizes context definitions across vendor rules.
+- `harness context govern [--root DIR] [--complexity SCORE] [--json]`: Complete 5-stage context governance audit.
+- `harness context add --session ID --type TYPE --content TEXT [--source SRC] [--priority N] [--json]`: Registers typed context into origin ledger.
+- `harness context transform --session ID --id REQ_ID --to-type TYPE [--source SRC] [--json]`: Explicitly transitions context across policy boundaries.
+- `harness context validate-tool --session ID [--id REQ_ID] [--tool-name NAME] [--output-json JSON] [--strict] [--json]`: Elevates raw tool output to verified evidence.
+- `harness context assemble --session ID [--budget-tokens N] [--json]`: Renders ordered prompt partitioned by semantic channels.
+- `harness context ledger --session ID [--id REQ_ID] [--json]`: Audits provenance ledger or traces multi-hop Isnad lineage.
+- `harness context snapshot --session ID [--export PATH | --import PATH] [--json]`: Exports or restores context session snapshots.
 
 ### `harness assess-compute`
 Dynamic 5D complexity evaluation and reasoning budget allocation.
@@ -117,6 +123,14 @@ Granular tool registry management.
 - `harness tool enable <tool_name>`: Enables a registered tool.
 - `harness tool disable <tool_name>`: Disables a registered tool.
 
+### `harness dock`
+Agent Dock workstation port management and procedure execution.
+- `harness dock inspect [<repo_or_path>] [--json]`: Inspects repository dock manifest or generic fallback without modifying state.
+- `harness dock link <repo_or_path> [--name NAME] [--approve] [--json]`: Links an agent dock and records its approval SHA-256 digest.
+- `harness dock list [--json]`: Lists all linked docks, verification status, and approval drift.
+- `harness dock tools <dock_name> [--json]`: Lists callable tools exposed by a dock.
+- `harness dock run <dock_name> <procedure_name> [--dry-run] [--json]`: Executes a declared procedure with pre-execution boundary gates.
+
 ### `harness creator` (Aliases: `create`, `scaffold`, `validate`, `archetypes`)
 Plugin and capability synthesis.
 - `harness creator build <name> --category <cat> [--archetype ARCH]`: Scaffolds a new plugin project.
@@ -125,11 +139,14 @@ Plugin and capability synthesis.
 - `harness creator remediate <path>`: Auto-repairs detected manifest and structure lint errors.
 
 ### `harness skills`
-Skill Knowledge Graph routing and shortest-path chaining.
+Skill Knowledge Graph routing, shortest-path chaining, and cross-cluster bridges.
 - `harness skills list`: Lists all registered agent skills in the knowledge graph.
 - `harness skills route "<intent>"`: Ranks candidate skills matching an operational intent.
 - `harness skills chain --from <skill_a> --to <skill_b>`: Finds the optimal directed execution chain.
 - `harness skills graph`: Indexes and displays the workspace skill knowledge graph.
+- `harness skills bridges [--json]`: Computes high-centrality cross-cluster bridge skills routing across domains.
+- `harness skills index [--json]`: Re-indexes the entire workspace skill catalog and updates topology caches.
+- `harness skills joint-query "<topic>" [--limit N] [--json]`: Executes unified cross-graph query joining Knowledge Vault KIs and Skill Graph nodes.
 - `harness skills create <name>`: Scaffolds a high-precision agent skill with `SKILL.md` and `CARD.md`.
 - `harness skills validate <skill_name>`: Validates an agent skill package against deep-module craft standards.
 - `harness skills info <skill_name>`: Inspects topological dependencies and anti-patterns for a skill.
@@ -146,17 +163,32 @@ Pre-commit SAST scanning and credential leak prevention.
 - `harness pre-commit-security audit-suppressions`: Audits security rule suppressions.
 - `harness pre-commit-security brief`: Generates security audit visual brief.
 
+### `harness mantis` (Aliases: `security-review`)
+Mantis 10-stage autonomous security review, SAST audit, and policy gate pipeline.
+- `harness mantis history-scan <repo_path>`: Scans git commit log for vulnerability patterns.
+- `harness mantis dir-summary <target_dir>`: Generates architectural security posture overview.
+- `harness mantis plan-review <plan_file>`: Critiques security plans against MITRE ATT&CK.
+- `harness mantis audit <target_dir>`: Runs multi-rule SAST audit (injection, auth, crypto).
+- `harness mantis dedupe`: Clusters and deduplicates candidate security findings.
+- `harness mantis critic-filter`: Filters false positives using dialectical safety rubric.
+- `harness mantis gate`: Evaluates blocking security policy release gate.
+- `harness mantis chain-exploits`: Discovers multi-step exploit paths across findings.
+- `harness mantis calibrate-risk`: Calibrates CVSS scores and computes aggregate risk index.
+- `harness mantis report`: Generates full vulnerability audit scorecard and HTML brief.
+
 ---
 
 ## 3. Documentation & Data Commands
 
 ### `harness doc`
-AST documentation coverage auditing and link drift verification.
+AST documentation coverage auditing, link drift verification, and wiki compilation.
 - `harness doc audit [--root DIR] [--min-coverage PCT] [--output FILE]`: Audits doc coverage across Python modules.
 - `harness doc drift [--root DIR] [--output FILE]`: Verifies all relative links and symbol names.
 - `harness doc brief [--output FILE]`: Generates an interactive HTML coverage brief.
 - `harness doc scaffold <module_path>`: Scaffolds standardized Diataxis documentation for a Python module.
 - `harness doc stats`: Inspects AST parsing cache performance statistics.
+- `harness doc wiki-compile <raw_dir> <output_dir> [--incremental] [--no-lint] [--json]`: Compiles raw notes into a cross-referenced Wiki.
+- `harness doc wiki-lint <wiki_dir> [--json]`: Audits compiled markdown wiki for broken links, missing entities, and orphans.
 
 ### `harness doc-builder` (Alias: `hf-doc-builder`)
 HuggingFace doc-builder AST compiler, link verifier, and MDX transpiler.
@@ -202,6 +234,16 @@ Multi-engine geospatial processing and CRS verification.
 - `harness gis route --task <task_type>`: Routes geospatial workloads to the optimal GIS engine across 14 engines.
 - `harness gis validate --crs <crs_code> --layer <layer>`: Enforces Coordinate Reference System (CRS) safety gates.
 - `harness gis architect --spec <pipeline_spec>`: Compiles geospatial analysis pipelines.
+
+### `harness gev` (Aliases: `gods-eye`, `osint`)
+God's Eye View multi-domain geospatial situational awareness, live telemetry, and simulated fallback engine.
+- `harness gev status`: Inspects operational status of all 5 domain subgroups and data providers.
+- `harness gev brief <lat> <lon> [--radius-km N]`: Synthesizes unified multi-layer situational assessment.
+- `harness gev flights <lat> <lon> [--radius-km N]`: Tracks active aerial traffic (OpenSky, ADS-B).
+- `harness gev vessels <lat> <lon> [--radius-km N]`: Tracks maritime vessel movements (AIS).
+- `harness gev hazards <lat> <lon> [--radius-km N]`: Aggregates active seismic, wildfire, and weather hazards.
+- `harness gev spatial <lat> <lon> [--radius-km N]`: Queries critical infrastructure and satellite passes.
+- `harness gev render <lat> <lon> [--style orthophoto|globe|terrain]`: Generates visual map tiles and terrain heights.
 
 ### `harness okf`
 Open Knowledge Framework (OKF v0.2) Git-native episodic memory.
@@ -265,6 +307,20 @@ Autonomous Knowledge Graph inspection, export, query traversal, and vault lifecy
 - `harness knowledge lifecycle [--apply-contradictions]`: Evaluates retrieval success rates and updates item statuses.
 - `harness knowledge contradictions`: Lists detected conflicts and antinomies between Knowledge Items.
 - `harness knowledge resolve <ki_a> <ki_b> --action supersede|contradict|dismiss`: Resolves an epistemic contradiction.
+- `harness knowledge lineage <skill_name>`: Traces genesis Knowledge Items and provenance chains that created an agent skill.
+- `harness knowledge reflect [--since DATE] [--category CAT] [--limit N]`: Harvests transcripts and distills new heuristics into Knowledge Items.
+- `harness knowledge joint-query "<topic>" [--limit N] [--vault DIR] [--json]`: Executes cross-graph query discovering epistemic KIs, procedural skills, and domain lineage links.
+
+### `harness memory` (Aliases: `memory-decay`, `ebbinghaus`)
+Working-memory retention management, Ebbinghaus forgetting curves, soft eviction, and 5-store query routing.
+- `harness memory register --key KEY --content TEXT [--channel TYPE] [--stability S] [--foundational]`: Registers working memory with channel multiplier.
+- `harness memory recall <key>`: Recalls memory item, non-linearly reinforcing stability.
+- `harness memory step [--turns N]`: Advances logical turns and soft-evicts items below retention threshold ($R(t) < 0.20$).
+- `harness memory working-set [--ranked] [--include-evicted]`: Queries active working set or full item retention history.
+- `harness memory benchmark [--turns N] [--items N] [--seed N]`: Simulates and benchmarks Ebbinghaus retention against recency baselines.
+- `harness memory snapshot [--export PATH | --import PATH]`: Exports or restores working memory session snapshots.
+- `harness memory status`: Inspects operational status and paradigms of all 5 partitioned memory stores.
+- `harness memory route "<question>"`: Recommends authoritative store (`okf`, `memgraphrag`, `graphiti`, `decay`, `vault`) for developer/agent inquiries.
 
 ### `harness bridge`
 Diagnostics for external ecosystem bridges (Em-Cubed, Memtext, Skill Flywheel).
@@ -317,6 +373,19 @@ Differential Facet Verifier — Multi-provider evidence comparison and facet ava
 - `harness facet compare --p1 <p1> --p2 <p2>`: Performs 3-valued differential outcome evaluation.
 - `harness facet gate --claim <claim>`: Assesses absence claimability gates.
 - `harness facet brief`: Generates differential facet visualization briefs.
+
+### `harness rea` (Aliases: `reverse-engineering`, `dissect`)
+Reverse-Engineering Automation (REA) unified toolkit facade over native, managed runtime, mobile/firmware, and JavaScript domain engines.
+- `harness rea inspect <target> [--max-symbols N] [--max-records N] [--json]`: Dissects binary/bytecode/archive artifacts and extracts semantic signatures.
+- `harness rea list`: Enumerates all 28 canonical REA tools organized by artifact category.
+- `harness rea providers`: Reports version, status, capabilities, and tool counts of the 4 domain plugins.
+- `harness rea decompile <target> [--function FUNC] [--class-name CLASS]`: Decompiles native functions or Dalvik classes.
+- `harness rea callgraph <target> [--function FUNC] [--depth N]`: Computes caller/callee function call graphs.
+- `harness rea signatures <target> [--category CAT]`: Extracts cryptographic, network, sink, and exported API signatures.
+- `harness rea devices`: Lists attached Android devices/emulators and inspects ADB client status.
+- `harness rea diff <target> [--providers P1,P2]`: Compares multi-provider dissection outputs with 3-valued differential outcomes.
+- `harness rea learn <target> [--domain DOM] [--tag TAG] [--dry-run]`: Seals dissection findings as `ev:<sha256>` evidence and writes dual-file Knowledge Items.
+- `harness rea learned`: Lists reverse-engineering Knowledge Items stored in the Knowledge Vault.
 
 ### `harness redteam`
 Microsoft PyRIT AI Red Teaming & Harm Evaluation Engine.

@@ -339,6 +339,63 @@ def doc_stats_cli(as_json: bool) -> None:
     click.echo()
 
 
+@doc_group.command("wiki-compile")
+@click.argument("raw_dir", type=click.Path(exists=True))
+@click.argument("output_dir", type=click.Path())
+@click.option("--incremental", is_flag=True, help="Only recompile and write changed files")
+@click.option("--no-lint", is_flag=True, help="Disable post-compilation link and orphan linter")
+@click.option("--json", "as_json", is_flag=True, help="Emit JSON output")
+def doc_wiki_compile_cli(raw_dir: str, output_dir: str, incremental: bool, no_lint: bool, as_json: bool) -> None:
+    """Compile raw markdown notes into a cross-referenced Wiki knowledge base."""
+    from plugins.data_engineering.wiki_compiler.main import compile_wiki_directory, compile_wiki_incremental
+    if incremental:
+        res = compile_wiki_incremental(raw_dir=raw_dir, output_dir=output_dir)
+    else:
+        res = compile_wiki_directory(raw_dir=raw_dir, output_dir=output_dir, run_linter=not no_lint)
+
+    if as_json:
+        click.echo(_json.dumps(res, indent=2))
+        return
+
+    if res.get("status") == "ok":
+        click.secho("\nWiki Compilation Successful", fg="green", bold=True)
+        click.echo("━" * 50)
+        click.echo(f"  Source Directory : {res.get('raw_dir')}")
+        click.echo(f"  Output Directory : {res.get('output_dir')}")
+        click.echo(f"  Entities Built   : {res.get('entities_compiled', res.get('compiled_count', 0))}")
+        click.echo(f"  Pages Written    : {res.get('written_pages_count', res.get('written_count', 0))}")
+        if res.get("orphan_pages_count") is not None:
+            click.echo(f"  Orphan Pages     : {res.get('orphan_pages_count')}")
+    else:
+        click.secho(f"[ERROR] Wiki compilation failed: {res.get('error')}", fg="red", err=True)
+        sys.exit(1)
+
+
+@doc_group.command("wiki-lint")
+@click.argument("wiki_dir", type=click.Path(exists=True))
+@click.option("--json", "as_json", is_flag=True, help="Emit JSON output")
+def doc_wiki_lint_cli(wiki_dir: str, as_json: bool) -> None:
+    """Audit compiled markdown wiki for broken links, missing entities, and orphans."""
+    from plugins.data_engineering.wiki_compiler.main import lint_wiki
+    res = lint_wiki(compiled_dir=wiki_dir)
+    if as_json:
+        click.echo(_json.dumps(res, indent=2))
+        return
+
+    if res.get("status") == "ok":
+        lint_rep = res.get("lint_report") or {}
+        passed = lint_rep.get("valid", True)
+        fg_col = "green" if passed else "yellow"
+        click.secho(f"\nWiki Lint Report: {'PASS' if passed else 'WARNINGS'}", fg=fg_col, bold=True)
+        click.echo("━" * 50)
+        click.echo(f"  Broken Links : {len(lint_rep.get('broken_links', []))}")
+        click.echo(f"  Orphan Nodes : {len(lint_rep.get('orphans', []))}")
+        click.echo(f"  Total Pages  : {lint_rep.get('total_pages', 0)}")
+    else:
+        click.secho(f"[ERROR] Wiki linting failed: {res.get('error')}", fg="red", err=True)
+        sys.exit(1)
+
+
 __all__ = [
     "doc_audit_cli",
     "doc_brief_cli",
@@ -346,5 +403,7 @@ __all__ = [
     "doc_group",
     "doc_scaffold_cli",
     "doc_stats_cli",
+    "doc_wiki_compile_cli",
+    "doc_wiki_lint_cli",
     "get_doc_service",
 ]

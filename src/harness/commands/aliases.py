@@ -60,7 +60,11 @@ CLI_ALIASES: dict[str, str] = {
     "bq": "bigquery",
     "open-source-gis": "gis",
     "garf-reporting": "garf",
+    "gods-eye": "gev",
+    "osint": "gev",
     # Memory & Mining
+    "memory-decay": "memory",
+    "ebbinghaus": "memory",
     "miner": "brain-miner",
     "artifact-miner": "brain-miner",
     "trajectory-miner": "trajectory",
@@ -68,6 +72,7 @@ CLI_ALIASES: dict[str, str] = {
     "temp-miner": "temp",
     "ephemeral-miner": "temp",
     # Security, Calibration & Evaluation
+    "security-review": "mantis",
     "security-guard": "pre-commit-security",
     "shift-left": "pre-commit-security",
     "net-diag": "network-forensics",
@@ -79,6 +84,8 @@ CLI_ALIASES: dict[str, str] = {
     "uncertainty-guard": "uncertainty",
     "obligation-ledger": "rol",
     "differential-facet": "facet",
+    "reverse-engineering": "rea",
+    "dissect": "rea",
 }
 
 

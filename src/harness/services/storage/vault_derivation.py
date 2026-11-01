@@ -93,30 +93,60 @@ def derive_knowledge_graph(
 
     # Census and component metrics
     adj: dict[str, set[str]] = defaultdict(set)
+    ki_adj: dict[str, set[str]] = defaultdict(set)
+    ki_ids = {k.id for k in items}
     for edge in edges:
         adj[edge.source].add(edge.target)
         adj[edge.target].add(edge.source)
+        if edge.source in ki_ids and edge.target in ki_ids:
+            ki_adj[edge.source].add(edge.target)
+            ki_adj[edge.target].add(edge.source)
 
-    visited: set[str] = set()
-    components: list[list[str]] = []
-    ki_ids = {k.id for k in items}
+    isolated_ki_count = sum(1 for kid in ki_ids if not adj[kid])
+    ki_only_isolated = sum(1 for kid in ki_ids if not ki_adj[kid])
+
+    visited_ki: set[str] = set()
+    ki_components: list[list[str]] = []
     for kid in sorted(ki_ids):
-        if kid not in visited:
+        if kid not in visited_ki:
             comp, q = [], [kid]
-            visited.add(kid)
+            visited_ki.add(kid)
             while q:
                 curr = q.pop()
                 comp.append(curr)
-                for neighbor in adj[curr]:
-                    if neighbor in ki_ids and neighbor not in visited:
-                        visited.add(neighbor)
+                for neighbor in ki_adj[curr]:
+                    if neighbor not in visited_ki:
+                        visited_ki.add(neighbor)
                         q.append(neighbor)
-            components.append(comp)
+            ki_components.append(comp)
+    ki_components.sort(key=len, reverse=True)
 
-    components.sort(key=len, reverse=True)
-    isolated_count = sum(1 for c in components if len(c) == 1)
+    if nodes_filter == "ki_only":
+        components = ki_components
+    else:
+        visited_all: set[str] = set()
+        components = []
+        for nid in sorted(nodes.keys()):
+            if nid not in visited_all:
+                comp, q = [], [nid]
+                visited_all.add(nid)
+                while q:
+                    curr = q.pop()
+                    comp.append(curr)
+                    for neighbor in adj[curr]:
+                        if neighbor not in visited_all:
+                            visited_all.add(neighbor)
+                            q.append(neighbor)
+                components.append(comp)
+        components.sort(key=len, reverse=True)
+
     edge_type_counts = Counter(e.type for e in edges)
     non_ki_counts = Counter(n.node_kind for n in nodes.values() if n.node_kind != "ki")
+    date_source_counts: Counter[str] = Counter()
+    for k in items:
+        extra = getattr(k, "model_extra", None) or {}
+        src = extra.get("_date_source") or getattr(k, "_date_source", None) or ("metadata" if k.created_at else "mtime_fallback")
+        date_source_counts[src] += 1
 
     summary = KnowledgeGraphSummary(
         total_nodes=len(nodes),
@@ -128,11 +158,15 @@ def derive_knowledge_graph(
         asserted_edge_count=sum(1 for e in edges if not e.derived),
         component_count=len(components),
         largest_component_size=len(components[0]) if components else 0,
-        isolated_ki_count=isolated_count,
+        isolated_ki_count=isolated_ki_count,
         untagged_ki_count=sum(1 for k in items if not k.tags),
         uncategorized_ki_count=sum(1 for k in items if not k.category or k.category == "general"),
         excluded_mega_tags=excluded_mega_tags,
         date_coverage_count=sum(1 for k in items if bool(k.created_at)),
+        ki_only_isolated_count=ki_only_isolated,
+        ki_only_component_count=len(ki_components),
+        ki_only_largest_component_size=len(ki_components[0]) if ki_components else 0,
+        date_sources=dict(date_source_counts),
     )
 
     return DerivedKnowledgeGraph(nodes=tuple(nodes.values()), edges=tuple(edges), summary=summary)

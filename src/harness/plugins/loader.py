@@ -168,7 +168,12 @@ class PluginLoader:
         processed_dirs: set[Path] = set()
         for manifest_path in sorted(directory.glob("**/plugin.json")):
             plugin_dir = manifest_path.parent
-            if plugin_dir in processed_dirs or any(p.name.startswith(".") for p in plugin_dir.parents) or plugin_dir.name.startswith("."):
+            if (
+                plugin_dir in processed_dirs
+                or any(p.name.startswith(".") for p in plugin_dir.parents)
+                or plugin_dir.name.startswith(".")
+                or ".claude-plugin" in manifest_path.parts
+            ):
                 continue
             processed_dirs.add(plugin_dir)
             try:

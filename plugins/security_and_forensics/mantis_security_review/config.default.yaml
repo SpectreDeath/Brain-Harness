@@ -1,0 +1,13 @@
+# Mantis Security Review & Triage Operational Budgets (Rule 44)
+version: "1.0.0"
+
+operational_budgets:
+  max_commits: 100
+  confidence_threshold: 0.7
+  gate_fail_on_severity: "HIGH"
+  max_exploit_chain_depth: 5
+  timeout_seconds: 60.0
+  dedupe_mode: "syntactic_and_ast"
+  default_strictness: "high"
+  asset_criticality: "high"
+

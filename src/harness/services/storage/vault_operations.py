@@ -19,10 +19,35 @@ from harness.services.storage.vault_taxonomy import (
     normalize_category,
     normalize_isnad,
     resolve_created_at,
+    resolve_created_at_with_source,
     resolve_source_target,
 )
 
 logger = structlog.get_logger()
+
+_CANONICAL_KI_KEYS: frozenset[str] = frozenset({
+    "schema_version",
+    "id",
+    "ki_id",
+    "title",
+    "source_target",
+    "detected_format",
+    "isnad",
+    "claims",
+    "isnad_claims",
+    "tags",
+    "category",
+    "edges",
+    "anchors",
+    "author",
+    "retrieval_count",
+    "success_count",
+    "last_retrieved_at",
+    "status",
+    "superseded_by",
+    "summary",
+    "created_at",
+})
 
 
 class KnowledgeVaultMixin(KnowledgeRetrievalMixin, IsnadAuditMixin):
@@ -62,14 +87,24 @@ class KnowledgeVaultMixin(KnowledgeRetrievalMixin, IsnadAuditMixin):
                 logger.warning("Failed to validate knowledge item", error=str(e))
         return items
 
-    async def sync_knowledge_vault(self, vault_dir: Path | str = ".harness/knowledge") -> int:
+    def get_last_skipped_items(self) -> list[tuple[str, str]]:
+        """Return list of (dir_name, error) from most recent sync_knowledge_vault run."""
+        return getattr(self, "_last_skipped_items", [])
+
+    async def sync_knowledge_vault(
+        self,
+        vault_dir: Path | str = ".harness/knowledge",
+        strict: bool = False,
+    ) -> int:
         """Scan on-disk dual-file knowledge vault and sync to storage, unifying metadata eras."""
         root = Path(vault_dir).resolve()
         if not root.exists() or not root.is_dir():
             return 0
 
-        synced_count = 0
+        synced_items: list[KnowledgeItemRecord] = []
+        skipped_items: list[tuple[str, str]] = []
         graph_service = KnowledgeGraphQueryService()
+
         for ki_dir in root.iterdir():
             if not ki_dir.is_dir():
                 continue
@@ -84,8 +119,13 @@ class KnowledgeVaultMixin(KnowledgeRetrievalMixin, IsnadAuditMixin):
 
                 ki_id = meta.get("id") or meta.get("ki_id") or ki_dir.name
                 source_target = resolve_source_target(meta)
-                created_at = resolve_created_at(meta, ki_dir)
+                created_at, date_source = resolve_created_at_with_source(meta, ki_dir)
                 isnad = normalize_isnad(meta)
+
+                extra_kwargs = {k: v for k, v in meta.items() if k not in _CANONICAL_KI_KEYS}
+                extra_kwargs["_date_source"] = date_source
+                if "summary" in meta:
+                    extra_kwargs["_metadata_summary"] = meta["summary"]
 
                 ki = KnowledgeItemRecord(
                     schema_version=meta.get("schema_version", "1.0.0"),
@@ -104,16 +144,37 @@ class KnowledgeVaultMixin(KnowledgeRetrievalMixin, IsnadAuditMixin):
                     last_retrieved_at=meta.get("last_retrieved_at"),
                     status=meta.get("status", "ACTIVE"),
                     superseded_by=meta.get("superseded_by"),
-                    summary=meta.get("summary") or summary_text,
+                    summary=summary_text or meta.get("summary", ""),
                     created_at=created_at,
+                    **extra_kwargs,
                 )
-                if not ki.edges:
-                    graph_service.backfill_edges_mechanically([ki])
-                await self.save_knowledge_item(ki)
-                synced_count += 1
+                synced_items.append(ki)
             except Exception as e:
+                skipped_items.append((ki_dir.name, str(e)))
                 logger.warning("Failed to sync knowledge item from disk", dir=str(ki_dir), error=str(e))
-        return synced_count
+
+        self._last_skipped_items = skipped_items
+        if strict and skipped_items:
+            raise ValueError(
+                f"Sync failed in strict mode with {len(skipped_items)} skipped item(s): "
+                f"{', '.join(f'{d} ({err})' for d, err in skipped_items[:5])}"
+            )
+
+        items_needing_backfill = [k for k in synced_items if not k.edges]
+        if items_needing_backfill:
+            graph_service.backfill_edges_mechanically(synced_items, vault_dir=root)
+
+        for ki in synced_items:
+            await self.save_knowledge_item(ki)
+
+        if hasattr(self, "_ensure_connection"):
+            from harness.services.storage.vault_derivation import derive_knowledge_graph
+            from harness.services.storage.vault_sqlite_graph import sync_ki_edges
+
+            graph = derive_knowledge_graph(synced_items)
+            sync_ki_edges(self._ensure_connection(), graph)
+
+        return len(synced_items)
 
     async def export_single_item(self, item: KnowledgeItemRecord, vault_dir: Path | str = ".harness/knowledge") -> None:
         """Export a single Knowledge Item to canonical dual-file format on disk (Rule 40).
@@ -135,6 +196,18 @@ class KnowledgeVaultMixin(KnowledgeRetrievalMixin, IsnadAuditMixin):
         else:
             meta_data = {}
 
+        if item.model_extra:
+            for k, v in item.model_extra.items():
+                if k not in meta_data:
+                    meta_data[k] = v
+
+        if "_metadata_summary" in meta_data:
+            meta_data["summary"] = meta_data.pop("_metadata_summary")
+
+        distilled = meta_data.get("distilled_learning")
+        if not distilled:
+            distilled = item.summary.split("\n")[0] if item.summary else item.title
+
         canonical_updates = {
             "schema_version": item.schema_version,
             "id": item.id,
@@ -153,7 +226,7 @@ class KnowledgeVaultMixin(KnowledgeRetrievalMixin, IsnadAuditMixin):
             "superseded_by": item.superseded_by,
             "author": item.author,
             "created_at": item.created_at,
-            "distilled_learning": item.summary.split("\n")[0] if item.summary else item.title,
+            "distilled_learning": distilled,
         }
         meta_data.update(canonical_updates)
         meta_file.write_text(json.dumps(meta_data, indent=2), encoding="utf-8")

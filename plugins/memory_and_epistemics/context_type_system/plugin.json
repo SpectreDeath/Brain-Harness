@@ -11,6 +11,9 @@
     "pydantic>=2.0.0",
     "structlog>=23.1.0"
   ],
+  "provides": [
+    "service.context_type_system"
+  ],
   "entrypoints": [
     {
       "name": "context_add",

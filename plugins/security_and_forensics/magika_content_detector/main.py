@@ -21,8 +21,11 @@ _POSSIBLE_MAGIKA_PATHS = [
     Path(__file__).parent / "vendor",
 ]
 for _p in _POSSIBLE_MAGIKA_PATHS:
-    if _p.exists() and str(_p) not in sys.path:
-        sys.path.insert(0, str(_p))
+    try:
+        if _p.exists() and str(_p) not in sys.path:
+            sys.path.insert(0, str(_p))
+    except (PermissionError, OSError):
+        pass
 
 try:
     from magika import Magika, PredictionMode
@@ -68,7 +71,12 @@ class MagikaContentDetectorEngine:
         self._kb: dict[str, Any] = {}
         self._ext_to_label: dict[str, str] = {}
         kb_path = Path(r"D:\GitHub\cloned\Google\magika\assets\content_types_kb.min.json")
-        if kb_path.exists():
+        kb_exists = False
+        try:
+            kb_exists = kb_path.exists()
+        except (PermissionError, OSError):
+            pass
+        if kb_exists:
             try:
                 import json
                 self._kb = json.loads(kb_path.read_text(encoding="utf-8"))
@@ -288,7 +296,12 @@ class MagikaContentDetectorEngine:
         filter_grp = (filter_group or "").strip().lower()
 
         kb_path = Path(r"D:\GitHub\cloned\Google\magika\assets\content_types_kb.min.json")
-        if kb_path.exists():
+        kb_exists = False
+        try:
+            kb_exists = kb_path.exists()
+        except (PermissionError, OSError):
+            pass
+        if kb_exists:
             import json
             try:
                 kb_data = json.loads(kb_path.read_text(encoding="utf-8"))

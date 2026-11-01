@@ -69,6 +69,14 @@ Tests for Evaluator Critic Adapter Plugin.
 
 ---
 
+## Architectural Consolidation Notice
+
+`evaluator_critic` is an intentional backward-compatibility adapter delegating directly to `critic_loop` (`plugins/agent_orchestration/critic_loop/`):
+- `critic_loop` is the primary, authoritative engine providing both `CRITIC_EVALUATION_SERVICE_KEY` and `CRITIC_LOOP_KEY` with 7 full analysis tools.
+- `evaluator_critic` provides 3 legacy entrypoint aliases (`critic_check_safety`, `critic_evaluate_code`, `critic_review_plan`) for existing workflows without duplicating implementation logic (`Rule 20`).
+
+---
+
 ## Related Documentation & Configuration
 - Manifest: [`plugin.json`](plugin.json)
 - Architecture Seams: [Context Architecture](../../../CONTEXT-MAP.md) | [User Manual](../../../USER_MANUAL.md)

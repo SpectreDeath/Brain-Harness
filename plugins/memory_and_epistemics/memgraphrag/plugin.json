@@ -11,6 +11,9 @@
     "pydantic>=2.0.0",
     "structlog>=23.1.0"
   ],
+  "provides": [
+    "service.memgraphrag"
+  ],
   "entrypoints": [
     {
       "name": "memgraphrag_index",

@@ -22,10 +22,12 @@ from harness.commands.skills.cli_routing import (
     skills_select,
 )
 from harness.commands.skills.cli_topology import (
+    skills_bridges,
     skills_capabilities,
     skills_chain,
     skills_check_chain,
     skills_clusters,
+    skills_index,
     skills_info,
     skills_prereqs,
 )
@@ -52,3 +54,9 @@ skills_group.add_command(skills_guidance, name="guidance")
 skills_group.add_command(skills_intercept, name="intercept")
 skills_group.add_command(skills_prereqs, name="prereqs")
 skills_group.add_command(skills_check_chain, name="check-chain")
+skills_group.add_command(skills_bridges, name="bridges")
+skills_group.add_command(skills_index, name="index")
+
+from harness.commands.reflection import knowledge_joint_query
+skills_group.add_command(knowledge_joint_query, name="joint-query")
+

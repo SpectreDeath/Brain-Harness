@@ -73,6 +73,12 @@ Rather than shipping a rigid, pre-packaged bundle of hardcoded domain tools, **H
 - **Autobiographical Reflection & Knowledge Vault:** Harness harvests its own transcripts, reports, and execution logs to distill verified, Isnad-grounded Knowledge Items.
 - **Immutable Event Stream:** All system transitions, tool executions, agent reasoning steps, and errors are appended to an immutable audit log.
 
+### Ecosystem Scale at a Glance
+- **134 Canonical Harness Plugins** (+ 1 external Pocock skill bundle with 35 entrypoints) totaling **625 tool entrypoints** across 7 architectural domains.
+- **98 Structured Workspace Skills** (`SKILL.md` + `CARD.md`) indexed in the dynamic Skill Knowledge Graph.
+- **45 Canonical CLI Command Groups** (`Rule 6` consolidated) exposing headless introspection, diagnostics, and operational workflows.
+- **282 Verified Knowledge Items** grounded with cryptographic Isnad provenance in the Epistemic Knowledge Vault.
+
 ---
 
 ## 2. Architecture Overview

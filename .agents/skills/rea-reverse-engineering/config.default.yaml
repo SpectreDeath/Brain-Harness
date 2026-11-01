@@ -1,0 +1,32 @@
+# REA Reverse-Engineering Toolkit — Operational Budgets & Zero-Fork Configuration
+rea_toolkit:
+  # Operational Budgets
+  max_symbols: 50
+  max_records: 100
+  max_bytes: 10485760
+  timeout_seconds: 60.0
+
+  # Enforcement Flags
+  offline_by_default: true
+  strict_absence_enforcement: true
+  require_explicit_reasons: true
+  decouple_provider_syntax: true
+  redact_vault_secrets: true
+
+  # Supported Artifact Categories (13 Kinds)
+  supported_categories:
+    - elf
+    - pe_managed
+    - pe_native
+    - dos_mz
+    - apk
+    - asar
+    - wasm
+    - il2cpp_metadata
+    - ai_model
+    - cpython_pyc
+    - har
+    - javascript_bundle
+    - evm_bytecode
+    - firmware
+

@@ -23,8 +23,11 @@ _POSSIBLE_EE_PATHS = [
     Path(__file__).parent.parent / "vendor",
 ]
 for _p in _POSSIBLE_EE_PATHS:
-    if _p.exists() and str(_p) not in sys.path:
-        sys.path.insert(0, str(_p))
+    try:
+        if _p.exists() and str(_p) not in sys.path:
+            sys.path.insert(0, str(_p))
+    except (PermissionError, OSError):
+        pass
 
 try:
     import ee  # type: ignore

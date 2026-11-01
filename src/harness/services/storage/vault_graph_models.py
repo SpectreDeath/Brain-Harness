@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, field
 from typing import Any
 
 
@@ -61,6 +61,10 @@ class KnowledgeGraphSummary:
     uncategorized_ki_count: int
     excluded_mega_tags: tuple[str, ...] = ()
     date_coverage_count: int = 0
+    ki_only_isolated_count: int = 0
+    ki_only_component_count: int = 0
+    ki_only_largest_component_size: int = 0
+    date_sources: dict[str, int] = field(default_factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)

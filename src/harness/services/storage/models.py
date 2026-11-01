@@ -6,7 +6,7 @@ from datetime import datetime, timezone
 from enum import Enum
 from typing import Any
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class IsnadClaimStatus(str, Enum):
@@ -65,6 +65,7 @@ class IsnadLineageBlock(BaseModel):
 
 
 class KnowledgeItemRecord(BaseModel):
+    model_config = ConfigDict(extra="allow")
     """Ground-truth Knowledge Item (KI) extracted from brains, repos, or audits."""
 
     schema_version: str = Field(default="1.0.0", description="Schema version identifier")

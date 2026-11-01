@@ -11,8 +11,10 @@ from harness.commands.skills.topology import (
     cluster_skills_cmd,
     discover_capabilities_cmd,
     find_skill_chain_cmd,
+    get_cross_cluster_bridges_cmd,
     get_prerequisite_closure_cmd,
     get_skill_topology_cmd,
+    index_skill_catalog_cmd,
 )
 
 
@@ -63,6 +65,41 @@ def skills_capabilities(query: str | None, path: str) -> None:
         if cap["target_outcomes"]:
             click.echo(f"   Outcomes: {', '.join(cap['target_outcomes'])}")
         click.echo("─" * 80)
+
+
+@click.command("bridges")
+@click.option("--json", "as_json", is_flag=True, help="Output raw JSON format")
+@click.option("--path", default=".", help="Root directory to scan")
+def skills_bridges(as_json: bool, path: str) -> None:
+    """Discover cross-domain macro-bridges connecting distinct skill clusters."""
+    res = get_cross_cluster_bridges_cmd(root_path=path)
+    if as_json:
+        click.echo(json.dumps(res, indent=2))
+        return
+
+    bridges = res.get("bridges", [])
+    click.echo(f"\n🌉 Cross-Cluster Skill Bridges ({len(bridges)} total)")
+    click.echo("━" * 80)
+    for b in bridges:
+        click.echo(f"  • {b.get('source_cluster')} ──[{b.get('bridge_type', 'macro')}]──> {b.get('target_cluster')}")
+        click.echo(f"    RATIONALE: {b.get('rationale', 'N/A')}")
+    click.echo("━" * 80)
+
+
+@click.command("index")
+@click.option("--path", default=".", help="Root path to index skills from")
+@click.option("--json", "as_json", is_flag=True, help="Output raw JSON format")
+def skills_index(path: str, as_json: bool) -> None:
+    """Scan and index all workspace skills into the skill knowledge graph (Rule 35)."""
+    res = index_skill_catalog_cmd(root_path=path)
+    if as_json:
+        click.echo(json.dumps(res, indent=2))
+        return
+
+    click.secho(f"\nSkill Catalog Indexed (Status: {res.get('status')})", fg="green", bold=True)
+    click.echo(f"  Indexed Skills: {res.get('indexed_skills', 0)}")
+    click.echo(f"  Categories    : {len(res.get('categories', []))}")
+    click.echo(f"  Total Edges   : {res.get('total_edges', 0)}")
 
 
 @click.command("chain")

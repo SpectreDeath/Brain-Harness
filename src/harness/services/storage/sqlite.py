@@ -160,3 +160,39 @@ class SQLiteStorageService(StorageService):
         if self._conn:
             self._conn.close()
             self._conn = None
+
+    def sync_ki_edges(self, graph: Any) -> int:
+        """Sync asserted and derived edges from graph topology into ki_edges table."""
+        from harness.services.storage.vault_sqlite_graph import sync_ki_edges as _sync_edges
+
+        return _sync_edges(self._ensure_connection(), graph)
+
+    def find_path_sql(
+        self,
+        from_id: str,
+        to_id: str,
+        max_depth: int = 6,
+        exclude_derived: bool = False,
+        directed: bool = False,
+    ) -> dict[str, Any]:
+        """Find cycle-safe shortest path between two nodes using SQLite WITH RECURSIVE CTE."""
+        from harness.services.storage.vault_sqlite_graph import find_path_sql as _find_path
+
+        return _find_path(
+            self._ensure_connection(),
+            from_id,
+            to_id,
+            max_depth=max_depth,
+            exclude_derived=exclude_derived,
+            directed=directed,
+        )
+
+    def get_transitive_dependents_sql(
+        self,
+        target_id: str,
+        max_depth: int = 6,
+    ) -> list[dict[str, Any]]:
+        """Retrieve multi-hop inbound dependents using SQLite WITH RECURSIVE CTE."""
+        from harness.services.storage.vault_sqlite_graph import get_transitive_dependents_sql as _get_dep
+
+        return _get_dep(self._ensure_connection(), target_id, max_depth=max_depth)

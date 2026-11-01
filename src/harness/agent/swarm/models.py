@@ -301,6 +301,48 @@ class SwarmTaskResult:
         return res
 
 
+def register_swarm_dag_in_graph(
+    dag: SwarmDAG,
+    graph_svc: Any,
+    run_id: str,
+    root_thread_id: str = "root",
+) -> list[str]:
+    """Bridge a static SwarmDAG into AgentExecutionGraphService using Rule 36 composite keys."""
+    current_export = graph_svc.export_graph()
+    if root_thread_id not in current_export.nodes:
+        graph_svc.register_thread(
+            node_id=root_thread_id,
+            role="swarm_orchestrator",
+            task=f"Swarm Run {run_id}",
+            metadata={"run_id": run_id},
+        )
+
+    waves = dag.get_execution_plan()
+    registered_ids: list[str] = []
+
+    for wave_idx, wave in enumerate(waves):
+        for node_id in wave:
+            node = dag.nodes[node_id]
+            composite_id = f"{run_id}_{node_id}"
+            parent_id = f"{run_id}_{node.dependencies[0]}" if node.dependencies else root_thread_id
+
+            graph_svc.register_thread(
+                node_id=composite_id,
+                role=node.role,
+                task=node.task,
+                parent_id=parent_id,
+                metadata={
+                    "run_id": run_id,
+                    "wave_index": wave_idx,
+                    "dependencies": list(node.dependencies),
+                    "allocated_tokens": node.allocated_tokens,
+                },
+            )
+            registered_ids.append(composite_id)
+
+    return registered_ids
+
+
 __all__ = [
     "SwarmDAG",
     "SwarmExecutionTree",
@@ -308,4 +350,5 @@ __all__ = [
     "SwarmNodeExecution",
     "SwarmTaskResult",
     "SwarmWaveMetrics",
+    "register_swarm_dag_in_graph",
 ]

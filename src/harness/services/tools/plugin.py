@@ -48,6 +48,9 @@ class ToolRegistryPlugin(HarnessPlugin):
     async def on_load(self, ctx: ServiceContext) -> None:
         bus = ctx.optional(EVENT_BUS_KEY)
         self._registry = ToolRegistry(event_bus=bus)
+        from harness.services.rea_toolkit import REA_TOOL_ALIASES
+        for alias, target in REA_TOOL_ALIASES.items():
+            self._registry.register_alias(alias, target)
         ctx.provide(TOOL_REGISTRY_KEY, self._registry, provider=self.name)
         logger.info("Tool registry service registered", telemetry=bus is not None)
 

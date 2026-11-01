@@ -107,17 +107,32 @@ def knowledge_group() -> None:
 @knowledge_group.command("sync")
 @click.option("--vault", "-v", "vault_dir", default=".harness/knowledge", help="Path to knowledge vault root directory")
 @click.option("--db", "db_path", default=None, help="Path to SQLite storage database (defaults to ~/.harness/storage.db)")
-def knowledge_sync(vault_dir: str, db_path: str | None) -> None:
+@click.option("--strict", is_flag=True, default=False, help="Fail with exit code 1 if any vault items fail validation")
+def knowledge_sync(vault_dir: str, db_path: str | None, strict: bool) -> None:
     """Sync all on-disk Knowledge Items from .harness/knowledge/ into the storage database."""
     storage_path = db_path or (Path.home() / ".harness" / "storage.db")
     storage = SQLiteStorageService(storage_path)
 
     async def _sync():
-        count = await storage.sync_knowledge_vault(vault_dir)
-        return count
+        try:
+            count = await storage.sync_knowledge_vault(vault_dir, strict=strict)
+            skipped = storage.get_last_skipped_items()
+            return count, skipped, None
+        except Exception as e:
+            return 0, [], str(e)
 
-    synced = _run_async(_sync())
+    synced, skipped, err = _run_async(_sync())
     storage.close()
+
+    if err:
+        click.echo(f"✗ Sync failed: {err}", err=True)
+        sys.exit(1)
+
+    if skipped:
+        click.echo(f"⚠ Warning: {len(skipped)} item(s) skipped during sync:")
+        for name, reason in skipped:
+            click.echo(f"  • {name}: {reason}")
+
     click.echo(f"✓ Successfully synced {synced} Knowledge Item(s) from '{vault_dir}' into storage.")
 
 
@@ -172,6 +187,55 @@ def knowledge_query(query_str: str, tag: str | None, status: str | None, vault_d
             summary_first = item.summary.split("\n")[0].strip("# ")
             click.echo(f"      {summary_first[:80]}")
     click.echo()
+
+
+@knowledge_group.command("joint-query")
+@click.argument("topic")
+@click.option("--limit", "-l", default=5, help="Maximum items to return per graph")
+@click.option("--vault", "-v", "vault_dir", default=".harness/knowledge", help="Path to knowledge vault root directory")
+@click.option("--skills-root", default=".", help="Root directory for skills discovery")
+@click.option("--json", "json_output", is_flag=True, help="Emit raw JSON payload")
+def knowledge_joint_query(topic: str, limit: int, vault_dir: str, skills_root: str, json_output: bool) -> None:
+    """Execute unified dual-graph query across Knowledge Vault and Skill Graph."""
+    from harness.services.skill_graph.joint_query import query_knowledge_and_skills
+
+    res = query_knowledge_and_skills(topic, vault_dir=vault_dir, root_path=skills_root, limit=limit)
+    if json_output:
+        click.echo(json.dumps(res, indent=2))
+        return
+
+    click.secho(f"\nDual-Graph Joint Query: '{topic}'", fg="cyan", bold=True)
+    click.echo("━" * 76)
+    click.echo(f"  Knowledge Vault Items : {res['knowledge_items_count']}")
+    click.echo(f"  Matched Skills        : {res['skills_count']}")
+    click.echo(f"  Linked Lineage Pairs  : {res['linked_pairs_count']}")
+
+    if res["knowledge_items"]:
+        click.secho("\n  [KNOWLEDGE VAULT ITEMS]", fg="yellow", bold=True)
+        for ki in res["knowledge_items"]:
+            click.echo(f"    • [{ki['status']}] {ki['ki_id']}: {ki['title']} ({ki['domain']})")
+
+    if res["skills"]:
+        click.secho("\n  [MATCHED AGENT SKILLS]", fg="green", bold=True)
+        for sk in res["skills"]:
+            chain_str = f" -> {' -> '.join(sk['recommended_chain'])}" if sk["recommended_chain"] else ""
+            click.echo(f"    • {sk['skill_name']} (Cluster: {sk['cluster']}, Conf: {sk['confidence']:.2f}){chain_str}")
+
+    if res["linked_pairs"]:
+        click.secho("\n  [CROSS-GRAPH LINEAGE LINKS]", fg="magenta", bold=True)
+        for lp in res["linked_pairs"]:
+            click.echo(f"    • {lp['ki_id']} ──[{lp['relationship']}]──> {lp['skill_name']}")
+
+    if res["unbridged_kis"]:
+        click.secho(f"\n  [UNBRIDGED KIs] ({len(res['unbridged_kis'])} items without procedural skills):", fg="red")
+        for ub in res["unbridged_kis"][:3]:
+            click.echo(f"    • {ub['ki_id']}: {ub['title']}")
+
+    if res["ungrounded_skills"]:
+        click.secho(f"\n  [UNGROUNDED SKILLS] ({len(res['ungrounded_skills'])} skills without backing Vault KI):", fg="blue")
+        for ug in res["ungrounded_skills"][:3]:
+            click.echo(f"    • {ug['skill_name']}")
+    click.echo("━" * 76)
 
 
 @knowledge_group.command("verify")
@@ -465,7 +529,7 @@ def knowledge_export(
             max_tag_freq=max_tag_freq,
             min_confidence=min_confidence,
         )
-        written = export_knowledge_graph(graph, validated_path, format=fmt, dynamic=dynamic_gexf)
+        written = export_knowledge_graph(graph, validated_path, format=fmt, dynamic=dynamic_gexf, items=items)
         return graph, written
 
     graph, written = _run_async(_derive_and_export())
@@ -478,8 +542,12 @@ def knowledge_export(
     click.echo(f"Target File:           {written}")
     click.echo(f"Total Nodes:           {s.total_nodes} ({s.ki_nodes} KIs, {non_ki_count} external)")
     click.echo(f"Total Edges:           {s.total_edges} ({s.asserted_edge_count} asserted, {s.derived_edge_count} derived)")
+    for edge_type, count in sorted(s.edges_by_type.items()):
+        click.echo(f"  • {edge_type:<20} {count:>4}")
     click.echo(f"Components:            {s.component_count} (Largest: {s.largest_component_size})")
     click.echo(f"Isolated KIs:          {s.isolated_ki_count}")
+    click.echo(f"Untagged KIs:          {s.untagged_ki_count}")
+    click.echo(f"Uncategorized KIs:     {s.uncategorized_ki_count}")
     if s.excluded_mega_tags:
         click.echo(f"Excluded Mega-Tags:    {', '.join(s.excluded_mega_tags)}")
     click.echo(f"✓ Successfully exported knowledge graph to '{written}'.\n")
@@ -550,13 +618,17 @@ def knowledge_backfill(vault_dir: str, dry_run: bool, commit: bool, max_tag_freq
 @click.option("--min-retrievals", default=5, type=int, help="Minimum retrievals before evaluating promote/demote")
 @click.option("--promote-ratio", default=0.75, type=float, help="Success ratio threshold for promotion")
 @click.option("--demote-ratio", default=0.25, type=float, help="Success ratio threshold for demotion")
-@click.option("--apply-contradictions", is_flag=True, default=False, help="Display contradiction queue alongside lifecycle audit")
+@click.option("--show-contradictions/--no-show-contradictions", default=True, help="Display contradiction queue alongside lifecycle audit")
+@click.option("--apply-contradictions", is_flag=True, default=False, help="Apply contradiction/supersession resolutions to on-disk vault")
+@click.option("--yes", "-y", is_flag=True, default=False, help="Skip confirmation when applying non-automatic resolutions")
 def knowledge_lifecycle(
     vault_dir: str,
     min_retrievals: int,
     promote_ratio: float,
     demote_ratio: float,
+    show_contradictions: bool,
     apply_contradictions: bool,
+    yes: bool,
 ) -> None:
     """Evaluate retrieval success rates and update item lifecycle status (PROMOTED / DEMOTED)."""
     storage = SQLiteStorageService(":memory:")
@@ -573,7 +645,6 @@ def knowledge_lifecycle(
         return lifecycle_res, conflicts
 
     res, conflicts = _run_async(_lifecycle())
-    storage.close()
 
     click.echo("\n📈 Knowledge Vault Lifecycle Evaluation")
     click.echo("━" * 70)
@@ -589,7 +660,44 @@ def knowledge_lifecycle(
     if not promoted and not demoted:
         click.echo("  (No items crossed the retrieval/utility threshold)")
 
-    if apply_contradictions or conflicts:
+    if apply_contradictions and conflicts:
+        click.echo(f"\nApplying Contradiction Resolutions ({len(conflicts)} pair(s)):")
+        click.echo("─" * 70)
+        applied_count = 0
+        for item in conflicts:
+            is_auto = item.conflict_type == "supersession_candidate" and item.confidence >= 0.90
+            prompt_msg = f"Apply '{item.suggested_edge}' resolution between {item.ki_a} and {item.ki_b}?"
+            if is_auto or yes or click.confirm(prompt_msg, default=True):
+                async def _apply_one(c=item):
+                    item_a = await storage.get_knowledge_item(c.ki_a)
+                    item_b = await storage.get_knowledge_item(c.ki_b)
+                    if item_a and item_b:
+                        if c.suggested_edge == "supersedes":
+                            item_a.add_edge("supersedes", item_b.id, target_kind="ki", derived=False, confidence=1.0, description=c.reason or "Lifecycle candidate")
+                            item_b.status = "SUPERSEDED"
+                            item_b.superseded_by = item_a.id
+                            await storage.save_knowledge_item(item_a, vault_dir=vault_dir)
+                            await storage.save_knowledge_item(item_b, vault_dir=vault_dir)
+                            await storage.export_single_item(item_a, vault_dir=vault_dir)
+                            await storage.export_single_item(item_b, vault_dir=vault_dir)
+                            return True
+                        elif c.suggested_edge == "contradicts":
+                            item_a.add_edge("contradicts", item_b.id, target_kind="ki", derived=False, confidence=1.0, description=c.reason or "Lifecycle candidate")
+                            item_b.add_edge("contradicts", item_a.id, target_kind="ki", derived=False, confidence=1.0, description=c.reason or "Lifecycle candidate")
+                            item_a.status = "CHALLENGED"
+                            item_b.status = "CHALLENGED"
+                            await storage.save_knowledge_item(item_a, vault_dir=vault_dir)
+                            await storage.save_knowledge_item(item_b, vault_dir=vault_dir)
+                            await storage.export_single_item(item_a, vault_dir=vault_dir)
+                            await storage.export_single_item(item_b, vault_dir=vault_dir)
+                            return True
+                    return False
+
+                if _run_async(_apply_one()):
+                    applied_count += 1
+                    click.echo(f"  ✓ Applied '{item.suggested_edge}': {item.ki_a} → {item.ki_b}")
+        click.echo(f"✓ Applied {applied_count} resolution(s) to vault.\n")
+    elif show_contradictions and conflicts:
         click.echo(f"\nContradiction Review Queue ({len(conflicts)} flagged pair(s)):")
         click.echo("─" * 70)
         for idx, item in enumerate(conflicts, 1):
@@ -597,6 +705,8 @@ def knowledge_lifecycle(
             click.echo(f"    KI A: {item.ki_a} | KI B: {item.ki_b}")
             click.echo(f"    Reason: {item.reason}")
             click.echo(f"    Suggested Resolution: harness knowledge resolve {item.ki_a} {item.ki_b} --action {item.suggested_edge}\n")
+
+    storage.close()
 
 
 @knowledge_group.command("resolve")
@@ -654,8 +764,16 @@ def knowledge_resolve(ki_a: str, ki_b: str, action: str, reason: str, vault_dir:
 @knowledge_group.command("stats")
 @click.option("--vault", "-v", "vault_dir", default=".harness/knowledge", help="Path to knowledge vault root directory")
 @click.option("--json", "as_json", is_flag=True, default=False, help="Output raw census metrics in JSON format")
+@click.option("--include-single-tag-edges", is_flag=True, default=False, help="Include 1-shared-tag derived same_domain edges")
+@click.option("--include-shared-source", is_flag=True, default=False, help="Include shared_source derived edges")
 @click.option("--max-tag-freq", default=0.15, type=float, help="Tag frequency threshold for mega-tag exclusion")
-def knowledge_stats(vault_dir: str, as_json: bool, max_tag_freq: float) -> None:
+def knowledge_stats(
+    vault_dir: str,
+    as_json: bool,
+    include_single_tag_edges: bool,
+    include_shared_source: bool,
+    max_tag_freq: float,
+) -> None:
     """Print comprehensive knowledge graph census metrics, node kinds, edge types, and components."""
     if sys.platform == "win32":
         try:
@@ -669,7 +787,12 @@ def knowledge_stats(vault_dir: str, as_json: bool, max_tag_freq: float) -> None:
         await storage.sync_knowledge_vault(vault_dir)
         items = await storage.list_knowledge_items()
         graph_svc = resolve_knowledge_graph_service()
-        graph = graph_svc.derive_graph(items, max_tag_freq=max_tag_freq)
+        graph = graph_svc.derive_graph(
+            items,
+            include_single_tag_edges=include_single_tag_edges,
+            include_shared_source=include_shared_source,
+            max_tag_freq=max_tag_freq,
+        )
         return graph.summary
 
     summary = _run_async(_stats())
@@ -690,10 +813,14 @@ def knowledge_stats(vault_dir: str, as_json: bool, max_tag_freq: float) -> None:
     for edge_type, count in sorted(s.edges_by_type.items()):
         click.echo(f"  • {edge_type:<20} {count:>4}")
     click.echo(f"Connected Components:  {s.component_count} (Largest: {s.largest_component_size} nodes)")
-    click.echo(f"Isolated KIs:          {s.isolated_ki_count}")
+    click.echo(f"  • KI-only Components:{s.ki_only_component_count:>4} (Largest: {s.ki_only_largest_component_size} KIs)")
+    click.echo(f"Isolated KIs:          {s.isolated_ki_count} (KI-only isolated: {s.ki_only_isolated_count})")
     click.echo(f"Untagged KIs:          {s.untagged_ki_count}")
     click.echo(f"Uncategorized KIs:     {s.uncategorized_ki_count}")
     click.echo(f"Date Coverage:         {s.date_coverage_count} / {s.ki_nodes} ({s.date_coverage_count / max(1, s.ki_nodes):.1%})")
+    if s.date_sources:
+        src_parts = [f"{count} from {src}" for src, count in sorted(s.date_sources.items())]
+        click.echo(f"  • Date Sources:      {', '.join(src_parts)}")
     if s.excluded_mega_tags:
         click.echo(f"Excluded Mega-Tags:    {', '.join(s.excluded_mega_tags)}")
     click.echo()
@@ -749,8 +876,9 @@ def knowledge_neighbors(node_id: str, depth: int, edge_type: str | None, exclude
 @click.option("--max-depth", default=6, type=int, help="Maximum search hops (default: 6)")
 @click.option("--exclude-derived", is_flag=True, default=False, help="Exclude automatically derived edges")
 @click.option("--directed", is_flag=True, default=False, help="Enforce strict directional edge traversal")
+@click.option("--engine", type=click.Choice(["bfs", "sqlite"], case_sensitive=False), default="bfs", help="Pathfinding engine (bfs or sqlite recursive CTE)")
 @click.option("--vault", "-v", "vault_dir", default=".harness/knowledge", help="Path to knowledge vault root directory")
-def knowledge_path(from_id: str, to_id: str, max_depth: int, exclude_derived: bool, directed: bool, vault_dir: str) -> None:
+def knowledge_path(from_id: str, to_id: str, max_depth: int, exclude_derived: bool, directed: bool, engine: str, vault_dir: str) -> None:
     """Find the BFS shortest path between two graph entities (Rule 55: zero synthetic edges)."""
     if sys.platform == "win32":
         try:
@@ -762,10 +890,18 @@ def knowledge_path(from_id: str, to_id: str, max_depth: int, exclude_derived: bo
 
     async def _path():
         await storage.sync_knowledge_vault(vault_dir)
+        if engine.lower() == "sqlite":
+            return storage.find_path_sql(
+                from_id,
+                to_id,
+                max_depth=max_depth,
+                exclude_derived=exclude_derived,
+                directed=directed,
+            )
         items = await storage.list_knowledge_items()
         graph_svc = resolve_knowledge_graph_service()
         graph = graph_svc.derive_graph(items)
-        res = graph_svc.find_path(
+        return graph_svc.find_path(
             from_id,
             to_id,
             graph,
@@ -773,7 +909,6 @@ def knowledge_path(from_id: str, to_id: str, max_depth: int, exclude_derived: bo
             exclude_derived=exclude_derived,
             directed=directed,
         )
-        return res
 
     res = _run_async(_path())
     storage.close()
@@ -828,13 +963,17 @@ def knowledge_topic(topic_str: str, vault_dir: str) -> None:
 
 @knowledge_group.command("dependents")
 @click.argument("node_id")
+@click.option("--transitive", is_flag=True, default=False, help="Traverse multi-hop inbound dependents using SQLite recursive CTE")
+@click.option("--max-depth", default=6, type=int, help="Maximum search hops when --transitive is set (default: 6)")
 @click.option("--vault", "-v", "vault_dir", default=".harness/knowledge", help="Path to knowledge vault root directory")
-def knowledge_dependents(node_id: str, vault_dir: str) -> None:
+def knowledge_dependents(node_id: str, transitive: bool, max_depth: int, vault_dir: str) -> None:
     """List inbound dependents pointing to a specific Knowledge Item, skill, or code path."""
     storage = SQLiteStorageService(":memory:")
 
     async def _dependents():
         await storage.sync_knowledge_vault(vault_dir)
+        if transitive:
+            return storage.get_transitive_dependents_sql(node_id, max_depth=max_depth)
         items = await storage.list_knowledge_items()
         graph_svc = resolve_knowledge_graph_service()
         return graph_svc.get_dependents(node_id, items)
@@ -847,14 +986,25 @@ def knowledge_dependents(node_id: str, vault_dir: str) -> None:
         click.echo("  (No items declare inbound edges to this node)")
     else:
         for d in deps:
-            click.echo(f"  • {d['source_ki']:<25} ──[{d['edge_type']}]──> ({d['confidence']:.0%})")
+            der = "[derived]" if d.get("derived") else "[asserted]"
+            depth_str = f" (hop {d['depth']})" if "depth" in d else ""
+            click.echo(f"  • {d['source_ki']:<25} ──[{d['edge_type']}]──>{depth_str} {der} ({d['confidence']:.0%})")
     click.echo()
 
 
 @knowledge_group.command("orphans")
 @click.option("--vault", "-v", "vault_dir", default=".harness/knowledge", help="Path to knowledge vault root directory")
+@click.option("--include-single-tag-edges", is_flag=True, default=False, help="Include 1-shared-tag derived same_domain edges")
+@click.option("--include-shared-source", is_flag=True, default=False, help="Include shared_source derived edges")
+@click.option("--max-tag-freq", default=0.15, type=float, help="Tag frequency threshold for mega-tag exclusion")
 @click.option("--json", "as_json", is_flag=True, default=False, help="Output orphan diagnostics in JSON format")
-def knowledge_orphans(vault_dir: str, as_json: bool) -> None:
+def knowledge_orphans(
+    vault_dir: str,
+    include_single_tag_edges: bool,
+    include_shared_source: bool,
+    max_tag_freq: float,
+    as_json: bool,
+) -> None:
     """Identify isolated Knowledge Items and report missing-field triage profiles."""
     storage = SQLiteStorageService(":memory:")
 
@@ -862,7 +1012,12 @@ def knowledge_orphans(vault_dir: str, as_json: bool) -> None:
         await storage.sync_knowledge_vault(vault_dir)
         items = await storage.list_knowledge_items()
         graph_svc = resolve_knowledge_graph_service()
-        graph = graph_svc.derive_graph(items)
+        graph = graph_svc.derive_graph(
+            items,
+            include_single_tag_edges=include_single_tag_edges,
+            include_shared_source=include_shared_source,
+            max_tag_freq=max_tag_freq,
+        )
         return graph_svc.get_orphans(graph, items)
 
     orphans = _run_async(_orphans())
@@ -950,21 +1105,21 @@ def knowledge_hygiene(
         click.echo(json.dumps(payload, indent=2))
         return
 
-    click.echo(f"\n🧹 Knowledge Vault Hygiene & Triaging")
+    click.echo("\n🧹 Knowledge Vault Hygiene & Triaging")
     click.echo("━" * 70)
     click.echo(f"Total Items Audited:     {len(items)}")
     click.echo(f"Uncategorized Items:     {audit_res['uncategorized_count']}")
     click.echo(f"Untagged Items:          {audit_res['untagged_count']}")
 
     if suggest_categories and audit_res["uncategorized"]:
-        click.echo(f"\nProposed Category Assignments (showing up to 20):")
+        click.echo("\nProposed Category Assignments (showing up to 20):")
         for u in audit_res["uncategorized"][:20]:
             click.echo(f"  • {u['id']:<32} {u['current_category']} ──> {u['proposed_category']}")
         if len(audit_res["uncategorized"]) > 20:
             click.echo(f"    ... and {len(audit_res['uncategorized']) - 20} more (use --json)")
 
     if suggest_tags and audit_res["untagged"]:
-        click.echo(f"\nProposed Tag Assignments (showing up to 15):")
+        click.echo("\nProposed Tag Assignments (showing up to 15):")
         for u in audit_res["untagged"][:15]:
             tags_str = ", ".join(u["proposed_tags"])
             click.echo(f"  • {u['id']:<32} [{tags_str}]")
@@ -998,12 +1153,29 @@ def knowledge_timeline(vault_dir: str, as_json: bool) -> None:
         domain_first_seen = {}
         dated_items = 0
 
+        tag_cumulative_counts = defaultdict(int)
+        mega_tag_crossings = {}
+        target_mega_tags = {"endogenous_memory", "self_reflection"}
+
+        total_retrievals = sum(k.retrieval_count for k in items)
+        retrieved_items = [k for k in items if k.retrieval_count > 0]
+        retrieval_weekly_counts = defaultdict(int)
+        for k in retrieved_items:
+            if k.last_retrieved_at:
+                dt_str = k.last_retrieved_at[:10]
+                try:
+                    dt = datetime.fromisoformat(k.last_retrieved_at.replace("Z", "+00:00"))
+                    yw = f"{dt.year}-W{dt.isocalendar().week:02d}"
+                except Exception:
+                    yw = dt_str[:7]
+                retrieval_weekly_counts[yw] += k.retrieval_count
+
         sorted_items = sorted(
             [ki for ki in items if ki.created_at],
             key=lambda x: x.created_at,
         )
 
-        for ki in sorted_items:
+        for n_t, ki in enumerate(sorted_items, 1):
             dated_items += 1
             dt_str = ki.created_at[:10]
             try:
@@ -1016,11 +1188,28 @@ def knowledge_timeline(vault_dir: str, as_json: bool) -> None:
             if dom not in domain_first_seen:
                 domain_first_seen[dom] = {"first_ki": ki.id, "date": dt_str}
 
+            for tag in ki.tags:
+                tag_cumulative_counts[tag] += 1
+                if tag in target_mega_tags and tag not in mega_tag_crossings and n_t >= 10:
+                    if (tag_cumulative_counts[tag] / n_t) >= 0.15:
+                        mega_tag_crossings[tag] = {
+                            "date": dt_str,
+                            "ki_id": ki.id,
+                            "ratio": tag_cumulative_counts[tag] / n_t,
+                            "item_index": n_t,
+                        }
+
         return {
             "total_items": len(items),
             "dated_items": dated_items,
             "weekly_growth": dict(sorted(weekly_counts.items())),
             "domain_emergence": domain_first_seen,
+            "mega_tag_crossings": mega_tag_crossings,
+            "retrievals": {
+                "total_retrievals": total_retrievals,
+                "retrieved_items_count": len(retrieved_items),
+                "weekly_velocity": dict(sorted(retrieval_weekly_counts.items())),
+            },
         }
 
     data = _run_async(_timeline())
@@ -1030,7 +1219,7 @@ def knowledge_timeline(vault_dir: str, as_json: bool) -> None:
         click.echo(json.dumps(data, indent=2))
         return
 
-    click.echo(f"\n📅 Knowledge Vault Temporal Growth Report")
+    click.echo("\n📅 Knowledge Vault Temporal Growth Report")
     click.echo("━" * 70)
     click.echo(f"Total Vault Items:       {data['total_items']}")
     click.echo(f"Dated Items:             {data['dated_items']} / {data['total_items']} ({data['dated_items'] / max(1, data['total_items']):.1%})")
@@ -1045,6 +1234,18 @@ def knowledge_timeline(vault_dir: str, as_json: bool) -> None:
         cum += cnt
         bar = "█" * min(30, cnt)
         click.echo(f"  • {yw}: {cnt:>3} items {bar:<30} (Cumulative: {cum})")
+
+    if data.get("mega_tag_crossings"):
+        click.echo("\nMega-Tag 15% Threshold Crossings:")
+        for tag, info in sorted(data["mega_tag_crossings"].items()):
+            click.echo(f"  • {tag:<22} crossed on {info['date']} (at #{info['item_index']}: {info['ki_id']}, {info['ratio']:.1%})")
+
+    ret = data.get("retrievals", {})
+    click.echo("\nRetrieval Velocity:")
+    click.echo(f"  • Total Retrievals:    {ret.get('total_retrievals', 0)} across {ret.get('retrieved_items_count', 0)} item(s)")
+    if ret.get("weekly_velocity"):
+        for yw, cnt in ret["weekly_velocity"].items():
+            click.echo(f"    - {yw}: {cnt} retrieval(s)")
     click.echo()
 
 

@@ -72,12 +72,16 @@ class HarnessReflectorEngine:
         # 4. Commit to storage vault if available (single write seam)
         if commit_to_vault and self.storage is not None:
             existing_items = await self.storage.list_knowledge_items()
+            if not existing_items and vault_dir and hasattr(self.storage, "sync_knowledge_vault"):
+                await self.storage.sync_knowledge_vault(vault_dir)
+                existing_items = await self.storage.list_knowledge_items()
             for ki in kis:
                 proposed = propose_links(ki, existing_items)
                 for p in proposed:
                     if not any(e.type == p.type and e.target == p.target for e in ki.edges):
                         ki.edges.append(p)
                 await self.storage.save_knowledge_item(ki, vault_dir=vault_dir)
+                existing_items.append(ki)
 
         # 5. Generate Visual Brief
         html_path: Path | None = None

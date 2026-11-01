@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+from typing import Any
 import xml.etree.ElementTree as ET
 
 from harness.services.storage.vault_cypher_exporter import export_cypher
@@ -64,13 +65,19 @@ def export_gexf(graph: DerivedKnowledgeGraph, out_path: Path | str, dynamic: boo
         ET.SubElement(edge_attrs, "attribute", {"id": attr_id, "title": title, "type": attr_type})
 
     node_map = {n.id: n for n in graph.nodes}
+    superseding_dates = {
+        e.target: node_map[e.source].created_at[:10]
+        for e in graph.edges
+        if e.type == "supersedes" and e.source in node_map and node_map[e.source].created_at
+    }
     nodes_elem = ET.SubElement(graph_elem, "nodes")
     for n in sorted(graph.nodes, key=lambda x: x.id):
         n_attrs = {"id": n.id, "label": n.label or n.id}
         if dynamic and n.created_at:
-            n_attrs["start"] = n.created_at[:10]
-            if n.status in ("SUPERSEDED", "ARCHIVED"):
-                n_attrs["end"] = n.created_at[:10]
+            start_date = n.created_at[:10]
+            n_attrs["start"] = start_date
+            if n.status in ("SUPERSEDED", "ARCHIVED") and superseding_dates.get(n.id, "") > start_date:
+                n_attrs["end"] = superseding_dates[n.id]
         n_elem = ET.SubElement(nodes_elem, "node", n_attrs)
         attvalues = ET.SubElement(n_elem, "attvalues")
         values = [
@@ -135,7 +142,9 @@ def export_graphml(graph: DerivedKnowledgeGraph, out_path: Path | str) -> Path:
     for k_id, k_name, k_type in edge_keys:
         ET.SubElement(root, "key", {"id": k_id, "for": "edge", "attr.name": k_name, "attr.type": k_type})
 
+    ET.SubElement(root, "key", {"id": "graph_summary", "for": "graph", "attr.name": "summary", "attr.type": "string"})
     graph_elem = ET.SubElement(root, "graph", {"id": "G", "edgedefault": "directed"})
+    ET.SubElement(graph_elem, "data", {"key": "graph_summary"}).text = json.dumps(graph.summary.to_dict())
 
     for n in sorted(graph.nodes, key=lambda x: x.id):
         n_elem = ET.SubElement(graph_elem, "node", {"id": n.id})
@@ -172,6 +181,7 @@ def export_knowledge_graph(
     out_path: Path | str,
     format: str = "json",
     dynamic: bool = False,
+    items: Any = None,
 ) -> Path:
     """Unified entrypoint dispatching knowledge graph serialization to specified format."""
     fmt = format.lower()
@@ -184,7 +194,6 @@ def export_knowledge_graph(
     elif fmt == "html":
         return export_html(graph, out_path)
     elif fmt == "cypher":
-        return export_cypher(graph, out_path)
-    else:
-        raise ValueError(f"Unsupported export format '{format}'. Supported formats: json, gexf, graphml, html, cypher.")
+        return export_cypher(graph, out_path, items=items)
+    raise ValueError(f"Unsupported export format '{format}'. Supported formats: json, gexf, graphml, html, cypher.")
 

@@ -79,6 +79,20 @@ plugin.on_load(context)
 
 ---
 
+## Dual-Seam Architecture: Kernel Isolation vs Agent Tooling
+
+`FilesystemGitPlugin` provides the authoritative implementation of `FILESYSTEM_GIT_KEY` (`src/harness/services/filesystem_git.py`), intentionally partitioned into two execution seams:
+
+1. **Agent-Facing `ToolRegistry` Seam (7 Manifest Tools)**:
+   - Exposes safe navigation, reading, writing, and git inspection tools (`fs_read_file`, `fs_write_file`, `fs_list_dir`, `fs_search_text`, `git_status`, `git_diff`, `git_log`).
+   - Declared in `plugin.json` for autonomous tool discovery during step execution.
+2. **Kernel-Only Transactional Seam (`Rule 8`)**:
+   - Implements `commit_transaction()` and `rollback_transaction()` on `FilesystemGitService`.
+   - **Intentionally omitted from `plugin.json`** to prevent LLM agents from spoofing or bypassing transactional git checkpoints.
+   - Automatically orchestrated by `StepExecutionEngine` inside `async with context.transaction()`: on tool failure, `rollback_transaction()` restores the workspace to the pre-step checkpoint.
+
+---
+
 ## Architecture & Diátaxis Classification
 
 - Diátaxis Quadrant: Reference (Track B) & How-To Guides

@@ -44,3 +44,12 @@ exploit mitigation checking, WebAssembly inspection via WABT 1.0.42, and EVM byt
 | `rea_native_evm_interface` | `(bytecode_hex, resolve_signatures)` | Parse flat EVM bytecode, extract 4-byte dispatch selectors, disassemble opcodes, and resolve public ABI signatures. |
 | `rea_native_annotate_function` | `(target_path, address, name, comment)` | Atomically update a function name and/or entry comment in the Ghidra session database. |
 | `rea_native_inspect_load_image` | `(target_path)` | Verify a loaded DOS MZ or COM image against its immutable target snapshot: byte digests, header mappings, and relocations. |
+
+---
+
+## Unified REA Toolkit Integration
+
+This plugin is integrated into the unified REA toolkit facade:
+- **CLI Commands:** `harness rea inspect`, `harness rea diff`, `harness rea learn`
+- **Agent Skill:** [rea-reverse-engineering](../../../.agents/skills/rea-reverse-engineering/SKILL.md)
+- **User Guide:** [How-To: Use REA Toolkit](../../../docs/how-to/use-rea-toolkit.md)

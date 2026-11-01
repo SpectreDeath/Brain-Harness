@@ -46,6 +46,6 @@ This domain coordinates code editing, structural verification, and tool-driven d
 ## Associated Agent Skills
 
 - [`codebase-context-architect`](../../../.agents/skills/codebase-context-architect/SKILL.md): Architects multi-layer codebase context files and linters.
-- [`deepen-architecture`](file:///C:/Users/spectre/.gemini/config/plugins/pocock-skills/skills/deepen-architecture/SKILL.md): Iterative architecture deepening loop eliminating shallow modules.
+- [`deepen-architecture`](../../../.agents/skills/deepen-architecture/SKILL.md): Iterative architecture deepening loop eliminating shallow modules.
 - [`repo-doc-synchronizer`](../../../.agents/skills/repo-doc-synchronizer/SKILL.md): Audits documentation coverage, detects drift, and scaffolds Diátaxis suites.
 - [`python-dataclass-architect`](../../../.agents/skills/python-dataclass-architect/SKILL.md): Designs type-safe, slotted and frozen Python data structures.

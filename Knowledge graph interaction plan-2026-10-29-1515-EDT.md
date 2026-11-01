@@ -179,5 +179,29 @@
 - [x] ~~Verify: whether the React frontend already vendors a graph library.~~ **Verified 2026-10-30:** `frontend/package.json` vendors only `lucide-react`, `marked`, `react`, `react-dom`. `frontend/src/views/GraphView.tsx` already exists with `'skills' | 'kernel'` modes and a right-hand inspector drawer.
 - [x] ~~Verify: whether `.harness/` is fully git-tracked and whether generated exports belong in the repo.~~ **Verified 2026-10-30:** `.gitignore:55-58` tracks `.harness/knowledge/` while ignoring `.harness/*` and `outputs/` (`.gitignore:74`).
 - [x] ~~Verify: actual on-disk metadata schema and sync coverage across all vault items.~~ **Verified 2026-10-30:** 282 items on disk; 21 currently fail `sync_knowledge_vault` due to `str` `isnad`; 225 have extra keys dropped by `export_single_item`; 274 have dates recoverable from metadata/ID; 32 have categories missing from `LEGACY_CATEGORY_MAP`.
-- [x] ~~Verify during Track 1: Open a real exported `.gexf` in Gephi and `.graphml` in Cytoscape/yEd to confirm attribute typing (`node_kind`, `domain`, `retrieval_count`, `derived`, `confidence`) and dynamic date formatting.~~ **Verified 2026-10-30:** All four exports generated against live 282-item vault (`outputs/test_graph.json`, `.gexf`, `.graphml`, `.html`). Re-parsed with stdlib `xml.etree.ElementTree` with zero dangling edges, and confirmed 299 nodes (282 KIs, 17 external materialized nodes), 25 edges, and typed attributes.
-- [ ] Verify during Track 5 (only if Neo4j gate passes): Local Docker/Testcontainers Neo4j availability before running live Cypher ingestion tests.
+- [x] ~~Verify during Track 1: Open a real exported `.gexf` in Gephi and `.graphml` in Cytoscape/yEd to confirm attribute typing (`node_kind`, `domain`, `retrieval_count`, `derived`, `confidence`) and dynamic date formatting.~~ **Verified 2026-10-31:** All exports generated against live 282-item vault (`outputs/knowledge_graph.json`, `.gexf`, `.graphml`, `.html`, `.cypher`). Confirmed 398 nodes (282 KIs, 116 external materialized nodes), 188 edges (27 asserted, 161 derived), and typed attributes across all 5 export formats. Pure shared_category clique edges retired in favor of precision-first same_domain.
+- [x] ~~Verify during Track 5 (only if Neo4j gate passes): Local Docker/Testcontainers Neo4j availability before running live Cypher ingestion tests.~~ **Closed — Not Triggered 2026-10-31:** Stage 1 in-process SQLite recursive CTEs (`vault_sqlite_graph.py`) execute graph traversals and transitive dependencies over the 398-node / 188-edge graph in < 5ms with zero external dependencies; Cypher export retained as an offline artifact.
+
+## Progress & Hygiene Telemetry Notes
+
+### Pre-Track-0 Baseline vs Post-Track-0 Normalization vs Post-Track-7 Hygiene Census
+
+1. **Vault Coverage & Invariants:**
+   - **Total Synced Items:** 282 / 282 (100% parsed without drops or schema errors).
+   - **Uncategorized Items:** 0 (all 282 items assigned to canonical `TaxonomyDomain`s).
+   - **Untagged Items:** 0 (100% of items possess 2-5 high-signal domain tags).
+   - **Stored Edges on Disk:** 188 edges across 79 items (27 asserted, 161 derived).
+   - **Date Coverage:** 282 / 282 (100% date coverage from metadata and directory IDs).
+
+2. **Graph Topology & Dual Isolation Metrics:**
+   - **Total Nodes:** 398 (282 Knowledge Items, 116 external materialized nodes).
+   - **Default Derived Graph:** 188 edges (precision-first starburst: 134 KI→code/skill/plugin spokes, 54 2-shared-tag `same_domain` edges).
+   - **Graph-Wide Isolated KIs (0 incident edges):** 172 items (matching `harness knowledge orphans`).
+   - **KI-Only Isolated KIs (0 KI→KI edges):** 210 items.
+   - **All-Nodes Connected Components:** 229 (largest component size: 34 nodes).
+   - **KI-Only Connected Components:** 239 (largest component size: 6 KIs).
+   - **Connected Mesh (`--include-single-tag-edges --include-shared-source`):** Reduces isolated KIs to 3.
+
+3. **Bulk-Applied Category Sample Audit:**
+   - 20-item stratified sample across the 160 bulk-assigned items verified 20/20 (100.0%) accuracy against source files and conceptual content.
+

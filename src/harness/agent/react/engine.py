@@ -32,15 +32,19 @@ logger = structlog.get_logger()
 
 
 async def _sync_knowledge_outcome(
-    context: ServiceContext | None, items: list[str], success: bool
+    context: ServiceContext | None,
+    items: list[str],
+    success: bool,
+    vault: Any | None = None,
 ) -> None:
-    if not items or context is None:
+    if not items:
         return
     try:
         from harness.services.storage import resolve_knowledge_vault
 
-        vault = resolve_knowledge_vault(context)
-        await vault.record_knowledge_outcome(items, success=success)
+        v = vault or (resolve_knowledge_vault(context) if context is not None else None)
+        if v is not None:
+            await v.record_knowledge_outcome(items, success=success)
     except Exception as ex:
         logger.debug("Failed to record knowledge outcome", error=str(ex))
 
@@ -66,6 +70,7 @@ class StepExecutionEngine:
         self.active_skills: list[str] = []
         self.active_knowledge_items: list[str] = []
         self.guidance_degraded: bool = False
+        self.knowledge_vault: Any | None = None
 
     async def _invoke_tool_safely(self, action_name: str, action_input: dict[str, Any]) -> Any:
         return await invoke_tool_transactional(
@@ -138,7 +143,7 @@ class StepExecutionEngine:
         except Exception as e:
             logger.error("LLM call failed during agent loop", error=str(e))
             trajectory.mark_error(f"Error communicating with LLM: {e}")
-            await _sync_knowledge_outcome(self.context, self.active_knowledge_items, False)
+            await _sync_knowledge_outcome(self.context, self.active_knowledge_items, False, vault=self.knowledge_vault)
             return False
 
         thought = response.content.strip()
@@ -157,7 +162,7 @@ class StepExecutionEngine:
             final_text = thought.split("FINAL ANSWER:", 1)[1].strip()
             trajectory.add_step(AgentStep(step_number=step_idx, thought=thought))
             trajectory.mark_completed(final_text)
-            await _sync_knowledge_outcome(self.context, self.active_knowledge_items, True)
+            await _sync_knowledge_outcome(self.context, self.active_knowledge_items, True, vault=self.knowledge_vault)
             return False
 
         if response.tool_calls:

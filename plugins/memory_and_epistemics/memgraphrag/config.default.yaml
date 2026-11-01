@@ -1,0 +1,9 @@
+# MemGraphRAG Baseline Operational Budgets (Rule 44)
+timeout_seconds: 30.0
+max_tokens_budget: 4500
+embedding_dimension: 384
+max_triples_per_passage: 12
+similarity_threshold: 0.72
+conflict_confidence_cutoff: 0.85
+subgraph_hops: 2
+

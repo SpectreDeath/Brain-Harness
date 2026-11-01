@@ -8,6 +8,9 @@
   "isolation": "subprocess",
   "trusted": true,
   "dependencies": [],
+  "provides": [
+    "service.wiki_compiler"
+  ],
   "entrypoints": [
     {
       "name": "compile_wiki_directory",

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 import sqlite3
 from typing import Any
 
@@ -64,60 +65,83 @@ def find_path_sql(
     to_id: str,
     max_depth: int = 6,
     exclude_derived: bool = False,
+    directed: bool = False,
 ) -> dict[str, Any]:
     """Find cycle-safe shortest path between two nodes using SQLite WITH RECURSIVE CTE (Rule 55)."""
     init_ki_edges_table(conn)
-    if from_id == to_id:
-        return {"status": "found", "chain": [from_id], "length": 0, "hops": []}
+    src = from_id.strip()
+    dst = to_id.strip()
+    if src == dst:
+        return {"status": "same_node", "chain": [src], "length": 0, "hops": []}
 
     allow_derived = 0 if exclude_derived else 1
-    query = """
-    WITH RECURSIVE search_graph AS (
-        SELECT 
-            source, 
-            target, 
-            edge_type, 
-            derived, 
-            confidence, 
-            1 AS hop_count, 
-            '/' || source || '/' || target || '/' AS path_string
-        FROM ki_edges
-        WHERE source = ? AND (? = 1 OR derived = 0)
 
+    hop_fwd = "json_object('from', source, 'to', target, 'edge_type', edge_type, 'direction', 'forward', 'derived', derived = 1, 'confidence', confidence)"
+    hop_rev = "json_object('from', target, 'to', source, 'edge_type', edge_type, 'direction', 'reverse', 'derived', derived = 1, 'confidence', confidence)"
+    if directed:
+        edge_view = f"""
+        SELECT source AS s, target AS t, edge_type, derived, confidence, 'forward' AS direction,
+               {hop_fwd} AS hop_obj
+        FROM ki_edges WHERE (? = 1 OR derived = 0)
+        """
+        params: tuple[Any, ...] = (allow_derived,)
+    else:
+        edge_view = f"""
+        SELECT source AS s, target AS t, edge_type, derived, confidence, 'forward' AS direction,
+               {hop_fwd} AS hop_obj
+        FROM ki_edges WHERE (? = 1 OR derived = 0)
         UNION ALL
+        SELECT target AS s, source AS t, edge_type, derived, confidence, 'reverse' AS direction,
+               {hop_rev} AS hop_obj
+        FROM ki_edges WHERE (? = 1 OR derived = 0)
+        """
+        params = (allow_derived, allow_derived)
 
-        SELECT 
-            e.source, 
-            e.target, 
-            e.edge_type, 
-            e.derived, 
-            e.confidence, 
-            sg.hop_count + 1,
-            sg.path_string || e.target || '/'
-        FROM ki_edges e
-        JOIN search_graph sg ON sg.target = e.source
-        WHERE instr(sg.path_string, '/' || e.target || '/') = 0
-          AND sg.hop_count < ?
-          AND (? = 1 OR e.derived = 0)
+    query = f"""
+    WITH edges_pool AS ({edge_view}),
+    search_graph AS (
+        SELECT s, t, edge_type, direction, derived, confidence, 1 AS hop_count,
+               '/' || s || '/' || t || '/' AS path_string,
+               json_array(hop_obj) AS hops_json
+        FROM edges_pool WHERE s = ?
+        UNION ALL
+        SELECT e.s, e.t, e.edge_type, e.direction, e.derived, e.confidence, sg.hop_count + 1,
+               sg.path_string || e.t || '/',
+               json_insert(sg.hops_json, '$[#]', e.hop_obj)
+        FROM edges_pool e
+        JOIN search_graph sg ON sg.t = e.s
+        WHERE instr(sg.path_string, '/' || e.t || '/') = 0 AND sg.hop_count < ?
     )
-    SELECT source, target, edge_type, derived, confidence, hop_count, path_string
-    FROM search_graph
-    WHERE target = ?
-    ORDER BY hop_count ASC
-    LIMIT 1;
+    SELECT s, t, edge_type, derived, confidence, hop_count, path_string, hops_json
+    FROM search_graph WHERE t = ?
+    ORDER BY hop_count ASC, derived ASC, confidence DESC LIMIT 1;
     """
-    cursor = conn.execute(query, (from_id, allow_derived, max_depth, allow_derived, to_id))
+    cursor = conn.execute(query, params + (src, max_depth, dst))
     row = cursor.fetchone()
     if not row:
         return {"status": "no_path", "chain": [], "length": 0, "hops": []}
 
     path_str = row[6]  # e.g. /ki-1/ki-2/ki-3/
     chain = [p for p in path_str.split("/") if p]
+    raw_hops = json.loads(row[7])
+    hops = [
+        {
+            "from": h["from"],
+            "to": h["to"],
+            "edge_type": h["edge_type"],
+            "direction": h["direction"],
+            "derived": bool(h["derived"]),
+            "confidence": float(h["confidence"]),
+        }
+        for item in raw_hops
+        for h in [json.loads(item) if isinstance(item, str) else item]
+    ]
     return {
         "status": "found",
         "chain": chain,
         "length": row[5],
         "path_string": path_str,
+        "hops": hops,
     }
 
 

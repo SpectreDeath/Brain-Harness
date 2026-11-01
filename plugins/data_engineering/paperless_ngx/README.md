@@ -69,5 +69,6 @@ plugin.on_load(context)
 ## Architecture & Diátaxis Classification
 
 - Diátaxis Quadrant: Reference (Track B) & How-To Guides
+- Companion Skill: [Paperless Document Pipeline](../../../.agents/skills/paperless-document-pipeline/SKILL.md)
 - Isolation: `subprocess` execution sandbox
 - Invariants: Slotted dataclass architecture (Rule 12), transactional context bounds (Rule 8), and zero-fork YAML configuration (Rule 44).

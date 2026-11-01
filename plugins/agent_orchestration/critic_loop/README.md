@@ -105,6 +105,15 @@ Comprehensive tests for Critic & Safety Evaluation Gate Plugin.
 
 ---
 
+## Architectural Engine & Adapter Relationship
+
+`critic_loop` is the primary, authoritative implementation for adversarial evaluation and safety gating:
+- Provides both `CRITIC_EVALUATION_SERVICE_KEY` and `CRITIC_LOOP_KEY` with 7 analysis tools.
+- `evaluator_critic` (`plugins/agent_orchestration/evaluator_critic/`) acts as a co-located backward-compatibility adapter delegating to this engine (`Rule 20`).
+- Specialized security finding deduplication is separately encapsulated in Mantis (`harness mantis critic-filter`).
+
+---
+
 ## Related Documentation & Configuration
 - Manifest: [`plugin.json`](plugin.json)
 - Architecture Seams: [Context Architecture](../../../CONTEXT-MAP.md) | [User Manual](../../../USER_MANUAL.md)

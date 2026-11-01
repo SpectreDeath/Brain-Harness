@@ -34,10 +34,19 @@ class ToolRegistry:
         pipeline: ToolExecutionPipeline | None = None,
     ) -> None:
         self._tools: dict[str, ToolSpec] = {}
+        self._aliases: dict[str, str] = {}
         self._event_bus = event_bus
         self._pipeline: ToolExecutionPipeline = (
             pipeline if pipeline is not None else ToolExecutionPipeline()
         )
+
+    def register_alias(self, alias: str, target: str) -> None:
+        """Register a declared tool alias mapping to a canonical tool name."""
+        self._aliases[alias] = target
+
+    def resolve_tool_name(self, name: str) -> str:
+        """Resolve a tool name through registered aliases if present."""
+        return self._aliases.get(name, name)
 
     @property
     def event_bus(self) -> EventBus | None:
@@ -61,34 +70,38 @@ class ToolRegistry:
 
     def enable_tool(self, name: str) -> bool:
         """Enable a specific tool by name."""
-        if name in self._tools:
-            self._tools[name].enabled = True
-            logger.info("Tool enabled", tool=name)
+        target = self.resolve_tool_name(name)
+        if target in self._tools:
+            self._tools[target].enabled = True
+            logger.info("Tool enabled", tool=target, alias=name if name != target else None)
             return True
         return False
 
     def disable_tool(self, name: str) -> bool:
         """Disable a specific tool by name without unregistering it."""
-        if name in self._tools:
-            self._tools[name].enabled = False
-            logger.info("Tool disabled", tool=name)
+        target = self.resolve_tool_name(name)
+        if target in self._tools:
+            self._tools[target].enabled = False
+            logger.info("Tool disabled", tool=target, alias=name if name != target else None)
             return True
         return False
 
     def toggle_tool(self, name: str, enabled: bool | None = None) -> bool:
         """Toggle a tool's enablement state."""
-        if name in self._tools:
+        target = self.resolve_tool_name(name)
+        if target in self._tools:
             if enabled is None:
-                self._tools[name].enabled = not self._tools[name].enabled
+                self._tools[target].enabled = not self._tools[target].enabled
             else:
-                self._tools[name].enabled = enabled
-            logger.info("Tool toggled", tool=name, enabled=self._tools[name].enabled)
+                self._tools[target].enabled = enabled
+            logger.info("Tool toggled", tool=target, enabled=self._tools[target].enabled, alias=name if name != target else None)
             return True
         return False
 
     def is_tool_enabled(self, name: str) -> bool:
         """Check if a tool is registered and enabled."""
-        spec = self._tools.get(name)
+        target = self.resolve_tool_name(name)
+        spec = self._tools.get(target)
         return spec is not None and spec.enabled
 
     def register_tool(self, spec: ToolSpec) -> None:
@@ -177,7 +190,8 @@ class ToolRegistry:
         metadata: dict[str, Any] | None = None,
     ) -> dict[str, Any]:
         """Invoke a tool by name through the interceptor pipeline with telemetry and error isolation."""
-        spec = self._tools.get(name)
+        target = self.resolve_tool_name(name)
+        spec = self._tools.get(target)
         if spec is None:
             err = f"Tool not found: {name}"
             logger.warning("Tool invocation failed", tool=name, error=err)
@@ -214,7 +228,7 @@ class ToolRegistry:
 
     def get(self, name: str) -> ToolSpec | None:
         """Get a tool spec by name."""
-        return self._tools.get(name)
+        return self._tools.get(self.resolve_tool_name(name))
 
     def list_tools(
         self,
@@ -265,14 +279,14 @@ class ToolRegistry:
 
     def has_tool(self, name: str) -> bool:
         """Check if a tool is registered."""
-        return name in self._tools
+        return self.resolve_tool_name(name) in self._tools
 
     def get_tool(self, name: str) -> ToolSpec | None:
         """Get a registered ToolSpec by name."""
-        return self._tools.get(name)
+        return self._tools.get(self.resolve_tool_name(name))
 
     def __contains__(self, name: str) -> bool:
-        return name in self._tools
+        return self.resolve_tool_name(name) in self._tools
 
     def __repr__(self) -> str:
         return f"ToolRegistry(tools={self.count})"

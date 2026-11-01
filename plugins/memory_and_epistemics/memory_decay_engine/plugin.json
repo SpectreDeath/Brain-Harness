@@ -8,6 +8,9 @@
   "isolation": "subprocess",
   "trusted": true,
   "dependencies": [],
+  "provides": [
+    "service.memory_decay"
+  ],
   "entrypoints": [
     {
       "name": "memory_register",

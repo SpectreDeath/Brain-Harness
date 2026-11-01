@@ -56,6 +56,8 @@ class MCPRegistry:
             {"uri": "harness://system/status", "name": "Harness System Diagnostics", "description": "Live active services and tool provider mappings", "mimeType": "application/json"},
             {"uri": "harness://knowledge/graph", "name": "Knowledge Graph Topology", "description": "Authoritative derived knowledge graph topology, nodes, edges, and census summary", "mimeType": "application/json"},
             {"uri": "harness://knowledge/contradictions", "name": "Knowledge Vault Contradiction Queue", "description": "Flagged antinomies, polarity conflicts, and candidate supersessions", "mimeType": "application/json"},
+            {"uri": "harness://rea/providers", "name": "REA Reverse-Engineering Providers", "description": "Status, version, capabilities, and tool counts of the 4 REA domain plugins", "mimeType": "application/json"},
+            {"uri": "harness://rea/routing-table", "name": "REA Artifact Routing Table", "description": "Artifact categories to primary and secondary plugin IDs, file magic signatures, and extensions", "mimeType": "application/json"},
         ]
         if self.loader is not None:
             catalog = self.loader.list_catalog()
@@ -112,6 +114,17 @@ class MCPRegistry:
             conflicts = await storage.audit_contradictions()
             storage.close()
             return [asdict(c) if hasattr(c, "__dataclass_fields__") else c.model_dump() for c in conflicts], "application/json"
+
+        if uri == "harness://rea/providers":
+            from dataclasses import asdict
+            from harness.services.rea_toolkit import resolve_rea_toolkit
+            service = resolve_rea_toolkit(self.context)
+            provs = service.providers()
+            return [asdict(p) for p in provs], "application/json"
+
+        if uri == "harness://rea/routing-table":
+            from harness.services.rea_toolkit import ARTIFACT_ROUTING_TABLE
+            return ARTIFACT_ROUTING_TABLE, "application/json"
 
         if uri.startswith("harness://plugins/") and uri.endswith("/guide"):
             plugin_name = uri.split("harness://plugins/")[1].split("/guide")[0]

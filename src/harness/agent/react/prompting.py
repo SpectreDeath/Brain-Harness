@@ -82,6 +82,8 @@ def build_react_initial_messages(
             from harness.services.storage import resolve_knowledge_vault
 
             vault = resolve_knowledge_vault(context)
+            if state_holder is not None:
+                state_holder.knowledge_vault = vault
             retrieved_kis = vault.retrieve_relevant_knowledge_sync(task, max_items=3)
             if retrieved_kis:
                 active_knowledge_items = [ki.id for ki in retrieved_kis]

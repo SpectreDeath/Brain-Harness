@@ -1,0 +1,12 @@
+# OKF Memory Governor Baseline Operational Budgets (Rule 44)
+timeout_seconds: 15.0
+max_tokens_budget: 3500
+bm25_top_k: 5
+trust_hierarchy:
+  - maintainer
+  - contributor
+  - agent
+  - untrusted
+concepts_dir: knowledge
+max_search_results: 10
+

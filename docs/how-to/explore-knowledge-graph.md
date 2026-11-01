@@ -57,11 +57,49 @@ harness knowledge export --format graphml --out outputs/knowledge_graph.graphml
 harness knowledge export --format cypher --out outputs/knowledge_graph.cypher
 ```
 
+#### Precision-First Starburst vs Connected Mesh:
+By default, `harness knowledge export` generates a precision-first starburst graph (398 nodes, 188 edges: 134 KI→code/skill/plugin spokes and 54 high-confidence 2-shared-tag `same_domain` edges). To export the denser connected mesh, pass `--include-single-tag-edges --include-shared-source` (which derives 1-tag and source links, reducing isolated KIs to 3):
+
+```bash
+# Export full connected mesh with single-tag and shared-source derivation
+harness knowledge export --format gexf --include-single-tag-edges --include-shared-source --out outputs/knowledge_mesh.gexf
+```
+
 #### 4-Step Gephi Quickstart:
-1. **Open**: In Gephi, choose **File → Open** and select `outputs/knowledge_graph.gexf` (Graph Type: Directed).
+1. **Open**: In Gephi, choose **File → Open** and select `outputs/knowledge_graph.gexf` (Graph Type: Directed). For dynamic timeline filtering, open `outputs/dynamic_graph.gexf` instead.
 2. **Layout**: Under **Layout**, select **ForceAtlas2** (set *Scaling* to `2.0`, enable *Prevent Overlap*, click **Run** then **Stop** once stabilized).
 3. **Partition Coloring**: Under **Appearance → Nodes → Partition**, choose `domain` and click **Apply** to color nodes by their taxonomy domain.
-4. **Timeline Filtering**: Enable the **Timeline** bar at the bottom to animate graph formation across weeks and reflection cycles.
+4. **Timeline Filtering**: When using `outputs/dynamic_graph.gexf` (exported with `--dynamic`), enable the **Timeline** bar at the bottom to animate graph formation across weeks and reflection cycles.
+
+#### Canonical Cypher Queries for Neo4j:
+When importing `outputs/knowledge_graph.cypher` into Neo4j Desktop or Aura, use these 5 canonical queries:
+
+1. **Shortest Path between KIs (Rule 55: reachability is strict):**
+   ```cypher
+   MATCH p = shortestPath((a:KnowledgeItem {id: "ki-5d-complexity-baseline"})-[*..6]-(b:KnowledgeItem {id: "ki-slotted-frozen-dataclass"}))
+   RETURN p
+   ```
+2. **Contradiction & Supersession Chains:**
+   ```cypher
+   MATCH (a:KnowledgeItem)-[r:SUPERSEDES|CONTRADICTS]->(b:KnowledgeItem)
+   RETURN a.id, type(r), b.id, a.status, b.status
+   ```
+3. **Skill & Plugin Lineage:**
+   ```cypher
+   MATCH (k:KnowledgeItem)-[r:BECAME_SKILL|BECAME_PLUGIN]->(target)
+   RETURN k.id, type(r), target.id, labels(target)
+   ```
+4. **Domain 2-Hop Neighborhoods:**
+   ```cypher
+   MATCH (k:KnowledgeItem {domain: "memory_and_epistemics"})-[r*1..2]-(neighbor)
+   RETURN k, r, neighbor
+   ```
+5. **Isolated KIs with Zero Relationships:**
+   ```cypher
+   MATCH (k:KnowledgeItem)
+   WHERE NOT (k)--()
+   RETURN k.id, k.title, k.category, k.tags
+   ```
 
 ---
 

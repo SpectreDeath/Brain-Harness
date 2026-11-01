@@ -50,3 +50,12 @@ discrete typed ADB device bridging, and Linux-isolated Binwalk/Unblob firmware c
 | `rea_mobile_adb_read_logcat` | `(device_serial, buffer, filter_tag, max_lines)` | Bounded adb logcat dump for a given buffer and optional tag filter. |
 | `rea_firmware_regions_inspect` | `(firmware_path)` | Scan binary with Binwalk 3.1.0 for signature candidates (Linux-only). |
 | `rea_firmware_extract` | `(firmware_path, destination_dir)` | Unpack embedded partitions via Unblob 26.6.4 into structured file trees (Linux-only). |
+
+---
+
+## Unified REA Toolkit Integration
+
+This plugin is integrated into the unified REA toolkit facade:
+- **CLI Commands:** `harness rea inspect`, `harness rea diff`, `harness rea learn`
+- **Agent Skill:** [rea-reverse-engineering](../../../.agents/skills/rea-reverse-engineering/SKILL.md)
+- **User Guide:** [How-To: Use REA Toolkit](../../../docs/how-to/use-rea-toolkit.md)

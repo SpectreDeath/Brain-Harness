@@ -1,4 +1,5 @@
 # Operational budgets and default parameters for Ebbinghaus Memory Decay Engine (Rule 44)
+timeout_seconds: 15.0
 half_life_turns: 20
 retention_threshold: 0.35
 max_nodes: 256

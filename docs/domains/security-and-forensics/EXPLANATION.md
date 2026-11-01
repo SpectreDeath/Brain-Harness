@@ -41,4 +41,4 @@ This domain enforces security boundaries, secret protection, and post-execution 
 
 - [`pre-commit-security-guard`](../../../.agents/skills/pre-commit-security-guard/SKILL.md): Intercepts vulnerabilities and secrets before PRs using Git hooks and DevSkim.
 - [`ethical-hacker-networking`](../../../.agents/skills/ethical-hacker-networking/SKILL.md): Executes protocol-level packet capture dissection and port evaluation.
-- [`git-guardrails-claude-code`](file:///C:/Users/spectre/.gemini/config/plugins/pocock-skills/skills/git-guardrails-claude-code/SKILL.md): Blocks destructive git operations before execution.
+- `git-guardrails-claude-code`: Blocks destructive git operations before execution (external plugin skill).

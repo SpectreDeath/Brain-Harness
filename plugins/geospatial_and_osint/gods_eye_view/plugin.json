@@ -12,6 +12,9 @@
     "pydantic>=2.0.0",
     "structlog>=23.1.0"
   ],
+  "provides": [
+    "service.gods_eye_view"
+  ],
   "entrypoints": [
     {
       "name": "gev_analyst_query",

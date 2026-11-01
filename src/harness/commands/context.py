@@ -346,6 +346,181 @@ def context_govern(root: str, complexity: float, as_json: bool, silent: bool) ->
     sys.exit(1)
 
 
+# --- Provenance & Context Type System CLI Seams ---
+@context_group.command("add")
+@click.option("--session", "-s", default="default", help="Session identifier")
+@click.option("--type", "-t", "context_type", required=True, type=click.Choice(["instruction", "memory", "evidence", "tool_output"]), help="Semantic channel context type")
+@click.option("--content", "-c", required=True, help="Content text")
+@click.option("--source", default=None, help="Origin source identifier")
+@click.option("--priority", "-p", default=0, type=int, help="Priority score")
+@click.option("--json", "as_json", is_flag=True, help="Emit JSON output")
+def context_add_cmd(session: str, context_type: str, content: str, source: str | None, priority: int, as_json: bool) -> None:
+    """Register a typed context item into session origin ledger."""
+    from plugins.memory_and_epistemics.context_type_system.main import context_add
+    res = context_add(session_id=session, context_type=context_type, content=content, source=source, priority=priority)
+    if as_json:
+        click.echo(_json.dumps(res, indent=2))
+        return
+    if res.get("status") == "ok":
+        item = res.get("item") or {}
+        click.secho(f"[OK] Added context item '{item.get('request_id')}' ({item.get('context_type')}) in session '{session}'", fg="green")
+    else:
+        click.secho(f"[ERROR] Failed to add context: {res.get('error')}", fg="red", err=True)
+        sys.exit(1)
+
+
+@context_group.command("transform")
+@click.option("--session", "-s", default="default", help="Session identifier")
+@click.option("--id", "request_id", required=True, help="Target item request ID")
+@click.option("--to-type", required=True, type=click.Choice(["instruction", "memory", "evidence", "tool_output"]), help="Target context type")
+@click.option("--source", default=None, help="Source identifier")
+@click.option("--json", "as_json", is_flag=True, help="Emit JSON output")
+def context_transform_cmd(session: str, request_id: str, to_type: str, source: str | None, as_json: bool) -> None:
+    """Explicitly transition a context item across permitted policy boundaries."""
+    from plugins.memory_and_epistemics.context_type_system.main import context_transform
+    res = context_transform(session_id=session, request_id=request_id, to_type=to_type, source=source)
+    if as_json:
+        click.echo(_json.dumps(res, indent=2))
+        return
+    if res.get("status") == "ok":
+        item = res.get("item") or {}
+        click.secho(f"[OK] Transformed item '{request_id}' -> '{item.get('context_type')}' in session '{session}'", fg="green")
+    else:
+        click.secho(f"[ERROR] Transform rejected: {res.get('error')}", fg="red", err=True)
+        sys.exit(1)
+
+
+@context_group.command("validate-tool")
+@click.option("--session", "-s", default="default", help="Session identifier")
+@click.option("--id", "request_id", default=None, help="Existing tool_output item request ID")
+@click.option("--tool-name", default="tool", help="Tool name if creating new tool_output item")
+@click.option("--output-json", default=None, help="Raw tool output payload if creating new item")
+@click.option("--strict", is_flag=True, help="Enforce strict validation")
+@click.option("--json", "as_json", is_flag=True, help="Emit JSON output")
+def context_validate_tool_cmd(session: str, request_id: str | None, tool_name: str, output_json: str | None, strict: bool, as_json: bool) -> None:
+    """Validate tool output and promote to verified evidence."""
+    from plugins.memory_and_epistemics.context_type_system.main import (
+        context_add,
+        context_validate_tool_output,
+    )
+    if not request_id:
+        if not output_json:
+            click.secho("[ERROR] Must provide either --id or --output-json", fg="red", err=True)
+            sys.exit(1)
+        add_res = context_add(session_id=session, context_type="tool_output", content=output_json, source=tool_name)
+        if add_res.get("status") != "ok" or not add_res.get("item"):
+            click.secho(f"[ERROR] Failed to stage tool output: {add_res.get('error')}", fg="red", err=True)
+            sys.exit(1)
+        request_id = add_res["item"]["request_id"]
+
+    res = context_validate_tool_output(session_id=session, tool_request_id=request_id, strict_mode=strict)
+    if as_json:
+        click.echo(_json.dumps(res, indent=2))
+        return
+    if res.get("status") == "ok":
+        item = res.get("item") or {}
+        click.secho(f"[OK] Validated and elevated '{request_id}' to evidence in session '{session}' (New ID: {item.get('request_id')})", fg="green")
+    else:
+        click.secho(f"[ERROR] Tool validation failed: {res.get('error')}", fg="red", err=True)
+        sys.exit(1)
+
+
+@context_group.command("assemble")
+@click.option("--session", "-s", default="default", help="Session identifier")
+@click.option("--budget-tokens", default=4000, type=int, help="Maximum token budget for assembled prompt")
+@click.option("--json", "as_json", is_flag=True, help="Emit JSON output")
+def context_assemble_cmd(session: str, budget_tokens: int, as_json: bool) -> None:
+    """Render structured prompt partitioned by typed semantic channels."""
+    from plugins.memory_and_epistemics.context_type_system.main import context_assemble_prompt
+    res = context_assemble_prompt(session_id=session, max_tokens=budget_tokens)
+    if as_json:
+        click.echo(_json.dumps(res, indent=2))
+        return
+    click.secho(f"\nAssembled Context Prompt ({session})", fg="cyan", bold=True)
+    click.echo("━" * 60)
+    click.echo(f"Items Rendered:  {res.get('item_count')}")
+    click.echo(f"Items Dropped:   {res.get('dropped_items_count')}")
+    click.echo(f"Used Tokens:     {res.get('used_tokens')}/{budget_tokens}")
+    click.echo(f"Channel Split:   {res.get('channel_breakdown')}")
+    click.echo("\nPrompt Preview:")
+    click.echo("─" * 60)
+    click.echo(res.get("prompt", "")[:1000])
+    if len(res.get("prompt", "")) > 1000:
+        click.echo("... [truncated]")
+
+
+@context_group.command("ledger")
+@click.option("--session", "-s", default="default", help="Session identifier")
+@click.option("--id", "request_id", default=None, help="Inspect specific item derivation lineage")
+@click.option("--json", "as_json", is_flag=True, help="Emit JSON output")
+def context_ledger_cmd(session: str, request_id: str | None, as_json: bool) -> None:
+    """Audit origin ledger or trace multi-hop Isnad lineage for a session."""
+    from plugins.memory_and_epistemics.context_type_system.main import (
+        context_get_lineage,
+        context_inspect_ledger,
+    )
+    if request_id:
+        res = context_get_lineage(session_id=session, request_id=request_id)
+        if as_json:
+            click.echo(_json.dumps(res, indent=2))
+            return
+        if res.get("status") == "ok":
+            click.secho(f"\nLineage Audit for Item '{request_id}' (Hops: {res.get('hops')})", fg="cyan", bold=True)
+            for hop in res.get("lineage", []):
+                click.echo(f"  • [{hop.get('context_type')}] {hop.get('request_id')} (from {hop.get('source') or 'unknown'})")
+        else:
+            click.secho(f"[ERROR] Lineage trace failed: {res.get('error')}", fg="red", err=True)
+            sys.exit(1)
+    else:
+        res = context_inspect_ledger(session_id=session)
+        if as_json:
+            click.echo(_json.dumps(res, indent=2))
+            return
+        click.secho(f"\nContext Provenance Ledger ({session})", fg="cyan", bold=True)
+        click.echo("━" * 60)
+        click.echo(f"Total Active Items: {res.get('total_items')}")
+        for rec in res.get("ledger", []):
+            click.echo(f"  • {rec.get('origin_id')}: type={rec.get('origin_type')} key={rec.get('key')}")
+
+
+@context_group.command("snapshot")
+@click.option("--session", "-s", default="default", help="Session identifier")
+@click.option("--export", "export_path", default=None, type=click.Path(), help="File path to export snapshot JSON")
+@click.option("--import", "import_path", default=None, type=click.Path(exists=True), help="File path to import snapshot JSON")
+@click.option("--json", "as_json", is_flag=True, help="Emit JSON output")
+def context_snapshot_cmd(session: str, export_path: str | None, import_path: str | None, as_json: bool) -> None:
+    """Export or restore a context session snapshot."""
+    from plugins.memory_and_epistemics.context_type_system.main import (
+        context_export_session,
+        context_import_session,
+    )
+    if import_path:
+        data = _json.loads(Path(import_path).read_text(encoding="utf-8"))
+        res = context_import_session(session_id=session, data=data)
+        if as_json:
+            click.echo(_json.dumps(res, indent=2))
+            return
+        if res.get("status") == "ok":
+            click.secho(f"[OK] Restored session '{session}' from {import_path}", fg="green")
+        else:
+            click.secho(f"[ERROR] Import failed: {res.get('error')}", fg="red", err=True)
+            sys.exit(1)
+    elif export_path:
+        res = context_export_session(session_id=session)
+        if res.get("status") == "ok":
+            Path(export_path).write_text(_json.dumps(res.get("data", {}), indent=2), encoding="utf-8")
+            if as_json:
+                click.echo(_json.dumps(res, indent=2))
+            else:
+                click.secho(f"[OK] Exported session '{session}' snapshot to {export_path}", fg="green")
+        else:
+            click.secho(f"[ERROR] Export failed: {res.get('error')}", fg="red", err=True)
+            sys.exit(1)
+    else:
+        res = context_export_session(session_id=session)
+        click.echo(_json.dumps(res, indent=2))
+
+
 __all__ = [
     "CodeSkeletonResult",
     "ContextCompileResult",

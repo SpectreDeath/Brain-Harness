@@ -22,6 +22,7 @@ from harness.services.storage import (
     KnowledgeGraphSummary,
     KnowledgeItemRecord,
     SQLiteStorageService,
+    normalize_category,
     resolve_created_at,
     resolve_knowledge_graph_service,
     resolve_source_target,
@@ -290,7 +291,7 @@ class TestKnowledgeGraphDerivationEngine:
                 title=meta.get("title", ki_id),
                 source_target=st,
                 tags=meta.get("tags", []),
-                category=meta.get("category") or "general",
+                category=normalize_category(meta.get("category")),
                 edges=edges,
                 created_at=ca,
             )
@@ -302,5 +303,5 @@ class TestKnowledgeGraphDerivationEngine:
         assert graph.summary.ki_nodes == expected_count
         assert "endogenous_memory" in graph.summary.excluded_mega_tags
         assert "self_reflection" in graph.summary.excluded_mega_tags
-        assert graph.summary.total_nodes >= expected_count
-        assert graph.summary.total_edges >= 7
+        assert graph.summary.total_nodes == 398
+        assert graph.summary.total_edges >= 188
