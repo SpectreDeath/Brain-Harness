@@ -140,7 +140,7 @@ async def test_isolated_introspect_and_tasks_submodules():
         )
 
         project_info = await execute_inspect_project(str(tmp_path), include_models=True)
-        assert project_info.project_root == str(tmp_path)
+        assert Path(project_info.project_root).resolve() == tmp_path.resolve()
         assert any(a.name == "store" for a in project_info.installed_apps)
         assert any(m.name == "Product" for m in project_info.models)
 

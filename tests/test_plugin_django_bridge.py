@@ -231,7 +231,7 @@ def process_order_task(order_id: int):
 
         # Test tool invocation
         inspect_res = await django_inspect_project(project_path=str(tmp_path))
-        assert inspect_res["project_root"] == str(tmp_path)
+        assert Path(inspect_res["project_root"]).resolve() == tmp_path.resolve()
         assert len(inspect_res["installed_apps"]) >= 1
         assert any(a["name"] == "myapp" for a in inspect_res["installed_apps"])
 
