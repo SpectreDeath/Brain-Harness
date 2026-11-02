@@ -14,6 +14,17 @@ from harness.services.storage.models import KnowledgeItemRecord
 logger = structlog.get_logger()
 
 
+def _update_disk_meta(root: Path, ki_id: str, updates: dict[str, Any]) -> None:
+    meta_path = root / ki_id / "metadata.json"
+    if meta_path.exists():
+        try:
+            raw = json.loads(meta_path.read_text(encoding="utf-8"))
+            raw.update(updates)
+            meta_path.write_text(json.dumps(raw, indent=2), encoding="utf-8")
+        except Exception as e:
+            logger.debug("Failed to update disk metadata", ki_id=ki_id, error=str(e))
+
+
 class KnowledgeRetrievalMixin:
     """Provides semantic matching, bounded prompt injection, and feedback loop tracking."""
 
@@ -133,25 +144,11 @@ class KnowledgeRetrievalMixin:
                 item.retrieval_count += 1
                 item.last_retrieved_at = now_iso
                 await self.save_knowledge_item(item)
-                meta_path = root / ki_id / "metadata.json"
-                if meta_path.exists():
-                    try:
-                        raw = json.loads(meta_path.read_text(encoding="utf-8"))
-                        raw["retrieval_count"] = item.retrieval_count
-                        raw["last_retrieved_at"] = now_iso
-                        meta_path.write_text(json.dumps(raw, indent=2), encoding="utf-8")
-                    except Exception as e:
-                        logger.debug("Failed to update disk metadata", ki_id=ki_id, error=str(e))
+                _update_disk_meta(root, ki_id, {"retrieval_count": item.retrieval_count, "last_retrieved_at": now_iso})
             else:
-                meta_path = root / ki_id / "metadata.json"
-                if meta_path.exists():
-                    try:
-                        raw = json.loads(meta_path.read_text(encoding="utf-8"))
-                        raw["retrieval_count"] = int(raw.get("retrieval_count", 0)) + 1
-                        raw["last_retrieved_at"] = now_iso
-                        meta_path.write_text(json.dumps(raw, indent=2), encoding="utf-8")
-                    except Exception as e:
-                        logger.debug("Failed to update disk metadata fallback", ki_id=ki_id, error=str(e))
+                meta = root / ki_id / "metadata.json"
+                cnt = (json.loads(meta.read_text("utf-8")).get("retrieval_count", 0) + 1) if meta.exists() else 1
+                _update_disk_meta(root, ki_id, {"retrieval_count": cnt, "last_retrieved_at": now_iso})
 
     async def record_knowledge_outcome(self, ki_ids: list[str], success: bool, vault_dir: Path | str = ".harness/knowledge") -> None:
         if not ki_ids:
@@ -163,24 +160,11 @@ class KnowledgeRetrievalMixin:
                 if success:
                     item.success_count += 1
                 await self.save_knowledge_item(item)
-                meta_path = root / ki_id / "metadata.json"
-                if meta_path.exists():
-                    try:
-                        raw = json.loads(meta_path.read_text(encoding="utf-8"))
-                        raw["success_count"] = item.success_count
-                        meta_path.write_text(json.dumps(raw, indent=2), encoding="utf-8")
-                    except Exception as e:
-                        logger.debug("Failed to update disk outcome", ki_id=ki_id, error=str(e))
+                _update_disk_meta(root, ki_id, {"success_count": item.success_count})
             else:
-                meta_path = root / ki_id / "metadata.json"
-                if meta_path.exists():
-                    try:
-                        raw = json.loads(meta_path.read_text(encoding="utf-8"))
-                        if success:
-                            raw["success_count"] = int(raw.get("success_count", 0)) + 1
-                        meta_path.write_text(json.dumps(raw, indent=2), encoding="utf-8")
-                    except Exception as e:
-                        logger.debug("Failed to update disk outcome fallback", ki_id=ki_id, error=str(e))
+                meta = root / ki_id / "metadata.json"
+                cnt = (json.loads(meta.read_text("utf-8")).get("success_count", 0) + 1) if (meta.exists() and success) else 0
+                _update_disk_meta(root, ki_id, {"success_count": cnt})
 
     async def evaluate_vault_lifecycle(
         self,
@@ -205,12 +189,5 @@ class KnowledgeRetrievalMixin:
             if new_status != item.status:
                 item.status = new_status
                 await self.save_knowledge_item(item)
-                meta_path = root / item.id / "metadata.json"
-                if meta_path.exists():
-                    try:
-                        raw = json.loads(meta_path.read_text(encoding="utf-8"))
-                        raw["status"] = new_status
-                        meta_path.write_text(json.dumps(raw, indent=2), encoding="utf-8")
-                    except Exception as e:
-                        logger.debug("Failed to update disk status", ki_id=item.id, error=str(e))
+                _update_disk_meta(root, item.id, {"status": new_status})
         return {"promoted": promoted, "demoted": demoted}

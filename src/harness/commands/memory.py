@@ -173,7 +173,7 @@ def memory_benchmark_cmd(turns: int, total_items: int, seed: int, as_json: bool)
         click.echo(json.dumps(res, indent=2))
         return
     sim = res.get("simulation") or {}
-    click.secho(f"\nEbbinghaus Memory Decay Simulation Benchmark", fg="cyan", bold=True)
+    click.secho("\nEbbinghaus Memory Decay Simulation Benchmark", fg="cyan", bold=True)
     click.echo("━" * 65)
     click.echo(f"  Turns Simulated   : {turns}")
     click.echo(f"  Total Injected    : {total_items}")

@@ -72,7 +72,7 @@ def gev_status_cmd(json_output: bool) -> None:
     click.secho("=" * 68, fg="cyan")
     click.echo(f"  Node.js Runtime : {'[FOUND]' if node_avail else '[NOT FOUND]'}")
     click.echo(f"  Tools Directory : {tools_dir} ({'[EXISTS]' if tools_exist else '[MISSING]'})")
-    click.echo(f"  Simulation Mode : Offline fallback enabled when air-gapped")
+    click.echo("  Simulation Mode : Offline fallback enabled when air-gapped")
     click.echo("  Subgroups       : 5 domains (Analyst, Flights/Vessels, Hazards, Space, 3D Rendering)")
 
 

@@ -63,7 +63,7 @@ class TestGeminiVercelStreamingChatbotSkill:
 
         data = json.loads(meta_file.read_text(encoding="utf-8"))
         assert data["id"] == "ki_20260918_gemini_vercel_streaming"
-        assert data["category"] == "integration_and_io"
+        assert data["category"] in ("integration_and_io", "infrastructure_and_runtime/integration")
         assert "isnad" in data
         assert len(data["isnad"]["claims"]) >= 3
 

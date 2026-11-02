@@ -49,7 +49,7 @@ def test_skills_cli_submodule_exports() -> None:
 
 @pytest.mark.unit
 def test_skills_cli_group_consolidation_rule_6() -> None:
-    """Verify Rule 6: skills_group has all 15 subcommands registered in a single consolidated group."""
+    """Verify Rule 6: skills_group has all subcommands registered in a single consolidated group."""
     expected = {
         "list",
         "run",
@@ -66,6 +66,9 @@ def test_skills_cli_group_consolidation_rule_6() -> None:
         "intercept",
         "prereqs",
         "check-chain",
+        "joint-query",
+        "bridges",
+        "index",
     }
     registered = set(skills_group.commands.keys())
     assert expected == registered, f"Mismatch in registered commands: {expected.symmetric_difference(registered)}"

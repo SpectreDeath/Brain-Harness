@@ -255,7 +255,7 @@ def rea_devices_cmd(target_serial: str | None, json_output: bool) -> None:
 
     adb_path = client_res.get("adb_path") or "(not found)"
     click.echo("=" * 70)
-    click.echo(f" ADB CLIENT & ATTACHED DEVICE SURFACE")
+    click.echo(" ADB CLIENT & ATTACHED DEVICE SURFACE")
     click.echo("=" * 70)
     click.echo(f" ADB Binary Path  : {adb_path}")
     click.echo(f" ADB Client Status: {'READY' if client_res.get('installed') else 'NOT INSTALLED'}")

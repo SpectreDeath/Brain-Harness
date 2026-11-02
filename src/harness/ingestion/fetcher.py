@@ -205,14 +205,22 @@ class RepoFetcher:
                     self._emit_event(EventType.REPO_FETCH_COMPLETED, source_clean, path=str(res), provider=parsed.provider.value)
                     return res
 
-                res = await self._fetch_remote_repo_archive(
-                    parsed.provider.value,
-                    parsed.owner,
-                    parsed.repo,
-                    ref=parsed.ref or ref,
-                    zip_url=parsed.zip_url,
-                    force=force,
-                )
+                if parsed.provider == RepoProvider.GITHUB:
+                    res = await self._fetch_github(
+                        parsed.owner,
+                        parsed.repo,
+                        ref=parsed.ref or ref,
+                        force=force,
+                    )
+                else:
+                    res = await self._fetch_remote_repo_archive(
+                        parsed.provider.value,
+                        parsed.owner,
+                        parsed.repo,
+                        ref=parsed.ref or ref,
+                        zip_url=parsed.zip_url,
+                        force=force,
+                    )
                 self._emit_event(
                     EventType.REPO_FETCH_COMPLETED,
                     source_clean,
@@ -446,8 +454,13 @@ class RepoFetcher:
                     )
                 except Exception:
                     pass
+            err_msg = ""
+            try:
+                err_msg = f": {e.response.text[:200]}"
+            except Exception:
+                pass
             raise FetchError(
-                f"{owner}/{repo}", f"HTTP {e.response.status_code}: {e.response.text[:200]}"
+                f"{owner}/{repo}", f"HTTP {e.response.status_code}{err_msg}"
             ) from e
         except Exception as e:
             zip_path.unlink(missing_ok=True)

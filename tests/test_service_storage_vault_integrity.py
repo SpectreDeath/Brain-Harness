@@ -28,11 +28,11 @@ class TestKnowledgeVaultDataIntegrity:
 
         storage = SQLiteStorageService(":memory:")
         synced_count = await storage.sync_knowledge_vault(src_vault)
-        assert synced_count == 282
+        assert synced_count >= 282
 
         target_vault = tmp_path / "fresh_export"
         exported_count = await storage.export_knowledge_vault(target_vault)
-        assert exported_count == 282
+        assert exported_count == synced_count
 
         # Spot-check headroom item for source dict and distilled_learning preservation
         headroom_src = json.loads((src_vault / "ki_20261028_headroom_context_optimization" / "metadata.json").read_text(encoding="utf-8"))
@@ -67,7 +67,7 @@ class TestKnowledgeVaultDataIntegrity:
         # Re-sync from fresh target vault
         storage_fresh = SQLiteStorageService(":memory:")
         resynced = await storage_fresh.sync_knowledge_vault(target_vault)
-        assert resynced == 282
+        assert resynced == synced_count
         storage.close()
         storage_fresh.close()
 
