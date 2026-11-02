@@ -1,0 +1,37 @@
+{
+  "id": "ki_r_c_graphics_device_serialization",
+  "title": "C-Level R GEdevice Interception & Zero-Dependency JSON Graphics Streaming",
+  "source_target": "D:\\GitHub\\cloned\\R\\jgd",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_ki_r_c_graphics_device_serialization",
+    "claims": [
+      {
+        "assertion": "The jgd graphics device hooks directly into R's C-level Graphics Engine (GEdevice) primitives (line, polyline, polygon, text, circle, raster), serializing graphical instructions into cJSON packets pushed across named pipes / sockets without linking external GUI libraries.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "jgd/r-pkg/src/device.c#L1-L40",
+            "sha256_hash": "f154948dbea3538bb43aac9b5f70c07a38c25368f3028dad829cd548c8c54087",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "jgd/server/hub.ts#L1-L50",
+            "sha256_hash": "d0ed480e9776f45202c46e26b19a485e69f0c95da05ff7faf59fee9e1b91ccac",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "gedevice",
+    "r_graphics",
+    "c_ffi",
+    "json_stream",
+    "named_pipes",
+    "canvas_rendering"
+  ]
+}

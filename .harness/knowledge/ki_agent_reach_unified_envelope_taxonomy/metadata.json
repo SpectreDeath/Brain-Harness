@@ -1,0 +1,36 @@
+{
+  "id": "ki_agent_reach_unified_envelope_taxonomy",
+  "title": "Schema v1 Result Envelope & Granular Error Classification for Agent Loops",
+  "source_target": "D:\\GitHub\\cloned\\Agent-Reach\\agent_reach\\runtime\\result.py",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_ki_agent_reach_unified_envelope_taxonomy",
+    "claims": [
+      {
+        "assertion": "Agent Reach guarantees a strict Schema v1 JSON envelope {schema_version, ok, channel, action, backend, items, meta, error} across all multi-platform scrapers, with deterministic error codes (NEED_SETUP, NEED_LOGIN, RATE_LIMITED, etc.) that enable autonomous agents to branch cleanly without HTML/DOM parsing.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "agent_reach/runtime/result.py#L1-L35",
+            "sha256_hash": "12b0b083859e7bdb373add63618efa29dd77fa1e3b71afdfa5dfb45fad68b5ec",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "agent_reach/runtime/dispatch.py#L15-L35",
+            "sha256_hash": "d7afea5eafef960ea6c9e755d275fd7707544c7548ec80a1c96029c4222b82b2",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "agent_reach",
+    "result_envelope",
+    "error_taxonomy",
+    "llm_tools",
+    "structured_output"
+  ]
+}

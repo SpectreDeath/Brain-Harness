@@ -1,0 +1,36 @@
+{
+  "id": "ki_agent_reach_session_isolation_and_credential_scrubbing",
+  "title": "Private HOME Sandboxing, Symlink Defense & Automated URL Credential Redaction",
+  "source_target": "D:\\GitHub\\cloned\\Agent-Reach\\agent_reach\\runtime\\sessions.py",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_ki_agent_reach_session_isolation_and_credential_scrubbing",
+    "claims": [
+      {
+        "assertion": "Agent Reach enforces filesystem and trajectory security by redirecting third-party CLI HOME paths to private directories (~/.agent-reach/sessions/<tool>/), validating symlink safety, and scrubbing URL basic auth credentials before returning results.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "agent_reach/runtime/sessions.py#L1-L35",
+            "sha256_hash": "cc18b61db146b3465c35cbd6b14ab749ad35a01b1af8d7449fd2b41061418f2f",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "agent_reach/utils/text.py#L1-L30",
+            "sha256_hash": "3ff284c4d210ce4ac9cbbf6e03d62cba2175c4e7ae5b00fd98aa9082e090bf66",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "session_isolation",
+    "credential_scrubbing",
+    "symlink_defense",
+    "security_sandboxing",
+    "private_paths"
+  ]
+}

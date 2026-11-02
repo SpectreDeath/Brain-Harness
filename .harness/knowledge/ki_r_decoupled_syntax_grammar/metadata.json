@@ -1,0 +1,36 @@
+{
+  "id": "ki_r_decoupled_syntax_grammar",
+  "title": "Decoupled Multi-Editor TextMate Syntax Grammar & Tokenization Architecture",
+  "source_target": "D:\\GitHub\\cloned\\R\\vscode-R-syntax",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_ki_r_decoupled_syntax_grammar",
+    "claims": [
+      {
+        "assertion": "The R syntax grammar defines high-precision TextMate tokens for R and R Markdown in declarative YAML, compiled into JSON syntaxes compatible across VS Code and Sublime Text, completely decoupled from language server binaries to support alternative language backends.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "vscode-R-syntax/syntaxes/r.yaml#L1-L35",
+            "sha256_hash": "e72188d06fb977cbaa3be69dbafdf16666443caa46d1739fde83cfc0d73ae04a",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "vscode-R-syntax/scripts/build.js#L1-L40",
+            "sha256_hash": "367740cc695fc8edc3b700f6ee8fdf20eb041ad674faddff0201e812c1ef8426",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "textmate_grammar",
+    "syntax_highlighting",
+    "yaml_compilation",
+    "decoupled_architecture",
+    "multi_editor_compatibility"
+  ]
+}

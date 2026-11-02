@@ -114,6 +114,7 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - `hf_doc_builder` — Hugging Face doc-builder integration for AST autodoc inspection, deterministic link checking, MDX transpilation, and semantic chunking.
   - `hyperframes_renderer` — Programmatic multimedia video rendering via HeyGen HyperFrames Node.js/GSAP engine.
   - `plugin.icm_architect` — Interpretable Context Methodology (ICM, arXiv:2603.16021) workspace architecture, contract auditing, link verification, quote verification, index generation, production workspace instantiation, and placeholder interpolation.
+  - `r_editor_bridge` — R editor tooling bridge integrating languageserver LSP 3.17, jgd C-level graphics streaming, and session watcher reflection.
 - **Member Skills**:
   - [`icm-workspace-architect`](.agents/skills/icm-workspace-architect/SKILL.md) — Design, scaffold, audit, and restructure workspaces using Interpretable Context Methodology (ICM, arXiv:2603.16021). Binds folder hierarchy to context scoping (L0-L4), replaces framework code with plain contracts, and validates with the walk test.
   - [`hyperframes-video-architect`](.agents/skills/hyperframes-video-architect/SKILL.md) — Architect, generate, and compose programmatic motion graphics and video timelines from code, diffs, and agent trajectories using HyperFrames and GSAP.
@@ -137,6 +138,7 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - [`hf-doc-builder-architect`](.agents/skills/hf-doc-builder-architect/SKILL.md) — Multi-package documentation engineering using zero-dependency mock virtualization, deterministic AST anchor graphs, and unified MDX transpilation.
   - [`system-design-architect`](.agents/skills/system-design-architect/SKILL.md) — Design, evaluate, and scale production distributed systems using the 5-step senior engineering framework, capacity estimation calculus, and 5-dimension interview scorecards.
   - [`python-diagrams-architect`](.agents/skills/python-diagrams-architect/SKILL.md) — Architect, generate, validate, and lint production system architecture and cloud infrastructure diagrams in Python using Diagrams-as-Code.
+  - [`r-language-server-toolkit`](.agents/skills/r-language-server-toolkit/SKILL.md) — Scaffold, configure, and inspect R language server protocol runtimes, C-level graphics devices (jgd), and session watchers for R execution environments.
 
 
 ### 5. [Security & Forensics](./docs/domains/security-and-forensics/EXPLANATION.md)
@@ -179,6 +181,7 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - `chatbotx` — Omnichannel messaging, contact management, visual flow DAG execution, and dynamic OpenAPI/MCP tool dispatch across WhatsApp, Telegram, Messenger, and Zalo.
   - `gradio_app_architect` — Production AI interface engineering, AST diagnostic inspection, and decoupled 3-tier scaffolding for Gradio applications (Eva J Patel 2026).
   - `gemini_vercel_streaming_chatbot` — Production AI chatbot engineering with Google Gemini & Vercel Serverless plain-text chunk streaming, CORS preflight gates, and reactive stream consumers (Johnson Samuel 2026).
+  - `agent_reach_bridge` — Agent Reach bridge integrating multi-platform web extraction, stealth CloakBrowser CDP sessions, and Schema v1 result envelopes.
 - **Member Skills**:
   - [`repo-to-plugin-forge`](.agents/skills/repo-to-plugin-forge/SKILL.md) — Autonomous synthesis and scaffolding of Harness plugins from attached codebases.
   - [`book-to-skill-forge`](.agents/skills/book-to-skill-forge/SKILL.md) — Synthesis and authoring of deep-module agent skills and coaching rubrics from books, articles, and video transcripts.
@@ -191,6 +194,7 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - [`chatbotx`](.agents/skills/chatbotx/SKILL.md) — Omnichannel chatbot automation, contact identity tagging, DAG flows, and dynamic OpenAPI tool execution across messaging networks.
   - [`gradio-app-architect`](.agents/skills/gradio-app-architect/SKILL.md) — Production-grade Gradio web applications and AI interfaces with decoupled logic, reactive Blocks event graphs, session state isolation, multimodal pipelines, and queued streaming.
   - [`gemini-vercel-streaming-chatbot`](.agents/skills/gemini-vercel-streaming-chatbot/SKILL.md) — Production-grade AI chatbots and embed widgets with Google Gemini and Vercel Serverless Functions using plain-text chunk streaming, CORS preflight guards, and React stream consumers.
+  - [`agent-reach-browser-bridge`](.agents/skills/agent-reach-browser-bridge/SKILL.md) — Scaffold, configure, and operate multi-platform web extraction, stealth CloakBrowser CDP sessions, and unified Schema v1 result envelopes for AI agents.
 
 ---
 

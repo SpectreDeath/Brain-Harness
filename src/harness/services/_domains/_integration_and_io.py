@@ -78,3 +78,12 @@ from harness.services.bridge_base import (
     BridgeTransportKind,
 )
 
+from harness.services.agent_reach import (
+    AGENT_REACH_SERVICE_KEY,
+    AgentReachProtocol,
+    ReachActionQueryData,
+    ReachChannelDescriptorData,
+    ReachEnvelopeData,
+    ReachSessionSandboxData,
+    resolve_agent_reach,
+)

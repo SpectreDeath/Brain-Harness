@@ -1,0 +1,36 @@
+{
+  "id": "ki_agent_reach_layered_backend_fallback",
+  "title": "Deterministic Multi-Tier Backend Fallback Cascades",
+  "source_target": "D:\\GitHub\\cloned\\Agent-Reach\\agent_reach\\runtime\\dispatch.py",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_ki_agent_reach_layered_backend_fallback",
+    "claims": [
+      {
+        "assertion": "Agent Reach actions define ordered backend sequences (Public API -> Dedicated CloakBrowser -> Native Session CLI), trying backends sequentially and gracefully falling back upon transient errors while pausing failing backends via adaptive backoff timers.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "agent_reach/runtime/dispatch.py#L1-L35",
+            "sha256_hash": "d7afea5eafef960ea6c9e755d275fd7707544c7548ec80a1c96029c4222b82b2",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "agent_reach/channels/base.py#L15-L45",
+            "sha256_hash": "7915850b7704fe19a9cfd31406f49e0c9951d0813cb0532cbe4ef59c72683b3e",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "backend_fallback",
+    "channel_routing",
+    "resilience",
+    "cascading_retries",
+    "browser_binding"
+  ]
+}

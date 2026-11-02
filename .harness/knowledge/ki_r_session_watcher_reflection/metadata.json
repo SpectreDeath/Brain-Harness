@@ -1,0 +1,36 @@
+{
+  "id": "ki_r_session_watcher_reflection",
+  "title": "Non-Invasive User-Space Session Introspection & Workspace Tracking",
+  "source_target": "D:\\GitHub\\cloned\\R\\vscode-R",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_ki_r_session_watcher_reflection",
+    "claims": [
+      {
+        "assertion": "vscode-R executes non-invasive runtime inspection by attaching custom environment hooks (.vsc.attach) into R's task callback list without modifying user variable state, writing workspace variables, loaded packages, and working directory metadata to temporary JSON queues.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "vscode-R/src/session.ts#L1-L45",
+            "sha256_hash": "405398b9431555240a2fa6f8e6a4d4a63c364f5277db3187d333dcf6d86cb081",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "vscode-R/R/session/init.R#L1-L60",
+            "sha256_hash": "N/A",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "session_watcher",
+    "r_introspection",
+    "task_callbacks",
+    "workspace_viewer",
+    "rstudioapi_emulation"
+  ]
+}

@@ -1,0 +1,10 @@
+# Baseline operational budgets for Agent Reach Browser Bridge (Rule 44)
+default_timeout_seconds: 30.0
+browser_idle_reclaim_seconds: 600
+browser_search_interval_seconds: 10.0
+backend_pause_timeout_seconds: 60
+backend_pause_upstream_broken_seconds: 120
+rate_limit_pause_seconds: 3600
+max_items_per_query: 50
+enable_credential_scrubbing: true
+

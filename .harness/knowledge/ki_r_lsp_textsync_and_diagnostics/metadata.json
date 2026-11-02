@@ -1,0 +1,37 @@
+{
+  "id": "ki_r_lsp_textsync_and_diagnostics",
+  "title": "LSP Incremental Text Synchronization & Asynchronous Lintr Diagnostics Pipeline",
+  "source_target": "D:\\GitHub\\cloned\\R\\languageserver",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_ki_r_lsp_textsync_and_diagnostics",
+    "claims": [
+      {
+        "assertion": "The R Language Server implements LSP 3.17 textDocument/didOpen and didChange handlers with versioned document caching and asynchronous linting, avoiding synchronous AST stalls during typing by delegating lint passes to debounced background workers.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "languageserver/R/handlers-textsync.R#L1-L35",
+            "sha256_hash": "571bb693a37e99e26df4a804b4cc7549ff61994fda08de9203dcfdc292058724",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "languageserver/R/diagnostics.R#L1-L40",
+            "sha256_hash": "a57a6a0fe42c35d5c91c9c4b4e13674e85c0274831d9a980c3fd5320012b6685",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "lsp",
+    "r_runtime",
+    "incremental_textsync",
+    "lintr",
+    "diagnostics",
+    "ast_parsing"
+  ]
+}

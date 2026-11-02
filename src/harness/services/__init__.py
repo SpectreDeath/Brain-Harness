@@ -22,6 +22,20 @@ from harness.services._domains._infra_and_cloud import *  # noqa: F401, F403
 from harness.services._domains._integration_and_io import *  # noqa: F401, F403
 
 __all__ = [
+    "AGENT_REACH_SERVICE_KEY",
+    "AgentReachProtocol",
+    "ReachActionQueryData",
+    "ReachChannelDescriptorData",
+    "ReachEnvelopeData",
+    "ReachSessionSandboxData",
+    "resolve_agent_reach",
+    "R_RUNTIME_SERVICE_KEY",
+    "RDiagnosticItemData",
+    "RLanguageServerConfigData",
+    "RPlotEventData",
+    "RRuntimeProtocol",
+    "RSessionInspectionData",
+    "resolve_r_runtime",
     "TurnGuardDecision",
     "TrajectoryTrace",
     "ToolPrunePolicy",

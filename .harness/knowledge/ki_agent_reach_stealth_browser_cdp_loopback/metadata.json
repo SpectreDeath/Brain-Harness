@@ -1,0 +1,36 @@
+{
+  "id": "ki_agent_reach_stealth_browser_cdp_loopback",
+  "title": "Dedicated Profile Sharing, Anti-Fingerprint Stealth & Localhost CDP Reconnection",
+  "source_target": "D:\\GitHub\\cloned\\Agent-Reach\\agent_reach\\runtime\\browser.py",
+  "detected_format": "git_repository",
+  "isnad": {
+    "decision_id": "dec_ki_agent_reach_stealth_browser_cdp_loopback",
+    "claims": [
+      {
+        "assertion": "Agent Reach operates a dedicated CloakBrowser instance using a shared profile under ~/.agent-reach/browser/profile over loopback CDP (127.0.0.1) with an idle watcher that automatically reclaims memory after 600 seconds of inactivity.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "agent_reach/runtime/browser.py#L1-L35",
+            "sha256_hash": "bfaa7095e4f1dc13b00e41ffafedb08039f369565f95144f1346db09e07c0c22",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "agent_reach/runtime/cdp.py#L1-L35",
+            "sha256_hash": "7df760f07fb3f09c6487c1f36fa2c0bb3969f317af62b3a53a1a07567a60bdbe",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "cloak_browser",
+    "cdp",
+    "stealth",
+    "anti_fingerprinting",
+    "idle_watcher"
+  ]
+}

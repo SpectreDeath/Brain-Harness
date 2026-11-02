@@ -1,0 +1,8 @@
+# Default configuration for R Editor Bridge Plugin (Rule 44)
+timeout_seconds: 120
+max_plots_cached: 50
+linter_debounce_ms: 300
+max_diagnostics_returned: 100
+default_graphics_device: "jgd"
+enable_session_watcher: true
+

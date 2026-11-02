@@ -1,0 +1,141 @@
+{
+  "name": "plugin.r_editor_bridge",
+  "version": "1.0.0",
+  "description": "R editor tooling bridge integrating languageserver LSP 3.17, jgd C-level graphics streaming, and session watcher reflection",
+  "entrypoint": "main.py",
+  "isolation": "subprocess",
+  "trusted": false,
+  "category": "developer_tooling",
+  "author": "REditorSupport Bridge Forge",
+  "provides": [
+    "service.r_runtime"
+  ],
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "r_inspect_session",
+      "description": "Inspect active R runtime session state, working directory, loaded packages, and symbols",
+      "parameters": [
+        {
+          "name": "pid",
+          "type": "integer",
+          "description": "Target R process ID",
+          "required": true
+        },
+        {
+          "name": "working_dir",
+          "type": "string",
+          "description": "Current working directory of R session",
+          "required": true
+        },
+        {
+          "name": "loaded_packages",
+          "type": "array",
+          "description": "List of loaded package namespace names",
+          "required": false
+        },
+        {
+          "name": "global_symbols",
+          "type": "array",
+          "description": "List of variable and function identifiers in .GlobalEnv",
+          "required": false
+        },
+        {
+          "name": "active_device",
+          "type": "string",
+          "description": "Active graphics device name (default: jgd)",
+          "required": false
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "r_parse_diagnostics",
+      "description": "Parse and normalize raw LSP and lintr diagnostic messages into structured items",
+      "parameters": [
+        {
+          "name": "raw_diagnostics",
+          "type": "array",
+          "description": "Raw list of diagnostic dictionaries from LSP or lintr",
+          "required": true
+        }
+      ],
+      "returns": "array"
+    },
+    {
+      "name": "r_stream_plot",
+      "description": "Process and serialize an R graphics device (jgd) display-list event packet",
+      "parameters": [
+        {
+          "name": "plot_index",
+          "type": "integer",
+          "description": "Sequential plot index",
+          "required": true
+        },
+        {
+          "name": "width",
+          "type": "number",
+          "description": "Plot width in pixels or points",
+          "required": true
+        },
+        {
+          "name": "height",
+          "type": "number",
+          "description": "Plot height in pixels or points",
+          "required": true
+        },
+        {
+          "name": "format",
+          "type": "string",
+          "description": "Encoding format (json, svg, png)",
+          "required": false
+        },
+        {
+          "name": "payload_size",
+          "type": "integer",
+          "description": "Size of serialized payload in bytes",
+          "required": false
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "r_validate_config",
+      "description": "Validate R Language Server configuration parameters against operational boundaries",
+      "parameters": [
+        {
+          "name": "r_path",
+          "type": "string",
+          "description": "Executable path to R binary",
+          "required": true
+        },
+        {
+          "name": "server_args",
+          "type": "array",
+          "description": "Arguments passed to R language server",
+          "required": false
+        },
+        {
+          "name": "debounce_ms",
+          "type": "integer",
+          "description": "Debounce delay in ms before triggering AST lint",
+          "required": false
+        },
+        {
+          "name": "lint_on_change",
+          "type": "boolean",
+          "description": "Whether to lint on textDocument/didChange",
+          "required": false
+        },
+        {
+          "name": "max_payload_mb",
+          "type": "integer",
+          "description": "Maximum allowed payload size in MB",
+          "required": false
+        }
+      ],
+      "returns": "boolean"
+    }
+  ]
+}
+

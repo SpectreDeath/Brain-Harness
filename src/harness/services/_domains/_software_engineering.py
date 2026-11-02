@@ -171,3 +171,12 @@ from harness.services.icm_architect import (
     resolve_icm_architect_service,
 )
 
+from harness.services.r_runtime import (
+    R_RUNTIME_SERVICE_KEY,
+    RDiagnosticItemData,
+    RLanguageServerConfigData,
+    RPlotEventData,
+    RRuntimeProtocol,
+    RSessionInspectionData,
+    resolve_r_runtime,
+)
