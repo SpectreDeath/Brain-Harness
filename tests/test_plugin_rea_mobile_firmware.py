@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+import shutil
 import struct
 import subprocess
 import sys
@@ -266,6 +267,7 @@ class TestReaMobileFirmwarePlugin:
 
     def test_adb_bridge_offline_and_timeout(self, monkeypatch: pytest.MonkeyPatch) -> None:
         """Verify AdbBridgeEngine timeout handling and offline simulation fallback."""
+        monkeypatch.setattr(shutil, "which", lambda _: None)
         engine = AdbBridgeEngine(adb_path=None)
         client = engine.inspect_client()
         assert client["status"] == "ok"

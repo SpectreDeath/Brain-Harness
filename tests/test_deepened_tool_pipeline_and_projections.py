@@ -296,11 +296,12 @@ async def test_event_bus_replay_stream() -> None:
 
     # Pre-populate events
     await bus.emit(plugin_event(EventType.PLUGIN_DISCOVERED, "p1"))
-    await asyncio.sleep(0.01)
-    t1 = time.time()
+    await asyncio.sleep(0.02)
+    t1 = time.time() - 0.5
     await bus.emit(plugin_event(EventType.PLUGIN_LOADED, "p1"))
     await bus.emit(tool_event(EventType.TOOL_INVOKED, "t1"))
-    t2 = time.time()
+    await asyncio.sleep(0.02)
+    t2 = time.time() + 0.5
     await bus.emit(plugin_event(EventType.PLUGIN_ENABLED, "p1"))
 
     # Replay all

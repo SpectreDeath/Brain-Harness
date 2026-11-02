@@ -76,8 +76,8 @@ def export_gexf(graph: DerivedKnowledgeGraph, out_path: Path | str, dynamic: boo
         if dynamic and n.created_at:
             start_date = n.created_at[:10]
             n_attrs["start"] = start_date
-            if n.status in ("SUPERSEDED", "ARCHIVED") and superseding_dates.get(n.id, "") > start_date:
-                n_attrs["end"] = superseding_dates[n.id]
+            if n.status in ("SUPERSEDED", "ARCHIVED"):
+                n_attrs["end"] = max(start_date, superseding_dates.get(n.id, start_date))
         n_elem = ET.SubElement(nodes_elem, "node", n_attrs)
         attvalues = ET.SubElement(n_elem, "attvalues")
         values = [

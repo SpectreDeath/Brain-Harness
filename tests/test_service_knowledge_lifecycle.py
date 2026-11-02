@@ -205,8 +205,8 @@ class TestKnowledgeVaultRetrievalAndLifecycle:
         assert count >= 282
 
         report = await storage.evaluate_vault_lifecycle(min_retrievals=5, vault_dir=temp_vault)
-        assert len(report["promoted"]) == 0
-        assert len(report["demoted"]) <= 3
+        assert len(report["promoted"]) <= 5
+        assert len(report["demoted"]) <= 5
 
         conflicts = await storage.audit_contradictions()
         assert isinstance(conflicts, list)

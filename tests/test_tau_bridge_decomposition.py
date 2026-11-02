@@ -324,7 +324,7 @@ def test_project_trust_evaluator() -> None:
     from harness.services.tau_bridge.trust import ProjectTrustEvaluator
 
     with tempfile.TemporaryDirectory() as tmpdir:
-        root_path = Path(tmpdir)
+        root_path = Path(tmpdir).resolve()
         sub_path = root_path / "subdir"
         sub_path.mkdir()
 
@@ -337,7 +337,7 @@ def test_project_trust_evaluator() -> None:
         (root_path / ".env").write_text("SECRET=123", encoding="utf-8")
 
         trust = ProjectTrustEvaluator.evaluate(str(root_path))
-        assert trust.git_root == str(root_path)
+        assert Path(trust.git_root).resolve() == root_path
         assert ".env" in trust.protected_assets
         assert trust.permission_level == "TRUSTED"
 
