@@ -4,8 +4,11 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+import structlog
 
 from harness.services.storage.models import IsnadLineageBlock, KnowledgeItemRecord
+
+logger = structlog.get_logger(__name__)
 
 _CANONICAL_KI_KEYS: frozenset[str] = frozenset({
     "schema_version",

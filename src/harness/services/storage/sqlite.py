@@ -6,8 +6,11 @@ import json
 from pathlib import Path
 import sqlite3
 from typing import Any
+import structlog
 
 from harness.services.storage.protocols import StorageService
+
+logger = structlog.get_logger(__name__)
 
 
 class SQLiteStorageService(StorageService):

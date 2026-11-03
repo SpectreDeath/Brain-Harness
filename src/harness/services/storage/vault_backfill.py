@@ -6,9 +6,12 @@ from collections import Counter
 import json
 from pathlib import Path
 from typing import Any, Sequence
+import structlog
 
 from harness.services.storage.models import KnowledgeEdge, KnowledgeItemRecord
 from harness.services.storage.vault_taxonomy import get_taxonomy_domain
+
+logger = structlog.get_logger(__name__)
 
 
 def propose_links(
