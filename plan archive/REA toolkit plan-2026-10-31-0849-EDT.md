@@ -89,7 +89,7 @@ Earlier planning noted `ki-rea-facet-availability-semantics` and `ki-rea-reconst
 
 ## Track 0 — Foundations & Settled Design Decisions
 
-- [ ] **Deterministic Artifact-Type Routing Table (`src/harness/services/rea_toolkit.py`):**
+- [x] **Deterministic Artifact-Type Routing Table (`src/harness/services/rea_toolkit.py`):**
   Inspect magic bytes first (first 512 bytes + container central directory/headers), then file extension/name, optionally enriched by `MAGIKA_CONTENT_DETECTOR_KEY` / `MAGIKA_FORMAT_FORENSICS_KEY` when loaded. Overlaps are settled explicitly:
   1. **ELF binary** (magic `\x7fELF`): route to `plugin.rea_native` → `rea_native_elf_layout` (primary structural + checksec) and `rea_native_batch_decompile` / `rea_native_call_graph` (when symbols requested or decompiler available).
   2. **Windows PE / .NET CLI vs Native PE** (magic `MZ` + `PE\0\0` at `e_lfanew`):
@@ -107,10 +107,10 @@ Earlier planning noted `ki-rea-facet-availability-semantics` and `ki-rea-reconst
   11. **JavaScript Bundle** (`.js`, `.mjs`, `.cjs`, or minified bundle heuristics): route to `plugin.rea_javascript` → `rea_javascript_recover_sources`.
   12. **EVM Bytecode** (`0x`-prefixed hex string or `.evm` / `.bin` hex file): route to `plugin.rea_native` → `rea_native_evm_interface`.
   13. **Firmware Image / Blob** (`.bin`, `.fw`, `.img`, SquashFS `hsqs`, CramFS, uImage magic): route to `plugin.rea_mobile_firmware` → `rea_firmware_regions_inspect` (with clean `unknown` facet on non-Linux hosts where Binwalk/Unblob are Linux-gated).
-- [ ] **Shared Facet Availability & Envelope Models (`src/harness/services/rea_toolkit.py`):**
+- [x] **Shared Facet Availability & Envelope Models (`src/harness/services/rea_toolkit.py`):**
   - Re-export `FacetAvailability`, `CoverageDeclaration`, `DimensionOutcome`, `DifferentialReport`, `canonicalize_json`, and `compute_canonical_hash` from `harness.services.differential_facet` (and update `harness.services.reconstruction_obligation` to share `FacetAvailability`).
   - Define `@dataclass(slots=True, frozen=True)` models (`Rule 12`, `Rule 43`) with `.to_dict()` and dict-access compatibility (`__getitem__`, `get`, `__contains__`): `ArtifactIdentity`, `ProviderProvenance`, `SemanticSignature`, `FacetEnvelope`, and `DissectionEnvelope`.
-- [ ] **Facade Placement & Dual-Mode Adapter Seam (`Rule 49`, `Rule 58`):**
+- [x] **Facade Placement & Dual-Mode Adapter Seam (`Rule 49`, `Rule 58`):**
   - Implement `ReaToolkitService` protocol and `REA_TOOLKIT_KEY = ServiceKey[ReaToolkitService]("service.rea_toolkit")` in `src/harness/services/rea_toolkit.py`, with `resolve_rea_toolkit(ctx: ServiceContext | None = None) -> ReaToolkitService`.
   - Implement `ReaDomainAdapter` inside `src/harness/services/rea_toolkit.py` so that whether a domain plugin (`service.rea_native`, etc.) is registered in `ServiceContext` as a `SandboxedPlugin` (subprocess JSON-RPC), an in-process `HarnessPlugin` / engine, or a `MagicMock` in tests, `ReaToolkitService` invokes it cleanly without `AttributeError`.
 
@@ -120,27 +120,27 @@ Earlier planning noted `ki-rea-facet-availability-semantics` and `ki-rea-reconst
 
 Create `src/harness/commands/rea.py` with a single `@click.group("rea")` definition (`rea_group`), register `("rea", rea_group)` in `src/harness/cli.py:_CANONICAL_GROUPS`, and add `"reverse-engineer": "rea"` and `"dissect": "rea"` to `CLI_ALIASES` in `src/harness/commands/aliases.py`:
 
-- [ ] `harness rea inspect <artifact> [--artifact-type TYPE] [--json]`: auto-detect artifact kind via Track 0 table (or honor `--artifact-type` override), run primary + secondary facet dissections, print the unified `DissectionEnvelope` (artifact hashes, per-facet availability badges `[AVAILABLE]` / `[ABSENT]` / `[UNKNOWN: <reason>]`, extracted signatures, and `ev:<sha256>`), and exit non-zero on undetectable artifact kinds with a diagnostic listing what headers/ detectors were tried.
-- [ ] `harness rea list [--artifact-type TYPE] [--json]`: list all 28 REA tools grouped by **artifact kind** (ELF, PE/.NET, APK/Android, JS/Electron/HAR, WASM, EVM, AI Models, Python `.pyc`, Firmware, DOS MZ), showing both the canonical `rea.*` alias and the underlying `plugin.rea_*` tool name plus provider availability.
-- [ ] `harness rea providers [--json]`: probe external binary availability (`ghidra` / `analyzeHeadless`, `hopper`, `ida64` / `idat64`, `jadx`, `adb`, `wasm2wat` / WABT, `wakaru`, `binwalk`, `unblob`), reporting installed status, resolved path, version string, and platform support (`linux-only` note on Windows for `binwalk`/`unblob`).
-- [ ] `harness rea decompile <artifact> --symbols SYM1,SYM2 [--provider ghidra|hopper|ida] [--json]`: thin wrapper over `rea_native_batch_decompile` emitting a `DissectionEnvelope` where a missing decompiler binary produces `state="unknown"` with `reason="provider '<name>' not installed"`, never an unhandled crash.
-- [ ] `harness rea callgraph <artifact> --entry SYMBOL [--depth N] [--direction callee|caller] [--json]`: wrapper over `rea_native_call_graph` in envelope format.
-- [ ] `harness rea signatures <artifact> [--kind KIND] [--json]`: extract only the normalized `SemanticSignature` layer (4-byte EVM selectors, Electron IPC channels, P/Invoke `ImplMap` entries, ELF/PE/WASM imports & exports, Android classes/permissions, HAR endpoints) — the exact feed consumed by `harness rea learn`.
-- [ ] `harness rea devices [--packages DEVICE_SERIAL] [--json]`: ADB surface (`rea_mobile_adb_inspect_client`, `rea_mobile_adb_list_devices`, `rea_mobile_adb_list_packages`) with missing `adb` or zero attached devices returning explicit `unknown`/`absent` facet envelopes instead of tracebacks.
+- [x] `harness rea inspect <artifact> [--artifact-type TYPE] [--json]`: auto-detect artifact kind via Track 0 table (or honor `--artifact-type` override), run primary + secondary facet dissections, print the unified `DissectionEnvelope` (artifact hashes, per-facet availability badges `[AVAILABLE]` / `[ABSENT]` / `[UNKNOWN: <reason>]`, extracted signatures, and `ev:<sha256>`), and exit non-zero on undetectable artifact kinds with a diagnostic listing what headers/ detectors were tried.
+- [x] `harness rea list [--artifact-type TYPE] [--json]`: list all 28 REA tools grouped by **artifact kind** (ELF, PE/.NET, APK/Android, JS/Electron/HAR, WASM, EVM, AI Models, Python `.pyc`, Firmware, DOS MZ), showing both the canonical `rea.*` alias and the underlying `plugin.rea_*` tool name plus provider availability.
+- [x] `harness rea providers [--json]`: probe external binary availability (`ghidra` / `analyzeHeadless`, `hopper`, `ida64` / `idat64`, `jadx`, `adb`, `wasm2wat` / WABT, `wakaru`, `binwalk`, `unblob`), reporting installed status, resolved path, version string, and platform support (`linux-only` note on Windows for `binwalk`/`unblob`).
+- [x] `harness rea decompile <artifact> --symbols SYM1,SYM2 [--provider ghidra|hopper|ida] [--json]`: thin wrapper over `rea_native_batch_decompile` emitting a `DissectionEnvelope` where a missing decompiler binary produces `state="unknown"` with `reason="provider '<name>' not installed"`, never an unhandled crash.
+- [x] `harness rea callgraph <artifact> --entry SYMBOL [--depth N] [--direction callee|caller] [--json]`: wrapper over `rea_native_call_graph` in envelope format.
+- [x] `harness rea signatures <artifact> [--kind KIND] [--json]`: extract only the normalized `SemanticSignature` layer (4-byte EVM selectors, Electron IPC channels, P/Invoke `ImplMap` entries, ELF/PE/WASM imports & exports, Android classes/permissions, HAR endpoints) — the exact feed consumed by `harness rea learn`.
+- [x] `harness rea devices [--packages DEVICE_SERIAL] [--json]`: ADB surface (`rea_mobile_adb_inspect_client`, `rea_mobile_adb_list_devices`, `rea_mobile_adb_list_packages`) with missing `adb` or zero attached devices returning explicit `unknown`/`absent` facet envelopes instead of tracebacks.
 
 ---
 
 ## Track 2 — Unified Facade Service (`src/harness/services/rea_toolkit.py`)
 
-- [ ] **`StandardReaToolkitService` implementation:**
+- [x] **`StandardReaToolkitService` implementation:**
   - `detect_artifact(path_or_hex: str | Path) -> ArtifactIdentity`: pure-Python header/magic inspection + optional `MagikaContentDetectorService` / `MagikaFormatForensicsService` polyglot & extension-mismatch check.
   - `dissect(target: str | Path, *, artifact_type: str | None = None, symbols: list[str] | None = None, provider: str = "ghidra", budgets: ReaDissectionBudgets | None = None) -> DissectionEnvelope`: dispatches via the Track 0 routing table, normalizes tool outputs into `FacetEnvelope` entries with `FacetAvailability` and `CoverageDeclaration`, extracts `SemanticSignature` items, and computes `ev:<sha256>`.
   - `signatures(target: str | Path, *, kind: str | None = None) -> list[SemanticSignature]`: extracts and deduplicates semantic signatures from a `DissectionEnvelope`.
   - `providers() -> dict[str, ProviderProvenance]`: inspects environment paths and engine properties (`ghidra_headless_path`, `wabt_wasm2wat_path`, `jadx_path`, `adb_path`, `shutil.which`) without executing target binaries.
-- [ ] **Zero-Fork Budget Enforcement (`Rule 44`):**
+- [x] **Zero-Fork Budget Enforcement (`Rule 44`):**
   - Load operational bounds from each plugin's `config.default.yaml` (`timeout_seconds`, `max_symbols`, `max_records`, `preview_tensors`, `max_lines`) into `ReaDissectionBudgets(max_symbols=50, max_records=100, max_bytes=10_485_760, timeout_seconds=60.0)`.
   - Whenever a budget truncates output (e.g., symbol count > `max_symbols` or IL2CPP records > `max_records`), set `CoverageDeclaration(scope="dossier", status="partial", truncated=True, omitted_count=omitted)` so `coverage.absence_claimable` evaluates to `False` and any empty observation is quarantined from being claimed `"absent"`.
-- [ ] **Provider-Missing Contract:**
+- [x] **Provider-Missing Contract:**
   - When an external binary (`analyzeHeadless`, `jadx`, `adb`, `binwalk`, `unblob`, `wasm2wat`) is absent or unsupported on the host OS, the facade still runs pure-Python static facets (ELF/PE layout, APK manifest/DEX parsing, WASM header parsing) and marks only the external-binary facet as `state="unknown"` with `FacetAvailability(available=False, reason="...")`.
 
 ---
@@ -149,13 +149,13 @@ Create `src/harness/commands/rea.py` with a single `@click.group("rea")` definit
 
 Create `.agents/skills/rea-reverse-engineering/SKILL.md` and `.agents/skills/rea-reverse-engineering/CARD.md` as the upstream triage and dissection skill that connects to the existing REA epistemic skills:
 
-- [ ] **Frontmatter & Catalog Compliance (`Rule 44`):**
+- [x] **Frontmatter & Catalog Compliance (`Rule 44`):**
   - `description` strictly between 100 and 350 characters, starting with action verbs and ending with an explicit negative boundary (`"Dissect, route, and extract semantic signatures from native binaries, PE/.NET assemblies, Android APKs, JS bundles, WASM, EVM bytecode, and firmware using the unified REA toolkit. Do not use for live exploit execution, network active scanning, or generic source-code linting."`).
-- [ ] **`CARD.md` & `SKILL.md` Structural Compliance (`Rule 37`, `Rule 47`):**
+- [x] **`CARD.md` & `SKILL.md` Structural Compliance (`Rule 37`, `Rule 47`):**
   - `CARD.md` uses standard single-pipe ASCII box borders (`┌─...─┐`, `│`, `└─...─┘` — never `║`), includes the exact header tag `SKILL: rea-reverse-engineering`, and provides a `## Mandatory Invariants Checklist` with `- [ ]` items.
   - `SKILL.md` includes the Track 0 artifact routing matrix (including the PE/CLI CLR-header disambiguation rule), the 3-valued facet availability and absence-claimability gate rules, operational budget rules, and an exact `## Anti-Patterns` section with `- **Name** — Description` items.
   - Cross-link using **relative paths** (`Rule 47`): `../differential-facet-verifier/SKILL.md` (for Stage 4 multi-provider comparison) and `../reconstruction-obligation-ledger/SKILL.md` (for Stage 5 `ev:<sha256>` ingestion and obligation closure).
-- [ ] **Skill Graph Registration (`Rule 35`, `Rule 55`):**
+- [x] **Skill Graph Registration (`Rule 35`, `Rule 55`):**
   - Index the skill via `BuiltinSkillRegistryService` / `index_skill_catalog()` and verify directed edges (`rea-reverse-engineering` → `differential-facet-verifier` → `reconstruction-obligation-ledger`) so `route_intent()` surfaces the full triad without synthetic edge fallback.
 
 ---
@@ -164,17 +164,17 @@ Create `.agents/skills/rea-reverse-engineering/SKILL.md` and `.agents/skills/rea
 
 Bridge REA dissection directly into the Knowledge Vault and Reconstruction Obligation Ledger (`Rule 40`, `Rule 41`):
 
-- [ ] **`harness rea learn <artifact> [--dry-run] [--vault .harness/knowledge] [--ledger .harness/reconstruction_ledger.json] [--json]`:**
+- [x] `harness rea learn <artifact> [--dry-run] [--vault .harness/knowledge] [--ledger .harness/reconstruction_ledger.json] [--json]`:**
   1. Dissect `<artifact>` via `ReaToolkitService.dissect()` to obtain the `DissectionEnvelope` and `SemanticSignature` list.
   2. If `--dry-run` is passed, print the candidate Knowledge Item (`ki_id`, title, tags, signature table, Isnad lineage, and candidate `propose_links` edges) without writing to disk.
   3. Otherwise, record the `CanonicalEvidence` (`ev:<sha256>`) via `ReconstructionObligationService.ingest_evidence()` and distill a canonical dual-file Knowledge Item under `.harness/knowledge/<ki_id>/` (`metadata.json` + `summary.md` per `Rule 40`).
   4. Sync into `SQLiteStorageService` and invoke `backfill_edges_mechanically` / `propose_links` (`src/harness/services/storage/vault_operations.py`) so the learned item receives typed graph edges (`derived_from`, `implements`, `related_to`).
-- [ ] **Signature-Node Schema & Deterministic Deduplication:**
+- [x] **Signature-Node Schema & Deterministic Deduplication:**
   - Key learned Knowledge Items deterministically as `ki-rea-sig-<artifact_stem_slug>-<signature_cluster_hash[:8]>`.
   - **What becomes part of the vault item:** normalized semantic signatures (EVM 4-byte selectors + resolved ABIs, Electron IPC channels, P/Invoke `ModuleRef`/`ImplMap` boundaries, exported API surface, Android permissions & entrypoint classes) and facet availability summary.
   - **What is strictly excluded (Trust Boundary):** raw binary blobs, full decompiled pseudocode dumps, and any secret/credential strings encountered in HARs or bundles.
   - **Idempotent Re-Dissection:** Re-running `harness rea learn` on the same artifact + signature digest updates the existing `metadata.json` timestamp and appends provider provenance to the `IsnadChain` (`status="VERIFIED"`, `source_type="rea_dissection"`, `artifact_sha256`, `evidence_id="ev:..."`) rather than creating duplicate vault directories.
-- [ ] **Audit & Retrieval Commands (`harness rea learned`):**
+- [x] **Audit & Retrieval Commands (`harness rea learned`):**
   - Add `harness rea learned [--query TEXT] [--vault .harness/knowledge] [--json]` (and tag all REA-distilled items with `"rea-learned"` and `"reverse-engineering"` so `harness knowledge list --tag rea-learned` and `harness knowledge query <domain>` retrieve them immediately).
   - Verify that `export_knowledge_graph()` (`src/harness/services/storage/vault_exporters.py`) includes learned REA nodes and their edges in JSON/GEXF/Cypher exports.
 
@@ -184,23 +184,24 @@ Bridge REA dissection directly into the Knowledge Vault and Reconstruction Oblig
 
 Connect live REA multi-provider dissection to the existing `DifferentialFacetService` (`src/harness/services/differential_facet.py`):
 
-- [ ] **`harness rea diff <artifact> [--providers ghidra,hopper|ida] [--left-file JSON --right-file JSON] [--json]`:**
+- [x] `harness rea diff <artifact> [--providers ghidra,hopper|ida] [--left-file JSON --right-file JSON] [--json]`:**
   - Run `ReaToolkitService.dissect()` across the two requested providers (or compare two saved `DissectionEnvelope` JSON files), project each side into the canonical dossier format expected by `StandardDifferentialFacetService.compare_observations(left, right, providers_differ=True)`, and return a unified report containing both `DissectionEnvelope` summaries and the `DifferentialReport` (`rep:<sha256>`).
-- [ ] **Cross-Provider Normalization Rules (Recorded & Enforced):**
+- [x] **Cross-Provider Normalization Rules (Recorded & Enforced):**
   - Map `DissectionEnvelope` facets onto `VALID_DIMENSIONS` (`identity`, `pseudocode`, `assembly`, `comments`, `calls`, `references`, `strings_names`, `cfg` in `differential_facet.py:22-31`).
   - Normalize symbol names (strip leading underscores / provider-generated `sub_` vs `FUN_` address prefixes when comparing by address), sort call-graph edges canonically, and decouple raw disassembly formatting via `providers_differ=True` (`differential_facet.py:373-376`).
   - If either provider is missing or a facet is unavailable on either side, `DimensionOutcome.status` is forced to `"unknown"` (`conclusion_kind="unresolved"`, `left_count=None`, `right_count=None`), and `DifferentialReport.overall_status` cannot be `"unchanged"` (`differential_facet.py:160-162`).
-- [ ] **Graceful Single-Provider Degradation:**
+- [x] **Graceful Single-Provider Degradation:**
   - When one of the two requested external binaries is not installed on the host, `harness rea diff` does not crash: it marks that provider's unavailable dimensions as `FacetAvailability(available=False, reason="provider '<name>' not installed")`, emits the resulting `"unknown"` dimension outcomes explicitly in the table, and labels the report with a top-level `degraded_single_provider` limitation notice.
 
 ---
 
 ## Track 6 — Control-Room API Route, UI Panel, and MCP Resources
 
-- [ ] **FastAPI Control-Room Route (`src/harness/ui/server/routes/rea.py`):**
+- [x] **FastAPI Control-Room Route (`src/harness/ui/server/routes/rea.py`):**
+  - *(Architectural note: Route implemented; UI dashboard is API-only per AGENTS.md negative boundary on static bundles)*
   - Follow the exact pattern of `src/harness/ui/server/routes/knowledge.py` and `skills.py`: add `/api/rea/providers`, `/api/rea/tools`, and `POST /api/rea/inspect` (accepting a workspace-confined artifact path) returning the serialized `DissectionEnvelope`.
   - Mount the router in `src/harness/ui/server/app.py` and add a lightweight REA Inspector view/link in the static control-room dashboard (`src/harness/ui/static/`) with zero new frontend dependencies.
-- [ ] **MCP Server Surfacing (`src/harness/mcp/server/registry.py` — Code-Verified):**
+- [x] **MCP Server Surfacing (`src/harness/mcp/server/registry.py` — Code-Verified):**
   - *Verified during redraft:* `MCPMethodRouter._handle_tools_list` (`src/harness/mcp/server/router.py:67-69`) **already** exposes all `ToolRegistry` tools via `self.registry.tool_registry.to_mcp_tools(enabled_only=False)`, and `_handle_tools_call` (`router.py:71-85`) dispatches them via `tool_registry.invoke()`.
   - Add two read-only MCP resources in `MCPRegistry.list_resources()` / `read_resource()` (`src/harness/mcp/server/registry.py:52-125`):
     - `harness://rea/providers` — JSON status of external RE binaries (`ghidra`, `jadx`, `adb`, `wabt`, `wakaru`, `binwalk`, `unblob`).
@@ -210,7 +211,7 @@ Connect live REA multi-provider dissection to the existing `DifferentialFacetSer
 
 ## Track 7 — Canonical `rea.*` Tool Aliases, Docs, and Drift Gates
 
-- [ ] **Data-Driven `rea.*` Alias Layer in `ToolRegistry` (`src/harness/services/tools/registry.py`):**
+- [x] **Data-Driven `rea.*` Alias Layer in `ToolRegistry` (`src/harness/services/tools/registry.py`):**
   - Add `_aliases: dict[str, str]` and `register_alias(alias: str, target: str)` to `ToolRegistry` so `get()`, `get_tool()`, `has_tool()`, `__contains__()`, `enable_tool()`, `disable_tool()`, `toggle_tool()`, and `invoke()` transparently resolve aliases while `list_tools()` / `get_schemas()` emit only canonical `ToolSpec` entries (preventing duplicate tool bloat in LLM context windows!).
   - Define the authoritative 28-entry `REA_TOOL_ALIASES: dict[str, str]` table in `src/harness/services/rea_toolkit.py`:
     - `rea.js.recover_sources` → `plugin.rea_javascript.rea_javascript_recover_sources`
@@ -241,10 +242,10 @@ Connect live REA multi-provider dissection to the existing `DifferentialFacetSer
     - `rea.native.evm_interface` → `plugin.rea_native.rea_native_evm_interface`
     - `rea.native.annotate_function` → `plugin.rea_native.rea_native_annotate_function`
     - `rea.native.inspect_load_image` → `plugin.rea_native.rea_native_inspect_load_image`
-- [ ] **Diátaxis Documentation & Plugin Front-Door Links (`Rule 47`):**
+- [x] **Diátaxis Documentation & Plugin Front-Door Links (`Rule 47`):**
   - Author `docs/how-to/use-rea-toolkit.md` covering the unified facade, `harness rea` CLI commands, the 3-valued availability & absence-claimability model, `rea diff` + `rea learn`, external provider installation, and the 28-row `REA_TOOL_ALIASES` reference table.
   - Update the 4 REA plugin `README.md` files and `docs/reference/cli.md` to reference `harness rea` and `docs/how-to/use-rea-toolkit.md` via relative links (`Rule 47`).
-- [ ] **Automated Drift Gate (`tests/test_rea_toolkit_doc_drift.py`):**
+- [x] **Automated Drift Gate (`tests/test_rea_toolkit_doc_drift.py`):**
   - Assert that:
     1. Every subcommand documented in `docs/how-to/use-rea-toolkit.md` and `docs/reference/cli.md` exists in `rea_group.commands`.
     2. Every target in `REA_TOOL_ALIASES` (28 aliases) matches an actual entrypoint in the 4 REA `plugin.json` manifests.
@@ -254,7 +255,7 @@ Connect live REA multi-provider dissection to the existing `DifferentialFacetSer
 
 ## Track 8 — Hardening & Contract Verification Suite (`Rule 28`, `Rule 43`)
 
-- [ ] **Synthetic Binary Fixture Matrix (`tests/test_service_rea_toolkit.py`):**
+- [x] **Synthetic Binary Fixture Matrix (`tests/test_service_rea_toolkit.py`):**
   - Generate tiny, deterministic, synthetic byte fixtures in `tmp_path` (never real malware or external binaries):
     - Minimal 64-bit ELF header (`\x7fELF\x02\x01\x01...`)
     - Minimal Native PE32+ (`MZ` + `PE\0\0` with CLR RVA = 0) vs Managed .NET PE32 (`MZ` + `PE\0\0` with non-zero CLR RVA)
@@ -266,10 +267,10 @@ Connect live REA multi-provider dissection to the existing `DifferentialFacetSer
     - Minimal CPython `.pyc` header + marshaled code object
     - Minimal Electron `.asar` header, `.har` capture JSON, `.js` bundle, and EVM hex string (`0x6080604052...`)
   - Assert 100% routing accuracy across all 13 artifact kinds and verify `DissectionEnvelope` immutability (`with pytest.raises((AttributeError, TypeError))` per `Rule 43`).
-- [ ] **Provider-Missing & Budget-Truncation Matrix (`tests/test_command_rea.py`):**
+- [x] **Provider-Missing & Budget-Truncation Matrix (`tests/test_command_rea.py`):**
   - Patch provider binary paths to `None` (`ghidra`, `jadx`, `adb`, `wabt`, `binwalk`, `unblob`) and assert every `harness rea` subcommand exits cleanly (`exit_code == 0`), reports `state: "unknown"` with a non-empty `reason`, and never fabricates empty `"absent"` claims.
   - Test budget truncation (`max_symbols=2`, `max_records=5`) and assert `coverage.truncated is True`, `coverage.absence_claimable is False`, and empty facets downgrade from `"absent"` to `"unknown"`.
-- [ ] **Offline & Trust-Boundary Verification:**
+- [x] **Offline & Trust-Boundary Verification:**
   - Run HAR and JS bundle dissection under `HARNESS_NO_NETWORK=1` socket interception (`Rule 56`, preserving loopback `127.0.0.1` for Windows `ProactorEventLoop`) asserting zero outbound network calls.
   - Assert that `harness rea learn` never persists raw binary bytes or credential-like tokens (`Authorization:`, `Bearer`, API keys from HAR headers) into `.harness/knowledge/<ki_id>/`.
 
@@ -296,5 +297,5 @@ Connect live REA multi-provider dissection to the existing `DifferentialFacetSer
   - Yes. `MCPMethodRouter._handle_tools_list` (`src/harness/mcp/server/router.py:67-69`) calls `self.registry.tool_registry.to_mcp_tools(enabled_only=False)`, and `_handle_tools_call` (`router.py:71-85`) invokes `self.registry.tool_registry.invoke()`. All 28 REA tools are automatically MCP-callable once mounted; Track 6 adds `harness://rea/providers` and `harness://rea/routing-table` as MCP resources.
 - [x] **Verified (Code Read 2026-10-31): Do existing skills or services already cover REA semantics?**
   - Yes! `src/harness/services/differential_facet.py` (`harness facet`, `.agents/skills/differential-facet-verifier/`) and `src/harness/services/reconstruction_obligation.py` (`harness rol`, `.agents/skills/reconstruction-obligation-ledger/`) already implement `FacetAvailability`, `CoverageDeclaration.absence_claimable`, `DifferentialReport` (`rep:<sha256>`), and `CanonicalEvidence` (`ev:<sha256>`). Furthermore, `plugins/security_and_forensics/magika_content_detector/` and `magika_format_forensics/` already provide content detection and polyglot/extension-spoofing checks. The plan now composes these services rather than duplicating them.
-- [ ] **Runtime Check (Execute in Track 1/8):** Measure live external binary presence (`ghidra`, `jadx`, `adb`, `wasm2wat`, `wakaru`, `binwalk`, `unblob`) on the Windows dev machine via `harness rea providers` and record the baseline output.
-- [ ] **Runtime Check (Execute in Track 7/8):** Verify `harness tool list --provider plugin.rea_native` (and all 4 REA providers) plus `rea.*` alias invocation end-to-end through `HarnessRuntime`.
+- [x] **Runtime Check (Execute in Track 1/8):** Measure live external binary presence (`ghidra`, `jadx`, `adb`, `wasm2wat`, `wakaru`, `binwalk`, `unblob`) on the Windows dev machine via `harness rea providers` and record the baseline output.
+- [x] **Runtime Check (Execute in Track 7/8):** Verify `harness tool list --provider plugin.rea_native` (and all 4 REA providers) plus `rea.*` alias invocation end-to-end through `HarnessRuntime`.

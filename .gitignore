@@ -54,6 +54,7 @@ coverage.xml
 # Harness runtime & local state
 .harness/*
 !.harness/knowledge/
+!.harness/graph/
 !.harness/config.json
 !.harness/*.py
 test_ingested_plugins/

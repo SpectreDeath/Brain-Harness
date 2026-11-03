@@ -429,12 +429,39 @@ def build_generic_dock_manifest(repo_root: Path) -> DockManifest:
     )
     tools = ("fs_read_file", "fs_search_text", "fs_list_dir", "git_status", "git_diff", "git_log")
 
+    # Synthesize deterministic SHA-256 digest from the generated structure (Track 5)
+    synth_dict = {
+        "name": repo_name,
+        "declared": False,
+        "entrypoints": {
+            k: {
+                "name": v.name,
+                "description": v.description,
+                "write_path": v.write_path,
+                "steps": [
+                    {
+                        "command": s.command,
+                        "workdir": s.workdir,
+                        "expected_output": s.expected_output,
+                        "call_procedure": s.call_procedure,
+                    }
+                    for s in v.steps
+                ],
+            }
+            for k, v in sorted(procedures.items())
+        },
+        "permissions": asdict(permissions),
+        "boundaries": asdict(boundaries),
+        "tools": list(tools),
+    }
+    synth_sha = hashlib.sha256(json.dumps(synth_dict, sort_keys=True).encode("utf-8")).hexdigest()
+
     return DockManifest(
         name=repo_name,
         description=f"Generic dock fallback for {repo_name}",
         declared=False,
         manifest_path=None,
-        sha256="",
+        sha256=synth_sha,
         entrypoints=procedures,
         tools=tools,
         permissions=permissions,
@@ -504,9 +531,15 @@ class DefaultDockService:
         state_file: Path | None = None,
     ) -> None:
         self._workspace_root = (workspace_root or Path.cwd()).resolve()
-        self._state_file = (
-            state_file or (self._workspace_root / ".harness" / "docks.json")
-        ).resolve()
+        env_state = os.environ.get("HARNESS_DOCKS_STATE_FILE")
+        if state_file is not None:
+            self._state_file = Path(state_file).resolve()
+        elif env_state:
+            self._state_file = Path(env_state).resolve()
+        else:
+            self._state_file = (
+                self._workspace_root / ".harness" / "docks.json"
+            ).resolve()
         self._git_service = DefaultFilesystemGitService()
 
     @property
@@ -611,22 +644,18 @@ class DefaultDockService:
             approved = bool(data.get("approved", False))
             approved_sha = data.get("approved_sha256", "")
 
-            # Check live manifest
-            manifest_file = repo_path / "dock.yaml"
-            live_sha = ""
-            declared = False
-            if manifest_file.exists():
-                declared = True
-                try:
-                    live_sha = hashlib.sha256(manifest_file.read_bytes()).hexdigest()
-                except Exception:
-                    live_sha = ""
+            # Check live manifest (inspect computes live_sha for both declared and generic docks)
+            try:
+                manifest = self.inspect(repo_path)
+                live_sha = manifest.sha256
+                declared = manifest.declared
+            except Exception:
+                live_sha = ""
+                declared = bool(data.get("declared", False))
 
             status = "unapproved"
             if approved:
-                if not declared and not approved_sha:
-                    status = "approved"  # Generic approved
-                elif declared and live_sha == approved_sha:
+                if live_sha and live_sha == approved_sha:
                     status = "approved"
                 else:
                     status = "manifest_changed"
@@ -694,10 +723,10 @@ class DefaultDockService:
         approved = bool(dock_data.get("approved", False))
         approved_sha = dock_data.get("approved_sha256", "")
 
-        # 1. Approval Gate
+        # 1. Approval Gate (Uniform drift protection across declared and generic docks)
         if not approved:
             raise DockApprovalDriftError(dock_name, manifest.sha256, "")
-        if manifest.declared and manifest.sha256 != approved_sha:
+        if manifest.sha256 != approved_sha:
             raise DockApprovalDriftError(dock_name, manifest.sha256, approved_sha)
 
         # 2. Permission Gate (Run)

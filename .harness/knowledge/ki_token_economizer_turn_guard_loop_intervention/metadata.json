@@ -31,5 +31,6 @@
     "failure_intervention",
     "agentic_reliability",
     "circuit_breaker"
-  ]
+  ],
+  "status": "ACTIVE"
 }

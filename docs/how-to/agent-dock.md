@@ -105,7 +105,7 @@ entrypoints:
 
 When linking to a repository that lacks a `dock.yaml`, the harness synthesizes a deterministic **Generic Dock** (`declared: false`):
 
-- **Auto-detected procedures**: Automatically exposes `test` (detecting `pytest`, `npm test`, or `cargo test` from manifest files) and `status` (`git status --short`).
+- **Auto-detected procedures**: Automatically exposes `test` (detecting `pytest`, Node test runners, or `cargo test` from manifest files) and `status` (`git status --short`).
 - **Safe default boundaries**: Prohibits touching `.git/`, `.env`, `.pytest_cache/`, `src/harness/ui/static/`, and blocks `git push --force`, `git reset --hard`, and `git clean -fd`.
 - **Default permissions**: Read-only (`read: true, run: true, write: false, push: false`).
 
@@ -152,6 +152,7 @@ Status indicates:
 ```bash
 harness dock tools brain-harness
 ```
+*Note: Tools listed by `harness dock tools` represent declared capabilities advertised by the dock manifest (unverified against the host `ToolRegistry`).*
 
 ### Running Procedures
 Execute a declared procedure on a linked dock:
@@ -171,9 +172,9 @@ harness dock run brain-harness verify-core
 The Agent Dock security model adheres to strict invariants:
 
 1. **Who Declares**: The repository owner authors `dock.yaml`.
-2. **Who Approves**: The human operator connecting the agent approves the manifest digest at `harness dock link` time.
-3. **Digest Pinning**: Any modification to `dock.yaml` invalidates approval and raises `DockApprovalDriftError` on `harness dock run` until re-approved.
-4. **Pre-Execution Refusal**: Boundaries are enforced *before* execution. A step that references a boundary path, matches a forbidden operation, or attempts directory traversal (`../`) is refused before subprocess creation.
+2. **Who Approves**: The human operator connecting the agent approves the manifest digest and visible procedure commands at `harness dock link` time.
+3. **Digest Pinning**: Any modification to `dock.yaml` (or synthesized manifest in generic docks) invalidates approval and raises `DockApprovalDriftError` on `harness dock run` until re-approved.
+4. **Pre-Execution Refusal & Workdir Confinement**: Boundaries are enforced *before* execution. Each step process is strictly confined to its resolved `workdir` relative to the repository root. Steps referencing a boundary path token, matching a forbidden operation pattern, or attempting directory traversal (`../`) outside the repository tree are refused before subprocess creation. Boundary enforcement guarantees process workdir confinement rather than full semantic regex sanitization of all arbitrary CLI flags.
 5. **Credential Scrubbing**: Dock procedures never receive credentials. The runner scrubs all token and API key environment variables (`GITHUB_TOKEN`, `OPENAI_API_KEY`, etc.) before launching steps.
 6. **Transactional Rollback**: When a `write_path: true` procedure fails on a clean git working tree, the harness automatically invokes git rollback to prevent partial workspace corruption.
 

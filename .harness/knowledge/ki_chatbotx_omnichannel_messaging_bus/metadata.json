@@ -30,8 +30,8 @@
       "line_range": "1-13"
     }
   ],
-  "retrieval_count": 2,
-  "last_retrieved_at": "2026-10-26T19:42:43.139234+00:00",
+  "retrieval_count": 4,
+  "last_retrieved_at": "2026-11-03T12:51:38.807845+00:00",
   "schema_version": "1.0.0",
   "category": "memory_and_epistemics",
   "source_target": "",
@@ -83,7 +83,7 @@
       }
     ]
   },
-  "success_count": 0,
+  "success_count": 2,
   "status": "ACTIVE",
   "superseded_by": null,
   "author": null,

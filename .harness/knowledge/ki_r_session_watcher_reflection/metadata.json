@@ -32,5 +32,6 @@
     "task_callbacks",
     "workspace_viewer",
     "rstudioapi_emulation"
-  ]
+  ],
+  "status": "ACTIVE"
 }

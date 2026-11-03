@@ -146,8 +146,18 @@ def dock_link(repo_or_path: str, name: str | None, approve: bool, as_json: bool)
             click.echo(f"   Permissions: read={manifest.permissions.read}, run={manifest.permissions.run}, write={manifest.permissions.write}, push={manifest.permissions.push}")
             click.echo(f"   Boundaries:  {len(manifest.boundaries.paths)} paths, {len(manifest.boundaries.operations)} operations")
             click.echo(f"   Procedures:  {len(manifest.entrypoints)}")
+            if manifest.entrypoints:
+                click.echo("\n   Declared Procedures & Commands:")
+                for p_name, proc in manifest.entrypoints.items():
+                    write_marker = " [write-path]" if proc.write_path else ""
+                    click.echo(f"     • {p_name}{write_marker}: {proc.description or 'No description'}")
+                    for s_idx, s in enumerate(proc.steps, start=1):
+                        if s.call_procedure:
+                            click.echo(f"         step {s_idx}: call -> {s.call_procedure}")
+                        else:
+                            click.echo(f"         step {s_idx}: {s.command} (in '{s.workdir}')")
             click.echo("")
-            approved = click.confirm("Approve docking with these permissions and boundaries?", default=False)
+            approved = click.confirm("Approve docking with these permissions, boundaries, and commands?", default=False)
         else:
             approved = False
 
@@ -201,7 +211,7 @@ def dock_list(as_json: bool) -> None:
 @click.argument("dock_name")
 @click.option("--json", "as_json", is_flag=True, help="Output tools list as JSON")
 def dock_tools(dock_name: str, as_json: bool) -> None:
-    """List tools exposed by a linked dock."""
+    """List tools exposed by a linked dock (declared tools, unverified against host registry)."""
     service = resolve_dock_service()
     try:
         tools = service.tools(dock_name)
@@ -209,10 +219,10 @@ def dock_tools(dock_name: str, as_json: bool) -> None:
         raise click.ClickException(str(e)) from e
 
     if as_json:
-        click.echo(json.dumps({"dock_name": dock_name, "tools": tools}, indent=2))
+        click.echo(json.dumps({"dock_name": dock_name, "tools": tools, "status": "declared_unverified"}, indent=2))
         return
 
-    click.echo(f"\n⚓ Tools exposed by dock '{dock_name}':")
+    click.echo(f"\n⚓ Tools declared by dock '{dock_name}' (unverified against host ToolRegistry):")
     if not tools:
         click.echo("  (no tools declared)")
     else:

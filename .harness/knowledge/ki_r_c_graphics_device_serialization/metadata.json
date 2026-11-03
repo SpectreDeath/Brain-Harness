@@ -33,5 +33,6 @@
     "json_stream",
     "named_pipes",
     "canvas_rendering"
-  ]
+  ],
+  "status": "ACTIVE"
 }

@@ -32,5 +32,6 @@
     "yaml_compilation",
     "decoupled_architecture",
     "multi_editor_compatibility"
-  ]
+  ],
+  "status": "ACTIVE"
 }

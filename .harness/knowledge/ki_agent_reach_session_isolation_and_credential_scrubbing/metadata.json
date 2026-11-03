@@ -32,5 +32,6 @@
     "symlink_defense",
     "security_sandboxing",
     "private_paths"
-  ]
+  ],
+  "status": "ACTIVE"
 }

@@ -27,25 +27,45 @@
       "claim": "Core agent loops must maintain strict zero-dependency decoupling from CLI and TUI rendering packages to remain portable.",
       "source_file": "D:/GitHub/cloned/tau/AGENTS.md",
       "lines": "25-35",
-      "confidence": "VERIFIED"
+      "confidence": 1.0,
+      "status": "VERIFIED",
+      "verified": true,
+      "assertion": "Core agent loops must maintain strict zero-dependency decoupling from CLI and TUI rendering packages to remain portable.",
+      "source": "D:/GitHub/cloned/tau/AGENTS.md",
+      "evidence_type": "primary_code"
     },
     {
       "claim": "Conversation sessions should be modeled as immutable DAG entries with parent pointers, enabling branching without journal rewrites.",
       "source_file": "D:/GitHub/cloned/tau/src/tau_agent/session/tree.py",
       "lines": "1-40",
-      "confidence": "VERIFIED"
+      "confidence": 1.0,
+      "status": "VERIFIED",
+      "verified": true,
+      "assertion": "Conversation sessions should be modeled as immutable DAG entries with parent pointers, enabling branching without journal rewrites.",
+      "source": "D:/GitHub/cloned/tau/src/tau_agent/session/tree.py",
+      "evidence_type": "primary_code"
     },
     {
       "claim": "Interleaved tool call transcripts must be repaired in-flight to prevent HTTP 400 Bad Request errors across Anthropic and OpenAI.",
       "source_file": "D:/GitHub/cloned/tau/src/tau_agent/tool_history.py",
       "lines": "1-169",
-      "confidence": "VERIFIED"
+      "confidence": 1.0,
+      "status": "VERIFIED",
+      "verified": true,
+      "assertion": "Interleaved tool call transcripts must be repaired in-flight to prevent HTTP 400 Bad Request errors across Anthropic and OpenAI.",
+      "source": "D:/GitHub/cloned/tau/src/tau_agent/tool_history.py",
+      "evidence_type": "primary_code"
     },
     {
       "claim": "Workspace execution requires hierarchical project trust verification to isolate sensitive credentials and SSH keys.",
       "source_file": "D:/GitHub/cloned/tau/src/tau_coding/project_trust.py",
       "lines": "1-703",
-      "confidence": "VERIFIED"
+      "confidence": 1.0,
+      "status": "VERIFIED",
+      "verified": true,
+      "assertion": "Workspace execution requires hierarchical project trust verification to isolate sensitive credentials and SSH keys.",
+      "source": "D:/GitHub/cloned/tau/src/tau_coding/project_trust.py",
+      "evidence_type": "primary_code"
     }
   ],
   "schema_version": "1.0.0",

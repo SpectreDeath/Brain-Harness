@@ -54,14 +54,31 @@ def export_cypher(
             claims = getattr(isnad, "claims", []) if isnad else []
             if isinstance(isnad, dict):
                 claims = isnad.get("claims", [])
+            if not claims:
+                claims = getattr(item, "claims", []) if hasattr(item, "claims") else (item.get("claims", []) if isinstance(item, dict) else [])
             for idx, c in enumerate(claims):
-                cid = (getattr(c, "claim_id", None) or (c.get("claim_id") if isinstance(c, dict) else None) or f"{item.id}-c{idx+1}")
-                assertion = getattr(c, "assertion", "") if hasattr(c, "assertion") else c.get("assertion", "")
-                status = getattr(c, "status", "VERIFIED") if hasattr(c, "status") else c.get("status", "VERIFIED")
-                conf = float(getattr(c, "confidence", 1.0) if hasattr(c, "confidence") else c.get("confidence", 1.0))
+                cid = (
+                    getattr(c, "claim_id", None)
+                    or (c.get("claim_id") or c.get("id") if isinstance(c, dict) else None)
+                    or f"{item.id}-c{idx+1}"
+                )
+                assertion = getattr(c, "assertion", "") if hasattr(c, "assertion") else (c.get("assertion", "") if isinstance(c, dict) else "")
+                if not assertion and isinstance(c, dict):
+                    assertion = c.get("claim", "")
+                status = getattr(c, "status", "VERIFIED") if hasattr(c, "status") else (c.get("status", "VERIFIED") if isinstance(c, dict) else "VERIFIED")
+                raw_conf = getattr(c, "confidence", 1.0) if hasattr(c, "confidence") else (c.get("confidence", 1.0) if isinstance(c, dict) else 1.0)
+                try:
+                    conf = float(raw_conf)
+                except (ValueError, TypeError):
+                    if isinstance(raw_conf, str) and raw_conf.upper() in ("VERIFIED", "HIGH", "TRUE"):
+                        conf = 1.0
+                    elif isinstance(raw_conf, str) and raw_conf.upper() in ("CHALLENGED", "LOW"):
+                        conf = 0.5
+                    else:
+                        conf = 1.0
                 etype = getattr(c, "evidence_type", "") or (c.get("evidence_type", "") if isinstance(c, dict) else "") or ""
-                src = getattr(c, "source", "") or (c.get("source", "") if isinstance(c, dict) else "") or ""
-                ver = "true" if (getattr(c, "verified", True) if hasattr(c, "verified") else c.get("verified", True)) else "false"
+                src = getattr(c, "source", "") or (c.get("source", "") or c.get("source_file", "") if isinstance(c, dict) else "") or ""
+                ver = "true" if (getattr(c, "verified", True) if hasattr(c, "verified") else (c.get("verified", True) if isinstance(c, dict) else True)) else "false"
                 vby = getattr(c, "verified_by", "") or (c.get("verified_by", "") if isinstance(c, dict) else "") or ""
                 claims_data.append((item.id, cid, assertion, status, conf, etype, src, ver, vby))
 
@@ -70,9 +87,9 @@ def export_cypher(
 
     for n in sorted(graph.nodes, key=lambda x: x.id):
         label = _get_cypher_label(n.node_kind)
-        safe_name = n.label.replace('"', '\\"')
-        safe_cat = n.category.replace('"', '\\"')
-        safe_dom = n.domain.replace('"', '\\"')
+        safe_name = n.label.replace("\\", "\\\\").replace('"', '\\"').replace("\n", " ")
+        safe_cat = n.category.replace("\\", "\\\\").replace('"', '\\"')
+        safe_dom = n.domain.replace("\\", "\\\\").replace('"', '\\"')
         tags_str = "[" + ", ".join(f'"{t}"' for t in n.tags) + "]"
         lines.append(
             f'MERGE (n:{label} {{id: "{n.id}"}}) '
@@ -83,10 +100,10 @@ def export_cypher(
         )
 
     for item_id, cid, assertion, status, conf, etype, src, ver, vby in claims_data:
-        safe_assert = assertion.replace('"', '\\"')
-        safe_etype = etype.replace('"', '\\"')
-        safe_src = src.replace('"', '\\"')
-        safe_vby = vby.replace('"', '\\"')
+        safe_assert = assertion.replace("\\", "\\\\").replace('"', '\\"').replace("\n", " ")
+        safe_etype = etype.replace("\\", "\\\\").replace('"', '\\"')
+        safe_src = src.replace("\\", "\\\\").replace('"', '\\"')
+        safe_vby = vby.replace("\\", "\\\\").replace('"', '\\"')
         lines.append(
             f'MERGE (c:IsnadClaim {{id: "{cid}"}}) '
             f'ON CREATE SET c.assertion = "{safe_assert}", c.status = "{status}", c.confidence = {conf:.2f}, '

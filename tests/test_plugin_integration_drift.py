@@ -93,16 +93,47 @@ class TestPluginIntegrationDrift:
         repo_root = Path.cwd()
         plugins_root = repo_root / "plugins"
 
-        # 1. Canonical internal plugins: depth 3 where category != 'external'
+        # 0. Manifest syntax gate (Track 1): verify every plugin.json in the tree parses as valid JSON
+        all_manifests = list(plugins_root.rglob("plugin.json"))
+        assert len(all_manifests) > 0, "Expected plugin.json manifests in repository"
+        for m in all_manifests:
+            try:
+                json.loads(m.read_text(encoding="utf-8"))
+            except Exception as err:
+                pytest.fail(f"Manifest failed JSON parse: {m} -> {err}")
+
+        # 1. Canonical internal plugins (Track 0): derived from depth-3 category directories where category != 'external'
+        valid_categories = {
+            "agent_orchestration",
+            "data_engineering",
+            "developer_tooling",
+            "geospatial_and_osint",
+            "infra_and_cloud",
+            "integration_and_io",
+            "machine_learning",
+            "memory_and_epistemics",
+            "security_and_forensics",
+            "software_engineering",
+        }
         canonical_manifests = [
-            p for p in plugins_root.glob("*/*/plugin.json")
-            if p.parent.parent.name != "external"
+            p for p in sorted(plugins_root.glob("*/*/plugin.json"))
+            if p.parent.parent.name != "external" and not p.parent.name.startswith(".")
         ]
-        assert len(canonical_manifests) in (134, 135, 136), f"Expected 134-136 canonical plugins, found {len(canonical_manifests)}"
+        expected_canonical_dirs = [
+            d for d in plugins_root.glob("*/*")
+            if d.is_dir() and d.parent.name in valid_categories and (d / "plugin.json").exists()
+        ]
+        # Dynamically derived expectation: canonical manifests must match registered category directories
+        assert len(canonical_manifests) == len(expected_canonical_dirs), (
+            f"Derived count mismatch: {len(canonical_manifests)} manifests vs {len(expected_canonical_dirs)} dirs"
+        )
+        assert len(canonical_manifests) >= 134, f"Expected at least 134 canonical plugins, found {len(canonical_manifests)}"
+        for cm in canonical_manifests:
+            assert cm.parent.parent.name in valid_categories, f"Invalid category {cm.parent.parent.name} for {cm}"
 
         # 2. External skill bundles: depth 3 where category == 'external'
         external_bundles = [
-            p for p in plugins_root.glob("*/*/plugin.json")
+            p for p in sorted(plugins_root.glob("*/*/plugin.json"))
             if p.parent.parent.name == "external"
         ]
         assert len(external_bundles) == 1, f"Expected 1 external bundle, found {len(external_bundles)}"
@@ -116,6 +147,16 @@ class TestPluginIntegrationDrift:
         for cm in claude_manifests:
             assert cm not in canonical_manifests
             assert cm not in external_bundles
+
+        # 4. README documentation count alignment gate (Track 4)
+        readme_text = (repo_root / "README.md").read_text(encoding="utf-8")
+        assert f"**{len(canonical_manifests)} Canonical Harness Plugins**" in readme_text, (
+            f"README.md plugin count drifted from discovered canonical manifests ({len(canonical_manifests)})"
+        )
+        workspace_skills = [s for s in (repo_root / ".agents" / "skills").glob("*/SKILL.md")]
+        assert f"**{len(workspace_skills)} Workspace Skills packages" in readme_text, (
+            f"README.md skill count drifted from discovered workspace skills ({len(workspace_skills)})"
+        )
 
     def test_target_plugins_provides_and_configs(self) -> None:
         """Verify that target plugins have non-empty 'provides' and valid config.default.yaml."""

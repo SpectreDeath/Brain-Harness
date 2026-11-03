@@ -15,6 +15,13 @@ def cli_runner() -> CliRunner:
     return CliRunner()
 
 
+@pytest.fixture(autouse=True)
+def isolate_dock_state(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
+    """Guarantee test suite hermeticity: test runs never write to active repo docks.json."""
+    test_state_file = tmp_path / "test_docks.json"
+    monkeypatch.setenv("HARNESS_DOCKS_STATE_FILE", str(test_state_file))
+
+
 def test_dock_help(cli_runner: CliRunner) -> None:
     result = cli_runner.invoke(main, ["dock", "--help"])
     assert result.exit_code == 0

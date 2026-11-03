@@ -32,5 +32,6 @@
     "resilience",
     "cascading_retries",
     "browser_binding"
-  ]
+  ],
+  "status": "ACTIVE"
 }

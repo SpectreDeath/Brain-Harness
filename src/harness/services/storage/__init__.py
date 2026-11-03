@@ -36,6 +36,7 @@ from harness.services.storage.vault_contradiction import (
 )
 from harness.services.storage.vault_derivation import derive_knowledge_graph
 from harness.services.storage.vault_exporters import (
+    export_cypher,
     export_gexf,
     export_graphml,
     export_html,
@@ -103,6 +104,7 @@ __all__ = [
     "backfill_edges_mechanically",
     "bfs_shortest_path",
     "derive_knowledge_graph",
+    "export_cypher",
     "export_gexf",
     "export_graphml",
     "export_html",

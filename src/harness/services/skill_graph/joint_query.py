@@ -1,6 +1,14 @@
 """Cross-graph joint query across Knowledge Vault and Skill Knowledge Graph.
 
 Unifies epistemic facts (what the harness knows) with procedural capabilities (how the harness acts).
+
+Architectural Decision Rationale (Track 6):
+query_knowledge_and_skills reads directly from canonical dual-file metadata.json (Rule 40)
+rather than instantiating SQLiteStorageService or acquiring SQLite connection locks.
+This guarantees:
+1. Sub-5ms CLI cold-start latency for interactive queries (`harness knowledge joint-query`).
+2. Complete zero-lock immunity against worker proactors and concurrent session writers (Rule 22).
+3. Direct inspection of declared `became_skill` / `distilled_from` graph edges with semantic domain fallbacks.
 """
 
 from __future__ import annotations
@@ -25,7 +33,7 @@ def query_knowledge_and_skills(
     vault_root = Path(vault_dir).resolve()
     matched_kis: list[dict[str, Any]] = []
 
-    # Direct high-speed dual-file vault query
+    # Direct high-speed dual-file vault query (Rule 22 & Rule 40)
     if vault_root.exists() and vault_root.is_dir():
         q_lower = topic.lower().strip()
         for ki_dir in vault_root.iterdir():
@@ -51,6 +59,7 @@ def query_knowledge_and_skills(
                     if isinstance(isnad, dict)
                     else getattr(isnad, "status", "VERIFIED")
                 )
+                edges = meta.get("edges") or []
 
                 searchable = f"{title} {summary} {' '.join(tags)} {domain}".lower()
                 if q_lower in searchable or not q_lower:
@@ -61,6 +70,7 @@ def query_knowledge_and_skills(
                         "status": status,
                         "tags": list(tags),
                         "summary_preview": (summary or "").split("\n")[0][:100],
+                        "edges": edges,
                     })
             except Exception:
                 continue
@@ -70,7 +80,7 @@ def query_knowledge_and_skills(
     matches = skill_routing.get("matches", [])
 
     # Map matched KIs
-    ki_list = matched_kis[:limit]
+    ki_list_raw = matched_kis[:limit]
 
     # Map matched Skills (Rule 35: match entries are strictly keyed by 'skill_name')
     skill_list = []
@@ -83,27 +93,53 @@ def query_knowledge_and_skills(
             "recommended_chain": s.get("recommended_chain", []),
         })
 
-    # Lineage and cross-link discovery
+    # Lineage and cross-link discovery (prioritizing typed became_skill / distilled_from edges over heuristics)
     linked_pairs = []
     matched_ki_ids = set()
     matched_skill_names = set()
 
-    for ki in ki_list:
+    for ki in ki_list_raw:
         k_text = (ki["title"] + " " + " ".join(ki["tags"]) + " " + ki["domain"]).lower()
+        ki_edges = ki.get("edges") or []
         for sk in skill_list:
-            sk_slug = sk["skill_name"].lower().replace("-", " ")
-            if (
-                sk_slug in k_text
-                or any(t.lower() in sk_slug for t in ki["tags"])
-                or ki["domain"].lower() in sk_slug
-            ):
+            sk_name = sk["skill_name"]
+            sk_clean = sk_name.lower().strip()
+
+            # 1. Check for typed graph edge (became_skill, distilled_from, implements)
+            rel_type = None
+            for edge in ki_edges:
+                edge_type = edge.get("type")
+                target = str(edge.get("target") or "").lower().strip()
+                if edge_type in ("became_skill", "distilled_from", "implements") and (
+                    target == sk_clean
+                    or target == f".agents/skills/{sk_clean}"
+                    or target.endswith(f"/{sk_clean}")
+                    or sk_clean in target
+                ):
+                    rel_type = edge_type
+                    break
+
+            # 2. Heuristic domain/tag lineage fallback
+            if not rel_type:
+                sk_slug = sk_clean.replace("-", " ")
+                if (
+                    sk_slug in k_text
+                    or any(t.lower() in sk_slug for t in ki["tags"])
+                    or ki["domain"].lower() in sk_slug
+                ):
+                    rel_type = "domain_lineage"
+
+            if rel_type:
                 linked_pairs.append({
                     "ki_id": ki["ki_id"],
                     "skill_name": sk["skill_name"],
-                    "relationship": "domain_lineage",
+                    "relationship": rel_type,
                 })
                 matched_ki_ids.add(ki["ki_id"])
                 matched_skill_names.add(sk["skill_name"])
+
+    # Clean ki_list output removing internal edges
+    ki_list = [{k: v for k, v in ki.items() if k != "edges"} for ki in ki_list_raw]
 
     unbridged_kis = [ki for ki in ki_list if ki["ki_id"] not in matched_ki_ids]
     ungrounded_skills = [sk for sk in skill_list if sk["skill_name"] not in matched_skill_names]

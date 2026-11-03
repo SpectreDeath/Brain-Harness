@@ -32,5 +32,6 @@
     "error_taxonomy",
     "llm_tools",
     "structured_output"
-  ]
+  ],
+  "status": "ACTIVE"
 }

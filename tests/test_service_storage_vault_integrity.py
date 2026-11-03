@@ -10,8 +10,12 @@ from harness.kernel.context import ServiceContext
 from harness.creator.skills.models import SkillOptions
 from harness.creator.skills.scaffold import SkillScaffoldEngine
 from harness.services.storage import (
+    DerivedKnowledgeGraph,
+    KnowledgeGraphNode,
+    KnowledgeGraphSummary,
     KnowledgeItemRecord,
     SQLiteStorageService,
+    export_cypher,
 )
 
 
@@ -220,3 +224,181 @@ class TestKnowledgeVaultDataIntegrity:
         assert edges[0]["type"] == "became_skill"
         assert edges[0]["target"] == "custom-scaffolded-skill"
         assert edges[0]["derived"] is False
+
+    @pytest.mark.asyncio
+    async def test_knowledge_lifecycle_promotion_e2e_proof(self, tmp_path: Path) -> None:
+        """Track 7: Prove evaluate_vault_lifecycle transitions ACTIVE -> PROMOTED in SQLite and on disk."""
+        vault_dir = tmp_path / "lifecycle_vault"
+        vault_dir.mkdir(parents=True)
+
+        # 1. High utility item: 5 retrievals, 4 successes (ratio = 0.80 >= 0.75)
+        ki_promote = vault_dir / "ki_candidate_promote"
+        ki_promote.mkdir()
+        (ki_promote / "metadata.json").write_text(json.dumps({
+            "id": "ki_candidate_promote",
+            "title": "Promotion Candidate",
+            "category": "developer_experience",
+            "tags": ["lifecycle", "verified"],
+            "status": "ACTIVE",
+            "retrieval_count": 5,
+            "success_count": 4,
+        }), encoding="utf-8")
+        (ki_promote / "summary.md").write_text("Promotion candidate summary", encoding="utf-8")
+
+        # 2. Low utility item: 6 retrievals, 1 success (ratio = 0.166 <= 0.25)
+        ki_demote = vault_dir / "ki_candidate_demote"
+        ki_demote.mkdir()
+        (ki_demote / "metadata.json").write_text(json.dumps({
+            "id": "ki_candidate_demote",
+            "title": "Demotion Candidate",
+            "category": "developer_experience",
+            "tags": ["lifecycle", "stale"],
+            "status": "ACTIVE",
+            "retrieval_count": 6,
+            "success_count": 1,
+        }), encoding="utf-8")
+        (ki_demote / "summary.md").write_text("Demotion candidate summary", encoding="utf-8")
+
+        # 3. Insufficient retrievals item: 3 retrievals, 3 successes (ratio = 1.0 but retrievals < 5)
+        ki_ignore = vault_dir / "ki_candidate_ignore"
+        ki_ignore.mkdir()
+        (ki_ignore / "metadata.json").write_text(json.dumps({
+            "id": "ki_candidate_ignore",
+            "title": "Ignore Candidate",
+            "category": "developer_experience",
+            "tags": ["lifecycle"],
+            "status": "ACTIVE",
+            "retrieval_count": 3,
+            "success_count": 3,
+        }), encoding="utf-8")
+        (ki_ignore / "summary.md").write_text("Ignore candidate summary", encoding="utf-8")
+
+        storage = SQLiteStorageService(":memory:")
+        await storage.sync_knowledge_vault(vault_dir)
+
+        # Execute lifecycle evaluation
+        res = await storage.evaluate_vault_lifecycle(
+            min_retrievals=5,
+            promote_ratio=0.75,
+            demote_ratio=0.25,
+            vault_dir=vault_dir,
+        )
+
+        assert res["promoted"] == ["ki_candidate_promote"]
+        assert res["demoted"] == ["ki_candidate_demote"]
+
+        # Assert in SQLite storage
+        item_promoted = await storage.get_knowledge_item("ki_candidate_promote")
+        assert item_promoted is not None
+        assert item_promoted.status == "PROMOTED"
+
+        item_demoted = await storage.get_knowledge_item("ki_candidate_demote")
+        assert item_demoted is not None
+        assert item_demoted.status == "DEMOTED"
+
+        item_ignored = await storage.get_knowledge_item("ki_candidate_ignore")
+        assert item_ignored is not None
+        assert item_ignored.status == "ACTIVE"
+
+        # Assert on-disk metadata.json was mutated atomically
+        meta_promoted = json.loads((ki_promote / "metadata.json").read_text(encoding="utf-8"))
+        assert meta_promoted["status"] == "PROMOTED"
+
+        meta_demoted = json.loads((ki_demote / "metadata.json").read_text(encoding="utf-8"))
+        assert meta_demoted["status"] == "DEMOTED"
+
+        meta_ignored = json.loads((ki_ignore / "metadata.json").read_text(encoding="utf-8"))
+        assert meta_ignored["status"] == "ACTIVE"
+
+        # Assert idempotency on second run
+        res_repeat = await storage.evaluate_vault_lifecycle(
+            min_retrievals=5,
+            promote_ratio=0.75,
+            demote_ratio=0.25,
+            vault_dir=vault_dir,
+        )
+        assert res_repeat["promoted"] == []
+        assert res_repeat["demoted"] == []
+
+        storage.close()
+
+    def test_cypher_export_isnad_claim_7tuple_properties(self, tmp_path: Path) -> None:
+        """Track 7: Verify Cypher exports emit IsnadClaim nodes with full 7-tuple temporal evidence properties."""
+        out_file = tmp_path / "test_epistemic_export.cypher"
+
+        node = KnowledgeGraphNode(
+            id="ki_arch_001",
+            label="Empirical Harness Architecture",
+            node_kind="ki",
+            category="agent_orchestration",
+            domain="agent_orchestration",
+            tags=("harness", "react"),
+            status="PROMOTED",
+            retrieval_count=12,
+            success_count=10,
+        )
+        summary = KnowledgeGraphSummary(
+            total_nodes=1,
+            ki_nodes=1,
+            non_ki_nodes_by_kind={},
+            total_edges=0,
+            edges_by_type={},
+            derived_edge_count=0,
+            asserted_edge_count=0,
+            component_count=1,
+            largest_component_size=1,
+            isolated_ki_count=0,
+            untagged_ki_count=0,
+            uncategorized_ki_count=0,
+            date_coverage_count=1,
+            date_sources={},
+            excluded_mega_tags=(),
+            ki_only_component_count=1,
+            ki_only_largest_component_size=1,
+            ki_only_isolated_count=0,
+        )
+        graph = DerivedKnowledgeGraph(nodes=(node,), edges=(), summary=summary)
+
+        # Mock item with typed IsnadClaim containing all 7 temporal evidence properties
+        class MockItem:
+            id = "ki_arch_001"
+            isnad = {
+                "claims": [
+                    {
+                        "claim_id": "ki_arch_001-c1",
+                        "assertion": "Deterministic 3-pass pruning bounds context budgets without semantic loss.",
+                        "status": "VERIFIED",
+                        "confidence": 0.98,
+                        "evidence_type": "empirical_benchmark",
+                        "source": "tests/test_context_pruner.py#L40-L80",
+                        "verified": True,
+                        "verified_by": "pytest-suite-runner",
+                    }
+                ]
+            }
+
+        written = export_cypher(graph, out_file, items=[MockItem()])
+        assert written == out_file.resolve()
+        assert out_file.exists()
+
+        content = out_file.read_text(encoding="utf-8")
+
+        # 1. Constraint assertion
+        assert "CREATE CONSTRAINT claim_id_unique IF NOT EXISTS FOR (c:IsnadClaim) REQUIRE c.id IS UNIQUE;" in content
+
+        # 2. Node Materialization with 7-tuple properties
+        expected_claim_merge = 'MERGE (c:IsnadClaim {id: "ki_arch_001-c1"})'
+        assert expected_claim_merge in content
+
+        # 7-tuple temporal evidence assertions
+        assert 'c.assertion = "Deterministic 3-pass pruning bounds context budgets without semantic loss."' in content
+        assert 'c.status = "VERIFIED"' in content
+        assert "c.confidence = 0.98" in content
+        assert 'c.evidence_type = "empirical_benchmark"' in content
+        assert 'c.source = "tests/test_context_pruner.py#L40-L80"' in content
+        assert "c.verified = true" in content
+        assert 'c.verified_by = "pytest-suite-runner"' in content
+
+        # 3. Directed relationship edge
+        expected_rel = 'MATCH (k:KnowledgeItem {id: "ki_arch_001"}), (c:IsnadClaim {id: "ki_arch_001-c1"}) MERGE (k)-[:ASSERTS_CLAIM]->(c);'
+        assert expected_rel in content

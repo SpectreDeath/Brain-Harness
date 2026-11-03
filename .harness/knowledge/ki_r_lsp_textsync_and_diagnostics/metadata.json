@@ -33,5 +33,6 @@
     "lintr",
     "diagnostics",
     "ast_parsing"
-  ]
+  ],
+  "status": "ACTIVE"
 }

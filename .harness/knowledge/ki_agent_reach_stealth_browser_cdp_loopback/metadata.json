@@ -32,5 +32,6 @@
     "stealth",
     "anti_fingerprinting",
     "idle_watcher"
-  ]
+  ],
+  "status": "ACTIVE"
 }

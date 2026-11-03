@@ -39,8 +39,8 @@
   ],
   "context": "External agent brains and IDE session archives rapidly grow to tens of thousands of JSONL log lines, overwhelming standard linear scans or heavy LLM context windows.",
   "distilled_learning": "# High-Scale Trajectory Ingestion & Overlapping Token Indexing",
-  "retrieval_count": 2,
-  "last_retrieved_at": "2026-10-26T19:42:44.003014+00:00",
+  "retrieval_count": 3,
+  "last_retrieved_at": "2026-11-03T12:51:38.807845+00:00",
   "schema_version": "1.0.0",
   "category": "agent_orchestration",
   "anchors": {},
@@ -54,7 +54,7 @@
       "description": null
     }
   ],
-  "success_count": 0,
+  "success_count": 1,
   "status": "ACTIVE",
   "superseded_by": null,
   "author": null,

@@ -31,5 +31,6 @@
     "token_economy",
     "schema_optimization",
     "context_compression"
-  ]
+  ],
+  "status": "ACTIVE"
 }

@@ -31,5 +31,6 @@
     "domain_adapter",
     "pricing_ledger",
     "multi_agent"
-  ]
+  ],
+  "status": "ACTIVE"
 }

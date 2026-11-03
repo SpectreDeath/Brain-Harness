@@ -124,7 +124,8 @@ def test_generic_dock_manifest_synthesis(tmp_path: Path) -> None:
     manifest = build_generic_dock_manifest(tmp_path)
 
     assert manifest.declared is False
-    assert manifest.sha256 == ""
+    assert len(manifest.sha256) == 64
+    assert manifest.sha256 != ""
     assert manifest.permissions.read is True
     assert manifest.permissions.run is True
     assert manifest.permissions.write is False
@@ -301,3 +302,39 @@ def test_dock_service_dry_run(tmp_path: Path) -> None:
     assert res.success is True
     assert res.dry_run is True
     assert "[dry-run]" in res.steps[0].stdout
+
+
+def test_generic_dock_drift_protection(tmp_path: Path) -> None:
+    """Generic dock fallback computes deterministic SHA and catches structural drift."""
+    toy_repo = tmp_path / "generic_repo"
+    toy_repo.mkdir()
+    state_file = tmp_path / "test_docks_state.json"
+    service = DefaultDockService(workspace_root=tmp_path, state_file=state_file)
+
+    # 1. Inspect without test files -> only status procedure
+    m1 = service.inspect(toy_repo)
+    assert "test" not in m1.entrypoints
+    assert "status" in m1.entrypoints
+    sha1 = m1.sha256
+    assert len(sha1) == 64
+
+    # Link with approve
+    rec = service.link(toy_repo, name="gen-dock", approve=True)
+    assert rec.approved_sha256 == sha1
+
+    # 2. Add pyproject.toml -> structural drift in generic procedures (adds test procedure)
+    (toy_repo / "pyproject.toml").write_text("[project]\nname='toy'\n", encoding="utf-8")
+    m2 = service.inspect(toy_repo)
+    assert "test" in m2.entrypoints
+    sha2 = m2.sha256
+    assert sha1 != sha2
+
+    # list_docks must detect manifest_changed on generic dock
+    docks = service.list_docks()
+    gen_docks = [d for d in docks if d["dock_name"] == "gen-dock"]
+    assert len(gen_docks) == 1
+    assert gen_docks[0]["status"] == "manifest_changed"
+
+    # Execution blocked by drift error
+    with pytest.raises(DockApprovalDriftError):
+        service.run("gen-dock", "status")

@@ -407,6 +407,7 @@ class RepoTriadPipelineEngine:
                 "title": ki.get("title", ki_id),
                 "source_target": ki.get("source_target", "repository_ingestion"),
                 "detected_format": "git_repository",
+                "status": ki.get("status", "ACTIVE"),
                 "isnad": {
                     "decision_id": f"dec_{ki_id}",
                     "claims": [
