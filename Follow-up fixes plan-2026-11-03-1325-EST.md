@@ -32,10 +32,10 @@ from the catalog. That change also contradicts the Big Fix Track 0 Verify
 claim of "25/25 tests passing" across `test_track0_sandbox_restrictions.py`
 and `test_plugin_loader.py`.
 
-- [ ] Find where the manifest-less dir drops out of the catalog (loader
+- [x] Find where the manifest-less dir drops out of the catalog (loader [Commit `0438b90`: Mechanism identified in `src/harness/plugins/catalog.py`: scanner required `class HarnessPlugin in *.py` rather than checking nested `plugin.json` existence, skipping empty manifest-less leaf dirs]
       discovery vs catalog builder) and record the mechanism in one
       sentence in the commit message or a code comment.
-- [ ] Decide, and record the decision with its reason: either restore
+- [x] Decide, and record the decision with its reason: either restore [Commit `0438b90`: Restored manifest-less leaf dir discovery (`nested_manifests == []`). Listing is non-executing and records untrusted status; execution gates remain fail-closed]
       manifest-less dirs to the catalog, or update the test's expectation
       to 1. Preferred direction: restore discovery, because listing a dir
       is not executing it — an untrusted entry in the catalog is not a
@@ -43,23 +43,23 @@ and `test_plugin_loader.py`.
       is unchanged either way. If there is a concrete reason the test
       expectation is the right fix instead, that reason is the decision
       record.
-- [ ] Verify: `tests/test_plugin_loader.py` and
-      `tests/test_track0_sandbox_restrictions.py` pass in full on a fresh
+- [x] Verify: `tests/test_plugin_loader.py` and
+      `tests/test_track0_sandbox_restrictions.py` pass in full [Commit `0438b90`: 20/20 tests passing in full (16 in test_plugin_loader.py, 4 in test_track0_sandbox_restrictions.py)] on a fresh
       checkout with full dependencies installed (note: the Track 1
       dismiss test needs `fastapi` and `python-multipart`; the catalog
       test does not, but run the set with deps present so the result is
       unambiguous).
-- [ ] Verify: the Big Fix Track 0 Verify claim is corrected to the actual
+- [x] Verify: the Big Fix Track 0 Verify claim is corrected to the actual [Commit `0438b90`: Corrected to 20/20 in plan archive/Big fix plan-2026-11-03-0950-EST.md:144]
       counts (see Track 1 — the plan edit, not the code).
 
 ## Track 1 — Plan hygiene (paperwork, same round as Track 0)
 
-- [ ] Untick the Big Fix Track 10 Gephi box. Replace its evidence note
+- [x] Untick the Big Fix Track 10 Gephi box. Replace its evidence note [Commit `0438b90`: Unticked in plan archive/Big fix plan-2026-11-03-0950-EST.md:567 with note 'Blocked on a human desktop session. Not done.']
       with: "Blocked on a human desktop session. Not done." Do not add
       another headless check, brief, or styling guide as evidence — the
       [NW] live-proof rule forbids that substitution, and it has now been
       substituted four times.
-- [ ] Correct the Big Fix Track 0 Verify line ("25/25 tests passing") to
+- [x] Correct the Big Fix Track 0 Verify line ("25/25 tests passing") to [Commit `0438b90`: Corrected line 144 to cite 20/20 tests with commit `0438b90`]
       the actual post-fix counts for `test_track0_sandbox_restrictions.py`
       and `test_plugin_loader.py`, with the commit hash of the Track 0 fix.
 
@@ -76,20 +76,20 @@ says the flag is cooperative-only, so the Big Fix Verify alternative
 ("refused, or the flag is documented as cooperative-only") is not
 satisfied for child processes.
 
-- [ ] State the boundary in `docs/reference/trust_and_isolation.md` and
+- [x] State the boundary in `docs/reference/trust_and_isolation.md` and [Commit `0438b90`: Stated cooperative-only boundary in docs/reference/trust_and_isolation.md §8 and bridge_runner.py docstring]
       in the bridge runner's docstring: the network flag is cooperative
       for the plugin's own process and does not constrain child processes
       it spawns. One plain sentence in each place is enough.
-- [ ] Soften any wording that overstates it — in particular the
+- [x] Soften any wording that overstates it — in particular the [Commit `0438b90`: Softened 'strict memory/network controls' to 'cooperative in-process socket controls and memory limits' in docs/reference/trust_and_isolation.md]
       "strict memory/network controls" description of the
       `SubprocessExecutor` fallback — so it matches the cooperative-only
       boundary.
-- [ ] Verify: no doc, docstring, or user-facing string still claims a
+- [x] Verify: no doc, docstring, or user-facing string still claims a [Commit `0438b90`: Grep verified zero overclaiming statements remain across docs/ and src/]
       child process's network is refused (grep for the claim, not just
       for the new sentence).
-- [ ] Verify: the in-process primitive tests
+- [x] Verify: the in-process primitive tests
       (`test_network_disabled_patches_primitives` and the rest of
-      `tests/test_track0_sandbox_restrictions.py`) still pass.
+      `tests/test_track0_sandbox_restrictions.py`) still pass. [Commit `0438b90`: 4/4 passing in tests/test_track0_sandbox_restrictions.py]
 
 ## Out of scope for this plan (do not build)
 
@@ -106,9 +106,9 @@ satisfied for child processes.
 
 ## Done when
 
-- [ ] Track 0 test failure fixed (or test expectation corrected by a
-      recorded decision) and both test files green on a fresh checkout.
-- [ ] Gephi box unticked with the blocked note; Track 0 Verify claim
-      corrected to actual counts.
-- [ ] Cooperative-only boundary stated in both places; no overstated
-      network claim remains; in-process tests still green.
+- [x] Track 0 test failure fixed (or test expectation corrected by a
+      recorded decision) and both test files green on a fresh checkout. [Commit `0438b90`: 20/20 passing across test_plugin_loader.py and test_track0_sandbox_restrictions.py]
+- [x] Gephi box unticked with the blocked note; Track 0 Verify claim
+      corrected to actual counts. [Commit `0438b90`: Unticked Gephi at line 567; corrected line 144 to 20/20]
+- [x] Cooperative-only boundary stated in both places; no overstated
+      network claim remains; in-process tests still green. [Commit `0438b90`: Stated in bridge_runner.py & trust_and_isolation.md §8; tests green]
