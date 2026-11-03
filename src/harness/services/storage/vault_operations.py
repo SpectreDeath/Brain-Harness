@@ -17,11 +17,8 @@ from harness.services.storage.vault_export import _CANONICAL_KI_KEYS, export_sin
 from harness.services.storage.vault_graph import KnowledgeGraphQueryService
 from harness.services.storage.vault_retrieval import KnowledgeRetrievalMixin
 from harness.services.storage.vault_taxonomy import (
-    normalize_category,
-    normalize_isnad,
-    resolve_created_at,
-    resolve_created_at_with_source,
-    resolve_source_target,
+    normalize_category, normalize_isnad, resolve_created_at,
+    resolve_created_at_with_source, resolve_source_target,
 )
 
 logger = structlog.get_logger()
@@ -41,8 +38,7 @@ class KnowledgeVaultMixin(KnowledgeRetrievalMixin, IsnadAuditMixin):
 
     async def save_knowledge_item(self, item: KnowledgeItemRecord, vault_dir: Path | str | None = None) -> None:
         """Save a Knowledge Item record under the canonical knowledge prefix and optionally flush to disk."""
-        payload = item.model_dump()
-        await self.set(f"ki:{item.id}", payload)
+        await self.set(f"ki:{item.id}", item.model_dump())
         if vault_dir:
             await self.export_single_item(item, vault_dir=vault_dir)
 
@@ -65,13 +61,10 @@ class KnowledgeVaultMixin(KnowledgeRetrievalMixin, IsnadAuditMixin):
         return items
 
     def get_last_skipped_items(self) -> list[tuple[str, str]]:
-        """Return list of (dir_name, error) from most recent sync_knowledge_vault run."""
         return getattr(self, "_last_skipped_items", [])
 
     async def sync_knowledge_vault(
-        self,
-        vault_dir: Path | str = ".harness/knowledge",
-        strict: bool = False,
+        self, vault_dir: Path | str = ".harness/knowledge", strict: bool = False,
     ) -> int:
         """Scan on-disk dual-file knowledge vault and sync to storage, unifying metadata eras."""
         root = Path(vault_dir).resolve()
@@ -108,23 +101,16 @@ class KnowledgeVaultMixin(KnowledgeRetrievalMixin, IsnadAuditMixin):
 
                 ki = KnowledgeItemRecord(
                     schema_version=meta.get("schema_version", "1.0.0"),
-                    id=ki_id,
-                    title=meta.get("title", ki_id),
-                    source_target=source_target,
+                    id=ki_id, title=meta.get("title", ki_id), source_target=source_target,
                     detected_format=meta.get("detected_format", "raw_docs"),
-                    isnad=isnad,
-                    tags=meta.get("tags", []),
+                    isnad=isnad, tags=meta.get("tags", []),
                     category=normalize_category(meta.get("category")),
-                    edges=edges,
-                    anchors=meta.get("anchors", {}),
-                    author=meta.get("author"),
+                    edges=edges, anchors=meta.get("anchors", {}), author=meta.get("author"),
                     retrieval_count=int(meta.get("retrieval_count", 0)),
                     success_count=int(meta.get("success_count", 0)),
                     last_retrieved_at=meta.get("last_retrieved_at"),
-                    status=meta.get("status", "ACTIVE"),
-                    superseded_by=meta.get("superseded_by"),
-                    summary=summary_text or meta.get("summary", ""),
-                    created_at=created_at,
+                    status=meta.get("status", "ACTIVE"), superseded_by=meta.get("superseded_by"),
+                    summary=summary_text or meta.get("summary", ""), created_at=created_at,
                     **extra_kwargs,
                 )
                 synced_items.append(ki)
@@ -142,27 +128,23 @@ class KnowledgeVaultMixin(KnowledgeRetrievalMixin, IsnadAuditMixin):
         items_needing_backfill = [k for k in synced_items if not k.edges]
         if items_needing_backfill:
             graph_service.backfill_edges_mechanically(synced_items, vault_dir=root)
-            # Write backfilled edges back to disk metadata.json (single authority invariant)
             for ki in items_needing_backfill:
-                if ki.edges:
-                    ki_meta_file = root / ki.id / "metadata.json"
-                    if ki_meta_file.exists():
-                        try:
-                            m_data = json.loads(ki_meta_file.read_text(encoding="utf-8"))
-                            m_data["edges"] = [e.model_dump() for e in ki.edges]
-                            ki_meta_file.write_text(json.dumps(m_data, indent=2) + "\n", encoding="utf-8")
-                        except Exception as ex:
-                            logger.warning("Failed writing backfilled edges to disk", ki_id=ki.id, error=str(ex))
+                if ki.edges and (root / ki.id / "metadata.json").exists():
+                    try:
+                        ki_meta_file = root / ki.id / "metadata.json"
+                        m_data = json.loads(ki_meta_file.read_text(encoding="utf-8"))
+                        m_data["edges"] = [e.model_dump() for e in ki.edges]
+                        ki_meta_file.write_text(json.dumps(m_data, indent=2) + "\n", encoding="utf-8")
+                    except Exception as ex:
+                        logger.warning("Failed writing backfilled edges to disk", ki_id=ki.id, error=str(ex))
 
         for ki in synced_items:
             await self.save_knowledge_item(ki)
 
-        # Prune stale KV store items not present on disk
         synced_ids = {ki.id for ki in synced_items}
         if hasattr(self, "list_knowledge_items"):
             try:
-                existing_items = await self.list_knowledge_items()
-                for old_item in existing_items:
+                for old_item in await self.list_knowledge_items():
                     if old_item.id not in synced_ids and hasattr(self, "delete_knowledge_item"):
                         await self.delete_knowledge_item(old_item.id)
             except Exception as ex:
@@ -194,10 +176,7 @@ class KnowledgeVaultMixin(KnowledgeRetrievalMixin, IsnadAuditMixin):
         return ContradictionDetector().detect_contradictions(items)
 
     async def query_knowledge(
-        self,
-        query: str = "",
-        tag: str | None = None,
-        status: str | None = None,
+        self, query: str = "", tag: str | None = None, status: str | None = None,
     ) -> list[KnowledgeItemRecord]:
         """Query knowledge items by search term, tag, and isnad status."""
         items = await self.list_knowledge_items(tag=tag)

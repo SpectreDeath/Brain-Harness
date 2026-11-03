@@ -28,14 +28,10 @@ class SQLiteStorageService(StorageService):
         if self._conn is None:
             self._conn = sqlite3.connect(self._db_path, check_same_thread=False)
             self._conn.execute(
-                """
-                CREATE TABLE IF NOT EXISTS kv_store (
-                    key TEXT PRIMARY KEY,
-                    value TEXT NOT NULL,
-                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-                )
-                """
+                "CREATE TABLE IF NOT EXISTS kv_store ("
+                "key TEXT PRIMARY KEY, value TEXT NOT NULL, "
+                "created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "
+                "updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)"
             )
             self._conn.commit()
         return self._conn
@@ -72,16 +68,10 @@ class SQLiteStorageService(StorageService):
 
     async def set(self, key: str, value: Any) -> None:
         conn = self._ensure_connection()
-        serialized = json.dumps(value)
         conn.execute(
-            """
-            INSERT INTO kv_store (key, value, updated_at)
-            VALUES (?, ?, CURRENT_TIMESTAMP)
-            ON CONFLICT(key) DO UPDATE SET
-                value = excluded.value,
-                updated_at = CURRENT_TIMESTAMP
-            """,
-            (key, serialized),
+            "INSERT INTO kv_store (key, value, updated_at) VALUES (?, ?, CURRENT_TIMESTAMP) "
+            "ON CONFLICT(key) DO UPDATE SET value = excluded.value, updated_at = CURRENT_TIMESTAMP",
+            (key, json.dumps(value)),
         )
         conn.commit()
 
@@ -89,16 +79,10 @@ class SQLiteStorageService(StorageService):
         if not mapping:
             return
         conn = self._ensure_connection()
-        records = [(k, json.dumps(v)) for k, v in mapping.items()]
         conn.executemany(
-            """
-            INSERT INTO kv_store (key, value, updated_at)
-            VALUES (?, ?, CURRENT_TIMESTAMP)
-            ON CONFLICT(key) DO UPDATE SET
-                value = excluded.value,
-                updated_at = CURRENT_TIMESTAMP
-            """,
-            records,
+            "INSERT INTO kv_store (key, value, updated_at) VALUES (?, ?, CURRENT_TIMESTAMP) "
+            "ON CONFLICT(key) DO UPDATE SET value = excluded.value, updated_at = CURRENT_TIMESTAMP",
+            [(k, json.dumps(v)) for k, v in mapping.items()],
         )
         conn.commit()
 
@@ -174,30 +158,17 @@ class SQLiteStorageService(StorageService):
         return _sync_edges(self._ensure_connection(), graph)
 
     def find_path_sql(
-        self,
-        from_id: str,
-        to_id: str,
-        max_depth: int = 6,
-        exclude_derived: bool = False,
-        directed: bool = False,
+        self, from_id: str, to_id: str, max_depth: int = 6, exclude_derived: bool = False, directed: bool = False,
     ) -> dict[str, Any]:
         """Find cycle-safe shortest path between two nodes using SQLite WITH RECURSIVE CTE."""
         from harness.services.storage.vault_sqlite_graph import find_path_sql as _find_path
 
         return _find_path(
-            self._ensure_connection(),
-            from_id,
-            to_id,
-            max_depth=max_depth,
-            exclude_derived=exclude_derived,
-            directed=directed,
+            self._ensure_connection(), from_id, to_id,
+            max_depth=max_depth, exclude_derived=exclude_derived, directed=directed,
         )
 
-    def get_transitive_dependents_sql(
-        self,
-        target_id: str,
-        max_depth: int = 6,
-    ) -> list[dict[str, Any]]:
+    def get_transitive_dependents_sql(self, target_id: str, max_depth: int = 6) -> list[dict[str, Any]]:
         """Retrieve multi-hop inbound dependents using SQLite WITH RECURSIVE CTE."""
         from harness.services.storage.vault_sqlite_graph import get_transitive_dependents_sql as _get_dep
 

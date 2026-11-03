@@ -29,10 +29,8 @@ def export_gexf(graph: DerivedKnowledgeGraph, out_path: Path | str, dynamic: boo
     out.parent.mkdir(parents=True, exist_ok=True)
 
     root = ET.Element("gexf", {
-        "xmlns": "http://www.gexf.net/1.3draft",
-        "xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
-        "xsi:schemaLocation": "http://www.gexf.net/1.3draft http://www.gexf.net/1.3draft/gexf.xsd",
-        "version": "1.3",
+        "xmlns": "http://www.gexf.net/1.3draft", "xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
+        "xsi:schemaLocation": "http://www.gexf.net/1.3draft http://www.gexf.net/1.3draft/gexf.xsd", "version": "1.3",
     })
 
     meta = ET.SubElement(root, "meta")
@@ -120,8 +118,7 @@ def export_graphml(graph: DerivedKnowledgeGraph, out_path: Path | str) -> Path:
     out.parent.mkdir(parents=True, exist_ok=True)
 
     root = ET.Element("graphml", {
-        "xmlns": "http://graphml.graphdrawing.org/xmlns",
-        "xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
+        "xmlns": "http://graphml.graphdrawing.org/xmlns", "xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
         "xsi:schemaLocation": "http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd",
     })
 

@@ -5,7 +5,13 @@ import io
 import json
 from typing import Any
 
-import tomllib
+try:
+    import tomllib
+except ModuleNotFoundError:
+    try:
+        import tomli as tomllib  # type: ignore[no-redef]
+    except ModuleNotFoundError:
+        tomllib = None  # type: ignore[assignment]
 
 
 def _parse_content(content: str, fmt: str) -> Any:
@@ -17,6 +23,8 @@ def _parse_content(content: str, fmt: str) -> Any:
         reader = csv.DictReader(io.StringIO(content.strip()))
         return list(reader)
     elif f == "toml":
+        if tomllib is None:
+            raise ImportError("TOML parsing requires 'tomli' on Python < 3.11")
         return tomllib.loads(content)
     else:
         raise ValueError(f"Unsupported source format: '{fmt}'. Supported: json, csv, toml.")

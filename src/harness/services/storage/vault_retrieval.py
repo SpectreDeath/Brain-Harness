@@ -41,11 +41,7 @@ class KnowledgeRetrievalMixin:
         raise NotImplementedError
 
     async def retrieve_relevant_knowledge(
-        self,
-        task: str,
-        max_items: int = 3,
-        min_score: float = 0.15,
-        vault_dir: Path | str = ".harness/knowledge",
+        self, task: str, max_items: int = 3, min_score: float = 0.15, vault_dir: Path | str = ".harness/knowledge",
     ) -> list[KnowledgeItemRecord]:
         """Retrieve most relevant Knowledge Items from Knowledge Vault for a task."""
         items = await self.list_knowledge_items()
@@ -147,12 +143,11 @@ class KnowledgeRetrievalMixin:
                 _update_disk_meta(root, ki_id, {"retrieval_count": item.retrieval_count, "last_retrieved_at": now_iso})
             else:
                 meta = root / ki_id / "metadata.json"
-                cnt = 1
-                if meta.exists():
-                    try:
-                        cnt = json.loads(meta.read_text("utf-8")).get("retrieval_count", 0) + 1
-                    except Exception as ex:
-                        logger.warning("Corrupt metadata.json during record_knowledge_retrieval", file=str(meta), error=str(ex))
+                try:
+                    cnt = (json.loads(meta.read_text("utf-8")).get("retrieval_count", 0) + 1) if meta.exists() else 1
+                except Exception as ex:
+                    logger.warning("Corrupt metadata.json during record_knowledge_retrieval", file=str(meta), error=str(ex))
+                    cnt = 1
                 _update_disk_meta(root, ki_id, {"retrieval_count": cnt, "last_retrieved_at": now_iso})
 
     async def record_knowledge_outcome(self, ki_ids: list[str], success: bool, vault_dir: Path | str = ".harness/knowledge") -> None:
@@ -168,12 +163,11 @@ class KnowledgeRetrievalMixin:
                 _update_disk_meta(root, ki_id, {"success_count": item.success_count})
             else:
                 meta = root / ki_id / "metadata.json"
-                cnt = 1 if success else 0
-                if meta.exists() and success:
-                    try:
-                        cnt = json.loads(meta.read_text("utf-8")).get("success_count", 0) + 1
-                    except Exception as ex:
-                        logger.warning("Corrupt metadata.json during record_knowledge_outcome", file=str(meta), error=str(ex))
+                try:
+                    cnt = (json.loads(meta.read_text("utf-8")).get("success_count", 0) + 1) if (meta.exists() and success) else (1 if success else 0)
+                except Exception as ex:
+                    logger.warning("Corrupt metadata.json during record_knowledge_outcome", file=str(meta), error=str(ex))
+                    cnt = 1 if success else 0
                 _update_disk_meta(root, ki_id, {"success_count": cnt})
 
     async def evaluate_vault_lifecycle(

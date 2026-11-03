@@ -12,18 +12,11 @@ from harness.services.storage.vault_graph_models import DerivedKnowledgeGraph
 def init_ki_edges_table(conn: sqlite3.Connection) -> None:
     """Initialize indexed relational edge table for recursive graph queries."""
     conn.execute(
-        """
-        CREATE TABLE IF NOT EXISTS ki_edges (
-            source TEXT NOT NULL,
-            target TEXT NOT NULL,
-            target_kind TEXT NOT NULL DEFAULT 'ki',
-            edge_type TEXT NOT NULL,
-            derived INTEGER NOT NULL DEFAULT 0,
-            confidence REAL NOT NULL DEFAULT 1.0,
-            description TEXT DEFAULT '',
-            PRIMARY KEY (source, target, edge_type)
-        )
-        """
+        "CREATE TABLE IF NOT EXISTS ki_edges ("
+        "source TEXT NOT NULL, target TEXT NOT NULL, target_kind TEXT NOT NULL DEFAULT 'ki', "
+        "edge_type TEXT NOT NULL, derived INTEGER NOT NULL DEFAULT 0, "
+        "confidence REAL NOT NULL DEFAULT 1.0, description TEXT DEFAULT '', "
+        "PRIMARY KEY (source, target, edge_type))"
     )
     conn.execute("CREATE INDEX IF NOT EXISTS idx_ki_edges_source ON ki_edges(source)")
     conn.execute("CREATE INDEX IF NOT EXISTS idx_ki_edges_target ON ki_edges(target)")
@@ -37,15 +30,7 @@ def sync_ki_edges(conn: sqlite3.Connection, graph: DerivedKnowledgeGraph) -> int
     cursor.execute("DELETE FROM ki_edges")
 
     rows = [
-        (
-            e.source,
-            e.target,
-            e.target_kind,
-            e.type,
-            1 if e.derived else 0,
-            float(e.confidence),
-            e.description or "",
-        )
+        (e.source, e.target, e.target_kind, e.type, 1 if e.derived else 0, float(e.confidence), e.description or "")
         for e in graph.edges
     ]
     cursor.executemany(
