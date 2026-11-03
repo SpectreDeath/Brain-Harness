@@ -111,7 +111,7 @@ def test_xor_training_convergence() -> None:
     assert predictions == expected
 
 
-@pytest.mark.unit
+@pytest.mark.slow
 def test_cli_verify_json() -> None:
     """Verifies CLI execution of verify diagnostic command."""
     cmd = [

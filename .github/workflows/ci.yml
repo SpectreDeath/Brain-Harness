@@ -34,6 +34,33 @@ jobs:
         run: |
           ruff check .
 
+  frontend:
+    name: Frontend Build & Lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        working-directory: frontend
+        run: npm ci
+
+      - name: Lint Frontend
+        working-directory: frontend
+        run: npm run lint
+
+      - name: Build Frontend
+        working-directory: frontend
+        run: npm run build
+
   test:
     name: Test Suite (${{ matrix.os }}, Python ${{ matrix.python-version }})
     runs-on: ${{ matrix.os }}
@@ -45,6 +72,8 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-latest]
         python-version: ["3.11"]
         include:
+          - os: ubuntu-latest
+            python-version: "3.10"
           - os: ubuntu-latest
             python-version: "3.12"
     env:
@@ -75,5 +104,6 @@ jobs:
 
       - name: Continuous Knowledge Distillation
         if: github.ref == 'refs/heads/main' && github.event_name == 'push' && matrix.os == 'ubuntu-latest' && matrix.python-version == '3.11'
+        continue-on-error: true
         run: |
           python -m harness.cli reflect --test-report test-report.xml --no-html --no-commit

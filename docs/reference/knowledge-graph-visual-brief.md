@@ -114,6 +114,6 @@ The companion Cypher export `.harness/graph/knowledge_graph.cypher` provides com
    - `CREATE CONSTRAINT plugin_id_unique IF NOT EXISTS FOR (p:Plugin) REQUIRE p.id IS UNIQUE;`
    - `CREATE CONSTRAINT path_id_unique IF NOT EXISTS FOR (f:CodePath) REQUIRE f.id IS UNIQUE;`
    - `CREATE CONSTRAINT claim_id_unique IF NOT EXISTS FOR (c:IsnadClaim) REQUIRE c.id IS UNIQUE;`
-2. **7-Tuple Temporal Evidence Materialization**:
+2. **7-Tuple Epistemic Claim Evidence Materialization**:
    - Every `IsnadClaim` node sets all 7 epistemic properties: `assertion`, `status`, `confidence`, `evidence_type`, `source`, `verified`, and `verified_by`.
    - Connected via directed `[:ASSERTS_CLAIM]` relationships from source Knowledge Items.

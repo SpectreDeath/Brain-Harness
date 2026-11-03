@@ -28,10 +28,15 @@ async def start_runtime(runtime: HarnessRuntime) -> None:
 
     logger.info("Starting Harness runtime")
     from harness.events.bus import EVENT_BUS_KEY
+    from harness.services.dock import DOCK_SERVICE_KEY, DefaultDockService
 
     runtime.context.provide(
         EVENT_BUS_KEY, runtime.event_bus, provider="harness", allow_override=True
     )
+    if not runtime.context.has(DOCK_SERVICE_KEY):
+        runtime.context.provide(
+            DOCK_SERVICE_KEY, DefaultDockService(), provider="harness", allow_override=True
+        )
 
     if runtime._auto_load_user_plugins:
         user_plugins = runtime.loader.discover_all()

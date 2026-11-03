@@ -106,15 +106,19 @@ def query_knowledge_and_skills(
             sk_clean = sk_name.lower().strip()
 
             # 1. Check for typed graph edge (became_skill, distilled_from, implements)
+            # Rationale: Direct typed edges prioritize exact match or path-component membership
+            # (e.g. '.agents/skills/<name>' or '<name>') rather than loose substring containment
+            # to prevent false-positive cross-links between unrelated skills sharing a common substring.
             rel_type = None
             for edge in ki_edges:
                 edge_type = edge.get("type")
                 target = str(edge.get("target") or "").lower().strip()
+                target_parts = [p.strip() for p in target.replace("\\", "/").split("/")]
                 if edge_type in ("became_skill", "distilled_from", "implements") and (
                     target == sk_clean
                     or target == f".agents/skills/{sk_clean}"
                     or target.endswith(f"/{sk_clean}")
-                    or sk_clean in target
+                    or sk_clean in target_parts
                 ):
                     rel_type = edge_type
                     break

@@ -54,7 +54,7 @@
     }
   ],
   "success_count": 0,
-  "status": "ACTIVE",
+  "status": "DEMOTED",
   "superseded_by": null,
   "author": null,
   "created_at": "2026-08-31T19:00:00Z"

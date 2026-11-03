@@ -268,14 +268,14 @@ class TestKnowledgeGraphDerivationEngine:
         assert ki_graph.edges[0].type == "same_domain"
 
     def test_live_vault_sync_and_derivation_integrity(self) -> None:
-        """Verify that all 282 on-disk vault items sync cleanly without dropping any items."""
+        """Verify that all on-disk vault items (301 items) sync cleanly without dropping any items."""
         vault_path = Path(".harness/knowledge")
         if not vault_path.exists():
             pytest.skip("Live .harness/knowledge directory not found")
 
         dirs = [d for d in vault_path.iterdir() if d.is_dir() and (d / "metadata.json").exists()]
         expected_count = len(dirs)
-        assert expected_count >= 282
+        assert expected_count >= 301
 
         svc = KnowledgeGraphQueryService()
         # Test direct resolution functions across all live metadata files

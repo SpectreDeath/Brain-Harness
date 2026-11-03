@@ -172,9 +172,9 @@ harness dock run brain-harness verify-core
 The Agent Dock security model adheres to strict invariants:
 
 1. **Who Declares**: The repository owner authors `dock.yaml`.
-2. **Who Approves**: The human operator connecting the agent approves the manifest digest and visible procedure commands at `harness dock link` time.
+2. **Who Approves**: The human operator connecting the agent approves the manifest digest and visible procedure commands at `harness dock link` time. Approval means approving shell execution: approving a dock manifest grants permission for the specific shell commands declared within its procedures to execute on the host machine.
 3. **Digest Pinning**: Any modification to `dock.yaml` (or synthesized manifest in generic docks) invalidates approval and raises `DockApprovalDriftError` on `harness dock run` until re-approved.
-4. **Pre-Execution Refusal & Workdir Confinement**: Boundaries are enforced *before* execution. Each step process is strictly confined to its resolved `workdir` relative to the repository root. Steps referencing a boundary path token, matching a forbidden operation pattern, or attempting directory traversal (`../`) outside the repository tree are refused before subprocess creation. Boundary enforcement guarantees process workdir confinement rather than full semantic regex sanitization of all arbitrary CLI flags.
+4. **Pre-Execution Refusal & Workdir Confinement**: Boundaries are enforced *before* execution. Each step process is strictly confined to its resolved `workdir` relative to the repository root. Steps referencing a boundary path token, matching a forbidden operation pattern, or attempting directory traversal (`../`) in workdir resolution outside the repository root are refused before subprocess creation. Traversal checks strictly enforce working directory confinement to the repository root and boundary path tokens; they do not perform semantic taint analysis across arbitrary command argument strings.
 5. **Credential Scrubbing**: Dock procedures never receive credentials. The runner scrubs all token and API key environment variables (`GITHUB_TOKEN`, `OPENAI_API_KEY`, etc.) before launching steps.
 6. **Transactional Rollback**: When a `write_path: true` procedure fails on a clean git working tree, the harness automatically invokes git rollback to prevent partial workspace corruption.
 
