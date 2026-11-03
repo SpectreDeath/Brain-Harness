@@ -31,7 +31,7 @@
 
 ## Suggested execution order
 
-```
+```text
 [Track 0: Drift Gate (Fix Red CI)]
                │
                ▼
@@ -82,7 +82,8 @@ The gate has broken twice following plugin additions. A third hardcoded integer 
 
 ## Track 2 — Status backfill (12 items) & triad creation path default
 
-### Resolved Root Cause:
+### Resolved Root Cause
+
 In `.agents/skills/repo-triad-forge/scripts/triad_pipeline.py:405-430`, `commit_vault_kis` builds `meta_payload` with `"isnad": {"status": "VERIFIED"}` but omits the top-level `"status": "ACTIVE"` required by `src/harness/services/storage/models.py:86` (`KnowledgeItemRecord`).
 
 - [x] **Fix creation path default**:
@@ -190,4 +191,3 @@ Per project architecture rules, no Track 7 item shall be implemented without a v
 - [x] **Live run**: Observable lifecycle status transition committed to disk.
 - [x] **Live run**: Gephi rendering report and layout inspection.
 - [x] **RESOLVED**: Triad-forge creation path location identified at `.agents/skills/repo-triad-forge/scripts/triad_pipeline.py:405-430` (Track 2 ready for immediate execution).
-
