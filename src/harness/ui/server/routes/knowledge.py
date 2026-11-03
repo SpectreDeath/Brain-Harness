@@ -151,11 +151,15 @@ async def resolve_knowledge_contradiction_endpoint(req: ResolveContradictionRequ
             item_a.add_edge("contradicts", item_b.id, target_kind="ki", derived=False, confidence=1.0, description=req.reason or "UI resolution")
             item_b.add_edge("contradicts", item_a.id, target_kind="ki", derived=False, confidence=1.0, description=req.reason or "UI resolution")
             item_a.status, item_b.status = "CHALLENGED", "CHALLENGED"
+        elif act == "dismiss":
+            item_a.add_edge("dismissed_contradiction", item_b.id, target_kind="ki", derived=False, confidence=1.0, description=req.reason or "UI dismissal")
+            item_b.add_edge("dismissed_contradiction", item_a.id, target_kind="ki", derived=False, confidence=1.0, description=req.reason or "UI dismissal")
+        else:
+            raise HTTPException(status_code=400, detail=f"Unsupported resolution action '{act}'. Must be supersede, contradict, or dismiss.")
 
-        if act in ("supersede", "contradict"):
-            for item in (item_a, item_b):
-                await storage.save_knowledge_item(item, vault_dir=req.vault_dir)
-                await storage.export_single_item(item, vault_dir=req.vault_dir)
+        for item in (item_a, item_b):
+            await storage.save_knowledge_item(item, vault_dir=req.vault_dir)
+            await storage.export_single_item(item, vault_dir=req.vault_dir)
 
         return {"status": "ok", "action": act, "message": f"Successfully applied '{act}' resolution"}
     except HTTPException:

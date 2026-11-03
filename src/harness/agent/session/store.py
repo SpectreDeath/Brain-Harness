@@ -9,7 +9,15 @@ import json
 from abc import ABC, abstractmethod
 from typing import Any
 
+import structlog
+
 from harness.agent.session.models import AgentSession
+
+logger = structlog.get_logger(__name__)
+
+
+class CorruptSessionError(ValueError):
+    """Raised when session data in storage exists but is corrupted (Rule Track 1)."""
 
 
 class AgentSessionStore(ABC):
@@ -87,9 +95,14 @@ class StorageBackedSessionStore(AgentSessionStore):
         if isinstance(data, str):
             try:
                 data = json.loads(data)
-            except Exception:
-                return None
-        return AgentSession.from_dict(data)
+            except Exception as e:
+                logger.warning("Failed to decode session JSON", session_id=session_id, error=str(e))
+                raise CorruptSessionError(f"Corrupt session JSON for '{session_id}': {e}") from e
+        try:
+            return AgentSession.from_dict(data)
+        except Exception as e:
+            logger.warning("Failed to parse session dictionary", session_id=session_id, error=str(e))
+            raise CorruptSessionError(f"Corrupt session data for '{session_id}': {e}") from e
 
     async def list(
         self,
@@ -102,14 +115,23 @@ class StorageBackedSessionStore(AgentSessionStore):
         for key in keys:
             data = await self.storage.get(key)
             if data is not None:
+                sid = key.split(":")[-1] if ":" in key else key
                 if isinstance(data, str):
                     try:
                         data = json.loads(data)
-                    except Exception:
+                    except Exception as e:
+                        logger.warning("Corrupt session encountered in store", key=key, error=str(e))
+                        if status is None or status == "corrupt":
+                            sessions.append(AgentSession(session_id=sid, task=f"[CORRUPT SESSION: {e}]", status="corrupt"))
                         continue
-                sess = AgentSession.from_dict(data)
-                if status is None or sess.status == status:
-                    sessions.append(sess)
+                try:
+                    sess = AgentSession.from_dict(data)
+                    if status is None or sess.status == status:
+                        sessions.append(sess)
+                except Exception as e:
+                    logger.warning("Corrupt session dictionary in store", key=key, error=str(e))
+                    if status is None or status == "corrupt":
+                        sessions.append(AgentSession(session_id=sid, task=f"[CORRUPT SESSION: {e}]", status="corrupt"))
 
         sessions.sort(key=lambda s: s.created_at, reverse=True)
         return sessions[offset : offset + limit]

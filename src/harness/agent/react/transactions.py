@@ -71,20 +71,22 @@ async def invoke_tool_transactional(
                     if not lint_res.is_clean:
                         obs["lint_diagnostics"] = lint_res.formatted_summary
 
+                scoped_paths = [str(target_file_path)] if target_file_path else None
                 if is_error:
                     await tx.dispose()
                     if git_svc:
-                        git_svc.rollback_transaction()
+                        git_svc.rollback_transaction(paths=scoped_paths)
                 else:
                     if git_svc:
                         git_svc.commit_transaction(
-                            f"chore(agent): tool {action_name}"
+                            f"chore(agent): tool {action_name}",
+                            paths=scoped_paths,
                         )
             return obs
         except Exception as err:
             await tx.dispose()
             if git_svc:
-                git_svc.rollback_transaction()
+                git_svc.rollback_transaction(paths=[str(target_file_path)] if target_file_path else None)
             return {"status": "error", "error": f"Tool execution failed: {err}"}
         finally:
             if state_holder is not None:

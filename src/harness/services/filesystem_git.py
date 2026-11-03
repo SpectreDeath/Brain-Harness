@@ -160,14 +160,17 @@ class FilesystemGitService(Protocol):
         message: str,
         repo_path: str = ".",
         author: str = "Harness Agent <agent@harness.local>",
+        paths: list[str] | None = None,
     ) -> GitCommitResult:
-        """Stage all modified tracked/untracked workspace files and commit with message."""
+        """Stage modified workspace files (or specific paths) and commit with message."""
         ...
 
     def rollback_transaction(
         self,
         repo_path: str = ".",
         target_hash: str | None = None,
+        paths: list[str] | None = None,
+        allow_untracked_clean: bool = False,
     ) -> GitRollbackResult:
         """Discard uncommitted modifications and restore clean workspace state."""
         ...
@@ -295,6 +298,7 @@ class DefaultFilesystemGitService:
         message: str,
         repo_path: str = ".",
         author: str = "Harness Agent <agent@harness.local>",
+        paths: list[str] | None = None,
     ) -> GitCommitResult:
         # Check if dirty
         status = self.git_status(repo_path)
@@ -303,8 +307,12 @@ class DefaultFilesystemGitService:
         if not status.dirty:
             return GitCommitResult(status="clean", message=message, files_committed=0)
 
-        # Stage and commit
-        add_code, _, add_err = self._run_git(["add", "-A"], repo_path)
+        # Stage and commit scoped paths or workspace files (Rule 8)
+        if paths:
+            add_args = ["add", "--"] + [p for p in paths if p]
+        else:
+            add_args = ["add", "-A"]
+        add_code, _, add_err = self._run_git(add_args, repo_path)
         if add_code != 0:
             return GitCommitResult(status="error", error=f"git add failed: {add_err}")
 
@@ -323,13 +331,15 @@ class DefaultFilesystemGitService:
             status="ok",
             commit_hash=commit_hash,
             message=message,
-            files_committed=status.changed_files_count,
+            files_committed=len(paths) if paths else status.changed_files_count,
         )
 
     def rollback_transaction(
         self,
         repo_path: str = ".",
         target_hash: str | None = None,
+        paths: list[str] | None = None,
+        allow_untracked_clean: bool = True,
     ) -> GitRollbackResult:
         # Revert uncommitted changes
         status = self.git_status(repo_path)
@@ -339,10 +349,19 @@ class DefaultFilesystemGitService:
             code, _, err = self._run_git(["reset", "--hard", target_hash], repo_path)
             if code != 0:
                 return GitRollbackResult(status="error", error=f"git reset failed: {err}")
+        elif paths:
+            # Scoped rollback to tool's own modified paths (never deletes unrelated files)
+            p_args = [p for p in paths if p]
+            if p_args:
+                self._run_git(["restore", "--staged", "--"] + p_args, repo_path)
+                self._run_git(["restore", "--"] + p_args, repo_path)
+                self._run_git(["clean", "-f", "--"] + p_args, repo_path)
         else:
+            # Unscoped rollback
             self._run_git(["restore", "--staged", "."], repo_path)
             self._run_git(["restore", "."], repo_path)
-            self._run_git(["clean", "-fd"], repo_path)
+            if allow_untracked_clean:
+                self._run_git(["clean", "-fd"], repo_path)
 
         return GitRollbackResult(status="ok", files_reverted=reverted_files, target_hash=target_hash)
 

@@ -550,13 +550,35 @@ class DefaultDockService:
         if not self._state_file.exists():
             return {}
         try:
-            return json.loads(self._state_file.read_text(encoding="utf-8"))
-        except Exception:
-            return {}
+            content = self._state_file.read_text(encoding="utf-8")
+            if not content.strip():
+                return {}
+            data = json.loads(content)
+            if not isinstance(data, dict):
+                raise ValueError("docks.json root is not a dictionary")
+            return data
+        except Exception as e:
+            import time
+            ts = int(time.time())
+            quarantine_path = self._state_file.with_name(f"{self._state_file.name}.corrupt-{ts}")
+            try:
+                shutil.copy2(self._state_file, quarantine_path)
+            except Exception:
+                pass
+            logger.error(
+                "docks.json is corrupted; quarantined to backup and refusing destructive overwrite",
+                state_file=str(self._state_file),
+                quarantine=str(quarantine_path),
+                error=str(e),
+            )
+            raise DockError(f"docks.json is corrupted and quarantined to {quarantine_path.name}: {e}") from e
 
     def _save_records(self, records: dict[str, dict[str, Any]]) -> None:
         self._state_file.parent.mkdir(parents=True, exist_ok=True)
-        self._state_file.write_text(json.dumps(records, indent=2), encoding="utf-8")
+        # Atomic write via temporary file (Rule 8 & data-integrity)
+        temp_file = self._state_file.with_suffix(".tmp")
+        temp_file.write_text(json.dumps(records, indent=2), encoding="utf-8")
+        temp_file.replace(self._state_file)
 
     def _resolve_repo_path(self, repo_or_path: str | Path) -> tuple[Path, str, str]:
         """Resolve local path or remote repository. Returns (path, transport, source)."""
