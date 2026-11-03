@@ -45,12 +45,31 @@ class ToolRegistryPlugin(HarnessPlugin):
     def trusted(self) -> bool:
         return True
 
+    @property
+    def trust_justification(self) -> str:
+        return "Core kernel tool registry managing tool reflection, alias resolution, and dispatch"
+
     async def on_load(self, ctx: ServiceContext) -> None:
         bus = ctx.optional(EVENT_BUS_KEY)
         self._registry = ToolRegistry(event_bus=bus)
         from harness.services.rea_toolkit import REA_TOOL_ALIASES
         for alias, target in REA_TOOL_ALIASES.items():
             self._registry.register_alias(alias, target)
+
+        # Apply persisted tool enablement state from .harness/tool_state.json if present
+        from pathlib import Path
+        import json
+        tool_state_file = Path(".harness/tool_state.json")
+        if tool_state_file.exists():
+            try:
+                state = json.loads(tool_state_file.read_text(encoding="utf-8"))
+                for t in state.get("disabled_tools", []):
+                    self._registry.disable_tool(t)
+                for t in state.get("enabled_tools", []):
+                    self._registry.enable_tool(t)
+            except Exception as e:
+                logger.debug("Failed to apply persisted tool state", error=str(e))
+
         ctx.provide(TOOL_REGISTRY_KEY, self._registry, provider=self.name)
         logger.info("Tool registry service registered", telemetry=bus is not None)
 

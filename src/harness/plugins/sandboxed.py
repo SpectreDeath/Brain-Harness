@@ -117,6 +117,10 @@ class SandboxedPlugin(ToolMountMixin, HarnessPlugin):
         return self._manifest.trusted
 
     @property
+    def trust_justification(self) -> str:
+        return self._manifest.trust_justification
+
+    @property
     def manifest(self) -> PluginManifest:
         return self._manifest
 

@@ -3,6 +3,52 @@
 from __future__ import annotations
 
 from typing import Any
+import json
+from pathlib import Path
+import structlog
+
+logger = structlog.get_logger()
+
+
+def _update_persistent_tool_state(
+    *,
+    enabled: list[str] | None = None,
+    disabled: list[str] | None = None,
+    config_dir: Path | None = None,
+) -> None:
+    """Persist enabled/disabled tool changes to .harness/tool_state.json if directory exists."""
+    target_dir = config_dir or Path(".harness")
+    if not target_dir.exists():
+        return
+
+    state_file = target_dir / "tool_state.json"
+    data: dict[str, Any] = {}
+    if state_file.exists():
+        try:
+            data = json.loads(state_file.read_text(encoding="utf-8"))
+        except Exception:
+            data = {}
+
+    enabled_set = set(data.get("enabled_tools", []))
+    disabled_set = set(data.get("disabled_tools", []))
+
+    if enabled:
+        for t in enabled:
+            enabled_set.add(t)
+            disabled_set.discard(t)
+
+    if disabled:
+        for t in disabled:
+            disabled_set.add(t)
+            enabled_set.discard(t)
+
+    data["enabled_tools"] = sorted(enabled_set)
+    data["disabled_tools"] = sorted(disabled_set)
+
+    try:
+        state_file.write_text(json.dumps(data, indent=2), encoding="utf-8")
+    except Exception as e:
+        logger.debug("Failed to persist tool state updates", error=str(e))
 
 
 def list_tools(
@@ -71,18 +117,33 @@ async def toggle_tool_by_name(
     enabled: bool | None = None,
     *,
     db_path: str = ":memory:",
+    exact: bool = True,
 ) -> list[str]:
-    """Standalone async command to toggle tool(s) matching a name or pattern."""
+    """Standalone async command to toggle tool(s) matching exact name or declared alias."""
     from harness.kernel.runtime import HarnessRuntime
 
     matched: list[str] = []
     async with HarnessRuntime.create(db_path=db_path) as rt:
         if rt.tools is None:
             return []
-        for t in rt.tools.list_tools():
-            if t.name == name or name in t.name:
-                rt.toggle_tool(t.name, enabled=enabled)
-                matched.append(t.name)
+
+        target = rt.tools.resolve_tool_name(name)
+        if rt.tools.has_tool(target):
+            rt.tools.toggle_tool(target, enabled=enabled)
+            matched.append(target)
+        elif not exact:
+            # Fallback substring matching only if non-exact pattern matching is requested
+            for t in rt.tools.list_tools():
+                if name in t.name:
+                    rt.tools.toggle_tool(t.name, enabled=enabled)
+                    matched.append(t.name)
+
+    if matched:
+        if enabled is True:
+            _update_persistent_tool_state(enabled=matched)
+        elif enabled is False:
+            _update_persistent_tool_state(disabled=matched)
+
     return matched
 
 

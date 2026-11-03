@@ -106,15 +106,18 @@ class ToolRegistry:
 
     def register_tool(self, spec: ToolSpec) -> None:
         """Register a pre-constructed ToolSpec."""
-        if spec.name in self._tools:
+        target = self.resolve_tool_name(spec.name)
+        if target != spec.name:
+            spec.name = target
+        if target in self._tools:
             logger.warning(
                 "Tool already registered, overwriting",
-                tool=spec.name,
-                old_provider=self._tools[spec.name].provider,
+                tool=target,
+                old_provider=self._tools[target].provider,
                 new_provider=spec.provider,
             )
-        self._tools[spec.name] = spec
-        logger.info("Tool registered", tool=spec.name, provider=spec.provider, enabled=spec.enabled)
+        self._tools[target] = spec
+        logger.info("Tool registered", tool=target, provider=spec.provider, enabled=spec.enabled)
 
     def register(
         self,
@@ -138,16 +141,17 @@ class ToolRegistry:
         if executor is None:
             raise ValueError("executor must be provided when registering by name")
 
-        if name in self._tools:
+        target = self.resolve_tool_name(name)
+        if target in self._tools:
             logger.warning(
                 "Tool already registered, overwriting",
-                tool=name,
-                old_provider=self._tools[name].provider,
+                tool=target,
+                old_provider=self._tools[target].provider,
                 new_provider=provider,
             )
 
-        self._tools[name] = ToolSpec(
-            name=name,
+        self._tools[target] = ToolSpec(
+            name=target,
             description=description,
             parameters_schema=parameters_schema or {},
             provider=provider,
@@ -155,29 +159,44 @@ class ToolRegistry:
             returns_schema=returns_schema or {},
             enabled=enabled,
         )
-        logger.info("Tool registered", tool=name, provider=provider, enabled=enabled)
+        logger.info("Tool registered", tool=target, provider=provider, enabled=enabled)
 
     def unregister(self, name: str) -> bool:
-        """Remove a tool from the registry."""
-        if name in self._tools:
-            del self._tools[name]
-            logger.info("Tool unregistered", tool=name)
-            return True
-        return False
+        """Remove a tool from the registry, resolving aliases and pruning stale alias mappings."""
+        target = self.resolve_tool_name(name)
+        removed = False
+        if target in self._tools:
+            del self._tools[target]
+            removed = True
+            logger.info("Tool unregistered", tool=target)
+
+        # Prune all aliases that pointed to the target or matched name
+        stale_aliases = [a for a, t in self._aliases.items() if t == target or a == name]
+        for a in stale_aliases:
+            del self._aliases[a]
+            removed = True
+
+        return removed
 
     def unregister_all_from(self, provider: str) -> list[str]:
-        """Remove all tools registered by a given plugin."""
+        """Remove all tools registered by a given plugin and prune associated aliases."""
         to_remove = [
             name for name, spec in self._tools.items() if spec.provider == provider
         ]
         for name in to_remove:
             del self._tools[name]
 
+        to_remove_set = set(to_remove)
+        stale_aliases = [a for a, t in self._aliases.items() if t in to_remove_set]
+        for a in stale_aliases:
+            del self._aliases[a]
+
         if to_remove:
             logger.info(
                 "Tools unregistered for plugin",
                 provider=provider,
                 tools=to_remove,
+                aliases_pruned=stale_aliases,
             )
         return to_remove
 
@@ -235,9 +254,30 @@ class ToolRegistry:
         *,
         enabled_only: bool = False,
         provider: str | None = None,
+        include_aliases: bool = False,
     ) -> list[ToolSpec]:
-        """List registered tools, optionally filtered by enablement or provider."""
+        """List registered tools, optionally filtered by enablement, provider, or including declared aliases."""
         tools = list(self._tools.values())
+        if include_aliases:
+            for alias, target in self._aliases.items():
+                canonical = self._tools.get(target)
+                if canonical is not None:
+                    alias_desc = (
+                        f"[Alias for {target}] {canonical.description}"
+                        if canonical.description
+                        else f"Alias for {target}"
+                    )
+                    alias_spec = ToolSpec(
+                        name=alias,
+                        description=alias_desc,
+                        parameters_schema=canonical.parameters_schema,
+                        provider=canonical.provider,
+                        executor=canonical.executor,
+                        returns_schema=canonical.returns_schema,
+                        enabled=canonical.enabled,
+                    )
+                    tools.append(alias_spec)
+
         if enabled_only:
             tools = [t for t in tools if t.enabled]
         if provider:
@@ -267,9 +307,12 @@ class ToolRegistry:
         *,
         enabled_only: bool = False,
         provider: str | None = None,
+        include_aliases: bool = True,
     ) -> list[dict[str, Any]]:
-        """Export registered tools in Model Context Protocol (MCP) format."""
-        tools = self.list_tools(enabled_only=enabled_only, provider=provider)
+        """Export registered tools in Model Context Protocol (MCP) format including callable aliases."""
+        tools = self.list_tools(
+            enabled_only=enabled_only, provider=provider, include_aliases=include_aliases
+        )
         return [spec.to_mcp_tool() for spec in tools]
 
     @property

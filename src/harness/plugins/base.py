@@ -80,6 +80,11 @@ class HarnessPlugin(ABC):
         """
         return False
 
+    @property
+    def trust_justification(self) -> str:
+        """Documented rationale explaining why this plugin is trusted for in-process execution."""
+        return ""
+
     async def on_load(self, ctx: ServiceContext) -> None:
         """Called when the plugin is loaded into the harness.
 

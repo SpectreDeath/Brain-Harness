@@ -142,6 +142,9 @@ class PluginManifest(BaseModel):
     trusted: bool = False
     """Whether the plugin is trusted to run in-process."""
 
+    trust_justification: str = ""
+    """Documented rationale explaining why the plugin is trusted for in-process or host execution."""
+
     author: str = ""
     """Plugin author or organization."""
 

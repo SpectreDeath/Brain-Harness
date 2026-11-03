@@ -65,10 +65,13 @@ class MCPMethodRouter:
             return self.codec.encode_response(ctx.request_id, {})
 
         async def _handle_tools_list(params: dict[str, Any], ctx: MCPRequestContext) -> dict[str, Any]:
-            tools_list = self.registry.tool_registry.to_mcp_tools(enabled_only=False)
+            # Align listing with call capabilities: advertise only enabled tools and resolve aliases
+            tools_list = self.registry.tool_registry.to_mcp_tools(enabled_only=True, include_aliases=True)
             return self.codec.build_tools_list_response(ctx.request_id, tools_list)
 
         async def _handle_tools_call(params: dict[str, Any], ctx: MCPRequestContext) -> dict[str, Any]:
+            # Connected MCP clients may invoke any enabled tool in the registry (alias-aware).
+            # Disabled tools are rejected by ToolRegistry.invoke.
             tool_name = str(params.get("name", ""))
             arguments = params.get("arguments", {})
             if not isinstance(arguments, dict):

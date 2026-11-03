@@ -5,6 +5,7 @@
   "entrypoint": "main.py",
   "isolation": "in_process",
   "trusted": true,
+  "trust_justification": "Pure computation, advisory-only context pruning, no filesystem/network/env access",
   "category": "memory_and_epistemics",
   "author": "Brain Harness Forge Engine",
   "provides": [
