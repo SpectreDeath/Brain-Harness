@@ -27,6 +27,8 @@ class VenvExecutor(SandboxExecutor):
         plugin_dir: Path,
         venv_dir: Path | None = None,
         dependencies: list[str] | None = None,
+        memory_limit_mb: float | None = None,
+        network_disabled: bool = False,
     ) -> None:
         """Initialize the venv executor.
 
@@ -34,6 +36,8 @@ class VenvExecutor(SandboxExecutor):
             plugin_dir: Root directory of the plugin.
             venv_dir: Where to create the venv. Defaults to ``plugin_dir/.venv``.
             dependencies: pip packages to install in the venv.
+            memory_limit_mb: Memory ceiling in megabytes.
+            network_disabled: Whether network access is disabled.
         """
         self._plugin_dir = plugin_dir
         if venv_dir is not None:
@@ -41,6 +45,8 @@ class VenvExecutor(SandboxExecutor):
         else:
             self._venv_dir = Path(".harness") / "venvs" / plugin_dir.name
         self._dependencies = dependencies or []
+        self._memory_limit_mb = memory_limit_mb
+        self._network_disabled = network_disabled
         self._subprocess: SubprocessExecutor | None = None
         self._setup_done = False
 
@@ -71,6 +77,8 @@ class VenvExecutor(SandboxExecutor):
         self._subprocess = SubprocessExecutor(
             entrypoint,
             python=str(venv_python),
+            memory_limit_mb=self._memory_limit_mb,
+            network_disabled=self._network_disabled,
         )
         await self._subprocess.start()
 

@@ -99,6 +99,21 @@ class SandboxExecutorFactory:
                     plugin=name,
                 )
 
+        mem_limit = 512.0
+        if container_cfg and getattr(container_cfg, "memory_limit", None):
+            try:
+                raw_mem = str(container_cfg.memory_limit).lower()
+                if raw_mem.endswith(("m", "mb")):
+                    mem_limit = float(raw_mem.rstrip("mb"))
+                elif raw_mem.endswith(("g", "gb")):
+                    mem_limit = float(raw_mem.rstrip("gb")) * 1024
+                else:
+                    mem_limit = float(raw_mem)
+            except Exception:
+                pass
+
+        network_disabled = not trusted
+
         if isolation == IsolationMode.DOCKER:
             runtime_bin = ContainerExecutor._detect_runtime()
             if runtime_bin:
@@ -113,27 +128,20 @@ class SandboxExecutorFactory:
                 plugin=name,
             )
             if entrypoint and entrypoint.exists():
-                return SubprocessExecutor(entrypoint)
+                return SubprocessExecutor(
+                    entrypoint,
+                    memory_limit_mb=mem_limit,
+                    network_disabled=network_disabled,
+                )
             return None
 
         if isolation == IsolationMode.VENV or len(deps) > 0:
             return VenvExecutor(
                 plugin_dir=root_path,
                 dependencies=deps,
+                memory_limit_mb=mem_limit,
+                network_disabled=network_disabled,
             )
-
-        mem_limit = 512.0
-        if container_cfg and getattr(container_cfg, "memory_limit", None):
-            try:
-                raw_mem = str(container_cfg.memory_limit).lower()
-                if raw_mem.endswith(("m", "mb")):
-                    mem_limit = float(raw_mem.rstrip("mb"))
-                elif raw_mem.endswith(("g", "gb")):
-                    mem_limit = float(raw_mem.rstrip("gb")) * 1024
-                else:
-                    mem_limit = float(raw_mem)
-            except Exception:
-                pass
 
         if isolation == IsolationMode.WASM:
             wasm_entrypoint = getattr(manifest, "wasm_entrypoint", None)

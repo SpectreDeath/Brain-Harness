@@ -234,7 +234,21 @@ class SubprocessExecutor(SandboxExecutor):
 
     async def start(self) -> None:
         runner_path = self._resolve_runner_path()
-        child_env = dict(self._env) if self._env else os.environ.copy()
+        if self._env:
+            child_env = dict(self._env)
+        else:
+            child_env = os.environ.copy()
+            # If network is disabled or sandbox is untrusted, scrub host environment secrets (Rule 15)
+            if self._network_disabled:
+                for k in list(child_env.keys()):
+                    ku = k.upper()
+                    if (
+                        "TOKEN" in ku
+                        or "SECRET" in ku
+                        or "PASSWORD" in ku
+                        or ("KEY" in ku and "PATH" not in ku)
+                    ):
+                        child_env.pop(k, None)
         if hasattr(sys, "prefix") and hasattr(sys, "base_prefix") and sys.prefix != sys.base_prefix:
             child_env.setdefault("VIRTUAL_ENV", sys.prefix)
         if self._network_disabled:

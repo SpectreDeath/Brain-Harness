@@ -220,18 +220,59 @@ def main() -> None:
         import socket
 
         _orig_connect = socket.socket.connect
+        _orig_connect_ex = getattr(socket.socket, "connect_ex", None)
+        _orig_sendto = getattr(socket.socket, "sendto", None)
+        _orig_getaddrinfo = getattr(socket, "getaddrinfo", None)
+
+        def _is_loopback(host_val: Any) -> bool:
+            return str(host_val).lower().strip() in ("127.0.0.1", "localhost", "::1", "0.0.0.0")
 
         def _blocked_connect(self: Any, *args: Any, **kwargs: Any) -> Any:
-            # Allow loopback connections required by Windows asyncio Proactor self-pipe
+            # Allow loopback connections required by Windows asyncio Proactor self-pipe (Rule 56)
             if args:
                 target = args[0]
                 if isinstance(target, tuple) and len(target) >= 1:
-                    host = str(target[0])
-                    if host in ("127.0.0.1", "localhost", "::1"):
+                    if _is_loopback(target[0]):
                         return _orig_connect(self, *args, **kwargs)
             raise PermissionError("Outbound network access disabled for sandboxed plugin")
 
+        def _blocked_connect_ex(self: Any, *args: Any, **kwargs: Any) -> Any:
+            if args:
+                target = args[0]
+                if isinstance(target, tuple) and len(target) >= 1:
+                    if _is_loopback(target[0]):
+                        if _orig_connect_ex:
+                            return _orig_connect_ex(self, *args, **kwargs)
+            raise PermissionError("Outbound network access disabled for sandboxed plugin")
+
+        def _blocked_sendto(self: Any, *args: Any, **kwargs: Any) -> Any:
+            target = None
+            if len(args) > 1 and isinstance(args[1], tuple):
+                target = args[1]
+            elif len(args) > 2 and isinstance(args[2], tuple):
+                target = args[2]
+            elif "address" in kwargs and isinstance(kwargs["address"], tuple):
+                target = kwargs["address"]
+
+            if target and len(target) >= 1:
+                if _is_loopback(target[0]):
+                    if _orig_sendto:
+                        return _orig_sendto(self, *args, **kwargs)
+            raise PermissionError("Outbound network access disabled for sandboxed plugin")
+
+        def _blocked_getaddrinfo(host: Any, port: Any, *args: Any, **kwargs: Any) -> Any:
+            if _is_loopback(host):
+                if _orig_getaddrinfo:
+                    return _orig_getaddrinfo(host, port, *args, **kwargs)
+            raise PermissionError("DNS resolution disabled for sandboxed plugin")
+
         socket.socket.connect = _blocked_connect  # type: ignore[assignment]
+        if _orig_connect_ex:
+            socket.socket.connect_ex = _blocked_connect_ex  # type: ignore[assignment]
+        if _orig_sendto:
+            socket.socket.sendto = _blocked_sendto  # type: ignore[assignment]
+        if _orig_getaddrinfo:
+            socket.getaddrinfo = _blocked_getaddrinfo  # type: ignore[assignment]
 
     _apply_resource_limits()
 

@@ -8,6 +8,7 @@ Sources:
 
 from __future__ import annotations
 
+import hashlib
 import importlib.util
 import stat
 import threading
@@ -188,7 +189,7 @@ class PluginLoader:
                 )
 
         # Scan for Python modules with HarnessPlugin subclasses outside manifest dirs
-        is_trusted = trusted if trusted is not None else True
+        is_trusted = trusted if trusted is not None else False
         for py_file in sorted(directory.glob("**/*.py")):
             if (
                 py_file.parent in processed_dirs
@@ -337,6 +338,11 @@ class PluginLoader:
         """Load a plugin from a directory with a plugin.json manifest."""
         manifest = PluginManifest.from_file(manifest_path)
 
+        # If manifest declares entrypoints, wrap with ManifestPlugin to mount tools via ToolMountMixin
+        # and resolve execution via SandboxExecutorFactory (InProcessExecutor for trusted in-process)
+        if manifest.entrypoints:
+            return ManifestPlugin(manifest, directory)
+
         # Enforce sandbox isolation policy: only load in-process if trusted and isolation is in_process
         if (
             manifest.trusted
@@ -346,7 +352,7 @@ class PluginLoader:
         ):
             entrypoint_path = directory / manifest.entrypoint
             if entrypoint_path.exists():
-                found = self._load_python_module(entrypoint_path)
+                found = self._load_python_module(entrypoint_path, trusted=manifest.trusted)
                 if found:
                     return found[0]
 
@@ -359,7 +365,44 @@ class PluginLoader:
         """Import a Python file and find HarnessPlugin subclasses."""
         plugins: list[HarnessPlugin] = []
 
-        module_name = f"harness_plugin_{py_file.stem}"
+        if not trusted:
+            # Check via AST whether the file defines a HarnessPlugin subclass declaring trusted = True before executing
+            is_statically_trusted = False
+            try:
+                import ast
+
+                source = py_file.read_text(encoding="utf-8")
+                tree = ast.parse(source, filename=str(py_file))
+                for node in ast.walk(tree):
+                    if isinstance(node, ast.ClassDef):
+                        for item in node.body:
+                            if isinstance(item, (ast.FunctionDef, ast.AsyncFunctionDef)) and item.name == "trusted":
+                                for sub in ast.walk(item):
+                                    if (
+                                        isinstance(sub, ast.Return)
+                                        and isinstance(sub.value, ast.Constant)
+                                        and sub.value.value is True
+                                    ):
+                                        is_statically_trusted = True
+                                        break
+                            elif isinstance(item, ast.Assign):
+                                for target in item.targets:
+                                    if isinstance(target, ast.Name) and target.id == "trusted":
+                                        if isinstance(item.value, ast.Constant) and item.value.value is True:
+                                            is_statically_trusted = True
+                                            break
+            except Exception:
+                is_statically_trusted = False
+
+            if not is_statically_trusted:
+                logger.warning(
+                    "Blocking untrusted Python plugin from in-process execution",
+                    file=str(py_file),
+                )
+                return []
+
+        module_hash = hashlib.sha256(str(py_file.resolve()).encode("utf-8")).hexdigest()[:8]
+        module_name = f"harness_plugin_{py_file.stem}_{module_hash}"
         if module_name in self._loaded_modules:
             return []
 

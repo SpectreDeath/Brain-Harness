@@ -57,7 +57,7 @@ class MyTestPlugin(HarnessPlugin):
         (plugin_dir / "plugin.py").write_text(plugin_code)
 
         loader = PluginLoader(plugin_dirs=[tmp_path])
-        plugins = loader.load_from_directory(tmp_path)
+        plugins = loader.load_from_directory(tmp_path, trusted=True)
 
         assert len(plugins) == 1
         assert plugins[0].name == "python-test-plugin"
@@ -88,6 +88,93 @@ class UntrustedExternalPlugin(HarnessPlugin):
         # Explicitly loading with trusted=False must block in-process instantiation
         plugins = loader.load_from_directory(plugin_dir, trusted=False)
         assert len(plugins) == 0
+
+    def test_manifestless_scan_defaults_untrusted(self, tmp_path: Path) -> None:
+        """Verify manifest-less scan defaults to untrusted (Rule Track 0)."""
+        plugin_code = '''
+from harness.plugins.base import HarnessPlugin
+
+class DefaultUntrustedPlugin(HarnessPlugin):
+    @property
+    def name(self) -> str:
+        return "default-untrusted"
+
+    @property
+    def version(self) -> str:
+        return "1.0.0"
+'''
+        plugin_dir = tmp_path / "default-untrusted-dir"
+        plugin_dir.mkdir()
+        (plugin_dir / "plugin.py").write_text(plugin_code)
+
+        loader = PluginLoader(plugin_dirs=[])
+        # Default scan (trusted=None) must default to untrusted and block
+        plugins = loader.load_from_directory(plugin_dir)
+        assert len(plugins) == 0
+
+    def test_blocked_plugin_module_code_does_not_execute(self, tmp_path: Path) -> None:
+        """Verify that untrusted blocked plugin module-level code is not executed."""
+        marker = tmp_path / "side_effect.txt"
+        plugin_code = f'''
+from harness.plugins.base import HarnessPlugin
+from pathlib import Path
+
+# Module-level side effect that should NOT run
+Path(r"{marker}").write_text("compromised")
+
+class MaliciousPlugin(HarnessPlugin):
+    @property
+    def name(self) -> str:
+        return "malicious"
+    @property
+    def version(self) -> str:
+        return "1.0.0"
+'''
+        plugin_dir = tmp_path / "malicious-dir"
+        plugin_dir.mkdir()
+        (plugin_dir / "plugin.py").write_text(plugin_code)
+
+        loader = PluginLoader(plugin_dirs=[])
+        plugins = loader.load_from_directory(plugin_dir, trusted=False)
+        assert len(plugins) == 0
+        assert not marker.exists(), "Module-level code executed despite being untrusted!"
+
+    def test_module_cache_collision_avoided(self, tmp_path: Path) -> None:
+        """Verify that two manifest-less plugins named main.py both load without cache collision."""
+        plugin_a_code = '''
+from harness.plugins.base import HarnessPlugin
+class PluginA(HarnessPlugin):
+    @property
+    def name(self) -> str:
+        return "plugin-a"
+    @property
+    def version(self) -> str:
+        return "1.0.0"
+'''
+        plugin_b_code = '''
+from harness.plugins.base import HarnessPlugin
+class PluginB(HarnessPlugin):
+    @property
+    def name(self) -> str:
+        return "plugin-b"
+    @property
+    def version(self) -> str:
+        return "1.0.0"
+'''
+        dir_a = tmp_path / "dir_a"
+        dir_b = tmp_path / "dir_b"
+        dir_a.mkdir()
+        dir_b.mkdir()
+        (dir_a / "main.py").write_text(plugin_a_code)
+        (dir_b / "main.py").write_text(plugin_b_code)
+
+        loader = PluginLoader(plugin_dirs=[])
+        plugins_a = loader.load_from_directory(dir_a, trusted=True)
+        plugins_b = loader.load_from_directory(dir_b, trusted=True)
+        assert len(plugins_a) == 1
+        assert len(plugins_b) == 1
+        assert plugins_a[0].name == "plugin-a"
+        assert plugins_b[0].name == "plugin-b"
 
     def test_load_from_zip(self, tmp_path: Path) -> None:
         import zipfile
