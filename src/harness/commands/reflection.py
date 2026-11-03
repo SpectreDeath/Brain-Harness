@@ -57,7 +57,7 @@ async def run_reflection_cmd(
         since_dt = None
         if since_iso:
             try:
-                since_dt = datetime.fromisoformat(since_iso)
+                since_dt = datetime.fromisoformat(since_iso.replace("Z", "+00:00"))
             except Exception as e:
                 logger.warning("Invalid since_iso timestamp, ignoring", since=since_iso, error=str(e))
 

@@ -26,7 +26,7 @@ def to_epoch(val: float | int | datetime | str | None) -> float | None:
         return val.timestamp()
     if isinstance(val, str):
         try:
-            return datetime.fromisoformat(val).timestamp()
+            return datetime.fromisoformat(val.replace("Z", "+00:00")).timestamp()
         except Exception:
             return None
     return None

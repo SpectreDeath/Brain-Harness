@@ -25,14 +25,14 @@ class ReflectionScope:
         if not self.since:
             return True
         try:
-            dt = datetime.fromisoformat(iso_date_str)
+            dt = datetime.fromisoformat(iso_date_str.replace("Z", "+00:00"))
             # Ensure timezone awareness comparison
             if dt.tzinfo is None:
                 dt = dt.replace(tzinfo=timezone.utc)
             cmp_since = self.since if self.since.tzinfo is not None else self.since.replace(tzinfo=timezone.utc)
             return dt >= cmp_since
         except Exception:
-            return True
+            return False
 
     def matches_conversation(self, conv_id: str) -> bool:
         """Check if a conversation ID matches the scope filter."""
