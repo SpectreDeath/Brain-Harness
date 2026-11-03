@@ -214,17 +214,10 @@ class PluginCatalog:
                 logger.warning("Failed to load plugin manifest", path=str(manifest_file), error=str(e))
                 return  # Do not index broken/unparseable manifests as active plugins
         elif current_dir != root_dir:
-            # Check if this directory contains a Python file declaring HarnessPlugin
-            has_py_plugin = False
-            for py_f in current_dir.glob("*.py"):
-                try:
-                    text = py_f.read_text(encoding="utf-8", errors="ignore")
-                    if "class " in text and "HarnessPlugin" in text:
-                        has_py_plugin = True
-                        break
-                except Exception:
-                    pass
-            if has_py_plugin:
+            # Check if there are nested manifests deeper in this tree
+            nested_manifests = [p for p in current_dir.glob("**/plugin.json") if not p.name.startswith((".", "__"))]
+            if not nested_manifests:
+                # Leaf directory without manifest: discoverable as untrusted, manifest-less catalog entry
                 is_plugin_dir = True
 
         if is_plugin_dir and current_dir != root_dir:

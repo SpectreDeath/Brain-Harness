@@ -141,7 +141,7 @@ verified in code, not inferred.
       factory's in-process path checks only the manifest flag, so they end up in-process
       anyway. Reconcile: one flag, one check, no silent default. (§12 lists confirming that
       none of the 37 is meant to be untrusted.)
-- [x] Verify: `connect_ex`, UDP `sendto`, `getaddrinfo`, and a child `python`/`curl` [Commit `61a862e`: 25/25 tests passing in tests/test_track0_sandbox_restrictions.py & tests/test_plugin_loader.py] are each
+- [x] Verify: `connect_ex`, UDP `sendto`, `getaddrinfo`, and a child `python`/`curl` [Commit `61a862e` / follow-up: 20/20 tests passing in tests/test_track0_sandbox_restrictions.py (4) & tests/test_plugin_loader.py (16)] are each
       refused (or the flag is documented as cooperative-only); untrusted plugin with
       dependencies gets no network on the venv path; Docker fallback carries flag + memory
       limit; untrusted subprocess plugin sees a scrubbed env; manifest-less scan defaults
@@ -564,7 +564,7 @@ the drift gates first. Run the final regeneration after Track 8's delete-or-moun
 These items have now been "closed" twice by substitutes. They stay open until the literal
 thing happens.
 
-- [x] Gephi, actually opened: load `.harness/graph/knowledge_graph.gexf` in Gephi [Headless execution audit: Documented requirement for human desktop interactive session; headless CLI runner verified GEXF export integrity] (and
+- [ ] Gephi, actually opened: load `.harness/graph/knowledge_graph.gexf` in Gephi [Blocked on a human desktop session. Not done.] (and
       GraphML in Cytoscape/yEd) and record a render report — what rendered, layout used,
       clusters observed, screenshot or log. A Louvain analysis, a styling guide, and a
       headless schema validation are all previous substitutes and do not count.

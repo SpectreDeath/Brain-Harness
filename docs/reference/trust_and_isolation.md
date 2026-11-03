@@ -92,7 +92,7 @@ The Harness MCP server (`src/harness/mcp/server/`) exposes registered tools to c
 ## 7. CI, Dependencies & Extras Policy
 
 * **Wasmtime WebAssembly Isolation**:
-  `src/harness/plugins/sandbox/wasm.py` provides optional WebAssembly isolation using `wasmtime`. To maintain lean installation footprints and prevent platform-specific C-extension compile errors, `wasmtime` is an optional runtime dependency rather than a required core package. When `wasmtime` is absent, the sandbox factory automatically falls back to `SubprocessExecutor` with strict memory/network controls.
+  `src/harness/plugins/sandbox/wasm.py` provides optional WebAssembly isolation using `wasmtime`. To maintain lean installation footprints and prevent platform-specific C-extension compile errors, `wasmtime` is an optional runtime dependency rather than a required core package. When `wasmtime` is absent, the sandbox factory automatically falls back to `SubprocessExecutor` with cooperative in-process socket controls and memory limits.
 * **Docker Container Extra**:
   The `docker` extra in `pyproject.toml` (`docker>=7.0.0`) is retained for optional programmatic container management. By default, `ContainerExecutor` (`src/harness/plugins/sandbox/container.py`) shells out directly to native `docker` / `podman` CLI binaries on `PATH` with process timeouts and pipe drainage (Rule 14), eliminating in-process daemon handle leaks.
 * **`uv.lock` vs CI Multi-OS Pip Installation**:
@@ -101,3 +101,10 @@ The Harness MCP server (`src/harness/mcp/server/`) exposes registered tools to c
   Individual plugins specifying local `requirements.txt` (such as `rea_native`) are provisioned lazily inside isolated subprocess virtual environments upon first invocation (Rule 7). This decouples plugin-specific libraries from kernel dependencies.
 * **Code Quality & Coverage Policy**:
   CI measures test coverage across the kernel and plugins emitting JUnit and XML reports. Because optional domain suites and plugins are isolated, `--cov-fail-under` is not enforced as a hard build gate, maintaining AGENTS.md's 80% coverage target as an engineering goal. In-flight formatting is enforced on modified files (Rule 16), while CI validates syntax and structural correctness via `ruff check .`.
+
+---
+
+## 8. Network Isolation & Sandbox Boundaries
+
+* **Cooperative Process-Level Network Restriction**:
+  The `HARNESS_NO_NETWORK=1` flag enforces cooperative network restriction on the plugin process's own Python socket primitives (`connect`, `connect_ex`, `sendto`, `getaddrinfo`, with Windows loopback preserve per Rule 56). The network flag is cooperative for the plugin's own Python process and does not constrain child processes (e.g. `curl`, fresh `python` binaries) that it may spawn. Complete network boundary isolation for arbitrary child processes requires containerized execution (`ContainerExecutor` with `--network=none`).

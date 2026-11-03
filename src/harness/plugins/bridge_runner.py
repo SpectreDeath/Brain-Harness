@@ -9,6 +9,13 @@ Architectural Role:
   serving JSON-RPC 2.0 requests over stdin/stdout.
 - It differs from `plugins/transport.py` (`StdioJsonRpcTransport`), which is the
   host-side async client that spawns child processes, monitors stderr, and issues RPCs.
+
+Network Isolation Boundary:
+- The `HARNESS_NO_NETWORK=1` flag enforces cooperative network restriction on the plugin
+  process's own Python socket primitives (`connect`, `connect_ex`, `sendto`, `getaddrinfo`).
+- The network flag is cooperative for the plugin's own process and does not constrain child
+  processes it spawns. Complete network boundary isolation for arbitrary child processes
+  requires containerized execution (`ContainerExecutor` with `--network=none`).
 """
 
 from __future__ import annotations
