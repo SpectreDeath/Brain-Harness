@@ -32,7 +32,7 @@ class ReflectionScope:
             cmp_since = self.since if self.since.tzinfo is not None else self.since.replace(tzinfo=timezone.utc)
             return dt >= cmp_since
         except Exception:
-            return False
+            return True
 
     def matches_conversation(self, conv_id: str) -> bool:
         """Check if a conversation ID matches the scope filter."""
