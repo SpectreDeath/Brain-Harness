@@ -1,7 +1,7 @@
 {
   "id": "ki_20260823_02",
   "title": "High-Scale Trajectory Ingestion & Overlapping Token Indexing",
-  "source_target": "d:/GitHub/projects/Brain Harness/plugins/memory_and_epistemics/brain_bridge/main.py",
+  "source_target": "plugins/memory_and_epistemics/brain_bridge/main.py",
   "detected_format": "harness_instance",
   "isnad": {
     "decision_id": "dec_20260823_02",
@@ -47,7 +47,7 @@
   "edges": [
     {
       "type": "references_code",
-      "target": "d:/GitHub/projects/Brain Harness/plugins/memory_and_epistemics/brain_bridge/main.py",
+      "target": "plugins/memory_and_epistemics/brain_bridge/main.py",
       "target_kind": "path",
       "derived": true,
       "confidence": 0.95,

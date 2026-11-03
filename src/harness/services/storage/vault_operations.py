@@ -87,6 +87,8 @@ class KnowledgeVaultMixin(KnowledgeRetrievalMixin, IsnadAuditMixin):
                 continue
             meta_file = ki_dir / "metadata.json"
             if not meta_file.exists():
+                skipped_items.append((ki_dir.name, "Missing metadata.json"))
+                logger.warning("Vault directory missing metadata.json", dir=str(ki_dir))
                 continue
             try:
                 meta = json.loads(meta_file.read_text(encoding="utf-8"))
@@ -140,9 +142,31 @@ class KnowledgeVaultMixin(KnowledgeRetrievalMixin, IsnadAuditMixin):
         items_needing_backfill = [k for k in synced_items if not k.edges]
         if items_needing_backfill:
             graph_service.backfill_edges_mechanically(synced_items, vault_dir=root)
+            # Write backfilled edges back to disk metadata.json (single authority invariant)
+            for ki in items_needing_backfill:
+                if ki.edges:
+                    ki_meta_file = root / ki.id / "metadata.json"
+                    if ki_meta_file.exists():
+                        try:
+                            m_data = json.loads(ki_meta_file.read_text(encoding="utf-8"))
+                            m_data["edges"] = [e.model_dump() for e in ki.edges]
+                            ki_meta_file.write_text(json.dumps(m_data, indent=2) + "\n", encoding="utf-8")
+                        except Exception as ex:
+                            logger.warning("Failed writing backfilled edges to disk", ki_id=ki.id, error=str(ex))
 
         for ki in synced_items:
             await self.save_knowledge_item(ki)
+
+        # Prune stale KV store items not present on disk
+        synced_ids = {ki.id for ki in synced_items}
+        if hasattr(self, "list_knowledge_items"):
+            try:
+                existing_items = await self.list_knowledge_items()
+                for old_item in existing_items:
+                    if old_item.id not in synced_ids and hasattr(self, "delete_knowledge_item"):
+                        await self.delete_knowledge_item(old_item.id)
+            except Exception as ex:
+                logger.debug("Failed pruning stale KV items", error=str(ex))
 
         if hasattr(self, "_ensure_connection"):
             from harness.services.storage.vault_derivation import derive_knowledge_graph

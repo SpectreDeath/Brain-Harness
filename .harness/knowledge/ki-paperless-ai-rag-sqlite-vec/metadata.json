@@ -6,23 +6,23 @@
   "summary": "Architectural distillation of paperless_ai in Paperless-NGX (v3.1.3). Documents zero-external-dependency vector retrieval using the sqlite-vec extension (llmindex.db), LlamaIndex node chunking (512 output / 200 overlap), dual-layer hybrid search combining Tantivy lexical BM25 with dense semantic vector embeddings, and streaming chat reference citation protocols.",
   "references": [
     {
-      "path": "D:/GitHub/cloned/paperless-ngx/src/paperless_ai/vector_store.py",
+      "path": "external/paperless-ngx/src/paperless_ai/vector_store.py",
       "description": "PaperlessSqliteVecVectorStore implementation wrapping sqlite-vec"
     },
     {
-      "path": "D:/GitHub/cloned/paperless-ngx/src/paperless_ai/indexing.py",
+      "path": "external/paperless-ngx/src/paperless_ai/indexing.py",
       "description": "Chunking, embedding, and index building pipelines"
     },
     {
-      "path": "D:/GitHub/cloned/paperless-ngx/src/paperless_ai/chat.py",
+      "path": "external/paperless-ngx/src/paperless_ai/chat.py",
       "description": "Streaming RAG chat engine and reference resolution"
     },
     {
-      "path": "D:/GitHub/cloned/paperless-ngx/src/paperless_ai/tables.py",
+      "path": "external/paperless-ngx/src/paperless_ai/tables.py",
       "description": "DocumentChunksTable, DocumentMetaTable, IndexMetaTable"
     },
     {
-      "path": "D:/GitHub/cloned/paperless-ngx/src/documents/search/_backend.py",
+      "path": "external/paperless-ngx/src/documents/search/_backend.py",
       "description": "Tantivy full-text search backend via whoosh-compat"
     }
   ],
@@ -58,7 +58,7 @@
   "edges": [
     {
       "type": "references_code",
-      "target": "D:/GitHub/cloned/paperless-ngx/src/paperless_ai/vector_store.py",
+      "target": "external/paperless-ngx/src/paperless_ai/vector_store.py",
       "target_kind": "path",
       "derived": true,
       "confidence": 0.95,
@@ -66,7 +66,7 @@
     },
     {
       "type": "references_code",
-      "target": "D:/GitHub/cloned/paperless-ngx/src/paperless_ai/indexing.py",
+      "target": "external/paperless-ngx/src/paperless_ai/indexing.py",
       "target_kind": "path",
       "derived": true,
       "confidence": 0.95,
@@ -74,7 +74,7 @@
     },
     {
       "type": "references_code",
-      "target": "D:/GitHub/cloned/paperless-ngx/src/paperless_ai/chat.py",
+      "target": "external/paperless-ngx/src/paperless_ai/chat.py",
       "target_kind": "path",
       "derived": true,
       "confidence": 0.95,
@@ -82,7 +82,7 @@
     },
     {
       "type": "references_code",
-      "target": "D:/GitHub/cloned/paperless-ngx/src/paperless_ai/tables.py",
+      "target": "external/paperless-ngx/src/paperless_ai/tables.py",
       "target_kind": "path",
       "derived": true,
       "confidence": 0.95,
@@ -90,7 +90,7 @@
     },
     {
       "type": "references_code",
-      "target": "D:/GitHub/cloned/paperless-ngx/src/documents/search/_backend.py",
+      "target": "external/paperless-ngx/src/documents/search/_backend.py",
       "target_kind": "path",
       "derived": true,
       "confidence": 0.95,

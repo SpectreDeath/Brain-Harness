@@ -6,11 +6,11 @@
   "summary": "ChatbotX architectural pattern isolating user-authored dynamic JavaScript flow step logic inside a decoupled HTTP microservice (apps/javascript-executor) utilizing isolated-vm for V8 heap boundary confinement, CPU execution bounds, and memory isolation.",
   "references": [
     {
-      "path": "D:/GitHub/cloned/ChatbotX/apps/javascript-executor/src/index.ts",
+      "path": "external/ChatbotX/apps/javascript-executor/src/index.ts",
       "description": "Microservice HTTP entrypoint executing isolated V8 contexts"
     },
     {
-      "path": "D:/GitHub/cloned/ChatbotX/packages/javascript-sandbox/src/index.ts",
+      "path": "external/ChatbotX/packages/javascript-sandbox/src/index.ts",
       "description": "Client SDK and contract types for communicating with the executor"
     }
   ],
@@ -40,7 +40,7 @@
   "edges": [
     {
       "type": "references_code",
-      "target": "D:/GitHub/cloned/ChatbotX/apps/javascript-executor/src/index.ts",
+      "target": "external/ChatbotX/apps/javascript-executor/src/index.ts",
       "target_kind": "path",
       "derived": true,
       "confidence": 0.95,
@@ -48,7 +48,7 @@
     },
     {
       "type": "references_code",
-      "target": "D:/GitHub/cloned/ChatbotX/packages/javascript-sandbox/src/index.ts",
+      "target": "external/ChatbotX/packages/javascript-sandbox/src/index.ts",
       "target_kind": "path",
       "derived": true,
       "confidence": 0.95,

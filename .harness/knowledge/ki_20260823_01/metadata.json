@@ -1,7 +1,7 @@
 {
   "id": "ki_20260823_01",
   "title": "Subprocess Sandbox Boundary & Dynamic Plugin Isolation",
-  "source_target": "d:/GitHub/projects/Brain Harness/src/harness/plugins/sandbox.py",
+  "source_target": "src/harness/plugins/sandbox.py",
   "detected_format": "harness_instance",
   "isnad": {
     "decision_id": "dec_20260823_01",
@@ -40,7 +40,7 @@
   "edges": [
     {
       "type": "references_code",
-      "target": "d:/GitHub/projects/Brain Harness/src/harness/plugins/sandbox.py",
+      "target": "src/harness/plugins/sandbox.py",
       "target_kind": "path",
       "derived": true,
       "confidence": 0.95,

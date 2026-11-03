@@ -1,7 +1,7 @@
 {
   "id": "ki_okf_agent_memory_v02",
   "title": "Open Knowledge Framework (OKF v0.2): Git-Native Agent Memory, BM25 Scoping, and Trust Ordering",
-  "source_target": "D:\\GitHub\\cloned\\Google\\okf-agent-memory",
+  "source_target": "external/Google/okf-agent-memory",
   "detected_format": "go_module",
   "timestamp": "2026-09-13T14:30:00Z",
   "isnad": {

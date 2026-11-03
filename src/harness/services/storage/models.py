@@ -7,6 +7,9 @@ from enum import Enum
 from typing import Any
 
 from pydantic import BaseModel, ConfigDict, Field
+import structlog
+
+logger = structlog.get_logger()
 
 
 class IsnadClaimStatus(str, Enum):
@@ -102,8 +105,8 @@ class KnowledgeItemRecord(BaseModel):
             elif isinstance(c, dict):
                 try:
                     typed.append(IsnadClaim.model_validate(c))
-                except Exception:
-                    typed.append(IsnadClaim(assertion=c.get("assertion", str(c)), evidence=c.get("evidence")))
+                except Exception as e:
+                    logger.warning("Invalid isnad claim payload rejected", ki_id=self.id, error=str(e), claim_data=c)
         return typed
 
     def add_edge(

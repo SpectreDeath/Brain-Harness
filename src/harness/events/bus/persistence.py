@@ -86,7 +86,8 @@ def iter_log_file(
                         continue
                     try:
                         event = _HarnessEvent.model_validate_json(line)
-                    except Exception:
+                    except Exception as ex:
+                        logger.warning("Corrupt JSONL line skipped during event replay", error=str(ex), path=str(path))
                         continue
 
                     if not found_since:
@@ -116,7 +117,8 @@ def iter_log_file(
                     continue
                 try:
                     event = _HarnessEvent.model_validate_json(line)
-                except Exception:
+                except Exception as ex:
+                    logger.warning("Corrupt JSONL line skipped during event replay", error=str(ex), path=str(path))
                     continue
 
                 if not found_since:

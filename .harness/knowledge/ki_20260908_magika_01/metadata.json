@@ -1,7 +1,7 @@
 {
   "id": "ki_20260908_magika_01",
   "title": "Google Magika Deep Learning Content Type & MIME Detection Architecture",
-  "source_target": "D:\\GitHub\\cloned\\Google\\magika",
+  "source_target": "external/Google/magika",
   "detected_format": "git_repository",
   "timestamp": "2026-09-08T18:13:00Z",
   "isnad": {

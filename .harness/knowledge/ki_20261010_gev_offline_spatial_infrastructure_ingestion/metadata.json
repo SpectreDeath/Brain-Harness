@@ -20,13 +20,13 @@
       {
         "assertion": "Critical infrastructure assets (submarine cables, landing stations, datacenters, dams, defense installations) can be indexed offline via constant-time SpatialHashGrid lookup.",
         "evidence_type": "code_implementation",
-        "source": "D:\\GitHub\\cloned\\gods-eye-view\\src\\data\\local_data\\",
+        "source": "external/gods-eye-view/src/data/local_data/",
         "verified": true
       },
       {
         "assertion": "TeleGeography landing points and cables provide worldwide subsea connectivity routing independent of live API connectivity.",
         "evidence_type": "empirical_benchmark",
-        "source": "D:\\GitHub\\cloned\\gods-eye-view\\src\\data\\local_data\\telegeography_submarine_cables\\landing-point-geo.json",
+        "source": "external/gods-eye-view/src/data/local_data/telegeography_submarine_cables/landing-point-geo.json",
         "verified": true
       }
     ],

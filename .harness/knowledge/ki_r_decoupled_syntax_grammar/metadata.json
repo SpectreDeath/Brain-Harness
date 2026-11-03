@@ -1,7 +1,7 @@
 {
   "id": "ki_r_decoupled_syntax_grammar",
   "title": "Decoupled Multi-Editor TextMate Syntax Grammar & Tokenization Architecture",
-  "source_target": "D:\\GitHub\\cloned\\R\\vscode-R-syntax",
+  "source_target": "external/R/vscode-R-syntax",
   "detected_format": "git_repository",
   "isnad": {
     "decision_id": "dec_ki_r_decoupled_syntax_grammar",
@@ -33,5 +33,9 @@
     "decoupled_architecture",
     "multi_editor_compatibility"
   ],
-  "status": "ACTIVE"
+  "status": "ACTIVE",
+  "category": "developer_tooling",
+  "created_at": "2026-11-01T16:00:00Z",
+  "retrieval_count": 0,
+  "edges": []
 }

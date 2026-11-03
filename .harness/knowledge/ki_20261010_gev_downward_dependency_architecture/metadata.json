@@ -19,13 +19,13 @@
       {
         "assertion": "Tool definitions in src/tools/ and queries in src/tools/queries/ are strictly isolated from DOM, Cesium, and Node globals, guaranteed by AST check-package-boundaries.mjs.",
         "evidence_type": "code_implementation",
-        "source": "D:\\GitHub\\cloned\\gods-eye-view\\scripts\\check-package-boundaries.mjs",
+        "source": "external/gods-eye-view/scripts/check-package-boundaries.mjs",
         "verified": true
       },
       {
         "assertion": "composeCatalog combines tools, requires services, and wraps calls with onion interceptors without mutating definitions.",
         "evidence_type": "code_implementation",
-        "source": "D:\\GitHub\\cloned\\gods-eye-view\\src\\tools\\catalog.js",
+        "source": "external/gods-eye-view/src/tools/catalog.js",
         "verified": true
       }
     ],

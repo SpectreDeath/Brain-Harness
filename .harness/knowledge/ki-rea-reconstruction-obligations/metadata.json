@@ -1,7 +1,7 @@
 {
   "id": "ki-rea-reconstruction-obligations",
   "title": "Reconstruction Obligation Ledgers & Canonical Evidence Records",
-  "source_uri": "D:\\GitHub\\cloned\\rea-main",
+  "source_uri": "external/rea-main",
   "source_commit": "701695139490777ece7a3ccb8508b6215a11c0fe",
   "created_at": "2026-10-17T18:16:00Z",
   "category": "security_and_forensics/reverse_engineering",
@@ -29,7 +29,7 @@
     }
   ],
   "schema_version": "1.0.0",
-  "source_target": "D:\\GitHub\\cloned\\rea-main",
+  "source_target": "external/rea-main",
   "detected_format": "raw_docs",
   "tags": [
     "reverse_engineering",

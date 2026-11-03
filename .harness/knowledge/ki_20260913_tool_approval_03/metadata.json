@@ -1,7 +1,7 @@
 {
   "id": "ki_20260913_tool_approval_03",
   "title": "Interactive Tool Approval Middleware & Security Sandboxing",
-  "source_target": "D:\\GitHub\\cloned\\claude-code",
+  "source_target": "external/claude-code",
   "detected_format": "git_repository",
   "isnad": {
     "decision_id": "dec_20260913_tool_approval_03",

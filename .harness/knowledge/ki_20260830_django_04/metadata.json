@@ -1,7 +1,7 @@
 {
   "id": "ki_20260830_django_04",
   "title": "Transactional Atomic Savepoint Stacks & Multi-Database Router Isolation",
-  "source_target": "D:\\GitHub\\cloned\\Django\\django-main\\django-main\\django\\db\\transaction.py",
+  "source_target": "external/Django/django-main/django-main/django/db/transaction.py",
   "detected_format": "git_repository",
   "isnad": {
     "decision_id": "dec_20260830_django_04",

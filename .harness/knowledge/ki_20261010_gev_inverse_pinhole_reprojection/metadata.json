@@ -19,7 +19,7 @@
       {
         "assertion": "Forward projection from 360 equirectangular spherical panoramas to pinhole cameras produces pixel gaps and tear artifacts; inverse mapping over destination pixels with bilinear interpolation guarantees hole-free reprojection.",
         "evidence_type": "mathematical_proof",
-        "source": "D:\\GitHub\\cloned\\gods-eye-view\\tools\\pano-pinhole.mjs",
+        "source": "external/gods-eye-view/tools/pano-pinhole.mjs",
         "verified": true
       }
     ],

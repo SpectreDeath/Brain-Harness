@@ -6,23 +6,23 @@
   "summary": "Architectural distillation of Paperless-NGX (v3.1.3), a production document management system. Documents the multi-stage ingestion pipeline (consumer.py), pluggable parser system, file locking invariants (FileLock/ReadWriteLock), Celery asynchronous worker queue, post-consumption workflow engine, and real-time WebSocket status telemetry.",
   "references": [
     {
-      "path": "D:/GitHub/cloned/paperless-ngx/src/documents/consumer.py",
+      "path": "external/paperless-ngx/src/documents/consumer.py",
       "description": "Document consumer pipeline and stage coordinator"
     },
     {
-      "path": "D:/GitHub/cloned/paperless-ngx/src/documents/parsers/",
+      "path": "external/paperless-ngx/src/documents/parsers/",
       "description": "Rasterised and Tika document parsers"
     },
     {
-      "path": "D:/GitHub/cloned/paperless-ngx/src/documents/models.py",
+      "path": "external/paperless-ngx/src/documents/models.py",
       "description": "Document, Tag, Correspondent, DocumentType, and CustomField models"
     },
     {
-      "path": "D:/GitHub/cloned/paperless-ngx/src/documents/workflows/",
+      "path": "external/paperless-ngx/src/documents/workflows/",
       "description": "Trigger-action workflow automation engine"
     },
     {
-      "path": "D:/GitHub/cloned/paperless-ngx/src/paperless/consumers.py",
+      "path": "external/paperless-ngx/src/paperless/consumers.py",
       "description": "StatusConsumer ASGI WebSocket for progress telemetry"
     }
   ],
@@ -57,7 +57,7 @@
   "edges": [
     {
       "type": "references_code",
-      "target": "D:/GitHub/cloned/paperless-ngx/src/documents/consumer.py",
+      "target": "external/paperless-ngx/src/documents/consumer.py",
       "target_kind": "path",
       "derived": true,
       "confidence": 0.95,
@@ -65,7 +65,7 @@
     },
     {
       "type": "references_code",
-      "target": "D:/GitHub/cloned/paperless-ngx/src/documents/parsers/",
+      "target": "external/paperless-ngx/src/documents/parsers/",
       "target_kind": "path",
       "derived": true,
       "confidence": 0.95,
@@ -73,7 +73,7 @@
     },
     {
       "type": "references_code",
-      "target": "D:/GitHub/cloned/paperless-ngx/src/documents/models.py",
+      "target": "external/paperless-ngx/src/documents/models.py",
       "target_kind": "path",
       "derived": true,
       "confidence": 0.95,
@@ -81,7 +81,7 @@
     },
     {
       "type": "references_code",
-      "target": "D:/GitHub/cloned/paperless-ngx/src/documents/workflows/",
+      "target": "external/paperless-ngx/src/documents/workflows/",
       "target_kind": "path",
       "derived": true,
       "confidence": 0.95,
@@ -89,7 +89,7 @@
     },
     {
       "type": "references_code",
-      "target": "D:/GitHub/cloned/paperless-ngx/src/paperless/consumers.py",
+      "target": "external/paperless-ngx/src/paperless/consumers.py",
       "target_kind": "path",
       "derived": true,
       "confidence": 0.95,

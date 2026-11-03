@@ -1,7 +1,7 @@
 {
   "id": "ki_agent_reach_stealth_browser_cdp_loopback",
   "title": "Dedicated Profile Sharing, Anti-Fingerprint Stealth & Localhost CDP Reconnection",
-  "source_target": "D:\\GitHub\\cloned\\Agent-Reach\\agent_reach\\runtime\\browser.py",
+  "source_target": "external/Agent-Reach/agent_reach/runtime/browser.py",
   "detected_format": "git_repository",
   "isnad": {
     "decision_id": "dec_ki_agent_reach_stealth_browser_cdp_loopback",
@@ -33,5 +33,9 @@
     "anti_fingerprinting",
     "idle_watcher"
   ],
-  "status": "ACTIVE"
+  "status": "ACTIVE",
+  "category": "integration_and_io",
+  "created_at": "2026-11-01T16:00:00Z",
+  "retrieval_count": 0,
+  "edges": []
 }

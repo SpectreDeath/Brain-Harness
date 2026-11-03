@@ -1,7 +1,7 @@
 {
   "id": "ki_20260823_03",
   "title": "Windows PowerShell Command Delimiter Normalization",
-  "source_target": "d:/GitHub/projects/Brain Harness/src/harness/cli.py",
+  "source_target": "src/harness/cli.py",
   "detected_format": "harness_instance",
   "isnad": {
     "decision_id": "dec_20260823_03",
@@ -40,7 +40,7 @@
   "edges": [
     {
       "type": "references_code",
-      "target": "d:/GitHub/projects/Brain Harness/src/harness/cli.py",
+      "target": "src/harness/cli.py",
       "target_kind": "path",
       "derived": true,
       "confidence": 0.95,

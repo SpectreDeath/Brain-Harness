@@ -1,7 +1,7 @@
 {
   "id": "ki_self_20260901_04",
   "title": "Dynamic 5D Compute Complexity Budgeting",
-  "source_target": "d:\\GitHub\\projects\\Brain Harness\\.agents\\skills\\compute-model-assessor",
+  "source_target": ".agents/skills/compute-model-assessor",
   "detected_format": "compute_complexity_assessor",
   "timestamp": "2026-09-01T17:35:00Z",
   "isnad": {

@@ -6,15 +6,15 @@
   "summary": "ChatbotX omnichannel abstraction layer unifying 26 third-party messaging networks (WhatsApp, Messenger, Telegram, Zalo, Instagram, Webchat, TikTok) into a normalized message schema, contact identity graph, and DAG flow execution engine backed by Kafka and BullMQ.",
   "references": [
     {
-      "path": "D:/GitHub/cloned/ChatbotX/packages/flow-config/src/index.ts",
+      "path": "external/ChatbotX/packages/flow-config/src/index.ts",
       "description": "Visual flow node definitions, trigger models, and compiler contracts"
     },
     {
-      "path": "D:/GitHub/cloned/ChatbotX/packages/sdk/src/index.ts",
+      "path": "external/ChatbotX/packages/sdk/src/index.ts",
       "description": "SDK interfaces for channel normalization, message actions, and errors"
     },
     {
-      "path": "D:/GitHub/cloned/ChatbotX/packages/event-bus/src/index.ts",
+      "path": "external/ChatbotX/packages/event-bus/src/index.ts",
       "description": "Kafka and Redis event dispatch schemas"
     }
   ],
@@ -46,7 +46,7 @@
   "edges": [
     {
       "type": "references_code",
-      "target": "D:/GitHub/cloned/ChatbotX/packages/flow-config/src/index.ts",
+      "target": "external/ChatbotX/packages/flow-config/src/index.ts",
       "target_kind": "path",
       "derived": true,
       "confidence": 0.95,
@@ -54,7 +54,7 @@
     },
     {
       "type": "references_code",
-      "target": "D:/GitHub/cloned/ChatbotX/packages/sdk/src/index.ts",
+      "target": "external/ChatbotX/packages/sdk/src/index.ts",
       "target_kind": "path",
       "derived": true,
       "confidence": 0.95,
@@ -62,7 +62,7 @@
     },
     {
       "type": "references_code",
-      "target": "D:/GitHub/cloned/ChatbotX/packages/event-bus/src/index.ts",
+      "target": "external/ChatbotX/packages/event-bus/src/index.ts",
       "target_kind": "path",
       "derived": true,
       "confidence": 0.95,

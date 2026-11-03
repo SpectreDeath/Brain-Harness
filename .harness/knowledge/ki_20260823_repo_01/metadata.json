@@ -1,7 +1,7 @@
 {
   "id": "ki_20260823_repo_01",
   "title": "Multi-Tier OS Process Sandboxing & Policy Transforms",
-  "source_target": "D:/GitHub/cloned/codex-main/codex-main",
+  "source_target": "external/codex-main/codex-main",
   "detected_format": "git_repository",
   "isnad": {
     "decision_id": "dec_20260823_repo_01",

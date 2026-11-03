@@ -1,7 +1,7 @@
 {
   "id": "ki_20260831_cellcog_02",
   "title": "Parent Session Tree Fallback DAG & Interim Rewake Heartbeat Delivery",
-  "source_target": "D:/GitHub/cloned/CellCog/cellcog_python-main/cellcog_python-main",
+  "source_target": "external/CellCog/cellcog_python-main/cellcog_python-main",
   "detected_format": "python_sdk_and_daemon",
   "timestamp": "2026-08-31T11:00:00Z",
   "isnad": {
@@ -13,12 +13,12 @@
         "lineage": [
           {
             "node_type": "primary_code",
-            "uri": "D:/GitHub/cloned/CellCog/cellcog_python-main/cellcog_python-main/cellcog/daemon/delivery.py#L20-L75",
+            "uri": "external/CellCog/cellcog_python-main/cellcog_python-main/cellcog/daemon/delivery.py#L20-L75",
             "verified": true
           },
           {
             "node_type": "primary_code",
-            "uri": "D:/GitHub/cloned/CellCog/cellcog_python-main/cellcog_python-main/cellcog/daemon/main.py#L80-L115",
+            "uri": "external/CellCog/cellcog_python-main/cellcog_python-main/cellcog/daemon/main.py#L80-L115",
             "verified": true
           },
           {

@@ -1,7 +1,7 @@
 {
   "id": "ki_20260831_cellcog_03",
   "title": "Pre-Flight File Integrity Verification & Transparent Blob Path Translation",
-  "source_target": "D:/GitHub/cloned/CellCog/cellcog_python-main/cellcog_python-main",
+  "source_target": "external/CellCog/cellcog_python-main/cellcog_python-main",
   "detected_format": "python_sdk_and_daemon",
   "timestamp": "2026-08-31T11:00:00Z",
   "isnad": {
@@ -13,12 +13,12 @@
         "lineage": [
           {
             "node_type": "primary_code",
-            "uri": "D:/GitHub/cloned/CellCog/cellcog_python-main/cellcog_python-main/cellcog/files.py#L30-L120",
+            "uri": "external/CellCog/cellcog_python-main/cellcog_python-main/cellcog/files.py#L30-L120",
             "verified": true
           },
           {
             "node_type": "primary_code",
-            "uri": "D:/GitHub/cloned/CellCog/cellcog_python-main/cellcog_python-main/cellcog/chat.py#L45-L90",
+            "uri": "external/CellCog/cellcog_python-main/cellcog_python-main/cellcog/chat.py#L45-L90",
             "verified": true
           },
           {

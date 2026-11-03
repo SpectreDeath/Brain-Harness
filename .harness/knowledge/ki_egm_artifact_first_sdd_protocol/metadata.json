@@ -7,7 +7,7 @@
   "source": {
     "title": "Elephant-Goldfish Model (EGM) Architecture & System Lifecycle",
     "url": "https://github.com/google/elephant-goldfish-model",
-    "repo_path": "D:/GitHub/cloned/elephant-goldfish-model",
+    "repo_path": "external/elephant-goldfish-model",
     "sha256": "8f9a2e3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f"
   },
   "tags": [
@@ -42,7 +42,7 @@
     ]
   },
   "schema_version": "1.0.0",
-  "source_target": "D:/GitHub/cloned/elephant-goldfish-model",
+  "source_target": "external/elephant-goldfish-model",
   "detected_format": "git_repository",
   "anchors": {},
   "edges": [],

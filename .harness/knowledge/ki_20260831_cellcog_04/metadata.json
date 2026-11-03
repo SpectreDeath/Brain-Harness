@@ -1,7 +1,7 @@
 {
   "id": "ki_20260831_cellcog_04",
   "title": "Monorepo Golden-Copy Multi-Channel Distribution & ClawHub Slug Optimization",
-  "source_target": "D:/GitHub/cloned/CellCog/skills-main/skills-main",
+  "source_target": "external/CellCog/skills-main/skills-main",
   "detected_format": "multi_channel_skill_repo",
   "timestamp": "2026-08-31T11:00:00Z",
   "isnad": {
@@ -13,17 +13,17 @@
         "lineage": [
           {
             "node_type": "primary_code",
-            "uri": "D:/GitHub/cloned/CellCog/skills-main/skills-main/scripts/sync_skills.py#L1-L100",
+            "uri": "external/CellCog/skills-main/skills-main/scripts/sync_skills.py#L1-L100",
             "verified": true
           },
           {
             "node_type": "primary_code",
-            "uri": "D:/GitHub/cloned/CellCog/cellcog-plugin-main/cellcog-plugin-main/CHANGELOG.md#L1-L80",
+            "uri": "external/CellCog/cellcog-plugin-main/cellcog-plugin-main/CHANGELOG.md#L1-L80",
             "verified": true
           },
           {
             "node_type": "primary_code",
-            "uri": "D:/GitHub/cloned/CellCog/cellcog-plugin-main/cellcog-plugin-main/package.json#L20-L50",
+            "uri": "external/CellCog/cellcog-plugin-main/cellcog-plugin-main/package.json#L20-L50",
             "verified": true
           },
           {

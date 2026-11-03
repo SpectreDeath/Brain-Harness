@@ -3,7 +3,7 @@
   "title": "AST-Grep Structural Pattern Enforcement over Generic Linters",
   "context": "Automated architectural boundary and concurrency pattern enforcement in multi-agent repositories.",
   "distilled_learning": "# AST-Grep Structural Pattern Enforcement over Generic Linters",
-  "source_target": "D:\\GitHub\\cloned\\opencode",
+  "source_target": "external/opencode",
   "detected_format": "git_repository",
   "isnad": {
     "decision_id": "dec_20261023_opencode_04",

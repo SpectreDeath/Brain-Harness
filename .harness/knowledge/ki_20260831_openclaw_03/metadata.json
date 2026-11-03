@@ -1,7 +1,7 @@
 {
   "id": "ki_20260831_openclaw_03",
   "title": "A2A (Agent-to-Agent) Multi-Agent Swarm Federation Protocol",
-  "source_target": "D:\\GitHub\\cloned\\openclaw",
+  "source_target": "external/openclaw",
   "detected_format": "typescript_monorepo",
   "timestamp": "2026-08-31T14:15:00Z",
   "isnad": {

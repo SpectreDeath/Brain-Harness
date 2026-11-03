@@ -1,7 +1,7 @@
 {
   "id": "ki_hf_autodoc_mock_virtualization",
   "title": "Zero-Dependency Meta-Path Mock Virtualization for AST Introspection",
-  "source_target": "D:\\GitHub\\cloned\\doc-builder",
+  "source_target": "external/doc-builder",
   "detected_format": "git_repository",
   "isnad": {
     "decision_id": "dec_ki_hf_autodoc_mock_virtualization",

@@ -50,13 +50,19 @@ async def export_single_item_to_disk(
     if meta_file.exists():
         try:
             meta_data = json.loads(meta_file.read_text(encoding="utf-8"))
-        except Exception:
+        except Exception as e:
+            logger.warning("Corrupt metadata.json encountered during export", file=str(meta_file), error=str(e))
             meta_data = {}
     else:
         meta_data = {}
 
     if item.model_extra:
         for k, v in item.model_extra.items():
+            if k == "_metadata_summary":
+                meta_data["summary"] = v
+                continue
+            if k.startswith("_"):
+                continue  # Prevent sync-injected keys (_date_source) from polluting export
             if k not in meta_data:
                 meta_data[k] = v
 

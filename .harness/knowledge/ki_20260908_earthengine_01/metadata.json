@@ -1,7 +1,7 @@
 {
   "id": "ki_20260908_earthengine_01",
   "title": "Google Earth Engine Planetary Geospatial Processing & Domain Partitioning Architecture",
-  "source_target": "D:\\GitHub\\cloned\\Google\\earthengine-api",
+  "source_target": "external/Google/earthengine-api",
   "detected_format": "git_repository",
   "timestamp": "2026-09-08T18:30:00Z",
   "isnad": {

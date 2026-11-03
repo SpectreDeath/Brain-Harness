@@ -1,7 +1,7 @@
 {
   "id": "ki_20260830_kimi_04",
   "title": "Hybrid In-Memory KV with Durable WAL Snapshot Persistence (MiniDb Pattern)",
-  "source_target": "D:\\GitHub\\cloned\\kimi-code-main\\kimi-code-main\\packages\\minidb\\src\\compaction.ts",
+  "source_target": "external/kimi-code-main/kimi-code-main/packages/minidb/src/compaction.ts",
   "detected_format": "git_repository",
   "isnad": {
     "decision_id": "dec_20260830_kimi_04",
@@ -34,7 +34,16 @@
   "schema_version": "1.0.0",
   "category": "memory_and_epistemics",
   "anchors": {},
-  "edges": [],
+  "edges": [
+    {
+      "type": "references_code",
+      "target": "external/kimi-code-main/kimi-code-main/packages/minidb/src/compaction.ts",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    }
+  ],
   "retrieval_count": 0,
   "success_count": 0,
   "last_retrieved_at": null,

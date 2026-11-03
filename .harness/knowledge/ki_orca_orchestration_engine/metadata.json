@@ -1,7 +1,7 @@
 {
   "id": "ki_orca_orchestration_engine",
   "title": "Orca Multi-Agent Orchestration Engine & Worktree Sandboxing",
-  "source_target": "D:\\GitHub\\cloned\\orca",
+  "source_target": "external/orca",
   "detected_format": "git_repository",
   "isnad": {
     "decision_id": "dec_orca_orchestration_engine",

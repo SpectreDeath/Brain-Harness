@@ -1,7 +1,7 @@
 {
   "id": "ki_20260913_memgraph_rag_05",
   "title": "Multi-Agent Memory Graph RAG with Temporal Decay",
-  "source_target": "D:\\GitHub\\cloned\\MemGraphRAG-main\\MemGraphRAG-main",
+  "source_target": "external/MemGraphRAG-main/MemGraphRAG-main",
   "detected_format": "git_repository",
   "isnad": {
     "decision_id": "dec_20260913_memgraph_rag_05",

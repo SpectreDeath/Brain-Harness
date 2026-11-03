@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import argparse
 from dataclasses import dataclass, field
+from datetime import datetime, timezone
 import json
 import os
 from pathlib import Path
@@ -406,9 +407,13 @@ class RepoTriadPipelineEngine:
             meta_payload = {
                 "id": ki_id,
                 "title": ki.get("title", ki_id),
+                "category": ki.get("category", "engineering"),
                 "source_target": ki.get("source_target", "repository_ingestion"),
                 "detected_format": "git_repository",
                 "status": ki.get("status", "ACTIVE"),
+                "created_at": ki.get("created_at") or datetime.now(timezone.utc).isoformat(),
+                "retrieval_count": int(ki.get("retrieval_count", 0)),
+                "edges": ki.get("edges", []),
                 "isnad": {
                     "decision_id": f"dec_{ki_id}",
                     "claims": [

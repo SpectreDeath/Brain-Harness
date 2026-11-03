@@ -1,7 +1,7 @@
 {
   "id": "ki_20260830_grok_05",
   "title": "Preemptive Interjection Buffer & Prompt Queue",
-  "source_target": "D:\\GitHub\\cloned\\grok-build-main\\grok-build-main",
+  "source_target": "external/grok-build-main/grok-build-main",
   "detected_format": "git_repository",
   "isnad": {
     "decision_id": "dec_20260830_grok_05",

@@ -1,7 +1,7 @@
 {
   "id": "ki_20260830_kimi_02",
   "title": "4-Layer Isomorphic Transcript Data Engine with Granularity Subscriptions",
-  "source_target": "D:\\GitHub\\cloned\\kimi-code-main\\kimi-code-main\\packages\\transcript\\src\\granularity\\filterOps.ts",
+  "source_target": "external/kimi-code-main/kimi-code-main/packages/transcript/src/granularity/filterOps.ts",
   "detected_format": "git_repository",
   "isnad": {
     "decision_id": "dec_20260830_kimi_02",
@@ -34,7 +34,16 @@
   "schema_version": "1.0.0",
   "category": "developer_experience",
   "anchors": {},
-  "edges": [],
+  "edges": [
+    {
+      "type": "references_code",
+      "target": "external/kimi-code-main/kimi-code-main/packages/transcript/src/granularity/filterOps.ts",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    }
+  ],
   "retrieval_count": 0,
   "success_count": 0,
   "last_retrieved_at": null,

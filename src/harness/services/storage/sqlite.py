@@ -45,7 +45,8 @@ class SQLiteStorageService(StorageService):
             return None
         try:
             return json.loads(row[0])
-        except json.JSONDecodeError:
+        except json.JSONDecodeError as ex:
+            logger.warning("Corrupt JSON payload in kv_store, returning raw string", key=key, error=str(ex))
             return row[0]
 
     async def get_many(self, keys: list[str]) -> dict[str, Any]:
@@ -61,7 +62,8 @@ class SQLiteStorageService(StorageService):
         for key, val_str in cursor.fetchall():
             try:
                 result[key] = json.loads(val_str)
-            except json.JSONDecodeError:
+            except json.JSONDecodeError as ex:
+                logger.warning("Corrupt JSON payload in kv_store get_many, returning raw string", key=key, error=str(ex))
                 result[key] = val_str
         return result
 
@@ -110,7 +112,8 @@ class SQLiteStorageService(StorageService):
         for key, val_str in cursor.fetchall():
             try:
                 result[key] = json.loads(val_str)
-            except json.JSONDecodeError:
+            except json.JSONDecodeError as ex:
+                logger.warning("Corrupt JSON payload in kv_store get_many, returning raw string", key=key, error=str(ex))
                 result[key] = val_str
         return result
 

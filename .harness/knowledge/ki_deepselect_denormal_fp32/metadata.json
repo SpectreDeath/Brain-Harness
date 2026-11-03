@@ -1,7 +1,7 @@
 {
   "id": "ki_deepselect_denormal_fp32",
   "title": "Denormal IEEE-754 FP32 Simulated Addition Bypassing CUDA Core ALU Contention",
-  "source_target": "D:\\GitHub\\cloned\\Google\\DeepSelect",
+  "source_target": "external/Google/DeepSelect",
   "detected_format": "git_repository",
   "isnad": {
     "decision_id": "dec_ki_deepselect_denormal_fp32",
@@ -12,19 +12,19 @@
         "lineage": [
           {
             "node_type": "primary_code",
-            "uri": "D:\\GitHub\\cloned\\Google\\DeepSelect/docs/DeepSelect-deep-dive.md#L100-L125",
+            "uri": "external/Google/DeepSelect/docs/DeepSelect-deep-dive.md#L100-L125",
             "sha256_hash": "N/A",
             "verified": true
           },
           {
             "node_type": "primary_code",
-            "uri": "D:\\GitHub\\cloned\\Google\\DeepSelect/csrc/structs.h#L10-L15",
+            "uri": "external/Google/DeepSelect/csrc/structs.h#L10-L15",
             "sha256_hash": "N/A",
             "verified": true
           },
           {
             "node_type": "primary_code",
-            "uri": "D:\\GitHub\\cloned\\Google\\DeepSelect/csrc/cuda_kernels/common_parts.cuh#L1050-L1075",
+            "uri": "external/Google/DeepSelect/csrc/cuda_kernels/common_parts.cuh#L1050-L1075",
             "sha256_hash": "N/A",
             "verified": true
           }

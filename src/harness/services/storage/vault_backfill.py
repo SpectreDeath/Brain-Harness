@@ -111,11 +111,20 @@ def backfill_edges_mechanically(
                                 if s_idx + 1 < len(parts):
                                     _maybe_add(ki, "became_skill", parts[s_idx + 1], "skill", derived=False, confidence=1.0)
                         elif "src/" in ref_path or "plugins/" in ref_path or ref_path.endswith(".py"):
-                            _maybe_add(ki, "references_code", ref_path, "path", derived=True, confidence=0.95)
+                            norm_path = ref_path
+                            for prefix in [
+                                "D:/GitHub/projects/Brain Harness/",
+                                "d:/GitHub/projects/Brain Harness/",
+                                "D:/GitHub/cloned/",
+                                "d:/GitHub/cloned/",
+                            ]:
+                                if norm_path.startswith(prefix):
+                                    norm_path = norm_path[len(prefix):]
+                            _maybe_add(ki, "references_code", norm_path, "path", derived=True, confidence=0.95)
                     for plug in meta.get("plugins_scaffolded", []):
                         _maybe_add(ki, "became_plugin", str(plug), "plugin", derived=False, confidence=1.0)
-                except Exception:
-                    pass
+                except Exception as ex:
+                    logger.debug("Failed extracting metadata edges during backfill", ki_id=ki.id, error=str(ex))
 
     dom_map: dict[str, list[KnowledgeItemRecord]] = {}
     for ki in items:

@@ -6,27 +6,27 @@
   "summary": "Architectural distillation of Google Garf (v0.2.0-core, 588 commits, commit dad42091), an enterprise framework unifying reporting APIs (Google Ads, Analytics, YouTube, REST) behind declarative SQL queries. Details query compilation, dynamic date macro resolution (:YYYYMMDD-N), in-memory GarfReport matrices, heterogeneous analytical writers (BigQuery, DuckDB, SQLite), deterministic zero-network simulation, and two-stage DAG workflow execution.",
   "references": [
     {
-      "path": "D:/GitHub/cloned/garf/libs/core/garf/core/query_parser.py",
+      "path": "external/garf/libs/core/garf/core/query_parser.py",
       "description": "GarfQueryParser and GarfQuery AST specifications"
     },
     {
-      "path": "D:/GitHub/cloned/garf/libs/core/garf/core/query_editor.py",
+      "path": "external/garf/libs/core/garf/core/query_editor.py",
       "description": "QueryEditor, macro replacements, and virtual column expressions"
     },
     {
-      "path": "D:/GitHub/cloned/garf/libs/core/garf/core/report.py",
+      "path": "external/garf/libs/core/garf/core/report.py",
       "description": "GarfReport in-memory tabular matrix and row slicer"
     },
     {
-      "path": "D:/GitHub/cloned/garf/libs/core/garf/core/simulator.py",
+      "path": "external/garf/libs/core/garf/core/simulator.py",
       "description": "Simulator for deterministic zero-network test report generation"
     },
     {
-      "path": "D:/GitHub/cloned/garf/libs/io/garf/io/writer.py",
+      "path": "external/garf/libs/io/garf/io/writer.py",
       "description": "AbsWriter and multi-destination egress factory"
     },
     {
-      "path": "D:/GitHub/cloned/garf/libs/executors/garf/executors/workflows/workflow.py",
+      "path": "external/garf/libs/executors/garf/executors/workflows/workflow.py",
       "description": "GarfWorkflow and parallel DAG workflow execution"
     }
   ],
@@ -66,7 +66,7 @@
   "edges": [
     {
       "type": "references_code",
-      "target": "D:/GitHub/cloned/garf/libs/core/garf/core/query_parser.py",
+      "target": "external/garf/libs/core/garf/core/query_parser.py",
       "target_kind": "path",
       "derived": true,
       "confidence": 0.95,
@@ -74,7 +74,7 @@
     },
     {
       "type": "references_code",
-      "target": "D:/GitHub/cloned/garf/libs/core/garf/core/query_editor.py",
+      "target": "external/garf/libs/core/garf/core/query_editor.py",
       "target_kind": "path",
       "derived": true,
       "confidence": 0.95,
@@ -82,7 +82,7 @@
     },
     {
       "type": "references_code",
-      "target": "D:/GitHub/cloned/garf/libs/core/garf/core/report.py",
+      "target": "external/garf/libs/core/garf/core/report.py",
       "target_kind": "path",
       "derived": true,
       "confidence": 0.95,
@@ -90,7 +90,7 @@
     },
     {
       "type": "references_code",
-      "target": "D:/GitHub/cloned/garf/libs/core/garf/core/simulator.py",
+      "target": "external/garf/libs/core/garf/core/simulator.py",
       "target_kind": "path",
       "derived": true,
       "confidence": 0.95,
@@ -98,7 +98,7 @@
     },
     {
       "type": "references_code",
-      "target": "D:/GitHub/cloned/garf/libs/io/garf/io/writer.py",
+      "target": "external/garf/libs/io/garf/io/writer.py",
       "target_kind": "path",
       "derived": true,
       "confidence": 0.95,
@@ -106,7 +106,7 @@
     },
     {
       "type": "references_code",
-      "target": "D:/GitHub/cloned/garf/libs/executors/garf/executors/workflows/workflow.py",
+      "target": "external/garf/libs/executors/garf/executors/workflows/workflow.py",
       "target_kind": "path",
       "derived": true,
       "confidence": 0.95,

@@ -3,7 +3,7 @@
   "title": "Unidirectional Layered Monorepo Architecture in AI Harnesses",
   "context": "Monorepo architectural partitioning across CLI, TUI, background daemons, and client SDKs in AI agent harnesses.",
   "distilled_learning": "# Unidirectional Layered Monorepo Architecture in AI Harnesses",
-  "source_target": "D:\\GitHub\\cloned\\opencode",
+  "source_target": "external/opencode",
   "detected_format": "git_repository",
   "isnad": {
     "decision_id": "dec_20261023_opencode_01",

@@ -1,7 +1,7 @@
 {
   "id": "ki_agent_reach_unified_envelope_taxonomy",
   "title": "Schema v1 Result Envelope & Granular Error Classification for Agent Loops",
-  "source_target": "D:\\GitHub\\cloned\\Agent-Reach\\agent_reach\\runtime\\result.py",
+  "source_target": "external/Agent-Reach/agent_reach/runtime/result.py",
   "detected_format": "git_repository",
   "isnad": {
     "decision_id": "dec_ki_agent_reach_unified_envelope_taxonomy",
@@ -33,5 +33,9 @@
     "llm_tools",
     "structured_output"
   ],
-  "status": "ACTIVE"
+  "status": "ACTIVE",
+  "category": "integration_and_io",
+  "created_at": "2026-11-01T16:00:00Z",
+  "retrieval_count": 0,
+  "edges": []
 }

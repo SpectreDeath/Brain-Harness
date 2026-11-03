@@ -1,7 +1,7 @@
 {
   "id": "ki_20260830_claude_02",
   "title": "Aspect-Oriented Multi-Agent Review Swarm",
-  "source_target": "D:\\GitHub\\cloned\\claude-code-main\\claude-code-main",
+  "source_target": "external/claude-code-main/claude-code-main",
   "detected_format": "git_repository",
   "isnad": {
     "decision_id": "dec_20260830_claude_02",

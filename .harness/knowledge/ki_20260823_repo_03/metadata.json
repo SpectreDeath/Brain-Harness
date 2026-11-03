@@ -1,7 +1,7 @@
 {
   "id": "ki_20260823_repo_03",
   "title": "Subagent Thread Forking & Safety Auditing with guardian-v2",
-  "source_target": "D:/GitHub/cloned/codex-main/codex-main",
+  "source_target": "external/codex-main/codex-main",
   "detected_format": "git_repository",
   "isnad": {
     "decision_id": "dec_20260823_repo_03",

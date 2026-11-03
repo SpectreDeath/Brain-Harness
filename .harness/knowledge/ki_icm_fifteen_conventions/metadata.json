@@ -7,7 +7,7 @@
   "source": {
     "title": "Interpretable Context Methodology (ICM) Conventions",
     "url": "https://github.com/RinDig/Interpretable-Context-Methodology",
-    "repo_path": "D:/GitHub/cloned/Interpretable-Context-Methodology",
+    "repo_path": "external/Interpretable-Context-Methodology",
     "sha256": "02ba5d8b71639fac8f7a6b71639f0500ac426fe8aada1808487d2e6c69adf46"
   },
   "tags": [
@@ -54,7 +54,7 @@
     ]
   },
   "schema_version": "1.0.0",
-  "source_target": "D:/GitHub/cloned/Interpretable-Context-Methodology",
+  "source_target": "external/Interpretable-Context-Methodology",
   "detected_format": "git_repository",
   "anchors": {},
   "edges": [],

@@ -1,7 +1,7 @@
 {
   "id": "ki_20260913_pr_lens_overlay",
   "title": "Idempotent Human Architectural Overlay Invariant",
-  "source_target": "D:\\GitHub\\cloned\\Google\\pr-lens",
+  "source_target": "external/Google/pr-lens",
   "detected_format": "git_repository",
   "isnad": {
     "decision_id": "dec_20260913_pr_lens_overlay_01",

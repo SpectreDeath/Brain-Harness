@@ -1,7 +1,7 @@
 {
   "id": "ki_agent_reach_layered_backend_fallback",
   "title": "Deterministic Multi-Tier Backend Fallback Cascades",
-  "source_target": "D:\\GitHub\\cloned\\Agent-Reach\\agent_reach\\runtime\\dispatch.py",
+  "source_target": "external/Agent-Reach/agent_reach/runtime/dispatch.py",
   "detected_format": "git_repository",
   "isnad": {
     "decision_id": "dec_ki_agent_reach_layered_backend_fallback",
@@ -33,5 +33,9 @@
     "cascading_retries",
     "browser_binding"
   ],
-  "status": "ACTIVE"
+  "status": "ACTIVE",
+  "category": "integration_and_io",
+  "created_at": "2026-11-01T16:00:00Z",
+  "retrieval_count": 0,
+  "edges": []
 }

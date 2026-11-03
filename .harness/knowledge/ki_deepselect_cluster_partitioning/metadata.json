@@ -1,7 +1,7 @@
 {
   "id": "ki_deepselect_cluster_partitioning",
   "title": "Threadblock Cluster Multi-SM Sequence Partitioning for Wave-Quantization Resilience",
-  "source_target": "D:\\GitHub\\cloned\\Google\\DeepSelect",
+  "source_target": "external/Google/DeepSelect",
   "detected_format": "git_repository",
   "isnad": {
     "decision_id": "dec_ki_deepselect_cluster_partitioning",
@@ -12,19 +12,19 @@
         "lineage": [
           {
             "node_type": "primary_code",
-            "uri": "D:\\GitHub\\cloned\\Google\\DeepSelect/docs/DeepSelect-deep-dive.md#L140-L155",
+            "uri": "external/Google/DeepSelect/docs/DeepSelect-deep-dive.md#L140-L155",
             "sha256_hash": "N/A",
             "verified": true
           },
           {
             "node_type": "primary_code",
-            "uri": "D:\\GitHub\\cloned\\Google\\DeepSelect/csrc/cuda_kernels/config.h#L15-L25",
+            "uri": "external/Google/DeepSelect/csrc/cuda_kernels/config.h#L15-L25",
             "sha256_hash": "N/A",
             "verified": true
           },
           {
             "node_type": "primary_code",
-            "uri": "D:\\GitHub\\cloned\\Google\\DeepSelect/csrc/cuda_kernels/v3_cluster/topk_select.cuh#L1-L100",
+            "uri": "external/Google/DeepSelect/csrc/cuda_kernels/v3_cluster/topk_select.cuh#L1-L100",
             "sha256_hash": "N/A",
             "verified": true
           }

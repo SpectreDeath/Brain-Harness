@@ -1,7 +1,7 @@
 {
   "id": "ki_20260830_kimi_01",
   "title": "4-Tier Hierarchical DI Scopes & Cascade Engine in Agent Frameworks",
-  "source_target": "D:\\GitHub\\cloned\\kimi-code-main\\kimi-code-main\\packages\\agent-core-v2\\src\\_base\\di\\cascadeEngine.ts",
+  "source_target": "external/kimi-code-main/kimi-code-main/packages/agent-core-v2/src/_base/di/cascadeEngine.ts",
   "detected_format": "git_repository",
   "isnad": {
     "decision_id": "dec_20260830_kimi_01",

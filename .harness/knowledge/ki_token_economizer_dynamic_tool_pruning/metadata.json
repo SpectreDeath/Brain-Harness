@@ -1,7 +1,7 @@
 {
   "id": "ki_token_economizer_dynamic_tool_pruning",
   "title": "Empirical Evidence-Based Tool Pruning & Capability Masking",
-  "source_target": "D:\\GitHub\\cloned\\TokenEconomizer",
+  "source_target": "external/TokenEconomizer",
   "detected_format": "git_repository",
   "isnad": {
     "decision_id": "dec_ki_token_economizer_dynamic_tool_pruning",
@@ -32,5 +32,9 @@
     "schema_optimization",
     "context_compression"
   ],
-  "status": "ACTIVE"
+  "status": "ACTIVE",
+  "category": "memory_and_epistemics",
+  "created_at": "2026-11-01T16:00:00Z",
+  "retrieval_count": 0,
+  "edges": []
 }

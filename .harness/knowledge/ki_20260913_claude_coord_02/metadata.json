@@ -1,7 +1,7 @@
 {
   "id": "ki_20260913_claude_coord_02",
   "title": "Hierarchical Sub-Agent Task Coordination & Lifecycle States",
-  "source_target": "D:\\GitHub\\cloned\\claude-code",
+  "source_target": "external/claude-code",
   "detected_format": "git_repository",
   "isnad": {
     "decision_id": "dec_20260913_claude_coord_02",

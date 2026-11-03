@@ -1,7 +1,7 @@
 {
   "id": "ki_20260830_kimi_03",
   "title": "Pure-Language Tree-Sitter Bash AST Parsing for Agent Shell Security Gates",
-  "source_target": "D:\\GitHub\\cloned\\kimi-code-main\\kimi-code-main\\packages\\tree-sitter-bash\\src\\parser.ts",
+  "source_target": "external/kimi-code-main/kimi-code-main/packages/tree-sitter-bash/src/parser.ts",
   "detected_format": "git_repository",
   "isnad": {
     "decision_id": "dec_20260830_kimi_03",
@@ -36,7 +36,16 @@
   "schema_version": "1.0.0",
   "category": "agent_orchestration",
   "anchors": {},
-  "edges": [],
+  "edges": [
+    {
+      "type": "references_code",
+      "target": "external/kimi-code-main/kimi-code-main/packages/tree-sitter-bash/src/parser.ts",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    }
+  ],
   "success_count": 1,
   "status": "ACTIVE",
   "superseded_by": null,

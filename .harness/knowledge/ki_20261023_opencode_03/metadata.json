@@ -3,7 +3,7 @@
   "title": "Persistent PTY Multiplexing Daemon for Long-Running Agents",
   "context": "Decoupled terminal process execution across transient user interfaces and live reconnects.",
   "distilled_learning": "# Persistent PTY Multiplexing Daemon for Long-Running Agents",
-  "source_target": "D:\\GitHub\\cloned\\opencode",
+  "source_target": "external/opencode",
   "detected_format": "git_repository",
   "isnad": {
     "decision_id": "dec_20261023_opencode_03",

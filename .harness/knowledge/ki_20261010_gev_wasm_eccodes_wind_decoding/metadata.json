@@ -20,7 +20,7 @@
       {
         "assertion": "Raw GRIB2 atmospheric forecast grids from NOAA GFS and ECMWF IFS can be unpacked client-side in sub-100ms via WebAssembly-compiled ECMWF eccodes without native C binary dependencies.",
         "evidence_type": "empirical_benchmark",
-        "source": "D:\\GitHub\\cloned\\gods-eye-view\\server\\providers\\wind\\",
+        "source": "external/gods-eye-view/server/providers/wind/",
         "verified": true
       }
     ],

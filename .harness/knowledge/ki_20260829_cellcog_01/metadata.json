@@ -1,7 +1,7 @@
 {
   "id": "ki_20260829_cellcog_01",
   "title": "Any-to-Any Sub-Agent Delegation & <SHOW_FILE> Multimodal Protocol",
-  "source_target": "D:/GitHub/cloned/CellCog/skills-main/skills-main",
+  "source_target": "external/CellCog/skills-main/skills-main",
   "detected_format": "raw_docs",
   "timestamp": "2026-08-29T16:17:00Z",
   "isnad": {
@@ -13,7 +13,7 @@
         "lineage": [
           {
             "node_type": "primary_code",
-            "uri": "D:/GitHub/cloned/CellCog/skills-main/skills-main/skills/cellcog/SKILL.md#L1-L150",
+            "uri": "external/CellCog/skills-main/skills-main/skills/cellcog/SKILL.md#L1-L150",
             "verified": true
           },
           {

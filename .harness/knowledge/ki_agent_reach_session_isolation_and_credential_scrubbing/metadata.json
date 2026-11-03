@@ -1,7 +1,7 @@
 {
   "id": "ki_agent_reach_session_isolation_and_credential_scrubbing",
   "title": "Private HOME Sandboxing, Symlink Defense & Automated URL Credential Redaction",
-  "source_target": "D:\\GitHub\\cloned\\Agent-Reach\\agent_reach\\runtime\\sessions.py",
+  "source_target": "external/Agent-Reach/agent_reach/runtime/sessions.py",
   "detected_format": "git_repository",
   "isnad": {
     "decision_id": "dec_ki_agent_reach_session_isolation_and_credential_scrubbing",
@@ -33,5 +33,9 @@
     "security_sandboxing",
     "private_paths"
   ],
-  "status": "ACTIVE"
+  "status": "ACTIVE",
+  "category": "integration_and_io",
+  "created_at": "2026-11-01T16:00:00Z",
+  "retrieval_count": 0,
+  "edges": []
 }

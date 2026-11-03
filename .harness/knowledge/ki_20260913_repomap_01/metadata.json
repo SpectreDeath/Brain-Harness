@@ -1,7 +1,7 @@
 {
   "id": "ki_20260913_repomap_01",
   "title": "PageRanked AST Context Prioritization & Token Budget Pruning",
-  "source_target": "D:\\GitHub\\cloned\\aider-main\\aider-main",
+  "source_target": "external/aider-main/aider-main",
   "detected_format": "git_repository",
   "isnad": {
     "decision_id": "dec_20260913_repomap_01",

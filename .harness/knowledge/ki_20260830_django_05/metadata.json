@@ -1,7 +1,7 @@
 {
   "id": "ki_20260830_django_05",
   "title": "Django 6.x Native Background Tasks Architecture & Result Backend Contracts",
-  "source_target": "D:\\GitHub\\cloned\\Django\\django-main\\django-main\\django\\tasks\\base.py",
+  "source_target": "external/Django/django-main/django-main/django/tasks/base.py",
   "detected_format": "git_repository",
   "isnad": {
     "decision_id": "dec_20260830_django_05",

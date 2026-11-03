@@ -1,7 +1,7 @@
 {
   "id": "ki_20260830_repo_02",
   "title": "Invariant Verification Gates",
-  "source_target": "D:\\GitHub\\cloned\\deepseek-harness-master",
+  "source_target": "external/deepseek-harness-master",
   "detected_format": "git_repository",
   "isnad": {
     "decision_id": "dec_20260830_repo_02",

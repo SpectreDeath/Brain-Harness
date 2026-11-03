@@ -6,27 +6,27 @@
   "summary": "Epistemic architectural distillation of Hugging Face datasets (v5.0.2.dev0). Details the dual-backed Arrow Dataset and IterableDataset engines, C++ PyArrow zero-copy memory mapping, lazy sharded streaming pipelines with generator evaluation, xxhash+dill deterministic transformation cache fingerprinting, 30+ lakehouse and scientific biostructure (mmCIF/PDB/FASTQ/GenBank) packaged modules, and declarative Features schema system.",
   "references": [
     {
-      "path": "D:/GitHub/cloned/datasets/src/datasets/arrow_dataset.py",
+      "path": "external/datasets/src/datasets/arrow_dataset.py",
       "description": "Core Dataset class backed by PyArrow table with zero-copy buffer slicing"
     },
     {
-      "path": "D:/GitHub/cloned/datasets/src/datasets/iterable_dataset.py",
+      "path": "external/datasets/src/datasets/iterable_dataset.py",
       "description": "IterableDataset generator-backed streaming pipeline with sharded prefetching"
     },
     {
-      "path": "D:/GitHub/cloned/datasets/src/datasets/fingerprint.py",
+      "path": "external/datasets/src/datasets/fingerprint.py",
       "description": "Hasher xxhash and dill deterministic transform cache fingerprinting"
     },
     {
-      "path": "D:/GitHub/cloned/datasets/src/datasets/features/features.py",
+      "path": "external/datasets/src/datasets/features/features.py",
       "description": "Features schema dictionary and recursive type decoders"
     },
     {
-      "path": "D:/GitHub/cloned/datasets/src/datasets/features/bio_structure.py",
+      "path": "external/datasets/src/datasets/features/bio_structure.py",
       "description": "BioStructure feature decoding for mmCIF and PDB macromolecular structures"
     },
     {
-      "path": "D:/GitHub/cloned/datasets/src/datasets/packaged_modules/",
+      "path": "external/datasets/src/datasets/packaged_modules/",
       "description": "Packaged dataset builders for 30+ lakehouse and tabular file formats"
     }
   ],
@@ -67,7 +67,7 @@
   "edges": [
     {
       "type": "references_code",
-      "target": "D:/GitHub/cloned/datasets/src/datasets/arrow_dataset.py",
+      "target": "external/datasets/src/datasets/arrow_dataset.py",
       "target_kind": "path",
       "derived": true,
       "confidence": 0.95,
@@ -75,7 +75,7 @@
     },
     {
       "type": "references_code",
-      "target": "D:/GitHub/cloned/datasets/src/datasets/iterable_dataset.py",
+      "target": "external/datasets/src/datasets/iterable_dataset.py",
       "target_kind": "path",
       "derived": true,
       "confidence": 0.95,
@@ -83,7 +83,7 @@
     },
     {
       "type": "references_code",
-      "target": "D:/GitHub/cloned/datasets/src/datasets/fingerprint.py",
+      "target": "external/datasets/src/datasets/fingerprint.py",
       "target_kind": "path",
       "derived": true,
       "confidence": 0.95,
@@ -91,7 +91,7 @@
     },
     {
       "type": "references_code",
-      "target": "D:/GitHub/cloned/datasets/src/datasets/features/features.py",
+      "target": "external/datasets/src/datasets/features/features.py",
       "target_kind": "path",
       "derived": true,
       "confidence": 0.95,
@@ -99,7 +99,7 @@
     },
     {
       "type": "references_code",
-      "target": "D:/GitHub/cloned/datasets/src/datasets/features/bio_structure.py",
+      "target": "external/datasets/src/datasets/features/bio_structure.py",
       "target_kind": "path",
       "derived": true,
       "confidence": 0.95,
@@ -107,7 +107,7 @@
     },
     {
       "type": "references_code",
-      "target": "D:/GitHub/cloned/datasets/src/datasets/packaged_modules/",
+      "target": "external/datasets/src/datasets/packaged_modules/",
       "target_kind": "path",
       "derived": true,
       "confidence": 0.95,

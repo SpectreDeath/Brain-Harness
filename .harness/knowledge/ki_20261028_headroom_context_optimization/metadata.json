@@ -7,7 +7,7 @@
   "source": {
     "title": "Headroom: The Context Optimization Layer for LLM Applications",
     "url": "https://github.com/headroom-ai/headroom",
-    "git_origin": "D:/GitHub/cloned/headroom",
+    "git_origin": "external/headroom",
     "git_commit": "d75a8a1",
     "upstream_reference": "headroom-ai v0.41.0"
   },
@@ -27,7 +27,7 @@
   "edges": [
     {
       "type": "references_code",
-      "target": "D:/GitHub/cloned/headroom/headroom/transforms",
+      "target": "external/headroom/headroom/transforms",
       "target_kind": "source",
       "derived": false,
       "confidence": 1.0,
