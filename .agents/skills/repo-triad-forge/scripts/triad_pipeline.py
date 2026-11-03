@@ -11,6 +11,7 @@ from dataclasses import dataclass, field
 import json
 import os
 from pathlib import Path
+import shlex
 import subprocess
 import sys
 from typing import Any
@@ -534,6 +535,7 @@ def main() -> None:
     p_run.add_argument("--repo", required=True, help="Path to repository")
     p_run.add_argument("--briefs-dir", help="Target directory for visual briefs")
     p_run.add_argument("--vault-dir", help="Target vault directory")
+    p_run.add_argument("--test-cmd", action="append", help="Verification command to execute (can specify multiple)")
     p_run.add_argument("--output", help="Output JSON path")
 
     args = parser.parse_args()
@@ -625,15 +627,25 @@ def main() -> None:
         v_dir = Path(args.vault_dir) if args.vault_dir else None
         committed = RepoTriadPipelineEngine.commit_vault_kis(kis_payload, v_dir)
         plan_data = RepoTriadPipelineEngine.synthesize_plan_data(res)
-        verification = RepoTriadPipelineEngine.run_bounded_verification(
-            [[sys.executable, "-c", "import sys; sys.exit(0)"]]
-        )
+        if getattr(args, "test_cmd", None):
+            test_commands = [shlex.split(c) for c in args.test_cmd]
+            verification = RepoTriadPipelineEngine.run_bounded_verification(test_commands)
+            v_stage_name = "Stage 5: Bounded Verification Suite"
+        else:
+            verification = TriadExecutionResult(
+                success=True,
+                stage="Verification",
+                artifacts=(),
+                message="Verification suite skipped: no test commands provided",
+            )
+            v_stage_name = "Stage 5: Verification Suite (Skipped - no commands supplied)"
+
         stages = [
             "Stage 1: Pre-Flight & 5D Complexity",
             "Stage 2: Visual Briefs Scaffolding",
             "Stage 3: Knowledge Item Extraction & Vault Commit",
             "Stage 4: Triad Implementation Plan Synthesis",
-            "Stage 5: Bounded Verification Suite",
+            v_stage_name,
         ]
         out_payload = {
             "success": verification.success,

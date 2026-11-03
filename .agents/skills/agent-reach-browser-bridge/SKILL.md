@@ -1,6 +1,6 @@
 ---
 name: agent-reach-browser-bridge
-description: Scaffold, configure, and operate multi-platform web extraction, stealth CloakBrowser CDP sessions, and unified Schema v1 result envelopes for AI agents. Do not use for generic SQL querying or raw binary network sniffing.
+description: Scaffold, configure, and format multi-platform channel routing, credential scrubbing, and unified Schema v1 result envelopes for AI agents. Envelope formatting only. Do not use for generic SQL querying or raw binary network sniffing.
 ---
 
 # Agent Reach Browser Bridge: Architecture & Integration

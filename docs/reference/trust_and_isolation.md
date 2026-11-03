@@ -77,3 +77,12 @@ The Harness MCP server (`src/harness/mcp/server/`) exposes registered tools to c
   Stores user-toggled plugin enablement states (`enabled_plugins`, `disabled_plugins`) modified via `harness plugin enable/disable`. Stale entries pointing to non-existent or deleted plugins are pruned automatically.
 * **`.harness/tool_state.json`**:
   Stores user-toggled granular tool enablement states (`enabled_tools`, `disabled_tools`) modified via `harness tool enable/disable`. Loaded on kernel startup by `ToolRegistryPlugin`.
+
+---
+
+## 6. Nested Subprocess Execution & Binary Discovery
+
+* **R Editor Bridge (`plugin.r_editor_bridge`)**:
+  Spawns child R/Rscript processes via `asyncio.create_subprocess_exec` (`r_editor_service.py`). When running inside a parent sandbox (`SubprocessExecutor` or `ContainerExecutor`), this is nested execution bounded by the parent sandbox's limits with Rule 14 pipe cleanup and Rule 53 stderr drainage.
+* **Agent Reach Bridge (`plugin.agent_reach_bridge`)**:
+  Operates primarily as an in-memory Schema v1 result envelope formatter and platform channel router. Any execution of the external `agent-reach` binary verifies binary presence on PATH via `shutil.which` before execution and raises clear diagnostic errors if missing, preventing silent execution failures or unverified PATH assumptions.

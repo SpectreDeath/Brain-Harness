@@ -137,7 +137,14 @@ class REditorBridgeService(RRuntimeProtocol):
         script_args: list[str],
         timeout_seconds: float = 30.0,
     ) -> tuple[int, str, str]:
-        """Execute sandboxed R subprocess with Rule 14 pipe cleanup and Rule 53 stderr drainage."""
+        """Execute child R subprocess within the plugin's sandboxed environment.
+
+        Note on Nested Execution:
+            When this plugin runs under SubprocessExecutor, ContainerExecutor, or VenvExecutor,
+            invoking R constitutes a nested child process execution bounded by the parent sandbox's
+            cgroup/process limits. It adheres strictly to Rule 14 (subprocess pipe disposal) and
+            Rule 53 (asynchronous stderr ring-buffer drainage).
+        """
         proc = await asyncio.create_subprocess_exec(
             r_path,
             *script_args,

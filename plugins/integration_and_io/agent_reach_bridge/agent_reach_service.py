@@ -8,8 +8,9 @@ from __future__ import annotations
 
 import asyncio
 from collections import deque
-import sys
 from pathlib import Path
+import shutil
+import sys
 from typing import Any
 
 import structlog
@@ -53,17 +54,17 @@ class AgentReachBridgeService(AgentReachProtocol):
         timeout: float = 30.0,
         **kwargs: Any,
     ) -> ReachEnvelopeData:
-        """Extract content from URL via automatic channel matching and fallback cascades."""
+        """Format an extraction dispatch envelope for target URL via automatic channel matching."""
         sanitized_url = self.scrub_credentials(url)
         channel = self._engine.match_channel(sanitized_url)
 
-        # In-memory domain envelope synthesis with sanitized metadata
+        # In-memory domain envelope synthesis with sanitized metadata (envelope planning)
         envelope = self._engine.build_envelope(
             ok=True,
             channel=channel,
             action="read",
             backend="agent_reach_dispatch",
-            items=[{"url": sanitized_url, "content_type": "text/markdown"}],
+            items=[{"url": sanitized_url, "content_type": "text/markdown", "status": "envelope_prepared"}],
             meta={"target_url": sanitized_url, "timeout": timeout},
         )
         return self._to_pydantic_envelope(envelope)
@@ -195,8 +196,15 @@ class AgentReachBridgeService(AgentReachProtocol):
         timeout_seconds: float = 30.0,
     ) -> tuple[int, str, str]:
         """Execute sandboxed agent-reach subprocess with Rule 14 pipe cleanup and Rule 53 stderr drainage."""
+        binary_path = shutil.which("agent-reach")
+        if not binary_path:
+            raise FileNotFoundError(
+                "The 'agent-reach' CLI executable was not found on PATH. "
+                "Install agent-reach or use in-memory Schema v1 envelope formatting."
+            )
+
         proc = await asyncio.create_subprocess_exec(
-            "agent-reach",
+            binary_path,
             *command_args,
             stdout=asyncio.subprocess.PIPE,
             stderr=asyncio.subprocess.PIPE,

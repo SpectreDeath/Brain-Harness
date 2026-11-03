@@ -1,7 +1,7 @@
 {
   "name": "plugin.agent_reach_bridge",
   "version": "1.0.0",
-  "description": "Agent Reach bridge integrating multi-platform web extraction, stealth CloakBrowser CDP sessions, and Schema v1 result envelopes",
+  "description": "Agent Reach bridge for platform routing, credential scrubbing, and Schema v1 dispatch envelope formatting",
   "entrypoint": "main.py",
   "isolation": "subprocess",
   "trusted": false,
