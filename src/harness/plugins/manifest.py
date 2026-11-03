@@ -14,7 +14,7 @@ from enum import Enum
 from pathlib import Path
 from typing import Any
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class IsolationMode(str, Enum):
@@ -39,6 +39,8 @@ class IsolationMode(str, Enum):
 class ParameterSpec(BaseModel):
     """A single parameter in a tool or function schema."""
 
+    model_config = ConfigDict(extra="allow")
+
     name: str
     type: str = "string"
     description: str = ""
@@ -48,6 +50,8 @@ class ParameterSpec(BaseModel):
 
 class EntrypointSpec(BaseModel):
     """Describes a callable entrypoint the plugin exposes."""
+
+    model_config = ConfigDict(extra="allow")
 
     name: str
     """Function or method name."""
@@ -114,6 +118,8 @@ class PluginManifest(BaseModel):
             ]
         }
     """
+
+    model_config = ConfigDict(extra="allow")
 
     name: str
     """Unique plugin name."""

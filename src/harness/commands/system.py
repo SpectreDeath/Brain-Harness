@@ -38,7 +38,9 @@ async def run_introspect(db_path: str = ":memory:") -> dict[str, Any]:
         )
         report = introspector.get_status_report()
         graph = introspector.generate_mermaid_graph()
-        return {**report, "graph": graph}
+        from harness.commands import CommandRegistry
+        cmds = [c.name for c in CommandRegistry.list_commands()]
+        return {**report, "graph": graph, "commands": cmds, "commands_count": len(cmds)}
 
 
 # --- Click CLI adapters ---
@@ -81,6 +83,11 @@ def introspect_cli() -> None:
     click.echo(f"\nAvailable Tools ({report['tools_count']}):")
     for t in report["tools"]:
         click.echo(f"  • {t}")
+
+    if report.get("commands"):
+        click.echo(f"\nHeadless Command Registry ({report['commands_count']}):")
+        for c in report["commands"]:
+            click.echo(f"  • {c}")
 
     click.echo("\n📊 Mermaid Dependency Graph:")
     click.echo(report["graph"])

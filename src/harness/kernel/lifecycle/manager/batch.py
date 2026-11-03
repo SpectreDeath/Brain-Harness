@@ -117,11 +117,14 @@ async def enable_all_plugins(
 
 
 async def disable_all_plugins(
-    manager: PluginLifecycle, entries: dict[str, PluginEntry]
+    manager: PluginLifecycle,
+    entries: dict[str, PluginEntry],
+    exclude: set[str] | None = None,
 ) -> dict[str, bool]:
-    """Disable all enabled plugins in reverse dependency order."""
+    """Disable all enabled plugins in reverse dependency order, optionally excluding specific plugins."""
+    exclude_set = exclude or set()
     enabled = [
-        n for n, e in entries.items() if e.state == PluginState.ENABLED
+        n for n, e in entries.items() if e.state == PluginState.ENABLED and n not in exclude_set
     ]
 
     try:

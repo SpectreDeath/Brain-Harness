@@ -1,6 +1,6 @@
 # Brain Harness Agent Skills Catalog
 
-The `.agents/skills` repository houses 95 production-grade AI agent skills for autonomous software engineering, data modeling, epistemic memory governance, and architectural introspection.
+The `.agents/skills` repository houses 103 production-grade AI agent skills for autonomous software engineering, data modeling, epistemic memory governance, and architectural introspection.
 
 All skills operate as deep modules with compact interfaces, slotted domain data models, zero-fork operational budgets, companion summary cards (`CARD.md`), and deterministic validation pipelines.
 
@@ -28,7 +28,7 @@ flowchart TD
         A3["Chat Slash Commands"]
     end
 
-    subgraph SkillsCatalog[".agents/skills/ (95 Deep-Module Skills)"]
+    subgraph SkillsCatalog[".agents/skills/ (103 Deep-Module Skills)"]
         direction TB
         D1["Agent Orchestration (12 skills)"]
         D2["Data Engineering &amp; Graph (9 skills)"]

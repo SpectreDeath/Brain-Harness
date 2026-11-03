@@ -123,6 +123,12 @@ class ReconstructionObligationLedgerPlugin(HarnessPlugin, ReconstructionObligati
     def verify_ledger(self, strict: bool = False) -> ReconstructionProof:
         return self._service.verify_ledger(strict=strict)
 
+    def rol_ingest_evidence(self, *args: Any, **kwargs: Any) -> CanonicalEvidence:
+        return self.ingest_evidence(*args, **kwargs)
+
+    def rol_verify_closure(self, *args: Any, **kwargs: Any) -> ReconstructionProof:
+        return self.verify_ledger(*args, **kwargs)
+
     def export_certificate(self) -> dict[str, Any]:
         return self._service.export_certificate()
 

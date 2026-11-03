@@ -76,6 +76,19 @@ class DifferentialFacetPlugin(HarnessPlugin, DifferentialFacetService):
     ) -> DifferentialReport:
         return self._service.compare_observations(left, right, providers_differ=providers_differ)
 
+    def facet_compare(
+        self,
+        left: dict[str, Any],
+        right: dict[str, Any],
+        providers_differ: bool = False,
+    ) -> DifferentialReport:
+        return self.compare_observations(left, right, providers_differ=providers_differ)
+
+    def facet_claim_absence(self, coverage: Any) -> bool:
+        if isinstance(coverage, dict):
+            return self.validate_absence_claim(CoverageDeclaration.from_dict(coverage))
+        return self.validate_absence_claim(coverage)
+
     def export_report(self, report: DifferentialReport) -> dict[str, Any]:
         return self._service.export_report(report)
 

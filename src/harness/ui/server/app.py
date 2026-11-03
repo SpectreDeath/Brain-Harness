@@ -51,6 +51,7 @@ def create_app(
     app.include_router(swarm_router)
     app.include_router(skills_router)
     app.include_router(knowledge_router)
+    app.include_router(rea_router)
 
     # Real-time WebSocket event streaming
     @app.websocket("/ws/events")

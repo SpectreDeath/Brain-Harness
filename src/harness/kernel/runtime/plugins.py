@@ -79,15 +79,8 @@ async def disable_all_plugins(
         keep_core: If True, keeps core services (tools, storage, llm) running.
     """
     core_plugins = {"tools.registry", "storage.sqlite", "llm.provider"} if keep_core else set()
-    disabled: list[str] = []
-    for name, entry in list(runtime.lifecycle.plugins.items()):
-        if entry.state == PluginState.ENABLED and name not in core_plugins:
-            try:
-                await runtime.lifecycle.disable(name)
-                disabled.append(name)
-            except Exception as e:
-                logger.warning("Failed disabling plugin", plugin=name, error=str(e))
-    return disabled
+    results = await runtime.lifecycle.disable_all(exclude=core_plugins)
+    return [name for name, success in results.items() if success]
 
 
 __all__ = [

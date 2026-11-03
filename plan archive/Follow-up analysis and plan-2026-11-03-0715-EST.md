@@ -1,3 +1,11 @@
+# SUPERSEDED ARCHIVAL DOCUMENT (ERRATA NOTICE)
+
+> [!WARNING]
+> This historical analysis document is archived and superseded by `Big fix plan-2026-11-03-0950-EST.md`.
+> Content in this document regarding skill census figures (103 vs 104), REA tool list directions, and unverified Track 5 storage authority assumptions contains known errata. Consult `Big fix plan-2026-11-03-0950-EST.md` and live test suites for authoritative architecture standards.
+
+---
+
 # Follow-up analysis and plan — 2026-11-03 (Redraft 0715-EST)
 
 **Head:** `17b36d7` ("chore: archive historical planning documents to plan archive/").  

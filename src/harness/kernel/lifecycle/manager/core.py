@@ -159,8 +159,8 @@ class PluginLifecycle:
             trusted_only=trusted_only, skip_user_plugins=skip_user_plugins, enable_timeout=enable_timeout
         )
 
-    async def disable_all(self) -> dict[str, bool]:
-        return await disable_all_plugins(self, self._entries)
+    async def disable_all(self, exclude: set[str] | None = None) -> dict[str, bool]:
+        return await disable_all_plugins(self, self._entries, exclude=exclude)
 
     async def unload_all(self) -> dict[str, bool]:
         return await unload_all_plugins(self, self._entries)
