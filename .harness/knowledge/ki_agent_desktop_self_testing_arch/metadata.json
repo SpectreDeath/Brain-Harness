@@ -1,0 +1,73 @@
+{
+  "id": "ki_agent_desktop_self_testing_arch",
+  "title": "Self-Mutating Architecture Linter & Zero-OS-Dependency Core",
+  "category": "software_engineering",
+  "source_target": "D:\\GitHub\\cloned\\agent-desktop",
+  "detected_format": "git_repository",
+  "status": "ACTIVE",
+  "created_at": "2026-11-04T12:15:51.307658+00:00",
+  "retrieval_count": 0,
+  "edges": [
+    {
+      "type": "references_code",
+      "target": "D:\\GitHub\\cloned\\agent-desktop\\scripts\\check_architecture.py#L1-L120",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    },
+    {
+      "type": "references_code",
+      "target": "D:\\GitHub\\cloned\\agent-desktop\\AGENTS.md#L120-L185",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    },
+    {
+      "type": "references_code",
+      "target": "D:\\GitHub\\cloned\\agent-desktop\\Cargo.toml#L1-L35",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    }
+  ],
+  "isnad": {
+    "decision_id": "dec_ki_agent_desktop_self_testing_arch",
+    "claims": [
+      {
+        "assertion": "Static architectural boundary verification must isolate domain core crates from OS runtime dependencies and plant synthetic violations of every boundary rule in a temporary workspace copy prior to production scanning, guaranteeing that detection rules never quietly decay.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "D:\\GitHub\\cloned\\agent-desktop\\scripts\\check_architecture.py#L1-L120",
+            "sha256_hash": "N/A",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "D:\\GitHub\\cloned\\agent-desktop\\AGENTS.md#L120-L185",
+            "sha256_hash": "N/A",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "D:\\GitHub\\cloned\\agent-desktop\\Cargo.toml#L1-L35",
+            "sha256_hash": "N/A",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "architecture_linter",
+    "self_testing",
+    "crate_isolation",
+    "zero_os_deps",
+    "agent_desktop"
+  ],
+  "distilled_learning": "agent-desktop enforces a strict 400-LOC cap per file, zero inline // comments, and complete decoupling between crates/core and OS platform crates (windows, macos, linux). Its check_architecture.py script lexes source tokens into placeholders and runs a self-test by injecting synthetic violations into a temporary copy before scanning the repository. If any rule fails to detect its planted violation, CI immediately fails, providing infallible immunity against architectural regression."
+}

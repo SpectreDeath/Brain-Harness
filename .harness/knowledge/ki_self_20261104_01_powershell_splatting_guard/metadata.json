@@ -1,0 +1,74 @@
+{
+  "id": "ki_self_20261104_01_powershell_splatting_guard",
+  "title": "PowerShell Qualified Ref Splatting Defense for CLI Agents",
+  "category": "software_engineering",
+  "source_target": "internal_endogenous_reflection",
+  "detected_format": "endogenous_reflection",
+  "status": "ACTIVE",
+  "created_at": "2026-11-04T13:44:55.273542+00:00",
+  "retrieval_count": 0,
+  "edges": [
+    {
+      "type": "references_code",
+      "target": "tests/test_agent_desktop_operator.py#L42-L56",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    },
+    {
+      "type": "references_code",
+      "target": ".agents/skills/agent-desktop-operator/SKILL.md#L68-L76",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    },
+    {
+      "type": "references_code",
+      "target": "D:\\GitHub\\cloned\\agent-desktop\\CONCEPTS.md#L30-L35",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    }
+  ],
+  "isnad": {
+    "decision_id": "dec_ki_self_20261104_01_powershell_splatting_guard",
+    "claims": [
+      {
+        "assertion": "AI agents operating desktop automation CLIs on Windows PowerShell must strictly single-quote qualified ref tokens ('@snapshot_id:eN'); unquoted @ tokens invoke PowerShell parameter splatting and abort command dispatch.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "tests/test_agent_desktop_operator.py#L42-L56",
+            "sha256_hash": "N/A",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": ".agents/skills/agent-desktop-operator/SKILL.md#L68-L76",
+            "sha256_hash": "N/A",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "D:\\GitHub\\cloned\\agent-desktop\\CONCEPTS.md#L30-L35",
+            "sha256_hash": "N/A",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "software_engineering",
+    "powershell",
+    "ref_splatting",
+    "cli_agents",
+    "endogenous_memory",
+    "self_reflection"
+  ],
+  "distilled_learning": "In Windows PowerShell environments, passing an unquoted ref such as @s8f3k2p9:e1 invokes PowerShell argument splatting, which interprets the token as an in-scope parameter variable rather than a literal string argument. AI agents operating desktop automation CLIs must enforce qualified ref validation (rejecting bare refs like @e8) and format references with explicit single quotes ('@s8f3k2p9:e1'). This defense is enforced in DesktopRefToken.powershell_quoted() and verified in test contracts."
+}

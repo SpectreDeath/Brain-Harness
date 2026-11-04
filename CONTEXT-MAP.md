@@ -1,219 +1,221 @@
-# Context Map: Brain Harness Ecosystem
-
-This context map defines the bounded domains for the Brain Harness ecosystem, partitioning all optional plugins, services, and cognitive capabilities into seven cohesive domain contexts.
-
----
-
-## Bounded Domains
-
-### 1. [Agent Orchestration](./docs/domains/agent-orchestration/EXPLANATION.md)
-
-- **Scope**: Multi-agent consensus, hierarchical task decomposition, adversarial debate, critic evaluation, and human-in-the-loop governance.
-- **Member Plugins**:
-  - `agent_supervisor` — Multi-agent delegation, wave coordination, and quorum consensus.
-  - `agent_debater` — Dialectical / Chavruta adversarial debate between generator and critic nodes.
-  - `evaluator_critic` — Structured criteria evaluation and quality scoring.
-  - `task_planner` — Hierarchical DAG task decomposition and dependency sequencing.
-  - `human_in_the_loop` — Interactive checkpoints, approval gates, and escalation modals.
-  - `orca_bridge` — Multi-agent Git worktree isolation, FIFO coordinator inboxes, injected preambles, and worker settlement.
-  - `context_course_bridge` — 6-layer context engineering stack auditor, FastMCP validator, subagent swarm planner, and sandboxed Nano Harness ReAct loop.
-  - `tau_harness_bridge` — Pi-style minimalist coding agent harness bridge with branchable session tree DAGs, append-only locked JSONL journal, in-flight tool repair, and project-trust security gates.
-  - `prompt_pruning_layer` — Deterministic 3-pass context optimization, whitespace deduplication, middle-out tool reduction, and tabular JSON truncation.
-  - `elephant_goldfish` — Bifurcated cognitive context spec drafting, 5-stage zero-context review pipeline, and AST codebase drift detection.
-- **Member Skills**:
-  - [`elephant-goldfish-governor`](.agents/skills/elephant-goldfish-governor/SKILL.md) — Govern AI agent design and review workflows using the Elephant-Goldfish bifurcated context architecture, artifact-first spec drafting, 5-stage antagonistic review gates, and living spec drift detection.
-  - [`prompt-pruning-architect`](.agents/skills/prompt-pruning-architect/SKILL.md) — Architect, audit, and tune deterministic 3-pass context pruning (whitespace normalization, middle-out truncation, tabular compression).
-  - [`context-engineering-architect`](.agents/skills/context-engineering-architect/SKILL.md) — Architect, audit, compose, and govern autonomous code agent context using the 6-layer stack (skills, FastMCP, plugins, subagents, hooks, nano harness) and path confinement.
-  - [`pi-coding-harness`](.agents/skills/pi-coding-harness/SKILL.md) — Architect, construct, sandbox, and evaluate portable terminal coding agents using decoupled 3-tier layering, branchable session tree DAGs, append-only JSONL storage, provider-safe tool history repair, and project-trust security gates.
-  - [`agent-harness-architect`](.agents/skills/agent-harness-architect/SKILL.md) — Architect, evaluate, select, and sandbox production-grade AI agent harnesses and runtime loops using 5-part harness architecture, 4-mechanism validation, and 4-layer stack partitioning.
-  - [`ai-native-harness-engineer`](.agents/skills/ai-native-harness-engineer/SKILL.md) — Architect, construct, and govern production AI coding harnesses using 4-gate behavioral pipelines, credential-free MCP security, and continuous drift telemetry.
-  - [`questio-reflection`](.agents/skills/questio-reflection/SKILL.md) — Aquinas-style adversarial self-reflection and invariant challenge before execution.
-  - [`ai-agent-engineer`](.agents/skills/ai-agent-engineer/SKILL.md) — Production-grade autonomous systems architecture, 4-Level Ladder qualification, 60 canonical patterns, substrate isolation, and session evaluation.
-  - [`swarm-reflection-optimizer`](.agents/skills/swarm-reflection-optimizer/SKILL.md) — Autonomous multi-agent DAG optimization, ANN textual backpropagation, Borda count deliberation, and Aquinas adversarial reflection.
-  - [`orca-orchestrator`](.agents/skills/orca-orchestrator/SKILL.md) — Supervise multi-agent coding swarms in isolated Git worktrees using FIFO inboxes and authoritative injected preambles.
-  - [`uncertainty-aware-ai-architect`](.agents/skills/uncertainty-aware-ai-architect/SKILL.md) — Architect, implement, and audit uncertainty-aware AI and RAG architectures using 3-layer deterministic boundaries, logit entropy analysis, and HITL escalation.
-  - [`self-evaluating-ai-pipeline`](.agents/skills/self-evaluating-ai-pipeline/SKILL.md) — Architect, implement, and automate 3-layer LLM evaluation pipelines (deterministic checks, anchored LLM-as-judge scoring, and human calibration) with golden regression suites and paired t-test statistical significance gating.
-  - [`deterministic-validation-loop`](.agents/skills/deterministic-validation-loop/SKILL.md) — Architect, implement, and operate spec-first deterministic validation loops (3-tier validation, exact error injection, and bounded retries) for LLM structured outputs.
-  - [`dynamic-model-router`](.agents/skills/dynamic-model-router/SKILL.md) — Architect, configure, and operate multi-provider dynamic LLM routing pipelines with sub-5ms heuristic complexity classification, declarative model matrices, and automated failover.
-  - [`harness-compass`](.agents/skills/harness-compass/SKILL.md) — Evolve, calibrate, and benchmark autonomous AI agent harnesses using constrained evolution, 4-stage proactive feedback, dual-track optimization, and R3 integration.
-  - [`coding-harness-calibrator`](.agents/skills/coding-harness-calibrator/SKILL.md) — Empirically calibrate and optimize autonomous coding agent harnesses across context management (T0-T4 staging), action spaces (tools vs bash), and planning scaffolds.
-  - [`conversation-trajectory-miner`](.agents/skills/conversation-trajectory-miner/SKILL.md) — Extract, deconstruct, and synthesize operational skills, debugging rubrics, and regression invariants from IDE conversation databases and execution trajectories. Do not use for superficial keyword search or live streaming logs.
-  - [`brain-artifact-miner`](.agents/skills/brain-artifact-miner/SKILL.md) — Extract, deconstruct, and synthesize operational skills, plan evolutions, and reusable scratch utilities from IDE brain artifact stores and streaming transcripts. Do not use for: relational SQLite conversation database queries (use conversation-trajectory-miner), live streaming log tailing, production database writes, or unauthenticated remote session access.
-  - [`temp-artifact-miner`](.agents/skills/temp-artifact-miner/SKILL.md) — Extract, triage, and synthesize architecture decision records, visual DAG briefs, and ephemeral test diagnostics from system temporary directories and pytest sandboxes. Do not use for relational SQLite queries, persistent brain workspaces, or destructive temp purging.
-  - [`ts-agent-harness-constructor`](.agents/skills/ts-agent-harness-constructor/SKILL.md) — Construct, validate, and harden zero-dependency AI agent runtime harnesses in TypeScript/Node.js: provider-agnostic loop, contract registry, workspace jail, atomic batch budgets, context windowing, and seeded failure testing. Do not use for harness selection, framework wrappers, or prompt-only scripts.
-  - [`agentic-reliability-harness`](.agents/skills/agentic-reliability-harness/SKILL.md) — Build, verify, and govern agentic AI reliability testing harnesses across the Five Evaluation Levels, PEP gateway trust boundaries, loop detectors, chaos fault injection, and 3-state release gates. Do not use for generic web scraping, single-turn chatbots, or unauthenticated database administration.
-
-### 2. [Memory & Epistemics](./docs/domains/memory-and-epistemics/EXPLANATION.md)
-
-- **Scope**: Declarative skill graphs, semantic embeddings, context distillation, prompt benchmarking, and claim lineage.
-- **Member Plugins**:
-  - `skill_knowledge_graph` — Skill network indexing, shortest-path chain synthesis, and intent routing.
-  - `vector_index` — Local semantic vector indexing and hybrid BM25/cosine retrieval.
-  - `embedding_cluster` — Vector clustering and dimensionality reduction.
-  - `context_compactor` — Context window distillation and token-budget compression.
-  - `prompt_benchmark` — Prompt efficacy benchmarking and token telemetry.
-  - `okf_memory` — Git-native agent memory governor, in-memory BM25 lexical ranking, pre-edit governance scoping, and trust validation.
-  - `brain_artifact_miner` — Filesystem-native workspace archaeology, scratch tool salvage, and dual-transcript introspection.
-  - `conversation_trajectory_miner` — Autobiographical trajectory archaeology, failure cluster detection, and dual-lens cognitive bifurcation.
-  - `temp_artifact_miner` — Ephemeral workspace archaeology, HTML visual brief extraction, test sandbox triage, and dual-lens cognitive bifurcation.
-  - `memory_decay_engine` — Ebbinghaus cognitive forgetting curve, turn-decay modeling, observation reinforcement, and probabilistic eviction.
-  - `token_economizer` — Experience-driven black-box cost control for coding agents with micro-skills lifecycle, dynamic tool pruning, and 3-tier failure-loop turn guard intervention.
-- **Member Skills**:
-  - [`ebbinghaus-memory-governor`](.agents/skills/ebbinghaus-memory-governor/SKILL.md) — Govern agent episodic memory using Ebbinghaus decay curve, half-life retention modeling, and reinforcement scoring.
-  - [`epistemic-isnad-audit`](.agents/skills/epistemic-isnad-audit/SKILL.md) — Unbroken chain-of-custody lineage verification for facts and decisions.
-  - [`mind-reader`](.agents/skills/mind-reader/SKILL.md) — Introspection and heuristic extraction from attached brain trajectories.
-  - [`repo-reader`](.agents/skills/repo-reader/SKILL.md) — Architectural pattern and commit trajectory introspection from Git repositories.
-  - [`harness-reflector`](.agents/skills/harness-reflector/SKILL.md) — Autobiographical reflection and heuristic distillation from internal reports and execution logs.
-  - [`epistemic-memory-lifecycle`](.agents/skills/epistemic-memory-lifecycle/SKILL.md) — Bounded 8-state knowledge item promotion pipeline, 6-class memory partitioning, and Theseus continuity audit.
-  - [`okf-memory-governor`](.agents/skills/okf-memory-governor/SKILL.md) — Git-native OKF v0.2 agent memory governance, pre-edit path scoping, atomic mutations, and normative validation.
-  - [`temp-artifact-miner`](.agents/skills/temp-artifact-miner/SKILL.md) — Ephemeral visual brief salvage, pytest sandbox triage, and Knowledge Vault cognitive bifurcation.
-  - [`token-economizer`](.agents/skills/token-economizer/SKILL.md) — Control coding agent token waste through experience-driven micro-skills lifecycle, empirical evidence-based tool pruning, and 3-tier failure-loop turn guard intervention.
-
-### 3. [Data Engineering](./docs/domains/data-engineering/EXPLANATION.md)
-
-- **Scope**: Curated tabular ingestion, out-of-core statistical profiling, schema transformation, and relational database execution.
-- **Member Plugins**:
-  - `dataset_profiler` — Out-of-core moments, null ratios, and Z-score outlier detection.
-  - `data_transformer` — Schema reshaping, column normalization, and type casting.
-  - `database_sql` — SQL query execution, transaction handling, and schema reflection.
-  - `synthetic_generator` — Synthetic tabular matrix and mock data generation.
-  - `deepselect_topk` — High-performance TopK kernel selection, harmonic bound estimation, and DeepSeek Sparse Attention (DSA) routing.
-  - `paperless_ngx` — Paperless-NGX document ingestion, hybrid Tantivy full-text search, and SQLite-Vec RAG integration bridge.
-  - `bigquery_augmented_analytics` — In-database BigQuery TVF execution for anomaly detection, change point isolation, Apriori attribution, and ARIMA_PLUS causal lift.
-  - `garf_reporting_pipeline` — Google Garf declarative SQL reporting, synthetic simulation, multi-destination report egress, and two-stage analytical workflow DAG bridge.
-  - `rea_javascript` — REA JavaScript & Web reverse engineering: Wakaru bundle deobfuscation, Electron ASAR inspection, passive CDP observation, .NET managed assembly inspection, and offline HAR capture analysis.
-- **Member Skills**:
-  - [`structured-data-scout`](.agents/skills/structured-data-scout/SKILL.md) — Curated tabular dataset ingestion from authoritative registries (UCI, Kaggle, OpenData).
-  - [`paperless-document-pipeline`](.agents/skills/paperless-document-pipeline/SKILL.md) — Ingest, classify, parse, and query documents across Paperless-NGX using hybrid Tantivy lexical and SQLite-Vec semantic search.
-  - [`survival-analysis`](.agents/skills/survival-analysis/SKILL.md) — Kaplan-Meier estimation, Cox proportional hazards regression, and Schoenfeld diagnostics.
-  - [`data-topology-mapper`](.agents/skills/data-topology-mapper/SKILL.md) — Causal DAG lineage mapping, queue architectures, and hybrid data topologies.
-  - [`sql-recursive-graph-traversal`](.agents/skills/sql-recursive-graph-traversal/SKILL.md) — Relational graph traversal, hierarchy trees, cycle detection, and BFS shortest paths in SQL.
-  - [`neural-network-from-scratch`](.agents/skills/neural-network-from-scratch/SKILL.md) — Feedforward neural network construction, analytical backpropagation calculus, numerical stability floors, and modular PyTorch translation.
-  - [`deepselect-topk-optimizer`](.agents/skills/deepselect-topk-optimizer/SKILL.md) — High-throughput TopK selection and DeepSeek Sparse Attention (DSA) kernel optimization, randomized block scanning, and denormal FP32 simulation.
-  - [`data-management-architect`](.agents/skills/data-management-architect/SKILL.md) — Enterprise data lifecycle governance, DAMA-DMBOK capabilities, Open Data Contracts (ODCS), Medallion lakehouse engineering, 6-dimension data quality gating, and Level 0–5 maturity roadmaps.
-  - [`neo4j-knowledge-graph-architect`](.agents/skills/neo4j-knowledge-graph-architect/SKILL.md) — Production Neo4j labeled property graph architecture, backward schema modeling, idempotent batch ingestion, Cypher traversal safety, index profiling, and epistemic evidence boundaries.
-  - [`knowledge-graph-pipeline`](.agents/skills/knowledge-graph-pipeline/SKILL.md) — End-to-end data scouting, ontological engineering, backward LPG schema design, idempotent UNWIND batching, and dual-engine recursive SQL traversal.
-  - [`bigquery-augmented-analytics`](.agents/skills/bigquery-augmented-analytics/SKILL.md) — In-database augmented analytics via Google BigQuery TVFs for automated change-point detection, multi-dimensional driver attribution, and ARIMA_PLUS counterfactual causal lift.
-  - [`garf-reporting-architect`](.agents/skills/garf-reporting-architect/SKILL.md) — Architect, simulate, execute, and govern declarative SQL reporting pipelines and analytical workflow DAGs across heterogeneous APIs and data stores using Google Garf patterns.
-  - [`open-source-gis-architect`](.agents/skills/open-source-gis-architect/SKILL.md) — Select, route, and validate open-source GIS engine workloads across 14 engines using deterministic decision trees, CRS safety gates, LiDAR format routing, and defense-restricted domain isolation.
-  - [`geospatial-disaster-simulation`](.agents/skills/geospatial-disaster-simulation/SKILL.md) — Real-world natural disaster simulations on interactive map tiles using tile-snapped canvas raster sources, Mercator elevation decoding, and Three.js 3D WebGL building collapse physics.
-  - [`discovery-index-scout`](.agents/skills/discovery-index-scout/SKILL.md) — Open-data discovery engine scouting public record archives, legislative transcripts, corporate filings, campaign finances, and research datasets across 46+ curated discovery indexes.
-
-### 4. [Software Engineering](./docs/domains/software-engineering/EXPLANATION.md)
-
-- **Scope**: AST code refactoring, architecture invariant linting, sandbox script execution, git operations, and artifact reporting.
-- **Member Plugins**:
-  - `refactor_engine` — AST-aware code transformation and import hygiene.
-  - `arch_linter` — Architecture boundary checking and cyclic dependency linting.
-  - `code_runner` — Isolated script execution and exit code assertions.
-  - `filesystem_git` — Git version control, branching, diffs, and staging.
-  - `migration_assistant` — Version migrations and compatibility cutovers.
-  - `artifact_generator` — Markdown summaries, visual brief generation, and diff reports.
-  - `pr_lens_graph` — Standalone animated SVG architecture diagrams, graph validation, and diff visualization.
-  - `repo_triad_forge` — Authoritative repository triad pipeline: 5-stage cognitive audit, visual brief generation, Knowledge Vault commits, and verification orchestration.
-  - `hf_doc_builder` — Hugging Face doc-builder integration for AST autodoc inspection, deterministic link checking, MDX transpilation, and semantic chunking.
-  - `hyperframes_renderer` — Programmatic multimedia video rendering via HeyGen HyperFrames Node.js/GSAP engine.
-  - `plugin.icm_architect` — Interpretable Context Methodology (ICM, arXiv:2603.16021) workspace architecture, contract auditing, link verification, quote verification, index generation, production workspace instantiation, and placeholder interpolation.
-  - `r_editor_bridge` — R editor tooling bridge integrating languageserver LSP 3.17, jgd C-level graphics streaming, and session watcher reflection.
-- **Member Skills**:
-  - [`icm-workspace-architect`](.agents/skills/icm-workspace-architect/SKILL.md) — Design, scaffold, audit, and restructure workspaces using Interpretable Context Methodology (ICM, arXiv:2603.16021). Binds folder hierarchy to context scoping (L0-L4), replaces framework code with plain contracts, and validates with the walk test.
-  - [`hyperframes-video-architect`](.agents/skills/hyperframes-video-architect/SKILL.md) — Architect, generate, and compose programmatic motion graphics and video timelines from code, diffs, and agent trajectories using HyperFrames and GSAP.
-  - [`architecture-deepening-workflow`](.agents/skills/architecture-deepening-workflow/SKILL.md) — Orchestrate the 7-phase architecture deepening cycle to decompose monolithic hotspots into subpackages <= 200 lines with contract tests and visual briefs.
-  - [`monolith-decomposition-engine`](.agents/skills/monolith-decomposition-engine/SKILL.md) — Factor monolithic codebases into slotted domain models, single-seam resolvers, and Click command groups strictly bounded to <= 200 lines.
-  - [`crafting-skills`](.agents/skills/crafting-skills/SKILL.md) — High-precision agent skill authoring, refactoring, and companion card generation.
-  - [`deepen-architecture`](.agents/skills/deepen-architecture/SKILL.md) — Iterative architecture deepening loop, eliminating shallow modules.
-  - [`compute-model-assessor`](.agents/skills/compute-model-assessor/SKILL.md) — Model routing, task complexity assessment, and reasoning compute budgeting.
-  - [`python-dataclass-architect`](.agents/skills/python-dataclass-architect/SKILL.md) — High-performance, memory-efficient data modeling using `slots=True`, `frozen=True`, and post-init invariants.
-  - [`agent-instruction-architect`](.agents/skills/agent-instruction-architect/SKILL.md) — Authoring, auditing, and maintaining `AGENTS.md` / `CLAUDE.md` repository instruction files.
-  - [`adversarial-agent-verifier`](.agents/skills/adversarial-agent-verifier/SKILL.md) — Runtime verification: DAG component seam analysis, inspect-before-edit protocols, and harsh adversarial code reviews.
-  - [`agent-skill-sdlc`](.agents/skills/agent-skill-sdlc/SKILL.md) — Autonomous agent skill lifecycle engine covering design, 3-tier config, two-phase validation, testing, and SkillSpector auditing.
-  - [`agent-skills-architect`](.agents/skills/agent-skills-architect/SKILL.md) — Enterprise agent skills architecture, 3-tier progressive disclosure, runtime tool approval middleware, CI linters, and Google 2x2 continuous evals.
-  - [`legacy-refactoring-guardian`](.agents/skills/legacy-refactoring-guardian/SKILL.md) — AI-assisted codebase archaeology, characterization safety nets, and incremental legacy refactoring.
-  - [`codebase-context-architect`](.agents/skills/codebase-context-architect/SKILL.md) — Multi-layer repository context files (`AGENTS.md`, `CLAUDE.md`, `.cursor/rules/`), single-source synchronization, token budgeting, and CI path/script verification linters.
-  - [`legacy-modernization-pipeline`](.agents/skills/legacy-modernization-pipeline/SKILL.md) — Safe legacy codebase modernization through multi-axis audits, causal DAG topology mapping, characterization test safety nets, and adversarial refactoring loops.
-  - [`codebase-context-governor`](.agents/skills/codebase-context-governor/SKILL.md) — Multi-layer codebase context governance, Three-Layer partitioning, automated CI linter enforcement, and dynamic 5D compute tier calibration.
-  - [`pr-lens-visualizer`](.agents/skills/pr-lens-visualizer/SKILL.md) — Standalone animated SVG architecture and data-flow diagrams from PR diffs, graph validation, and progressive disclosure walkthroughs.
-  - [`repo-triad-forge`](.agents/skills/repo-triad-forge/SKILL.md) — Unified repository cognitive audit, dual-file Knowledge Vault retention, slotted skill synthesis, and sandboxed plugin forging.
-  - [`responsible-ai-prototyping`](.agents/skills/responsible-ai-prototyping/SKILL.md) — Build, audit, and harden web applications generated by AI builders (Lovable, v0, Bolt) using data minimization, security-first prompt templates, bipartite auth/authz testing, dependency pruning, and honest stage-gate classification.
-  - [`hf-doc-builder-architect`](.agents/skills/hf-doc-builder-architect/SKILL.md) — Multi-package documentation engineering using zero-dependency mock virtualization, deterministic AST anchor graphs, and unified MDX transpilation.
-  - [`system-design-architect`](.agents/skills/system-design-architect/SKILL.md) — Design, evaluate, and scale production distributed systems using the 5-step senior engineering framework, capacity estimation calculus, and 5-dimension interview scorecards.
-  - [`python-diagrams-architect`](.agents/skills/python-diagrams-architect/SKILL.md) — Architect, generate, validate, and lint production system architecture and cloud infrastructure diagrams in Python using Diagrams-as-Code.
-  - [`r-language-server-toolkit`](.agents/skills/r-language-server-toolkit/SKILL.md) — Scaffold, configure, and inspect R language server protocol runtimes, C-level graphics devices (jgd), and session watchers for R execution environments.
-
-
-### 5. [Security & Forensics](./docs/domains/security-and-forensics/EXPLANATION.md)
-
-- **Scope**: Threat modeling, vulnerability scanning, log forensics, network port auditing, and execution trajectory auditing.
-- **Member Plugins**:
-  - `security_scanner` — Vulnerability detection and secret leakage analysis.
-  - `pre_commit_security_guard` — Shift-left SAST analysis, Shannon entropy secret interception, deliberate synthetic smoke tests, and SARIF dual-gate CI defense.
-  - `threat_modeler` — STRIDE threat modeling and attack tree formulation.
-  - `log_forensics` — Structured log pattern extraction and anomaly hunting.
-  - `network_forensics` — Port security audit, TTL hop discovery, tri-state port evaluation, TCP flag deconstruction, cleartext exposure analysis, and 7-layer fault isolation.
-  - `trajectory_auditor` — Execution step replay and invariant trajectory verification.
-  - `pyrit_red_teaming` — GenAI red-teaming orchestrator bridging Microsoft PyRIT attack vectors, jailbreak probes, and vulnerability scorecards.
-- **Member Skills**:
-  - [`ai-red-teaming-architect`](.agents/skills/ai-red-teaming-architect/SKILL.md) — Orchestrate automated and manual red-teaming assessments of AI systems using Microsoft PyRIT patterns, jailbreak trees, and scored vulnerability reports.
-  - [`pre-commit-security-guard`](.agents/skills/pre-commit-security-guard/SKILL.md) — Shift security left by intercepting vulnerabilities and secrets before pull requests using Git pre-commit hooks, multi-file DevSkim SAST, Gitleaks, deliberate failure injection, and dual-gate CI enforcement.
-  - [`ethical-hacker-networking`](.agents/skills/ethical-hacker-networking/SKILL.md) — Protocol-level network reconnaissance, packet capture inspection, tri-state port evaluation, TCP flag state machine analysis, and systematic 7-layer fault isolation.
-
-### 6. [Infrastructure & Cloud Operations](./docs/domains/infra-and-cloud/EXPLANATION.md)
-
-- **Scope**: Container management, Kubernetes manifest validation, Infrastructure-as-Code (IaC), and CI/CD pipelines.
-- **Member Plugins**:
-  - `docker_container` — Container lifecycle, build, run, and port binding.
-  - `k8s_manifest` — Kubernetes YAML schema validation and resource scaffolding.
-  - `terraform_iac` — Terraform HCL syntax validation and plan checking.
-  - `ci_pipeline` — CI/CD pipeline definition and automated workflow validation.
-  - `prometheus_exporter` — Prometheus text format metric exporter and runtime telemetry aggregator.
-- **Member Skills**:
-  - [`cloud-infrastructure-architect`](.agents/skills/cloud-infrastructure-architect/SKILL.md) — Architect, audit, and govern cloud infrastructure, container sandboxing, and Terraform state.
-  - [`kubernetes-drift-guardian`](.agents/skills/kubernetes-drift-guardian/SKILL.md) — Detect and reconcile Kubernetes manifest drift, audit RBAC policies, and enforce Pod Security Standards.
-
-### 7. [Integration & I/O](./docs/domains/integration-and-io/EXPLANATION.md)
-
-- **Scope**: Clean web fetching, OpenAPI client generation, webhook notifications, and symbolic constraint solving.
-- **Member Plugins**:
-  - `web_fetcher` — Markdown web scraping and HTTP JSON requests.
-  - `api_openapi` — OpenAPI spec ingestion and client tool synthesis.
-  - `notification_webhook` — Webhook broadcasting and alert dispatch.
-  - `symbolic_solver` — Z3 theorem proving and constraint satisfaction.
-  - `chatbotx` — Omnichannel messaging, contact management, visual flow DAG execution, and dynamic OpenAPI/MCP tool dispatch across WhatsApp, Telegram, Messenger, and Zalo.
-  - `gradio_app_architect` — Production AI interface engineering, AST diagnostic inspection, and decoupled 3-tier scaffolding for Gradio applications (Eva J Patel 2026).
-  - `gemini_vercel_streaming_chatbot` — Production AI chatbot engineering with Google Gemini & Vercel Serverless plain-text chunk streaming, CORS preflight gates, and reactive stream consumers (Johnson Samuel 2026).
-  - `agent_reach_bridge` — Agent Reach bridge integrating multi-platform web extraction, stealth CloakBrowser CDP sessions, and Schema v1 result envelopes.
-- **Member Skills**:
-  - [`repo-to-plugin-forge`](.agents/skills/repo-to-plugin-forge/SKILL.md) — Autonomous synthesis and scaffolding of Harness plugins from attached codebases.
-  - [`book-to-skill-forge`](.agents/skills/book-to-skill-forge/SKILL.md) — Synthesis and authoring of deep-module agent skills and coaching rubrics from books, articles, and video transcripts.
-  - [`developer-docs-architect`](.agents/skills/developer-docs-architect/SKILL.md) — Architecture, authoring, and AI-optimization of technical documentation, API reference suites, and C4 architecture blueprints using Diátaxis and Docs-as-Code pipelines.
-  - [`ai-file-analysis-agent`](.agents/skills/ai-file-analysis-agent/SKILL.md) — Document-grounded AI file analysis assistants with Direct File API vs RAG triage, prompt grounding constraints, and conversational fault shielding.
-  - [`deep-skill-forge`](.agents/skills/deep-skill-forge/SKILL.md) — Autonomous end-to-end synthesis pipeline uniting literature deconstruction, deep architecture elevation, bounded self-repair, and Knowledge Vault retention.
-  - [`multimedia-intelligence-forge`](.agents/skills/multimedia-intelligence-forge/SKILL.md) — Subprocess multimedia transcription, dual-lens cognitive distillation, isnad claim lineage verification, and canonical dual-file Knowledge Vault retention.
-  - [`external-repo-bridge-forge`](.agents/skills/external-repo-bridge-forge/SKILL.md) — Foreign GitHub repository ingestion, commit trajectory analysis, sandboxed Harness plugin synthesis, and Diátaxis documentation with C4 architecture models.
-  - [`agentwikis-router`](.agents/skills/agentwikis-router/SKILL.md) — Scope-bounded developer task routing, zero-latency offline documentation extraction, trust-calibrated abstention, and Open Data Contract governance across AgentWikis knowledge bases.
-  - [`chatbotx`](.agents/skills/chatbotx/SKILL.md) — Omnichannel chatbot automation, contact identity tagging, DAG flows, and dynamic OpenAPI tool execution across messaging networks.
-  - [`gradio-app-architect`](.agents/skills/gradio-app-architect/SKILL.md) — Production-grade Gradio web applications and AI interfaces with decoupled logic, reactive Blocks event graphs, session state isolation, multimodal pipelines, and queued streaming.
-  - [`gemini-vercel-streaming-chatbot`](.agents/skills/gemini-vercel-streaming-chatbot/SKILL.md) — Production-grade AI chatbots and embed widgets with Google Gemini and Vercel Serverless Functions using plain-text chunk streaming, CORS preflight guards, and React stream consumers.
-  - [`agent-reach-browser-bridge`](.agents/skills/agent-reach-browser-bridge/SKILL.md) — Scaffold, configure, and operate multi-platform web extraction, stealth CloakBrowser CDP sessions, and unified Schema v1 result envelopes for AI agents.
-
----
-
-## Cross-Domain Relationships
-
-```mermaid
-flowchart LR
-    AO[Agent Orchestration] -->|Queries Skills & Context| ME[Memory & Epistemics]
-    AO -->|Delegates Tasks| DE[Data Engineering]
-    AO -->|Delegates Tasks| SE[Software Engineering]
-    AO -->|Audits Actions| SF[Security & Forensics]
-    
-    SE -->|Packages & Deploys| IC[Infra & Cloud]
-    SE -->|Dispatches I/O| II[Integration & I/O]
-    
-    DE -->|Validates Schemas| II
-    SF -->|Audits Infrastructure| IC
-```
-
-- **Agent Orchestration $\rightarrow$ Memory & Epistemics**: Agents query the `skill_knowledge_graph` and `vector_index` to route intent and retrieve relevant execution chains before decomposing tasks.
-- **Agent Orchestration $\rightarrow$ Security & Forensics**: Destructive or mutating operations trigger `trajectory_auditor` and `human_in_the_loop` before committing to state.
-- **Software Engineering $\rightarrow$ Infra & Cloud**: Refactored codebases and schemas hand off to `docker_container`, `k8s_manifest`, and `ci_pipeline` for containerization and delivery.
+# Context Map: Brain Harness Ecosystem
+
+This context map defines the bounded domains for the Brain Harness ecosystem, partitioning all optional plugins, services, and cognitive capabilities into seven cohesive domain contexts.
+
+---
+
+## Bounded Domains
+
+### 1. [Agent Orchestration](./docs/domains/agent-orchestration/EXPLANATION.md)
+
+- **Scope**: Multi-agent consensus, hierarchical task decomposition, adversarial debate, critic evaluation, and human-in-the-loop governance.
+- **Member Plugins**:
+  - `agent_supervisor` — Multi-agent delegation, wave coordination, and quorum consensus.
+  - `agent_debater` — Dialectical / Chavruta adversarial debate between generator and critic nodes.
+  - `evaluator_critic` — Structured criteria evaluation and quality scoring.
+  - `task_planner` — Hierarchical DAG task decomposition and dependency sequencing.
+  - `human_in_the_loop` — Interactive checkpoints, approval gates, and escalation modals.
+  - `orca_bridge` — Multi-agent Git worktree isolation, FIFO coordinator inboxes, injected preambles, and worker settlement.
+  - `context_course_bridge` — 6-layer context engineering stack auditor, FastMCP validator, subagent swarm planner, and sandboxed Nano Harness ReAct loop.
+  - `tau_harness_bridge` — Pi-style minimalist coding agent harness bridge with branchable session tree DAGs, append-only locked JSONL journal, in-flight tool repair, and project-trust security gates.
+  - `prompt_pruning_layer` — Deterministic 3-pass context optimization, whitespace deduplication, middle-out tool reduction, and tabular JSON truncation.
+  - `elephant_goldfish` — Bifurcated cognitive context spec drafting, 5-stage zero-context review pipeline, and AST codebase drift detection.
+- **Member Skills**:
+  - [`elephant-goldfish-governor`](.agents/skills/elephant-goldfish-governor/SKILL.md) — Govern AI agent design and review workflows using the Elephant-Goldfish bifurcated context architecture, artifact-first spec drafting, 5-stage antagonistic review gates, and living spec drift detection.
+  - [`prompt-pruning-architect`](.agents/skills/prompt-pruning-architect/SKILL.md) — Architect, audit, and tune deterministic 3-pass context pruning (whitespace normalization, middle-out truncation, tabular compression).
+  - [`context-engineering-architect`](.agents/skills/context-engineering-architect/SKILL.md) — Architect, audit, compose, and govern autonomous code agent context using the 6-layer stack (skills, FastMCP, plugins, subagents, hooks, nano harness) and path confinement.
+  - [`pi-coding-harness`](.agents/skills/pi-coding-harness/SKILL.md) — Architect, construct, sandbox, and evaluate portable terminal coding agents using decoupled 3-tier layering, branchable session tree DAGs, append-only JSONL storage, provider-safe tool history repair, and project-trust security gates.
+  - [`agent-harness-architect`](.agents/skills/agent-harness-architect/SKILL.md) — Architect, evaluate, select, and sandbox production-grade AI agent harnesses and runtime loops using 5-part harness architecture, 4-mechanism validation, and 4-layer stack partitioning.
+  - [`ai-native-harness-engineer`](.agents/skills/ai-native-harness-engineer/SKILL.md) — Architect, construct, and govern production AI coding harnesses using 4-gate behavioral pipelines, credential-free MCP security, and continuous drift telemetry.
+  - [`questio-reflection`](.agents/skills/questio-reflection/SKILL.md) — Aquinas-style adversarial self-reflection and invariant challenge before execution.
+  - [`ai-agent-engineer`](.agents/skills/ai-agent-engineer/SKILL.md) — Production-grade autonomous systems architecture, 4-Level Ladder qualification, 60 canonical patterns, substrate isolation, and session evaluation.
+  - [`swarm-reflection-optimizer`](.agents/skills/swarm-reflection-optimizer/SKILL.md) — Autonomous multi-agent DAG optimization, ANN textual backpropagation, Borda count deliberation, and Aquinas adversarial reflection.
+  - [`orca-orchestrator`](.agents/skills/orca-orchestrator/SKILL.md) — Supervise multi-agent coding swarms in isolated Git worktrees using FIFO inboxes and authoritative injected preambles.
+  - [`uncertainty-aware-ai-architect`](.agents/skills/uncertainty-aware-ai-architect/SKILL.md) — Architect, implement, and audit uncertainty-aware AI and RAG architectures using 3-layer deterministic boundaries, logit entropy analysis, and HITL escalation.
+  - [`self-evaluating-ai-pipeline`](.agents/skills/self-evaluating-ai-pipeline/SKILL.md) — Architect, implement, and automate 3-layer LLM evaluation pipelines (deterministic checks, anchored LLM-as-judge scoring, and human calibration) with golden regression suites and paired t-test statistical significance gating.
+  - [`deterministic-validation-loop`](.agents/skills/deterministic-validation-loop/SKILL.md) — Architect, implement, and operate spec-first deterministic validation loops (3-tier validation, exact error injection, and bounded retries) for LLM structured outputs.
+  - [`dynamic-model-router`](.agents/skills/dynamic-model-router/SKILL.md) — Architect, configure, and operate multi-provider dynamic LLM routing pipelines with sub-5ms heuristic complexity classification, declarative model matrices, and automated failover.
+  - [`harness-compass`](.agents/skills/harness-compass/SKILL.md) — Evolve, calibrate, and benchmark autonomous AI agent harnesses using constrained evolution, 4-stage proactive feedback, dual-track optimization, and R3 integration.
+  - [`coding-harness-calibrator`](.agents/skills/coding-harness-calibrator/SKILL.md) — Empirically calibrate and optimize autonomous coding agent harnesses across context management (T0-T4 staging), action spaces (tools vs bash), and planning scaffolds.
+  - [`conversation-trajectory-miner`](.agents/skills/conversation-trajectory-miner/SKILL.md) — Extract, deconstruct, and synthesize operational skills, debugging rubrics, and regression invariants from IDE conversation databases and execution trajectories. Do not use for superficial keyword search or live streaming logs.
+  - [`brain-artifact-miner`](.agents/skills/brain-artifact-miner/SKILL.md) — Extract, deconstruct, and synthesize operational skills, plan evolutions, and reusable scratch utilities from IDE brain artifact stores and streaming transcripts. Do not use for: relational SQLite conversation database queries (use conversation-trajectory-miner), live streaming log tailing, production database writes, or unauthenticated remote session access.
+  - [`temp-artifact-miner`](.agents/skills/temp-artifact-miner/SKILL.md) — Extract, triage, and synthesize architecture decision records, visual DAG briefs, and ephemeral test diagnostics from system temporary directories and pytest sandboxes. Do not use for relational SQLite queries, persistent brain workspaces, or destructive temp purging.
+  - [`ts-agent-harness-constructor`](.agents/skills/ts-agent-harness-constructor/SKILL.md) — Construct, validate, and harden zero-dependency AI agent runtime harnesses in TypeScript/Node.js: provider-agnostic loop, contract registry, workspace jail, atomic batch budgets, context windowing, and seeded failure testing. Do not use for harness selection, framework wrappers, or prompt-only scripts.
+  - [`agentic-reliability-harness`](.agents/skills/agentic-reliability-harness/SKILL.md) — Build, verify, and govern agentic AI reliability testing harnesses across the Five Evaluation Levels, PEP gateway trust boundaries, loop detectors, chaos fault injection, and 3-state release gates. Do not use for generic web scraping, single-turn chatbots, or unauthenticated database administration.
+
+### 2. [Memory & Epistemics](./docs/domains/memory-and-epistemics/EXPLANATION.md)
+
+- **Scope**: Declarative skill graphs, semantic embeddings, context distillation, prompt benchmarking, and claim lineage.
+- **Member Plugins**:
+  - `skill_knowledge_graph` — Skill network indexing, shortest-path chain synthesis, and intent routing.
+  - `vector_index` — Local semantic vector indexing and hybrid BM25/cosine retrieval.
+  - `embedding_cluster` — Vector clustering and dimensionality reduction.
+  - `context_compactor` — Context window distillation and token-budget compression.
+  - `prompt_benchmark` — Prompt efficacy benchmarking and token telemetry.
+  - `okf_memory` — Git-native agent memory governor, in-memory BM25 lexical ranking, pre-edit governance scoping, and trust validation.
+  - `brain_artifact_miner` — Filesystem-native workspace archaeology, scratch tool salvage, and dual-transcript introspection.
+  - `conversation_trajectory_miner` — Autobiographical trajectory archaeology, failure cluster detection, and dual-lens cognitive bifurcation.
+  - `temp_artifact_miner` — Ephemeral workspace archaeology, HTML visual brief extraction, test sandbox triage, and dual-lens cognitive bifurcation.
+  - `memory_decay_engine` — Ebbinghaus cognitive forgetting curve, turn-decay modeling, observation reinforcement, and probabilistic eviction.
+  - `token_economizer` — Experience-driven black-box cost control for coding agents with micro-skills lifecycle, dynamic tool pruning, and 3-tier failure-loop turn guard intervention.
+- **Member Skills**:
+  - [`ebbinghaus-memory-governor`](.agents/skills/ebbinghaus-memory-governor/SKILL.md) — Govern agent episodic memory using Ebbinghaus decay curve, half-life retention modeling, and reinforcement scoring.
+  - [`epistemic-isnad-audit`](.agents/skills/epistemic-isnad-audit/SKILL.md) — Unbroken chain-of-custody lineage verification for facts and decisions.
+  - [`mind-reader`](.agents/skills/mind-reader/SKILL.md) — Introspection and heuristic extraction from attached brain trajectories.
+  - [`repo-reader`](.agents/skills/repo-reader/SKILL.md) — Architectural pattern and commit trajectory introspection from Git repositories.
+  - [`harness-reflector`](.agents/skills/harness-reflector/SKILL.md) — Autobiographical reflection and heuristic distillation from internal reports and execution logs.
+  - [`epistemic-memory-lifecycle`](.agents/skills/epistemic-memory-lifecycle/SKILL.md) — Bounded 8-state knowledge item promotion pipeline, 6-class memory partitioning, and Theseus continuity audit.
+  - [`okf-memory-governor`](.agents/skills/okf-memory-governor/SKILL.md) — Git-native OKF v0.2 agent memory governance, pre-edit path scoping, atomic mutations, and normative validation.
+  - [`temp-artifact-miner`](.agents/skills/temp-artifact-miner/SKILL.md) — Ephemeral visual brief salvage, pytest sandbox triage, and Knowledge Vault cognitive bifurcation.
+  - [`token-economizer`](.agents/skills/token-economizer/SKILL.md) — Control coding agent token waste through experience-driven micro-skills lifecycle, empirical evidence-based tool pruning, and 3-tier failure-loop turn guard intervention.
+
+### 3. [Data Engineering](./docs/domains/data-engineering/EXPLANATION.md)
+
+- **Scope**: Curated tabular ingestion, out-of-core statistical profiling, schema transformation, and relational database execution.
+- **Member Plugins**:
+  - `dataset_profiler` — Out-of-core moments, null ratios, and Z-score outlier detection.
+  - `data_transformer` — Schema reshaping, column normalization, and type casting.
+  - `database_sql` — SQL query execution, transaction handling, and schema reflection.
+  - `synthetic_generator` — Synthetic tabular matrix and mock data generation.
+  - `deepselect_topk` — High-performance TopK kernel selection, harmonic bound estimation, and DeepSeek Sparse Attention (DSA) routing.
+  - `paperless_ngx` — Paperless-NGX document ingestion, hybrid Tantivy full-text search, and SQLite-Vec RAG integration bridge.
+  - `bigquery_augmented_analytics` — In-database BigQuery TVF execution for anomaly detection, change point isolation, Apriori attribution, and ARIMA_PLUS causal lift.
+  - `garf_reporting_pipeline` — Google Garf declarative SQL reporting, synthetic simulation, multi-destination report egress, and two-stage analytical workflow DAG bridge.
+  - `rea_javascript` — REA JavaScript & Web reverse engineering: Wakaru bundle deobfuscation, Electron ASAR inspection, passive CDP observation, .NET managed assembly inspection, and offline HAR capture analysis.
+- **Member Skills**:
+  - [`structured-data-scout`](.agents/skills/structured-data-scout/SKILL.md) — Curated tabular dataset ingestion from authoritative registries (UCI, Kaggle, OpenData).
+  - [`paperless-document-pipeline`](.agents/skills/paperless-document-pipeline/SKILL.md) — Ingest, classify, parse, and query documents across Paperless-NGX using hybrid Tantivy lexical and SQLite-Vec semantic search.
+  - [`survival-analysis`](.agents/skills/survival-analysis/SKILL.md) — Kaplan-Meier estimation, Cox proportional hazards regression, and Schoenfeld diagnostics.
+  - [`data-topology-mapper`](.agents/skills/data-topology-mapper/SKILL.md) — Causal DAG lineage mapping, queue architectures, and hybrid data topologies.
+  - [`sql-recursive-graph-traversal`](.agents/skills/sql-recursive-graph-traversal/SKILL.md) — Relational graph traversal, hierarchy trees, cycle detection, and BFS shortest paths in SQL.
+  - [`neural-network-from-scratch`](.agents/skills/neural-network-from-scratch/SKILL.md) — Feedforward neural network construction, analytical backpropagation calculus, numerical stability floors, and modular PyTorch translation.
+  - [`deepselect-topk-optimizer`](.agents/skills/deepselect-topk-optimizer/SKILL.md) — High-throughput TopK selection and DeepSeek Sparse Attention (DSA) kernel optimization, randomized block scanning, and denormal FP32 simulation.
+  - [`data-management-architect`](.agents/skills/data-management-architect/SKILL.md) — Enterprise data lifecycle governance, DAMA-DMBOK capabilities, Open Data Contracts (ODCS), Medallion lakehouse engineering, 6-dimension data quality gating, and Level 0–5 maturity roadmaps.
+  - [`neo4j-knowledge-graph-architect`](.agents/skills/neo4j-knowledge-graph-architect/SKILL.md) — Production Neo4j labeled property graph architecture, backward schema modeling, idempotent batch ingestion, Cypher traversal safety, index profiling, and epistemic evidence boundaries.
+  - [`knowledge-graph-pipeline`](.agents/skills/knowledge-graph-pipeline/SKILL.md) — End-to-end data scouting, ontological engineering, backward LPG schema design, idempotent UNWIND batching, and dual-engine recursive SQL traversal.
+  - [`bigquery-augmented-analytics`](.agents/skills/bigquery-augmented-analytics/SKILL.md) — In-database augmented analytics via Google BigQuery TVFs for automated change-point detection, multi-dimensional driver attribution, and ARIMA_PLUS counterfactual causal lift.
+  - [`garf-reporting-architect`](.agents/skills/garf-reporting-architect/SKILL.md) — Architect, simulate, execute, and govern declarative SQL reporting pipelines and analytical workflow DAGs across heterogeneous APIs and data stores using Google Garf patterns.
+  - [`open-source-gis-architect`](.agents/skills/open-source-gis-architect/SKILL.md) — Select, route, and validate open-source GIS engine workloads across 14 engines using deterministic decision trees, CRS safety gates, LiDAR format routing, and defense-restricted domain isolation.
+  - [`geospatial-disaster-simulation`](.agents/skills/geospatial-disaster-simulation/SKILL.md) — Real-world natural disaster simulations on interactive map tiles using tile-snapped canvas raster sources, Mercator elevation decoding, and Three.js 3D WebGL building collapse physics.
+  - [`discovery-index-scout`](.agents/skills/discovery-index-scout/SKILL.md) — Open-data discovery engine scouting public record archives, legislative transcripts, corporate filings, campaign finances, and research datasets across 46+ curated discovery indexes.
+
+### 4. [Software Engineering](./docs/domains/software-engineering/EXPLANATION.md)
+
+- **Scope**: AST code refactoring, architecture invariant linting, sandbox script execution, git operations, and artifact reporting.
+- **Member Plugins**:
+  - `refactor_engine` — AST-aware code transformation and import hygiene.
+  - `arch_linter` — Architecture boundary checking and cyclic dependency linting.
+  - `code_runner` — Isolated script execution and exit code assertions.
+  - `filesystem_git` — Git version control, branching, diffs, and staging.
+  - `migration_assistant` — Version migrations and compatibility cutovers.
+  - `artifact_generator` — Markdown summaries, visual brief generation, and diff reports.
+  - `pr_lens_graph` — Standalone animated SVG architecture diagrams, graph validation, and diff visualization.
+  - `repo_triad_forge` — Authoritative repository triad pipeline: 5-stage cognitive audit, visual brief generation, Knowledge Vault commits, and verification orchestration.
+  - `hf_doc_builder` — Hugging Face doc-builder integration for AST autodoc inspection, deterministic link checking, MDX transpilation, and semantic chunking.
+  - `hyperframes_renderer` — Programmatic multimedia video rendering via HeyGen HyperFrames Node.js/GSAP engine.
+  - `plugin.icm_architect` — Interpretable Context Methodology (ICM, arXiv:2603.16021) workspace architecture, contract auditing, link verification, quote verification, index generation, production workspace instantiation, and placeholder interpolation.
+  - `r_editor_bridge` — R editor tooling bridge integrating languageserver LSP 3.17, jgd C-level graphics streaming, and session watcher reflection.
+- **Member Skills**:
+  - [`icm-workspace-architect`](.agents/skills/icm-workspace-architect/SKILL.md) — Design, scaffold, audit, and restructure workspaces using Interpretable Context Methodology (ICM, arXiv:2603.16021). Binds folder hierarchy to context scoping (L0-L4), replaces framework code with plain contracts, and validates with the walk test.
+  - [`hyperframes-video-architect`](.agents/skills/hyperframes-video-architect/SKILL.md) — Architect, generate, and compose programmatic motion graphics and video timelines from code, diffs, and agent trajectories using HyperFrames and GSAP.
+  - [`architecture-deepening-workflow`](.agents/skills/architecture-deepening-workflow/SKILL.md) — Orchestrate the 7-phase architecture deepening cycle to decompose monolithic hotspots into subpackages <= 200 lines with contract tests and visual briefs.
+  - [`monolith-decomposition-engine`](.agents/skills/monolith-decomposition-engine/SKILL.md) — Factor monolithic codebases into slotted domain models, single-seam resolvers, and Click command groups strictly bounded to <= 200 lines.
+  - [`crafting-skills`](.agents/skills/crafting-skills/SKILL.md) — High-precision agent skill authoring, refactoring, and companion card generation.
+  - [`deepen-architecture`](.agents/skills/deepen-architecture/SKILL.md) — Iterative architecture deepening loop, eliminating shallow modules.
+  - [`compute-model-assessor`](.agents/skills/compute-model-assessor/SKILL.md) — Model routing, task complexity assessment, and reasoning compute budgeting.
+  - [`python-dataclass-architect`](.agents/skills/python-dataclass-architect/SKILL.md) — High-performance, memory-efficient data modeling using `slots=True`, `frozen=True`, and post-init invariants.
+  - [`agent-instruction-architect`](.agents/skills/agent-instruction-architect/SKILL.md) — Authoring, auditing, and maintaining `AGENTS.md` / `CLAUDE.md` repository instruction files.
+  - [`adversarial-agent-verifier`](.agents/skills/adversarial-agent-verifier/SKILL.md) — Runtime verification: DAG component seam analysis, inspect-before-edit protocols, and harsh adversarial code reviews.
+  - [`agent-skill-sdlc`](.agents/skills/agent-skill-sdlc/SKILL.md) — Autonomous agent skill lifecycle engine covering design, 3-tier config, two-phase validation, testing, and SkillSpector auditing.
+  - [`agent-skills-architect`](.agents/skills/agent-skills-architect/SKILL.md) — Enterprise agent skills architecture, 3-tier progressive disclosure, runtime tool approval middleware, CI linters, and Google 2x2 continuous evals.
+  - [`legacy-refactoring-guardian`](.agents/skills/legacy-refactoring-guardian/SKILL.md) — AI-assisted codebase archaeology, characterization safety nets, and incremental legacy refactoring.
+  - [`codebase-context-architect`](.agents/skills/codebase-context-architect/SKILL.md) — Multi-layer repository context files (`AGENTS.md`, `CLAUDE.md`, `.cursor/rules/`), single-source synchronization, token budgeting, and CI path/script verification linters.
+  - [`legacy-modernization-pipeline`](.agents/skills/legacy-modernization-pipeline/SKILL.md) — Safe legacy codebase modernization through multi-axis audits, causal DAG topology mapping, characterization test safety nets, and adversarial refactoring loops.
+  - [`codebase-context-governor`](.agents/skills/codebase-context-governor/SKILL.md) — Multi-layer codebase context governance, Three-Layer partitioning, automated CI linter enforcement, and dynamic 5D compute tier calibration.
+  - [`pr-lens-visualizer`](.agents/skills/pr-lens-visualizer/SKILL.md) — Standalone animated SVG architecture and data-flow diagrams from PR diffs, graph validation, and progressive disclosure walkthroughs.
+  - [`repo-triad-forge`](.agents/skills/repo-triad-forge/SKILL.md) — Unified repository cognitive audit, dual-file Knowledge Vault retention, slotted skill synthesis, and sandboxed plugin forging.
+  - [`responsible-ai-prototyping`](.agents/skills/responsible-ai-prototyping/SKILL.md) — Build, audit, and harden web applications generated by AI builders (Lovable, v0, Bolt) using data minimization, security-first prompt templates, bipartite auth/authz testing, dependency pruning, and honest stage-gate classification.
+  - [`hf-doc-builder-architect`](.agents/skills/hf-doc-builder-architect/SKILL.md) — Multi-package documentation engineering using zero-dependency mock virtualization, deterministic AST anchor graphs, and unified MDX transpilation.
+  - [`system-design-architect`](.agents/skills/system-design-architect/SKILL.md) — Design, evaluate, and scale production distributed systems using the 5-step senior engineering framework, capacity estimation calculus, and 5-dimension interview scorecards.
+  - [`python-diagrams-architect`](.agents/skills/python-diagrams-architect/SKILL.md) — Architect, generate, validate, and lint production system architecture and cloud infrastructure diagrams in Python using Diagrams-as-Code.
+  - [`r-language-server-toolkit`](.agents/skills/r-language-server-toolkit/SKILL.md) — Scaffold, configure, and inspect R language server protocol runtimes, C-level graphics devices (jgd), and session watchers for R execution environments.
+
+
+### 5. [Security & Forensics](./docs/domains/security-and-forensics/EXPLANATION.md)
+
+- **Scope**: Threat modeling, vulnerability scanning, log forensics, network port auditing, and execution trajectory auditing.
+- **Member Plugins**:
+  - `security_scanner` — Vulnerability detection and secret leakage analysis.
+  - `pre_commit_security_guard` — Shift-left SAST analysis, Shannon entropy secret interception, deliberate synthetic smoke tests, and SARIF dual-gate CI defense.
+  - `threat_modeler` — STRIDE threat modeling and attack tree formulation.
+  - `log_forensics` — Structured log pattern extraction and anomaly hunting.
+  - `network_forensics` — Port security audit, TTL hop discovery, tri-state port evaluation, TCP flag deconstruction, cleartext exposure analysis, and 7-layer fault isolation.
+  - `trajectory_auditor` — Execution step replay and invariant trajectory verification.
+  - `pyrit_red_teaming` — GenAI red-teaming orchestrator bridging Microsoft PyRIT attack vectors, jailbreak probes, and vulnerability scorecards.
+- **Member Skills**:
+  - [`ai-red-teaming-architect`](.agents/skills/ai-red-teaming-architect/SKILL.md) — Orchestrate automated and manual red-teaming assessments of AI systems using Microsoft PyRIT patterns, jailbreak trees, and scored vulnerability reports.
+  - [`pre-commit-security-guard`](.agents/skills/pre-commit-security-guard/SKILL.md) — Shift security left by intercepting vulnerabilities and secrets before pull requests using Git pre-commit hooks, multi-file DevSkim SAST, Gitleaks, deliberate failure injection, and dual-gate CI enforcement.
+  - [`ethical-hacker-networking`](.agents/skills/ethical-hacker-networking/SKILL.md) — Protocol-level network reconnaissance, packet capture inspection, tri-state port evaluation, TCP flag state machine analysis, and systematic 7-layer fault isolation.
+
+### 6. [Infrastructure & Cloud Operations](./docs/domains/infra-and-cloud/EXPLANATION.md)
+
+- **Scope**: Container management, Kubernetes manifest validation, Infrastructure-as-Code (IaC), and CI/CD pipelines.
+- **Member Plugins**:
+  - `docker_container` — Container lifecycle, build, run, and port binding.
+  - `k8s_manifest` — Kubernetes YAML schema validation and resource scaffolding.
+  - `terraform_iac` — Terraform HCL syntax validation and plan checking.
+  - `ci_pipeline` — CI/CD pipeline definition and automated workflow validation.
+  - `prometheus_exporter` — Prometheus text format metric exporter and runtime telemetry aggregator.
+- **Member Skills**:
+  - [`cloud-infrastructure-architect`](.agents/skills/cloud-infrastructure-architect/SKILL.md) — Architect, audit, and govern cloud infrastructure, container sandboxing, and Terraform state.
+  - [`kubernetes-drift-guardian`](.agents/skills/kubernetes-drift-guardian/SKILL.md) — Detect and reconcile Kubernetes manifest drift, audit RBAC policies, and enforce Pod Security Standards.
+
+### 7. [Integration & I/O](./docs/domains/integration-and-io/EXPLANATION.md)
+
+- **Scope**: Clean web fetching, OpenAPI client generation, webhook notifications, and symbolic constraint solving.
+- **Member Plugins**:
+  - `web_fetcher` — Markdown web scraping and HTTP JSON requests.
+  - `api_openapi` — OpenAPI spec ingestion and client tool synthesis.
+  - `notification_webhook` — Webhook broadcasting and alert dispatch.
+  - `symbolic_solver` — Z3 theorem proving and constraint satisfaction.
+  - `chatbotx` — Omnichannel messaging, contact management, visual flow DAG execution, and dynamic OpenAPI/MCP tool dispatch across WhatsApp, Telegram, Messenger, and Zalo.
+  - `gradio_app_architect` — Production AI interface engineering, AST diagnostic inspection, and decoupled 3-tier scaffolding for Gradio applications (Eva J Patel 2026).
+  - `gemini_vercel_streaming_chatbot` — Production AI chatbot engineering with Google Gemini & Vercel Serverless plain-text chunk streaming, CORS preflight gates, and reactive stream consumers (Johnson Samuel 2026).
+  - `agent_reach_bridge` — Agent Reach bridge integrating multi-platform web extraction, stealth CloakBrowser CDP sessions, and Schema v1 result envelopes.
+  - `agent_desktop` — Desktop GUI automation & accessibility tree computer-use engine with snapshot maps, qualified ref allocation, and 2D delivery-retry disposition.
+- **Member Skills**:
+  - [`repo-to-plugin-forge`](.agents/skills/repo-to-plugin-forge/SKILL.md) — Autonomous synthesis and scaffolding of Harness plugins from attached codebases.
+  - [`book-to-skill-forge`](.agents/skills/book-to-skill-forge/SKILL.md) — Synthesis and authoring of deep-module agent skills and coaching rubrics from books, articles, and video transcripts.
+  - [`developer-docs-architect`](.agents/skills/developer-docs-architect/SKILL.md) — Architecture, authoring, and AI-optimization of technical documentation, API reference suites, and C4 architecture blueprints using Diátaxis and Docs-as-Code pipelines.
+  - [`ai-file-analysis-agent`](.agents/skills/ai-file-analysis-agent/SKILL.md) — Document-grounded AI file analysis assistants with Direct File API vs RAG triage, prompt grounding constraints, and conversational fault shielding.
+  - [`deep-skill-forge`](.agents/skills/deep-skill-forge/SKILL.md) — Autonomous end-to-end synthesis pipeline uniting literature deconstruction, deep architecture elevation, bounded self-repair, and Knowledge Vault retention.
+  - [`multimedia-intelligence-forge`](.agents/skills/multimedia-intelligence-forge/SKILL.md) — Subprocess multimedia transcription, dual-lens cognitive distillation, isnad claim lineage verification, and canonical dual-file Knowledge Vault retention.
+  - [`external-repo-bridge-forge`](.agents/skills/external-repo-bridge-forge/SKILL.md) — Foreign GitHub repository ingestion, commit trajectory analysis, sandboxed Harness plugin synthesis, and Diátaxis documentation with C4 architecture models.
+  - [`agentwikis-router`](.agents/skills/agentwikis-router/SKILL.md) — Scope-bounded developer task routing, zero-latency offline documentation extraction, trust-calibrated abstention, and Open Data Contract governance across AgentWikis knowledge bases.
+  - [`chatbotx`](.agents/skills/chatbotx/SKILL.md) — Omnichannel chatbot automation, contact identity tagging, DAG flows, and dynamic OpenAPI tool execution across messaging networks.
+  - [`gradio-app-architect`](.agents/skills/gradio-app-architect/SKILL.md) — Production-grade Gradio web applications and AI interfaces with decoupled logic, reactive Blocks event graphs, session state isolation, multimodal pipelines, and queued streaming.
+  - [`gemini-vercel-streaming-chatbot`](.agents/skills/gemini-vercel-streaming-chatbot/SKILL.md) — Production-grade AI chatbots and embed widgets with Google Gemini and Vercel Serverless Functions using plain-text chunk streaming, CORS preflight guards, and React stream consumers.
+  - [`agent-reach-browser-bridge`](.agents/skills/agent-reach-browser-bridge/SKILL.md) — Scaffold, configure, and operate multi-platform web extraction, stealth CloakBrowser CDP sessions, and unified Schema v1 result envelopes for AI agents.
+  - [`agent-desktop-operator`](.agents/skills/agent-desktop-operator/SKILL.md) — Operate desktop applications across Windows, macOS, and Linux using accessibility tree snapshot maps, qualified ref allocation, and 2D delivery-retry recovery.
+
+---
+
+## Cross-Domain Relationships
+
+```mermaid
+flowchart LR
+    AO[Agent Orchestration] -->|Queries Skills & Context| ME[Memory & Epistemics]
+    AO -->|Delegates Tasks| DE[Data Engineering]
+    AO -->|Delegates Tasks| SE[Software Engineering]
+    AO -->|Audits Actions| SF[Security & Forensics]
+    
+    SE -->|Packages & Deploys| IC[Infra & Cloud]
+    SE -->|Dispatches I/O| II[Integration & I/O]
+    
+    DE -->|Validates Schemas| II
+    SF -->|Audits Infrastructure| IC
+```
+
+- **Agent Orchestration $\rightarrow$ Memory & Epistemics**: Agents query the `skill_knowledge_graph` and `vector_index` to route intent and retrieve relevant execution chains before decomposing tasks.
+- **Agent Orchestration $\rightarrow$ Security & Forensics**: Destructive or mutating operations trigger `trajectory_auditor` and `human_in_the_loop` before committing to state.
+- **Software Engineering $\rightarrow$ Infra & Cloud**: Refactored codebases and schemas hand off to `docker_container`, `k8s_manifest`, and `ci_pipeline` for containerization and delivery.

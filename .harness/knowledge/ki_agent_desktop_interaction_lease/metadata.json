@@ -1,0 +1,73 @@
+{
+  "id": "ki_agent_desktop_interaction_lease",
+  "title": "Cross-Process Interaction Lease & Web-Wrapper Depth Bypass",
+  "category": "software_engineering",
+  "source_target": "D:\\GitHub\\cloned\\agent-desktop",
+  "detected_format": "git_repository",
+  "status": "ACTIVE",
+  "created_at": "2026-11-04T12:15:51.308795+00:00",
+  "retrieval_count": 0,
+  "edges": [
+    {
+      "type": "references_code",
+      "target": "D:\\GitHub\\cloned\\agent-desktop\\crates\\core\\src\\session\\interaction_lease.rs#L1-L125",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    },
+    {
+      "type": "references_code",
+      "target": "D:\\GitHub\\cloned\\agent-desktop\\CONCEPTS.md#L50-L66",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    },
+    {
+      "type": "references_code",
+      "target": "D:\\GitHub\\cloned\\agent-desktop\\crates\\core\\src\\tree\\accname.rs#L1-L50",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    }
+  ],
+  "isnad": {
+    "decision_id": "dec_ki_agent_desktop_interaction_lease",
+    "claims": [
+      {
+        "assertion": "Multi-agent GUI automation requires cross-process file/mutex interaction leases with contention counters for mutations while tree observations remain lock-free, paired with Chromium web-wrapper detection to skip empty container depth on Electron/web applications.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "D:\\GitHub\\cloned\\agent-desktop\\crates\\core\\src\\session\\interaction_lease.rs#L1-L125",
+            "sha256_hash": "N/A",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "D:\\GitHub\\cloned\\agent-desktop\\CONCEPTS.md#L50-L66",
+            "sha256_hash": "N/A",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "D:\\GitHub\\cloned\\agent-desktop\\crates\\core\\src\\tree\\accname.rs#L1-L50",
+            "sha256_hash": "N/A",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "interaction_lease",
+    "web_wrapper_bypass",
+    "chromium",
+    "concurrency",
+    "agent_desktop"
+  ],
+  "distilled_learning": "Mutating desktop application state across multiple agent processes can lead to input collisions. agent-desktop resolves this with an inheritable InteractionLease that tracks contention counts and provides atomic ownership during semantic clicks and typing. For observation, it identifies Chromium provenance (Chrome_WidgetWin_1 on Windows) and skips non-semantic anonymous container wrappers during tree walks, preventing deep web applications from exhausting observation budgets by an order of magnitude."
+}

@@ -1,0 +1,73 @@
+{
+  "id": "ki_agent_desktop_disposition_matrix",
+  "title": "2D Delivery \u00d7 Retry Disposition Matrix with Stability Sampling",
+  "category": "agent_orchestration",
+  "source_target": "D:\\GitHub\\cloned\\agent-desktop",
+  "detected_format": "git_repository",
+  "status": "ACTIVE",
+  "created_at": "2026-11-04T12:15:51.305649+00:00",
+  "retrieval_count": 0,
+  "edges": [
+    {
+      "type": "references_code",
+      "target": "D:\\GitHub\\cloned\\agent-desktop\\crates\\core\\src\\response\\delivery_disposition.rs#L1-L13",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    },
+    {
+      "type": "references_code",
+      "target": "D:\\GitHub\\cloned\\agent-desktop\\crates\\core\\src\\response\\retry_disposition.rs#L1-L10",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    },
+    {
+      "type": "references_code",
+      "target": "D:\\GitHub\\cloned\\agent-desktop\\crates\\core\\src\\actionability\\evaluate.rs#L78-L110",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    }
+  ],
+  "isnad": {
+    "decision_id": "dec_ki_agent_desktop_disposition_matrix",
+    "claims": [
+      {
+        "assertion": "Agent action results and error envelopes must bifurcate outcomes along two independent dimensions: DeliveryDisposition (NotDelivered, DeliveryUncertain, DeliveredUnverified, DeliveredVerified) and RetryDisposition (Safe, Unsafe, Unknown), preventing destructive double-activation of non-idempotent controls.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "D:\\GitHub\\cloned\\agent-desktop\\crates\\core\\src\\response\\delivery_disposition.rs#L1-L13",
+            "sha256_hash": "N/A",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "D:\\GitHub\\cloned\\agent-desktop\\crates\\core\\src\\response\\retry_disposition.rs#L1-L10",
+            "sha256_hash": "N/A",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "D:\\GitHub\\cloned\\agent-desktop\\crates\\core\\src\\actionability\\evaluate.rs#L78-L110",
+            "sha256_hash": "N/A",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "delivery_disposition",
+    "retry_safety",
+    "actionability",
+    "react_loop",
+    "agent_desktop"
+  ],
+  "distilled_learning": "When an agent interacts with a desktop GUI, failure to deliver an action differs crucially from delivering an action without observation verification. agent-desktop pairs DeliveryDisposition with RetryDisposition in every envelope and error. Furthermore, check_with_stability_or_gap samples transient window animations before converting a layout shift into an error, ensuring agent ReAct execution loops know with mathematical certainty whether an action can safely be retried or requires an emergency transaction rollback."
+}

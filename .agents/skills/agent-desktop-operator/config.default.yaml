@@ -1,0 +1,14 @@
+# Agent Desktop Operator Default Operational Budgets
+version: "1.1.0"
+isolation_mode: "subprocess"
+budgets:
+  timeout_seconds: 300
+  command_timeout_ms: 10000
+  max_concurrent_mcp_calls: 8
+  max_mcp_message_bytes: 4194304
+  max_self_repair_retries: 3
+policies:
+  default_action_policy: "headless"
+  web_wrapper_depth_skip: true
+  whole_window_uniqueness_check: true
+  powershell_quote_refs: true

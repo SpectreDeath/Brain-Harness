@@ -87,3 +87,14 @@ from harness.services.agent_reach import (
     ReachSessionSandboxData,
     resolve_agent_reach,
 )
+from harness.services.agent_desktop import (
+    AGENT_DESKTOP_KEY,
+    ActionDisposition,
+    AgentDesktopActResult,
+    AgentDesktopService,
+    AgentDesktopSnapshotResult,
+    AgentDesktopStatusResult,
+    AgentDesktopWindowResult,
+    DesktopRefToken,
+    EvidenceTriState,
+)

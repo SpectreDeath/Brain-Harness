@@ -584,4 +584,14 @@ __all__ = [
     "ModelTensorDescriptor",
     "PycInspectReport",
     "resolve_rea_managed_runtime",
+    # Agent Desktop Service
+    "AGENT_DESKTOP_KEY",
+    "AgentDesktopService",
+    "DesktopRefToken",
+    "ActionDisposition",
+    "EvidenceTriState",
+    "AgentDesktopSnapshotResult",
+    "AgentDesktopActResult",
+    "AgentDesktopWindowResult",
+    "AgentDesktopStatusResult",
 ]

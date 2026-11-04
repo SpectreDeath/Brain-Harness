@@ -1,0 +1,786 @@
+{
+  "top_affinity_pairs": [
+    {
+      "node_a": "mind-reader",
+      "node_b": "repo-reader",
+      "affinity_weight": 10.607,
+      "cluster_a": "cluster_11_mind_reader",
+      "cluster_b": "cluster_11_mind_reader",
+      "is_intra_cluster": true
+    },
+    {
+      "node_a": "brain-artifact-miner",
+      "node_b": "temp-artifact-miner",
+      "affinity_weight": 9.322,
+      "cluster_a": "cluster_13_brain_artifact_miner",
+      "cluster_b": "cluster_13_brain_artifact_miner",
+      "is_intra_cluster": true
+    },
+    {
+      "node_a": "brain-artifact-miner",
+      "node_b": "conversation-trajectory-miner",
+      "affinity_weight": 8.127,
+      "cluster_a": "cluster_13_brain_artifact_miner",
+      "cluster_b": "cluster_13_brain_artifact_miner",
+      "is_intra_cluster": true
+    },
+    {
+      "node_a": "conversation-trajectory-miner",
+      "node_b": "temp-artifact-miner",
+      "affinity_weight": 8.093,
+      "cluster_a": "cluster_13_brain_artifact_miner",
+      "cluster_b": "cluster_13_brain_artifact_miner",
+      "is_intra_cluster": true
+    },
+    {
+      "node_a": "codebase-context-governor",
+      "node_b": "context-anti-rot-sync",
+      "affinity_weight": 7.913,
+      "cluster_a": "cluster_06_codebase_context_governor",
+      "cluster_b": "cluster_06_codebase_context_governor",
+      "is_intra_cluster": true
+    },
+    {
+      "node_a": "context-type-system",
+      "node_b": "ebbinghaus-memory-governor",
+      "affinity_weight": 7.678,
+      "cluster_a": "cluster_01_gemini_vercel_streaming_chatbot",
+      "cluster_b": "cluster_10_ebbinghaus_memory_governor",
+      "is_intra_cluster": false
+    },
+    {
+      "node_a": "deep-skill-forge",
+      "node_b": "repo-triad-forge",
+      "affinity_weight": 7.17,
+      "cluster_a": "cluster_03_crafting_skills",
+      "cluster_b": "cluster_03_crafting_skills",
+      "is_intra_cluster": true
+    },
+    {
+      "node_a": "agent-skill-sdlc",
+      "node_b": "deep-skill-forge",
+      "affinity_weight": 6.569,
+      "cluster_a": "cluster_03_crafting_skills",
+      "cluster_b": "cluster_03_crafting_skills",
+      "is_intra_cluster": true
+    },
+    {
+      "node_a": "media-to-vault-pipeline",
+      "node_b": "multimedia-intelligence-forge",
+      "affinity_weight": 6.541,
+      "cluster_a": "cluster_03_crafting_skills",
+      "cluster_b": "cluster_05_external_repo_bridge_forge",
+      "is_intra_cluster": false
+    },
+    {
+      "node_a": "differential-facet-verifier",
+      "node_b": "rea-reverse-engineering",
+      "affinity_weight": 6.539,
+      "cluster_a": "cluster_08_mantis_security_review",
+      "cluster_b": "cluster_08_mantis_security_review",
+      "is_intra_cluster": true
+    },
+    {
+      "node_a": "architecture-deepening-workflow",
+      "node_b": "monolith-decomposition-engine",
+      "affinity_weight": 6.039,
+      "cluster_a": "cluster_12_architecture_deepening_workflow",
+      "cluster_b": "cluster_12_architecture_deepening_workflow",
+      "is_intra_cluster": true
+    },
+    {
+      "node_a": "bigquery-augmented-analytics",
+      "node_b": "garf-reporting-architect",
+      "affinity_weight": 5.939,
+      "cluster_a": "cluster_09_bigquery_augmented_analytics",
+      "cluster_b": "cluster_09_bigquery_augmented_analytics",
+      "is_intra_cluster": true
+    },
+    {
+      "node_a": "mantis-security-review",
+      "node_b": "rea-reverse-engineering",
+      "affinity_weight": 5.939,
+      "cluster_a": "cluster_08_mantis_security_review",
+      "cluster_b": "cluster_08_mantis_security_review",
+      "is_intra_cluster": true
+    },
+    {
+      "node_a": "knowledge-graph-pipeline",
+      "node_b": "neo4j-knowledge-graph-architect",
+      "affinity_weight": 5.854,
+      "cluster_a": "cluster_14_knowledge_graph_pipeline",
+      "cluster_b": "cluster_14_knowledge_graph_pipeline",
+      "is_intra_cluster": true
+    },
+    {
+      "node_a": "repo-reader",
+      "node_b": "repo-to-plugin-forge",
+      "affinity_weight": 5.696,
+      "cluster_a": "cluster_11_mind_reader",
+      "cluster_b": "cluster_03_crafting_skills",
+      "is_intra_cluster": false
+    },
+    {
+      "node_a": "harness-reflector",
+      "node_b": "mind-reader",
+      "affinity_weight": 5.679,
+      "cluster_a": "cluster_01_gemini_vercel_streaming_chatbot",
+      "cluster_b": "cluster_11_mind_reader",
+      "is_intra_cluster": false
+    },
+    {
+      "node_a": "legacy-modernization-pipeline",
+      "node_b": "legacy-refactoring-guardian",
+      "affinity_weight": 5.67,
+      "cluster_a": "cluster_06_codebase_context_governor",
+      "cluster_b": "cluster_03_crafting_skills",
+      "is_intra_cluster": false
+    },
+    {
+      "node_a": "epistemic-memory-lifecycle",
+      "node_b": "mind-reader",
+      "affinity_weight": 5.625,
+      "cluster_a": "cluster_11_mind_reader",
+      "cluster_b": "cluster_11_mind_reader",
+      "is_intra_cluster": true
+    },
+    {
+      "node_a": "coding-harness-calibrator",
+      "node_b": "harness-compass",
+      "affinity_weight": 5.568,
+      "cluster_a": "cluster_04_agent_harness_architect",
+      "cluster_b": "cluster_04_agent_harness_architect",
+      "is_intra_cluster": true
+    },
+    {
+      "node_a": "codebase-context-architect",
+      "node_b": "codebase-context-governor",
+      "affinity_weight": 5.356,
+      "cluster_a": "cluster_03_crafting_skills",
+      "cluster_b": "cluster_06_codebase_context_governor",
+      "is_intra_cluster": false
+    },
+    {
+      "node_a": "deepselect-topk-optimizer",
+      "node_b": "neural-network-from-scratch",
+      "affinity_weight": 5.339,
+      "cluster_a": "cluster_19_deepselect_topk_optimizer",
+      "cluster_b": "cluster_19_deepselect_topk_optimizer",
+      "is_intra_cluster": true
+    },
+    {
+      "node_a": "ebbinghaus-memory-governor",
+      "node_b": "okf-memory-governor",
+      "affinity_weight": 5.339,
+      "cluster_a": "cluster_10_ebbinghaus_memory_governor",
+      "cluster_b": "cluster_10_ebbinghaus_memory_governor",
+      "is_intra_cluster": true
+    },
+    {
+      "node_a": "ethical-hacker-networking",
+      "node_b": "mantis-security-review",
+      "affinity_weight": 5.339,
+      "cluster_a": "cluster_08_mantis_security_review",
+      "cluster_b": "cluster_08_mantis_security_review",
+      "is_intra_cluster": true
+    },
+    {
+      "node_a": "agent-harness-architect",
+      "node_b": "orca-orchestrator",
+      "affinity_weight": 5.139,
+      "cluster_a": "cluster_04_agent_harness_architect",
+      "cluster_b": "cluster_04_agent_harness_architect",
+      "is_intra_cluster": true
+    },
+    {
+      "node_a": "deep-skill-forge",
+      "node_b": "system-design-architect",
+      "affinity_weight": 5.115,
+      "cluster_a": "cluster_03_crafting_skills",
+      "cluster_b": "cluster_03_crafting_skills",
+      "is_intra_cluster": true
+    },
+    {
+      "node_a": "codebase-context-architect",
+      "node_b": "context-anti-rot-sync",
+      "affinity_weight": 5.034,
+      "cluster_a": "cluster_03_crafting_skills",
+      "cluster_b": "cluster_06_codebase_context_governor",
+      "is_intra_cluster": false
+    },
+    {
+      "node_a": "deep-skill-forge",
+      "node_b": "multimedia-intelligence-forge",
+      "affinity_weight": 4.984,
+      "cluster_a": "cluster_03_crafting_skills",
+      "cluster_b": "cluster_05_external_repo_bridge_forge",
+      "is_intra_cluster": false
+    },
+    {
+      "node_a": "agent-harness-architect",
+      "node_b": "ai-agent-engineer",
+      "affinity_weight": 4.931,
+      "cluster_a": "cluster_04_agent_harness_architect",
+      "cluster_b": "cluster_04_agent_harness_architect",
+      "is_intra_cluster": true
+    },
+    {
+      "node_a": "repo-to-plugin-forge",
+      "node_b": "repo-triad-forge",
+      "affinity_weight": 4.9,
+      "cluster_a": "cluster_03_crafting_skills",
+      "cluster_b": "cluster_03_crafting_skills",
+      "is_intra_cluster": true
+    },
+    {
+      "node_a": "ask-matt",
+      "node_b": "triage",
+      "affinity_weight": 4.839,
+      "cluster_a": "cluster_02_ask_matt",
+      "cluster_b": "cluster_02_ask_matt",
+      "is_intra_cluster": true
+    },
+    {
+      "node_a": "ask-matt",
+      "node_b": "wayfinder",
+      "affinity_weight": 4.839,
+      "cluster_a": "cluster_02_ask_matt",
+      "cluster_b": "cluster_02_ask_matt",
+      "is_intra_cluster": true
+    },
+    {
+      "node_a": "book-to-skill-forge",
+      "node_b": "repo-to-plugin-forge",
+      "affinity_weight": 4.652,
+      "cluster_a": "cluster_05_external_repo_bridge_forge",
+      "cluster_b": "cluster_03_crafting_skills",
+      "is_intra_cluster": false
+    },
+    {
+      "node_a": "external-repo-bridge-forge",
+      "node_b": "multimedia-intelligence-forge",
+      "affinity_weight": 4.57,
+      "cluster_a": "cluster_05_external_repo_bridge_forge",
+      "cluster_b": "cluster_05_external_repo_bridge_forge",
+      "is_intra_cluster": true
+    },
+    {
+      "node_a": "gemini-vercel-streaming-chatbot",
+      "node_b": "gradio-app-architect",
+      "affinity_weight": 4.463,
+      "cluster_a": "cluster_01_gemini_vercel_streaming_chatbot",
+      "cluster_b": "cluster_01_gemini_vercel_streaming_chatbot",
+      "is_intra_cluster": true
+    },
+    {
+      "node_a": "agent-harness-architect",
+      "node_b": "ai-native-harness-engineer",
+      "affinity_weight": 4.455,
+      "cluster_a": "cluster_04_agent_harness_architect",
+      "cluster_b": "cluster_04_agent_harness_architect",
+      "is_intra_cluster": true
+    },
+    {
+      "node_a": "deep-repo-auditor",
+      "node_b": "repo-reader",
+      "affinity_weight": 4.452,
+      "cluster_a": "cluster_03_crafting_skills",
+      "cluster_b": "cluster_11_mind_reader",
+      "is_intra_cluster": false
+    },
+    {
+      "node_a": "agentic-reliability-harness",
+      "node_b": "ai-native-harness-engineer",
+      "affinity_weight": 4.439,
+      "cluster_a": "cluster_04_agent_harness_architect",
+      "cluster_b": "cluster_04_agent_harness_architect",
+      "is_intra_cluster": true
+    },
+    {
+      "node_a": "ask-matt",
+      "node_b": "grill-with-docs",
+      "affinity_weight": 4.439,
+      "cluster_a": "cluster_02_ask_matt",
+      "cluster_b": "cluster_02_ask_matt",
+      "is_intra_cluster": true
+    },
+    {
+      "node_a": "ask-matt",
+      "node_b": "to-tickets",
+      "affinity_weight": 4.439,
+      "cluster_a": "cluster_02_ask_matt",
+      "cluster_b": "cluster_02_ask_matt",
+      "is_intra_cluster": true
+    },
+    {
+      "node_a": "python-diagrams-architect",
+      "node_b": "system-design-architect",
+      "affinity_weight": 4.404,
+      "cluster_a": "cluster_03_crafting_skills",
+      "cluster_b": "cluster_03_crafting_skills",
+      "is_intra_cluster": true
+    },
+    {
+      "node_a": "cellcog-multimodal",
+      "node_b": "external-repo-bridge-forge",
+      "affinity_weight": 4.385,
+      "cluster_a": "cluster_05_external_repo_bridge_forge",
+      "cluster_b": "cluster_05_external_repo_bridge_forge",
+      "is_intra_cluster": true
+    },
+    {
+      "node_a": "multimedia-intelligence-forge",
+      "node_b": "youtube-transcript-fetcher",
+      "affinity_weight": 4.385,
+      "cluster_a": "cluster_05_external_repo_bridge_forge",
+      "cluster_b": "cluster_05_external_repo_bridge_forge",
+      "is_intra_cluster": true
+    },
+    {
+      "node_a": "crafting-skills",
+      "node_b": "repo-to-plugin-forge",
+      "affinity_weight": 4.377,
+      "cluster_a": "cluster_03_crafting_skills",
+      "cluster_b": "cluster_03_crafting_skills",
+      "is_intra_cluster": true
+    },
+    {
+      "node_a": "harness-reflector",
+      "node_b": "swarm-reflection-optimizer",
+      "affinity_weight": 4.323,
+      "cluster_a": "cluster_01_gemini_vercel_streaming_chatbot",
+      "cluster_b": "cluster_07_swarm_reflection_optimizer",
+      "is_intra_cluster": false
+    },
+    {
+      "node_a": "agent-harness-architect",
+      "node_b": "context-engineering-architect",
+      "affinity_weight": 4.296,
+      "cluster_a": "cluster_04_agent_harness_architect",
+      "cluster_b": "cluster_04_agent_harness_architect",
+      "is_intra_cluster": true
+    },
+    {
+      "node_a": "deep-repo-auditor",
+      "node_b": "repo-triad-forge",
+      "affinity_weight": 4.283,
+      "cluster_a": "cluster_03_crafting_skills",
+      "cluster_b": "cluster_03_crafting_skills",
+      "is_intra_cluster": true
+    },
+    {
+      "node_a": "deep-skill-forge",
+      "node_b": "deepen-architecture",
+      "affinity_weight": 4.262,
+      "cluster_a": "cluster_03_crafting_skills",
+      "cluster_b": "cluster_03_crafting_skills",
+      "is_intra_cluster": true
+    },
+    {
+      "node_a": "neo4j-knowledge-graph-architect",
+      "node_b": "sql-recursive-graph-traversal",
+      "affinity_weight": 4.261,
+      "cluster_a": "cluster_14_knowledge_graph_pipeline",
+      "cluster_b": "cluster_14_knowledge_graph_pipeline",
+      "is_intra_cluster": true
+    },
+    {
+      "node_a": "epistemic-memory-lifecycle",
+      "node_b": "harness-reflector",
+      "affinity_weight": 4.25,
+      "cluster_a": "cluster_11_mind_reader",
+      "cluster_b": "cluster_01_gemini_vercel_streaming_chatbot",
+      "is_intra_cluster": false
+    },
+    {
+      "node_a": "ask-matt",
+      "node_b": "improve-codebase-architecture",
+      "affinity_weight": 4.25,
+      "cluster_a": "cluster_02_ask_matt",
+      "cluster_b": "cluster_02_ask_matt",
+      "is_intra_cluster": true
+    }
+  ],
+  "clusters": {
+    "cluster_01_gemini_vercel_streaming_chatbot": {
+      "cluster_id": "cluster_01_gemini_vercel_streaming_chatbot",
+      "name": "Gemini Vercel Streaming Chatbot & Domain Peers",
+      "size": 23,
+      "intra_edge_count": 14,
+      "cross_edge_count": 88,
+      "avg_intra_affinity": 2.198,
+      "avg_cross_affinity": 2.118,
+      "coherence_ratio": 1.04,
+      "skills": [
+        "adversarial-agent-verifier",
+        "agent-instruction-architect",
+        "agentwikis-router",
+        "chatbotx",
+        "claude-handoff",
+        "context-type-system",
+        "deterministic-validation-loop",
+        "gemini-vercel-streaming-chatbot",
+        "geospatial-disaster-simulation",
+        "git-guardrails-claude-code",
+        "gods-eye-view",
+        "gradio-app-architect",
+        "harness-reflector",
+        "hyperframes-video-architect",
+        "icm-workspace-architect",
+        "migrate-to-shoehorn",
+        "plugin-seam-and-mirror-auditor",
+        "python-dataclass-architect",
+        "r-language-server-toolkit",
+        "scaffold-exercises",
+        "setup-pre-commit",
+        "tdd",
+        "writing-for-agents"
+      ]
+    },
+    "cluster_02_ask_matt": {
+      "cluster_id": "cluster_02_ask_matt",
+      "name": "Ask Matt & Domain Peers",
+      "size": 23,
+      "intra_edge_count": 43,
+      "cross_edge_count": 6,
+      "avg_intra_affinity": 2.601,
+      "avg_cross_affinity": 1.892,
+      "coherence_ratio": 1.38,
+      "skills": [
+        "ask-matt",
+        "code-review",
+        "diagnosing-bugs",
+        "domain-modeling",
+        "grill-me",
+        "grill-with-docs",
+        "grilling",
+        "handoff",
+        "implement",
+        "improve-codebase-architecture",
+        "loop-me",
+        "prototype",
+        "research",
+        "resolving-merge-conflicts",
+        "setup-matt-pocock-skills",
+        "teach",
+        "to-questionnaire",
+        "to-spec",
+        "to-tickets",
+        "triage",
+        "wait-what",
+        "wayfinder",
+        "wizard"
+      ]
+    },
+    "cluster_03_crafting_skills": {
+      "cluster_id": "cluster_03_crafting_skills",
+      "name": "Crafting Skills & Domain Peers",
+      "size": 17,
+      "intra_edge_count": 62,
+      "cross_edge_count": 201,
+      "avg_intra_affinity": 2.779,
+      "avg_cross_affinity": 2.28,
+      "coherence_ratio": 1.22,
+      "skills": [
+        "agent-skill-sdlc",
+        "codebase-context-architect",
+        "crafting-skills",
+        "deep-repo-auditor",
+        "deep-skill-forge",
+        "deepen-architecture",
+        "discovery-index-scout",
+        "legacy-refactoring-guardian",
+        "media-to-vault-pipeline",
+        "open-source-gis-architect",
+        "python-diagrams-architect",
+        "repo-doc-synchronizer",
+        "repo-to-plugin-forge",
+        "repo-triad-forge",
+        "structured-data-scout",
+        "survival-analysis",
+        "system-design-architect"
+      ]
+    },
+    "cluster_04_agent_harness_architect": {
+      "cluster_id": "cluster_04_agent_harness_architect",
+      "name": "Agent Harness Architect & Domain Peers",
+      "size": 13,
+      "intra_edge_count": 42,
+      "cross_edge_count": 36,
+      "avg_intra_affinity": 2.821,
+      "avg_cross_affinity": 2.216,
+      "coherence_ratio": 1.27,
+      "skills": [
+        "agent-harness-architect",
+        "agentic-reliability-harness",
+        "ai-agent-engineer",
+        "ai-native-harness-engineer",
+        "coding-harness-calibrator",
+        "context-engineering-architect",
+        "dynamic-model-router",
+        "elephant-goldfish-governor",
+        "harness-compass",
+        "orca-orchestrator",
+        "prompt-pruning-architect",
+        "self-evaluating-ai-pipeline",
+        "ts-agent-harness-constructor"
+      ]
+    },
+    "cluster_05_external_repo_bridge_forge": {
+      "cluster_id": "cluster_05_external_repo_bridge_forge",
+      "name": "External Repo Bridge Forge & Domain Peers",
+      "size": 9,
+      "intra_edge_count": 19,
+      "cross_edge_count": 89,
+      "avg_intra_affinity": 2.873,
+      "avg_cross_affinity": 2.293,
+      "coherence_ratio": 1.25,
+      "skills": [
+        "agent-desktop-operator",
+        "agent-reach-browser-bridge",
+        "ai-file-analysis-agent",
+        "book-to-skill-forge",
+        "cellcog-multimodal",
+        "developer-docs-architect",
+        "external-repo-bridge-forge",
+        "multimedia-intelligence-forge",
+        "youtube-transcript-fetcher"
+      ]
+    },
+    "cluster_06_codebase_context_governor": {
+      "cluster_id": "cluster_06_codebase_context_governor",
+      "name": "Codebase Context Governor & Domain Peers",
+      "size": 6,
+      "intra_edge_count": 8,
+      "cross_edge_count": 53,
+      "avg_intra_affinity": 3.3,
+      "avg_cross_affinity": 2.393,
+      "coherence_ratio": 1.38,
+      "skills": [
+        "agent-skills-architect",
+        "codebase-context-governor",
+        "context-anti-rot-sync",
+        "legacy-modernization-pipeline",
+        "pr-lens-visualizer",
+        "responsible-ai-prototyping"
+      ]
+    },
+    "cluster_07_swarm_reflection_optimizer": {
+      "cluster_id": "cluster_07_swarm_reflection_optimizer",
+      "name": "Swarm Reflection Optimizer & Domain Peers",
+      "size": 6,
+      "intra_edge_count": 5,
+      "cross_edge_count": 66,
+      "avg_intra_affinity": 3.155,
+      "avg_cross_affinity": 2.253,
+      "coherence_ratio": 1.4,
+      "skills": [
+        "compute-model-assessor",
+        "game-theoretic-swarm-deliberator",
+        "pi-coding-harness",
+        "sme-ann-backprop",
+        "swarm-reflection-optimizer",
+        "uncertainty-aware-ai-architect"
+      ]
+    },
+    "cluster_08_mantis_security_review": {
+      "cluster_id": "cluster_08_mantis_security_review",
+      "name": "Mantis Security Review & Domain Peers",
+      "size": 6,
+      "intra_edge_count": 8,
+      "cross_edge_count": 6,
+      "avg_intra_affinity": 3.908,
+      "avg_cross_affinity": 2.165,
+      "coherence_ratio": 1.81,
+      "skills": [
+        "ai-red-teaming-architect",
+        "differential-facet-verifier",
+        "ethical-hacker-networking",
+        "mantis-security-review",
+        "rea-reverse-engineering",
+        "reconstruction-obligation-ledger"
+      ]
+    },
+    "cluster_09_bigquery_augmented_analytics": {
+      "cluster_id": "cluster_09_bigquery_augmented_analytics",
+      "name": "Bigquery Augmented Analytics & Domain Peers",
+      "size": 5,
+      "intra_edge_count": 5,
+      "cross_edge_count": 19,
+      "avg_intra_affinity": 3.496,
+      "avg_cross_affinity": 2.05,
+      "coherence_ratio": 1.71,
+      "skills": [
+        "bigquery-augmented-analytics",
+        "data-management-architect",
+        "garf-reporting-architect",
+        "hf-datasets-engineer",
+        "paperless-document-pipeline"
+      ]
+    },
+    "cluster_10_ebbinghaus_memory_governor": {
+      "cluster_id": "cluster_10_ebbinghaus_memory_governor",
+      "name": "Ebbinghaus Memory Governor & Domain Peers",
+      "size": 5,
+      "intra_edge_count": 10,
+      "cross_edge_count": 12,
+      "avg_intra_affinity": 2.941,
+      "avg_cross_affinity": 2.676,
+      "coherence_ratio": 1.1,
+      "skills": [
+        "ebbinghaus-memory-governor",
+        "media-mind-forge",
+        "okf-memory-governor",
+        "ontological-engineering-coach",
+        "ontology-spider"
+      ]
+    },
+    "cluster_11_mind_reader": {
+      "cluster_id": "cluster_11_mind_reader",
+      "name": "Mind Reader & Domain Peers",
+      "size": 5,
+      "intra_edge_count": 10,
+      "cross_edge_count": 94,
+      "avg_intra_affinity": 3.793,
+      "avg_cross_affinity": 2.271,
+      "coherence_ratio": 1.67,
+      "skills": [
+        "epistemic-isnad-audit",
+        "epistemic-memory-lifecycle",
+        "mind-reader",
+        "pre-commit-security-guard",
+        "repo-reader"
+      ]
+    },
+    "cluster_12_architecture_deepening_workflow": {
+      "cluster_id": "cluster_12_architecture_deepening_workflow",
+      "name": "Architecture Deepening Workflow & Domain Peers",
+      "size": 3,
+      "intra_edge_count": 1,
+      "cross_edge_count": 12,
+      "avg_intra_affinity": 6.039,
+      "avg_cross_affinity": 1.866,
+      "coherence_ratio": 3.24,
+      "skills": [
+        "architecture-deepening-workflow",
+        "hf-doc-builder-architect",
+        "monolith-decomposition-engine"
+      ]
+    },
+    "cluster_13_brain_artifact_miner": {
+      "cluster_id": "cluster_13_brain_artifact_miner",
+      "name": "Brain Artifact Miner & Domain Peers",
+      "size": 3,
+      "intra_edge_count": 3,
+      "cross_edge_count": 24,
+      "avg_intra_affinity": 8.514,
+      "avg_cross_affinity": 2.107,
+      "coherence_ratio": 4.04,
+      "skills": [
+        "brain-artifact-miner",
+        "conversation-trajectory-miner",
+        "temp-artifact-miner"
+      ]
+    },
+    "cluster_14_knowledge_graph_pipeline": {
+      "cluster_id": "cluster_14_knowledge_graph_pipeline",
+      "name": "Knowledge Graph Pipeline & Domain Peers",
+      "size": 3,
+      "intra_edge_count": 3,
+      "cross_edge_count": 6,
+      "avg_intra_affinity": 4.403,
+      "avg_cross_affinity": 2.288,
+      "coherence_ratio": 1.92,
+      "skills": [
+        "knowledge-graph-pipeline",
+        "neo4j-knowledge-graph-architect",
+        "sql-recursive-graph-traversal"
+      ]
+    },
+    "cluster_15_writing_beats": {
+      "cluster_id": "cluster_15_writing_beats",
+      "name": "Writing Beats & Domain Peers",
+      "size": 3,
+      "intra_edge_count": 3,
+      "cross_edge_count": 0,
+      "avg_intra_affinity": 2.783,
+      "avg_cross_affinity": 0.0,
+      "coherence_ratio": 0.0,
+      "skills": [
+        "writing-beats",
+        "writing-fragments",
+        "writing-shape"
+      ]
+    },
+    "cluster_16_data_topology_mapper": {
+      "cluster_id": "cluster_16_data_topology_mapper",
+      "name": "Data Topology Mapper & Domain Peers",
+      "size": 2,
+      "intra_edge_count": 1,
+      "cross_edge_count": 47,
+      "avg_intra_affinity": 4.041,
+      "avg_cross_affinity": 2.23,
+      "coherence_ratio": 1.81,
+      "skills": [
+        "data-topology-mapper",
+        "questio-reflection"
+      ]
+    },
+    "cluster_17_cloud_infrastructure_architect": {
+      "cluster_id": "cluster_17_cloud_infrastructure_architect",
+      "name": "Cloud Infrastructure Architect & Domain Peers",
+      "size": 2,
+      "intra_edge_count": 1,
+      "cross_edge_count": 1,
+      "avg_intra_affinity": 3.0,
+      "avg_cross_affinity": 2.839,
+      "coherence_ratio": 1.06,
+      "skills": [
+        "cloud-infrastructure-architect",
+        "kubernetes-drift-guardian"
+      ]
+    },
+    "cluster_18_codebase_design": {
+      "cluster_id": "cluster_18_codebase_design",
+      "name": "Codebase Design & Domain Peers",
+      "size": 2,
+      "intra_edge_count": 1,
+      "cross_edge_count": 2,
+      "avg_intra_affinity": 1.77,
+      "avg_cross_affinity": 2.31,
+      "coherence_ratio": 0.77,
+      "skills": [
+        "codebase-design",
+        "setup-ts-deep-modules"
+      ]
+    },
+    "cluster_19_deepselect_topk_optimizer": {
+      "cluster_id": "cluster_19_deepselect_topk_optimizer",
+      "name": "Deepselect Topk Optimizer & Domain Peers",
+      "size": 2,
+      "intra_edge_count": 1,
+      "cross_edge_count": 1,
+      "avg_intra_affinity": 5.339,
+      "avg_cross_affinity": 1.9,
+      "coherence_ratio": 2.81,
+      "skills": [
+        "deepselect-topk-optimizer",
+        "neural-network-from-scratch"
+      ]
+    },
+    "cluster_20_headroom_context_optimizer": {
+      "cluster_id": "cluster_20_headroom_context_optimizer",
+      "name": "Headroom Context Optimizer & Domain Peers",
+      "size": 2,
+      "intra_edge_count": 1,
+      "cross_edge_count": 1,
+      "avg_intra_affinity": 2.839,
+      "avg_cross_affinity": 3.395,
+      "coherence_ratio": 0.84,
+      "skills": [
+        "headroom-context-optimizer",
+        "token-economizer"
+      ]
+    }
+  }
+}

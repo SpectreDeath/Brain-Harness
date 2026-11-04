@@ -1,0 +1,60 @@
+{
+  "id": "ki_self_20261104_03_planted_violation_boundary_gate",
+  "title": "Planted-Violation Self-Testing Architecture Boundary Gate",
+  "category": "software_engineering",
+  "source_target": "internal_endogenous_reflection",
+  "detected_format": "endogenous_reflection",
+  "status": "ACTIVE",
+  "created_at": "2026-11-04T13:44:55.275519+00:00",
+  "retrieval_count": 0,
+  "edges": [
+    {
+      "type": "references_code",
+      "target": "D:\\GitHub\\cloned\\agent-desktop\\scripts\\check_architecture.py#L1-L120",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    },
+    {
+      "type": "references_code",
+      "target": "D:\\GitHub\\cloned\\agent-desktop\\AGENTS.md#L120-L185",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    }
+  ],
+  "isnad": {
+    "decision_id": "dec_ki_self_20261104_03_planted_violation_boundary_gate",
+    "claims": [
+      {
+        "assertion": "Static architectural boundary linters must inject synthetic violations into an ephemeral workspace copy before scanning the target repository, ensuring that dead or decaying rules fail CI immediately.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "D:\\GitHub\\cloned\\agent-desktop\\scripts\\check_architecture.py#L1-L120",
+            "sha256_hash": "N/A",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "D:\\GitHub\\cloned\\agent-desktop\\AGENTS.md#L120-L185",
+            "sha256_hash": "N/A",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "software_engineering",
+    "architecture_linter",
+    "planted_violation",
+    "self_testing",
+    "endogenous_memory",
+    "self_reflection"
+  ],
+  "distilled_learning": "Static analysis linters and architecture boundary checkers can silently rot over time as codebases evolve and dependencies shift. The planted-violation self-testing pattern requires the verification script to plant deliberate synthetic violations of every architectural boundary rule in a temporary workspace copy before running against production files. If any rule fails to detect its planted violation, CI immediately aborts, ensuring the verification harness remains perpetually infallible."
+}

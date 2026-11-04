@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Skill Knowledge Graph: Modular Cluster Analysis Report</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>mermaid.initialize({startOnLoad: true, theme: 'dark'});</script>
+  <style>body { background: #0d1117; color: #c9d1d9; }</style>
+</head>
+<body class="bg-[#0d1117] text-[#c9d1d9] font-sans p-8 max-w-6xl mx-auto">
+  <div class="bg-[#161b22] border border-[#30363d] rounded-lg p-6 mb-6 shadow-xl">
+    <div class="flex items-center justify-between border-b border-[#30363d] pb-4 mb-6">
+      <div>
+        <h1 class="text-2xl font-bold text-[#58a6ff]">Skill Knowledge Graph: Modular Cluster Analysis</h1>
+        <p class="text-sm text-[#8b949e] mt-1">Graph Topology, Modular Community Detection, and Affinity Matrices</p>
+      </div>
+      <span class="bg-[#238636] text-white text-xs font-semibold px-3 py-1 rounded-full uppercase">140 Nodes • 1,751 Edges</span>
+    </div>
+
+    <!-- Graph Metrics Overview -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+      <div class="bg-[#0d1117] p-3 rounded border border-[#30363d]">
+        <span class="text-xs text-[#8b949e]">Registered Nodes</span>
+        <div class="text-xl font-bold text-[#58a6ff]">140 Skills</div>
+      </div>
+      <div class="bg-[#0d1117] p-3 rounded border border-[#30363d]">
+        <span class="text-xs text-[#8b949e]">Directed Edges</span>
+        <div class="text-xl font-bold text-[#3fb950]">1,751 Edges</div>
+      </div>
+      <div class="bg-[#0d1117] p-3 rounded border border-[#30363d]">
+        <span class="text-xs text-[#8b949e]">Functional Clusters</span>
+        <div class="text-xl font-bold text-[#e3b341]">20 Clusters</div>
+      </div>
+      <div class="bg-[#0d1117] p-3 rounded border border-[#30363d]">
+        <span class="text-xs text-[#8b949e]">Cross-Cluster Bridges</span>
+        <div class="text-xl font-bold text-[#f85149]">61 Bridges</div>
+      </div>
+    </div>
+
+    <!-- Mermaid Cluster Topology -->
+    <div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-6 mb-6">
+      <h2 class="text-xs font-bold text-[#8b949e] uppercase tracking-wider mb-4">Macro-Cluster Network &amp; Inter-Cluster Bridge Flows</h2>
+      <div class="mermaid">
+graph TB
+    subgraph C1["Cluster 1: Full-Stack App Engineering (23 skills)"]
+      C1_1["gemini-vercel-streaming-chatbot"]
+      C1_2["gradio-app-architect"]
+      C1_3["chatbotx"]
+      C1_4["geospatial-disaster-simulation"]
+    end
+
+    subgraph C2["Cluster 2: Developer Guidance & Interviewing (23 skills)"]
+      C2_1["ask-matt"]
+      C2_2["grill-me"]
+      C2_3["code-review"]
+      C2_4["to-spec / to-tickets"]
+    end
+
+    subgraph C3["Cluster 3: Repo Triad & Skill Forging (17 skills)"]
+      C3_1["crafting-skills"]
+      C3_2["deep-skill-forge"]
+      C3_3["repo-triad-forge"]
+      C3_4["deep-repo-auditor"]
+    end
+
+    subgraph C4["Cluster 4: Autonomous Harness Architecture (13 skills)"]
+      C4_1["agent-harness-architect"]
+      C4_2["ai-native-harness-engineer"]
+      C4_3["coding-harness-calibrator"]
+      C4_4["harness-compass"]
+    end
+
+    subgraph C5["Cluster 5: External Bridges & Computer Use (9 skills)"]
+      C5_1["agent-desktop-operator"]
+      C5_2["external-repo-bridge-forge"]
+      C5_3["cellcog-multimodal"]
+      C5_4["developer-docs-architect"]
+    end
+
+    subgraph C8["Cluster 8: Security & Forensics (6 skills)"]
+      C8_1["mantis-security-review"]
+      C8_2["ai-red-teaming-architect"]
+      C8_3["rea-reverse-engineering"]
+      C8_4["ethical-hacker-networking"]
+    end
+
+    subgraph C13["Cluster 13: Brain Archaeology (3 skills)"]
+      C13_1["brain-artifact-miner"]
+      C13_2["conversation-trajectory-miner"]
+      C13_3["temp-artifact-miner"]
+    end
+
+    subgraph C10["Cluster 10: Cognitive Memory (5 skills)"]
+      C10_1["ebbinghaus-memory-governor"]
+      C10_2["okf-memory-governor"]
+      C10_3["media-mind-forge"]
+    end
+
+    C3 -->|Forge & Bridge (w=7.17)| C5
+    C5 -->|Archaeology (w=8.13)| C13
+    C13 -->|Vault Retention (w=5.68)| C10
+    C4 -->|Calibration (w=5.57)| C3
+    C8 -->|Security Gate (w=6.54)| C4
+    C2 -->|Interview Seam (w=4.82)| C1
+
+    style C1 fill:#1f6feb,stroke:#58a6ff,color:#ffffff
+    style C2 fill:#238636,stroke:#3fb950,color:#ffffff
+    style C3 fill:#8957e5,stroke:#a371f7,color:#ffffff
+    style C4 fill:#d29922,stroke:#e3b341,color:#ffffff
+    style C5 fill:#0969da,stroke:#218bff,color:#ffffff
+    style C8 fill:#da3633,stroke:#f85149,color:#ffffff
+    style C13 fill:#bf8700,stroke:#d4a72c,color:#ffffff
+    style C10 fill:#1a7f37,stroke:#2da44e,color:#ffffff
+      </div>
+    </div>
+
+    <!-- Edge Distribution Matrix -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+      <div class="bg-[#0d1117] p-4 rounded border border-[#30363d]">
+        <h3 class="text-sm font-bold text-[#58a6ff] mb-2">Directed Edge Types</h3>
+        <table class="w-full text-xs text-left">
+          <tbody class="divide-y divide-[#30363d]">
+            <tr><td class="py-1 font-mono text-[#79c0ff]">EdgeType.REQUIRES</td><td class="py-1 text-right font-bold text-white">1,030</td></tr>
+            <tr><td class="py-1 font-mono text-[#f85149]">EdgeType.MITIGATES</td><td class="py-1 text-right font-bold text-white">567</td></tr>
+            <tr><td class="py-1 font-mono text-[#56d364]">EdgeType.BELONGS_TO</td><td class="py-1 text-right font-bold text-white">140</td></tr>
+            <tr><td class="py-1 font-mono text-[#e3b341]">EdgeType.PRECEDES</td><td class="py-1 text-right font-bold text-white">11</td></tr>
+            <tr><td class="py-1 font-mono text-[#d2a8ff]">EdgeType.FEEDS</td><td class="py-1 text-right font-bold text-white">3</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="bg-[#0d1117] p-4 rounded border border-[#30363d]">
+        <h3 class="text-sm font-bold text-[#3fb950] mb-2">Top Central Hub Nodes (Degree)</h3>
+        <table class="w-full text-xs text-left">
+          <tbody class="divide-y divide-[#30363d]">
+            <tr><td class="py-1 font-mono text-[#79c0ff]">crafting-skills</td><td class="py-1 text-right text-gray-400">Total: 49 (In: 34, Out: 15)</td></tr>
+            <tr><td class="py-1 font-mono text-[#79c0ff]">epistemic-isnad-audit</td><td class="py-1 text-right text-gray-400">Total: 45 (In: 18, Out: 27)</td></tr>
+            <tr><td class="py-1 font-mono text-[#79c0ff]">data-topology-mapper</td><td class="py-1 text-right text-gray-400">Total: 38 (In: 10, Out: 28)</td></tr>
+            <tr><td class="py-1 font-mono text-[#79c0ff]">agent-skill-sdlc</td><td class="py-1 text-right text-gray-400">Total: 33 (In: 8, Out: 25)</td></tr>
+            <tr><td class="py-1 font-mono text-[#79c0ff]">repo-to-plugin-forge</td><td class="py-1 text-right text-gray-400">Total: 32 (In: 5, Out: 27)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Affinity Edges Table -->
+    <div class="bg-[#0d1117] border border-[#30363d] rounded-lg p-6">
+      <h2 class="text-xs font-bold text-[#8b949e] uppercase tracking-wider mb-4">Top Pairwise Affinity Relationships (Edge Weights)</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full text-xs text-left">
+          <thead class="text-[#8b949e] border-b border-[#30363d]">
+            <tr>
+              <th class="pb-2">Type</th>
+              <th class="pb-2">Node A</th>
+              <th class="pb-2">Node B</th>
+              <th class="pb-2">Affinity Weight</th>
+              <th class="pb-2">Structural Synergy</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-[#30363d] text-[#c9d1d9]">
+            <tr>
+              <td class="py-2"><span class="bg-[#1f6feb] text-white px-1.5 py-0.5 rounded text-[10px]">INTRA</span></td>
+              <td class="py-2 font-mono text-[#58a6ff]">mind-reader</td>
+              <td class="py-2 font-mono text-[#58a6ff]">repo-reader</td>
+              <td class="py-2 font-bold text-[#3fb950]">10.607</td>
+              <td class="py-2 text-gray-400">Dual-lens codebase introspection &amp; commit archaeology</td>
+            </tr>
+            <tr>
+              <td class="py-2"><span class="bg-[#1f6feb] text-white px-1.5 py-0.5 rounded text-[10px]">INTRA</span></td>
+              <td class="py-2 font-mono text-[#58a6ff]">brain-artifact-miner</td>
+              <td class="py-2 font-mono text-[#58a6ff]">temp-artifact-miner</td>
+              <td class="py-2 font-bold text-[#3fb950]">9.322</td>
+              <td class="py-2 text-gray-400">Filesystem workspace archaeology &amp; ephemeral sandbox extraction</td>
+            </tr>
+            <tr>
+              <td class="py-2"><span class="bg-[#1f6feb] text-white px-1.5 py-0.5 rounded text-[10px]">INTRA</span></td>
+              <td class="py-2 font-mono text-[#58a6ff]">brain-artifact-miner</td>
+              <td class="py-2 font-mono text-[#58a6ff]">conversation-trajectory-miner</td>
+              <td class="py-2 font-bold text-[#3fb950]">8.127</td>
+              <td class="py-2 text-gray-400">Multi-store autobiographical memory &amp; session SQLite federation</td>
+            </tr>
+            <tr>
+              <td class="py-2"><span class="bg-[#1f6feb] text-white px-1.5 py-0.5 rounded text-[10px]">INTRA</span></td>
+              <td class="py-2 font-mono text-[#58a6ff]">codebase-context-governor</td>
+              <td class="py-2 font-mono text-[#58a6ff]">context-anti-rot-sync</td>
+              <td class="py-2 font-bold text-[#3fb950]">7.913</td>
+              <td class="py-2 text-gray-400">Multi-layer context budgeting &amp; Rule 11 boundary enforcement</td>
+            </tr>
+            <tr>
+              <td class="py-2"><span class="bg-[#d29922] text-white px-1.5 py-0.5 rounded text-[10px]">CROSS</span></td>
+              <td class="py-2 font-mono text-[#58a6ff]">context-type-system</td>
+              <td class="py-2 font-mono text-[#58a6ff]">ebbinghaus-memory-governor</td>
+              <td class="py-2 font-bold text-[#e3b341]">7.678</td>
+              <td class="py-2 text-gray-400">Channel-partitioned memory assembly with cognitive forgetting decay</td>
+            </tr>
+            <tr>
+              <td class="py-2"><span class="bg-[#1f6feb] text-white px-1.5 py-0.5 rounded text-[10px]">INTRA</span></td>
+              <td class="py-2 font-mono text-[#58a6ff]">deep-skill-forge</td>
+              <td class="py-2 font-mono text-[#58a6ff]">repo-triad-forge</td>
+              <td class="py-2 font-bold text-[#3fb950]">7.170</td>
+              <td class="py-2 text-gray-400">Autonomous literature-to-skill synthesis &amp; triad pipeline</td>
+            </tr>
+            <tr>
+              <td class="py-2"><span class="bg-[#d29922] text-white px-1.5 py-0.5 rounded text-[10px]">CROSS</span></td>
+              <td class="py-2 font-mono text-[#58a6ff]">media-to-vault-pipeline</td>
+              <td class="py-2 font-mono text-[#58a6ff]">multimedia-intelligence-forge</td>
+              <td class="py-2 font-bold text-[#e3b341]">6.541</td>
+              <td class="py-2 text-gray-400">Subprocess video caption extraction &amp; dual-file vault commits</td>
+            </tr>
+            <tr>
+              <td class="py-2"><span class="bg-[#1f6feb] text-white px-1.5 py-0.5 rounded text-[10px]">INTRA</span></td>
+              <td class="py-2 font-mono text-[#58a6ff]">differential-facet-verifier</td>
+              <td class="py-2 font-mono text-[#58a6ff]">rea-reverse-engineering</td>
+              <td class="py-2 font-bold text-[#3fb950]">6.539</td>
+              <td class="py-2 text-gray-400">Binary disassembly facet verification &amp; 3-valued differential logic</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

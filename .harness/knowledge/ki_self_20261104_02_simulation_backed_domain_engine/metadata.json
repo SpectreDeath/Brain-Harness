@@ -1,0 +1,74 @@
+{
+  "id": "ki_self_20261104_02_simulation_backed_domain_engine",
+  "title": "Dual-Mode Simulation-Backed Engine for Native System Sandboxes",
+  "category": "software_engineering",
+  "source_target": "internal_endogenous_reflection",
+  "detected_format": "endogenous_reflection",
+  "status": "ACTIVE",
+  "created_at": "2026-11-04T13:44:55.274493+00:00",
+  "retrieval_count": 0,
+  "edges": [
+    {
+      "type": "references_code",
+      "target": "plugins/integration_and_io/agent_desktop/engine.py#L20-L80",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    },
+    {
+      "type": "references_code",
+      "target": ".agents/skills/agent-desktop-operator/scripts/desktop_operator_engine.py#L90-L150",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    },
+    {
+      "type": "references_code",
+      "target": "tests/test_plugin_agent_desktop.py#L50-L75",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    }
+  ],
+  "isnad": {
+    "decision_id": "dec_ki_self_20261104_02_simulation_backed_domain_engine",
+    "claims": [
+      {
+        "assertion": "Sandboxed Harness plugins wrapping native OS executables must embed high-fidelity deterministic simulation fallbacks in their domain engines, ensuring contract and hygiene test suites execute with 100% reliability in CI environments where heavy binaries cannot be compiled.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "plugins/integration_and_io/agent_desktop/engine.py#L20-L80",
+            "sha256_hash": "N/A",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": ".agents/skills/agent-desktop-operator/scripts/desktop_operator_engine.py#L90-L150",
+            "sha256_hash": "N/A",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "tests/test_plugin_agent_desktop.py#L50-L75",
+            "sha256_hash": "N/A",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "software_engineering",
+    "simulation_fallback",
+    "plugin_architecture",
+    "ci_cd",
+    "endogenous_memory",
+    "self_reflection"
+  ],
+  "distilled_learning": "External tools and plugins often depend on platform-specific C++/Rust binaries, OS accessibility daemons, or display servers (UI Automation, AXUIElement, AT-SPI) that are absent or uncompiled in CI/CD runners and test containers. Implementing a dual-mode domain engine with an automatic simulation fallback allows the complete test suite (IoC resolution, protocol contracts, schema validation, and tool wrappers) to pass with 100% determinism while strictly isolating the real subprocess runner behind Rule 14 and Rule 53 transport safety nets."
+}

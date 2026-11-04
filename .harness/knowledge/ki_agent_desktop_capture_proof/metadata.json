@@ -1,0 +1,73 @@
+{
+  "id": "ki_agent_desktop_capture_proof",
+  "title": "Evidence Tri-State & Capture-Proof Ref Identity Resolution",
+  "category": "software_engineering",
+  "source_target": "D:\\GitHub\\cloned\\agent-desktop",
+  "detected_format": "git_repository",
+  "status": "ACTIVE",
+  "created_at": "2026-11-04T12:15:51.304488+00:00",
+  "retrieval_count": 0,
+  "edges": [
+    {
+      "type": "references_code",
+      "target": "D:\\GitHub\\cloned\\agent-desktop\\CONCEPTS.md#L68-L115",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    },
+    {
+      "type": "references_code",
+      "target": "D:\\GitHub\\cloned\\agent-desktop\\crates\\core\\src\\refs\\ref_capture_proof.rs#L1-L162",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    },
+    {
+      "type": "references_code",
+      "target": "D:\\GitHub\\cloned\\agent-desktop\\crates\\core\\src\\refs\\ref_entry_identity.rs#L1-L80",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    }
+  ],
+  "isnad": {
+    "decision_id": "dec_ki_agent_desktop_capture_proof",
+    "claims": [
+      {
+        "assertion": "Accessibility properties must adhere to an Evidence Tri-State (Known, Absent, Unknown) without collapsing to boolean. Element refs (@snapshot_id:eN) are proven unique across the entire window at snapshot time using 16 field-mask buckets and unread_bits verification.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "D:\\GitHub\\cloned\\agent-desktop\\CONCEPTS.md#L68-L115",
+            "sha256_hash": "N/A",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "D:\\GitHub\\cloned\\agent-desktop\\crates\\core\\src\\refs\\ref_capture_proof.rs#L1-L162",
+            "sha256_hash": "N/A",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "D:\\GitHub\\cloned\\agent-desktop\\crates\\core\\src\\refs\\ref_entry_identity.rs#L1-L80",
+            "sha256_hash": "N/A",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "accessibility",
+    "ref_identity",
+    "capture_proof",
+    "tri_state",
+    "agent_desktop"
+  ],
+  "distilled_learning": "Operating system accessibility trees exhibit partial reads, timing glitches, and identical twins. agent-desktop resolves this by enforcing a non-collapsing Evidence Tri-State (Known, Absent, Unknown) and whole-window CaptureProof. When an element is captured, its uniqueness is verified across the window under a 16 field-mask bucket index. If unread_bits exist (a property timed out or failed to read), uniqueness is withheld, preventing false-positive ref actions and eliminating non-deterministic click delivery."
+}

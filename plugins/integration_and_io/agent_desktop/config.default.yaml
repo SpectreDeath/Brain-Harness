@@ -1,0 +1,13 @@
+# Agent Desktop Plugin Configuration
+version: "1.1.0"
+category: "integration_and_io"
+isolation: "subprocess"
+budgets:
+  timeout_seconds: 300
+  command_timeout_ms: 10000
+  max_concurrent_mcp_calls: 8
+  max_mcp_message_bytes: 4194304
+execution:
+  preferred_mode: "cli_subprocess"
+  enable_simulation_fallback: true
+  powershell_quote_refs: true

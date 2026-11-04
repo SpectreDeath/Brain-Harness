@@ -1,0 +1,74 @@
+{
+  "id": "ki_agent_desktop_mcp_cancellation",
+  "title": "Clap-Derived Dynamic MCP Server with Pre-Spawn Cancel & SIGTERM Input Release",
+  "category": "integration_and_io",
+  "source_target": "D:\\GitHub\\cloned\\agent-desktop",
+  "detected_format": "git_repository",
+  "status": "ACTIVE",
+  "created_at": "2026-11-04T12:15:51.306491+00:00",
+  "retrieval_count": 0,
+  "edges": [
+    {
+      "type": "references_code",
+      "target": "D:\\GitHub\\cloned\\agent-desktop\\src\\mcp\\mod.rs#L1-L120",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    },
+    {
+      "type": "references_code",
+      "target": "D:\\GitHub\\cloned\\agent-desktop\\src\\mcp\\calls.rs#L1-L110",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    },
+    {
+      "type": "references_code",
+      "target": "D:\\GitHub\\cloned\\agent-desktop\\src\\mcp\\catalog.rs#L1-L95",
+      "target_kind": "path",
+      "derived": true,
+      "confidence": 0.95,
+      "description": null
+    }
+  ],
+  "isnad": {
+    "decision_id": "dec_ki_agent_desktop_mcp_cancellation",
+    "claims": [
+      {
+        "assertion": "MCP stdio servers can dynamically project CLI command trees into JSON-RPC tools with zero manual schema duplication, while bounding concurrency (8 slots), registering call admission under lock before thread spawn, and granting 3-second SIGTERM grace periods on cancellation to release held physical inputs.",
+        "lineage": [
+          {
+            "node_type": "primary_code",
+            "uri": "D:\\GitHub\\cloned\\agent-desktop\\src\\mcp\\mod.rs#L1-L120",
+            "sha256_hash": "N/A",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "D:\\GitHub\\cloned\\agent-desktop\\src\\mcp\\calls.rs#L1-L110",
+            "sha256_hash": "N/A",
+            "verified": true
+          },
+          {
+            "node_type": "primary_code",
+            "uri": "D:\\GitHub\\cloned\\agent-desktop\\src\\mcp\\catalog.rs#L1-L95",
+            "sha256_hash": "N/A",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "tags": [
+    "mcp",
+    "stdio_server",
+    "cancellation",
+    "sigterm",
+    "concurrency_cap",
+    "agent_desktop"
+  ],
+  "distilled_learning": "The agent-desktop mcp subcommand projects all leaf commands from clap CommandFactory into MCP tools adhering to the 2026-07-28 specification. Concurrency is strictly capped at 8 in-flight calls. A centralized Calls registry admits request IDs under mutex before worker thread execution so early cancellations never orphan running children. When an active headed action (e.g., mouse drag) is cancelled, SIGTERM is sent first with a 3-second grace window, allowing the OS input release handler to un-press buttons and keys before process termination."
+}

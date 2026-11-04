@@ -1,0 +1,247 @@
+{
+  "name": "plugin.agent_desktop",
+  "version": "1.1.0",
+  "description": "Desktop GUI automation & accessibility tree computer-use engine with snapshot maps, qualified ref allocation, and 2D delivery-retry disposition",
+  "category": "integration_and_io",
+  "language": "python",
+  "entrypoint": "main.py",
+  "isolation": "subprocess",
+  "trusted": false,
+  "author": "Brain Harness Desktop Integration Team",
+  "dependencies": [
+    "pydantic>=2.0.0",
+    "structlog>=23.1.0"
+  ],
+  "provides": [
+    "service.agent_desktop"
+  ],
+  "entrypoints": [
+    {
+      "name": "desktop_snapshot",
+      "description": "Capture application accessibility tree snapshot or drill down into a root ref",
+      "parameters": [
+        {
+          "name": "app",
+          "type": "string",
+          "description": "Target desktop application name (e.g. 'Notes', 'Explorer', 'Code')",
+          "required": false,
+          "default": ""
+        },
+        {
+          "name": "root_ref",
+          "type": "string",
+          "description": "Qualified root ref (@snapshot_id:eN) to drill down into",
+          "required": false,
+          "default": ""
+        },
+        {
+          "name": "interactive_only",
+          "type": "boolean",
+          "description": "Filter snapshot to interactive actionable elements only",
+          "required": false,
+          "default": true
+        },
+        {
+          "name": "skeleton",
+          "type": "boolean",
+          "description": "Clamp depth and return children_count on cut branches for large trees",
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "compact",
+          "type": "boolean",
+          "description": "Strip redundant node geometry for token budget reduction",
+          "required": false,
+          "default": true
+        },
+        {
+          "name": "surface",
+          "type": "string",
+          "description": "Target specific surface overlay ('menu', 'dialog', 'sheet', 'alert')",
+          "required": false,
+          "default": ""
+        },
+        {
+          "name": "session",
+          "type": "string",
+          "description": "Session namespace name",
+          "required": false,
+          "default": "default"
+        }
+      ]
+    },
+    {
+      "name": "desktop_act",
+      "description": "Execute a semantic or physical action on a qualified ref (@snapshot_id:eN)",
+      "parameters": [
+        {
+          "name": "action",
+          "type": "string",
+          "description": "Action name: 'click', 'double-click', 'right-click', 'set-value', 'type', 'select', 'toggle', 'focus'",
+          "required": true
+        },
+        {
+          "name": "ref_id",
+          "type": "string",
+          "description": "Qualified reference token (@<snapshot_id>:e<N>)",
+          "required": true
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "description": "Value to enter when action is 'set-value' or 'type'",
+          "required": false,
+          "default": ""
+        },
+        {
+          "name": "headed",
+          "type": "boolean",
+          "description": "Use physical synthetic mouse/keyboard events instead of headless API",
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "interval_ms",
+          "type": "integer",
+          "description": "Typing cadence interval in milliseconds",
+          "required": false
+        },
+        {
+          "name": "session",
+          "type": "string",
+          "description": "Session namespace name",
+          "required": false,
+          "default": "default"
+        }
+      ]
+    },
+    {
+      "name": "desktop_find",
+      "description": "Find accessibility nodes matching role, name, or text within an application",
+      "parameters": [
+        {
+          "name": "app",
+          "type": "string",
+          "description": "Target application name",
+          "required": false,
+          "default": ""
+        },
+        {
+          "name": "role",
+          "type": "string",
+          "description": "Exact accessibility role (e.g. 'button', 'edit', 'combobox', 'menuitem')",
+          "required": false,
+          "default": ""
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "description": "Exact accessible element name",
+          "required": false,
+          "default": ""
+        },
+        {
+          "name": "text",
+          "type": "string",
+          "description": "Sub-text to match in element value or description",
+          "required": false,
+          "default": ""
+        },
+        {
+          "name": "session",
+          "type": "string",
+          "description": "Session namespace name",
+          "required": false,
+          "default": "default"
+        }
+      ]
+    },
+    {
+      "name": "desktop_manage_window",
+      "description": "List, focus, resize, or reposition application windows and query displays",
+      "parameters": [
+        {
+          "name": "operation",
+          "type": "string",
+          "description": "Window command: 'list-windows', 'list-displays', 'list-apps', 'focus-window', 'resize-window', 'move-window', 'minimize', 'maximize', 'restore'",
+          "required": true
+        },
+        {
+          "name": "app",
+          "type": "string",
+          "description": "Application filter",
+          "required": false,
+          "default": ""
+        },
+        {
+          "name": "window_id",
+          "type": "string",
+          "description": "Target window identifier",
+          "required": false,
+          "default": ""
+        },
+        {
+          "name": "bounds",
+          "type": "object",
+          "description": "Window bounds rectangle dictionary with x, y, w, h",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "desktop_wait",
+      "description": "Wait for a desktop element, window, or surface condition without fixed sleep races",
+      "parameters": [
+        {
+          "name": "app",
+          "type": "string",
+          "description": "Target application name",
+          "required": false,
+          "default": ""
+        },
+        {
+          "name": "element_ref",
+          "type": "string",
+          "description": "Qualified ref token to wait on",
+          "required": false,
+          "default": ""
+        },
+        {
+          "name": "window_title",
+          "type": "string",
+          "description": "Window title to wait for",
+          "required": false,
+          "default": ""
+        },
+        {
+          "name": "text",
+          "type": "string",
+          "description": "Accessible text to wait for",
+          "required": false,
+          "default": ""
+        },
+        {
+          "name": "timeout_ms",
+          "type": "integer",
+          "description": "Maximum wait timeout in milliseconds",
+          "required": false,
+          "default": 5000
+        }
+      ]
+    },
+    {
+      "name": "desktop_status",
+      "description": "Query host OS accessibility API status, permissions grant, and available surfaces",
+      "parameters": [
+        {
+          "name": "check_permissions",
+          "type": "boolean",
+          "description": "Perform live accessibility permissions probe",
+          "required": false,
+          "default": true
+        }
+      ]
+    }
+  ]
+}
