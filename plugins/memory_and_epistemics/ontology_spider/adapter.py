@@ -10,19 +10,34 @@ import json
 from pathlib import Path
 from typing import Any, Union
 
-from ontology_spider.model import (
-    Entity,
-    OntologyModel,
-    Provenance,
-    Relation,
-)
-from ontology_spider.seam import ModelSource
+try:
+    from ontology_spider.model import (
+        Entity,
+        OntologyModel,
+        Provenance,
+        Relation,
+    )
+    from ontology_spider.seam import ModelSource
+    HAS_ONTOLOGY_SPIDER = True
+except ModuleNotFoundError:
+    HAS_ONTOLOGY_SPIDER = False
+    Entity = None  # type: ignore
+    OntologyModel = None  # type: ignore
+    Provenance = None  # type: ignore
+    Relation = None  # type: ignore
+    ModelSource = object  # type: ignore
 
 
 class HarnessVaultModelSource(ModelSource):
     """Adapter loading vault-shaped items and typed edges into an OntologyModel."""
 
     def __init__(self, source: Union[str, Path, dict[str, Any]]) -> None:
+        if not HAS_ONTOLOGY_SPIDER:
+            raise RuntimeError(
+                "The 'ontology_spider' engine is not installed. "
+                "Install it via: pip install -e <path-to-Ontology-Spider> "
+                "or consult plugins/memory_and_epistemics/ontology_spider/README.md"
+            )
         self.source = source
         self.source_label = str(source) if not isinstance(source, dict) else "memory_dict"
 

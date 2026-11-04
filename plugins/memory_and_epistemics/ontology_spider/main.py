@@ -9,7 +9,7 @@ from typing import Any, Union
 from harness.kernel.context import ServiceContext, ServiceKey
 from harness.plugins.base import HarnessPlugin
 
-from .service import OntologySpiderService
+from .service import HAS_ONTOLOGY_SPIDER, OntologySpiderService
 
 logger = logging.getLogger(__name__)
 
@@ -39,6 +39,13 @@ class OntologySpiderPlugin(HarnessPlugin):
 
     async def on_load(self, ctx: ServiceContext) -> None:
         logger.info("loading_plugin: %s", self.name)
+        if not HAS_ONTOLOGY_SPIDER:
+            logger.warning(
+                "Ontology-Spider engine is not installed. "
+                "Install via: pip install -e <path-to-Ontology-Spider> "
+                "(see plugins/memory_and_epistemics/ontology_spider/README.md). "
+                "Plugin registered in offline/stub mode."
+            )
         ctx.provide(ONTOLOGY_SPIDER_KEY, self._service)
         ctx.provide(ONTOLOGY_REASONER_KEY, self._service)
 

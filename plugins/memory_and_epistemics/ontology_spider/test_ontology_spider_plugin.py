@@ -3,14 +3,19 @@
 from __future__ import annotations
 
 import ast
+import importlib.util
 import json
+import os
 import tempfile
 from pathlib import Path
 
 import pytest
 
 from harness.kernel.context import ServiceContext
-from plugins.memory_and_epistemics.ontology_spider.adapter import HarnessVaultModelSource
+from plugins.memory_and_epistemics.ontology_spider.adapter import (
+    HAS_ONTOLOGY_SPIDER,
+    HarnessVaultModelSource,
+)
 from plugins.memory_and_epistemics.ontology_spider.main import (
     ONTOLOGY_SPIDER_KEY,
     OntologySpiderPlugin,
@@ -20,14 +25,21 @@ from plugins.memory_and_epistemics.ontology_spider.main import (
 )
 from plugins.memory_and_epistemics.ontology_spider.service import OntologySpiderService
 
+skip_if_no_engine = pytest.mark.skipif(
+    not HAS_ONTOLOGY_SPIDER,
+    reason="Ontology-Spider engine is not installed (install via: pip install -e <path-to-Ontology-Spider>)",
+)
+
 
 @pytest.fixture
 def vault_sample_path() -> Path:
-    p = Path("D:/GitHub/projects/Ontology-Spider/examples/vault_sample.json")
-    assert p.exists(), f"Vault sample not found at: {p}"
+    """Portable fixture resolving bundled vault sample JSON within the plugin directory."""
+    p = Path(__file__).parent / "fixtures" / "vault_sample.json"
+    assert p.exists(), f"Vault sample fixture not found at: {p}"
     return p
 
 
+@skip_if_no_engine
 def test_harness_vault_adapter_loads_sample(vault_sample_path: Path):
     adapter = HarnessVaultModelSource(vault_sample_path)
     model = adapter.load()
@@ -38,6 +50,7 @@ def test_harness_vault_adapter_loads_sample(vault_sample_path: Path):
     assert "impl_plugin" in model.entities
 
 
+@skip_if_no_engine
 def test_ontology_spider_service_transitive_query_and_proof(vault_sample_path: Path):
     service = OntologySpiderService()
     res = service.query(vault_sample_path, "query transitive depends_on from impl_plugin")
@@ -53,6 +66,7 @@ def test_ontology_spider_service_transitive_query_and_proof(vault_sample_path: P
     assert len(core_ans["provenance"]) >= 2
 
 
+@skip_if_no_engine
 def test_vault_directory_loading():
     """Verify loading a directory-based knowledge vault structure."""
     with tempfile.TemporaryDirectory() as tmpdir:
@@ -113,6 +127,7 @@ def test_vault_directory_loading():
         assert db_ans["path"] == ["service_a", "service_b", "database_c"]
 
 
+@skip_if_no_engine
 def test_schema_validation_detects_cycles():
     cyclical_vault = {
         "vault_id": "cycle_test",
@@ -133,6 +148,7 @@ def test_schema_validation_detects_cycles():
 
 @pytest.mark.asyncio
 async def test_plugin_lifecycle_and_ioc_registration():
+    """Verify plugin registers services into IoC container even when engine is absent (offline mode)."""
     ctx = ServiceContext()
     p = OntologySpiderPlugin()
 
@@ -145,6 +161,7 @@ async def test_plugin_lifecycle_and_ioc_registration():
     await p.on_unload()
 
 
+@skip_if_no_engine
 def test_standalone_entrypoints(vault_sample_path: Path):
     loaded = load_vault_ontology(vault_sample_path)
     assert loaded["entities_count"] == 5  # 3 items + 2 item types
@@ -157,9 +174,25 @@ def test_standalone_entrypoints(vault_sample_path: Path):
     assert isinstance(val_res, list)
 
 
+@skip_if_no_engine
 def test_engine_zero_brain_harness_imports():
     """Verify that Ontology-Spider engine imports ZERO Brain Harness code (Track 2 guardrail)."""
-    engine_root = Path("D:/GitHub/projects/Ontology-Spider/src/ontology_spider")
+    spec = importlib.util.find_spec("ontology_spider")
+    engine_root = None
+    if spec and spec.origin:
+        engine_root = Path(spec.origin).parent
+    elif "ONTOLOGY_SPIDER_ROOT" in os.environ:
+        p = Path(os.environ["ONTOLOGY_SPIDER_ROOT"])
+        if (p / "src" / "ontology_spider").exists():
+            engine_root = p / "src" / "ontology_spider"
+        elif (p / "ontology_spider").exists():
+            engine_root = p / "ontology_spider"
+        elif p.exists():
+            engine_root = p
+
+    if not engine_root or not engine_root.exists():
+        pytest.skip("Could not locate ontology_spider source directory to inspect AST imports")
+
     for py_file in engine_root.rglob("*.py"):
         tree = ast.parse(py_file.read_text(encoding="utf-8"), filename=str(py_file))
         for node in ast.walk(tree):
@@ -169,3 +202,13 @@ def test_engine_zero_brain_harness_imports():
             elif isinstance(node, ast.ImportFrom):
                 if node.module:
                     assert "harness" not in node.module.lower(), f"Forbidden import from {node.module} in {py_file}"
+
+
+def test_missing_engine_error_message():
+    """Verify that when engine is absent, calling service methods surfaces actionable install message."""
+    if not HAS_ONTOLOGY_SPIDER:
+        service = OntologySpiderService()
+        with pytest.raises(RuntimeError) as exc_info:
+            service.query("demo.json", "query what is test?")
+        assert "pip install -e <path-to-Ontology-Spider>" in str(exc_info.value)
+        assert "README.md" in str(exc_info.value)
