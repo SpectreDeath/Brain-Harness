@@ -49,3 +49,11 @@ entrypoints:
       - command: "python src/harness/cli.py context lint --root ."
         workdir: "."
 
+  verify-ontology:
+    description: "Verify ontology reasoning, vault traversal, and proof traces via Ontology-Spider"
+    write_path: false
+    steps:
+      - command: "pytest plugins/memory_and_epistemics/ontology_spider/test_ontology_spider_plugin.py -v"
+        workdir: "."
+
+

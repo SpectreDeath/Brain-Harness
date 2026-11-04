@@ -1,0 +1,59 @@
+{
+  "name": "plugin.ontology_spider",
+  "version": "0.2.0",
+  "description": "Formal logic reasoning, multi-hop dependency traversal, and schema validation over Brain Harness vaults",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "category": "memory_and_epistemics",
+  "author": "Brain Harness Epistemics Engine",
+  "provides": [
+    "service.ontology_spider",
+    "service.ontology_reasoner"
+  ],
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "load_vault_ontology",
+      "description": "Load a vault-shaped knowledge graph export or directory into an Ontology-Spider model",
+      "parameters": [
+        {
+          "name": "vault_source",
+          "type": "string",
+          "description": "Path to vault JSON file, directory, or raw JSON string",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "query_ontology",
+      "description": "Execute a logic reasoning query (ancestors, transitive, recommend, pattern) with proof explanations",
+      "parameters": [
+        {
+          "name": "vault_source",
+          "type": "string",
+          "description": "Path to vault JSON file or directory",
+          "required": true
+        },
+        {
+          "name": "query",
+          "type": "string",
+          "description": "Controlled Dialog query (e.g. 'query transitive depends_on from impl_plugin')",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "validate_ontology",
+      "description": "Validate schema constraints, acyclicity, domain/range, and disjointness across vault ontology",
+      "parameters": [
+        {
+          "name": "vault_source",
+          "type": "string",
+          "description": "Path to vault JSON file or directory",
+          "required": true
+        }
+      ]
+    }
+  ]
+}
