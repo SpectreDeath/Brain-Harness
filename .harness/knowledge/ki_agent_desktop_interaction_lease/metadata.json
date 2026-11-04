@@ -10,7 +10,7 @@
   "edges": [
     {
       "type": "references_code",
-      "target": "D:\\GitHub\\cloned\\agent-desktop\\crates\\core\\src\\session\\interaction_lease.rs#L1-L125",
+      "target": "cloned/agent-desktop/crates/core/src/session/interaction_lease.rs#L1-L125",
       "target_kind": "path",
       "derived": true,
       "confidence": 0.95,
@@ -18,7 +18,7 @@
     },
     {
       "type": "references_code",
-      "target": "D:\\GitHub\\cloned\\agent-desktop\\CONCEPTS.md#L50-L66",
+      "target": "cloned/agent-desktop/CONCEPTS.md#L50-L66",
       "target_kind": "path",
       "derived": true,
       "confidence": 0.95,
@@ -26,7 +26,7 @@
     },
     {
       "type": "references_code",
-      "target": "D:\\GitHub\\cloned\\agent-desktop\\crates\\core\\src\\tree\\accname.rs#L1-L50",
+      "target": "cloned/agent-desktop/crates/core/src/tree/accname.rs#L1-L50",
       "target_kind": "path",
       "derived": true,
       "confidence": 0.95,

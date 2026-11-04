@@ -10,7 +10,7 @@
   "edges": [
     {
       "type": "references_code",
-      "target": "D:\\GitHub\\cloned\\agent-desktop\\src\\mcp\\mod.rs#L1-L120",
+      "target": "cloned/agent-desktop/src/mcp/mod.rs#L1-L120",
       "target_kind": "path",
       "derived": true,
       "confidence": 0.95,
@@ -18,7 +18,7 @@
     },
     {
       "type": "references_code",
-      "target": "D:\\GitHub\\cloned\\agent-desktop\\src\\mcp\\calls.rs#L1-L110",
+      "target": "cloned/agent-desktop/src/mcp/calls.rs#L1-L110",
       "target_kind": "path",
       "derived": true,
       "confidence": 0.95,
@@ -26,7 +26,7 @@
     },
     {
       "type": "references_code",
-      "target": "D:\\GitHub\\cloned\\agent-desktop\\src\\mcp\\catalog.rs#L1-L95",
+      "target": "cloned/agent-desktop/src/mcp/catalog.rs#L1-L95",
       "target_kind": "path",
       "derived": true,
       "confidence": 0.95,

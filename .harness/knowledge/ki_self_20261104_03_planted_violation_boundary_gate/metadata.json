@@ -10,7 +10,7 @@
   "edges": [
     {
       "type": "references_code",
-      "target": "D:\\GitHub\\cloned\\agent-desktop\\scripts\\check_architecture.py#L1-L120",
+      "target": "cloned/agent-desktop/scripts/check_architecture.py#L1-L120",
       "target_kind": "path",
       "derived": true,
       "confidence": 0.95,
@@ -18,7 +18,7 @@
     },
     {
       "type": "references_code",
-      "target": "D:\\GitHub\\cloned\\agent-desktop\\AGENTS.md#L120-L185",
+      "target": "cloned/agent-desktop/AGENTS.md#L120-L185",
       "target_kind": "path",
       "derived": true,
       "confidence": 0.95,

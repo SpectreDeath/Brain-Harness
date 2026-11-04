@@ -10,7 +10,7 @@
   "edges": [
     {
       "type": "references_code",
-      "target": "D:\\GitHub\\cloned\\agent-desktop\\CONCEPTS.md#L68-L115",
+      "target": "cloned/agent-desktop/CONCEPTS.md#L68-L115",
       "target_kind": "path",
       "derived": true,
       "confidence": 0.95,
@@ -18,7 +18,7 @@
     },
     {
       "type": "references_code",
-      "target": "D:\\GitHub\\cloned\\agent-desktop\\crates\\core\\src\\refs\\ref_capture_proof.rs#L1-L162",
+      "target": "cloned/agent-desktop/crates/core/src/refs/ref_capture_proof.rs#L1-L162",
       "target_kind": "path",
       "derived": true,
       "confidence": 0.95,
@@ -26,7 +26,7 @@
     },
     {
       "type": "references_code",
-      "target": "D:\\GitHub\\cloned\\agent-desktop\\crates\\core\\src\\refs\\ref_entry_identity.rs#L1-L80",
+      "target": "cloned/agent-desktop/crates/core/src/refs/ref_entry_identity.rs#L1-L80",
       "target_kind": "path",
       "derived": true,
       "confidence": 0.95,
