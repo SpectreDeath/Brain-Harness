@@ -159,32 +159,10 @@ def extract_invariants(content: str) -> list[SkillInvariantDefinition]:
 
 
 _NON_SKILL_TOKENS = frozenset({
-    "card.md",
-    "skill.md",
-    "temp",
-    "requestfeedback",
-    "skills",
-    "knowledge",
-    "script",
-    "scripts",
-    "mermaid",
-    "dist",
-    "head",
-    "body",
-    "html",
-    "div",
-    "span",
-    "true",
-    "false",
-    "none",
-    "null",
-    "href",
-    "http",
-    "https",
-    "src",
-    "tests",
-    "plugins",
-    "docs",
+    "card.md", "skill.md", "temp", "requestfeedback", "skills", "knowledge",
+    "script", "scripts", "mermaid", "dist", "head", "body", "html", "div",
+    "span", "true", "false", "none", "null", "href", "http", "https",
+    "src", "tests", "plugins", "docs",
 })
 
 

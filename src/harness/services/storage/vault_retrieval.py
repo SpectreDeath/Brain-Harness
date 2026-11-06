@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
 import re
 from typing import Any, cast
@@ -15,16 +16,9 @@ logger = structlog.get_logger()
 
 
 def _update_disk_meta(root: Path, ki_id: str, updates: dict[str, Any]) -> None:
-    import os
-
     if "PYTEST_CURRENT_TEST" in os.environ:
-        resolved = root.resolve()
-        # Prevent tests from dirtying git-tracked repository vault files
-        if (
-            ".harness" in resolved.parts
-            and "pytest" not in str(resolved).lower()
-            and "temp" not in str(resolved).lower()
-        ):
+        res = str(root.resolve()).lower()
+        if ".harness" in res and "pytest" not in res and "temp" not in res:
             return
 
     meta_path = root / ki_id / "metadata.json"
@@ -66,9 +60,8 @@ class KnowledgeRetrievalMixin:
 
         tokens = set(re.findall(r"[a-zA-Z0-9_-]{3,}", task.lower()))
         stopwords = {
-            "the", "and", "for", "with", "from", "that", "this", "into", "over",
-            "after", "before", "about", "your", "have", "been", "will", "would",
-            "could", "should", "each", "other", "every", "some", "such", "than",
+            "the", "and", "for", "with", "from", "that", "this", "into", "over", "after", "before",
+            "about", "your", "have", "been", "will", "would", "could", "should", "each", "other", "every", "some", "such", "than",
         }
         query_terms = [t for t in tokens if t not in stopwords]
         if not query_terms:
@@ -112,11 +105,7 @@ class KnowledgeRetrievalMixin:
         return [item for _, item in scored_items[:max_items]]
 
     def retrieve_relevant_knowledge_sync(
-        self,
-        task: str,
-        max_items: int = 3,
-        min_score: float = 0.15,
-        vault_dir: Path | str = ".harness/knowledge",
+        self, task: str, max_items: int = 3, min_score: float = 0.15, vault_dir: Path | str = ".harness/knowledge",
     ) -> list[KnowledgeItemRecord]:
         from harness.creator.validator.base import _run_coro_sync
 
@@ -183,11 +172,7 @@ class KnowledgeRetrievalMixin:
                 _update_disk_meta(root, ki_id, {"success_count": cnt})
 
     async def evaluate_vault_lifecycle(
-        self,
-        min_retrievals: int = 5,
-        promote_ratio: float = 0.75,
-        demote_ratio: float = 0.25,
-        vault_dir: Path | str = ".harness/knowledge",
+        self, min_retrievals: int = 5, promote_ratio: float = 0.75, demote_ratio: float = 0.25, vault_dir: Path | str = ".harness/knowledge",
     ) -> dict[str, list[str]]:
         items = await self.list_knowledge_items()
         promoted, demoted, root = [], [], Path(vault_dir).resolve()
