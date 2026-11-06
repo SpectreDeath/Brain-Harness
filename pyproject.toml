@@ -36,7 +36,7 @@ dev = [
     "types-PyYAML",
     "rich>=13.0.0",
     "requests>=2.31.0",
-    "youtube-transcript-api>=0.6.0",
+    "youtube-transcript-api>=1.2.4",
     "jsonschema>=4.20.0",
     "numpy>=1.26.0",
     "scipy>=1.10.0",
