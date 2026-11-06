@@ -24,7 +24,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-llm = ["litellm>=1.100.4"]
+llm = ["litellm>=1.106.6"]
 docker = ["docker>=7.0.0"]
 dev = [
     "pytest",
