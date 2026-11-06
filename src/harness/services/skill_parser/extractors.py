@@ -158,19 +158,51 @@ def extract_invariants(content: str) -> list[SkillInvariantDefinition]:
     return invariants
 
 
+_NON_SKILL_TOKENS = frozenset({
+    "card.md",
+    "skill.md",
+    "temp",
+    "requestfeedback",
+    "skills",
+    "knowledge",
+    "script",
+    "scripts",
+    "mermaid",
+    "dist",
+    "head",
+    "body",
+    "html",
+    "div",
+    "span",
+    "true",
+    "false",
+    "none",
+    "null",
+    "href",
+    "http",
+    "https",
+    "src",
+    "tests",
+    "plugins",
+    "docs",
+})
+
+
 def extract_references(text: str, exclude_self: str = "") -> list[str]:
     """Extract cross-skill references from markdown links and text."""
     refs: list[str] = []
     for match in re.findall(r"/([a-z0-9_\-]+)", text):
-        if len(match) > 3 and match != exclude_self:
-            refs.append(match)
+        clean_match = match.lower().strip()
+        if len(clean_match) > 3 and clean_match != exclude_self and clean_match not in _NON_SKILL_TOKENS:
+            refs.append(clean_match)
 
     for match in re.findall(r"\[([a-z0-9_\-]+)\]", text):
+        clean_match = match.lower().strip()
         if (
-            len(match) > 3
-            and match != exclude_self
-            and match not in {"card.md", "skill.md", "temp", "requestfeedback"}
+            len(clean_match) > 3
+            and clean_match != exclude_self
+            and clean_match not in _NON_SKILL_TOKENS
         ):
-            refs.append(match)
+            refs.append(clean_match)
 
     return list(dict.fromkeys(refs))

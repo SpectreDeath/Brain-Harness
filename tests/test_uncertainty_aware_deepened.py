@@ -21,6 +21,7 @@ import tempfile
 from pathlib import Path
 
 import pytest
+pytest.importorskip("numpy")
 from click.testing import CliRunner
 
 _ws_root = Path(__file__).resolve().parent.parent

@@ -214,3 +214,39 @@ def test_initial_messages_construction():
     assert "test_tool" in msgs[0].content
     assert msgs[1].role == "user"
     assert "Solve the puzzle" in msgs[1].content
+
+
+@pytest.mark.asyncio
+async def test_invoke_tool_transactional_unscoped_does_not_rollback_repo():
+    """Verify invoke_tool_transactional skips git rollback when scoped_paths is None (Track 4)."""
+    from unittest.mock import MagicMock
+    from harness.agent.react import invoke_tool_transactional
+    from harness.kernel.context import ServiceContext
+    from harness.services.filesystem_git import FILESYSTEM_GIT_KEY
+
+    ctx = ServiceContext()
+    mock_git = MagicMock()
+    ctx.provide(FILESYSTEM_GIT_KEY, mock_git)
+
+    tools = ToolRegistry()
+    tools.register(
+        name="fail_no_path",
+        description="Fails without file path",
+        executor=lambda query: {"status": "error", "error": "failed"},
+    )
+    tools.register(
+        name="fail_with_path",
+        description="Fails with file path",
+        executor=lambda path: {"status": "error", "error": "failed"},
+    )
+
+    # 1. Unscoped tool call fails -> git rollback must be skipped!
+    obs1 = await invoke_tool_transactional(ctx, tools, "fail_no_path", {"query": "test"})
+    assert obs1.get("result", {}).get("status") == "error"
+    mock_git.rollback_transaction.assert_not_called()
+    mock_git.commit_transaction.assert_not_called()
+
+    # 2. Scoped tool call fails -> git rollback called with specific paths!
+    obs2 = await invoke_tool_transactional(ctx, tools, "fail_with_path", {"path": "src/dummy.py"})
+    assert obs2.get("result", {}).get("status") == "error"
+    mock_git.rollback_transaction.assert_called_once_with(paths=["src/dummy.py"])

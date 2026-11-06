@@ -59,6 +59,8 @@ class ContextLinter:
             return False
         if SemanticPathClassifier.is_archetype_template(span):
             return False
+        if SemanticPathClassifier.is_runtime_state(span):
+            return False
         return bool(cls.PATH_LIKE_RE.match(span))
 
     @classmethod

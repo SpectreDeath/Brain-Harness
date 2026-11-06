@@ -44,7 +44,7 @@ All 12 plugins are first-party components carrying `trusted: True`. Direct in-pr
 * Conversely, when dispatched by an autonomous agent during ReAct loop execution, these tools run inside the sandboxed isolation transport configured in their manifest.
 
 ### Skill-Script Adapters
-The 5 skill-script adapters (`calibrator/engine_adapter.py`, `self_eval`, `uncertainty`, `bigquery`, `compass`) adapt domain algorithms from `.agents/skills/<name>/scripts/` into Click CLI subcommands. These scripts are vetted first-party domain models and execute directly in-process when invoked via the CLI.
+The 5 skill-script adapters (`src/harness/commands/calibrator/engine_adapter.py`, `self_eval`, `uncertainty`, `bigquery`, `compass`) adapt domain algorithms from `.agents/skills/<name>/scripts/` into Click CLI subcommands. These scripts are vetted first-party domain models and execute directly in-process when invoked via the CLI.
 
 ---
 
@@ -83,7 +83,7 @@ The Harness MCP server (`src/harness/mcp/server/`) exposes registered tools to c
 ## 6. Nested Subprocess Execution & Binary Discovery
 
 * **R Editor Bridge (`plugin.r_editor_bridge`)**:
-  Spawns child R/Rscript processes via `asyncio.create_subprocess_exec` (`r_editor_service.py`). When running inside a parent sandbox (`SubprocessExecutor` or `ContainerExecutor`), this is nested execution bounded by the parent sandbox's limits with Rule 14 pipe cleanup and Rule 53 stderr drainage.
+  Spawns child R/Rscript processes via `asyncio.create_subprocess_exec` (`plugins/developer_tooling/r_editor_bridge/r_editor_service.py`). When running inside a parent sandbox (`SubprocessExecutor` or `ContainerExecutor`), this is nested execution bounded by the parent sandbox's limits with Rule 14 pipe cleanup and Rule 53 stderr drainage.
 * **Agent Reach Bridge (`plugin.agent_reach_bridge`)**:
   Operates primarily as an in-memory Schema v1 result envelope formatter and platform channel router. Any execution of the external `agent-reach` binary verifies binary presence on PATH via `shutil.which` before execution and raises clear diagnostic errors if missing, preventing silent execution failures or unverified PATH assumptions.
 

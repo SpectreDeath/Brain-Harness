@@ -2,7 +2,7 @@
 <gexf xmlns="http://www.gexf.net/1.3draft" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gexf.net/1.3draft http://www.gexf.net/1.3draft/gexf.xsd" version="1.3">
   <meta>
     <creator>Brain Harness</creator>
-    <description>Derived Knowledge Graph: 417 nodes, 188 edges (27 asserted, 161 derived)</description>
+    <description>Derived Knowledge Graph: 451 nodes, 218 edges (27 asserted, 191 derived)</description>
   </meta>
   <graph defaultedgetype="directed" mode="static">
     <attributes class="node" mode="static">
@@ -23,6 +23,26 @@
       <attribute id="3" title="shared_tags" type="string" />
     </attributes>
     <nodes>
+      <node id=".agents/skills/agent-desktop-operator/SKILL.md#L68-L76" label="SKILL.md#L68-L76">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id=".agents/skills/agent-desktop-operator/scripts/desktop_operator_engine.py#L90-L150" label="desktop_operator_engine.py#L90-L150">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
       <node id="Brain Harness (src/harness/services/context_optimizer/)" label=")">
         <attvalues>
           <attvalue for="0" value="path" />
@@ -73,316 +93,6 @@
           <attvalue for="6" value="0" />
         </attvalues>
       </node>
-      <node id="D:/GitHub/cloned/ChatbotX/apps/builder/src/app/api/public-spec.json/route.ts" label="route.ts">
-        <attvalues>
-          <attvalue for="0" value="path" />
-          <attvalue for="1" value="path" />
-          <attvalue for="2" value="path" />
-          <attvalue for="4" value="EXTERNAL" />
-          <attvalue for="5" value="0" />
-          <attvalue for="6" value="0" />
-        </attvalues>
-      </node>
-      <node id="D:/GitHub/cloned/ChatbotX/apps/builder/src/routers/public.ts" label="public.ts">
-        <attvalues>
-          <attvalue for="0" value="path" />
-          <attvalue for="1" value="path" />
-          <attvalue for="2" value="path" />
-          <attvalue for="4" value="EXTERNAL" />
-          <attvalue for="5" value="0" />
-          <attvalue for="6" value="0" />
-        </attvalues>
-      </node>
-      <node id="D:/GitHub/cloned/ChatbotX/apps/javascript-executor/src/index.ts" label="index.ts">
-        <attvalues>
-          <attvalue for="0" value="path" />
-          <attvalue for="1" value="path" />
-          <attvalue for="2" value="path" />
-          <attvalue for="4" value="EXTERNAL" />
-          <attvalue for="5" value="0" />
-          <attvalue for="6" value="0" />
-        </attvalues>
-      </node>
-      <node id="D:/GitHub/cloned/ChatbotX/apps/mcp-server/src/openapi-loader.ts" label="openapi-loader.ts">
-        <attvalues>
-          <attvalue for="0" value="path" />
-          <attvalue for="1" value="path" />
-          <attvalue for="2" value="path" />
-          <attvalue for="4" value="EXTERNAL" />
-          <attvalue for="5" value="0" />
-          <attvalue for="6" value="0" />
-        </attvalues>
-      </node>
-      <node id="D:/GitHub/cloned/ChatbotX/packages/event-bus/src/index.ts" label="index.ts">
-        <attvalues>
-          <attvalue for="0" value="path" />
-          <attvalue for="1" value="path" />
-          <attvalue for="2" value="path" />
-          <attvalue for="4" value="EXTERNAL" />
-          <attvalue for="5" value="0" />
-          <attvalue for="6" value="0" />
-        </attvalues>
-      </node>
-      <node id="D:/GitHub/cloned/ChatbotX/packages/flow-config/src/index.ts" label="index.ts">
-        <attvalues>
-          <attvalue for="0" value="path" />
-          <attvalue for="1" value="path" />
-          <attvalue for="2" value="path" />
-          <attvalue for="4" value="EXTERNAL" />
-          <attvalue for="5" value="0" />
-          <attvalue for="6" value="0" />
-        </attvalues>
-      </node>
-      <node id="D:/GitHub/cloned/ChatbotX/packages/javascript-sandbox/src/index.ts" label="index.ts">
-        <attvalues>
-          <attvalue for="0" value="path" />
-          <attvalue for="1" value="path" />
-          <attvalue for="2" value="path" />
-          <attvalue for="4" value="EXTERNAL" />
-          <attvalue for="5" value="0" />
-          <attvalue for="6" value="0" />
-        </attvalues>
-      </node>
-      <node id="D:/GitHub/cloned/ChatbotX/packages/sdk/src/index.ts" label="index.ts">
-        <attvalues>
-          <attvalue for="0" value="path" />
-          <attvalue for="1" value="path" />
-          <attvalue for="2" value="path" />
-          <attvalue for="4" value="EXTERNAL" />
-          <attvalue for="5" value="0" />
-          <attvalue for="6" value="0" />
-        </attvalues>
-      </node>
-      <node id="D:/GitHub/cloned/datasets/src/datasets/arrow_dataset.py" label="arrow_dataset.py">
-        <attvalues>
-          <attvalue for="0" value="path" />
-          <attvalue for="1" value="path" />
-          <attvalue for="2" value="path" />
-          <attvalue for="4" value="EXTERNAL" />
-          <attvalue for="5" value="0" />
-          <attvalue for="6" value="0" />
-        </attvalues>
-      </node>
-      <node id="D:/GitHub/cloned/datasets/src/datasets/features/bio_structure.py" label="bio_structure.py">
-        <attvalues>
-          <attvalue for="0" value="path" />
-          <attvalue for="1" value="path" />
-          <attvalue for="2" value="path" />
-          <attvalue for="4" value="EXTERNAL" />
-          <attvalue for="5" value="0" />
-          <attvalue for="6" value="0" />
-        </attvalues>
-      </node>
-      <node id="D:/GitHub/cloned/datasets/src/datasets/features/features.py" label="features.py">
-        <attvalues>
-          <attvalue for="0" value="path" />
-          <attvalue for="1" value="path" />
-          <attvalue for="2" value="path" />
-          <attvalue for="4" value="EXTERNAL" />
-          <attvalue for="5" value="0" />
-          <attvalue for="6" value="0" />
-        </attvalues>
-      </node>
-      <node id="D:/GitHub/cloned/datasets/src/datasets/fingerprint.py" label="fingerprint.py">
-        <attvalues>
-          <attvalue for="0" value="path" />
-          <attvalue for="1" value="path" />
-          <attvalue for="2" value="path" />
-          <attvalue for="4" value="EXTERNAL" />
-          <attvalue for="5" value="0" />
-          <attvalue for="6" value="0" />
-        </attvalues>
-      </node>
-      <node id="D:/GitHub/cloned/datasets/src/datasets/iterable_dataset.py" label="iterable_dataset.py">
-        <attvalues>
-          <attvalue for="0" value="path" />
-          <attvalue for="1" value="path" />
-          <attvalue for="2" value="path" />
-          <attvalue for="4" value="EXTERNAL" />
-          <attvalue for="5" value="0" />
-          <attvalue for="6" value="0" />
-        </attvalues>
-      </node>
-      <node id="D:/GitHub/cloned/datasets/src/datasets/packaged_modules/" label="packaged_modules">
-        <attvalues>
-          <attvalue for="0" value="path" />
-          <attvalue for="1" value="path" />
-          <attvalue for="2" value="path" />
-          <attvalue for="4" value="EXTERNAL" />
-          <attvalue for="5" value="0" />
-          <attvalue for="6" value="0" />
-        </attvalues>
-      </node>
-      <node id="D:/GitHub/cloned/garf/libs/core/garf/core/query_editor.py" label="query_editor.py">
-        <attvalues>
-          <attvalue for="0" value="path" />
-          <attvalue for="1" value="path" />
-          <attvalue for="2" value="path" />
-          <attvalue for="4" value="EXTERNAL" />
-          <attvalue for="5" value="0" />
-          <attvalue for="6" value="0" />
-        </attvalues>
-      </node>
-      <node id="D:/GitHub/cloned/garf/libs/core/garf/core/query_parser.py" label="query_parser.py">
-        <attvalues>
-          <attvalue for="0" value="path" />
-          <attvalue for="1" value="path" />
-          <attvalue for="2" value="path" />
-          <attvalue for="4" value="EXTERNAL" />
-          <attvalue for="5" value="0" />
-          <attvalue for="6" value="0" />
-        </attvalues>
-      </node>
-      <node id="D:/GitHub/cloned/garf/libs/core/garf/core/report.py" label="report.py">
-        <attvalues>
-          <attvalue for="0" value="path" />
-          <attvalue for="1" value="path" />
-          <attvalue for="2" value="path" />
-          <attvalue for="4" value="EXTERNAL" />
-          <attvalue for="5" value="0" />
-          <attvalue for="6" value="0" />
-        </attvalues>
-      </node>
-      <node id="D:/GitHub/cloned/garf/libs/core/garf/core/simulator.py" label="simulator.py">
-        <attvalues>
-          <attvalue for="0" value="path" />
-          <attvalue for="1" value="path" />
-          <attvalue for="2" value="path" />
-          <attvalue for="4" value="EXTERNAL" />
-          <attvalue for="5" value="0" />
-          <attvalue for="6" value="0" />
-        </attvalues>
-      </node>
-      <node id="D:/GitHub/cloned/garf/libs/executors/garf/executors/workflows/workflow.py" label="workflow.py">
-        <attvalues>
-          <attvalue for="0" value="path" />
-          <attvalue for="1" value="path" />
-          <attvalue for="2" value="path" />
-          <attvalue for="4" value="EXTERNAL" />
-          <attvalue for="5" value="0" />
-          <attvalue for="6" value="0" />
-        </attvalues>
-      </node>
-      <node id="D:/GitHub/cloned/garf/libs/io/garf/io/writer.py" label="writer.py">
-        <attvalues>
-          <attvalue for="0" value="path" />
-          <attvalue for="1" value="path" />
-          <attvalue for="2" value="path" />
-          <attvalue for="4" value="EXTERNAL" />
-          <attvalue for="5" value="0" />
-          <attvalue for="6" value="0" />
-        </attvalues>
-      </node>
-      <node id="D:/GitHub/cloned/headroom/headroom/transforms" label="transforms">
-        <attvalues>
-          <attvalue for="0" value="source" />
-          <attvalue for="1" value="source" />
-          <attvalue for="2" value="source" />
-          <attvalue for="4" value="EXTERNAL" />
-          <attvalue for="5" value="0" />
-          <attvalue for="6" value="0" />
-        </attvalues>
-      </node>
-      <node id="D:/GitHub/cloned/paperless-ngx/src/documents/consumer.py" label="consumer.py">
-        <attvalues>
-          <attvalue for="0" value="path" />
-          <attvalue for="1" value="path" />
-          <attvalue for="2" value="path" />
-          <attvalue for="4" value="EXTERNAL" />
-          <attvalue for="5" value="0" />
-          <attvalue for="6" value="0" />
-        </attvalues>
-      </node>
-      <node id="D:/GitHub/cloned/paperless-ngx/src/documents/models.py" label="models.py">
-        <attvalues>
-          <attvalue for="0" value="path" />
-          <attvalue for="1" value="path" />
-          <attvalue for="2" value="path" />
-          <attvalue for="4" value="EXTERNAL" />
-          <attvalue for="5" value="0" />
-          <attvalue for="6" value="0" />
-        </attvalues>
-      </node>
-      <node id="D:/GitHub/cloned/paperless-ngx/src/documents/parsers/" label="parsers">
-        <attvalues>
-          <attvalue for="0" value="path" />
-          <attvalue for="1" value="path" />
-          <attvalue for="2" value="path" />
-          <attvalue for="4" value="EXTERNAL" />
-          <attvalue for="5" value="0" />
-          <attvalue for="6" value="0" />
-        </attvalues>
-      </node>
-      <node id="D:/GitHub/cloned/paperless-ngx/src/documents/search/_backend.py" label="_backend.py">
-        <attvalues>
-          <attvalue for="0" value="path" />
-          <attvalue for="1" value="path" />
-          <attvalue for="2" value="path" />
-          <attvalue for="4" value="EXTERNAL" />
-          <attvalue for="5" value="0" />
-          <attvalue for="6" value="0" />
-        </attvalues>
-      </node>
-      <node id="D:/GitHub/cloned/paperless-ngx/src/documents/workflows/" label="workflows">
-        <attvalues>
-          <attvalue for="0" value="path" />
-          <attvalue for="1" value="path" />
-          <attvalue for="2" value="path" />
-          <attvalue for="4" value="EXTERNAL" />
-          <attvalue for="5" value="0" />
-          <attvalue for="6" value="0" />
-        </attvalues>
-      </node>
-      <node id="D:/GitHub/cloned/paperless-ngx/src/paperless/consumers.py" label="consumers.py">
-        <attvalues>
-          <attvalue for="0" value="path" />
-          <attvalue for="1" value="path" />
-          <attvalue for="2" value="path" />
-          <attvalue for="4" value="EXTERNAL" />
-          <attvalue for="5" value="0" />
-          <attvalue for="6" value="0" />
-        </attvalues>
-      </node>
-      <node id="D:/GitHub/cloned/paperless-ngx/src/paperless_ai/chat.py" label="chat.py">
-        <attvalues>
-          <attvalue for="0" value="path" />
-          <attvalue for="1" value="path" />
-          <attvalue for="2" value="path" />
-          <attvalue for="4" value="EXTERNAL" />
-          <attvalue for="5" value="0" />
-          <attvalue for="6" value="0" />
-        </attvalues>
-      </node>
-      <node id="D:/GitHub/cloned/paperless-ngx/src/paperless_ai/indexing.py" label="indexing.py">
-        <attvalues>
-          <attvalue for="0" value="path" />
-          <attvalue for="1" value="path" />
-          <attvalue for="2" value="path" />
-          <attvalue for="4" value="EXTERNAL" />
-          <attvalue for="5" value="0" />
-          <attvalue for="6" value="0" />
-        </attvalues>
-      </node>
-      <node id="D:/GitHub/cloned/paperless-ngx/src/paperless_ai/tables.py" label="tables.py">
-        <attvalues>
-          <attvalue for="0" value="path" />
-          <attvalue for="1" value="path" />
-          <attvalue for="2" value="path" />
-          <attvalue for="4" value="EXTERNAL" />
-          <attvalue for="5" value="0" />
-          <attvalue for="6" value="0" />
-        </attvalues>
-      </node>
-      <node id="D:/GitHub/cloned/paperless-ngx/src/paperless_ai/vector_store.py" label="vector_store.py">
-        <attvalues>
-          <attvalue for="0" value="path" />
-          <attvalue for="1" value="path" />
-          <attvalue for="2" value="path" />
-          <attvalue for="4" value="EXTERNAL" />
-          <attvalue for="5" value="0" />
-          <attvalue for="6" value="0" />
-        </attvalues>
-      </node>
       <node id="agent-skills-architect" label="agent-skills-architect">
         <attvalues>
           <attvalue for="0" value="skill" />
@@ -413,6 +123,166 @@
           <attvalue for="6" value="0" />
         </attvalues>
       </node>
+      <node id="cloned/agent-desktop/AGENTS.md#L120-L185" label="AGENTS.md#L120-L185">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="cloned/agent-desktop/CONCEPTS.md#L30-L35" label="CONCEPTS.md#L30-L35">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="cloned/agent-desktop/CONCEPTS.md#L50-L66" label="CONCEPTS.md#L50-L66">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="cloned/agent-desktop/CONCEPTS.md#L68-L115" label="CONCEPTS.md#L68-L115">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="cloned/agent-desktop/Cargo.toml#L1-L35" label="Cargo.toml#L1-L35">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="cloned/agent-desktop/crates/core/src/actionability/evaluate.rs#L78-L110" label="evaluate.rs#L78-L110">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="cloned/agent-desktop/crates/core/src/refs/ref_capture_proof.rs#L1-L162" label="ref_capture_proof.rs#L1-L162">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="cloned/agent-desktop/crates/core/src/refs/ref_entry_identity.rs#L1-L80" label="ref_entry_identity.rs#L1-L80">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="cloned/agent-desktop/crates/core/src/response/delivery_disposition.rs#L1-L13" label="delivery_disposition.rs#L1-L13">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="cloned/agent-desktop/crates/core/src/response/retry_disposition.rs#L1-L10" label="retry_disposition.rs#L1-L10">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="cloned/agent-desktop/crates/core/src/session/interaction_lease.rs#L1-L125" label="interaction_lease.rs#L1-L125">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="cloned/agent-desktop/crates/core/src/tree/accname.rs#L1-L50" label="accname.rs#L1-L50">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="cloned/agent-desktop/scripts/check_architecture.py#L1-L120" label="check_architecture.py#L1-L120">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="cloned/agent-desktop/src/mcp/calls.rs#L1-L110" label="calls.rs#L1-L110">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="cloned/agent-desktop/src/mcp/catalog.rs#L1-L95" label="catalog.rs#L1-L95">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="cloned/agent-desktop/src/mcp/mod.rs#L1-L120" label="mod.rs#L1-L120">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
       <node id="cloud-infrastructure-architect" label="cloud-infrastructure-architect">
         <attvalues>
           <attvalue for="0" value="skill" />
@@ -428,36 +298,6 @@
           <attvalue for="0" value="skill" />
           <attvalue for="1" value="skill" />
           <attvalue for="2" value="skill" />
-          <attvalue for="4" value="EXTERNAL" />
-          <attvalue for="5" value="0" />
-          <attvalue for="6" value="0" />
-        </attvalues>
-      </node>
-      <node id="d:/GitHub/projects/Brain Harness/plugins/memory_and_epistemics/brain_bridge/main.py" label="main.py">
-        <attvalues>
-          <attvalue for="0" value="path" />
-          <attvalue for="1" value="path" />
-          <attvalue for="2" value="path" />
-          <attvalue for="4" value="EXTERNAL" />
-          <attvalue for="5" value="0" />
-          <attvalue for="6" value="0" />
-        </attvalues>
-      </node>
-      <node id="d:/GitHub/projects/Brain Harness/src/harness/cli.py" label="cli.py">
-        <attvalues>
-          <attvalue for="0" value="path" />
-          <attvalue for="1" value="path" />
-          <attvalue for="2" value="path" />
-          <attvalue for="4" value="EXTERNAL" />
-          <attvalue for="5" value="0" />
-          <attvalue for="6" value="0" />
-        </attvalues>
-      </node>
-      <node id="d:/GitHub/projects/Brain Harness/src/harness/plugins/sandbox.py" label="sandbox.py">
-        <attvalues>
-          <attvalue for="0" value="path" />
-          <attvalue for="1" value="path" />
-          <attvalue for="2" value="path" />
           <attvalue for="4" value="EXTERNAL" />
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
@@ -508,6 +348,366 @@
           <attvalue for="0" value="skill" />
           <attvalue for="1" value="skill" />
           <attvalue for="2" value="skill" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="external/ChatbotX/apps/builder/src/app/api/public-spec.json/route.ts" label="route.ts">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="external/ChatbotX/apps/builder/src/routers/public.ts" label="public.ts">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="external/ChatbotX/apps/javascript-executor/src/index.ts" label="index.ts">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="external/ChatbotX/apps/mcp-server/src/openapi-loader.ts" label="openapi-loader.ts">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="external/ChatbotX/packages/event-bus/src/index.ts" label="index.ts">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="external/ChatbotX/packages/flow-config/src/index.ts" label="index.ts">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="external/ChatbotX/packages/javascript-sandbox/src/index.ts" label="index.ts">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="external/ChatbotX/packages/sdk/src/index.ts" label="index.ts">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="external/datasets/src/datasets/arrow_dataset.py" label="arrow_dataset.py">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="external/datasets/src/datasets/features/bio_structure.py" label="bio_structure.py">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="external/datasets/src/datasets/features/features.py" label="features.py">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="external/datasets/src/datasets/fingerprint.py" label="fingerprint.py">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="external/datasets/src/datasets/iterable_dataset.py" label="iterable_dataset.py">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="external/datasets/src/datasets/packaged_modules/" label="packaged_modules">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="external/garf/libs/core/garf/core/query_editor.py" label="query_editor.py">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="external/garf/libs/core/garf/core/query_parser.py" label="query_parser.py">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="external/garf/libs/core/garf/core/report.py" label="report.py">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="external/garf/libs/core/garf/core/simulator.py" label="simulator.py">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="external/garf/libs/executors/garf/executors/workflows/workflow.py" label="workflow.py">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="external/garf/libs/io/garf/io/writer.py" label="writer.py">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="external/headroom/headroom/transforms" label="transforms">
+        <attvalues>
+          <attvalue for="0" value="source" />
+          <attvalue for="1" value="source" />
+          <attvalue for="2" value="source" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="external/kimi-code-main/kimi-code-main/packages/agent-core-v2/src/_base/di/cascadeEngine.ts" label="cascadeEngine.ts">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="external/kimi-code-main/kimi-code-main/packages/minidb/src/compaction.ts" label="compaction.ts">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="external/kimi-code-main/kimi-code-main/packages/pi-tui/src/tui.ts" label="tui.ts">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="external/kimi-code-main/kimi-code-main/packages/transcript/src/granularity/filterOps.ts" label="filterOps.ts">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="external/kimi-code-main/kimi-code-main/packages/tree-sitter-bash/src/parser.ts" label="parser.ts">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="external/paperless-ngx/src/documents/consumer.py" label="consumer.py">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="external/paperless-ngx/src/documents/models.py" label="models.py">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="external/paperless-ngx/src/documents/parsers/" label="parsers">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="external/paperless-ngx/src/documents/search/_backend.py" label="_backend.py">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="external/paperless-ngx/src/documents/workflows/" label="workflows">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="external/paperless-ngx/src/paperless/consumers.py" label="consumers.py">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="external/paperless-ngx/src/paperless_ai/chat.py" label="chat.py">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="external/paperless-ngx/src/paperless_ai/indexing.py" label="indexing.py">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="external/paperless-ngx/src/paperless_ai/tables.py" label="tables.py">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="external/paperless-ngx/src/paperless_ai/vector_store.py" label="vector_store.py">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
           <attvalue for="4" value="EXTERNAL" />
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
@@ -685,7 +885,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-10-17T18:00:00Z" />
-          <attvalue for="8" value="D:\GitHub\cloned\rea-main" />
+          <attvalue for="8" value="external/rea-main" />
         </attvalues>
       </node>
       <node id="ki-rea-reconstruction-obligations" label="Reconstruction Obligation Ledgers &amp; Canonical Evidence Records">
@@ -698,7 +898,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-10-17T18:16:00Z" />
-          <attvalue for="8" value="D:\GitHub\cloned\rea-main" />
+          <attvalue for="8" value="external/rea-main" />
         </attvalues>
       </node>
       <node id="ki-responsible-ai-prototyping" label="Responsible AI Prototyping &amp; Web App Governance (Eva J Patel / Lovable)">
@@ -813,7 +1013,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-08-23T00:00:00Z" />
-          <attvalue for="8" value="d:/GitHub/projects/Brain Harness/src/harness/plugins/sandbox.py" />
+          <attvalue for="8" value="src/harness/plugins/sandbox.py" />
         </attvalues>
       </node>
       <node id="ki_20260823_02" label="High-Scale Trajectory Ingestion &amp; Overlapping Token Indexing">
@@ -823,10 +1023,10 @@
           <attvalue for="2" value="agent_orchestration" />
           <attvalue for="3" value="brain_bridge,indexing,tf_idf,search,trajectory_memory" />
           <attvalue for="4" value="ACTIVE" />
-          <attvalue for="5" value="2" />
-          <attvalue for="6" value="0" />
+          <attvalue for="5" value="3" />
+          <attvalue for="6" value="1" />
           <attvalue for="7" value="2026-08-23T00:00:00Z" />
-          <attvalue for="8" value="d:/GitHub/projects/Brain Harness/plugins/memory_and_epistemics/brain_bridge/main.py" />
+          <attvalue for="8" value="plugins/memory_and_epistemics/brain_bridge/main.py" />
         </attvalues>
       </node>
       <node id="ki_20260823_03" label="Windows PowerShell Command Delimiter Normalization">
@@ -839,7 +1039,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-08-23T00:00:00Z" />
-          <attvalue for="8" value="d:/GitHub/projects/Brain Harness/src/harness/cli.py" />
+          <attvalue for="8" value="src/harness/cli.py" />
         </attvalues>
       </node>
       <node id="ki_20260823_repo_01" label="Multi-Tier OS Process Sandboxing &amp; Policy Transforms">
@@ -852,7 +1052,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-08-23T00:00:00Z" />
-          <attvalue for="8" value="D:/GitHub/cloned/codex-main/codex-main" />
+          <attvalue for="8" value="external/codex-main/codex-main" />
         </attvalues>
       </node>
       <node id="ki_20260823_repo_02" label="Deterministic AST-Level Command Authorization via execpolicy">
@@ -865,7 +1065,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-08-23T00:00:00Z" />
-          <attvalue for="8" value="D:/GitHub/cloned/codex-main/codex-main" />
+          <attvalue for="8" value="external/codex-main/codex-main" />
         </attvalues>
       </node>
       <node id="ki_20260823_repo_03" label="Subagent Thread Forking &amp; Safety Auditing with guardian-v2">
@@ -878,7 +1078,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-08-23T00:00:00Z" />
-          <attvalue for="8" value="D:/GitHub/cloned/codex-main/codex-main" />
+          <attvalue for="8" value="external/codex-main/codex-main" />
         </attvalues>
       </node>
       <node id="ki_20260823_repo_04" label="Storage-Neutral Parent/Child Topology with agent-graph-store">
@@ -888,10 +1088,10 @@
           <attvalue for="2" value="agent_orchestration" />
           <attvalue for="3" value="agent_graph,multi_agent,thread_topology,dag,state_management" />
           <attvalue for="4" value="ACTIVE" />
-          <attvalue for="5" value="0" />
-          <attvalue for="6" value="0" />
+          <attvalue for="5" value="1" />
+          <attvalue for="6" value="1" />
           <attvalue for="7" value="2026-08-23T00:00:00Z" />
-          <attvalue for="8" value="D:/GitHub/cloned/codex-main/codex-main" />
+          <attvalue for="8" value="external/codex-main/codex-main" />
         </attvalues>
       </node>
       <node id="ki_20260823_repo_05" label="App-Server Daemon RPC Gate &amp; Automated Rust-to-TS Schema Synchronization">
@@ -904,7 +1104,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-08-23T00:00:00Z" />
-          <attvalue for="8" value="D:/GitHub/cloned/codex-main/codex-main" />
+          <attvalue for="8" value="external/codex-main/codex-main" />
         </attvalues>
       </node>
       <node id="ki_20260824_repo_01" label="Bi-Temporal Edge Invalidation in Dynamic Knowledge Graphs">
@@ -939,8 +1139,8 @@
           <attvalue for="1" value="memory_and_epistemics" />
           <attvalue for="2" value="memory_and_epistemics" />
           <attvalue for="3" value="graph_database,kuzu,embedded_database,driver_architecture,testing,in_process" />
-          <attvalue for="4" value="ACTIVE" />
-          <attvalue for="5" value="4" />
+          <attvalue for="4" value="DEMOTED" />
+          <attvalue for="5" value="5" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-08-24T00:00:00Z" />
           <attvalue for="8" value="https://github.com/getzep/graphiti" />
@@ -969,7 +1169,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-08-29T16:17:00Z" />
-          <attvalue for="8" value="D:/GitHub/cloned/CellCog/skills-main/skills-main" />
+          <attvalue for="8" value="external/CellCog/skills-main/skills-main" />
         </attvalues>
       </node>
       <node id="ki_20260829_cellcog_02" label="Pure Copy Multi-Channel Skill Distribution &amp; Drift-Proof Catalogs">
@@ -982,7 +1182,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-08-29T16:17:00Z" />
-          <attvalue for="8" value="D:/GitHub/cloned/CellCog/skills-main/skills-main" />
+          <attvalue for="8" value="external/CellCog/skills-main/skills-main" />
         </attvalues>
       </node>
       <node id="ki_20260830_claude_01" label="Async Rewake in Agent Lifecycle Hooks">
@@ -995,7 +1195,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-08-30T00:00:00Z" />
-          <attvalue for="8" value="D:\GitHub\cloned\claude-code-main\claude-code-main" />
+          <attvalue for="8" value="external/claude-code-main/claude-code-main" />
         </attvalues>
       </node>
       <node id="ki_20260830_claude_02" label="Aspect-Oriented Multi-Agent Review Swarm">
@@ -1008,7 +1208,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-08-30T00:00:00Z" />
-          <attvalue for="8" value="D:\GitHub\cloned\claude-code-main\claude-code-main" />
+          <attvalue for="8" value="external/claude-code-main/claude-code-main" />
         </attvalues>
       </node>
       <node id="ki_20260830_django_01" label="Thread-Safe Lazy App Registry &amp; Topological Initialization in Multi-Tenant / Plugin Architectures">
@@ -1017,11 +1217,11 @@
           <attvalue for="1" value="data_engineering" />
           <attvalue for="2" value="data_engineering" />
           <attvalue for="3" value="django,architecture,app_registry,ioc_container,plugin_lifecycle,thread_safety" />
-          <attvalue for="4" value="ACTIVE" />
-          <attvalue for="5" value="4" />
+          <attvalue for="4" value="DEMOTED" />
+          <attvalue for="5" value="5" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-08-30T00:00:00Z" />
-          <attvalue for="8" value="D:\GitHub\cloned\Django\django-main\django-main\django\apps\registry.py" />
+          <attvalue for="8" value="external/Django/django-main/django-main/django/apps/registry.py" />
         </attvalues>
       </node>
       <node id="ki_20260830_django_02" label="WeakRef Signal Dispatcher Pattern with Dead-Receiver Garbage Collection">
@@ -1034,7 +1234,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-08-30T00:00:00Z" />
-          <attvalue for="8" value="D:\GitHub\cloned\Django\django-main\django-main\django\dispatch\dispatcher.py" />
+          <attvalue for="8" value="external/Django/django-main/django-main/django/dispatch/dispatcher.py" />
         </attvalues>
       </node>
       <node id="ki_20260830_django_03" label="Declarative Metaclass Field Descriptors &amp; Deferred QuerySet Compilation">
@@ -1047,7 +1247,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-08-30T00:00:00Z" />
-          <attvalue for="8" value="D:\GitHub\cloned\Django\django-main\django-main\django\db\models\base.py" />
+          <attvalue for="8" value="external/Django/django-main/django-main/django/db/models/base.py" />
         </attvalues>
       </node>
       <node id="ki_20260830_django_04" label="Transactional Atomic Savepoint Stacks &amp; Multi-Database Router Isolation">
@@ -1060,7 +1260,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-08-30T00:00:00Z" />
-          <attvalue for="8" value="D:\GitHub\cloned\Django\django-main\django-main\django\db\transaction.py" />
+          <attvalue for="8" value="external/Django/django-main/django-main/django/db/transaction.py" />
         </attvalues>
       </node>
       <node id="ki_20260830_django_05" label="Django 6.x Native Background Tasks Architecture &amp; Result Backend Contracts">
@@ -1069,11 +1269,11 @@
           <attvalue for="1" value="data_engineering" />
           <attvalue for="2" value="data_engineering" />
           <attvalue for="3" value="django,django_6,background_tasks,async,job_queue,task_result" />
-          <attvalue for="4" value="ACTIVE" />
-          <attvalue for="5" value="2" />
-          <attvalue for="6" value="0" />
+          <attvalue for="4" value="PROMOTED" />
+          <attvalue for="5" value="8" />
+          <attvalue for="6" value="6" />
           <attvalue for="7" value="2026-08-30T00:00:00Z" />
-          <attvalue for="8" value="D:\GitHub\cloned\Django\django-main\django-main\django\tasks\base.py" />
+          <attvalue for="8" value="external/Django/django-main/django-main/django/tasks/base.py" />
         </attvalues>
       </node>
       <node id="ki_20260830_grok_01" label="Hashline Anchoring with Bounded Shift Recovery">
@@ -1086,7 +1286,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-08-30T00:00:00Z" />
-          <attvalue for="8" value="D:\GitHub\cloned\grok-build-main\grok-build-main" />
+          <attvalue for="8" value="external/grok-build-main/grok-build-main" />
         </attvalues>
       </node>
       <node id="ki_20260830_grok_02" label="Pure Subagent Configuration Precedence Engine">
@@ -1096,10 +1296,10 @@
           <attvalue for="2" value="agent_orchestration" />
           <attvalue for="3" value="agent_loop,subagents,resolution_engine,configuration_precedence,pure_logic" />
           <attvalue for="4" value="ACTIVE" />
-          <attvalue for="5" value="0" />
-          <attvalue for="6" value="0" />
+          <attvalue for="5" value="1" />
+          <attvalue for="6" value="1" />
           <attvalue for="7" value="2026-08-30T00:00:00Z" />
-          <attvalue for="8" value="D:\GitHub\cloned\grok-build-main\grok-build-main" />
+          <attvalue for="8" value="external/grok-build-main/grok-build-main" />
         </attvalues>
       </node>
       <node id="ki_20260830_grok_03" label="Sandbox Hook Write-Deny Security Boundary">
@@ -1112,7 +1312,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-08-30T00:00:00Z" />
-          <attvalue for="8" value="D:\GitHub\cloned\grok-build-main\grok-build-main" />
+          <attvalue for="8" value="external/grok-build-main/grok-build-main" />
         </attvalues>
       </node>
       <node id="ki_20260830_grok_04" label="Two-Tier Guest Path Virtualization with Traversal Clipping">
@@ -1125,7 +1325,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-08-30T00:00:00Z" />
-          <attvalue for="8" value="D:\GitHub\cloned\grok-build-main\grok-build-main" />
+          <attvalue for="8" value="external/grok-build-main/grok-build-main" />
         </attvalues>
       </node>
       <node id="ki_20260830_grok_05" label="Preemptive Interjection Buffer &amp; Prompt Queue">
@@ -1138,7 +1338,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-08-30T00:00:00Z" />
-          <attvalue for="8" value="D:\GitHub\cloned\grok-build-main\grok-build-main" />
+          <attvalue for="8" value="external/grok-build-main/grok-build-main" />
         </attvalues>
       </node>
       <node id="ki_20260830_kimi_01" label="4-Tier Hierarchical DI Scopes &amp; Cascade Engine in Agent Frameworks">
@@ -1151,7 +1351,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-08-30T00:00:00Z" />
-          <attvalue for="8" value="D:\GitHub\cloned\kimi-code-main\kimi-code-main\packages\agent-core-v2\src\_base\di\cascadeEngine.ts" />
+          <attvalue for="8" value="external/kimi-code-main/kimi-code-main/packages/agent-core-v2/src/_base/di/cascadeEngine.ts" />
         </attvalues>
       </node>
       <node id="ki_20260830_kimi_02" label="4-Layer Isomorphic Transcript Data Engine with Granularity Subscriptions">
@@ -1164,7 +1364,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-08-30T00:00:00Z" />
-          <attvalue for="8" value="D:\GitHub\cloned\kimi-code-main\kimi-code-main\packages\transcript\src\granularity\filterOps.ts" />
+          <attvalue for="8" value="external/kimi-code-main/kimi-code-main/packages/transcript/src/granularity/filterOps.ts" />
         </attvalues>
       </node>
       <node id="ki_20260830_kimi_03" label="Pure-Language Tree-Sitter Bash AST Parsing for Agent Shell Security Gates">
@@ -1174,10 +1374,10 @@
           <attvalue for="2" value="agent_orchestration" />
           <attvalue for="3" value="kimi_code,tree_sitter,bash_ast,shell_security,execpolicy,command_parsing" />
           <attvalue for="4" value="ACTIVE" />
-          <attvalue for="5" value="2" />
-          <attvalue for="6" value="0" />
+          <attvalue for="5" value="3" />
+          <attvalue for="6" value="1" />
           <attvalue for="7" value="2026-08-30T00:00:00Z" />
-          <attvalue for="8" value="D:\GitHub\cloned\kimi-code-main\kimi-code-main\packages\tree-sitter-bash\src\parser.ts" />
+          <attvalue for="8" value="external/kimi-code-main/kimi-code-main/packages/tree-sitter-bash/src/parser.ts" />
         </attvalues>
       </node>
       <node id="ki_20260830_kimi_04" label="Hybrid In-Memory KV with Durable WAL Snapshot Persistence (MiniDb Pattern)">
@@ -1190,7 +1390,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-08-30T00:00:00Z" />
-          <attvalue for="8" value="D:\GitHub\cloned\kimi-code-main\kimi-code-main\packages\minidb\src\compaction.ts" />
+          <attvalue for="8" value="external/kimi-code-main/kimi-code-main/packages/minidb/src/compaction.ts" />
         </attvalues>
       </node>
       <node id="ki_20260830_kimi_05" label="Differential Terminal Rendering &amp; Synchronized Output Protocol for Agent TUIs">
@@ -1203,7 +1403,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-08-30T00:00:00Z" />
-          <attvalue for="8" value="D:\GitHub\cloned\kimi-code-main\kimi-code-main\packages\pi-tui\src\tui.ts" />
+          <attvalue for="8" value="external/kimi-code-main/kimi-code-main/packages/pi-tui/src/tui.ts" />
         </attvalues>
       </node>
       <node id="ki_20260830_repo_01" label="Tool Package Decoupling">
@@ -1216,7 +1416,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-08-30T00:00:00Z" />
-          <attvalue for="8" value="D:\GitHub\cloned\deepseek-harness-master" />
+          <attvalue for="8" value="external/deepseek-harness-master" />
         </attvalues>
       </node>
       <node id="ki_20260830_repo_02" label="Invariant Verification Gates">
@@ -1229,7 +1429,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-08-30T00:00:00Z" />
-          <attvalue for="8" value="D:\GitHub\cloned\deepseek-harness-master" />
+          <attvalue for="8" value="external/deepseek-harness-master" />
         </attvalues>
       </node>
       <node id="ki_20260831_cellcog_01" label="Zero-Footprint Asynchronous Daemon &amp; WebSocket-to-Polling State Machine">
@@ -1242,7 +1442,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-08-31T11:00:00Z" />
-          <attvalue for="8" value="D:/GitHub/cloned/CellCog/cellcog_python-main/cellcog_python-main" />
+          <attvalue for="8" value="external/CellCog/cellcog_python-main/cellcog_python-main" />
         </attvalues>
       </node>
       <node id="ki_20260831_cellcog_02" label="Parent Session Tree Fallback DAG &amp; Interim Rewake Heartbeat Delivery">
@@ -1255,7 +1455,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-08-31T11:00:00Z" />
-          <attvalue for="8" value="D:/GitHub/cloned/CellCog/cellcog_python-main/cellcog_python-main" />
+          <attvalue for="8" value="external/CellCog/cellcog_python-main/cellcog_python-main" />
         </attvalues>
       </node>
       <node id="ki_20260831_cellcog_03" label="Pre-Flight File Integrity Verification &amp; Transparent Blob Path Translation">
@@ -1268,7 +1468,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-08-31T11:00:00Z" />
-          <attvalue for="8" value="D:/GitHub/cloned/CellCog/cellcog_python-main/cellcog_python-main" />
+          <attvalue for="8" value="external/CellCog/cellcog_python-main/cellcog_python-main" />
         </attvalues>
       </node>
       <node id="ki_20260831_cellcog_04" label="Monorepo Golden-Copy Multi-Channel Distribution &amp; ClawHub Slug Optimization">
@@ -1281,7 +1481,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-08-31T11:00:00Z" />
-          <attvalue for="8" value="D:/GitHub/cloned/CellCog/skills-main/skills-main" />
+          <attvalue for="8" value="external/CellCog/skills-main/skills-main" />
         </attvalues>
       </node>
       <node id="ki_20260831_em3_01" label="Pre-Execution AST Security Visitor for Dynamic Code Sandboxing">
@@ -1303,8 +1503,8 @@
           <attvalue for="1" value="memory_and_epistemics" />
           <attvalue for="2" value="memory_and_epistemics" />
           <attvalue for="3" value="pyarrow,zero_copy,shared_memory,polyglot_execution,ipc,em_cubed,repo_introspection" />
-          <attvalue for="4" value="ACTIVE" />
-          <attvalue for="5" value="4" />
+          <attvalue for="4" value="DEMOTED" />
+          <attvalue for="5" value="5" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-08-31T19:00:00Z" />
           <attvalue for="8" value="D:\GitHub\projects\em-cubed" />
@@ -1359,7 +1559,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-08-31T14:15:00Z" />
-          <attvalue for="8" value="D:\GitHub\cloned\openclaw" />
+          <attvalue for="8" value="external/openclaw" />
         </attvalues>
       </node>
       <node id="ki_20260831_openclaw_02" label="Trusted Gateway Control Plane &amp; Deterministic Sandboxed Execution">
@@ -1369,10 +1569,10 @@
           <attvalue for="2" value="security_and_forensics" />
           <attvalue for="3" value="gateway,security,websocket,rpc,approval_gates,openclaw,repo_introspection" />
           <attvalue for="4" value="ACTIVE" />
-          <attvalue for="5" value="2" />
-          <attvalue for="6" value="0" />
+          <attvalue for="5" value="3" />
+          <attvalue for="6" value="1" />
           <attvalue for="7" value="2026-08-31T14:15:00Z" />
-          <attvalue for="8" value="D:\GitHub\cloned\openclaw" />
+          <attvalue for="8" value="external/openclaw" />
         </attvalues>
       </node>
       <node id="ki_20260831_openclaw_03" label="A2A (Agent-to-Agent) Multi-Agent Swarm Federation Protocol">
@@ -1385,7 +1585,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-08-31T14:15:00Z" />
-          <attvalue for="8" value="D:\GitHub\cloned\openclaw" />
+          <attvalue for="8" value="external/openclaw" />
         </attvalues>
       </node>
       <node id="ki_20260831_openclaw_04" label="Deterministic Session Tree Branching &amp; Compaction with UUIDv7">
@@ -1395,10 +1595,10 @@
           <attvalue for="2" value="agent_orchestration" />
           <attvalue for="3" value="session_trees,uuidv7,compaction,branching,openclaw,repo_introspection" />
           <attvalue for="4" value="ACTIVE" />
-          <attvalue for="5" value="0" />
-          <attvalue for="6" value="0" />
+          <attvalue for="5" value="1" />
+          <attvalue for="6" value="1" />
           <attvalue for="7" value="2026-08-31T14:15:00Z" />
-          <attvalue for="8" value="D:\GitHub\cloned\openclaw" />
+          <attvalue for="8" value="external/openclaw" />
         </attvalues>
       </node>
       <node id="ki_20260831_sme_01" label="MIMO 6D Dynamic Control Surface for Multi-Objective Agentic Harnesses">
@@ -1421,8 +1621,8 @@
           <attvalue for="2" value="agent_orchestration" />
           <attvalue for="3" value="ann_backprop,textual_gradient,momentum_smoothing,self_evolving_agents,multi_agent_optimization,repo_introspection" />
           <attvalue for="4" value="ACTIVE" />
-          <attvalue for="5" value="0" />
-          <attvalue for="6" value="0" />
+          <attvalue for="5" value="1" />
+          <attvalue for="6" value="1" />
           <attvalue for="7" value="2026-08-31T16:20:00Z" />
           <attvalue for="8" value="D:\GitHub\projects\SME" />
         </attvalues>
@@ -1567,7 +1767,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-09-08T18:30:00Z" />
-          <attvalue for="8" value="D:\GitHub\cloned\Google\earthengine-api" />
+          <attvalue for="8" value="external/Google/earthengine-api" />
         </attvalues>
       </node>
       <node id="ki_20260908_magika_01" label="Google Magika Deep Learning Content Type &amp; MIME Detection Architecture">
@@ -1580,7 +1780,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-09-08T18:13:00Z" />
-          <attvalue for="8" value="D:\GitHub\cloned\Google\magika" />
+          <attvalue for="8" value="external/Google/magika" />
         </attvalues>
       </node>
       <node id="ki_20260908_mantis_01" label="Google Mantis Decoupled Security Review Pipeline &amp; Sandboxed Crash Verification">
@@ -1593,7 +1793,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-09-08T17:30:00Z" />
-          <attvalue for="8" value="D:\GitHub\cloned\Google\mantis" />
+          <attvalue for="8" value="external/Google/mantis" />
         </attvalues>
       </node>
       <node id="ki_20260913_claude_coord_02" label="Hierarchical Sub-Agent Task Coordination &amp; Lifecycle States">
@@ -1606,7 +1806,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-09-13T00:00:00Z" />
-          <attvalue for="8" value="D:\GitHub\cloned\claude-code" />
+          <attvalue for="8" value="external/claude-code" />
         </attvalues>
       </node>
       <node id="ki_20260913_context_types_04" label="Context Item Typing &amp; Evidence Boundary Invariants">
@@ -1619,7 +1819,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-09-13T00:00:00Z" />
-          <attvalue for="8" value="D:\GitHub\cloned\context-type-system-main\context-type-system-main" />
+          <attvalue for="8" value="external/context-type-system-main/context-type-system-main" />
         </attvalues>
       </node>
       <node id="ki_20260913_memgraph_rag_05" label="Multi-Agent Memory Graph RAG with Temporal Decay">
@@ -1632,7 +1832,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-09-13T00:00:00Z" />
-          <attvalue for="8" value="D:\GitHub\cloned\MemGraphRAG-main\MemGraphRAG-main" />
+          <attvalue for="8" value="external/MemGraphRAG-main/MemGraphRAG-main" />
         </attvalues>
       </node>
       <node id="ki_20260913_pr_lens_byok_provider" label="Normalized BYOK Multi-LLM Provider Architecture">
@@ -1645,7 +1845,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-09-13T00:00:00Z" />
-          <attvalue for="8" value="D:\GitHub\cloned\Google\pr-lens" />
+          <attvalue for="8" value="external/Google/pr-lens" />
         </attvalues>
       </node>
       <node id="ki_20260913_pr_lens_eli5_pedagogy" label="Progressive Disclosure Diagram Generation Pedagogy (ELI5)">
@@ -1658,7 +1858,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-09-13T00:00:00Z" />
-          <attvalue for="8" value="D:\GitHub\cloned\Google\pr-lens" />
+          <attvalue for="8" value="external/Google/pr-lens" />
         </attvalues>
       </node>
       <node id="ki_20260913_pr_lens_overlay" label="Idempotent Human Architectural Overlay Invariant">
@@ -1671,7 +1871,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-09-13T00:00:00Z" />
-          <attvalue for="8" value="D:\GitHub\cloned\Google\pr-lens" />
+          <attvalue for="8" value="external/Google/pr-lens" />
         </attvalues>
       </node>
       <node id="ki_20260913_pr_lens_schema" label="Strict Dual-Engine Schema Validation &amp; Integrity Invariants">
@@ -1684,7 +1884,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-09-13T00:00:00Z" />
-          <attvalue for="8" value="D:\GitHub\cloned\Google\pr-lens" />
+          <attvalue for="8" value="external/Google/pr-lens" />
         </attvalues>
       </node>
       <node id="ki_20260913_pr_lens_svg_animation" label="Zero-Dependency Standalone Animated SVG Embedding Pattern">
@@ -1697,7 +1897,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-09-13T00:00:00Z" />
-          <attvalue for="8" value="D:\GitHub\cloned\Google\pr-lens" />
+          <attvalue for="8" value="external/Google/pr-lens" />
         </attvalues>
       </node>
       <node id="ki_20260913_repomap_01" label="PageRanked AST Context Prioritization &amp; Token Budget Pruning">
@@ -1710,7 +1910,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-09-13T00:00:00Z" />
-          <attvalue for="8" value="D:\GitHub\cloned\aider-main\aider-main" />
+          <attvalue for="8" value="external/aider-main/aider-main" />
         </attvalues>
       </node>
       <node id="ki_20260913_stagehand_06" label="Semantic DOM Extraction &amp; Self-Healing Web Action Primitives">
@@ -1723,7 +1923,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-09-13T00:00:00Z" />
-          <attvalue for="8" value="D:\GitHub\cloned\stagehand-main\stagehand-main" />
+          <attvalue for="8" value="external/stagehand-main/stagehand-main" />
         </attvalues>
       </node>
       <node id="ki_20260913_tool_approval_03" label="Interactive Tool Approval Middleware &amp; Security Sandboxing">
@@ -1736,7 +1936,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-09-13T00:00:00Z" />
-          <attvalue for="8" value="D:\GitHub\cloned\claude-code" />
+          <attvalue for="8" value="external/claude-code" />
         </attvalues>
       </node>
       <node id="ki_20260918_gemini_vercel_streaming" label="Plain-Text Chunk Streaming Architecture for Gemini on Vercel Serverless">
@@ -1858,7 +2058,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-10-23T00:00:00Z" />
-          <attvalue for="8" value="D:\GitHub\cloned\opencode" />
+          <attvalue for="8" value="external/opencode" />
         </attvalues>
       </node>
       <node id="ki_20261023_opencode_02" label="Dual-Runtime Plugin Interface Architecture (Effect &amp; Promise)">
@@ -1871,7 +2071,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-10-23T00:00:00Z" />
-          <attvalue for="8" value="D:\GitHub\cloned\opencode" />
+          <attvalue for="8" value="external/opencode" />
         </attvalues>
       </node>
       <node id="ki_20261023_opencode_03" label="Persistent PTY Multiplexing Daemon for Long-Running Agents">
@@ -1884,7 +2084,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-10-23T00:00:00Z" />
-          <attvalue for="8" value="D:\GitHub\cloned\opencode" />
+          <attvalue for="8" value="external/opencode" />
         </attvalues>
       </node>
       <node id="ki_20261023_opencode_04" label="AST-Grep Structural Pattern Enforcement over Generic Linters">
@@ -1897,7 +2097,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-10-23T00:00:00Z" />
-          <attvalue for="8" value="D:\GitHub\cloned\opencode" />
+          <attvalue for="8" value="external/opencode" />
         </attvalues>
       </node>
       <node id="ki_20261023_rea_01" label="Zero-Allocation Binary Offset Seeking for High-Scale Model Artifact Inspection">
@@ -1910,7 +2110,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-10-23T16:20:00Z" />
-          <attvalue for="8" value="D:\GitHub\cloned\rea-main" />
+          <attvalue for="8" value="external/rea-main" />
         </attvalues>
       </node>
       <node id="ki_20261023_rea_02" label="Multi-Version Magic Header Parsing &amp; Section Map Validation for Unity IL2CPP">
@@ -1923,7 +2123,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-10-23T16:20:00Z" />
-          <attvalue for="8" value="D:\GitHub\cloned\rea-main" />
+          <attvalue for="8" value="external/rea-main" />
         </attvalues>
       </node>
       <node id="ki_20261023_rea_03" label="Bounded Worker Control Framing and NUL-Delimited IPC Streams">
@@ -1936,7 +2136,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-10-23T16:20:00Z" />
-          <attvalue for="8" value="D:\GitHub\cloned\rea-main" />
+          <attvalue for="8" value="external/rea-main" />
         </attvalues>
       </node>
       <node id="ki_20261023_rea_04" label="Static Native Boundary Mapping for Managed CLI/PE Runtimes">
@@ -1949,7 +2149,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-10-23T16:20:00Z" />
-          <attvalue for="8" value="D:\GitHub\cloned\rea-main" />
+          <attvalue for="8" value="external/rea-main" />
         </attvalues>
       </node>
       <node id="ki_20261024_icm_architect" label="Interpretable Context Methodology (ICM): Folder Structure as Agent Architecture, Five-Layer Hierarchy, Three Primitives, and Verified Stage Checks">
@@ -1959,8 +2159,8 @@
           <attvalue for="2" value="context_engineering" />
           <attvalue for="3" value="interpretable_context_methodology,icm_architecture,folder_structure_as_agent_architecture,five_layer_context_hierarchy,three_primitives,five_forms,pipeline_production_line,record_library,knowledge_bundle,context_map,system_map,cold_walk_test,token_bounding,auditable_stage_checks,placeholder_syntax,production_workspaces" />
           <attvalue for="4" value="ACTIVE" />
-          <attvalue for="5" value="0" />
-          <attvalue for="6" value="0" />
+          <attvalue for="5" value="2" />
+          <attvalue for="6" value="1" />
           <attvalue for="7" value="2026-10-24T16:00:00Z" />
           <attvalue for="8" value="https://arxiv.org/abs/2603.16021" />
         </attvalues>
@@ -1978,56 +2178,121 @@
           <attvalue for="8" value="https://github.com/headroom-ai/headroom" />
         </attvalues>
       </node>
+      <node id="ki_agent_desktop_capture_proof" label="Evidence Tri-State &amp; Capture-Proof Ref Identity Resolution">
+        <attvalues>
+          <attvalue for="0" value="ki" />
+          <attvalue for="1" value="developer_experience/software_engineering" />
+          <attvalue for="2" value="developer_experience" />
+          <attvalue for="3" value="accessibility,ref_identity,capture_proof,tri_state,agent_desktop" />
+          <attvalue for="4" value="ACTIVE" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="2026-11-04T12:15:51.304488+00:00" />
+          <attvalue for="8" value="D:\GitHub\cloned\agent-desktop" />
+        </attvalues>
+      </node>
+      <node id="ki_agent_desktop_disposition_matrix" label="2D Delivery × Retry Disposition Matrix with Stability Sampling">
+        <attvalues>
+          <attvalue for="0" value="ki" />
+          <attvalue for="1" value="agent_orchestration" />
+          <attvalue for="2" value="agent_orchestration" />
+          <attvalue for="3" value="delivery_disposition,retry_safety,actionability,react_loop,agent_desktop" />
+          <attvalue for="4" value="ACTIVE" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="2026-11-04T12:15:51.305649+00:00" />
+          <attvalue for="8" value="D:\GitHub\cloned\agent-desktop" />
+        </attvalues>
+      </node>
+      <node id="ki_agent_desktop_interaction_lease" label="Cross-Process Interaction Lease &amp; Web-Wrapper Depth Bypass">
+        <attvalues>
+          <attvalue for="0" value="ki" />
+          <attvalue for="1" value="developer_experience/software_engineering" />
+          <attvalue for="2" value="developer_experience" />
+          <attvalue for="3" value="interaction_lease,web_wrapper_bypass,chromium,concurrency,agent_desktop" />
+          <attvalue for="4" value="ACTIVE" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="2026-11-04T12:15:51.308795+00:00" />
+          <attvalue for="8" value="D:\GitHub\cloned\agent-desktop" />
+        </attvalues>
+      </node>
+      <node id="ki_agent_desktop_mcp_cancellation" label="Clap-Derived Dynamic MCP Server with Pre-Spawn Cancel &amp; SIGTERM Input Release">
+        <attvalues>
+          <attvalue for="0" value="ki" />
+          <attvalue for="1" value="infrastructure_and_runtime/integration" />
+          <attvalue for="2" value="infrastructure_and_runtime" />
+          <attvalue for="3" value="mcp,stdio_server,cancellation,sigterm,concurrency_cap,agent_desktop" />
+          <attvalue for="4" value="ACTIVE" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="2026-11-04T12:15:51.306491+00:00" />
+          <attvalue for="8" value="D:\GitHub\cloned\agent-desktop" />
+        </attvalues>
+      </node>
+      <node id="ki_agent_desktop_self_testing_arch" label="Self-Mutating Architecture Linter &amp; Zero-OS-Dependency Core">
+        <attvalues>
+          <attvalue for="0" value="ki" />
+          <attvalue for="1" value="developer_experience/software_engineering" />
+          <attvalue for="2" value="developer_experience" />
+          <attvalue for="3" value="architecture_linter,self_testing,crate_isolation,zero_os_deps,agent_desktop" />
+          <attvalue for="4" value="ACTIVE" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="2026-11-04T12:15:51.307658+00:00" />
+          <attvalue for="8" value="D:\GitHub\cloned\agent-desktop" />
+        </attvalues>
+      </node>
       <node id="ki_agent_reach_layered_backend_fallback" label="Deterministic Multi-Tier Backend Fallback Cascades">
         <attvalues>
           <attvalue for="0" value="ki" />
-          <attvalue for="1" value="general" />
-          <attvalue for="2" value="general" />
+          <attvalue for="1" value="infrastructure_and_runtime/integration" />
+          <attvalue for="2" value="infrastructure_and_runtime" />
           <attvalue for="3" value="backend_fallback,channel_routing,resilience,cascading_retries,browser_binding" />
           <attvalue for="4" value="ACTIVE" />
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
-          <attvalue for="7" value="2026-11-03T12:15:22.941820+00:00" />
-          <attvalue for="8" value="D:\GitHub\cloned\Agent-Reach\agent_reach\runtime\dispatch.py" />
+          <attvalue for="7" value="2026-11-01T16:00:00Z" />
+          <attvalue for="8" value="external/Agent-Reach/agent_reach/runtime/dispatch.py" />
         </attvalues>
       </node>
       <node id="ki_agent_reach_session_isolation_and_credential_scrubbing" label="Private HOME Sandboxing, Symlink Defense &amp; Automated URL Credential Redaction">
         <attvalues>
           <attvalue for="0" value="ki" />
-          <attvalue for="1" value="general" />
-          <attvalue for="2" value="general" />
+          <attvalue for="1" value="infrastructure_and_runtime/integration" />
+          <attvalue for="2" value="infrastructure_and_runtime" />
           <attvalue for="3" value="session_isolation,credential_scrubbing,symlink_defense,security_sandboxing,private_paths" />
           <attvalue for="4" value="ACTIVE" />
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
-          <attvalue for="7" value="2026-11-03T12:15:22.942823+00:00" />
-          <attvalue for="8" value="D:\GitHub\cloned\Agent-Reach\agent_reach\runtime\sessions.py" />
+          <attvalue for="7" value="2026-11-01T16:00:00Z" />
+          <attvalue for="8" value="external/Agent-Reach/agent_reach/runtime/sessions.py" />
         </attvalues>
       </node>
       <node id="ki_agent_reach_stealth_browser_cdp_loopback" label="Dedicated Profile Sharing, Anti-Fingerprint Stealth &amp; Localhost CDP Reconnection">
         <attvalues>
           <attvalue for="0" value="ki" />
-          <attvalue for="1" value="general" />
-          <attvalue for="2" value="general" />
+          <attvalue for="1" value="infrastructure_and_runtime/integration" />
+          <attvalue for="2" value="infrastructure_and_runtime" />
           <attvalue for="3" value="cloak_browser,cdp,stealth,anti_fingerprinting,idle_watcher" />
           <attvalue for="4" value="ACTIVE" />
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
-          <attvalue for="7" value="2026-11-03T12:15:22.943823+00:00" />
-          <attvalue for="8" value="D:\GitHub\cloned\Agent-Reach\agent_reach\runtime\browser.py" />
+          <attvalue for="7" value="2026-11-01T16:00:00Z" />
+          <attvalue for="8" value="external/Agent-Reach/agent_reach/runtime/browser.py" />
         </attvalues>
       </node>
       <node id="ki_agent_reach_unified_envelope_taxonomy" label="Schema v1 Result Envelope &amp; Granular Error Classification for Agent Loops">
         <attvalues>
           <attvalue for="0" value="ki" />
-          <attvalue for="1" value="general" />
-          <attvalue for="2" value="general" />
+          <attvalue for="1" value="infrastructure_and_runtime/integration" />
+          <attvalue for="2" value="infrastructure_and_runtime" />
           <attvalue for="3" value="agent_reach,result_envelope,error_taxonomy,llm_tools,structured_output" />
           <attvalue for="4" value="ACTIVE" />
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
-          <attvalue for="7" value="2026-11-03T12:15:22.943823+00:00" />
-          <attvalue for="8" value="D:\GitHub\cloned\Agent-Reach\agent_reach\runtime\result.py" />
+          <attvalue for="7" value="2026-11-01T16:00:00Z" />
+          <attvalue for="8" value="external/Agent-Reach/agent_reach/runtime/result.py" />
         </attvalues>
       </node>
       <node id="ki_agent_skills_progressive_disclosure" label="Agent Skills Progressive Disclosure &amp; Loose Constraint Architecture">
@@ -2141,8 +2406,8 @@
           <attvalue for="2" value="agent_orchestration" />
           <attvalue for="3" value="agent_engineering,scoping,four_level_ladder,pre_flight_questions,architecture_heuristics,aslanyan" />
           <attvalue for="4" value="ACTIVE" />
-          <attvalue for="5" value="2" />
-          <attvalue for="6" value="0" />
+          <attvalue for="5" value="3" />
+          <attvalue for="6" value="1" />
           <attvalue for="7" value="2026-09-06T14:15:00Z" />
           <attvalue for="8" value="The AI Agent Engineer's Guide: 60 Patterns for Building Autonomous Systems (Vahe Aslanyan, LUNARTECH)" />
         </attvalues>
@@ -2385,8 +2650,8 @@
           <attvalue for="2" value="memory_and_epistemics" />
           <attvalue for="3" value="messaging_bus,omnichannel,graph_flow,chatbots" />
           <attvalue for="4" value="ACTIVE" />
-          <attvalue for="5" value="2" />
-          <attvalue for="6" value="0" />
+          <attvalue for="5" value="4" />
+          <attvalue for="6" value="2" />
           <attvalue for="7" value="2026-09-16T16:42:00-04:00" />
         </attvalues>
       </node>
@@ -2397,8 +2662,8 @@
           <attvalue for="2" value="memory_and_epistemics" />
           <attvalue for="3" value="autobiographical_memory,trajectory_mining,sqlite_wal,proactor_safety,byte_offset_indexing,epistemics" />
           <attvalue for="4" value="ACTIVE" />
-          <attvalue for="5" value="2" />
-          <attvalue for="6" value="0" />
+          <attvalue for="5" value="3" />
+          <attvalue for="6" value="1" />
           <attvalue for="7" value="2026-10-03T15:05:00Z" />
         </attvalues>
       </node>
@@ -2412,7 +2677,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-09-13T22:44:36.029132+00:00" />
-          <attvalue for="8" value="D:\GitHub\cloned\Google\DeepSelect" />
+          <attvalue for="8" value="external/Google/DeepSelect" />
         </attvalues>
       </node>
       <node id="ki_deepselect_bitmask_filtering" label="Single-Pass PTX Bitmask Accumulation &amp; Warp-Level Traversal">
@@ -2425,7 +2690,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-09-13T22:44:36.029132+00:00" />
-          <attvalue for="8" value="D:\GitHub\cloned\Google\DeepSelect" />
+          <attvalue for="8" value="external/Google/DeepSelect" />
         </attvalues>
       </node>
       <node id="ki_deepselect_cluster_partitioning" label="Threadblock Cluster Multi-SM Sequence Partitioning for Wave-Quantization Resilience">
@@ -2438,7 +2703,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-09-13T22:44:36.029132+00:00" />
-          <attvalue for="8" value="D:\GitHub\cloned\Google\DeepSelect" />
+          <attvalue for="8" value="external/Google/DeepSelect" />
         </attvalues>
       </node>
       <node id="ki_deepselect_denormal_fp32" label="Denormal IEEE-754 FP32 Simulated Addition Bypassing CUDA Core ALU Contention">
@@ -2448,10 +2713,10 @@
           <attvalue for="2" value="scientific_computing" />
           <attvalue for="3" value="cuda,ptx,hardware_optimization,alu_throughput" />
           <attvalue for="4" value="ACTIVE" />
-          <attvalue for="5" value="2" />
-          <attvalue for="6" value="0" />
+          <attvalue for="5" value="3" />
+          <attvalue for="6" value="1" />
           <attvalue for="7" value="2026-10-28T16:34:56.574890+00:00" />
-          <attvalue for="8" value="D:\GitHub\cloned\Google\DeepSelect" />
+          <attvalue for="8" value="external/Google/DeepSelect" />
         </attvalues>
       </node>
       <node id="ki_egm_antagonistic_review_pipeline" label="5-Stage Antagonistic Review Pipeline with Synthesizer Fan-Out/Fan-In and In-Thread Remediation">
@@ -2464,7 +2729,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-11-01T14:10:00Z" />
-          <attvalue for="8" value="D:/GitHub/cloned/elephant-goldfish-model" />
+          <attvalue for="8" value="external/elephant-goldfish-model" />
         </attvalues>
       </node>
       <node id="ki_egm_artifact_first_sdd_protocol" label="Artifact-First Spec-Driven Development (SDD) &amp; Altitude Boundary Protocol: Chat Dump Prohibition and Semantic Range Isolation">
@@ -2477,7 +2742,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-11-01T14:10:00Z" />
-          <attvalue for="8" value="D:/GitHub/cloned/elephant-goldfish-model" />
+          <attvalue for="8" value="external/elephant-goldfish-model" />
         </attvalues>
       </node>
       <node id="ki_egm_bifurcated_context_architecture" label="Elephant &amp; Goldfish Bifurcated Cognitive Context Architecture: Asymmetric Memory Partitioning, Zero-Context Subagents, and Hallucination Suppression">
@@ -2490,7 +2755,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-11-01T14:10:00Z" />
-          <attvalue for="8" value="D:/GitHub/cloned/elephant-goldfish-model" />
+          <attvalue for="8" value="external/elephant-goldfish-model" />
         </attvalues>
       </node>
       <node id="ki_egm_living_spec_drift_detection" label="Living Specification Governance &amp; Continuous Codebase Drift Detection: AST Differential Auditing across Implementations and Checked-In Specs">
@@ -2503,7 +2768,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-11-01T14:10:00Z" />
-          <attvalue for="8" value="D:/GitHub/cloned/elephant-goldfish-model" />
+          <attvalue for="8" value="external/elephant-goldfish-model" />
         </attvalues>
       </node>
       <node id="ki_epistemic_graph_traversal_evidence_boundary" label="Epistemic Graph Traversal and the Relation-vs-Inference Boundary">
@@ -2631,7 +2896,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-09-21T21:24:13.618172+00:00" />
-          <attvalue for="8" value="D:\GitHub\cloned\doc-builder" />
+          <attvalue for="8" value="external/doc-builder" />
         </attvalues>
       </node>
       <node id="ki_hf_autoresearch_multi_worker_lab" label="Multi-Agent Autoresearch AI Lab Architecture &amp; Heterogeneous Model Workers">
@@ -2670,7 +2935,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-09-21T21:24:13.618172+00:00" />
-          <attvalue for="8" value="D:\GitHub\cloned\doc-builder" />
+          <attvalue for="8" value="external/doc-builder" />
         </attvalues>
       </node>
       <node id="ki_hf_fastmcp_dynamic_tool_protocol" label="FastMCP Universal Adapter Pattern &amp; JSON-RPC Client-Server Transport Seams">
@@ -2709,7 +2974,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-09-21T21:24:13.630718+00:00" />
-          <attvalue for="8" value="D:\GitHub\cloned\doc-builder" />
+          <attvalue for="8" value="external/doc-builder" />
         </attvalues>
       </node>
       <node id="ki_hf_nano_harness_react_sandboxing" label="Minimal ReAct Autonomous Loops, Safe-Path Sandboxing &amp; Bounded Error Self-Repair">
@@ -2761,7 +3026,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-11-01T15:35:00Z" />
-          <attvalue for="8" value="D:/GitHub/cloned/Interpretable-Context-Methodology" />
+          <attvalue for="8" value="external/Interpretable-Context-Methodology" />
         </attvalues>
       </node>
       <node id="ki_icm_placeholder_templating_engine" label="ICM Factory-Configuration Templating: Double-Brace Placeholders, Whole-Section Conditionals, and Questionnaire Onboarding">
@@ -2774,7 +3039,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-11-01T15:35:00Z" />
-          <attvalue for="8" value="D:/GitHub/cloned/Interpretable-Context-Methodology" />
+          <attvalue for="8" value="external/Interpretable-Context-Methodology" />
         </attvalues>
       </node>
       <node id="ki_icm_workspace_builder_metapipeline" label="ICM Workspace-Builder: Self-Hosting 5-Stage Meta-Pipeline for Autonomous Agent Workspace Synthesis and Cold Walk Validation">
@@ -2787,7 +3052,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-11-01T15:35:00Z" />
-          <attvalue for="8" value="D:/GitHub/cloned/Interpretable-Context-Methodology" />
+          <attvalue for="8" value="external/Interpretable-Context-Methodology" />
         </attvalues>
       </node>
       <node id="ki_koos_typescript_harness_from_scratch" label="Zero-Dependency AI Agent Harness Construction in TypeScript: Provider-Agnostic Loops, Workspace Jailing, Atomic Batch Budgets, and Seeded Failure Testing">
@@ -2864,7 +3129,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-09-13T14:30:00Z" />
-          <attvalue for="8" value="D:\GitHub\cloned\Google\okf-agent-memory" />
+          <attvalue for="8" value="external/Google/okf-agent-memory" />
         </attvalues>
       </node>
       <node id="ki_oliinyk_geospatial_disaster_simulation" label="Geospatial Disaster Simulation on Real Maps: Tile-Aligned Canvas Draping, Elevation Inundation, Three.js Shared WebGL Context, and Feature-State Building Collapse Physics">
@@ -2874,7 +3139,7 @@
           <attvalue for="2" value="scientific_computing" />
           <attvalue for="3" value="geospatial_simulation,mapbox_gl_js,maplibre_gl,threejs,web_mercator,terrarium_elevation,terrain_rgb,canvas_raster_source,fill_extrusion,feature_state,promote_id,instanced_mesh,seismic_fragility,rigid_body_physics,container_shake" />
           <attvalue for="4" value="ACTIVE" />
-          <attvalue for="5" value="0" />
+          <attvalue for="5" value="1" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-10-23T10:45:00Z" />
           <attvalue for="8" value="https://www.freecodecamp.org/news/disaster-simulation-real-map-mapbox-three-js/" />
@@ -2903,59 +3168,59 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-09-16T15:35:03.874670+00:00" />
-          <attvalue for="8" value="D:\GitHub\cloned\orca" />
+          <attvalue for="8" value="external/orca" />
         </attvalues>
       </node>
       <node id="ki_r_c_graphics_device_serialization" label="C-Level R GEdevice Interception &amp; Zero-Dependency JSON Graphics Streaming">
         <attvalues>
           <attvalue for="0" value="ki" />
-          <attvalue for="1" value="general" />
-          <attvalue for="2" value="general" />
+          <attvalue for="1" value="developer_experience/tooling" />
+          <attvalue for="2" value="developer_experience" />
           <attvalue for="3" value="gedevice,r_graphics,c_ffi,json_stream,named_pipes,canvas_rendering" />
           <attvalue for="4" value="ACTIVE" />
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
-          <attvalue for="7" value="2026-11-03T12:15:22.965332+00:00" />
-          <attvalue for="8" value="D:\GitHub\cloned\R\jgd" />
+          <attvalue for="7" value="2026-11-01T16:00:00Z" />
+          <attvalue for="8" value="external/R/jgd" />
         </attvalues>
       </node>
       <node id="ki_r_decoupled_syntax_grammar" label="Decoupled Multi-Editor TextMate Syntax Grammar &amp; Tokenization Architecture">
         <attvalues>
           <attvalue for="0" value="ki" />
-          <attvalue for="1" value="general" />
-          <attvalue for="2" value="general" />
+          <attvalue for="1" value="developer_experience/tooling" />
+          <attvalue for="2" value="developer_experience" />
           <attvalue for="3" value="textmate_grammar,syntax_highlighting,yaml_compilation,decoupled_architecture,multi_editor_compatibility" />
           <attvalue for="4" value="ACTIVE" />
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
-          <attvalue for="7" value="2026-11-03T12:15:22.965332+00:00" />
-          <attvalue for="8" value="D:\GitHub\cloned\R\vscode-R-syntax" />
+          <attvalue for="7" value="2026-11-01T16:00:00Z" />
+          <attvalue for="8" value="external/R/vscode-R-syntax" />
         </attvalues>
       </node>
       <node id="ki_r_lsp_textsync_and_diagnostics" label="LSP Incremental Text Synchronization &amp; Asynchronous Lintr Diagnostics Pipeline">
         <attvalues>
           <attvalue for="0" value="ki" />
-          <attvalue for="1" value="general" />
-          <attvalue for="2" value="general" />
+          <attvalue for="1" value="developer_experience/tooling" />
+          <attvalue for="2" value="developer_experience" />
           <attvalue for="3" value="lsp,r_runtime,incremental_textsync,lintr,diagnostics,ast_parsing" />
           <attvalue for="4" value="ACTIVE" />
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
-          <attvalue for="7" value="2026-11-03T12:15:22.966338+00:00" />
-          <attvalue for="8" value="D:\GitHub\cloned\R\languageserver" />
+          <attvalue for="7" value="2026-11-01T16:00:00Z" />
+          <attvalue for="8" value="external/R/languageserver" />
         </attvalues>
       </node>
       <node id="ki_r_session_watcher_reflection" label="Non-Invasive User-Space Session Introspection &amp; Workspace Tracking">
         <attvalues>
           <attvalue for="0" value="ki" />
-          <attvalue for="1" value="general" />
-          <attvalue for="2" value="general" />
+          <attvalue for="1" value="developer_experience/tooling" />
+          <attvalue for="2" value="developer_experience" />
           <attvalue for="3" value="session_watcher,r_introspection,task_callbacks,workspace_viewer,rstudioapi_emulation" />
           <attvalue for="4" value="ACTIVE" />
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
-          <attvalue for="7" value="2026-11-03T12:15:22.966338+00:00" />
-          <attvalue for="8" value="D:\GitHub\cloned\R\vscode-R" />
+          <attvalue for="7" value="2026-11-01T16:00:00Z" />
+          <attvalue for="8" value="external/R/vscode-R" />
         </attvalues>
       </node>
       <node id="ki_self_20260826_01" label="Click CLI Group Single-Source Consolidation">
@@ -3306,7 +3571,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-09-01T17:35:00Z" />
-          <attvalue for="8" value="d:\GitHub\projects\Brain Harness\src\harness\mcp" />
+          <attvalue for="8" value="src/harness/mcp" />
         </attvalues>
       </node>
       <node id="ki_self_20260901_04" label="Dynamic 5D Compute Complexity Budgeting">
@@ -3319,7 +3584,7 @@
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-09-01T17:35:00Z" />
-          <attvalue for="8" value="d:\GitHub\projects\Brain Harness\.agents\skills\compute-model-assessor" />
+          <attvalue for="8" value=".agents/skills/compute-model-assessor" />
         </attvalues>
       </node>
       <node id="ki_self_20260901_scratch_01" label="Burrows' Delta Stylometry &amp; Corpus Normalization">
@@ -3380,9 +3645,9 @@
           <attvalue for="1" value="developer_experience/testing" />
           <attvalue for="2" value="developer_experience" />
           <attvalue for="3" value="powershell,globbing,pytest,testing,endogenous_memory,self_reflection" />
-          <attvalue for="4" value="ACTIVE" />
-          <attvalue for="5" value="2" />
-          <attvalue for="6" value="0" />
+          <attvalue for="4" value="PROMOTED" />
+          <attvalue for="5" value="8" />
+          <attvalue for="6" value="6" />
           <attvalue for="7" value="2026-09-02T11:58:36Z" />
           <attvalue for="8" value="Brain Harness Execution History" />
         </attvalues>
@@ -3602,7 +3867,7 @@
           <attvalue for="2" value="developer_experience" />
           <attvalue for="3" value="legacy_modernization,characterization_testing,codebase_archaeology,seam_introduction,refactoring_safety_nets,dual_lens_distillation,endogenous_memory,self_reflection" />
           <attvalue for="4" value="ACTIVE" />
-          <attvalue for="5" value="0" />
+          <attvalue for="5" value="1" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-09-05T19:40:00Z" />
           <attvalue for="8" value="Hugo Teijiz / freeCodeCamp Literature" />
@@ -3915,9 +4180,9 @@
           <attvalue for="1" value="agent_orchestration" />
           <attvalue for="2" value="agent_orchestration" />
           <attvalue for="3" value="llm_evaluation,deterministic_guardrails,llm_as_judge,rubric_anchoring,human_in_the_loop,cohens_kappa,regression_testing,golden_datasets,paired_t_test,statistical_significance" />
-          <attvalue for="4" value="ACTIVE" />
-          <attvalue for="5" value="2" />
-          <attvalue for="6" value="0" />
+          <attvalue for="4" value="PROMOTED" />
+          <attvalue for="5" value="9" />
+          <attvalue for="6" value="7" />
           <attvalue for="7" value="2026-09-17T22:50:00Z" />
         </attvalues>
       </node>
@@ -4229,6 +4494,45 @@
           <attvalue for="8" value="Brain Harness Master Expansion (Phases 1-6)" />
         </attvalues>
       </node>
+      <node id="ki_self_20261104_01_powershell_splatting_guard" label="PowerShell Qualified Ref Splatting Defense for CLI Agents">
+        <attvalues>
+          <attvalue for="0" value="ki" />
+          <attvalue for="1" value="developer_experience/software_engineering" />
+          <attvalue for="2" value="developer_experience" />
+          <attvalue for="3" value="software_engineering,powershell,ref_splatting,cli_agents,endogenous_memory,self_reflection" />
+          <attvalue for="4" value="ACTIVE" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="2026-11-04T13:44:55.273542+00:00" />
+          <attvalue for="8" value="internal_endogenous_reflection" />
+        </attvalues>
+      </node>
+      <node id="ki_self_20261104_02_simulation_backed_domain_engine" label="Dual-Mode Simulation-Backed Engine for Native System Sandboxes">
+        <attvalues>
+          <attvalue for="0" value="ki" />
+          <attvalue for="1" value="developer_experience/software_engineering" />
+          <attvalue for="2" value="developer_experience" />
+          <attvalue for="3" value="software_engineering,simulation_fallback,plugin_architecture,ci_cd,endogenous_memory,self_reflection" />
+          <attvalue for="4" value="ACTIVE" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="2026-11-04T13:44:55.274493+00:00" />
+          <attvalue for="8" value="internal_endogenous_reflection" />
+        </attvalues>
+      </node>
+      <node id="ki_self_20261104_03_planted_violation_boundary_gate" label="Planted-Violation Self-Testing Architecture Boundary Gate">
+        <attvalues>
+          <attvalue for="0" value="ki" />
+          <attvalue for="1" value="developer_experience/software_engineering" />
+          <attvalue for="2" value="developer_experience" />
+          <attvalue for="3" value="software_engineering,architecture_linter,planted_violation,self_testing,endogenous_memory,self_reflection" />
+          <attvalue for="4" value="ACTIVE" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+          <attvalue for="7" value="2026-11-04T13:44:55.275519+00:00" />
+          <attvalue for="8" value="internal_endogenous_reflection" />
+        </attvalues>
+      </node>
       <node id="ki_solla_contract_first_medallion_lakehouse" label="Open Data Contracts and Contract-First Medallion Lakehouse Engineering">
         <attvalues>
           <attvalue for="0" value="ki" />
@@ -4288,8 +4592,8 @@
           <attvalue for="2" value="developer_experience" />
           <attvalue for="3" value="system_design,distributed_systems,architecture_interview,capacity_estimation,concurrency_control,case_studies,spotify,booking_com,whatsapp" />
           <attvalue for="4" value="ACTIVE" />
-          <attvalue for="5" value="2" />
-          <attvalue for="6" value="0" />
+          <attvalue for="5" value="3" />
+          <attvalue for="6" value="1" />
           <attvalue for="7" value="2026-10-21T13:00:00Z" />
         </attvalues>
       </node>
@@ -4320,53 +4624,53 @@
       <node id="ki_token_economizer_dynamic_tool_pruning" label="Empirical Evidence-Based Tool Pruning &amp; Capability Masking">
         <attvalues>
           <attvalue for="0" value="ki" />
-          <attvalue for="1" value="general" />
-          <attvalue for="2" value="general" />
+          <attvalue for="1" value="memory_and_epistemics" />
+          <attvalue for="2" value="memory_and_epistemics" />
           <attvalue for="3" value="tool_pruning,token_economy,schema_optimization,context_compression" />
           <attvalue for="4" value="ACTIVE" />
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
-          <attvalue for="7" value="2026-11-03T12:15:22.999337+00:00" />
-          <attvalue for="8" value="D:\GitHub\cloned\TokenEconomizer" />
+          <attvalue for="7" value="2026-11-01T16:00:00Z" />
+          <attvalue for="8" value="external/TokenEconomizer" />
         </attvalues>
       </node>
       <node id="ki_token_economizer_microskills_lifecycle" label="Experience-Driven Micro-Skills Lifecycle &amp; Asymmetric Contradiction Eviction">
         <attvalues>
           <attvalue for="0" value="ki" />
-          <attvalue for="1" value="general" />
-          <attvalue for="2" value="general" />
+          <attvalue for="1" value="memory_and_epistemics" />
+          <attvalue for="2" value="memory_and_epistemics" />
           <attvalue for="3" value="token_economy,micro_skills,context_optimization,cognitive_retention" />
           <attvalue for="4" value="ACTIVE" />
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
-          <attvalue for="7" value="2026-11-03T12:15:23.000338+00:00" />
-          <attvalue for="8" value="D:\GitHub\cloned\TokenEconomizer" />
+          <attvalue for="7" value="2026-11-01T16:00:00Z" />
+          <attvalue for="8" value="external/TokenEconomizer" />
         </attvalues>
       </node>
       <node id="ki_token_economizer_multi_agent_trace_federation" label="Standardized Multi-Harness Session Trajectory &amp; Cost Ledger Federation">
         <attvalues>
           <attvalue for="0" value="ki" />
-          <attvalue for="1" value="general" />
-          <attvalue for="2" value="general" />
+          <attvalue for="1" value="memory_and_epistemics" />
+          <attvalue for="2" value="memory_and_epistemics" />
           <attvalue for="3" value="trace_federation,domain_adapter,pricing_ledger,multi_agent" />
           <attvalue for="4" value="ACTIVE" />
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
-          <attvalue for="7" value="2026-11-03T12:15:23.001338+00:00" />
-          <attvalue for="8" value="D:\GitHub\cloned\TokenEconomizer" />
+          <attvalue for="7" value="2026-11-01T16:00:00Z" />
+          <attvalue for="8" value="external/TokenEconomizer" />
         </attvalues>
       </node>
       <node id="ki_token_economizer_turn_guard_loop_intervention" label="3-Tier Failure-Loop Intervention &amp; Conjunction Gating">
         <attvalues>
           <attvalue for="0" value="ki" />
-          <attvalue for="1" value="general" />
-          <attvalue for="2" value="general" />
+          <attvalue for="1" value="memory_and_epistemics" />
+          <attvalue for="2" value="memory_and_epistemics" />
           <attvalue for="3" value="loop_guard,failure_intervention,agentic_reliability,circuit_breaker" />
           <attvalue for="4" value="ACTIVE" />
           <attvalue for="5" value="0" />
           <attvalue for="6" value="0" />
-          <attvalue for="7" value="2026-11-03T12:15:23.001338+00:00" />
-          <attvalue for="8" value="D:\GitHub\cloned\TokenEconomizer" />
+          <attvalue for="7" value="2026-11-01T16:00:00Z" />
+          <attvalue for="8" value="external/TokenEconomizer" />
         </attvalues>
       </node>
       <node id="ki_umairmirza_precommit_security" label="Shift-Left Pre-Commit Security: Multi-Engine Division of Labor, Synthetic Failure Smoke Gates, and Dual-Gate CI Parity">
@@ -4576,6 +4880,26 @@
         </attvalues>
       </node>
       <node id="plugins/geospatial_and_osint/earth_engine_pipeline/main.py" label="main.py">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="plugins/integration_and_io/agent_desktop/engine.py#L20-L80" label="engine.py#L20-L80">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="plugins/memory_and_epistemics/brain_bridge/main.py" label="main.py">
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -4835,6 +5159,16 @@
           <attvalue for="6" value="0" />
         </attvalues>
       </node>
+      <node id="src/harness/mcp" label="mcp">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
       <node id="src/harness/plugins/catalog.py" label="catalog.py">
         <attvalues>
           <attvalue for="0" value="path" />
@@ -4856,6 +5190,16 @@
         </attvalues>
       </node>
       <node id="src/harness/plugins/loader.py#L71-L110" label="loader.py#L71-L110">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="src/harness/plugins/sandbox.py" label="sandbox.py">
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -4995,6 +5339,16 @@
           <attvalue for="6" value="0" />
         </attvalues>
       </node>
+      <node id="tests/test_agent_desktop_operator.py#L42-L56" label="test_agent_desktop_operator.py#L42-L56">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
       <node id="tests/test_agent_skill_sdlc.py" label="test_agent_skill_sdlc.py">
         <attvalues>
           <attvalue for="0" value="path" />
@@ -5026,6 +5380,16 @@
         </attvalues>
       </node>
       <node id="tests/test_data_management_architect.py" label="test_data_management_architect.py">
+        <attvalues>
+          <attvalue for="0" value="path" />
+          <attvalue for="1" value="path" />
+          <attvalue for="2" value="path" />
+          <attvalue for="4" value="EXTERNAL" />
+          <attvalue for="5" value="0" />
+          <attvalue for="6" value="0" />
+        </attvalues>
+      </node>
+      <node id="tests/test_plugin_agent_desktop.py#L50-L75" label="test_plugin_agent_desktop.py#L50-L75">
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -5170,42 +5534,42 @@
           <attvalue for="2" value="1.00" />
         </attvalues>
       </edge>
-      <edge id="e19" source="ki-hf-datasets-arrow-streaming" target="D:/GitHub/cloned/datasets/src/datasets/arrow_dataset.py" weight="0.95">
+      <edge id="e19" source="ki-hf-datasets-arrow-streaming" target="external/datasets/src/datasets/arrow_dataset.py" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e20" source="ki-hf-datasets-arrow-streaming" target="D:/GitHub/cloned/datasets/src/datasets/features/bio_structure.py" weight="0.95">
+      <edge id="e20" source="ki-hf-datasets-arrow-streaming" target="external/datasets/src/datasets/features/bio_structure.py" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e21" source="ki-hf-datasets-arrow-streaming" target="D:/GitHub/cloned/datasets/src/datasets/features/features.py" weight="0.95">
+      <edge id="e21" source="ki-hf-datasets-arrow-streaming" target="external/datasets/src/datasets/features/features.py" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e22" source="ki-hf-datasets-arrow-streaming" target="D:/GitHub/cloned/datasets/src/datasets/fingerprint.py" weight="0.95">
+      <edge id="e22" source="ki-hf-datasets-arrow-streaming" target="external/datasets/src/datasets/fingerprint.py" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e23" source="ki-hf-datasets-arrow-streaming" target="D:/GitHub/cloned/datasets/src/datasets/iterable_dataset.py" weight="0.95">
+      <edge id="e23" source="ki-hf-datasets-arrow-streaming" target="external/datasets/src/datasets/iterable_dataset.py" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e24" source="ki-hf-datasets-arrow-streaming" target="D:/GitHub/cloned/datasets/src/datasets/packaged_modules/" weight="0.95">
+      <edge id="e24" source="ki-hf-datasets-arrow-streaming" target="external/datasets/src/datasets/packaged_modules/" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
@@ -5240,70 +5604,70 @@
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e29" source="ki-paperless-ai-rag-sqlite-vec" target="D:/GitHub/cloned/paperless-ngx/src/documents/search/_backend.py" weight="0.95">
+      <edge id="e29" source="ki-paperless-ai-rag-sqlite-vec" target="external/paperless-ngx/src/documents/search/_backend.py" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e30" source="ki-paperless-ai-rag-sqlite-vec" target="D:/GitHub/cloned/paperless-ngx/src/paperless_ai/chat.py" weight="0.95">
+      <edge id="e30" source="ki-paperless-ai-rag-sqlite-vec" target="external/paperless-ngx/src/paperless_ai/chat.py" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e31" source="ki-paperless-ai-rag-sqlite-vec" target="D:/GitHub/cloned/paperless-ngx/src/paperless_ai/indexing.py" weight="0.95">
+      <edge id="e31" source="ki-paperless-ai-rag-sqlite-vec" target="external/paperless-ngx/src/paperless_ai/indexing.py" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e32" source="ki-paperless-ai-rag-sqlite-vec" target="D:/GitHub/cloned/paperless-ngx/src/paperless_ai/tables.py" weight="0.95">
+      <edge id="e32" source="ki-paperless-ai-rag-sqlite-vec" target="external/paperless-ngx/src/paperless_ai/tables.py" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e33" source="ki-paperless-ai-rag-sqlite-vec" target="D:/GitHub/cloned/paperless-ngx/src/paperless_ai/vector_store.py" weight="0.95">
+      <edge id="e33" source="ki-paperless-ai-rag-sqlite-vec" target="external/paperless-ngx/src/paperless_ai/vector_store.py" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e34" source="ki-paperless-ngx-architecture" target="D:/GitHub/cloned/paperless-ngx/src/documents/consumer.py" weight="0.95">
+      <edge id="e34" source="ki-paperless-ngx-architecture" target="external/paperless-ngx/src/documents/consumer.py" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e35" source="ki-paperless-ngx-architecture" target="D:/GitHub/cloned/paperless-ngx/src/documents/models.py" weight="0.95">
+      <edge id="e35" source="ki-paperless-ngx-architecture" target="external/paperless-ngx/src/documents/models.py" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e36" source="ki-paperless-ngx-architecture" target="D:/GitHub/cloned/paperless-ngx/src/documents/parsers/" weight="0.95">
+      <edge id="e36" source="ki-paperless-ngx-architecture" target="external/paperless-ngx/src/documents/parsers/" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e37" source="ki-paperless-ngx-architecture" target="D:/GitHub/cloned/paperless-ngx/src/documents/workflows/" weight="0.95">
+      <edge id="e37" source="ki-paperless-ngx-architecture" target="external/paperless-ngx/src/documents/workflows/" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e38" source="ki-paperless-ngx-architecture" target="D:/GitHub/cloned/paperless-ngx/src/paperless/consumers.py" weight="0.95">
+      <edge id="e38" source="ki-paperless-ngx-architecture" target="external/paperless-ngx/src/paperless/consumers.py" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
@@ -5401,46 +5765,46 @@
           <attvalue for="2" value="0.80" />
         </attvalues>
       </edge>
-      <edge id="e52" source="ki_20260823_01" target="d:/GitHub/projects/Brain Harness/src/harness/plugins/sandbox.py" weight="0.95">
-        <attvalues>
-          <attvalue for="0" value="references_code" />
-          <attvalue for="1" value="true" />
-          <attvalue for="2" value="0.95" />
-        </attvalues>
-      </edge>
-      <edge id="e53" source="ki_20260823_01" target="ki_20260830_grok_03" weight="0.80">
+      <edge id="e52" source="ki_20260823_01" target="ki_20260830_grok_03" weight="0.80">
         <attvalues>
           <attvalue for="0" value="same_domain" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.80" />
         </attvalues>
       </edge>
-      <edge id="e54" source="ki_20260823_01" target="ki_20260913_tool_approval_03" weight="0.80">
+      <edge id="e53" source="ki_20260823_01" target="ki_20260913_tool_approval_03" weight="0.80">
         <attvalues>
           <attvalue for="0" value="same_domain" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.80" />
         </attvalues>
       </edge>
-      <edge id="e55" source="ki_20260823_02" target="d:/GitHub/projects/Brain Harness/plugins/memory_and_epistemics/brain_bridge/main.py" weight="0.95">
+      <edge id="e54" source="ki_20260823_01" target="src/harness/plugins/sandbox.py" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e56" source="ki_20260823_03" target="d:/GitHub/projects/Brain Harness/src/harness/cli.py" weight="0.95">
+      <edge id="e55" source="ki_20260823_02" target="plugins/memory_and_epistemics/brain_bridge/main.py" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e57" source="ki_20260823_03" target="ki_self_20260907_02" weight="0.80">
+      <edge id="e56" source="ki_20260823_03" target="ki_self_20260907_02" weight="0.80">
         <attvalues>
           <attvalue for="0" value="same_domain" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.80" />
+        </attvalues>
+      </edge>
+      <edge id="e57" source="ki_20260823_03" target="src/harness/cli.py" weight="0.95">
+        <attvalues>
+          <attvalue for="0" value="references_code" />
+          <attvalue for="1" value="true" />
+          <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
       <edge id="e58" source="ki_20260823_repo_01" target="ki_20260831_em3_01" weight="0.80">
@@ -5513,840 +5877,1050 @@
           <attvalue for="2" value="0.80" />
         </attvalues>
       </edge>
-      <edge id="e68" source="ki_20260830_kimi_01" target="ki_self_20260830_01" weight="0.80">
+      <edge id="e68" source="ki_20260830_kimi_01" target="external/kimi-code-main/kimi-code-main/packages/agent-core-v2/src/_base/di/cascadeEngine.ts" weight="0.95">
+        <attvalues>
+          <attvalue for="0" value="references_code" />
+          <attvalue for="1" value="true" />
+          <attvalue for="2" value="0.95" />
+        </attvalues>
+      </edge>
+      <edge id="e69" source="ki_20260830_kimi_01" target="ki_self_20260830_01" weight="0.80">
         <attvalues>
           <attvalue for="0" value="same_domain" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.80" />
         </attvalues>
       </edge>
-      <edge id="e69" source="ki_20260830_repo_01" target="ki_20261023_opencode_01" weight="0.80">
+      <edge id="e70" source="ki_20260830_kimi_02" target="external/kimi-code-main/kimi-code-main/packages/transcript/src/granularity/filterOps.ts" weight="0.95">
+        <attvalues>
+          <attvalue for="0" value="references_code" />
+          <attvalue for="1" value="true" />
+          <attvalue for="2" value="0.95" />
+        </attvalues>
+      </edge>
+      <edge id="e71" source="ki_20260830_kimi_03" target="external/kimi-code-main/kimi-code-main/packages/tree-sitter-bash/src/parser.ts" weight="0.95">
+        <attvalues>
+          <attvalue for="0" value="references_code" />
+          <attvalue for="1" value="true" />
+          <attvalue for="2" value="0.95" />
+        </attvalues>
+      </edge>
+      <edge id="e72" source="ki_20260830_kimi_04" target="external/kimi-code-main/kimi-code-main/packages/minidb/src/compaction.ts" weight="0.95">
+        <attvalues>
+          <attvalue for="0" value="references_code" />
+          <attvalue for="1" value="true" />
+          <attvalue for="2" value="0.95" />
+        </attvalues>
+      </edge>
+      <edge id="e73" source="ki_20260830_kimi_05" target="external/kimi-code-main/kimi-code-main/packages/pi-tui/src/tui.ts" weight="0.95">
+        <attvalues>
+          <attvalue for="0" value="references_code" />
+          <attvalue for="1" value="true" />
+          <attvalue for="2" value="0.95" />
+        </attvalues>
+      </edge>
+      <edge id="e74" source="ki_20260830_repo_01" target="ki_20261023_opencode_01" weight="0.80">
         <attvalues>
           <attvalue for="0" value="same_domain" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.80" />
         </attvalues>
       </edge>
-      <edge id="e70" source="ki_20260831_cellcog_01" target="ki_20260831_cellcog_03" weight="0.80">
+      <edge id="e75" source="ki_20260831_cellcog_01" target="ki_20260831_cellcog_03" weight="0.80">
         <attvalues>
           <attvalue for="0" value="same_domain" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.80" />
         </attvalues>
       </edge>
-      <edge id="e71" source="ki_20260831_cellcog_01" target="ki_20260831_cellcog_04" weight="0.80">
+      <edge id="e76" source="ki_20260831_cellcog_01" target="ki_20260831_cellcog_04" weight="0.80">
         <attvalues>
           <attvalue for="0" value="same_domain" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.80" />
         </attvalues>
       </edge>
-      <edge id="e72" source="ki_20260831_cellcog_03" target="ki_20260831_cellcog_04" weight="0.80">
+      <edge id="e77" source="ki_20260831_cellcog_03" target="ki_20260831_cellcog_04" weight="0.80">
         <attvalues>
           <attvalue for="0" value="same_domain" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.80" />
         </attvalues>
       </edge>
-      <edge id="e73" source="ki_20260831_em3_01" target="ki_20260831_openclaw_02" weight="0.80">
+      <edge id="e78" source="ki_20260831_em3_01" target="ki_20260831_openclaw_02" weight="0.80">
         <attvalues>
           <attvalue for="0" value="same_domain" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.80" />
         </attvalues>
       </edge>
-      <edge id="e74" source="ki_20260831_em3_01" target="ki_self_20260827_02" weight="0.80">
+      <edge id="e79" source="ki_20260831_em3_01" target="ki_self_20260827_02" weight="0.80">
         <attvalues>
           <attvalue for="0" value="same_domain" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.80" />
         </attvalues>
       </edge>
-      <edge id="e75" source="ki_20260831_em3_01" target="ki_self_20261002_05" weight="0.80">
+      <edge id="e80" source="ki_20260831_em3_01" target="ki_self_20261002_05" weight="0.80">
         <attvalues>
           <attvalue for="0" value="same_domain" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.80" />
         </attvalues>
       </edge>
-      <edge id="e76" source="ki_20260831_em3_02" target="ki_20260831_em3_03" weight="0.80">
+      <edge id="e81" source="ki_20260831_em3_02" target="ki_20260831_em3_03" weight="0.80">
         <attvalues>
           <attvalue for="0" value="same_domain" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.80" />
         </attvalues>
       </edge>
-      <edge id="e77" source="ki_20260831_em3_04" target="ki_20260831_em3_05" weight="0.80">
+      <edge id="e82" source="ki_20260831_em3_04" target="ki_20260831_em3_05" weight="0.80">
         <attvalues>
           <attvalue for="0" value="same_domain" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.80" />
         </attvalues>
       </edge>
-      <edge id="e78" source="ki_20260831_openclaw_01" target="ki_20260831_openclaw_03" weight="0.80">
+      <edge id="e83" source="ki_20260831_openclaw_01" target="ki_20260831_openclaw_03" weight="0.80">
         <attvalues>
           <attvalue for="0" value="same_domain" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.80" />
         </attvalues>
       </edge>
-      <edge id="e79" source="ki_20260831_openclaw_01" target="ki_20260831_openclaw_04" weight="0.80">
+      <edge id="e84" source="ki_20260831_openclaw_01" target="ki_20260831_openclaw_04" weight="0.80">
         <attvalues>
           <attvalue for="0" value="same_domain" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.80" />
         </attvalues>
       </edge>
-      <edge id="e80" source="ki_20260831_openclaw_03" target="ki_20260831_openclaw_04" weight="0.80">
+      <edge id="e85" source="ki_20260831_openclaw_03" target="ki_20260831_openclaw_04" weight="0.80">
         <attvalues>
           <attvalue for="0" value="same_domain" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.80" />
         </attvalues>
       </edge>
-      <edge id="e81" source="ki_20260831_sme_04" target="ki_20260831_sme_05" weight="0.80">
+      <edge id="e86" source="ki_20260831_sme_04" target="ki_20260831_sme_05" weight="0.80">
         <attvalues>
           <attvalue for="0" value="same_domain" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.80" />
         </attvalues>
       </edge>
-      <edge id="e82" source="ki_20260831_strategify_01" target="ki_self_20260831_04" weight="0.80">
+      <edge id="e87" source="ki_20260831_strategify_01" target="ki_self_20260831_04" weight="0.80">
         <attvalues>
           <attvalue for="0" value="same_domain" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.80" />
         </attvalues>
       </edge>
-      <edge id="e83" source="ki_20260831_strategify_04" target="ki_self_20260831_01" weight="0.80">
+      <edge id="e88" source="ki_20260831_strategify_04" target="ki_self_20260831_01" weight="0.80">
         <attvalues>
           <attvalue for="0" value="same_domain" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.80" />
         </attvalues>
       </edge>
-      <edge id="e84" source="ki_20260913_claude_coord_02" target="ki_audit_20260908_02" weight="0.80">
+      <edge id="e89" source="ki_20260913_claude_coord_02" target="ki_audit_20260908_02" weight="0.80">
         <attvalues>
           <attvalue for="0" value="same_domain" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.80" />
         </attvalues>
       </edge>
-      <edge id="e85" source="ki_20260913_claude_coord_02" target="ki_orca_orchestration_engine" weight="0.80">
+      <edge id="e90" source="ki_20260913_claude_coord_02" target="ki_orca_orchestration_engine" weight="0.80">
         <attvalues>
           <attvalue for="0" value="same_domain" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.80" />
         </attvalues>
       </edge>
-      <edge id="e86" source="ki_20260913_pr_lens_eli5_pedagogy" target="ki_agent_skills_progressive_disclosure" weight="0.80">
+      <edge id="e91" source="ki_20260913_pr_lens_eli5_pedagogy" target="ki_agent_skills_progressive_disclosure" weight="0.80">
         <attvalues>
           <attvalue for="0" value="same_domain" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.80" />
         </attvalues>
       </edge>
-      <edge id="e87" source="ki_20260913_pr_lens_overlay" target="ki_20260913_pr_lens_schema" weight="0.80">
+      <edge id="e92" source="ki_20260913_pr_lens_overlay" target="ki_20260913_pr_lens_schema" weight="0.80">
         <attvalues>
           <attvalue for="0" value="same_domain" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.80" />
         </attvalues>
       </edge>
-      <edge id="e88" source="ki_20260922_tau_pi_agent_architecture" target="pi-coding-harness" weight="1.00">
+      <edge id="e93" source="ki_20260922_tau_pi_agent_architecture" target="pi-coding-harness" weight="1.00">
         <attvalues>
           <attvalue for="0" value="became_skill" />
           <attvalue for="1" value="false" />
           <attvalue for="2" value="1.00" />
         </attvalues>
       </edge>
-      <edge id="e89" source="ki_20260922_tau_pi_agent_architecture" target="plugins/agent_orchestration/tau_harness_bridge/README.md" weight="0.95">
+      <edge id="e94" source="ki_20260922_tau_pi_agent_architecture" target="plugins/agent_orchestration/tau_harness_bridge/README.md" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e90" source="ki_20260923_ethical_hacker_networking" target="ethical-hacker-networking" weight="1.00">
+      <edge id="e95" source="ki_20260923_ethical_hacker_networking" target="ethical-hacker-networking" weight="1.00">
         <attvalues>
           <attvalue for="0" value="became_skill" />
           <attvalue for="1" value="false" />
           <attvalue for="2" value="1.00" />
         </attvalues>
       </edge>
-      <edge id="e91" source="ki_20260923_ethical_hacker_networking" target="plugins/security_and_forensics/network_forensics/main.py" weight="0.95">
+      <edge id="e96" source="ki_20260923_ethical_hacker_networking" target="plugins/security_and_forensics/network_forensics/main.py" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e92" source="ki_20260923_ethical_hacker_networking" target="src/harness/services/network_forensics.py" weight="0.95">
+      <edge id="e97" source="ki_20260923_ethical_hacker_networking" target="src/harness/services/network_forensics.py" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e93" source="ki_20261028_headroom_context_optimization" target="D:/GitHub/cloned/headroom/headroom/transforms" weight="1.00">
+      <edge id="e98" source="ki_20261028_headroom_context_optimization" target="external/headroom/headroom/transforms" weight="1.00">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="false" />
           <attvalue for="2" value="1.00" />
         </attvalues>
       </edge>
-      <edge id="e94" source="ki_20261028_headroom_context_optimization" target="headroom-context-optimizer" weight="1.00">
+      <edge id="e99" source="ki_20261028_headroom_context_optimization" target="headroom-context-optimizer" weight="1.00">
         <attvalues>
           <attvalue for="0" value="became_skill" />
           <attvalue for="1" value="false" />
           <attvalue for="2" value="1.00" />
         </attvalues>
       </edge>
-      <edge id="e95" source="ki_20261028_headroom_context_optimization" target="ki_20260913_context_types_04" weight="0.95">
+      <edge id="e100" source="ki_20261028_headroom_context_optimization" target="ki_20260913_context_types_04" weight="0.95">
         <attvalues>
           <attvalue for="0" value="same_domain" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e96" source="ki_20261028_headroom_context_optimization" target="plugins/memory_and_epistemics/headroom_context_optimizer" weight="1.00">
+      <edge id="e101" source="ki_20261028_headroom_context_optimization" target="plugins/memory_and_epistemics/headroom_context_optimizer" weight="1.00">
         <attvalues>
           <attvalue for="0" value="became_plugin" />
           <attvalue for="1" value="false" />
           <attvalue for="2" value="1.00" />
         </attvalues>
       </edge>
-      <edge id="e97" source="ki_audit_20260908_02" target="src/harness/agent/react.py" weight="0.95">
+      <edge id="e102" source="ki_agent_desktop_capture_proof" target="cloned/agent-desktop/CONCEPTS.md#L68-L115" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e98" source="ki_audit_20260908_02" target="src/harness/agent/swarm.py" weight="0.95">
+      <edge id="e103" source="ki_agent_desktop_capture_proof" target="cloned/agent-desktop/crates/core/src/refs/ref_capture_proof.rs#L1-L162" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e99" source="ki_audit_20260908_02" target="src/harness/events/bus.py" weight="0.95">
+      <edge id="e104" source="ki_agent_desktop_capture_proof" target="cloned/agent-desktop/crates/core/src/refs/ref_entry_identity.rs#L1-L80" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e100" source="ki_audit_20260908_02" target="src/harness/kernel/context.py" weight="0.95">
+      <edge id="e105" source="ki_agent_desktop_disposition_matrix" target="cloned/agent-desktop/crates/core/src/actionability/evaluate.rs#L78-L110" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e101" source="ki_audit_20260908_03" target="src/harness/agent/react.py" weight="0.95">
+      <edge id="e106" source="ki_agent_desktop_disposition_matrix" target="cloned/agent-desktop/crates/core/src/response/delivery_disposition.rs#L1-L13" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e102" source="ki_audit_20260908_03" target="src/harness/agent/swarm.py" weight="0.95">
+      <edge id="e107" source="ki_agent_desktop_disposition_matrix" target="cloned/agent-desktop/crates/core/src/response/retry_disposition.rs#L1-L10" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e103" source="ki_audit_20260908_03" target="src/harness/kernel/context.py" weight="0.95">
+      <edge id="e108" source="ki_agent_desktop_interaction_lease" target="cloned/agent-desktop/CONCEPTS.md#L50-L66" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e104" source="ki_audit_20260908_03" target="src/harness/kernel/lifecycle.py" weight="0.95">
+      <edge id="e109" source="ki_agent_desktop_interaction_lease" target="cloned/agent-desktop/crates/core/src/session/interaction_lease.rs#L1-L125" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e105" source="ki_audit_20260908_03" target="src/harness/services/tools.py" weight="0.95">
+      <edge id="e110" source="ki_agent_desktop_interaction_lease" target="cloned/agent-desktop/crates/core/src/tree/accname.rs#L1-L50" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e106" source="ki_audit_20260908_05" target="src/harness/services/openrouter_gateway.py#L17" weight="0.95">
+      <edge id="e111" source="ki_agent_desktop_mcp_cancellation" target="cloned/agent-desktop/src/mcp/calls.rs#L1-L110" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e107" source="ki_audit_20260908_06" target="src/harness/commands/__init__.py" weight="0.95">
+      <edge id="e112" source="ki_agent_desktop_mcp_cancellation" target="cloned/agent-desktop/src/mcp/catalog.rs#L1-L95" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e108" source="ki_audit_20260908_06" target="src/harness/ui/" weight="0.95">
+      <edge id="e113" source="ki_agent_desktop_mcp_cancellation" target="cloned/agent-desktop/src/mcp/mod.rs#L1-L120" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e109" source="ki_audit_20260908_07" target="src/harness/events/bus.py#L630" weight="0.95">
+      <edge id="e114" source="ki_agent_desktop_self_testing_arch" target="cloned/agent-desktop/AGENTS.md#L120-L185" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e110" source="ki_audit_20260908_07" target="src/harness/services/agent_graph.py" weight="0.95">
+      <edge id="e115" source="ki_agent_desktop_self_testing_arch" target="cloned/agent-desktop/Cargo.toml#L1-L35" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e111" source="ki_audit_20260908_07" target="src/harness/services/cellcog.py" weight="0.95">
+      <edge id="e116" source="ki_agent_desktop_self_testing_arch" target="cloned/agent-desktop/scripts/check_architecture.py#L1-L120" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e112" source="ki_audit_20260908_07" target="src/harness/services/data_management.py" weight="0.95">
-        <attvalues>
-          <attvalue for="0" value="references_code" />
-          <attvalue for="1" value="true" />
-          <attvalue for="2" value="0.95" />
-        </attvalues>
-      </edge>
-      <edge id="e113" source="ki_audit_20260908_07" target="src/harness/services/repomap.py" weight="0.95">
-        <attvalues>
-          <attvalue for="0" value="references_code" />
-          <attvalue for="1" value="true" />
-          <attvalue for="2" value="0.95" />
-        </attvalues>
-      </edge>
-      <edge id="e114" source="ki_audit_20260915_01" target="src/harness/kernel/context.py#L25-L95" weight="0.95">
-        <attvalues>
-          <attvalue for="0" value="references_code" />
-          <attvalue for="1" value="true" />
-          <attvalue for="2" value="0.95" />
-        </attvalues>
-      </edge>
-      <edge id="e115" source="ki_audit_20260915_01" target="src/harness/kernel/lifecycle.py#L45-L110" weight="0.95">
-        <attvalues>
-          <attvalue for="0" value="references_code" />
-          <attvalue for="1" value="true" />
-          <attvalue for="2" value="0.95" />
-        </attvalues>
-      </edge>
-      <edge id="e116" source="ki_audit_20260915_02" target="src/harness/services/compute_assessor.py" weight="0.95">
-        <attvalues>
-          <attvalue for="0" value="references_code" />
-          <attvalue for="1" value="true" />
-          <attvalue for="2" value="0.95" />
-        </attvalues>
-      </edge>
-      <edge id="e117" source="ki_audit_20260915_02" target="tests/test_compute_assessor.py" weight="0.95">
-        <attvalues>
-          <attvalue for="0" value="references_code" />
-          <attvalue for="1" value="true" />
-          <attvalue for="2" value="0.95" />
-        </attvalues>
-      </edge>
-      <edge id="e118" source="ki_audit_20260915_03" target="src/harness/plugins/loader.py#L71-L110" weight="0.95">
-        <attvalues>
-          <attvalue for="0" value="references_code" />
-          <attvalue for="1" value="true" />
-          <attvalue for="2" value="0.95" />
-        </attvalues>
-      </edge>
-      <edge id="e119" source="ki_auto_20260915_01" target="ki_mindreader_20260911_01" weight="0.80">
+      <edge id="e117" source="ki_agent_desktop_self_testing_arch" target="ki_self_20261104_03_planted_violation_boundary_gate" weight="0.80">
         <attvalues>
           <attvalue for="0" value="same_domain" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.80" />
         </attvalues>
       </edge>
-      <edge id="e120" source="ki_chatbotx_dynamic_mcp_orpc" target="D:/GitHub/cloned/ChatbotX/apps/builder/src/app/api/public-spec.json/route.ts" weight="0.95">
+      <edge id="e118" source="ki_audit_20260908_02" target="src/harness/agent/react.py" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e121" source="ki_chatbotx_dynamic_mcp_orpc" target="D:/GitHub/cloned/ChatbotX/apps/builder/src/routers/public.ts" weight="0.95">
+      <edge id="e119" source="ki_audit_20260908_02" target="src/harness/agent/swarm.py" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e122" source="ki_chatbotx_dynamic_mcp_orpc" target="D:/GitHub/cloned/ChatbotX/apps/mcp-server/src/openapi-loader.ts" weight="0.95">
+      <edge id="e120" source="ki_audit_20260908_02" target="src/harness/events/bus.py" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e123" source="ki_chatbotx_isolated_vm_execution" target="D:/GitHub/cloned/ChatbotX/apps/javascript-executor/src/index.ts" weight="0.95">
+      <edge id="e121" source="ki_audit_20260908_02" target="src/harness/kernel/context.py" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e124" source="ki_chatbotx_isolated_vm_execution" target="D:/GitHub/cloned/ChatbotX/packages/javascript-sandbox/src/index.ts" weight="0.95">
+      <edge id="e122" source="ki_audit_20260908_03" target="src/harness/agent/react.py" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e125" source="ki_chatbotx_omnichannel_messaging_bus" target="D:/GitHub/cloned/ChatbotX/packages/event-bus/src/index.ts" weight="0.95">
+      <edge id="e123" source="ki_audit_20260908_03" target="src/harness/agent/swarm.py" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e126" source="ki_chatbotx_omnichannel_messaging_bus" target="D:/GitHub/cloned/ChatbotX/packages/flow-config/src/index.ts" weight="0.95">
+      <edge id="e124" source="ki_audit_20260908_03" target="src/harness/kernel/context.py" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e127" source="ki_chatbotx_omnichannel_messaging_bus" target="D:/GitHub/cloned/ChatbotX/packages/sdk/src/index.ts" weight="0.95">
+      <edge id="e125" source="ki_audit_20260908_03" target="src/harness/kernel/lifecycle.py" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e128" source="ki_deepselect_bitmask_filtering" target="ki_deepselect_denormal_fp32" weight="0.80">
+      <edge id="e126" source="ki_audit_20260908_03" target="src/harness/services/tools.py" weight="0.95">
+        <attvalues>
+          <attvalue for="0" value="references_code" />
+          <attvalue for="1" value="true" />
+          <attvalue for="2" value="0.95" />
+        </attvalues>
+      </edge>
+      <edge id="e127" source="ki_audit_20260908_05" target="src/harness/services/openrouter_gateway.py#L17" weight="0.95">
+        <attvalues>
+          <attvalue for="0" value="references_code" />
+          <attvalue for="1" value="true" />
+          <attvalue for="2" value="0.95" />
+        </attvalues>
+      </edge>
+      <edge id="e128" source="ki_audit_20260908_06" target="src/harness/commands/__init__.py" weight="0.95">
+        <attvalues>
+          <attvalue for="0" value="references_code" />
+          <attvalue for="1" value="true" />
+          <attvalue for="2" value="0.95" />
+        </attvalues>
+      </edge>
+      <edge id="e129" source="ki_audit_20260908_06" target="src/harness/ui/" weight="0.95">
+        <attvalues>
+          <attvalue for="0" value="references_code" />
+          <attvalue for="1" value="true" />
+          <attvalue for="2" value="0.95" />
+        </attvalues>
+      </edge>
+      <edge id="e130" source="ki_audit_20260908_07" target="src/harness/events/bus.py#L630" weight="0.95">
+        <attvalues>
+          <attvalue for="0" value="references_code" />
+          <attvalue for="1" value="true" />
+          <attvalue for="2" value="0.95" />
+        </attvalues>
+      </edge>
+      <edge id="e131" source="ki_audit_20260908_07" target="src/harness/services/agent_graph.py" weight="0.95">
+        <attvalues>
+          <attvalue for="0" value="references_code" />
+          <attvalue for="1" value="true" />
+          <attvalue for="2" value="0.95" />
+        </attvalues>
+      </edge>
+      <edge id="e132" source="ki_audit_20260908_07" target="src/harness/services/cellcog.py" weight="0.95">
+        <attvalues>
+          <attvalue for="0" value="references_code" />
+          <attvalue for="1" value="true" />
+          <attvalue for="2" value="0.95" />
+        </attvalues>
+      </edge>
+      <edge id="e133" source="ki_audit_20260908_07" target="src/harness/services/data_management.py" weight="0.95">
+        <attvalues>
+          <attvalue for="0" value="references_code" />
+          <attvalue for="1" value="true" />
+          <attvalue for="2" value="0.95" />
+        </attvalues>
+      </edge>
+      <edge id="e134" source="ki_audit_20260908_07" target="src/harness/services/repomap.py" weight="0.95">
+        <attvalues>
+          <attvalue for="0" value="references_code" />
+          <attvalue for="1" value="true" />
+          <attvalue for="2" value="0.95" />
+        </attvalues>
+      </edge>
+      <edge id="e135" source="ki_audit_20260915_01" target="src/harness/kernel/context.py#L25-L95" weight="0.95">
+        <attvalues>
+          <attvalue for="0" value="references_code" />
+          <attvalue for="1" value="true" />
+          <attvalue for="2" value="0.95" />
+        </attvalues>
+      </edge>
+      <edge id="e136" source="ki_audit_20260915_01" target="src/harness/kernel/lifecycle.py#L45-L110" weight="0.95">
+        <attvalues>
+          <attvalue for="0" value="references_code" />
+          <attvalue for="1" value="true" />
+          <attvalue for="2" value="0.95" />
+        </attvalues>
+      </edge>
+      <edge id="e137" source="ki_audit_20260915_02" target="src/harness/services/compute_assessor.py" weight="0.95">
+        <attvalues>
+          <attvalue for="0" value="references_code" />
+          <attvalue for="1" value="true" />
+          <attvalue for="2" value="0.95" />
+        </attvalues>
+      </edge>
+      <edge id="e138" source="ki_audit_20260915_02" target="tests/test_compute_assessor.py" weight="0.95">
+        <attvalues>
+          <attvalue for="0" value="references_code" />
+          <attvalue for="1" value="true" />
+          <attvalue for="2" value="0.95" />
+        </attvalues>
+      </edge>
+      <edge id="e139" source="ki_audit_20260915_03" target="src/harness/plugins/loader.py#L71-L110" weight="0.95">
+        <attvalues>
+          <attvalue for="0" value="references_code" />
+          <attvalue for="1" value="true" />
+          <attvalue for="2" value="0.95" />
+        </attvalues>
+      </edge>
+      <edge id="e140" source="ki_auto_20260915_01" target="ki_mindreader_20260911_01" weight="0.80">
         <attvalues>
           <attvalue for="0" value="same_domain" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.80" />
         </attvalues>
       </edge>
-      <edge id="e129" source="ki_garf_reporting_engine" target="D:/GitHub/cloned/garf/libs/core/garf/core/query_editor.py" weight="0.95">
+      <edge id="e141" source="ki_chatbotx_dynamic_mcp_orpc" target="external/ChatbotX/apps/builder/src/app/api/public-spec.json/route.ts" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e130" source="ki_garf_reporting_engine" target="D:/GitHub/cloned/garf/libs/core/garf/core/query_parser.py" weight="0.95">
+      <edge id="e142" source="ki_chatbotx_dynamic_mcp_orpc" target="external/ChatbotX/apps/builder/src/routers/public.ts" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e131" source="ki_garf_reporting_engine" target="D:/GitHub/cloned/garf/libs/core/garf/core/report.py" weight="0.95">
+      <edge id="e143" source="ki_chatbotx_dynamic_mcp_orpc" target="external/ChatbotX/apps/mcp-server/src/openapi-loader.ts" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e132" source="ki_garf_reporting_engine" target="D:/GitHub/cloned/garf/libs/core/garf/core/simulator.py" weight="0.95">
+      <edge id="e144" source="ki_chatbotx_isolated_vm_execution" target="external/ChatbotX/apps/javascript-executor/src/index.ts" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e133" source="ki_garf_reporting_engine" target="D:/GitHub/cloned/garf/libs/executors/garf/executors/workflows/workflow.py" weight="0.95">
+      <edge id="e145" source="ki_chatbotx_isolated_vm_execution" target="external/ChatbotX/packages/javascript-sandbox/src/index.ts" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e134" source="ki_garf_reporting_engine" target="D:/GitHub/cloned/garf/libs/io/garf/io/writer.py" weight="0.95">
+      <edge id="e146" source="ki_chatbotx_omnichannel_messaging_bus" target="external/ChatbotX/packages/event-bus/src/index.ts" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e135" source="ki_google_repos_bridge" target="plugin.google_adk_docs_navigator" weight="1.00">
+      <edge id="e147" source="ki_chatbotx_omnichannel_messaging_bus" target="external/ChatbotX/packages/flow-config/src/index.ts" weight="0.95">
+        <attvalues>
+          <attvalue for="0" value="references_code" />
+          <attvalue for="1" value="true" />
+          <attvalue for="2" value="0.95" />
+        </attvalues>
+      </edge>
+      <edge id="e148" source="ki_chatbotx_omnichannel_messaging_bus" target="external/ChatbotX/packages/sdk/src/index.ts" weight="0.95">
+        <attvalues>
+          <attvalue for="0" value="references_code" />
+          <attvalue for="1" value="true" />
+          <attvalue for="2" value="0.95" />
+        </attvalues>
+      </edge>
+      <edge id="e149" source="ki_deepselect_bitmask_filtering" target="ki_deepselect_denormal_fp32" weight="0.80">
+        <attvalues>
+          <attvalue for="0" value="same_domain" />
+          <attvalue for="1" value="true" />
+          <attvalue for="2" value="0.80" />
+        </attvalues>
+      </edge>
+      <edge id="e150" source="ki_garf_reporting_engine" target="external/garf/libs/core/garf/core/query_editor.py" weight="0.95">
+        <attvalues>
+          <attvalue for="0" value="references_code" />
+          <attvalue for="1" value="true" />
+          <attvalue for="2" value="0.95" />
+        </attvalues>
+      </edge>
+      <edge id="e151" source="ki_garf_reporting_engine" target="external/garf/libs/core/garf/core/query_parser.py" weight="0.95">
+        <attvalues>
+          <attvalue for="0" value="references_code" />
+          <attvalue for="1" value="true" />
+          <attvalue for="2" value="0.95" />
+        </attvalues>
+      </edge>
+      <edge id="e152" source="ki_garf_reporting_engine" target="external/garf/libs/core/garf/core/report.py" weight="0.95">
+        <attvalues>
+          <attvalue for="0" value="references_code" />
+          <attvalue for="1" value="true" />
+          <attvalue for="2" value="0.95" />
+        </attvalues>
+      </edge>
+      <edge id="e153" source="ki_garf_reporting_engine" target="external/garf/libs/core/garf/core/simulator.py" weight="0.95">
+        <attvalues>
+          <attvalue for="0" value="references_code" />
+          <attvalue for="1" value="true" />
+          <attvalue for="2" value="0.95" />
+        </attvalues>
+      </edge>
+      <edge id="e154" source="ki_garf_reporting_engine" target="external/garf/libs/executors/garf/executors/workflows/workflow.py" weight="0.95">
+        <attvalues>
+          <attvalue for="0" value="references_code" />
+          <attvalue for="1" value="true" />
+          <attvalue for="2" value="0.95" />
+        </attvalues>
+      </edge>
+      <edge id="e155" source="ki_garf_reporting_engine" target="external/garf/libs/io/garf/io/writer.py" weight="0.95">
+        <attvalues>
+          <attvalue for="0" value="references_code" />
+          <attvalue for="1" value="true" />
+          <attvalue for="2" value="0.95" />
+        </attvalues>
+      </edge>
+      <edge id="e156" source="ki_google_repos_bridge" target="plugin.google_adk_docs_navigator" weight="1.00">
         <attvalues>
           <attvalue for="0" value="became_plugin" />
           <attvalue for="1" value="false" />
           <attvalue for="2" value="1.00" />
         </attvalues>
       </edge>
-      <edge id="e136" source="ki_google_repos_bridge" target="plugin.google_adk_optimizer" weight="1.00">
+      <edge id="e157" source="ki_google_repos_bridge" target="plugin.google_adk_optimizer" weight="1.00">
         <attvalues>
           <attvalue for="0" value="became_plugin" />
           <attvalue for="1" value="false" />
           <attvalue for="2" value="1.00" />
         </attvalues>
       </edge>
-      <edge id="e137" source="ki_google_repos_bridge" target="plugin.google_adk_runtime" weight="1.00">
+      <edge id="e158" source="ki_google_repos_bridge" target="plugin.google_adk_runtime" weight="1.00">
         <attvalues>
           <attvalue for="0" value="became_plugin" />
           <attvalue for="1" value="false" />
           <attvalue for="2" value="1.00" />
         </attvalues>
       </edge>
-      <edge id="e138" source="ki_google_repos_bridge" target="plugin.google_adk_web_bridge" weight="1.00">
+      <edge id="e159" source="ki_google_repos_bridge" target="plugin.google_adk_web_bridge" weight="1.00">
         <attvalues>
           <attvalue for="0" value="became_plugin" />
           <attvalue for="1" value="false" />
           <attvalue for="2" value="1.00" />
         </attvalues>
       </edge>
-      <edge id="e139" source="ki_google_repos_bridge" target="plugin.google_styleguide_auditor" weight="1.00">
+      <edge id="e160" source="ki_google_repos_bridge" target="plugin.google_styleguide_auditor" weight="1.00">
         <attvalues>
           <attvalue for="0" value="became_plugin" />
           <attvalue for="1" value="false" />
           <attvalue for="2" value="1.00" />
         </attvalues>
       </edge>
-      <edge id="e140" source="ki_google_repos_bridge" target="plugin.google_tunix_posttraining" weight="1.00">
+      <edge id="e161" source="ki_google_repos_bridge" target="plugin.google_tunix_posttraining" weight="1.00">
         <attvalues>
           <attvalue for="0" value="became_plugin" />
           <attvalue for="1" value="false" />
           <attvalue for="2" value="1.00" />
         </attvalues>
       </edge>
-      <edge id="e141" source="ki_google_repos_bridge" target="plugin.perfetto_trace_processor" weight="1.00">
+      <edge id="e162" source="ki_google_repos_bridge" target="plugin.perfetto_trace_processor" weight="1.00">
         <attvalues>
           <attvalue for="0" value="became_plugin" />
           <attvalue for="1" value="false" />
           <attvalue for="2" value="1.00" />
         </attvalues>
       </edge>
-      <edge id="e142" source="ki_koos_typescript_harness_from_scratch" target="ki_self_20260917_01" weight="0.80">
+      <edge id="e163" source="ki_koos_typescript_harness_from_scratch" target="ki_self_20260917_01" weight="0.80">
         <attvalues>
           <attvalue for="0" value="same_domain" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.80" />
         </attvalues>
       </edge>
-      <edge id="e143" source="ki_self_20260827_02" target="ki_self_20261002_05" weight="0.80">
+      <edge id="e164" source="ki_self_20260827_02" target="ki_self_20261002_05" weight="0.80">
         <attvalues>
           <attvalue for="0" value="same_domain" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.80" />
         </attvalues>
       </edge>
-      <edge id="e144" source="ki_self_20260827_02" target="ki_self_20261019_pyrit_redteam_01" weight="0.80">
+      <edge id="e165" source="ki_self_20260827_02" target="ki_self_20261019_pyrit_redteam_01" weight="0.80">
         <attvalues>
           <attvalue for="0" value="same_domain" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.80" />
         </attvalues>
       </edge>
-      <edge id="e145" source="ki_self_20260829_02" target="ki_self_20260914_05" weight="0.80">
+      <edge id="e166" source="ki_self_20260829_02" target="ki_self_20260914_05" weight="0.80">
         <attvalues>
           <attvalue for="0" value="same_domain" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.80" />
         </attvalues>
       </edge>
-      <edge id="e146" source="ki_self_20260901_02" target="ki_self_20260901_scratch_03" weight="0.80">
+      <edge id="e167" source="ki_self_20260901_02" target="ki_self_20260901_scratch_03" weight="0.80">
         <attvalues>
           <attvalue for="0" value="same_domain" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.80" />
         </attvalues>
       </edge>
-      <edge id="e147" source="ki_self_20260908_01" target="deep-repo-auditor" weight="1.00">
+      <edge id="e168" source="ki_self_20260901_03" target="src/harness/mcp" weight="0.95">
+        <attvalues>
+          <attvalue for="0" value="references_code" />
+          <attvalue for="1" value="true" />
+          <attvalue for="2" value="0.95" />
+        </attvalues>
+      </edge>
+      <edge id="e169" source="ki_self_20260908_01" target="deep-repo-auditor" weight="1.00">
         <attvalues>
           <attvalue for="0" value="became_skill" />
           <attvalue for="1" value="false" />
           <attvalue for="2" value="1.00" />
         </attvalues>
       </edge>
-      <edge id="e148" source="ki_self_20260908_01" target="src/harness/services/skill_graph.py" weight="0.95">
+      <edge id="e170" source="ki_self_20260908_01" target="src/harness/services/skill_graph.py" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e149" source="ki_self_20260908_01" target="src/harness/services/skill_pipeline.py" weight="0.95">
+      <edge id="e171" source="ki_self_20260908_01" target="src/harness/services/skill_pipeline.py" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e150" source="ki_self_20260908_02" target="src/harness/creator/validator.py" weight="0.95">
+      <edge id="e172" source="ki_self_20260908_02" target="src/harness/creator/validator.py" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e151" source="ki_self_20260908_02" target="src/harness/services/skill_graph.py" weight="0.95">
+      <edge id="e173" source="ki_self_20260908_02" target="src/harness/services/skill_graph.py" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e152" source="ki_self_20260908_03" target="context-anti-rot-sync" weight="1.00">
+      <edge id="e174" source="ki_self_20260908_03" target="context-anti-rot-sync" weight="1.00">
         <attvalues>
           <attvalue for="0" value="became_skill" />
           <attvalue for="1" value="false" />
           <attvalue for="2" value="1.00" />
         </attvalues>
       </edge>
-      <edge id="e153" source="ki_self_20260908_03" target="media-to-vault-pipeline" weight="1.00">
+      <edge id="e175" source="ki_self_20260908_03" target="media-to-vault-pipeline" weight="1.00">
         <attvalues>
           <attvalue for="0" value="became_skill" />
           <attvalue for="1" value="false" />
           <attvalue for="2" value="1.00" />
         </attvalues>
       </edge>
-      <edge id="e154" source="ki_self_20260908_04" target="data-management-architect" weight="1.00">
+      <edge id="e176" source="ki_self_20260908_04" target="data-management-architect" weight="1.00">
         <attvalues>
           <attvalue for="0" value="became_skill" />
           <attvalue for="1" value="false" />
           <attvalue for="2" value="1.00" />
         </attvalues>
       </edge>
-      <edge id="e155" source="ki_self_20260908_04" target="tests/test_data_management_architect.py" weight="0.95">
+      <edge id="e177" source="ki_self_20260908_04" target="tests/test_data_management_architect.py" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e156" source="ki_self_20260909_01" target="plugins/agent_orchestration/agent_debater/main.py" weight="0.95">
+      <edge id="e178" source="ki_self_20260909_01" target="plugins/agent_orchestration/agent_debater/main.py" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e157" source="ki_self_20260909_01" target="plugins/agent_orchestration/critic_loop/config.default.yaml" weight="0.95">
+      <edge id="e179" source="ki_self_20260909_01" target="plugins/agent_orchestration/critic_loop/config.default.yaml" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e158" source="ki_self_20260909_01" target="plugins/agent_orchestration/critic_loop/main.py" weight="0.95">
+      <edge id="e180" source="ki_self_20260909_01" target="plugins/agent_orchestration/critic_loop/main.py" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e159" source="ki_self_20260909_01" target="plugins/agent_orchestration/evaluator_critic/main.py" weight="0.95">
+      <edge id="e181" source="ki_self_20260909_01" target="plugins/agent_orchestration/evaluator_critic/main.py" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e160" source="ki_self_20260909_02" target="plugins/geospatial_and_osint/earth_engine_pipeline/main.py" weight="0.95">
+      <edge id="e182" source="ki_self_20260909_02" target="plugins/geospatial_and_osint/earth_engine_pipeline/main.py" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e161" source="ki_self_20260909_02" target="scratch/inspect_omarchy.py" weight="0.95">
+      <edge id="e183" source="ki_self_20260909_02" target="scratch/inspect_omarchy.py" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e162" source="ki_self_20260909_03" target="plugins/agent_orchestration/critic_loop/main.py" weight="0.95">
+      <edge id="e184" source="ki_self_20260909_03" target="plugins/agent_orchestration/critic_loop/main.py" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e163" source="ki_self_20260909_03" target="plugins/agent_orchestration/google_adk_runtime/main.py" weight="0.95">
+      <edge id="e185" source="ki_self_20260909_03" target="plugins/agent_orchestration/google_adk_runtime/main.py" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e164" source="ki_self_20260909_03" target="src/harness/plugins/loader.py" weight="0.95">
+      <edge id="e186" source="ki_self_20260909_03" target="src/harness/plugins/loader.py" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e165" source="ki_self_20260910_01" target="agent-skills-architect" weight="1.00">
+      <edge id="e187" source="ki_self_20260910_01" target="agent-skills-architect" weight="1.00">
         <attvalues>
           <attvalue for="0" value="became_skill" />
           <attvalue for="1" value="false" />
           <attvalue for="2" value="1.00" />
         </attvalues>
       </edge>
-      <edge id="e166" source="ki_self_20260910_01" target="tests/test_agent_skills_architect_deepened.py" weight="0.95">
+      <edge id="e188" source="ki_self_20260910_01" target="tests/test_agent_skills_architect_deepened.py" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e167" source="ki_self_20260910_02" target="agent-skills-architect" weight="1.00">
+      <edge id="e189" source="ki_self_20260910_02" target="agent-skills-architect" weight="1.00">
         <attvalues>
           <attvalue for="0" value="became_skill" />
           <attvalue for="1" value="false" />
           <attvalue for="2" value="1.00" />
         </attvalues>
       </edge>
-      <edge id="e168" source="ki_self_20260910_02" target="tests/test_agent_skill_sdlc.py" weight="0.95">
+      <edge id="e190" source="ki_self_20260910_02" target="tests/test_agent_skill_sdlc.py" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e169" source="ki_self_20260911_01" target="ki_self_20260914_01" weight="0.80">
+      <edge id="e191" source="ki_self_20260911_01" target="ki_self_20260914_01" weight="0.80">
         <attvalues>
           <attvalue for="0" value="same_domain" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.80" />
         </attvalues>
       </edge>
-      <edge id="e170" source="ki_self_20260922_01" target="ki_self_20260924_01" weight="0.80">
+      <edge id="e192" source="ki_self_20260922_01" target="ki_self_20260924_01" weight="0.80">
         <attvalues>
           <attvalue for="0" value="same_domain" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.80" />
         </attvalues>
       </edge>
-      <edge id="e171" source="ki_self_20261014_01" target="architecture-deepening-workflow" weight="1.00">
+      <edge id="e193" source="ki_self_20261014_01" target="architecture-deepening-workflow" weight="1.00">
         <attvalues>
           <attvalue for="0" value="became_skill" />
           <attvalue for="1" value="false" />
           <attvalue for="2" value="1.00" />
         </attvalues>
       </edge>
-      <edge id="e172" source="ki_self_20261019_hyperframes_video_01" target="Brain Harness (src/harness/services/hyperframes/)" weight="0.95">
+      <edge id="e194" source="ki_self_20261019_hyperframes_video_01" target="Brain Harness (src/harness/services/hyperframes/)" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e173" source="ki_self_20261019_hyperframes_video_01" target="hyperframes-video-architect" weight="1.00">
+      <edge id="e195" source="ki_self_20261019_hyperframes_video_01" target="hyperframes-video-architect" weight="1.00">
         <attvalues>
           <attvalue for="0" value="became_skill" />
           <attvalue for="1" value="false" />
           <attvalue for="2" value="1.00" />
         </attvalues>
       </edge>
-      <edge id="e174" source="ki_self_20261019_memory_decay_01" target="Brain Harness (src/harness/services/memory_decay/)" weight="0.95">
+      <edge id="e196" source="ki_self_20261019_memory_decay_01" target="Brain Harness (src/harness/services/memory_decay/)" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e175" source="ki_self_20261019_memory_decay_01" target="ebbinghaus-memory-governor" weight="1.00">
+      <edge id="e197" source="ki_self_20261019_memory_decay_01" target="ebbinghaus-memory-governor" weight="1.00">
         <attvalues>
           <attvalue for="0" value="became_skill" />
           <attvalue for="1" value="false" />
           <attvalue for="2" value="1.00" />
         </attvalues>
       </edge>
-      <edge id="e176" source="ki_self_20261019_prometheus_exporter_01" target="Brain Harness (src/harness/services/prometheus/)" weight="0.95">
+      <edge id="e198" source="ki_self_20261019_prometheus_exporter_01" target="Brain Harness (src/harness/services/prometheus/)" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e177" source="ki_self_20261019_prometheus_exporter_01" target="cloud-infrastructure-architect" weight="1.00">
+      <edge id="e199" source="ki_self_20261019_prometheus_exporter_01" target="cloud-infrastructure-architect" weight="1.00">
         <attvalues>
           <attvalue for="0" value="became_skill" />
           <attvalue for="1" value="false" />
           <attvalue for="2" value="1.00" />
         </attvalues>
       </edge>
-      <edge id="e178" source="ki_self_20261019_prompt_pruning_01" target="Brain Harness (src/harness/services/context_optimizer/)" weight="0.95">
+      <edge id="e200" source="ki_self_20261019_prompt_pruning_01" target="Brain Harness (src/harness/services/context_optimizer/)" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e179" source="ki_self_20261019_prompt_pruning_01" target="prompt-pruning-architect" weight="1.00">
+      <edge id="e201" source="ki_self_20261019_prompt_pruning_01" target="prompt-pruning-architect" weight="1.00">
         <attvalues>
           <attvalue for="0" value="became_skill" />
           <attvalue for="1" value="false" />
           <attvalue for="2" value="1.00" />
         </attvalues>
       </edge>
-      <edge id="e180" source="ki_self_20261019_pyrit_redteam_01" target="Brain Harness (src/harness/services/pyrit_scanner/)" weight="0.95">
+      <edge id="e202" source="ki_self_20261019_pyrit_redteam_01" target="Brain Harness (src/harness/services/pyrit_scanner/)" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e181" source="ki_self_20261019_pyrit_redteam_01" target="ai-red-teaming-architect" weight="1.00">
+      <edge id="e203" source="ki_self_20261019_pyrit_redteam_01" target="ai-red-teaming-architect" weight="1.00">
         <attvalues>
           <attvalue for="0" value="became_skill" />
           <attvalue for="1" value="false" />
           <attvalue for="2" value="1.00" />
         </attvalues>
       </edge>
-      <edge id="e182" source="ki_solla_contract_first_medallion_lakehouse" target="ki_solla_dikw_data_asset_continuum" weight="0.80">
+      <edge id="e204" source="ki_self_20261104_01_powershell_splatting_guard" target=".agents/skills/agent-desktop-operator/SKILL.md#L68-L76" weight="0.95">
+        <attvalues>
+          <attvalue for="0" value="references_code" />
+          <attvalue for="1" value="true" />
+          <attvalue for="2" value="0.95" />
+        </attvalues>
+      </edge>
+      <edge id="e205" source="ki_self_20261104_01_powershell_splatting_guard" target="cloned/agent-desktop/CONCEPTS.md#L30-L35" weight="0.95">
+        <attvalues>
+          <attvalue for="0" value="references_code" />
+          <attvalue for="1" value="true" />
+          <attvalue for="2" value="0.95" />
+        </attvalues>
+      </edge>
+      <edge id="e206" source="ki_self_20261104_01_powershell_splatting_guard" target="tests/test_agent_desktop_operator.py#L42-L56" weight="0.95">
+        <attvalues>
+          <attvalue for="0" value="references_code" />
+          <attvalue for="1" value="true" />
+          <attvalue for="2" value="0.95" />
+        </attvalues>
+      </edge>
+      <edge id="e207" source="ki_self_20261104_02_simulation_backed_domain_engine" target=".agents/skills/agent-desktop-operator/scripts/desktop_operator_engine.py#L90-L150" weight="0.95">
+        <attvalues>
+          <attvalue for="0" value="references_code" />
+          <attvalue for="1" value="true" />
+          <attvalue for="2" value="0.95" />
+        </attvalues>
+      </edge>
+      <edge id="e208" source="ki_self_20261104_02_simulation_backed_domain_engine" target="plugins/integration_and_io/agent_desktop/engine.py#L20-L80" weight="0.95">
+        <attvalues>
+          <attvalue for="0" value="references_code" />
+          <attvalue for="1" value="true" />
+          <attvalue for="2" value="0.95" />
+        </attvalues>
+      </edge>
+      <edge id="e209" source="ki_self_20261104_02_simulation_backed_domain_engine" target="tests/test_plugin_agent_desktop.py#L50-L75" weight="0.95">
+        <attvalues>
+          <attvalue for="0" value="references_code" />
+          <attvalue for="1" value="true" />
+          <attvalue for="2" value="0.95" />
+        </attvalues>
+      </edge>
+      <edge id="e210" source="ki_self_20261104_03_planted_violation_boundary_gate" target="cloned/agent-desktop/AGENTS.md#L120-L185" weight="0.95">
+        <attvalues>
+          <attvalue for="0" value="references_code" />
+          <attvalue for="1" value="true" />
+          <attvalue for="2" value="0.95" />
+        </attvalues>
+      </edge>
+      <edge id="e211" source="ki_self_20261104_03_planted_violation_boundary_gate" target="cloned/agent-desktop/scripts/check_architecture.py#L1-L120" weight="0.95">
+        <attvalues>
+          <attvalue for="0" value="references_code" />
+          <attvalue for="1" value="true" />
+          <attvalue for="2" value="0.95" />
+        </attvalues>
+      </edge>
+      <edge id="e212" source="ki_solla_contract_first_medallion_lakehouse" target="ki_solla_dikw_data_asset_continuum" weight="0.80">
         <attvalues>
           <attvalue for="0" value="same_domain" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.80" />
         </attvalues>
       </edge>
-      <edge id="e183" source="ki_solla_contract_first_medallion_lakehouse" target="ki_solla_dmbok_governance_decision_rights" weight="0.80">
+      <edge id="e213" source="ki_solla_contract_first_medallion_lakehouse" target="ki_solla_dmbok_governance_decision_rights" weight="0.80">
         <attvalues>
           <attvalue for="0" value="same_domain" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.80" />
         </attvalues>
       </edge>
-      <edge id="e184" source="ki_solla_dikw_data_asset_continuum" target="ki_solla_dmbok_governance_decision_rights" weight="0.80">
+      <edge id="e214" source="ki_solla_dikw_data_asset_continuum" target="ki_solla_dmbok_governance_decision_rights" weight="0.80">
         <attvalues>
           <attvalue for="0" value="same_domain" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.80" />
         </attvalues>
       </edge>
-      <edge id="e185" source="ki_umairmirza_precommit_security" target="plugins/security_and_forensics/pre_commit_security_guard/main.py" weight="0.95">
+      <edge id="e215" source="ki_umairmirza_precommit_security" target="plugins/security_and_forensics/pre_commit_security_guard/main.py" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />
           <attvalue for="2" value="0.95" />
         </attvalues>
       </edge>
-      <edge id="e186" source="ki_umairmirza_precommit_security" target="pre-commit-security-guard" weight="1.00">
+      <edge id="e216" source="ki_umairmirza_precommit_security" target="pre-commit-security-guard" weight="1.00">
         <attvalues>
           <attvalue for="0" value="became_skill" />
           <attvalue for="1" value="false" />
           <attvalue for="2" value="1.00" />
         </attvalues>
       </edge>
-      <edge id="e187" source="ki_umairmirza_precommit_security" target="src/harness/services/pre_commit_security_guard.py" weight="0.95">
+      <edge id="e217" source="ki_umairmirza_precommit_security" target="src/harness/services/pre_commit_security_guard.py" weight="0.95">
         <attvalues>
           <attvalue for="0" value="references_code" />
           <attvalue for="1" value="true" />

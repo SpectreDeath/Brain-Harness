@@ -12,6 +12,7 @@ from pathlib import Path
 from typing import Any
 
 import pytest
+pytest.importorskip("jsonschema")
 from click.testing import CliRunner
 
 _ws_root = Path(__file__).resolve().parent.parent

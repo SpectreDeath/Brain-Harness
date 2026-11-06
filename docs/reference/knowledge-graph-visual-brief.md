@@ -1,8 +1,8 @@
 # Knowledge Graph Visual Brief & Topology Analysis
 
 **Export Format**: GEXF (`.harness/graph/knowledge_graph.gexf`) & Cypher (`.harness/graph/knowledge_graph.cypher`)  
-**Generated Date**: 2026-11-03  
-**Source Knowledge Vault**: `.harness/knowledge/` (301 Knowledge Items)  
+**Generated Date**: 2026-11-05  
+**Source Knowledge Vault**: `.harness/knowledge/` (309 Knowledge Items)  
 
 ---
 
@@ -12,21 +12,22 @@ The derived knowledge graph models the complete epistemic and architectural memo
 
 | Entity Kind | Count | Description |
 |:---|:---:|:---|
-| **Knowledge Items (`ki`)** | 301 | Primary empirical and architectural heuristics in `.harness/knowledge/` |
-| **Code Paths (`path`)** | 86 | Upstream and workspace files referenced by `source_target` |
-| **Agent Skills (`skill`)** | 22 | Scaffolding targets linked via `became_skill` |
+| **Knowledge Items (`ki`)** | 309 | Primary empirical and architectural heuristics in `.harness/knowledge/` |
+| **Code Paths (`path`)** | 116 | Upstream and workspace files referenced by `source_target` |
+| **Agent Skills (`skill`)** | 17 | Scaffolding targets linked via `became_skill` |
 | **Plugins (`plugin`)** | 8 | Ecosystem extensions linked via `became_plugin` |
-| **Total Nodes** | **417** | Combined network entities |
+| **Source Repositories (`source`)** | 1 | External origin repositories |
+| **Total Nodes** | **451** | Combined network entities |
 
 ### Edge Type Distribution
 
 | Edge Type | Count | Inference Mode | Description |
 |:---|:---:|:---:|:---|
-| `references_code` | 108 | Derived | Directional provenance edge to source file/directory |
-| `same_domain` | 54 | Derived | Semantic affinity edge sharing $\ge 2$ high-signal domain tags |
+| `references_code` | 137 | Derived | Directional provenance edge to source file/directory |
+| `same_domain` | 55 | Derived | Semantic affinity edge sharing $\ge 2$ high-signal domain tags |
 | `became_skill` | 18 | Asserted | Epistemic-to-procedural promotion edge into `.agents/skills/` |
 | `became_plugin` | 8 | Asserted | Epistemic-to-kernel promotion edge into `plugins/` |
-| **Total Edges** | **188** | 27 Asserted, 161 Derived | Multi-relational typed DAG edges |
+| **Total Edges** | **218** | 27 Asserted, 191 Derived | Multi-relational typed DAG edges |
 
 > [!NOTE]
 > **Excluded Mega-Tags**: `endogenous_memory` and `self_reflection` crossed the 15% frequency threshold and were excluded during derivation to prevent spurious hairball clustering.

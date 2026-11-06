@@ -1,1 +1,1 @@
-structlog
+structlog>=24.1.0

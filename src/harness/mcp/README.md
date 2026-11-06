@@ -18,7 +18,7 @@ The `harness.mcp` package implements bidirectional integration with the Model Co
 
 | Module | Core Classes | Responsibility |
 |---|---|---|
-| [`server.py`](server.py) | `HarnessMCPServer` | Host MCP server exposing tools, skills, and prompts over stdio or HTTP. |
+| [`server/`](server/) | `HarnessMCPServer` | Host MCP server exposing tools, skills, and prompts over stdio or HTTP. |
 | [`client_plugin.py`](client_plugin.py) | `MCPClientPlugin` | Client plugin importing tools from remote MCP servers into Harness. |
 | [`protocol.py`](protocol.py) | `MCPProtocolCodec`, `MCPRequest` | JSON-RPC 2.0 protocol definitions, error codes, and serialization codec. |
 

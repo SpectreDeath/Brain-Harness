@@ -96,6 +96,11 @@ def test_load_real_dock_manifest() -> None:
     assert "verify-core" in manifest.entrypoints
     assert "sync-context" in manifest.entrypoints
     assert manifest.entrypoints["sync-context"].write_path is True
+    vault_step = manifest.entrypoints["vault-stats"].steps[0]
+    assert vault_step.command == "python -m harness.cli knowledge stats"
+    assert vault_step.expected_output == "Knowledge Graph Census Statistics"
+    sync_step = manifest.entrypoints["sync-context"].steps[0]
+    assert sync_step.command == "python -m harness.cli context lint --root ."
 
 
 def test_load_dock_manifest_malformed(tmp_path: Path) -> None:

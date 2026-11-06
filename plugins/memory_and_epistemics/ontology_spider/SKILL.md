@@ -1,11 +1,13 @@
 ---
 name: ontology-spider
-description: Query, traverse, validate, and explain Brain Harness knowledge vaults and domain ontologies using formal logic reasoning.
+description: Query, traverse, validate, and explain Brain Harness knowledge vaults and domain ontologies using formal logic reasoning. Do not use for fuzzy text search or ungrounded vector clustering.
 ---
 
 # Ontology-Spider Skill
 
 The **Ontology-Spider** skill equips AI agents with formal logic reasoning over Brain Harness vaults, code architectures, and domain models. Unlike unstructured vector search or fuzzy heuristic lookup, Ontology-Spider provides deterministic graph traversals, inheritance reasoning, and mathematically provable explanations.
+
+See [CARD.md](CARD.md) for the companion summary card, stage progression table, and mandatory invariants checklist.
 
 ---
 
@@ -63,3 +65,13 @@ if violations:
 - **Trusted Input**: Operates over structured JSON vault exports or on-disk `metadata.json` items. Unstructured markdown bodies remain referenced by URI.
 - **Controlled Language**: Use the exact grammar specified above; do not construct free-form natural language query strings.
 - **Performance**: Powered by SWI-Prolog with automatic bounded pure-Python degraded fallback when SWI-Prolog is not present on the host.
+
+---
+
+## Anti-Patterns
+
+- **Free-Form Prompt Injection** — Passing unstructured conversational queries instead of controlled `.dialog` grammar.
+- **Ungrounded Vector Approximation** — Using fuzzy semantic embedding searches when exact logical closures are required.
+- **Ignoring Inference Fallback** — Assuming SWI-Prolog binary is universally installed without handling the pure-Python reasoner.
+- **Unverified Traversal Claims** — Accepting transitive deductions without inspecting `path` and `rules_fired` provenance.
+- **Unbounded Cycle Traversal** — Running transitive queries without validating acyclicity constraints first.

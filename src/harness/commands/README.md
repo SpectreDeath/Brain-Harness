@@ -25,10 +25,10 @@ Commands are strictly decoupled from Click CLI option parsers:
 | [`context.py`](context.py) | `harness context` | — | 3-tier context compilation, AST RepoMap injection, and prompt pruning. |
 | [`compute.py`](compute.py) | `harness assess-compute` | — | Dynamic 5D complexity evaluation and model tier reasoning budget recommendation. |
 | [`model_router.py`](model_router.py) | `harness router` | `model-router` | Heuristic query complexity classification and dynamic multi-provider routing. |
-| [`calibrator.py`](calibrator.py) | `harness calibrate` | `calibrator` | Empirical coding harness component calibration, staging simulation, and forecasting. |
+| [`calibrator/`](calibrator/) | `harness calibrate` | `calibrator` | Empirical coding harness component calibration, staging simulation, and forecasting. |
 | [`harness_architect.py`](harness_architect.py) | `harness architect` | `harness-architect` | 5-part harness architecture audit, reliability scoring, and stack analysis. |
 | [`compass.py`](compass.py) | `harness compass` | `harness-compass` | Autonomous agent harness benchmarking and constrained evolution. |
-| [`self_eval.py`](self_eval.py) | `harness eval` | `self-eval` | Deterministic prompt evaluation pipelines and 3-layer LLM quality evaluation. |
+| [`self_eval/`](self_eval/) | `harness eval` | `self-eval` | Deterministic prompt evaluation pipelines and 3-layer LLM quality evaluation. |
 | [`validation_loop.py`](validation_loop.py) | `harness validation-loop`| `validate-loop` | Spec-first deterministic validation loop execution and report generation. |
 | [`uncertainty/`](uncertainty/) | `harness uncertainty` | `uncertainty-guard` | 3-layer uncertainty gating, retrieval similarity scoring, and logprob validation. |
 | [`tau.py`](tau.py) | `harness tau` | `coding-harness` | Pi-style coding agent harness commands (DAG trees, journals, repair, trust). |
@@ -54,7 +54,7 @@ Commands are strictly decoupled from Click CLI option parsers:
 |---|---|---|---|
 | [`doc.py`](doc.py) | `harness doc` | — | Repository documentation auditing, AST symbol drift verification, and sync. |
 | [`doc_builder.py`](doc_builder.py) | `harness doc-builder` | `hf-doc-builder` | HF Doc Builder — Documentation compilation, link verification, and MDX transpilation. |
-| [`data.py`](data.py) | `harness data` | — | Enterprise data management, contracts, quality profiling, and Medallion pipelines. |
+| [`data/`](data/) | `harness data` | — | Enterprise data management, contracts, quality profiling, and Medallion pipelines. |
 | [`datasets.py`](datasets.py) | `harness datasets` | — | Hugging Face Datasets inspection, streaming, transformation, and lakehouse conversion. |
 | [`bigquery.py`](bigquery.py) | `harness bigquery` | `bq` | BigQuery in-database augmented analytics TVF execution suite. |
 | [`garf.py`](garf.py) | `harness garf` | `garf-reporting` | Google Garf Declarative SQL Reporting & Analytical Workflow DAGs. |

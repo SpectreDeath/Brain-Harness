@@ -57,7 +57,7 @@ def synthesize_cluster_capabilities(
     if not emergent_caps and len(members) >= 2:
         member_targets = [
             getattr(skills[m], "target", "") or getattr(skills[m], "description", "")
-            for m in members[:3]
+            for m in members[:4]
         ]
         synth_guarded_aps: list[str] = []
         synth_invs: list[str] = []
@@ -72,10 +72,63 @@ def synthesize_cluster_capabilities(
                     synth_invs.append(inv_rule)
 
         synth_title = f"Composite {hub_skill.replace('-', ' ').title()} & Domain Synthesis"
+        target_snippets = []
+        for t in member_targets:
+            if not t:
+                continue
+            first_sent = t.split(". ")[0].strip().rstrip(".")
+            if first_sent:
+                target_snippets.append(first_sent)
+        targets_text = " | ".join(target_snippets[:3]) if target_snippets else "collaborative capability execution"
         synth_desc = (
             f"Integrates {', '.join(members[:4])} into an end-to-end {primary_domain} pipeline, "
-            f"combining: {' | '.join(t for t in member_targets if t)[:160]}."
+            f"combining: {targets_text}."
         )
+
+        # Autonomous vs Human-only invocation gating
+        executable_members = []
+        for m in members:
+            s_obj = skills.get(m)
+            fm = getattr(s_obj, "frontmatter", None)
+            disable_model = False
+            if isinstance(fm, dict):
+                disable_model = fm.get("disable-model-invocation") is True
+            elif hasattr(s_obj, "disable_model_invocation"):
+                disable_model = getattr(s_obj, "disable_model_invocation", False) is True
+            if not disable_model:
+                executable_members.append(m)
+
+        cand_members = executable_members if executable_members else members
+
+        # Order candidate pipeline topologically along internal dependencies
+        cand_set = set(cand_members)
+        in_degree = {m: 0 for m in cand_members}
+        adj = {m: [] for m in cand_members}
+        for m in cand_members:
+            node = skills.get(m)
+            deps = getattr(node, "dependencies", []) or getattr(node, "references", []) or []
+            for d in deps:
+                if d in cand_set and d != m:
+                    adj[d].append(m)
+                    in_degree[m] += 1
+
+        from collections import deque
+        queue = deque(sorted([m for m in cand_members if in_degree[m] == 0]))
+        ordered_pipeline: list[str] = []
+        while queue:
+            curr = queue.popleft()
+            ordered_pipeline.append(curr)
+            for neighbor in adj[curr]:
+                in_degree[neighbor] -= 1
+                if in_degree[neighbor] == 0:
+                    queue.append(neighbor)
+
+        for m in cand_members:
+            if m not in ordered_pipeline:
+                ordered_pipeline.append(m)
+
+        final_pipeline = ordered_pipeline[:5]
+
         emergent_caps.append(
             EmergentCapability(
                 id=f"cap_synth_{cluster_id}",
@@ -83,7 +136,7 @@ def synthesize_cluster_capabilities(
                 description=synth_desc,
                 cluster_id=cluster_id,
                 primary_skills=members[:5],
-                recommended_pipeline=members[:5],
+                recommended_pipeline=final_pipeline,
                 novelty_rationale=(
                     f"Collectively coordinates {len(members)} peer skills to eliminate siloed execution "
                     f"in {primary_domain} with shared verification."

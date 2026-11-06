@@ -1,7 +1,7 @@
 # Skill Knowledge Graph: Modular Cluster Analysis & Topology Report
 
 > [!IMPORTANT]
-> **Executive Graph Summary**: The Brain Harness Skill Knowledge Graph comprises **140 active skill nodes**, **73 categories**, and **1,751 directed relationship edges**. Using modular community detection and normalized bipartite affinity calculations, the graph partitions into **20 cohesive functional clusters**, linked by **61 cross-cluster macro-bridges** and yielding **23 emergent macro-capabilities**. Pairwise affinity weights range from $1.600$ to $10.607$ ($\mu = 2.528$).
+> **Executive Graph Summary**: The Brain Harness Skill Knowledge Graph comprises **140 active skill nodes**, **73 categories**, and **996 directed relationship edges**. Using modular community detection and normalized bipartite affinity calculations, the graph partitions into **19 cohesive functional clusters**, linked by **52 cross-cluster macro-bridges** and yielding **22 emergent macro-capabilities**. Pairwise affinity weights range from $1.600$ to $10.607$ ($\mu = 2.528$).
 
 An interactive dark-mode HTML visual brief with Mermaid diagrams is available at:
 - Workspace Report: [`skill_knowledge_graph_cluster_analysis.html`](skill_knowledge_graph_cluster_analysis.html)
@@ -13,8 +13,8 @@ An interactive dark-mode HTML visual brief with Mermaid diagrams is available at
 
 ### 1.1 Structural Graph Metrics
 - **Total Registered Nodes**: $140$ skills (+ $73$ category boundary vertices)
-- **Total Directed Edges**: $1,751$
-- **Average Node Degree**: $12.51$ edges / node
+- **Total Directed Edges**: $996$
+- **Average Node Degree**: $7.11$ edges / node
 - **Affinity Matrix Dimensions**: $133 \times 133$ dense skills matrix
 - **Non-Zero Pairwise Affinities**: $1,246$ skill-pair interactions
 - **Affinity Distribution**: Min $= 1.600$, Max $= 10.607$, Mean $= 2.528$
@@ -24,16 +24,16 @@ The graph models five distinct edge semantics:
 
 | Edge Type | Total Count | Average Weight | Operational Semantics |
 |---|---|---|---|
-| **`EdgeType.REQUIRES`** | **1,030** | $1.00$ | Hard operational prerequisite; skill $A$ cannot execute without skill $B$. |
-| **`EdgeType.MITIGATES`** | **567** | $1.00$ | Anti-pattern or failure-mode guard; skill $A$ actively prevents defect $B$. |
+| **`EdgeType.MITIGATES`** | **572** | $1.00$ | Anti-pattern or failure-mode guard; skill $A$ actively prevents defect $B$. |
+| **`EdgeType.REQUIRES`** | **270** | $1.00$ | Hard operational prerequisite; skill $A$ cannot execute without skill $B$. |
 | **`EdgeType.BELONGS_TO`** | **140** | $1.00$ | Category taxonomic membership; maps skill to primary ecosystem domain. |
 | **`EdgeType.PRECEDES`** | **11** | $1.00$ | Strict sequential pipeline order in multi-stage DAGs. |
 | **`EdgeType.FEEDS`** | **3** | $1.00$ | Asynchronous artifact streaming conduit between analytical processes. |
 
 ```mermaid
-pie title Edge Types Distribution (Total: 1,751)
-    "REQUIRES (Prerequisites)" : 1030
-    "MITIGATES (Anti-Patterns)" : 567
+pie title Edge Types Distribution (Total: 996)
+    "MITIGATES (Anti-Patterns)" : 572
+    "REQUIRES (Prerequisites)" : 270
     "BELONGS_TO (Taxonomy)" : 140
     "PRECEDES (Ordering)" : 11
     "FEEDS (Data Streaming)" : 3
@@ -50,30 +50,32 @@ Out-degree hubs fan out dependencies across the graph, coordinating multi-stage 
 
 | Rank | Skill Node | Out-Degree | Primary Domain | Core Orchestration Role |
 |---|---|---|---|---|
-| 1 | **`ask-matt`** | **29** | `general` | Master router and conversational triage entrypoint over developer workflows. |
-| 2 | **`data-topology-mapper`** | **28** | `architecture` | Pre-modification causal DAG mapping and structural blast-radius calculus. |
-| 3 | **`discovery-index-scout`** | **27** | `intelligence` | Multi-source public record discovery and archival search routing. |
-| 4 | **`epistemic-isnad-audit`** | **27** | `memory` | Chain-of-custody lineage audit gate for claims and dependencies. |
-| 5 | **`repo-reader`** | **27** | `architecture` | 4-axis repository introspection and commit trajectory archaeology. |
-| 6 | **`repo-to-plugin-forge`** | **27** | `engineering` | Autonomous plugin scaffolding and IoC service seam bridge. |
-| 7 | **`agent-instruction-architect`** | **26** | `governance` | Multi-agent AGENTS.md/CLAUDE.md instruction context governance. |
-| 8 | **`agent-skill-sdlc`** | **25** | `engineering` | Full-lifecycle skill authoring, zero-fork config, and two-phase validation. |
-| 9 | **`codebase-context-architect`** | **25** | `governance` | Multi-layer context synchronization and single-source instruction generation. |
-| 10 | **`gemini-vercel-streaming-chatbot`**| **25** | `integration_and_io`| Multi-platform plain-text stream engineering and reactive client consumers. |
+| 1 | **`ask-matt`** | **24** | `general` | Master router and conversational triage entrypoint over developer workflows. |
+| 2 | **`brain-artifact-miner`** | **16** | `Agent Orchestration` | Multi-store trajectory mining and IDE artifact extraction. |
+| 3 | **`neo4j-knowledge-graph-architect`** | **15** | `data_engineering` | Labeled property graph modeling and Cypher query compilation. |
+| 4 | **`agent-skill-sdlc`** | **14** | `engineering` | Full-lifecycle skill authoring, zero-fork config, and two-phase validation. |
+| 5 | **`discovery-index-scout`** | **14** | `intelligence` | Multi-source public record discovery and archival search routing. |
+| 6 | **`geospatial-disaster-simulation`** | **14** | `data-engineering` | Geospatial natural disaster simulation and Three.js 3D WebGL physics. |
+| 7 | **`open-source-gis-architect`** | **14** | `geospatial_and_osint` | Deterministic open-source GIS engine workload routing. |
+| 8 | **`agentic-reliability-harness`** | **13** | `agent_orchestration` | Agent reliability testing harnesses across Five Evaluation Levels. |
+| 9 | **`temp-artifact-miner`** | **13** | `Agent Orchestration` | Ephemeral test diagnostic and visual DAG brief triage. |
+| 10 | **`deep-skill-forge`** | **12** | `engineering` | Autonomous literature-to-skill synthesis and deep module scaffolding. |
 
 ### 2.2 Top 10 In-Degree Authorities (Foundational Ecosystem Keystones)
-In-degree authorities represent the most depended-upon skills across the ecosystem:
+In-degree authorities represent the most depended-upon skills across the ecosystem (filtered strictly to valid skills in `graph.nodes`):
 
 | Rank | Authority Node | In-Degree | Functional Significance in Ecosystem |
 |---|---|---|---|
-| 1 | **`cat:general`** | **50** | Root classification container for general-purpose developer skills. |
-| 2 | **`crafting-skills`** | **34** | The universal skill crafting standard (CARD.md, visual briefs, invariants). |
-| 3 | **`epistemic-isnad-audit`** | **18** | Mandatory verification gate before committing knowledge to persistent memory. |
-| 4 | **`skills` / `knowledge`** | **17** | Core storage authority and knowledge item lineage targets. |
-| 5 | **`mermaid` / `script` / `dist`** | **15** | Structural artifact generators and pipeline output targets. |
-| 6 | **`data-topology-mapper`** | **10** | Architectural prerequisite before complex multi-module refactoring. |
-| 7 | **`agent-skill-sdlc`** | **8** | SDLC gate prerequisite for newly forged agent skills. |
-| 8 | **`repo-to-plugin-forge`** | **5** | Synthesis target for repository bridge pipelines. |
+| 1 | **`crafting-skills`** | **34** | The universal skill crafting standard (CARD.md, visual briefs, invariants). |
+| 2 | **`epistemic-isnad-audit`** | **18** | Mandatory verification gate before committing knowledge to persistent memory. |
+| 3 | **`data-topology-mapper`** | **10** | Architectural prerequisite before complex multi-module refactoring. |
+| 4 | **`deepen-architecture`** | **9** | Iterative architecture deepening loop and seam optimization. |
+| 5 | **`agent-skill-sdlc`** | **8** | SDLC gate prerequisite for newly forged agent skills. |
+| 6 | **`agent-harness-architect`** | **8** | Harness runtime loop architecture, sandboxing, and evaluation. |
+| 7 | **`epistemic-memory-lifecycle`** | **8** | 8-state knowledge item promotion and memory partitioning. |
+| 8 | **`book-to-skill-forge`** | **7** | Technical framework transformation into deep-module agent skills. |
+| 9 | **`codebase-design`** | **7** | Deep-module design principles and testable interface seams. |
+| 10 | **`deep-skill-forge`** | **7** | Literature-to-deep-skill synthesis and knowledge retention. |
 
 ---
 
@@ -191,7 +193,7 @@ flowchart TD
 
 ## 6. Discovered Emergent Macro-Capabilities
 
-When clusters interact through high-affinity bridges, they unlock **23 emergent macro-capabilities**—higher-order autonomous workflows that no single skill can accomplish alone:
+When clusters interact through high-affinity bridges, they unlock **22 emergent macro-capabilities**—higher-order autonomous workflows that no single skill can accomplish alone:
 
 1. **Autonomous Repository Triad Ingestion**:
    - *Participating Clusters*: `cluster_03` (Skill Forging) + `cluster_05` (External Bridges) + `cluster_11` (Introspection).

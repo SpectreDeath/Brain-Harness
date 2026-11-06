@@ -74,9 +74,9 @@
   "detected_format": "raw_docs",
   "anchors": {},
   "edges": [],
-  "retrieval_count": 2,
+  "retrieval_count": 3,
   "success_count": 1,
-  "last_retrieved_at": "2026-11-03T12:56:35.286199+00:00",
+  "last_retrieved_at": "2026-11-06T00:34:50.300859+00:00",
   "status": "ACTIVE",
   "superseded_by": null,
   "distilled_learning": "# Interpretable Context Methodology (ICM): Folder Structure as Agent Architecture"

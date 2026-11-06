@@ -1,8 +1,14 @@
-"""Transactional tool execution boundaries and workspace checkpointing for ReAct agents."""
+"""Transactional tool execution boundaries and workspace checkpointing for ReAct agents.
+
+Git checkpointing is opt-in via FILESYSTEM_GIT_KEY in ReActEngine (scoped strictly to target
+file paths to prevent destructive repo-wide rollbacks) and explicitly enabled for write_path: true
+procedures in DefaultDockService.
+"""
 
 from __future__ import annotations
 
 from typing import Any
+import structlog
 
 from harness.kernel.context import ServiceContext
 from harness.services.arch_linter import (
@@ -14,6 +20,8 @@ from harness.services.filesystem_git import (
     FilesystemGitService,
 )
 from harness.services.tools import ToolRegistry
+
+logger = structlog.get_logger(__name__)
 
 
 async def invoke_tool_transactional(
@@ -32,11 +40,20 @@ async def invoke_tool_transactional(
     git_svc: FilesystemGitService | None = context.optional(FILESYSTEM_GIT_KEY)
     linter_svc: ArchLinterService = resolve_arch_linter(context)
 
-    target_file_path = (
+    raw_path = (
         action_input.get("path")
         or action_input.get("file_path")
         or action_input.get("target_file")
+        or action_input.get("target_path")
     )
+    raw_files = action_input.get("files")
+    scoped_paths: list[str] | None = None
+    if raw_path:
+        scoped_paths = [str(raw_path)]
+    elif isinstance(raw_files, list) and all(isinstance(f, str) for f in raw_files) and raw_files:
+        scoped_paths = [str(f) for f in raw_files]
+
+    target_file_path = str(raw_path) if raw_path else (scoped_paths[0] if scoped_paths else None)
 
     # Rule 16 & Rule 21: Active Anti-Pattern & Invariant Interception before tool execution
     try:
@@ -71,22 +88,27 @@ async def invoke_tool_transactional(
                     if not lint_res.is_clean:
                         obs["lint_diagnostics"] = lint_res.formatted_summary
 
-                scoped_paths = [str(target_file_path)] if target_file_path else None
                 if is_error:
                     await tx.dispose()
-                    if git_svc:
+                    if git_svc and scoped_paths:
                         git_svc.rollback_transaction(paths=scoped_paths)
+                    elif git_svc and not scoped_paths:
+                        logger.debug("react_git_checkpoint_skipped_unscoped", action=action_name, reason="no_scoped_paths")
                 else:
-                    if git_svc:
+                    if git_svc and scoped_paths:
                         git_svc.commit_transaction(
                             f"chore(agent): tool {action_name}",
                             paths=scoped_paths,
                         )
+                    elif git_svc and not scoped_paths:
+                        logger.debug("react_git_checkpoint_skipped_unscoped", action=action_name, reason="no_scoped_paths")
             return obs
         except Exception as err:
             await tx.dispose()
-            if git_svc:
-                git_svc.rollback_transaction(paths=[str(target_file_path)] if target_file_path else None)
+            if git_svc and scoped_paths:
+                git_svc.rollback_transaction(paths=scoped_paths)
+            elif git_svc and not scoped_paths:
+                logger.debug("react_git_checkpoint_skipped_unscoped", action=action_name, reason="no_scoped_paths")
             return {"status": "error", "error": f"Tool execution failed: {err}"}
         finally:
             if state_holder is not None:

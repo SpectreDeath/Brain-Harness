@@ -74,7 +74,7 @@
 
 ## Negative Boundaries & Safety Guardrails
 
-- **What NOT to Touch**: Never edit generated cache files in `.pytest_cache/`, `src/harness/ui/static/vendor/`, or persistent SQLite memory stores without transactions.
+- **What NOT to Touch**: Never edit generated cache files in `.pytest_cache/`, `src/harness/ui/static/`, or persistent SQLite memory stores without transactions.
 - **Dependency Guardrail**: Do not introduce new third-party dependencies into `pyproject.toml` without explicit user approval.
 - **Execution Safety**: Never execute destructive git operations (`git push --force`, `git reset --hard`, `git clean -fd`) or unredacted credential commands in terminal sessions.
 
@@ -89,7 +89,7 @@
 
 ## Testing
 
-- Tests live in `tests/` mirroring `src/harness/` structure.
+- Tests live in `tests/` with domain prefixes (`test_kernel_*`, `test_service_*`, `test_plugin_*`, `test_command_*`, `test_agent_*`, `test_ingestion_*`).
 - Use `pytest` with `pytest-asyncio` for async tests.
 - Mark tests: `@pytest.mark.unit`, `@pytest.mark.integration`, `@pytest.mark.slow`.
 - Aim for ≥80% coverage on kernel and plugin system.

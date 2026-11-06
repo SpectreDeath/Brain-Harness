@@ -28,7 +28,7 @@ The ingestion pipeline transforms external code repositories and API specificati
 |---|---|---|
 | [`resolvers.py`](resolvers.py) | `UniversalSourceRegistry`, `GitHubSourceResolver`, `PyPISourceResolver`, `OpenAPISourceResolver` | Resolves URIs and package identifiers into structured `ResolvedSource` handles. |
 | [`fetcher.py`](fetcher.py) | `RepoFetcher`, `FetchError`, `DEFAULT_PLUGIN_DIR` | Clones and stages external repositories safely with branch and commit pinning. |
-| [`inspector.py`](inspector.py) | `RepoInspector`, `InspectionError` | Inspects target repository ASTs, manifests, and file layouts to detect architectures. |
+| [`inspector/`](inspector/) | `RepoInspector`, `InspectionError` | Inspects target repository ASTs, manifests, and file layouts to detect architectures. |
 | [`converter.py`](converter.py) | `RepoConverter`, `ConvertedPlugin`, `ConversionError` | Synthesizes sandboxed plugin scaffolding and configuration wrappers around code. |
 | [`pipeline.py`](pipeline.py) | `PluginIngestionPipeline`, `PluginIngestionEngine` | End-to-end orchestration pipeline executing resolve $\rightarrow$ fetch $\rightarrow$ inspect $\rightarrow$ convert. |
 | [`openapi_converter.py`](openapi_converter.py)| `OpenApiConverter` | Translates OpenAPI/Swagger REST schemas into declarative agent tools. |

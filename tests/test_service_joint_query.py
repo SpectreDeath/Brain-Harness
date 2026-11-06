@@ -55,6 +55,8 @@ def test_query_knowledge_and_skills_typed_edge_priority(tmp_path: Path) -> None:
     assert res["status"] == "ok"
     assert len(res["knowledge_items"]) == 1
     assert res["knowledge_items"][0]["ki_id"] == "ki_test_sample"
+    assert res["knowledge_items"][0]["status"] == "ACTIVE"
+    assert res["knowledge_items"][0]["isnad_status"] == "VERIFIED"
 
     # Verify that linked_pairs identifies the became_skill relationship
     matching_pairs = [
@@ -63,4 +65,30 @@ def test_query_knowledge_and_skills_typed_edge_priority(tmp_path: Path) -> None:
     ]
     assert len(matching_pairs) == 1
     assert matching_pairs[0]["relationship"] == "became_skill"
+
+
+def test_query_knowledge_and_skills_filters_demoted(tmp_path: Path) -> None:
+    """Verify that DEMOTED items are filtered out by default unless include_inactive=True."""
+    vault_dir = tmp_path / "knowledge"
+    vault_dir.mkdir()
+
+    # 1. Create an ACTIVE KI and a DEMOTED KI
+    for ki_id, status in [("ki_active", "ACTIVE"), ("ki_demoted", "DEMOTED")]:
+        d = vault_dir / ki_id
+        d.mkdir()
+        meta = {
+            "id": ki_id,
+            "title": f"Test {ki_id}",
+            "status": status,
+            "tags": ["test"],
+        }
+        (d / "metadata.json").write_text(json.dumps(meta), encoding="utf-8")
+        (d / "summary.md").write_text("# Summary\nTest.", encoding="utf-8")
+
+    res_default = query_knowledge_and_skills("test", vault_dir=str(vault_dir))
+    assert len(res_default["knowledge_items"]) == 1
+    assert res_default["knowledge_items"][0]["ki_id"] == "ki_active"
+
+    res_inactive = query_knowledge_and_skills("test", vault_dir=str(vault_dir), include_inactive=True)
+    assert len(res_inactive["knowledge_items"]) == 2
 

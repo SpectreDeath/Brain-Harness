@@ -120,7 +120,7 @@ def scan_skills_catalog(
             )
         for dep in card.dependencies:
             clean_dep = dep.strip().lower().replace("_", "-").lstrip("/")
-            if clean_dep != card.name:
+            if clean_dep != card.name and clean_dep in discovered:
                 _add_local_edge(card.name, clean_dep, EdgeType.REQUIRES)
 
     for s1, s2 in CANONICAL_PIPELINE_PRECEDENCE:

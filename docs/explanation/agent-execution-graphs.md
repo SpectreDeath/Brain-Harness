@@ -50,7 +50,7 @@ The Harness divides multi-agent thread execution into **three distinct phases**,
   - Renders real-time hierarchical ASCII trees for CLI inspection.
 
 ### Phase 3: Persistent Trajectory Store & Forensics (`AgentSessionManager`)
-- **Component**: `src/harness/agent/session.py` and `src/harness/commands/session.py`
+- **Component**: `src/harness/agent/session/` and `src/harness/commands/session.py`
 - **Data Model**: Durable relational SQLite session records (`conversations/<cid>.db`).
 - **Responsibilities**:
   - Implements canonical session lifecycle contracts: `task` (input), `final_answer` (success), `error_message` (failure) per `Rule 36`.

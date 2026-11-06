@@ -31,9 +31,9 @@ entrypoints:
     description: "Display knowledge graph and vault statistics"
     write_path: false
     steps:
-      - command: "python src/harness/cli.py knowledge stats"
+      - command: "python -m harness.cli knowledge stats"
         workdir: "."
-        expected_output: "Active Knowledge Items"
+        expected_output: "Knowledge Graph Census Statistics"
 
   verify-core:
     description: "Run targeted dock verification tests"
@@ -46,7 +46,7 @@ entrypoints:
     description: "Lint and verify codebase context and instruction file hygiene"
     write_path: true
     steps:
-      - command: "python src/harness/cli.py context lint --root ."
+      - command: "python -m harness.cli context lint --root ."
         workdir: "."
 
   verify-ontology:

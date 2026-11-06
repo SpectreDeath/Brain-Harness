@@ -390,6 +390,36 @@ class HeadroomContextOptimizerPlugin(HarnessPlugin):
         ctx.provide(HEADROOM_CONTEXT_OPTIMIZER_KEY, self._engine, provider=self.name)
         logger.info("headroom_context_optimizer_loaded", service_key=HEADROOM_CONTEXT_OPTIMIZER_KEY.name)
 
+    def headroom_compress_content(
+        self,
+        content: str,
+        content_type: str | None = None,
+        target_ratio: float = 0.6,
+        preserve_keys: list[str] | None = None,
+    ) -> dict[str, Any]:
+        return asdict(self._engine.compress_content(content, content_type, target_ratio, preserve_keys))
+
+    def headroom_dedup_turns(
+        self,
+        messages: list[dict[str, Any]],
+        min_lines: int = 3,
+        min_chars: int = 40,
+    ) -> dict[str, Any]:
+        return asdict(self._engine.dedup_turns(messages, min_lines, min_chars))
+
+    def headroom_detect_cache_drift(self, system_prompt: str) -> dict[str, Any]:
+        return asdict(self._engine.detect_cache_drift(system_prompt))
+
+    def headroom_compact_thinking(
+        self,
+        messages: list[dict[str, Any]],
+        keep_last_turns: int = 2,
+    ) -> dict[str, Any]:
+        return asdict(self._engine.compact_thinking(messages, keep_last_turns))
+
+    def headroom_savings_metrics(self, reset: bool = False) -> dict[str, Any]:
+        return asdict(self._engine.get_savings_metrics(reset))
+
     async def on_enable(self) -> None:
         if self._context and self._context.has(TOOL_REGISTRY_KEY):
             registry: ToolRegistry = self._context.require(TOOL_REGISTRY_KEY)
@@ -397,45 +427,35 @@ class HeadroomContextOptimizerPlugin(HarnessPlugin):
             registry.register(
                 name="headroom_compress_content",
                 description="Compress arbitrary content (code, JSON, logs, diffs, text) using Headroom format-aware compressors",
-                executor=lambda content, content_type=None, target_ratio=0.6, preserve_keys=None: (
-                    asdict(self._engine.compress_content(content, content_type, target_ratio, preserve_keys))
-                ),
+                executor=self.headroom_compress_content,
                 provider=self.name,
             )
 
             registry.register(
                 name="headroom_dedup_turns",
                 description="Cross-Context Retrieval (CCR): Deduplicate repeating tool returns and observations across conversation turns",
-                executor=lambda messages, min_lines=3, min_chars=40: (
-                    asdict(self._engine.dedup_turns(messages, min_lines, min_chars))
-                ),
+                executor=self.headroom_dedup_turns,
                 provider=self.name,
             )
 
             registry.register(
                 name="headroom_detect_cache_drift",
                 description="Inspect system prompt for volatile elements (UUIDs, timestamps, hashes) that bust prompt cache prefixes",
-                executor=lambda system_prompt: (
-                    asdict(self._engine.detect_cache_drift(system_prompt))
-                ),
+                executor=self.headroom_detect_cache_drift,
                 provider=self.name,
             )
 
             registry.register(
                 name="headroom_compact_thinking",
                 description="Compact prior-turn extended thinking reasoning blocks into deterministic summarized markers",
-                executor=lambda messages, keep_last_turns=2: (
-                    asdict(self._engine.compact_thinking(messages, keep_last_turns))
-                ),
+                executor=self.headroom_compact_thinking,
                 provider=self.name,
             )
 
             registry.register(
                 name="headroom_savings_metrics",
                 description="Inspect session context savings, trimmed tokens, and compression ledger",
-                executor=lambda reset=False: (
-                    asdict(self._engine.get_savings_metrics(reset))
-                ),
+                executor=self.headroom_savings_metrics,
                 provider=self.name,
             )
 

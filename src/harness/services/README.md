@@ -46,16 +46,16 @@ Brain Harness implements an extensible micro-kernel architecture with strict con
 | Service Module | Authoritative ServiceKey | Protocol / Class | Description |
 |---|---|---|---|
 | [`skill_graph/`](skill_graph/) | `SKILL_GRAPH_SERVICE_KEY` | `SkillKnowledgeGraphService` | Directed knowledge graph of agent skills with topological shortest-path routing. |
-| [`skill_parser.py`](skill_parser.py) | `SKILL_PARSER_SERVICE_KEY` | `SkillCardParserService` | Parses `CARD.md` metadata boxes and `SKILL.md` documents into structured schemas. |
+| [`skill_parser/`](skill_parser/) | `SKILL_PARSER_SERVICE_KEY` | `SkillCardParserService` | Parses `CARD.md` metadata boxes and `SKILL.md` documents into structured schemas. |
 | [`skill_clustering/`](skill_clustering/) | `SKILL_CLUSTERING_SERVICE_KEY` | `SkillClusteringService` | Computes semantic and topological clusters across agent capability catalogs. |
 | [`skill_visualizer.py`](skill_visualizer.py) | `SKILL_VISUALIZER_SERVICE_KEY` | `SkillVisualizerService` | Generates self-contained interactive HTML Visual Briefs of skill topologies. |
-| [`storage.py`](storage.py) | `STORAGE_SERVICE_KEY` | `StorageService` | Relational SQLite persistence supporting read-only URI mode and transactions. |
+| [`storage/`](storage/) | `STORAGE_SERVICE_KEY` | `StorageService` | Relational SQLite persistence supporting read-only URI mode and transactions. |
 | [`vector_index.py`](vector_index.py) | `VECTOR_INDEX_SERVICE_KEY` | `VectorIndexService` | In-memory and disk-persisted dense vector indexing and cosine similarity search. |
 | [`okf_memory.py`](okf_memory.py) | `OKF_MEMORY_SERVICE_KEY` | `OkfMemoryService` | Open Knowledge Framework (OKF v0.2) Git-native episodic and semantic memory. |
 | [`memgraphrag.py`](memgraphrag.py) | `MEMGRAPHRAG_SERVICE_KEY` | `MemGraphRagService` | Hybrid graph and retrieval-augmented generation memory indexing. |
 | [`graphiti.py`](graphiti.py) | `GRAPHITI_SERVICE_KEY` | `GraphitiService` | Temporal knowledge graph tracking entity evolutions and relationship lifespans. |
 | [`discovery_index.py`](discovery_index.py) | `DISCOVERY_INDEX_SERVICE_KEY` | `DiscoveryIndexService` | Catalogs and searches open public record archives and research corpora. |
-| [`brain_artifact_miner.py`](brain_artifact_miner.py) | `BRAIN_ARTIFACT_MINER_KEY` | `BrainArtifactMinerService` | Filesystem-native brain store archaeology, scratch salvage, and dual-transcript seek. |
+| [`brain_artifact_miner/`](brain_artifact_miner/) | `BRAIN_ARTIFACT_MINER_KEY` | `BrainArtifactMinerService` | Filesystem-native brain store archaeology, scratch salvage, and dual-transcript seek. |
 | [`conversation_trajectory_miner/`](conversation_trajectory_miner/) | `CONVERSATION_TRAJECTORY_MINER_KEY` | `ConversationTrajectoryMinerService` | Autobiographical session trajectory extraction, friction scorecard analysis, and cognitive bifurcation. |
 | [`temp_artifact_miner/`](temp_artifact_miner/) | `TEMP_ARTIFACT_MINER_KEY` | `TempArtifactMinerService` | Ephemeral visual brief triage, pytest sandbox archaeology, and dual-lens cognitive bifurcation. |
 | [`brain_bridge/`](brain_bridge/) | `BRAIN_BRIDGE_KEY` | `BrainBridgeService` | Foreign brain format detection, git history parsing, and TF-IDF search indexing. |
@@ -68,7 +68,7 @@ Brain Harness implements an extensible micro-kernel architecture with strict con
 | [`bigquery_augmented_analytics.py`](bigquery_augmented_analytics.py) | `BIGQUERY_AUGMENTED_ANALYTICS_SERVICE_KEY` | `BigQueryAugmentedAnalyticsService` | In-database augmented analytics via Table-Valued Functions (TVFs) and ARIMA_PLUS. |
 | [`garf_reporting/`](garf_reporting/) | `GARF_REPORTING_SERVICE_KEY` | `GarfReportingService` | Declarative SQL reporting pipelines and analytical workflow DAGs across APIs. |
 | [`open_source_gis/`](open_source_gis/) | `OPEN_SOURCE_GIS_SERVICE_KEY` | `OpenSourceGisService` | Geospatial processing across 14 GIS engines with CRS safety verification. |
-| [`paperless_ngx.py`](paperless_ngx.py) | `PAPERLESS_NGX_SERVICE_KEY` | `PaperlessNgxService` | Document ingestion, classification, and hybrid Tantivy/SQLite-Vec search. |
+| [`paperless_ngx/`](paperless_ngx/) | `PAPERLESS_NGX_SERVICE_KEY` | `PaperlessNgxService` | Document ingestion, classification, and hybrid Tantivy/SQLite-Vec search. |
 | [`hf_datasets/`](hf_datasets/) | `HF_DATASETS_SERVICE_KEY` | `HfDatasetsService` | Arrow zero-copy memory mapping, streaming pipelines, lakehouse format conversion, and single-seam resolution (`resolve_hf_datasets_service`). |
 | [`tau_bridge/`](tau_bridge/) | `TAU_BRIDGE_SERVICE_KEY` | `TauBridgeService` | Bidirectional integration with HuggingFace Tau coding agent harness. |
 | [`claude_code.py`](claude_code.py) | `CLAUDE_CODE_BRIDGE_KEY` | `ClaudeCodeBridgeService` | Claude Code prompt compaction and dangerous bash command guardrails. |

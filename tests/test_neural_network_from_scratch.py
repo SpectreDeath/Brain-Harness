@@ -11,8 +11,8 @@ import subprocess
 import sys
 from pathlib import Path
 
-import numpy as np
 import pytest
+np = pytest.importorskip("numpy")
 
 # Add scripts directory to sys.path for direct module import
 SKILL_DIR = Path(__file__).resolve().parent.parent / ".agents" / "skills" / "neural-network-from-scratch"

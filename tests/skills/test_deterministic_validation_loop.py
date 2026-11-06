@@ -2,6 +2,7 @@
 import json
 import re
 import pytest
+jsonschema = pytest.importorskip("jsonschema")
 from jsonschema import validate, ValidationError
 
 # --- Mock Implementation of 3-Tier Validator & Loop Engine ---

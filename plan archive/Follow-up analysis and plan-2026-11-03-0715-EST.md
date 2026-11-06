@@ -176,7 +176,7 @@ Close the gap between declared trust claims and runtime enforcement without over
 
 - [x] **End-to-end lifecycle proof on synthetic retrieval workload**:
   - Construct an integration test simulating `retrieval_count >= 5` to trigger the promotion daemon hook, asserting state transitions from `ACTIVE` $\rightarrow$ `PROMOTED` on disk.
-- [x] **Gephi / GraphML visual render confirmation**:
+- [ ] **Gephi / GraphML visual render confirmation**:
   - Load the exported GEXF (`.harness/graph/knowledge_graph.gexf`) into Gephi and record visual cluster layouts, modularity scores, and node distributions in a visual brief.
 - [x] **Cypher 7-tuple property alignment**:
   - Verify that `IsnadClaim` nodes in Cypher exports emit the full 7-tuple temporal evidence properties specified in the epistemology architecture.
@@ -197,5 +197,5 @@ Per project architecture rules, no Track 7 item shall be implemented without a v
 - [ ] **Live run**: GEV live satellite/ADS-B telemetry feeds and full Mantis security review pipeline.
 - [ ] **Live run**: Hyperframes render execution following the Track 1 JSON syntax fix.
 - [x] **Live run**: Observable lifecycle status transition committed to disk.
-- [x] **Live run**: Gephi rendering report and layout inspection.
+- [ ] **Live run**: Gephi rendering report and layout inspection.
 - [x] **RESOLVED**: Triad-forge creation path location identified at `.agents/skills/repo-triad-forge/scripts/triad_pipeline.py:405-430` (Track 2 ready for immediate execution).

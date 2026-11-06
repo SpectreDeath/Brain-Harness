@@ -341,6 +341,9 @@ def context_govern(root: str, complexity: float, as_json: bool, silent: bool) ->
         sys.exit(0)
 
     click.echo("\n[FAIL] Context Governance Violations Detected:", err=True)
+    for st in report.stages:
+        if not st.passed:
+            click.echo(f"  - [Stage {st.stage_num}: {st.stage_name}] {st.message}", err=True)
     for v in report.violations:
         click.echo(f"  - [{v.rule_name}] {v.file_path}:{v.line_number}: {v.message}", err=True)
     sys.exit(1)

@@ -60,8 +60,8 @@ if __name__ == "__main__":
 ## Dual-Mode Frontend Packaging Story
 
 The dashboard operates in two decoupled modes depending on the runtime environment:
-1. **Full React Vite SPA (`frontend/dist`)**: When developing from source or running the production build (`npm run build` in `frontend/`), FastAPI serves the compiled React 19 + TypeScript SPA from `frontend/dist/` with full interactive modals, Mermaid charts, and 8 dedicated views (Overview, Agent, Graph, Plugins, Sandboxes, Skills, Swarm, Timeline).
-2. **Embedded Standalone Fallback (`static/index.html`)**: When installed as a package via `pip install` without compiled node artifacts, the server automatically falls back to `src/harness/ui/static/index.html`. This lightweight, zero-dependency dashboard is packaged directly into Python wheels via `[tool.setuptools.package-data]` in `pyproject.toml`, providing essential lifecycle management and event monitoring out-of-the-box.
+1. **Full React Vite SPA**: When developing from source or running the production Vite build, FastAPI serves the compiled React 19 + TypeScript SPA with full interactive modals, Mermaid charts, and 8 dedicated views (Overview, Agent, Graph, Plugins, Sandboxes, Skills, Swarm, Timeline).
+2. **Embedded Standalone Fallback (`static/index.html`)**: When installed as a package via `pip install` without compiled node artifacts, the server automatically falls back to `static/index.html`. This lightweight, zero-dependency dashboard is packaged directly into Python wheels via `[tool.setuptools.package-data]` in `pyproject.toml`, providing essential lifecycle management and event monitoring out-of-the-box.
 
 ---
 

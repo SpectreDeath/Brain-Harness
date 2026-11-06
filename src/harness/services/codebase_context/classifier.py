@@ -13,9 +13,9 @@ class SemanticPathClassifier:
     MIME_TYPE_RE = re.compile(
         r"^(?:text|application|image|audio|video|multipart|font|model)/[a-zA-Z0-9.+_-]+$"
     )
-    # HTTP / WebSocket API Routes and Endpoints (e.g., /api/health, /ws/events, /v1/chat, /)
+    # HTTP / WebSocket API Routes, JSON-RPC protocol methods (e.g., /api/health, /ws/events, tools/list, tools/call) and Endpoints
     API_ROUTE_RE = re.compile(
-        r"^/(?:api|ws|v\d+|graphql|health|metrics|docs|openapi|redoc)(?:/[\w._-]+)*$|^/$"
+        r"^/?(?:api|ws|v\d+|graphql|health|metrics|docs|openapi|redoc|tools|prompts|resources|sampling)(?:/[\w._-]+)*$|^/$"
     )
     # Common foreign repo archetypes, documentation templates, and language build manifests
     ARCHETYPE_FILENAMES = frozenset({
@@ -61,3 +61,9 @@ class SemanticPathClassifier:
         """Check if span is a standalone architectural archetype template or build manifest filename."""
         clean = span.split("/")[-1].split("\\")[-1]
         return clean in cls.ARCHETYPE_FILENAMES
+
+    @classmethod
+    def is_runtime_state(cls, span: str) -> bool:
+        """Check if span targets ephemeral runtime state or generated graph artifacts (Rule 47)."""
+        clean = span.replace("\\", "/").strip()
+        return clean.startswith((".harness/", ".system_generated/", "test_ingested_plugins/")) or clean.startswith("outputs/")

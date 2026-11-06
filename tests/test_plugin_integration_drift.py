@@ -158,6 +158,30 @@ class TestPluginIntegrationDrift:
             f"README.md skill count drifted from discovered workspace skills ({len(workspace_skills)})"
         )
 
+        # 5. Secondary documentation count alignment and overclaim gates (Track 3)
+        user_manual_text = (repo_root / "USER_MANUAL.md").read_text(encoding="utf-8")
+        assert f"**{len(canonical_manifests)} Canonical Harness Plugins**" in user_manual_text, (
+            f"USER_MANUAL.md plugin count drifted from discovered canonical manifests ({len(canonical_manifests)})"
+        )
+        assert f"**{len(workspace_skills)} Workspace Skills packages" in user_manual_text, (
+            f"USER_MANUAL.md skill count drifted from discovered workspace skills ({len(workspace_skills)})"
+        )
+
+        plugins_readme_text = (plugins_root / "README.md").read_text(encoding="utf-8")
+        assert f"{len(canonical_manifests)} Plugins" in plugins_readme_text, (
+            f"plugins/README.md count drifted from discovered canonical manifests ({len(canonical_manifests)})"
+        )
+
+        skills_readme_text = (repo_root / ".agents" / "skills" / "README.md").read_text(encoding="utf-8")
+        assert f"{len(workspace_skills)} production-grade AI agent skills" in skills_readme_text, (
+            f".agents/skills/README.md count drifted from discovered workspace skills ({len(workspace_skills)})"
+        )
+
+        integrated_toolkits_text = (repo_root / "docs" / "reference" / "integrated-toolkits.md").read_text(encoding="utf-8")
+        assert "CloakBrowser" not in integrated_toolkits_text, "Found unscrubbed 'CloakBrowser' claim in integrated-toolkits.md"
+        context_map_text = (repo_root / "CONTEXT-MAP.md").read_text(encoding="utf-8")
+        assert "CloakBrowser" not in context_map_text, "Found unscrubbed 'CloakBrowser' claim in CONTEXT-MAP.md"
+
     def test_target_plugins_provides_and_configs(self) -> None:
         """Verify that target plugins have non-empty 'provides' and valid config.default.yaml."""
         repo_root = Path.cwd()

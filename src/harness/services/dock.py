@@ -864,6 +864,18 @@ class DefaultDockService:
                     env.pop(k, None)
             env["PYTHONIOENCODING"] = "utf-8"
 
+            # Prepend repo root and src/ to PYTHONPATH (Rule 50)
+            repo_pp = f"{repo_path / 'src'}{os.pathsep}{repo_path}"
+            if "PYTHONPATH" in env and env["PYTHONPATH"]:
+                env["PYTHONPATH"] = f"{repo_pp}{os.pathsep}{env['PYTHONPATH']}"
+            else:
+                env["PYTHONPATH"] = repo_pp
+
+            # Prepend repo virtualenv if available
+            venv_bin = repo_path / ".venv" / ("Scripts" if os.name == "nt" else "bin")
+            if venv_bin.is_dir():
+                env["PATH"] = f"{venv_bin}{os.pathsep}{env.get('PATH', '')}"
+
             # Execute subprocess with Rule 14 & Rule 53 guarantees
             stderr_ring: deque[str] = deque(maxlen=50)
             try:

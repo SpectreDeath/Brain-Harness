@@ -28,6 +28,7 @@ def query_knowledge_and_skills(
     root_path: str = ".",
     limit: int = 5,
     ctx: ServiceContext | None = None,
+    include_inactive: bool = False,
 ) -> dict[str, Any]:
     """Execute unified dual-graph query joining Knowledge Vault KIs and Skill Graph nodes."""
     vault_root = Path(vault_dir).resolve()
@@ -54,26 +55,50 @@ def query_knowledge_and_skills(
                 tags = meta.get("tags") or []
                 domain = meta.get("domain") or meta.get("category") or "general"
                 isnad = meta.get("isnad") or {}
-                status = (
+
+                lifecycle_status = str(meta.get("status") or "ACTIVE").upper()
+                isnad_status = str(
                     isnad.get("status", "VERIFIED")
                     if isinstance(isnad, dict)
                     else getattr(isnad, "status", "VERIFIED")
-                )
+                ).upper()
+
+                if not include_inactive and lifecycle_status in {"DEMOTED", "ARCHIVED", "SUPERSEDED", "REJECTED"}:
+                    continue
+
                 edges = meta.get("edges") or []
 
                 searchable = f"{title} {summary} {' '.join(tags)} {domain}".lower()
                 if q_lower in searchable or not q_lower:
+                    score = 1.0
+                    if q_lower:
+                        if q_lower in title.lower():
+                            score += 3.0
+                        if any(q_lower in t.lower() for t in tags):
+                            score += 2.0
+                        if q_lower in domain.lower():
+                            score += 1.0
+                    if lifecycle_status == "PROMOTED":
+                        score *= 1.15
+
                     matched_kis.append({
                         "ki_id": ki_id,
                         "title": title,
                         "domain": domain,
-                        "status": status,
+                        "status": lifecycle_status,
+                        "isnad_status": isnad_status,
                         "tags": list(tags),
                         "summary_preview": (summary or "").split("\n")[0][:100],
                         "edges": edges,
+                        "_score": score,
                     })
             except Exception:
                 continue
+
+    # Sort KIs by score
+    matched_kis.sort(key=lambda x: x.get("_score", 0.0), reverse=True)
+    for k in matched_kis:
+        k.pop("_score", None)
 
     # Query Skill Graph intent routing
     skill_routing = route_skills_cmd(intent=topic, top_k=limit, root_path=root_path, context=ctx)
