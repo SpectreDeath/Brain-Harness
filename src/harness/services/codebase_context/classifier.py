@@ -15,7 +15,7 @@ class SemanticPathClassifier:
     )
     # HTTP / WebSocket API Routes, JSON-RPC protocol methods (e.g., /api/health, /ws/events, tools/list, tools/call) and Endpoints
     API_ROUTE_RE = re.compile(
-        r"^/?(?:api|ws|v\d+|graphql|health|metrics|docs|openapi|redoc|tools|prompts|resources|sampling)(?:/[\w._-]+)*$|^/$"
+        r"^/(?:api|ws|v\d+|graphql|health|metrics|docs|openapi|redoc)(?:/[\w._-]+)*$|^/$|^(?:tools|prompts|resources|sampling)(?:/[\w._-]+)+$"
     )
     # Common foreign repo archetypes, documentation templates, and language build manifests
     ARCHETYPE_FILENAMES = frozenset({

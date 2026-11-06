@@ -257,102 +257,59 @@
       "emergent_capabilities": [
         {
           "id": "cap_synth_cluster_01_plugin_seam_and_mirror_auditor",
-          "title": "Composite Plugin Seam And Mirror Auditor & Domain Synthesis",
-          "description": "Integrates adversarial-agent-verifier, agent-instruction-architect, deterministic-validation-loop, gemini-vercel-streaming-chatbot into an end-to-end Integration & I/O pipeline, combining: Execute rigorous runtime verification including DAG seam analysis, inspect-before-edit protocols, test contracts, and harsh adversarial reviews | Author, audit, and maintain AGENTS.md, CLAUDE.md, and agent context files | Architect, implement, and operate spec-first deterministic validation loops (3-tier validation, exact error injection, and bounded retries) for LLM structured outputs.",
+          "title": "Composite Chatbotx & Domain Synthesis",
+          "description": "Integrates chatbotx, repo-doc-synchronizer, gradio-app-architect, adversarial-agent-verifier into an end-to-end Integration & I/O pipeline, combining: Orchestrate omnichannel chatbot workflows, contact identity tags, DAG flows, and dynamic OpenAPI tools across WhatsApp, Telegram, and Messenger | Audit repository documentation coverage, detect drift against live code ASTs, and author missing Di\u00e1taxis doc suites | Architect, build, debug, and deploy production-grade Gradio web applications and AI interfaces using clean logic-interface separation, reactive Blocks event graphs, session state isolation, multimodal pipelines, and queued streaming.",
           "cluster_id": "cluster_01_plugin_seam_and_mirror_auditor",
           "primary_skills": [
+            "chatbotx",
+            "repo-doc-synchronizer",
+            "gradio-app-architect",
             "adversarial-agent-verifier",
-            "agent-instruction-architect",
-            "deterministic-validation-loop",
-            "gemini-vercel-streaming-chatbot",
-            "geospatial-disaster-simulation"
+            "python-dataclass-architect"
           ],
           "recommended_pipeline": [
-            "adversarial-agent-verifier",
-            "agentwikis-router",
             "chatbotx",
-            "claude-handoff",
-            "deterministic-validation-loop"
+            "repo-doc-synchronizer",
+            "gradio-app-architect",
+            "adversarial-agent-verifier",
+            "python-dataclass-architect"
           ],
-          "novelty_rationale": "Collectively coordinates 23 peer skills to eliminate siloed execution in Integration & I/O with shared verification.",
+          "novelty_rationale": "Collectively coordinates 5 peer skills to eliminate siloed execution in Integration & I/O with shared verification.",
           "guarded_anti_patterns": [
-            "Polite Rubber-Stamping",
-            "Shotgun Editing",
-            "Moving the Goalposts (Test Mutation)",
-            "Debugging Debris Pollution",
-            "Speculative Complexity",
-            "Instruction Flooding"
+            "ID Assumption Blindness",
+            "Unchecked Broadcast Blast",
+            "Security Scope Mismatch",
+            "Synchronous Flow Blocking",
+            "Unsalvaged Reprompt Loop",
+            "Premature File Mutation"
           ],
           "guaranteed_invariants": [
-            "No Blind Editing: Agent must inspect and summarize relevant files before modifying code.",
-            "Tests As Contract: Failing tests written first; never mutate tests to force a pass.",
-            "No Polite Rubber-Stamping: Code review scored on harsh 1-10 scale with concrete failure points.",
-            "Seam Vulnerability Checked: Serialization, database transactions, and error boundaries audited.",
-            "Clean-Up Commit Verified: Zero `TODO`, `FIXME`, or debug print statements left in final diff.",
-            "Token Budget Bound: `AGENTS.md` is strictly under 300 lines (target: 80\u2013150 lines)."
+            "Resolve IDs Before Action \u2014 Never call tagging or flow actions without querying `list_contacts` and resolving verified UUIDs first.",
+            "Respect `x-mcp` Safety Hints \u2014 Treat operations flagged with `destructiveHint: true` as mandatory checkpoint stops.",
+            "Workspace Token Scope Only \u2014 Filter out channel-token security requirements; only dispatch operations authenticated via workspace developer tokens.",
+            "Subprocess Sandbox Execution \u2014 Execute user-submitted JavaScript steps inside isolated microservices (`isolated-vm`), never inside the main proactor.",
+            "Local String Salvage \u2014 Strip markdown fences and remove trailing commas before paying reprompt tokens on raw model responses.",
+            "AST Derivation Invariant: All generated API references and symbol tables must be derived from live Python AST trees, never hallucinated."
           ],
           "keywords": [
             "adversarial",
             "agent",
-            "agents",
-            "agentwikis",
             "app",
             "architect",
-            "auditor",
-            "chatbot",
             "chatbotx",
-            "claude",
-            "code",
-            "commit",
             "dataclass",
-            "deterministic",
-            "disaster",
             "doc",
-            "exercises",
-            "eye",
-            "gemini",
-            "geospatial",
-            "git",
-            "gods",
             "gradio",
-            "guardrails",
-            "handoff",
-            "harness",
-            "hyperframes",
-            "icm",
-            "instruction",
             "integration",
-            "language",
-            "loop",
-            "migrate",
-            "mirror",
-            "plugin",
-            "pre",
             "python",
-            "reflector",
             "repo",
-            "router",
-            "scaffold",
-            "seam",
-            "server",
-            "setup",
-            "shoehorn",
-            "simulation",
-            "streaming",
             "synchronizer",
-            "tdd",
-            "toolkit",
-            "validation",
-            "vercel",
-            "verifier",
-            "video",
-            "view",
-            "workspace",
-            "writing"
+            "verifier"
           ],
           "target_outcomes": [
             "End-to-end Integration & I/O domain artifacts"
-          ]
+          ],
+          "invocation_mode": "autonomous"
         }
       ]
     },
@@ -394,65 +351,43 @@
       "emergent_capabilities": [
         {
           "id": "cap_synth_cluster_02_ask_matt",
-          "title": "Composite Ask Matt & Domain Synthesis",
-          "description": "Integrates ask-matt, code-review, diagnosing-bugs, domain-modeling into an end-to-end general pipeline, combining: Ask which skill or flow fits your situation | Review the changes since a fixed point (commit, branch, tag, or merge-base) along two axes \u2014 Standards (does the code follow this repo's documented coding standards?) and Spec (does the code match what the originating issue/spec asked for?) | Diagnosis loop for hard bugs and performance regressions.",
+          "title": "Composite Diagnosing Bugs & Domain Synthesis",
+          "description": "Integrates diagnosing-bugs, code-review, resolving-merge-conflicts, wizard into an end-to-end general pipeline, combining: Diagnosis loop for hard bugs and performance regressions | Review the changes since a fixed point (commit, branch, tag, or merge-base) along two axes \u2014 Standards (does the code follow this repo's documented coding standards?) and Spec (does the code match what the originating issue/spec asked for?) | Use when you need to resolve an in-progress git merge/rebase conflict.",
           "cluster_id": "cluster_02_ask_matt",
           "primary_skills": [
-            "ask-matt",
-            "code-review",
             "diagnosing-bugs",
-            "domain-modeling",
-            "grill-me"
+            "code-review",
+            "resolving-merge-conflicts",
+            "wizard",
+            "domain-modeling"
           ],
           "recommended_pipeline": [
-            "domain-modeling",
-            "grilling",
-            "handoff",
-            "prototype",
-            "research"
+            "diagnosing-bugs",
+            "code-review",
+            "resolving-merge-conflicts",
+            "wizard",
+            "domain-modeling"
           ],
-          "novelty_rationale": "Collectively coordinates 23 peer skills to eliminate siloed execution in general with shared verification.",
+          "novelty_rationale": "Collectively coordinates 5 peer skills to eliminate siloed execution in general with shared verification.",
           "guarded_anti_patterns": [],
           "guaranteed_invariants": [],
           "keywords": [
-            "architecture",
-            "ask",
             "bugs",
             "code",
-            "codebase",
             "conflicts",
             "diagnosing",
-            "docs",
             "domain",
             "general",
-            "grill",
-            "grilling",
-            "handoff",
-            "implement",
-            "improve",
-            "loop",
-            "matt",
             "merge",
             "modeling",
-            "pocock",
-            "prototype",
-            "questionnaire",
-            "research",
             "resolving",
             "review",
-            "setup",
-            "skills",
-            "spec",
-            "teach",
-            "tickets",
-            "triage",
-            "wait",
-            "wayfinder",
             "wizard"
           ],
           "target_outcomes": [
             "End-to-end general domain artifacts"
-          ]
+          ],
+          "invocation_mode": "autonomous"
         }
       ]
     },
@@ -548,7 +483,8 @@
             "Consensus decision payload",
             "Textual gradient update log",
             "Optimized swarm DAG"
-          ]
+          ],
+          "invocation_mode": "autonomous"
         },
         {
           "id": "cap_harness_calibration_evolution",
@@ -597,7 +533,8 @@
           "target_outcomes": [
             "Harness calibration scorecard",
             "4-gate behavioral pipeline configuration"
-          ]
+          ],
+          "invocation_mode": "autonomous"
         }
       ]
     },
@@ -680,7 +617,8 @@
           "target_outcomes": [
             "Verified Knowledge Vault item (metadata.json + summary.md)",
             "Cryptographic isn\u0101d hash chain"
-          ]
+          ],
+          "invocation_mode": "autonomous"
         }
       ]
     },
@@ -764,7 +702,8 @@
             "Sandboxed Harness plugin package",
             "Architectural visual brief",
             "Seam verification diffs"
-          ]
+          ],
+          "invocation_mode": "autonomous"
         }
       ]
     },
@@ -847,7 +786,8 @@
             "Sandboxed Harness plugin package",
             "Architectural visual brief",
             "Seam verification diffs"
-          ]
+          ],
+          "invocation_mode": "autonomous"
         },
         {
           "id": "cap_agentic_swarm_self_evolution",
@@ -896,7 +836,8 @@
             "Consensus decision payload",
             "Textual gradient update log",
             "Optimized swarm DAG"
-          ]
+          ],
+          "invocation_mode": "autonomous"
         }
       ]
     },
@@ -971,7 +912,8 @@
             "Causal DAG topology map",
             "Characterization test suite",
             "Verified modernized code"
-          ]
+          ],
+          "invocation_mode": "autonomous"
         },
         {
           "id": "cap_context_anti_rot_governance",
@@ -1019,7 +961,8 @@
           "target_outcomes": [
             "Pruned AGENTS.md / CLAUDE.md files",
             "Zero-rot CI verification report"
-          ]
+          ],
+          "invocation_mode": "autonomous"
         }
       ]
     },
@@ -1046,42 +989,41 @@
       "emergent_capabilities": [
         {
           "id": "cap_synth_cluster_08_mantis_security_review",
-          "title": "Composite Mantis Security Review & Domain Synthesis",
-          "description": "Integrates ai-red-teaming-architect, differential-facet-verifier, ethical-hacker-networking, mantis-security-review into an end-to-end security-and-forensics pipeline, combining: Execute automated GenAI adversarial red-teaming, jailbreak audits, and vulnerability scorecard synthesis | Audit, compare, and verify multi-provider evidence dossiers using explicit facet availability semantics, absence claimability gates, and 3-valued differential outcomes | Protocol reconnaissance, tri-state recon, packet capture inspection, and 7-layer fault isolation for ethical hacking.",
+          "title": "Composite Differential Facet Verifier & Domain Synthesis",
+          "description": "Integrates differential-facet-verifier, reconstruction-obligation-ledger, ethical-hacker-networking, rea-reverse-engineering into an end-to-end security-and-forensics pipeline, combining: Audit, compare, and verify multi-provider evidence dossiers using explicit facet availability semantics, absence claimability gates, and 3-valued differential outcomes | Cryptographic closure & evidence-backed obligation tracking | Protocol reconnaissance, tri-state recon, packet capture inspection, and 7-layer fault isolation for ethical hacking.",
           "cluster_id": "cluster_08_mantis_security_review",
           "primary_skills": [
-            "ai-red-teaming-architect",
             "differential-facet-verifier",
+            "reconstruction-obligation-ledger",
             "ethical-hacker-networking",
-            "mantis-security-review",
-            "rea-reverse-engineering"
+            "rea-reverse-engineering",
+            "mantis-security-review"
           ],
           "recommended_pipeline": [
-            "ai-red-teaming-architect",
             "differential-facet-verifier",
-            "ethical-hacker-networking",
             "reconstruction-obligation-ledger",
-            "rea-reverse-engineering"
+            "ethical-hacker-networking",
+            "rea-reverse-engineering",
+            "mantis-security-review"
           ],
-          "novelty_rationale": "Collectively coordinates 6 peer skills to eliminate siloed execution in security-and-forensics with shared verification.",
+          "novelty_rationale": "Collectively coordinates 5 peer skills to eliminate siloed execution in security-and-forensics with shared verification.",
           "guarded_anti_patterns": [
-            "Unauthenticated API Fuzzing",
-            "In-Process Dependency Pollution",
-            "Unchecked Tool Side-Effects",
             "Facet Conflation",
             "Undeclared Absence Fallacy",
-            "Provider Text False Contradiction"
+            "Provider Text False Contradiction",
+            "Limitation Erasure",
+            "Premature `unchanged` Verdict",
+            "Premature Closure"
           ],
           "guaranteed_invariants": [
-            "Lazy Venv Staging Invariant: Heavy dependencies (pyrit, azure-ai) must remain uninstalled in base env; staging is lazy on first invoke.",
-            "Pipe Drainage Invariant: All subprocess transports must drain stdout/stderr and close stdin in a `finally` block.",
-            "Loopback Preservation Invariant: Network interception hooks must preserve local loopback `127.0.0.1` and `::1`.",
-            "Slotted Scorecard Invariant: Vulnerability scorecards must adhere to `@dataclass(slots=True, frozen=True)` schemas.",
             "Every unavailable facet (`available: false`) must declare a non-empty `reason` string.",
-            "An absence claim is rejected unless `coverage.status == 'complete'` and `truncated == false` and `omitted_count == 0`."
+            "An absence claim is rejected unless `coverage.status == 'complete'` and `truncated == false` and `omitted_count == 0`.",
+            "Any dimension with status `unknown` must carry `left_digest == None`, `right_digest == None`, `left_count == None`, `right_count == None`.",
+            "Overall report status cannot be `unchanged` if any dimension is `unknown`.",
+            "Report ID must carry the cryptographic prefix `rep:<sha256>`.",
+            "Content-Addressed Determinism: Every tool observation must be digested using canonical JSON key sorting into `ev:<sha256>`."
           ],
           "keywords": [
-            "architect",
             "differential",
             "engineering",
             "ethical",
@@ -1094,16 +1036,15 @@
             "obligation",
             "rea",
             "reconstruction",
-            "red",
             "reverse",
             "review",
             "security",
-            "teaming",
             "verifier"
           ],
           "target_outcomes": [
             "End-to-end security-and-forensics domain artifacts"
-          ]
+          ],
+          "invocation_mode": "autonomous"
         }
       ]
     },
@@ -1129,45 +1070,43 @@
       "emergent_capabilities": [
         {
           "id": "cap_synth_cluster_09_ebbinghaus_memory_governor",
-          "title": "Composite Ebbinghaus Memory Governor & Domain Synthesis",
-          "description": "Integrates context-type-system, ebbinghaus-memory-governor, media-mind-forge, okf-memory-governor into an end-to-end general pipeline, combining: Govern LLM prompt context through four partitioned semantic channels with immutable provenance ledgers, tool output elevation, and quota-budgeted assembly | Govern cognitive memory decay curves, reinforce stability on recall, and evict sub-threshold working set items | Distill video transcripts into executable agent skills and grounded Knowledge Items.",
+          "title": "Composite Okf Memory Governor & Domain Synthesis",
+          "description": "Integrates okf-memory-governor, ebbinghaus-memory-governor, context-type-system, media-mind-forge into an end-to-end general pipeline, combining: Govern Git-native agent memory bundles, enforce pre-edit code path scoping, and validate normative OKF schemas | Govern cognitive memory decay curves, reinforce stability on recall, and evict sub-threshold working set items | Govern LLM prompt context through four partitioned semantic channels with immutable provenance ledgers, tool output elevation, and quota-budgeted assembly.",
           "cluster_id": "cluster_09_ebbinghaus_memory_governor",
           "primary_skills": [
-            "context-type-system",
-            "ebbinghaus-memory-governor",
-            "media-mind-forge",
             "okf-memory-governor",
-            "ontological-engineering-coach"
+            "ebbinghaus-memory-governor",
+            "context-type-system",
+            "media-mind-forge",
+            "ontology-spider"
           ],
           "recommended_pipeline": [
-            "media-mind-forge",
             "okf-memory-governor",
-            "ontological-engineering-coach",
-            "ontology-spider",
-            "context-type-system"
+            "ebbinghaus-memory-governor",
+            "context-type-system",
+            "media-mind-forge",
+            "ontology-spider"
           ],
-          "novelty_rationale": "Collectively coordinates 6 peer skills to eliminate siloed execution in general with shared verification.",
+          "novelty_rationale": "Collectively coordinates 5 peer skills to eliminate siloed execution in general with shared verification.",
           "guarded_anti_patterns": [
-            "Raw String Splice",
-            "Unverified Promotion",
-            "Unbudgeted Assembly",
-            "Unlinked Transformations",
-            "Recency-Only Purging",
-            "Hard Item Deletion"
+            "Blanket Directory Scans",
+            "Actor Trust Escalation",
+            "Dangling Relation References",
+            "Unsanitized Frontmatter Newlines",
+            "Manual Bookkeeping Edits",
+            "Recency-Only Purging"
           ],
           "guaranteed_invariants": [
-            "Channel Isolation Invariant: Raw `tool_output` must never transition directly to `instruction`.",
-            "Tool Validation Invariant: Promotion of `tool_output` to `evidence` requires `validate_tool_output` validation.",
-            "Token Ceiling Invariant: Context prompts must respect configured token budgets and channel quotas.",
-            "Provenance Chain Invariant: All item transformations must record origin lineage in the provenance ledger.",
-            "Deterministic Turn Step Invariant: Decay must strictly depend on logical turn counts, never system wall-clock timestamps.",
-            "Monotonic Stability Invariant: Every recall event must monotonically increase stability $S$ without regression."
+            "Path Scoping Invariant: Always execute `okf_search(for_path=...)` before proposing edits to files referenced in `code_refs`.",
+            "Anti-Blanket Scan Invariant: Never run `list_dir` or `grep` on `knowledge/`; always use lexical BM25 with `limit <= 3`.",
+            "Trust Ordering Invariant: Agent models must never self-attest as `human:` in verification metadata.",
+            "Path Traversal Invariant: Target paths must resolve strictly within the designated bundle root directory.",
+            "Automatic Bookkeeping Invariant: Concept mutations must automatically synchronize parent `index.md` tables and `log.md` ledgers.",
+            "Deterministic Turn Step Invariant: Decay must strictly depend on logical turn counts, never system wall-clock timestamps."
           ],
           "keywords": [
-            "coach",
             "context",
             "ebbinghaus",
-            "engineering",
             "forge",
             "general",
             "governor",
@@ -1175,7 +1114,6 @@
             "memory",
             "mind",
             "okf",
-            "ontological",
             "ontology",
             "spider",
             "system",
@@ -1183,7 +1121,8 @@
           ],
           "target_outcomes": [
             "End-to-end general domain artifacts"
-          ]
+          ],
+          "invocation_mode": "autonomous"
         }
       ]
     },
@@ -1254,7 +1193,8 @@
             "Open Data Contract specification",
             "BigQuery TVF causality model",
             "Garf DAG report"
-          ]
+          ],
+          "invocation_mode": "autonomous"
         }
       ]
     },
@@ -1277,35 +1217,35 @@
       "emergent_capabilities": [
         {
           "id": "cap_synth_cluster_11_architecture_deepening_workflow",
-          "title": "Composite Architecture Deepening Workflow & Domain Synthesis",
-          "description": "Integrates architecture-deepening-workflow, hf-doc-builder-architect, monolith-decomposition-engine into an end-to-end developer_tooling / architecture pipeline, combining: 7-phase cycle: scan -> map -> factor -> verify -> brief -> push | Multi-package doc compilation, mock virtualization & MDX chunking | Decompose hotspots into slotted, single-seam subpackages <=200L.",
+          "title": "Composite Monolith Decomposition Engine & Domain Synthesis",
+          "description": "Integrates monolith-decomposition-engine, architecture-deepening-workflow, hf-doc-builder-architect into an end-to-end developer_tooling / architecture pipeline, combining: Decompose hotspots into slotted, single-seam subpackages <=200L | 7-phase cycle: scan -> map -> factor -> verify -> brief -> push | Multi-package doc compilation, mock virtualization & MDX chunking.",
           "cluster_id": "cluster_11_architecture_deepening_workflow",
           "primary_skills": [
+            "monolith-decomposition-engine",
             "architecture-deepening-workflow",
-            "hf-doc-builder-architect",
-            "monolith-decomposition-engine"
+            "hf-doc-builder-architect"
           ],
           "recommended_pipeline": [
-            "hf-doc-builder-architect",
             "monolith-decomposition-engine",
-            "architecture-deepening-workflow"
+            "architecture-deepening-workflow",
+            "hf-doc-builder-architect"
           ],
           "novelty_rationale": "Collectively coordinates 3 peer skills to eliminate siloed execution in developer_tooling / architecture with shared verification.",
           "guarded_anti_patterns": [
-            "Premature Submodule Bloat",
-            "Untracked File Staging",
-            "Bypassing Regression Gates",
-            "Leaking Secrets in Git Arguments",
-            "Silent Batch Exception Masking",
-            "Environment-Coupled Inspection"
+            "Shallow Delegation Wrappers",
+            "Untyped String Service Keys",
+            "Mutating Frozen Dataclasses",
+            "Click Subcommand Shadowing",
+            "Missing Module-Level Singletons",
+            "Premature Submodule Bloat"
           ],
           "guaranteed_invariants": [
-            "Strict Submodule Bounds: Every single decomposed file must not exceed 200 lines (Rule 11).",
-            "Slotted & Frozen Dataclasses: Internal state and check models must declare `slots=True, frozen=True` (Rule 12 & 43).",
-            "Click Single-Source Consolidation: CLI command groups must register all subcommands in a single co-located block (Rule 6).",
-            "Rule 58 Single-Seam Resolver: Subpackages must expose `resolve_*()` with IoC container resolution and fallback.",
-            "Rule 45 Plugin Singleton: Plugin entrypoints must export `plugin = MyPlugin()` at module level.",
-            "Rule 15 Token Redaction: Remote git pushes must execute via isolated runner scripts with in-memory token redaction."
+            "Strict Line Count Cap: Every factored submodule must strictly remain $\\le 200$ lines (Rule 11).",
+            "Slotted & Frozen Dataclasses: High-volume models must use `slots=True, frozen=True` with `__post_init__` assertions (Rule 12 & 43).",
+            "Single-Seam Resolver: Provide unified `resolve_<domain>()` with IoC resolution and local fallback (Rule 58).",
+            "Click Single-Source Consolidation: Co-locate Click command registrations in a single block (Rule 6).",
+            "Plugin Singleton Export: Export instantiated module-level `plugin` in plugin entrypoints (Rule 45).",
+            "Backward-Compatible Facade: Re-export all public symbols with `__all__` in `__init__.py`."
           ],
           "keywords": [
             "architect",
@@ -1322,7 +1262,8 @@
           ],
           "target_outcomes": [
             "End-to-end developer_tooling / architecture domain artifacts"
-          ]
+          ],
+          "invocation_mode": "autonomous"
         }
       ]
     },
@@ -1344,12 +1285,12 @@
       "emergent_capabilities": [
         {
           "id": "cap_synth_cluster_12_brain_artifact_miner",
-          "title": "Composite Brain Artifact Miner & Domain Synthesis",
-          "description": "Integrates brain-artifact-miner, conversation-trajectory-miner, temp-artifact-miner into an end-to-end Agent Orchestration pipeline, combining: Filesystem-Native Brain Workspace Archaeology & Artifact Mining | Multi-Store Autobiographical Trajectory Mining & Skill Synthesis | Ephemeral Runtime Store Mining & Visual Architecture Salvage.",
+          "title": "Composite Conversation Trajectory Miner & Domain Synthesis",
+          "description": "Integrates conversation-trajectory-miner, brain-artifact-miner, temp-artifact-miner into an end-to-end Agent Orchestration pipeline, combining: Multi-Store Autobiographical Trajectory Mining & Skill Synthesis | Filesystem-Native Brain Workspace Archaeology & Artifact Mining | Ephemeral Runtime Store Mining & Visual Architecture Salvage.",
           "cluster_id": "cluster_12_brain_artifact_miner",
           "primary_skills": [
-            "brain-artifact-miner",
             "conversation-trajectory-miner",
+            "brain-artifact-miner",
             "temp-artifact-miner"
           ],
           "recommended_pipeline": [
@@ -1359,20 +1300,20 @@
           ],
           "novelty_rationale": "Collectively coordinates 3 peer skills to eliminate siloed execution in Agent Orchestration with shared verification.",
           "guarded_anti_patterns": [
-            "Unbounded Directory Traversal",
-            "Protection Boundary Stall",
-            "Scratch Script Amnesia",
-            "Silent Batch Exception Suppression",
-            "Subprocess Pipe Deadlock Blindness",
-            "Truncated Transcript Blindness"
+            "Unbounded String Scanning",
+            "Lock Contention Crash",
+            "Single-Lens Monolith",
+            "Protobuf Deserialization Panic",
+            "Polite Rubber-Stamping",
+            "Shotgun Knowledge Commits"
           ],
           "guaranteed_invariants": [
-            "IDE Boundary Resilience: Always pivot immediately to shell reads on system protection boundary denials (Rule 46).",
-            "Binary Byte-Offset Indexing: Transcripts over 10 MB must use an $O(1)$ byte-offset seek table rather than loading full text into memory (Rule 48).",
-            "Dual-Transcript Synchronization: Detect `is_truncated: true` and dereference to `transcript_full.jsonl` step at matching index (Rule 22).",
-            "Defensive Batch Visibility: Batch scanning loops must log unexpected errors and reraise `NameError`, `TypeError`, `AttributeError` (Rule 32).",
-            "JSON Null-Field Fallback: Sidecar metadata extraction must use `dict.get(\"key\") or []` to guard against explicit JSON `null` (Rule 33).",
-            "Dual-Lens Cognitive Bifurcation: Mining outputs must strictly separate into epistemic Knowledge Vault items and executable skills (Rule 41)."
+            "Proactor-Safe Read-Only Handshake: All SQLite databases must be connected using URI read-only mode (`?mode=ro`) to prevent lock contention with live IDE workers.",
+            "Binary Byte-Offset Indexing: Sequential transcript reads over 10 MB must use an $O(1)$ byte-offset seek table rather than loading full text into memory.",
+            "Dual-Lens Cognitive Bifurcation: Mining outputs must strictly separate into epistemic Knowledge Vault items (`.harness/knowledge/`) and executable skills (`.agents/skills/`).",
+            "Lossy Protobuf Resilience: Unrecognized protobuf payloads must be handled via UTF-8 lossy decoding and `executor_metadata` relational fallbacks.",
+            "Canonical Dual-File Vault Format: Knowledge items must use the canonical dual-file directory format (`metadata.json` + `summary.md`).",
+            "UTF-8 Stream Codec Configuration: All python CLI runners and entrypoints must configure standard output/error to UTF-8."
           ],
           "keywords": [
             "agent",
@@ -1386,7 +1327,8 @@
           ],
           "target_outcomes": [
             "End-to-end Agent Orchestration domain artifacts"
-          ]
+          ],
+          "invocation_mode": "autonomous"
         }
       ]
     },
@@ -1454,7 +1396,8 @@
             "Ontological model definition",
             "Loaded Neo4j property graph",
             "Recursive SQL queries"
-          ]
+          ],
+          "invocation_mode": "autonomous"
         }
       ]
     },
@@ -1501,7 +1444,8 @@
           ],
           "target_outcomes": [
             "End-to-end general domain artifacts"
-          ]
+          ],
+          "invocation_mode": "human_only"
         }
       ]
     },
@@ -1563,7 +1507,8 @@
           ],
           "target_outcomes": [
             "End-to-end architecture / epistemic-governance domain artifacts"
-          ]
+          ],
+          "invocation_mode": "autonomous"
         }
       ]
     },
@@ -1623,7 +1568,8 @@
           ],
           "target_outcomes": [
             "End-to-end infra_and_cloud domain artifacts"
-          ]
+          ],
+          "invocation_mode": "autonomous"
         }
       ]
     },
@@ -1668,7 +1614,8 @@
           ],
           "target_outcomes": [
             "End-to-end general domain artifacts"
-          ]
+          ],
+          "invocation_mode": "human_only"
         }
       ]
     },
@@ -1730,7 +1677,8 @@
           "target_outcomes": [
             "Modular PyTorch / NumPy architecture",
             "CUDA / Triton cluster optimization plan"
-          ]
+          ],
+          "invocation_mode": "autonomous"
         }
       ]
     },
@@ -1790,7 +1738,8 @@
           ],
           "target_outcomes": [
             "End-to-end general domain artifacts"
-          ]
+          ],
+          "invocation_mode": "autonomous"
         }
       ]
     }
@@ -2660,164 +2609,99 @@
   "emergent_capabilities": [
     {
       "id": "cap_synth_cluster_01_plugin_seam_and_mirror_auditor",
-      "title": "Composite Plugin Seam And Mirror Auditor & Domain Synthesis",
-      "description": "Integrates adversarial-agent-verifier, agent-instruction-architect, deterministic-validation-loop, gemini-vercel-streaming-chatbot into an end-to-end Integration & I/O pipeline, combining: Execute rigorous runtime verification including DAG seam analysis, inspect-before-edit protocols, test contracts, and harsh adversarial reviews | Author, audit, and maintain AGENTS.md, CLAUDE.md, and agent context files | Architect, implement, and operate spec-first deterministic validation loops (3-tier validation, exact error injection, and bounded retries) for LLM structured outputs.",
+      "title": "Composite Chatbotx & Domain Synthesis",
+      "description": "Integrates chatbotx, repo-doc-synchronizer, gradio-app-architect, adversarial-agent-verifier into an end-to-end Integration & I/O pipeline, combining: Orchestrate omnichannel chatbot workflows, contact identity tags, DAG flows, and dynamic OpenAPI tools across WhatsApp, Telegram, and Messenger | Audit repository documentation coverage, detect drift against live code ASTs, and author missing Di\u00e1taxis doc suites | Architect, build, debug, and deploy production-grade Gradio web applications and AI interfaces using clean logic-interface separation, reactive Blocks event graphs, session state isolation, multimodal pipelines, and queued streaming.",
       "cluster_id": "cluster_01_plugin_seam_and_mirror_auditor",
       "primary_skills": [
+        "chatbotx",
+        "repo-doc-synchronizer",
+        "gradio-app-architect",
         "adversarial-agent-verifier",
-        "agent-instruction-architect",
-        "deterministic-validation-loop",
-        "gemini-vercel-streaming-chatbot",
-        "geospatial-disaster-simulation"
+        "python-dataclass-architect"
       ],
       "recommended_pipeline": [
-        "adversarial-agent-verifier",
-        "agentwikis-router",
         "chatbotx",
-        "claude-handoff",
-        "deterministic-validation-loop"
+        "repo-doc-synchronizer",
+        "gradio-app-architect",
+        "adversarial-agent-verifier",
+        "python-dataclass-architect"
       ],
-      "novelty_rationale": "Collectively coordinates 23 peer skills to eliminate siloed execution in Integration & I/O with shared verification.",
+      "novelty_rationale": "Collectively coordinates 5 peer skills to eliminate siloed execution in Integration & I/O with shared verification.",
       "guarded_anti_patterns": [
-        "Polite Rubber-Stamping",
-        "Shotgun Editing",
-        "Moving the Goalposts (Test Mutation)",
-        "Debugging Debris Pollution",
-        "Speculative Complexity",
-        "Instruction Flooding"
+        "ID Assumption Blindness",
+        "Unchecked Broadcast Blast",
+        "Security Scope Mismatch",
+        "Synchronous Flow Blocking",
+        "Unsalvaged Reprompt Loop",
+        "Premature File Mutation"
       ],
       "guaranteed_invariants": [
-        "No Blind Editing: Agent must inspect and summarize relevant files before modifying code.",
-        "Tests As Contract: Failing tests written first; never mutate tests to force a pass.",
-        "No Polite Rubber-Stamping: Code review scored on harsh 1-10 scale with concrete failure points.",
-        "Seam Vulnerability Checked: Serialization, database transactions, and error boundaries audited.",
-        "Clean-Up Commit Verified: Zero `TODO`, `FIXME`, or debug print statements left in final diff.",
-        "Token Budget Bound: `AGENTS.md` is strictly under 300 lines (target: 80\u2013150 lines)."
+        "Resolve IDs Before Action \u2014 Never call tagging or flow actions without querying `list_contacts` and resolving verified UUIDs first.",
+        "Respect `x-mcp` Safety Hints \u2014 Treat operations flagged with `destructiveHint: true` as mandatory checkpoint stops.",
+        "Workspace Token Scope Only \u2014 Filter out channel-token security requirements; only dispatch operations authenticated via workspace developer tokens.",
+        "Subprocess Sandbox Execution \u2014 Execute user-submitted JavaScript steps inside isolated microservices (`isolated-vm`), never inside the main proactor.",
+        "Local String Salvage \u2014 Strip markdown fences and remove trailing commas before paying reprompt tokens on raw model responses.",
+        "AST Derivation Invariant: All generated API references and symbol tables must be derived from live Python AST trees, never hallucinated."
       ],
       "keywords": [
         "adversarial",
         "agent",
-        "agents",
-        "agentwikis",
         "app",
         "architect",
-        "auditor",
-        "chatbot",
         "chatbotx",
-        "claude",
-        "code",
-        "commit",
         "dataclass",
-        "deterministic",
-        "disaster",
         "doc",
-        "exercises",
-        "eye",
-        "gemini",
-        "geospatial",
-        "git",
-        "gods",
         "gradio",
-        "guardrails",
-        "handoff",
-        "harness",
-        "hyperframes",
-        "icm",
-        "instruction",
         "integration",
-        "language",
-        "loop",
-        "migrate",
-        "mirror",
-        "plugin",
-        "pre",
         "python",
-        "reflector",
         "repo",
-        "router",
-        "scaffold",
-        "seam",
-        "server",
-        "setup",
-        "shoehorn",
-        "simulation",
-        "streaming",
         "synchronizer",
-        "tdd",
-        "toolkit",
-        "validation",
-        "vercel",
-        "verifier",
-        "video",
-        "view",
-        "workspace",
-        "writing"
+        "verifier"
       ],
       "target_outcomes": [
         "End-to-end Integration & I/O domain artifacts"
-      ]
+      ],
+      "invocation_mode": "autonomous"
     },
     {
       "id": "cap_synth_cluster_02_ask_matt",
-      "title": "Composite Ask Matt & Domain Synthesis",
-      "description": "Integrates ask-matt, code-review, diagnosing-bugs, domain-modeling into an end-to-end general pipeline, combining: Ask which skill or flow fits your situation | Review the changes since a fixed point (commit, branch, tag, or merge-base) along two axes \u2014 Standards (does the code follow this repo's documented coding standards?) and Spec (does the code match what the originating issue/spec asked for?) | Diagnosis loop for hard bugs and performance regressions.",
+      "title": "Composite Diagnosing Bugs & Domain Synthesis",
+      "description": "Integrates diagnosing-bugs, code-review, resolving-merge-conflicts, wizard into an end-to-end general pipeline, combining: Diagnosis loop for hard bugs and performance regressions | Review the changes since a fixed point (commit, branch, tag, or merge-base) along two axes \u2014 Standards (does the code follow this repo's documented coding standards?) and Spec (does the code match what the originating issue/spec asked for?) | Use when you need to resolve an in-progress git merge/rebase conflict.",
       "cluster_id": "cluster_02_ask_matt",
       "primary_skills": [
-        "ask-matt",
-        "code-review",
         "diagnosing-bugs",
-        "domain-modeling",
-        "grill-me"
+        "code-review",
+        "resolving-merge-conflicts",
+        "wizard",
+        "domain-modeling"
       ],
       "recommended_pipeline": [
-        "domain-modeling",
-        "grilling",
-        "handoff",
-        "prototype",
-        "research"
+        "diagnosing-bugs",
+        "code-review",
+        "resolving-merge-conflicts",
+        "wizard",
+        "domain-modeling"
       ],
-      "novelty_rationale": "Collectively coordinates 23 peer skills to eliminate siloed execution in general with shared verification.",
+      "novelty_rationale": "Collectively coordinates 5 peer skills to eliminate siloed execution in general with shared verification.",
       "guarded_anti_patterns": [],
       "guaranteed_invariants": [],
       "keywords": [
-        "architecture",
-        "ask",
         "bugs",
         "code",
-        "codebase",
         "conflicts",
         "diagnosing",
-        "docs",
         "domain",
         "general",
-        "grill",
-        "grilling",
-        "handoff",
-        "implement",
-        "improve",
-        "loop",
-        "matt",
         "merge",
         "modeling",
-        "pocock",
-        "prototype",
-        "questionnaire",
-        "research",
         "resolving",
         "review",
-        "setup",
-        "skills",
-        "spec",
-        "teach",
-        "tickets",
-        "triage",
-        "wait",
-        "wayfinder",
         "wizard"
       ],
       "target_outcomes": [
         "End-to-end general domain artifacts"
-      ]
+      ],
+      "invocation_mode": "autonomous"
     },
     {
       "id": "cap_agentic_swarm_self_evolution",
@@ -2866,7 +2750,8 @@
         "Consensus decision payload",
         "Textual gradient update log",
         "Optimized swarm DAG"
-      ]
+      ],
+      "invocation_mode": "autonomous"
     },
     {
       "id": "cap_harness_calibration_evolution",
@@ -2915,7 +2800,8 @@
       "target_outcomes": [
         "Harness calibration scorecard",
         "4-gate behavioral pipeline configuration"
-      ]
+      ],
+      "invocation_mode": "autonomous"
     },
     {
       "id": "cap_multimedia_vault_distillation",
@@ -2963,7 +2849,8 @@
       "target_outcomes": [
         "Verified Knowledge Vault item (metadata.json + summary.md)",
         "Cryptographic isn\u0101d hash chain"
-      ]
+      ],
+      "invocation_mode": "autonomous"
     },
     {
       "id": "cap_foreign_repo_ingestion_deepening",
@@ -3013,7 +2900,8 @@
         "Sandboxed Harness plugin package",
         "Architectural visual brief",
         "Seam verification diffs"
-      ]
+      ],
+      "invocation_mode": "autonomous"
     },
     {
       "id": "cap_legacy_modernization_safety_net",
@@ -3061,7 +2949,8 @@
         "Causal DAG topology map",
         "Characterization test suite",
         "Verified modernized code"
-      ]
+      ],
+      "invocation_mode": "autonomous"
     },
     {
       "id": "cap_context_anti_rot_governance",
@@ -3109,46 +2998,46 @@
       "target_outcomes": [
         "Pruned AGENTS.md / CLAUDE.md files",
         "Zero-rot CI verification report"
-      ]
+      ],
+      "invocation_mode": "autonomous"
     },
     {
       "id": "cap_synth_cluster_08_mantis_security_review",
-      "title": "Composite Mantis Security Review & Domain Synthesis",
-      "description": "Integrates ai-red-teaming-architect, differential-facet-verifier, ethical-hacker-networking, mantis-security-review into an end-to-end security-and-forensics pipeline, combining: Execute automated GenAI adversarial red-teaming, jailbreak audits, and vulnerability scorecard synthesis | Audit, compare, and verify multi-provider evidence dossiers using explicit facet availability semantics, absence claimability gates, and 3-valued differential outcomes | Protocol reconnaissance, tri-state recon, packet capture inspection, and 7-layer fault isolation for ethical hacking.",
+      "title": "Composite Differential Facet Verifier & Domain Synthesis",
+      "description": "Integrates differential-facet-verifier, reconstruction-obligation-ledger, ethical-hacker-networking, rea-reverse-engineering into an end-to-end security-and-forensics pipeline, combining: Audit, compare, and verify multi-provider evidence dossiers using explicit facet availability semantics, absence claimability gates, and 3-valued differential outcomes | Cryptographic closure & evidence-backed obligation tracking | Protocol reconnaissance, tri-state recon, packet capture inspection, and 7-layer fault isolation for ethical hacking.",
       "cluster_id": "cluster_08_mantis_security_review",
       "primary_skills": [
-        "ai-red-teaming-architect",
         "differential-facet-verifier",
+        "reconstruction-obligation-ledger",
         "ethical-hacker-networking",
-        "mantis-security-review",
-        "rea-reverse-engineering"
+        "rea-reverse-engineering",
+        "mantis-security-review"
       ],
       "recommended_pipeline": [
-        "ai-red-teaming-architect",
         "differential-facet-verifier",
-        "ethical-hacker-networking",
         "reconstruction-obligation-ledger",
-        "rea-reverse-engineering"
+        "ethical-hacker-networking",
+        "rea-reverse-engineering",
+        "mantis-security-review"
       ],
-      "novelty_rationale": "Collectively coordinates 6 peer skills to eliminate siloed execution in security-and-forensics with shared verification.",
+      "novelty_rationale": "Collectively coordinates 5 peer skills to eliminate siloed execution in security-and-forensics with shared verification.",
       "guarded_anti_patterns": [
-        "Unauthenticated API Fuzzing",
-        "In-Process Dependency Pollution",
-        "Unchecked Tool Side-Effects",
         "Facet Conflation",
         "Undeclared Absence Fallacy",
-        "Provider Text False Contradiction"
+        "Provider Text False Contradiction",
+        "Limitation Erasure",
+        "Premature `unchanged` Verdict",
+        "Premature Closure"
       ],
       "guaranteed_invariants": [
-        "Lazy Venv Staging Invariant: Heavy dependencies (pyrit, azure-ai) must remain uninstalled in base env; staging is lazy on first invoke.",
-        "Pipe Drainage Invariant: All subprocess transports must drain stdout/stderr and close stdin in a `finally` block.",
-        "Loopback Preservation Invariant: Network interception hooks must preserve local loopback `127.0.0.1` and `::1`.",
-        "Slotted Scorecard Invariant: Vulnerability scorecards must adhere to `@dataclass(slots=True, frozen=True)` schemas.",
         "Every unavailable facet (`available: false`) must declare a non-empty `reason` string.",
-        "An absence claim is rejected unless `coverage.status == 'complete'` and `truncated == false` and `omitted_count == 0`."
+        "An absence claim is rejected unless `coverage.status == 'complete'` and `truncated == false` and `omitted_count == 0`.",
+        "Any dimension with status `unknown` must carry `left_digest == None`, `right_digest == None`, `left_count == None`, `right_count == None`.",
+        "Overall report status cannot be `unchanged` if any dimension is `unknown`.",
+        "Report ID must carry the cryptographic prefix `rep:<sha256>`.",
+        "Content-Addressed Determinism: Every tool observation must be digested using canonical JSON key sorting into `ev:<sha256>`."
       ],
       "keywords": [
-        "architect",
         "differential",
         "engineering",
         "ethical",
@@ -3161,58 +3050,55 @@
         "obligation",
         "rea",
         "reconstruction",
-        "red",
         "reverse",
         "review",
         "security",
-        "teaming",
         "verifier"
       ],
       "target_outcomes": [
         "End-to-end security-and-forensics domain artifacts"
-      ]
+      ],
+      "invocation_mode": "autonomous"
     },
     {
       "id": "cap_synth_cluster_09_ebbinghaus_memory_governor",
-      "title": "Composite Ebbinghaus Memory Governor & Domain Synthesis",
-      "description": "Integrates context-type-system, ebbinghaus-memory-governor, media-mind-forge, okf-memory-governor into an end-to-end general pipeline, combining: Govern LLM prompt context through four partitioned semantic channels with immutable provenance ledgers, tool output elevation, and quota-budgeted assembly | Govern cognitive memory decay curves, reinforce stability on recall, and evict sub-threshold working set items | Distill video transcripts into executable agent skills and grounded Knowledge Items.",
+      "title": "Composite Okf Memory Governor & Domain Synthesis",
+      "description": "Integrates okf-memory-governor, ebbinghaus-memory-governor, context-type-system, media-mind-forge into an end-to-end general pipeline, combining: Govern Git-native agent memory bundles, enforce pre-edit code path scoping, and validate normative OKF schemas | Govern cognitive memory decay curves, reinforce stability on recall, and evict sub-threshold working set items | Govern LLM prompt context through four partitioned semantic channels with immutable provenance ledgers, tool output elevation, and quota-budgeted assembly.",
       "cluster_id": "cluster_09_ebbinghaus_memory_governor",
       "primary_skills": [
-        "context-type-system",
-        "ebbinghaus-memory-governor",
-        "media-mind-forge",
         "okf-memory-governor",
-        "ontological-engineering-coach"
+        "ebbinghaus-memory-governor",
+        "context-type-system",
+        "media-mind-forge",
+        "ontology-spider"
       ],
       "recommended_pipeline": [
-        "media-mind-forge",
         "okf-memory-governor",
-        "ontological-engineering-coach",
-        "ontology-spider",
-        "context-type-system"
+        "ebbinghaus-memory-governor",
+        "context-type-system",
+        "media-mind-forge",
+        "ontology-spider"
       ],
-      "novelty_rationale": "Collectively coordinates 6 peer skills to eliminate siloed execution in general with shared verification.",
+      "novelty_rationale": "Collectively coordinates 5 peer skills to eliminate siloed execution in general with shared verification.",
       "guarded_anti_patterns": [
-        "Raw String Splice",
-        "Unverified Promotion",
-        "Unbudgeted Assembly",
-        "Unlinked Transformations",
-        "Recency-Only Purging",
-        "Hard Item Deletion"
+        "Blanket Directory Scans",
+        "Actor Trust Escalation",
+        "Dangling Relation References",
+        "Unsanitized Frontmatter Newlines",
+        "Manual Bookkeeping Edits",
+        "Recency-Only Purging"
       ],
       "guaranteed_invariants": [
-        "Channel Isolation Invariant: Raw `tool_output` must never transition directly to `instruction`.",
-        "Tool Validation Invariant: Promotion of `tool_output` to `evidence` requires `validate_tool_output` validation.",
-        "Token Ceiling Invariant: Context prompts must respect configured token budgets and channel quotas.",
-        "Provenance Chain Invariant: All item transformations must record origin lineage in the provenance ledger.",
-        "Deterministic Turn Step Invariant: Decay must strictly depend on logical turn counts, never system wall-clock timestamps.",
-        "Monotonic Stability Invariant: Every recall event must monotonically increase stability $S$ without regression."
+        "Path Scoping Invariant: Always execute `okf_search(for_path=...)` before proposing edits to files referenced in `code_refs`.",
+        "Anti-Blanket Scan Invariant: Never run `list_dir` or `grep` on `knowledge/`; always use lexical BM25 with `limit <= 3`.",
+        "Trust Ordering Invariant: Agent models must never self-attest as `human:` in verification metadata.",
+        "Path Traversal Invariant: Target paths must resolve strictly within the designated bundle root directory.",
+        "Automatic Bookkeeping Invariant: Concept mutations must automatically synchronize parent `index.md` tables and `log.md` ledgers.",
+        "Deterministic Turn Step Invariant: Decay must strictly depend on logical turn counts, never system wall-clock timestamps."
       ],
       "keywords": [
-        "coach",
         "context",
         "ebbinghaus",
-        "engineering",
         "forge",
         "general",
         "governor",
@@ -3220,7 +3106,6 @@
         "memory",
         "mind",
         "okf",
-        "ontological",
         "ontology",
         "spider",
         "system",
@@ -3228,7 +3113,8 @@
       ],
       "target_outcomes": [
         "End-to-end general domain artifacts"
-      ]
+      ],
+      "invocation_mode": "autonomous"
     },
     {
       "id": "cap_enterprise_lakehouse_governance",
@@ -3277,39 +3163,40 @@
         "Open Data Contract specification",
         "BigQuery TVF causality model",
         "Garf DAG report"
-      ]
+      ],
+      "invocation_mode": "autonomous"
     },
     {
       "id": "cap_synth_cluster_11_architecture_deepening_workflow",
-      "title": "Composite Architecture Deepening Workflow & Domain Synthesis",
-      "description": "Integrates architecture-deepening-workflow, hf-doc-builder-architect, monolith-decomposition-engine into an end-to-end developer_tooling / architecture pipeline, combining: 7-phase cycle: scan -> map -> factor -> verify -> brief -> push | Multi-package doc compilation, mock virtualization & MDX chunking | Decompose hotspots into slotted, single-seam subpackages <=200L.",
+      "title": "Composite Monolith Decomposition Engine & Domain Synthesis",
+      "description": "Integrates monolith-decomposition-engine, architecture-deepening-workflow, hf-doc-builder-architect into an end-to-end developer_tooling / architecture pipeline, combining: Decompose hotspots into slotted, single-seam subpackages <=200L | 7-phase cycle: scan -> map -> factor -> verify -> brief -> push | Multi-package doc compilation, mock virtualization & MDX chunking.",
       "cluster_id": "cluster_11_architecture_deepening_workflow",
       "primary_skills": [
+        "monolith-decomposition-engine",
         "architecture-deepening-workflow",
-        "hf-doc-builder-architect",
-        "monolith-decomposition-engine"
+        "hf-doc-builder-architect"
       ],
       "recommended_pipeline": [
-        "hf-doc-builder-architect",
         "monolith-decomposition-engine",
-        "architecture-deepening-workflow"
+        "architecture-deepening-workflow",
+        "hf-doc-builder-architect"
       ],
       "novelty_rationale": "Collectively coordinates 3 peer skills to eliminate siloed execution in developer_tooling / architecture with shared verification.",
       "guarded_anti_patterns": [
-        "Premature Submodule Bloat",
-        "Untracked File Staging",
-        "Bypassing Regression Gates",
-        "Leaking Secrets in Git Arguments",
-        "Silent Batch Exception Masking",
-        "Environment-Coupled Inspection"
+        "Shallow Delegation Wrappers",
+        "Untyped String Service Keys",
+        "Mutating Frozen Dataclasses",
+        "Click Subcommand Shadowing",
+        "Missing Module-Level Singletons",
+        "Premature Submodule Bloat"
       ],
       "guaranteed_invariants": [
-        "Strict Submodule Bounds: Every single decomposed file must not exceed 200 lines (Rule 11).",
-        "Slotted & Frozen Dataclasses: Internal state and check models must declare `slots=True, frozen=True` (Rule 12 & 43).",
-        "Click Single-Source Consolidation: CLI command groups must register all subcommands in a single co-located block (Rule 6).",
-        "Rule 58 Single-Seam Resolver: Subpackages must expose `resolve_*()` with IoC container resolution and fallback.",
-        "Rule 45 Plugin Singleton: Plugin entrypoints must export `plugin = MyPlugin()` at module level.",
-        "Rule 15 Token Redaction: Remote git pushes must execute via isolated runner scripts with in-memory token redaction."
+        "Strict Line Count Cap: Every factored submodule must strictly remain $\\le 200$ lines (Rule 11).",
+        "Slotted & Frozen Dataclasses: High-volume models must use `slots=True, frozen=True` with `__post_init__` assertions (Rule 12 & 43).",
+        "Single-Seam Resolver: Provide unified `resolve_<domain>()` with IoC resolution and local fallback (Rule 58).",
+        "Click Single-Source Consolidation: Co-locate Click command registrations in a single block (Rule 6).",
+        "Plugin Singleton Export: Export instantiated module-level `plugin` in plugin entrypoints (Rule 45).",
+        "Backward-Compatible Facade: Re-export all public symbols with `__all__` in `__init__.py`."
       ],
       "keywords": [
         "architect",
@@ -3326,16 +3213,17 @@
       ],
       "target_outcomes": [
         "End-to-end developer_tooling / architecture domain artifacts"
-      ]
+      ],
+      "invocation_mode": "autonomous"
     },
     {
       "id": "cap_synth_cluster_12_brain_artifact_miner",
-      "title": "Composite Brain Artifact Miner & Domain Synthesis",
-      "description": "Integrates brain-artifact-miner, conversation-trajectory-miner, temp-artifact-miner into an end-to-end Agent Orchestration pipeline, combining: Filesystem-Native Brain Workspace Archaeology & Artifact Mining | Multi-Store Autobiographical Trajectory Mining & Skill Synthesis | Ephemeral Runtime Store Mining & Visual Architecture Salvage.",
+      "title": "Composite Conversation Trajectory Miner & Domain Synthesis",
+      "description": "Integrates conversation-trajectory-miner, brain-artifact-miner, temp-artifact-miner into an end-to-end Agent Orchestration pipeline, combining: Multi-Store Autobiographical Trajectory Mining & Skill Synthesis | Filesystem-Native Brain Workspace Archaeology & Artifact Mining | Ephemeral Runtime Store Mining & Visual Architecture Salvage.",
       "cluster_id": "cluster_12_brain_artifact_miner",
       "primary_skills": [
-        "brain-artifact-miner",
         "conversation-trajectory-miner",
+        "brain-artifact-miner",
         "temp-artifact-miner"
       ],
       "recommended_pipeline": [
@@ -3345,20 +3233,20 @@
       ],
       "novelty_rationale": "Collectively coordinates 3 peer skills to eliminate siloed execution in Agent Orchestration with shared verification.",
       "guarded_anti_patterns": [
-        "Unbounded Directory Traversal",
-        "Protection Boundary Stall",
-        "Scratch Script Amnesia",
-        "Silent Batch Exception Suppression",
-        "Subprocess Pipe Deadlock Blindness",
-        "Truncated Transcript Blindness"
+        "Unbounded String Scanning",
+        "Lock Contention Crash",
+        "Single-Lens Monolith",
+        "Protobuf Deserialization Panic",
+        "Polite Rubber-Stamping",
+        "Shotgun Knowledge Commits"
       ],
       "guaranteed_invariants": [
-        "IDE Boundary Resilience: Always pivot immediately to shell reads on system protection boundary denials (Rule 46).",
-        "Binary Byte-Offset Indexing: Transcripts over 10 MB must use an $O(1)$ byte-offset seek table rather than loading full text into memory (Rule 48).",
-        "Dual-Transcript Synchronization: Detect `is_truncated: true` and dereference to `transcript_full.jsonl` step at matching index (Rule 22).",
-        "Defensive Batch Visibility: Batch scanning loops must log unexpected errors and reraise `NameError`, `TypeError`, `AttributeError` (Rule 32).",
-        "JSON Null-Field Fallback: Sidecar metadata extraction must use `dict.get(\"key\") or []` to guard against explicit JSON `null` (Rule 33).",
-        "Dual-Lens Cognitive Bifurcation: Mining outputs must strictly separate into epistemic Knowledge Vault items and executable skills (Rule 41)."
+        "Proactor-Safe Read-Only Handshake: All SQLite databases must be connected using URI read-only mode (`?mode=ro`) to prevent lock contention with live IDE workers.",
+        "Binary Byte-Offset Indexing: Sequential transcript reads over 10 MB must use an $O(1)$ byte-offset seek table rather than loading full text into memory.",
+        "Dual-Lens Cognitive Bifurcation: Mining outputs must strictly separate into epistemic Knowledge Vault items (`.harness/knowledge/`) and executable skills (`.agents/skills/`).",
+        "Lossy Protobuf Resilience: Unrecognized protobuf payloads must be handled via UTF-8 lossy decoding and `executor_metadata` relational fallbacks.",
+        "Canonical Dual-File Vault Format: Knowledge items must use the canonical dual-file directory format (`metadata.json` + `summary.md`).",
+        "UTF-8 Stream Codec Configuration: All python CLI runners and entrypoints must configure standard output/error to UTF-8."
       ],
       "keywords": [
         "agent",
@@ -3372,7 +3260,8 @@
       ],
       "target_outcomes": [
         "End-to-end Agent Orchestration domain artifacts"
-      ]
+      ],
+      "invocation_mode": "autonomous"
     },
     {
       "id": "cap_ontological_graph_engineering",
@@ -3420,7 +3309,8 @@
         "Ontological model definition",
         "Loaded Neo4j property graph",
         "Recursive SQL queries"
-      ]
+      ],
+      "invocation_mode": "autonomous"
     },
     {
       "id": "cap_synth_cluster_14_writing_beats",
@@ -3449,7 +3339,8 @@
       ],
       "target_outcomes": [
         "End-to-end general domain artifacts"
-      ]
+      ],
+      "invocation_mode": "human_only"
     },
     {
       "id": "cap_synth_cluster_15_data_topology_mapper",
@@ -3493,7 +3384,8 @@
       ],
       "target_outcomes": [
         "End-to-end architecture / epistemic-governance domain artifacts"
-      ]
+      ],
+      "invocation_mode": "autonomous"
     },
     {
       "id": "cap_synth_cluster_16_cloud_infrastructure_architect",
@@ -3536,7 +3428,8 @@
       ],
       "target_outcomes": [
         "End-to-end infra_and_cloud domain artifacts"
-      ]
+      ],
+      "invocation_mode": "autonomous"
     },
     {
       "id": "cap_synth_cluster_17_codebase_design",
@@ -3564,7 +3457,8 @@
       ],
       "target_outcomes": [
         "End-to-end general domain artifacts"
-      ]
+      ],
+      "invocation_mode": "human_only"
     },
     {
       "id": "cap_sparse_neural_calculus",
@@ -3609,7 +3503,8 @@
       "target_outcomes": [
         "Modular PyTorch / NumPy architecture",
         "CUDA / Triton cluster optimization plan"
-      ]
+      ],
+      "invocation_mode": "autonomous"
     },
     {
       "id": "cap_synth_cluster_19_headroom_context_optimizer",
@@ -3651,7 +3546,8 @@
       ],
       "target_outcomes": [
         "End-to-end general domain artifacts"
-      ]
+      ],
+      "invocation_mode": "autonomous"
     },
     {
       "id": "cap_adversarial_security_gate",
@@ -3700,7 +3596,8 @@
         "Dialectical objection matrix",
         "Pre-commit SAST scorecard",
         "Zero-regression test pass"
-      ]
+      ],
+      "invocation_mode": "autonomous"
     },
     {
       "id": "cap_docs_as_code_ast_pipeline",
@@ -3747,7 +3644,8 @@
       "target_outcomes": [
         "AST documentation drift scorecard",
         "Complete Di\u00e1taxis documentation suite"
-      ]
+      ],
+      "invocation_mode": "autonomous"
     }
   ]
 }

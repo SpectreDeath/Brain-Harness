@@ -37,6 +37,11 @@ def synthesize_cluster_capabilities(
                     if inv_rule and inv_rule not in guaranteed_invs:
                         guaranteed_invs.append(inv_rule)
 
+            pipe_skills = [s for s in pat["pipeline"] if s in skills]
+            has_disabled = any(
+                getattr(skills.get(s), "disable_model_invocation", False)
+                for s in pipe_skills
+            )
             emergent_caps.append(
                 EmergentCapability(
                     id=pat["id"],
@@ -44,90 +49,143 @@ def synthesize_cluster_capabilities(
                     description=pat["rationale"],
                     cluster_id=cluster_id,
                     primary_skills=matching_core,
-                    recommended_pipeline=[s for s in pat["pipeline"] if s in skills],
+                    recommended_pipeline=pipe_skills,
                     novelty_rationale=pat["rationale"],
                     guarded_anti_patterns=guarded_aps[:6],
                     guaranteed_invariants=guaranteed_invs[:6],
                     keywords=sorted(pat.get("keywords", [])),
                     target_outcomes=pat["outcomes"],
+                    invocation_mode="human_only" if has_disabled else "autonomous",
                 )
             )
 
     # Dynamic emergent capability synthesis for clusters without a canonical match
     if not emergent_caps and len(members) >= 2:
-        member_targets = [
-            getattr(skills[m], "target", "") or getattr(skills[m], "description", "")
-            for m in members[:4]
+        # Autonomous vs Human-only invocation gating
+        autonomous_members = [
+            m
+            for m in members
+            if not getattr(skills.get(m), "disable_model_invocation", False)
         ]
+        if len(autonomous_members) >= 2:
+            cand_members = autonomous_members
+            inv_mode = "autonomous"
+        else:
+            cand_members = list(members)
+            inv_mode = "human_only"
+
+        # Order candidate pipeline topologically along internal dependencies
+        cand_set = set(cand_members)
+        in_degree = {m: 0 for m in cand_members}
+        out_degree = {m: 0 for m in cand_members}
+        adj: dict[str, list[str]] = {m: [] for m in cand_members}
+        for m in cand_members:
+            node = skills.get(m)
+            deps = (
+                getattr(node, "dependencies", [])
+                or getattr(node, "references", [])
+                or []
+            )
+            for d in deps:
+                if d in cand_set and d != m:
+                    adj[d].append(m)
+                    in_degree[m] += 1
+                    out_degree[d] += 1
+
+        # Identify connected root nodes (in_degree == 0 and out_degree > 0)
+        from collections import deque
+
+        connected_roots = [
+            m for m in cand_members if in_degree[m] == 0 and out_degree[m] > 0
+        ]
+        connected_roots.sort(
+            key=lambda m: (
+                out_degree[m],
+                len(getattr(skills.get(m), "dependencies", []) or []),
+                m == hub_skill,
+            ),
+            reverse=True,
+        )
+
+        queue = deque(connected_roots)
+        ordered_pipeline: list[str] = []
+        curr_in_degree = dict(in_degree)
+
+        while queue:
+            curr = queue.popleft()
+            if curr not in ordered_pipeline:
+                ordered_pipeline.append(curr)
+            sorted_neighbors = sorted(
+                adj[curr],
+                key=lambda n: (out_degree[n], n == hub_skill),
+                reverse=True,
+            )
+            for neighbor in sorted_neighbors:
+                curr_in_degree[neighbor] -= 1
+                if curr_in_degree[neighbor] == 0 and neighbor not in ordered_pipeline:
+                    queue.append(neighbor)
+
+        # If there are remaining connected nodes (e.g. cycles or disjoint subgraphs)
+        remaining_connected = [
+            m
+            for m in cand_members
+            if m not in ordered_pipeline and (out_degree[m] > 0 or in_degree[m] > 0)
+        ]
+        if remaining_connected:
+            remaining_connected.sort(
+                key=lambda m: (out_degree[m] + in_degree[m], m == hub_skill),
+                reverse=True,
+            )
+            for m in remaining_connected:
+                if m not in ordered_pipeline:
+                    ordered_pipeline.append(m)
+
+        # Finally, append isolated nodes sorted by hub status and global references
+        isolated = [m for m in cand_members if m not in ordered_pipeline]
+        isolated.sort(
+            key=lambda m: (
+                m == hub_skill,
+                len(getattr(skills.get(m), "dependencies", []) or []),
+            ),
+            reverse=True,
+        )
+        ordered_pipeline.extend(isolated)
+
+        final_pipeline = ordered_pipeline[: min(5, len(ordered_pipeline))]
+
         synth_guarded_aps: list[str] = []
         synth_invs: list[str] = []
-        for m in members:
-            for ap in getattr(skills[m], "anti_patterns", []):
+        for m in final_pipeline:
+            for ap in getattr(skills.get(m), "anti_patterns", []) or []:
                 ap_name = getattr(ap, "name", "")
                 if ap_name and ap_name not in synth_guarded_aps:
                     synth_guarded_aps.append(ap_name)
-            for inv in getattr(skills[m], "invariants", []):
+            for inv in getattr(skills.get(m), "invariants", []) or []:
                 inv_rule = getattr(inv, "rule", "")
                 if inv_rule and inv_rule not in synth_invs:
                     synth_invs.append(inv_rule)
 
-        synth_title = f"Composite {hub_skill.replace('-', ' ').title()} & Domain Synthesis"
+        pipe_hub = final_pipeline[0] if final_pipeline else hub_skill
+        synth_title = f"Composite {pipe_hub.replace('-', ' ').title()} & Domain Synthesis"
         target_snippets = []
-        for t in member_targets:
+        for m in final_pipeline[:4]:
+            t = getattr(skills.get(m), "target", "") or getattr(
+                skills.get(m), "description", ""
+            )
             if not t:
                 continue
             first_sent = t.split(". ")[0].strip().rstrip(".")
             if first_sent:
                 target_snippets.append(first_sent)
-        targets_text = " | ".join(target_snippets[:3]) if target_snippets else "collaborative capability execution"
+        targets_text = (
+            " | ".join(target_snippets[:3])
+            if target_snippets
+            else "collaborative capability execution"
+        )
         synth_desc = (
-            f"Integrates {', '.join(members[:4])} into an end-to-end {primary_domain} pipeline, "
+            f"Integrates {', '.join(final_pipeline[:4])} into an end-to-end {primary_domain} pipeline, "
             f"combining: {targets_text}."
         )
-
-        # Autonomous vs Human-only invocation gating
-        executable_members = []
-        for m in members:
-            s_obj = skills.get(m)
-            fm = getattr(s_obj, "frontmatter", None)
-            disable_model = False
-            if isinstance(fm, dict):
-                disable_model = fm.get("disable-model-invocation") is True
-            elif hasattr(s_obj, "disable_model_invocation"):
-                disable_model = getattr(s_obj, "disable_model_invocation", False) is True
-            if not disable_model:
-                executable_members.append(m)
-
-        cand_members = executable_members if executable_members else members
-
-        # Order candidate pipeline topologically along internal dependencies
-        cand_set = set(cand_members)
-        in_degree = {m: 0 for m in cand_members}
-        adj = {m: [] for m in cand_members}
-        for m in cand_members:
-            node = skills.get(m)
-            deps = getattr(node, "dependencies", []) or getattr(node, "references", []) or []
-            for d in deps:
-                if d in cand_set and d != m:
-                    adj[d].append(m)
-                    in_degree[m] += 1
-
-        from collections import deque
-        queue = deque(sorted([m for m in cand_members if in_degree[m] == 0]))
-        ordered_pipeline: list[str] = []
-        while queue:
-            curr = queue.popleft()
-            ordered_pipeline.append(curr)
-            for neighbor in adj[curr]:
-                in_degree[neighbor] -= 1
-                if in_degree[neighbor] == 0:
-                    queue.append(neighbor)
-
-        for m in cand_members:
-            if m not in ordered_pipeline:
-                ordered_pipeline.append(m)
-
-        final_pipeline = ordered_pipeline[:5]
 
         emergent_caps.append(
             EmergentCapability(
@@ -135,16 +193,19 @@ def synthesize_cluster_capabilities(
                 title=synth_title,
                 description=synth_desc,
                 cluster_id=cluster_id,
-                primary_skills=members[:5],
-                recommended_pipeline=final_pipeline,
+                primary_skills=list(final_pipeline),
+                recommended_pipeline=list(final_pipeline),
                 novelty_rationale=(
-                    f"Collectively coordinates {len(members)} peer skills to eliminate siloed execution "
+                    f"Collectively coordinates {len(final_pipeline)} peer skills to eliminate siloed execution "
                     f"in {primary_domain} with shared verification."
                 ),
                 guarded_anti_patterns=synth_guarded_aps[:6],
                 guaranteed_invariants=synth_invs[:6],
-                keywords=sorted(set(tok_fn(" ".join(members) + " " + primary_domain))),
+                keywords=sorted(
+                    set(tok_fn(" ".join(final_pipeline) + " " + primary_domain))
+                ),
                 target_outcomes=[f"End-to-end {primary_domain} domain artifacts"],
+                invocation_mode=inv_mode,
             )
         )
 

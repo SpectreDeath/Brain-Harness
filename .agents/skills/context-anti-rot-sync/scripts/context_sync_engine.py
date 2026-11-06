@@ -307,8 +307,14 @@ class ContextSyncEngine:
             has_execution_seams=has_execution_seams,
         )
 
-    def clean_file(self, target_path: Path | str, output_path: Path | str) -> CleanResult:
-        """Cleans excess whitespace, redundant empty lines, and trailing spaces."""
+    def clean_file(
+        self,
+        target_path: Path | str,
+        output_path: Path | str,
+        prune_rot: bool = True,
+        max_lines: int = 150,
+    ) -> CleanResult:
+        """Cleans excess whitespace, redundant empty lines, trailing spaces, lint leakage, and dead references."""
         t_path = Path(target_path)
         if not t_path.is_absolute():
             t_path = self.workspace_root / t_path
@@ -317,20 +323,131 @@ class ContextSyncEngine:
         if not out_path.is_absolute():
             out_path = self.workspace_root / out_path
 
+        if not t_path.exists():
+            raise FileNotFoundError(f"Source file does not exist: {t_path}")
+
         text = t_path.read_text(encoding="utf-8", errors="ignore")
         lines = [line.rstrip() for line in text.splitlines()]
 
+        # Extract available npm scripts from package.json if present
+        available_scripts: set[str] = set()
+        pkg_file = self.workspace_root / "package.json"
+        if pkg_file.exists():
+            try:
+                pkg_data = json.loads(pkg_file.read_text(encoding="utf-8", errors="ignore"))
+                if isinstance(pkg_data, dict) and "scripts" in pkg_data:
+                    available_scripts = set(pkg_data["scripts"].keys())
+            except Exception:
+                pass
+
         cleaned_lines: list[str] = []
         last_blank = False
+
+        lint_leak_regexes = [
+            re.compile(r"ERROR:\s*[A-Z0-9]+", re.IGNORECASE),
+            re.compile(r"Traceback \(most recent call last\):", re.IGNORECASE),
+            re.compile(r"npm ERR!", re.IGNORECASE),
+            re.compile(r"pytest:\s*error:", re.IGNORECASE),
+            re.compile(r"(?:SyntaxError|TypeError|ValueError):\s+", re.IGNORECASE),
+            re.compile(r"(?:flake8|pylint|eslint|ruff):\s*error", re.IGNORECASE),
+        ]
+
+        backtick_regex = re.compile(r"`([^`]+)`")
+
         for line in lines:
-            is_blank = len(line.strip()) == 0
+            trimmed = line.strip()
+            is_blank = len(trimmed) == 0
+
             if is_blank:
                 if not last_blank:
                     cleaned_lines.append("")
                 last_blank = True
-            else:
-                cleaned_lines.append(line)
-                last_blank = False
+                continue
+
+            if prune_rot:
+                # 1. Strip lines matching lint leakage patterns
+                is_lint_leak = False
+                lower_line = line.lower()
+                if "rule" not in lower_line and "assert" not in lower_line and "invariant" not in lower_line:
+                    for pat in lint_leak_regexes:
+                        if pat.search(line):
+                            is_lint_leak = True
+                            break
+                    if not is_lint_leak and ("error:" in lower_line or "warning:" in lower_line):
+                        if not trimmed.startswith("#") and not trimmed.startswith("- **"):
+                            is_lint_leak = True
+
+                if is_lint_leak:
+                    continue
+
+                # 2. Check dead local path references in the line
+                spans = backtick_regex.findall(line)
+                has_broken_path = False
+                for span in spans:
+                    if ("/" in span or "." in span) and not span.startswith("http") and not span.startswith("npm") and not span.startswith("python"):
+                        path_target = self.workspace_root / span
+                        path_rel = t_path.parent / span
+                        if not path_target.exists() and not path_rel.exists():
+                            has_broken_path = True
+                            break
+                if has_broken_path:
+                    continue
+
+                # 3. Check and repair unconfigured npm scripts against package.json
+                if available_scripts:
+                    for span in spans:
+                        npm_m = re.match(r"^npm run ([\w:-]+)$", span) or re.match(r"^npm (test|start|build)$", span)
+                        if npm_m:
+                            s_name = npm_m.group(1)
+                            if s_name not in available_scripts:
+                                replacement = "npm test" if "test" in available_scripts else f"npm run {sorted(available_scripts)[0]}"
+                                line = line.replace(f"`{span}`", f"`{replacement}`")
+
+            cleaned_lines.append(line)
+            last_blank = False
+
+        # 4. If instruction file exceeds budget or has repetitive filler, prune rot while preserving headers and boundaries
+        estimated_tokens = sum(len(l) + 1 for l in cleaned_lines) // 4
+        if prune_rot and (len(cleaned_lines) > 80 or estimated_tokens > 700):
+            preserved_lines: list[str] = []
+            filler_count = 0
+            for line in cleaned_lines:
+                trimmed = line.strip()
+                is_repetitive_filler = bool(
+                    re.match(r"^-\s+Rule\s+\d+:\s+General guideline", trimmed, re.IGNORECASE)
+                )
+                if (
+                    trimmed.startswith("#")
+                    or trimmed == ""
+                    or "negative" in trimmed.lower()
+                    or "do not" in trimmed.lower()
+                    or "pytest" in trimmed.lower()
+                    or "build" in trimmed.lower()
+                    or "reference" in trimmed.lower()
+                    or "path" in trimmed.lower()
+                    or "seam" in trimmed.lower()
+                ):
+                    preserved_lines.append(line)
+                elif is_repetitive_filler:
+                    if filler_count < 10:
+                        preserved_lines.append(line)
+                        filler_count += 1
+                else:
+                    if filler_count < 25:
+                        preserved_lines.append(line)
+                        filler_count += 1
+
+            final_lines: list[str] = []
+            last_blank = False
+            for line in preserved_lines[:max_lines]:
+                if len(line.strip()) == 0:
+                    if not last_blank:
+                        final_lines.append("")
+                    last_blank = True
+                else:
+                    final_lines.append(line)
+                    last_blank = False
+            cleaned_lines = final_lines
 
         cleaned_text = "\n".join(cleaned_lines) + "\n"
         out_path.parent.mkdir(parents=True, exist_ok=True)

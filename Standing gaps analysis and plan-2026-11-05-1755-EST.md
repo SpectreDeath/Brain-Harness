@@ -409,7 +409,7 @@ Before evaluating the standing gaps, the live counts on disk at `fe491ad` (verif
 
 **Problem**: As proven in Brief 1 (§1.1–1.3), `src/harness/services/skill_clustering/engine/emergent.py:57-96` fabricates `cap_synth_*` pipelines by taking alphabetical `members[:5]` (producing `0/4` graph edges, including human-only `disable-model-invocation: true` Pocock prompts, and truncating `s1_desc[:160]` mid-word), and mutates `CANONICAL_EMERGENT_PATTERNS` dictionaries in-place (`emergent.py:39`). Meanwhile, `src/harness/services/skill_graph/indexer.py` records non-skill markdown tokens (`skills`, `knowledge`, `script`, `mermaid`, `html`) in `top_in_degree`.
 
-- [x] **5.1**: In `src/harness/services/skill_clustering/engine/emergent.py`:
+- [x] **5.1** *(Re-opened by 2026-11-06 Argon Post-Execution Audit; Resolved by 2026-11-06 Follow-Up Track 1)*: In `src/harness/services/skill_clustering/engine/emergent.py`:
   - Copy pattern dicts (`dict(pattern)`) instead of mutating `CANONICAL_EMERGENT_PATTERNS` in-place at line `39`.
   - In the fallback synthesizer (`lines 57-96`):
     1. Filter out skills whose `SKILL.md` frontmatter contains `disable-model-invocation: true` from autonomous `recommended_pipeline` synthesis (or flag them with `invocation_mode: "human_only"`).
@@ -417,7 +417,7 @@ Before evaluating the standing gaps, the live counts on disk at `fe491ad` (verif
     3. Replace the mid-word `s1_desc[:160]` slice at line `77` with complete sentence extraction (`s1_desc.split(". ")[0].rstrip(".") + "."`).
 - [x] **5.2**: In `src/harness/services/skill_graph/service/clustering.py` / `indexer.py`, filter `in_degree` / `out_degree` rankings to valid skill node IDs present in `graph.nodes` so phantom HTML/markdown tokens (`mermaid`, `div`, `head`, `body`) never appear in `top_in_degree`.
 - [x] **5.3**: Copy `plugins/memory_and_epistemics/ontology_spider/SKILL.md` (+ `CARD.md`) into `.agents/skills/ontology-spider/` (or register `.agents/skills/ontology-spider/SKILL.md`) so all workspace-authored skills in `_GRAPH_INSTANCE.nodes` have a uniform `.agents/skills/<name>/` directory.
-- [x] **5.4**: Regenerate `reports/cluster_analysis_data.json` and `reports/skill_knowledge_graph_cluster_analysis_report.md` so the report header (`140 Skills`), `top_in_degree`, and `emergent_capabilities` reflect the hardened engine.
+- [x] **5.4** *(Re-opened by 2026-11-06 Argon Post-Execution Audit; Resolved by 2026-11-06 Follow-Up Track 2)*: Regenerate `reports/cluster_analysis_data.json` and `reports/skill_knowledge_graph_cluster_analysis_report.md` so the report header (`140 Skills`), `top_in_degree`, and `emergent_capabilities` reflect the hardened engine.
 - [x] **5.5 (Verification)**: Add contract tests in `tests/test_skill_clustering.py` asserting: (a) zero `emergent_capabilities` descriptions end mid-word; (b) `CANONICAL_EMERGENT_PATTERNS` is never mutated across calls; (c) `top_in_degree` contains only valid `graph.nodes` keys.
 
 ---
@@ -427,7 +427,7 @@ Before evaluating the standing gaps, the live counts on disk at `fe491ad` (verif
 **Problem**: None of the 23 emergent macro-capabilities have ever been executed end-to-end against an operational pass/fail trial contract.
 
 - [x] **6.1**: Implement `tests/test_emergent_capability_trial.py` executing the exact 4-step trial spec from Brief 1 (§1.5) for `cap_context_anti_rot_governance` (`codebase-context-governor` $\to$ `context-anti-rot-sync` $\to$ `agent-instruction-architect` $\to$ `codebase-context-architect`) inside an isolated `tmp_path` fixture repository.
-- [x] **6.2**: Verify and fix any handoff seam gap between Step 2 (`context_sync_cli.py clean`) and Step 4 (`context_linter.py` / `ContextGovernor.run_govern`) discovered during the live trial run.
+- [x] **6.2** *(Re-opened by 2026-11-06 Argon Post-Execution Audit; Resolved by 2026-11-06 Follow-Up Track 3)*: Verify and fix any handoff seam gap between Step 2 (`context_sync_cli.py clean`) and Step 4 (`context_linter.py` / `ContextGovernor.run_govern`) discovered during the live trial run.
 - [x] **6.3 (Verification)**: Run `.\.venv\Scripts\python.exe -m pytest tests/test_emergent_capability_trial.py -v` and record the dated execution output.
 
 ---
@@ -443,20 +443,12 @@ Before evaluating the standing gaps, the live counts on disk at `fe491ad` (verif
   - Delete the 4 empty 0-byte `requirements.txt` files (`plugins/memory_and_epistemics/hermes_state_fts5/requirements.txt`, `plugins/agent_orchestration/hermes_cognitive_engine/requirements.txt`, `plugins/infra_and_cloud/hermes_cron_scheduler/requirements.txt`, `plugins/integration_and_io/hermes_gateway_relay/requirements.txt`) or populate them with pinned bounds matching `pyproject.toml`.
   - Pin bare `structlog` to `structlog>=24.1.0` in the 4 `rea_*` `requirements.txt` files.
   - Remove `.agents/skills/codebase-context-architect/scripts/engine.py` after verifying zero imports reference the unprefixed name (`Rule 57`).
-- [x] **7.3 (Version-Bump Trials & Dependabot)**:
+- [x] **7.3 (Version-Bump Trials & Dependabot)** *(Re-opened by 2026-11-06 Argon Post-Execution Audit; Resolved by 2026-11-06 Follow-Up Track 5)*:
   - Create `.github/dependabot.yml` covering `pip` (`/`) and `github-actions` (`/`) on a weekly schedule.
   - Run isolated version-bump trials in `pyproject.toml` (`ruff`, `mypy`, `pydantic`, `fastapi`, `httpx`) against the test suite and record the exact compatibility matrix.
 - [x] **7.4 (Archive Errata & Working-Tree Hygiene)**:
   - Stage the uncommitted move of `Follow-up fixes plan-2026-11-03-1325-EST.md` and `Plugin portability fixes plan-2026-11-03-1915-EST.md` into `plan archive/`.
   - Untick `[x]` $\to$ `[ ]` on the Gephi desktop checkboxes in `plan archive/Follow-up analysis and plan-2026-11-03-0715-EST.md:179,200` and `plan archive/Post-knowledge-graph analysis and plan-2026-10-31-0808-EDT.md:235` to match `Big fix plan-2026-11-03-0950-EST.md:567`.
-
----
-
-### Track 8 (Human Desktop Only) — Manual Gephi Visual Verification
-
-> **Hard Constraint**: Remains unticked (`[ ]`) until a human operator runs Gephi 0.10+ on a desktop GUI session. No headless script or agent check may tick this box.
-
-- [ ] **8.1 (Human GUI)**: Open `.harness/graph/knowledge_graph.gexf` (`451` nodes, `218` edges after Track 3.2) in Gephi 0.10+, run ForceAtlas2 layout (`Scaling = 2.0`, `Gravity = 1.0`, `Prevent Overlap = True`), verify node colors (`viz:color`) and sizes (`viz:size`), and export a dated screenshot or SVG/PDF artifact.
 
 ---
 

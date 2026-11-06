@@ -130,38 +130,16 @@ def test_cap_context_anti_rot_governance_trial(tmp_path: Path) -> None:
     # Prune redundant whitespace, eliminate lint leakage, fix broken path & script spans
     sync_engine = ContextSyncEngine(workspace_root=repo_dir)
 
-    # 1. Clean whitespace on AGENTS.md
-    clean_res = sync_engine.clean_file("AGENTS.md", "AGENTS.md")
+    # 1. Clean AGENTS.md (pruning rot, lint leakage, dead paths, and whitespace)
+    clean_res = sync_engine.clean_file("AGENTS.md", "AGENTS.md", prune_rot=True)
     assert clean_res.cleaned_lines < clean_res.original_lines
+    assert clean_res.cleaned_lines <= 150
 
-    # 2. Compress bloated rules into concise standards, eliminate lint leakage and broken ghost module
-    cleaned_agents_lines = [
-        "# Constitution and Guidelines",
-        "",
-        "## Execution Seams",
-        "- Run unit tests via `pytest -v`",
-        "- Build package via `python -m build`",
-        "",
-        "## Negative Boundaries",
-        "- Do not touch production credentials or sensitive env files.",
-        "- Do not modify host configuration outside test scope.",
-        "",
-        "## Path References",
-        "- Reference valid: `src/app.py`",
-        "",
-        "## Core Architectural Guidelines",
-        "- Rule 1: Maintain modular single-responsibility plugins.",
-        "- Rule 2: Keep context files concise and strictly budgeted.",
-        "- Rule 3: Use typed ServiceKey for all IoC registrations.",
-        "- Rule 4: Subprocess isolation for external plugins.",
-    ]
-    (repo_dir / "AGENTS.md").write_text("\n".join(cleaned_agents_lines) + "\n", encoding="utf-8")
-
-    # 3. Fix the broken npm script reference in docs/guide.md
-    (docs_dir / "guide.md").write_text(
-        "# Developer Guide\n\nRun `npm test` to execute test suite.\n",
-        encoding="utf-8",
+    # 2. Clean docs/guide.md (repairing unconfigured npm script references)
+    clean_docs_res = sync_engine.clean_file(
+        "docs/guide.md", "docs/guide.md", prune_rot=True
     )
+    assert clean_docs_res.cleaned_lines >= 1
 
     # 4. Audit via context-anti-rot-sync engine
     audit_res = sync_engine.audit_file("AGENTS.md", max_lines=150)

@@ -79,58 +79,85 @@ In-degree authorities represent the most depended-upon skills across the ecosyst
 
 ---
 
-## 3. The 20 Functional Clusters
+## 3. The 19 Functional Clusters
 
-The graph naturally partitions into **20 functional clusters** using bipartite affinity community detection. Below is the comprehensive taxonomy of each cluster:
+The graph naturally partitions into **19 functional clusters** using bipartite affinity community detection. Below is the comprehensive taxonomy of each cluster:
 
 ```mermaid
 graph LR
     subgraph MacroEcosystem["Brain Harness Macro-Clusters"]
-      C1["Cluster 1: Full-Stack App Engineering (23)"]
-      C2["Cluster 2: Developer Guidance & Pocock Suite (23)"]
-      C3["Cluster 3: Repo Triad & Skill Forging (17)"]
-      C4["Cluster 4: Autonomous Harness Architecture (13)"]
-      C5["Cluster 5: External Bridges & Computer Use (9)"]
-      C6["Cluster 6: Codebase Context & Governance (6)"]
-      C7["Cluster 7: Multi-Agent Swarms & Backprop (6)"]
-      C8["Cluster 8: Security & Forensic Reverse Eng (6)"]
-      C9["Cluster 9: BigQuery Analytics & Lakehouses (5)"]
-      C10["Cluster 10: Cognitive Memory & Decay (5)"]
-      C11["Cluster 11: Epistemic Introspection (5)"]
-      C12_20["Clusters 12-20: Micro-Specializations (22)"]
+
+      C1["Cluster 1: Plugin Seam And Mirror Auditor (23)"]
+
+      C2["Cluster 2: Ask Matt (23)"]
+
+      C3["Cluster 3: Agent Harness Architect (17)"]
+
+      C4["Cluster 4: External Repo Bridge Forge (11)"]
+
+      C5["Cluster 5: Deep Skill Forge (11)"]
+
+      C6["Cluster 6: Mind Reader (10)"]
+
+      C7["Cluster 7: Codebase Context Governor (7)"]
+
+      C8["Cluster 8: Mantis Security Review (6)"]
+
+      C9["Cluster 9: Ebbinghaus Memory Governor (6)"]
+
+      C10["Cluster 10: Bigquery Augmented Analytics (4)"]
+
+      C11["Cluster 11: Architecture Deepening Workflow (3)"]
+
+      C12["Cluster 12: Brain Artifact Miner (3)"]
+
+      C13["Cluster 13: Knowledge Graph Pipeline (3)"]
+
+      C14["Cluster 14: Writing Beats (3)"]
+
+      C15["Cluster 15: Data Topology Mapper (2)"]
+
+      C16["Cluster 16: Cloud Infrastructure Architect (2)"]
+
+      C17["Cluster 17: Codebase Design (2)"]
+
+      C18["Cluster 18: Deepselect Topk Optimizer (2)"]
+
+      C19["Cluster 19: Headroom Context Optimizer (2)"]
+
     end
+
     C3 -->|Forge Bridge| C5
     C5 -->|Computer Use| C1
     C4 -->|Harness Control| C7
-    C11 -->|Isnad Lineage| C10
+    C10 -->|Isnad Lineage| C9
     C8 -->|Security Gates| C4
     C6 -->|Instruction Sync| C3
 ```
 
 ### Detailed Cluster Profiles
 
-| Cluster ID & Name | Size | Intra Affinity | Cross Affinity | Coherence Ratio | Member Skills |
+| Cluster ID & Name | Size | Internal Edges | Cohesion Score | Central Hub | Member Skills |
 |---|---|---|---|---|---|
-| **`cluster_01_gemini_vercel_streaming_chatbot`**<br>*Full-Stack Application & UI Engineering* | **23** | $2.31$ | $0.85$ | **2.72** | `adversarial-agent-verifier`, `agent-instruction-architect`, `agentwikis-router`, `chatbotx`, `claude-handoff`, `context-type-system`, `deterministic-validation-loop`, `gemini-vercel-streaming-chatbot`, `geospatial-disaster-simulation`, `git-guardrails-claude-code`, `gods-eye-view`, `gradio-app-architect`, `harness-reflector`, `hyperframes-video-architect`, `icm-workspace-architect`, `migrate-to-shoehorn`, `plugin-seam-and-mirror-auditor`, `python-dataclass-architect`, `r-language-server-toolkit`, `scaffold-exercises`, `setup-pre-commit`, `tdd`, `writing-for-agents` |
-| **`cluster_02_ask_matt`**<br>*Interactive Developer Guidance & Interviewing* | **23** | $1.98$ | $0.62$ | **3.19** | `ask-matt`, `code-review`, `diagnosing-bugs`, `domain-modeling`, `grill-me`, `grill-with-docs`, `grilling`, `handoff`, `implement`, `improve-codebase-architecture`, `loop-me`, `prototype`, `research`, `resolving-merge-conflicts`, `setup-matt-pocock-skills`, `teach`, `to-questionnaire`, `to-spec`, `to-tickets`, `triage`, `wait-what`, `wayfinder`, `wizard` |
-| **`cluster_03_crafting_skills`**<br>*Repository Triad & Deep Skill Forging* | **17** | $3.84$ | $0.94$ | **4.09** | `agent-skill-sdlc`, `codebase-context-architect`, `crafting-skills`, `deep-repo-auditor`, `deep-skill-forge`, `deepen-architecture`, `discovery-index-scout`, `legacy-refactoring-guardian`, `media-to-vault-pipeline`, `open-source-gis-architect`, `python-diagrams-architect`, `repo-doc-synchronizer`, `repo-to-plugin-forge`, `repo-triad-forge`, `structured-data-scout`, `survival-analysis`, `system-design-architect` |
-| **`cluster_04_agent_harness_architect`**<br>*Autonomous Agent Harness Architecture & Calibration* | **13** | $3.52$ | $0.88$ | **4.00** | `agent-harness-architect`, `agentic-reliability-harness`, `ai-agent-engineer`, `ai-native-harness-engineer`, `coding-harness-calibrator`, `context-engineering-architect`, `dynamic-model-router`, `elephant-goldfish-governor`, `harness-compass`, `orca-orchestrator`, `prompt-pruning-architect`, `self-evaluating-ai-pipeline`, `ts-agent-harness-constructor` |
-| **`cluster_05_external_repo_bridge_forge`**<br>*External Codebase Bridges & Desktop Computer Use* | **9** | $3.46$ | $0.91$ | **3.80** | `agent-desktop-operator`, `agent-reach-browser-bridge`, `ai-file-analysis-agent`, `book-to-skill-forge`, `cellcog-multimodal`, `developer-docs-architect`, `external-repo-bridge-forge`, `multimedia-intelligence-forge`, `youtube-transcript-fetcher` |
-| **`cluster_06_codebase_context_governor`**<br>*Multi-Layer Context Governance & Anti-Rot* | **6** | $4.12$ | $0.82$ | **5.02** | `agent-skills-architect`, `codebase-context-governor`, `context-anti-rot-sync`, `legacy-modernization-pipeline`, `pr-lens-visualizer`, `responsible-ai-prototyping` |
-| **`cluster_07_swarm_reflection_optimizer`**<br>*Multi-Agent Swarms, Game Theory & Backpropagation* | **6** | $3.89$ | $0.79$ | **4.92** | `compute-model-assessor`, `game-theoretic-swarm-deliberator`, `pi-coding-harness`, `sme-ann-backprop`, `swarm-reflection-optimizer`, `uncertainty-aware-ai-architect` |
-| **`cluster_08_mantis_security_review`**<br>*Security Auditing, Reverse Engineering & Forensics* | **6** | $4.25$ | $0.76$ | **5.59** | `ai-red-teaming-architect`, `differential-facet-verifier`, `ethical-hacker-networking`, `mantis-security-review`, `rea-reverse-engineering`, `reconstruction-obligation-ledger` |
-| **`cluster_09_bigquery_augmented_analytics`**<br>*In-Database Analytics, Lakehouses & TVFs* | **5** | $4.62$ | $0.71$ | **6.51** | `bigquery-augmented-analytics`, `data-management-architect`, `garf-reporting-architect`, `hf-datasets-engineer`, `paperless-document-pipeline` |
-| **`cluster_10_ebbinghaus_memory_governor`**<br>*Epistemic Memory Retention & Forgetting Decay* | **5** | $3.95$ | $0.84$ | **4.70** | `ebbinghaus-memory-governor`, `media-mind-forge`, `okf-memory-governor`, `ontological-engineering-coach`, `ontology-spider` |
-| **`cluster_11_mind_reader`**<br>*Epistemic Introspection, Isnād & Codebase Archaeology* | **5** | $5.41$ | $0.89$ | **6.08** | `epistemic-isnad-audit`, `epistemic-memory-lifecycle`, `mind-reader`, `pre-commit-security-guard`, `repo-reader` |
-| **`cluster_12_architecture_deepening_workflow`**<br>*Monolith Decomposition & 7-Phase Deepening* | **3** | $5.12$ | $0.65$ | **7.88** | `architecture-deepening-workflow`, `hf-doc-builder-architect`, `monolith-decomposition-engine` |
-| **`cluster_13_brain_artifact_miner`**<br>*Filesystem & Trajectory Workspace Archaeology* | **3** | **8.51** | $0.78$ | **10.91**| `brain-artifact-miner`, `conversation-trajectory-miner`, `temp-artifact-miner` |
-| **`cluster_14_knowledge_graph_pipeline`**<br>*Property Graphs & Recursive SQL Hierarchies* | **3** | $4.87$ | $0.61$ | **7.98** | `knowledge-graph-pipeline`, `neo4j-knowledge-graph-architect`, `sql-recursive-graph-traversal` |
-| **`cluster_15_writing_beats`**<br>*Agent Documentation & Prose Composition* | **3** | $4.32$ | $0.52$ | **8.31** | `writing-beats`, `writing-fragments`, `writing-shape` |
-| **`cluster_16_data_topology_mapper`**<br>*Causal DAG Architecture & Objection Reflection* | **2** | $4.91$ | $0.92$ | **5.34** | `data-topology-mapper`, `questio-reflection` |
-| **`cluster_17_cloud_infrastructure_architect`**<br>*Cloud Observability & Kubernetes Drift Governance* | **2** | $4.76$ | $0.55$ | **8.65** | `cloud-infrastructure-architect`, `kubernetes-drift-guardian` |
-| **`cluster_18_codebase_design`**<br>*Deep Modules & TypeScript Package Seams* | **2** | $4.22$ | $0.60$ | **7.03** | `codebase-design`, `setup-ts-deep-modules` |
-| **`cluster_19_deepselect_topk_optimizer`**<br>*Sparse Attention & Feedforward Neural Networks* | **2** | $5.34$ | $0.58$ | **9.21** | `deepselect-topk-optimizer`, `neural-network-from-scratch` |
-| **`cluster_20_headroom_context_optimizer`**<br>*Token Waste Control & Transcript Deduplication* | **2** | $4.89$ | $0.67$ | **7.30** | `headroom-context-optimizer`, `token-economizer` |
+| **`cluster_01_plugin_seam_and_mirror_auditor`**<br>*Plugin Seam And Mirror Auditor & Domain Peers* | **23** | 8 | 0.10 | `plugin-seam-and-mirror-auditor` | `adversarial-agent-verifier`, `agent-instruction-architect`, `agentwikis-router`, `chatbotx`, `claude-handoff`, `deterministic-validation-loop`, `gemini-vercel-streaming-chatbot`, `geospatial-disaster-simulation`, `git-guardrails-claude-code`, `gods-eye-view`, `gradio-app-architect`, `harness-reflector`, `hyperframes-video-architect`, `icm-workspace-architect`, `migrate-to-shoehorn`, `plugin-seam-and-mirror-auditor`, `python-dataclass-architect`, `r-language-server-toolkit`, `repo-doc-synchronizer`, `scaffold-exercises`, `setup-pre-commit`, `tdd`, `writing-for-agents` |
+| **`cluster_02_ask_matt`**<br>*Ask Matt & Domain Peers* | **23** | 40 | 0.10 | `ask-matt` | `ask-matt`, `code-review`, `diagnosing-bugs`, `domain-modeling`, `grill-me`, `grill-with-docs`, `grilling`, `handoff`, `implement`, `improve-codebase-architecture`, `loop-me`, `prototype`, `research`, `resolving-merge-conflicts`, `setup-matt-pocock-skills`, `teach`, `to-questionnaire`, `to-spec`, `to-tickets`, `triage`, `wait-what`, `wayfinder`, `wizard` |
+| **`cluster_03_agent_harness_architect`**<br>*Agent Harness Architect & Domain Peers* | **17** | 16 | 0.10 | `agent-harness-architect` | `agent-harness-architect`, `agentic-reliability-harness`, `ai-agent-engineer`, `ai-native-harness-engineer`, `coding-harness-calibrator`, `compute-model-assessor`, `context-engineering-architect`, `dynamic-model-router`, `elephant-goldfish-governor`, `game-theoretic-swarm-deliberator`, `harness-compass`, `orca-orchestrator`, `pi-coding-harness`, `prompt-pruning-architect`, `self-evaluating-ai-pipeline`, `ts-agent-harness-constructor`, `uncertainty-aware-ai-architect` |
+| **`cluster_04_external_repo_bridge_forge`**<br>*External Repo Bridge Forge & Domain Peers* | **11** | 6 | 0.10 | `external-repo-bridge-forge` | `agent-desktop-operator`, `agent-reach-browser-bridge`, `ai-file-analysis-agent`, `book-to-skill-forge`, `cellcog-multimodal`, `developer-docs-architect`, `external-repo-bridge-forge`, `media-to-vault-pipeline`, `multimedia-intelligence-forge`, `open-source-gis-architect`, `youtube-transcript-fetcher` |
+| **`cluster_05_deep_skill_forge`**<br>*Deep Skill Forge & Domain Peers* | **11** | 12 | 0.11 | `deep-skill-forge` | `agent-skill-sdlc`, `codebase-context-architect`, `crafting-skills`, `deep-skill-forge`, `deepen-architecture`, `discovery-index-scout`, `hf-datasets-engineer`, `python-diagrams-architect`, `repo-to-plugin-forge`, `repo-triad-forge`, `system-design-architect` |
+| **`cluster_06_mind_reader`**<br>*Mind Reader & Domain Peers* | **10** | 11 | 0.12 | `mind-reader` | `deep-repo-auditor`, `epistemic-isnad-audit`, `epistemic-memory-lifecycle`, `mind-reader`, `pre-commit-security-guard`, `repo-reader`, `sme-ann-backprop`, `structured-data-scout`, `survival-analysis`, `swarm-reflection-optimizer` |
+| **`cluster_07_codebase_context_governor`**<br>*Codebase Context Governor & Domain Peers* | **7** | 3 | 0.10 | `codebase-context-governor` | `agent-skills-architect`, `codebase-context-governor`, `context-anti-rot-sync`, `legacy-modernization-pipeline`, `legacy-refactoring-guardian`, `pr-lens-visualizer`, `responsible-ai-prototyping` |
+| **`cluster_08_mantis_security_review`**<br>*Mantis Security Review & Domain Peers* | **6** | 6 | 0.20 | `mantis-security-review` | `ai-red-teaming-architect`, `differential-facet-verifier`, `ethical-hacker-networking`, `mantis-security-review`, `rea-reverse-engineering`, `reconstruction-obligation-ledger` |
+| **`cluster_09_ebbinghaus_memory_governor`**<br>*Ebbinghaus Memory Governor & Domain Peers* | **6** | 3 | 0.10 | `ebbinghaus-memory-governor` | `context-type-system`, `ebbinghaus-memory-governor`, `media-mind-forge`, `okf-memory-governor`, `ontological-engineering-coach`, `ontology-spider` |
+| **`cluster_10_bigquery_augmented_analytics`**<br>*Bigquery Augmented Analytics & Domain Peers* | **4** | 3 | 0.25 | `bigquery-augmented-analytics` | `bigquery-augmented-analytics`, `data-management-architect`, `garf-reporting-architect`, `paperless-document-pipeline` |
+| **`cluster_11_architecture_deepening_workflow`**<br>*Architecture Deepening Workflow & Domain Peers* | **3** | 1 | 0.17 | `architecture-deepening-workflow` | `architecture-deepening-workflow`, `hf-doc-builder-architect`, `monolith-decomposition-engine` |
+| **`cluster_12_brain_artifact_miner`**<br>*Brain Artifact Miner & Domain Peers* | **3** | 3 | 0.50 | `brain-artifact-miner` | `brain-artifact-miner`, `conversation-trajectory-miner`, `temp-artifact-miner` |
+| **`cluster_13_knowledge_graph_pipeline`**<br>*Knowledge Graph Pipeline & Domain Peers* | **3** | 3 | 0.50 | `knowledge-graph-pipeline` | `knowledge-graph-pipeline`, `neo4j-knowledge-graph-architect`, `sql-recursive-graph-traversal` |
+| **`cluster_14_writing_beats`**<br>*Writing Beats & Domain Peers* | **3** | 0 | 0.10 | `writing-beats` | `writing-beats`, `writing-fragments`, `writing-shape` |
+| **`cluster_15_data_topology_mapper`**<br>*Data Topology Mapper & Domain Peers* | **2** | 0 | 0.10 | `data-topology-mapper` | `data-topology-mapper`, `questio-reflection` |
+| **`cluster_16_cloud_infrastructure_architect`**<br>*Cloud Infrastructure Architect & Domain Peers* | **2** | 0 | 0.10 | `cloud-infrastructure-architect` | `cloud-infrastructure-architect`, `kubernetes-drift-guardian` |
+| **`cluster_17_codebase_design`**<br>*Codebase Design & Domain Peers* | **2** | 1 | 0.50 | `codebase-design` | `codebase-design`, `setup-ts-deep-modules` |
+| **`cluster_18_deepselect_topk_optimizer`**<br>*Deepselect Topk Optimizer & Domain Peers* | **2** | 1 | 0.50 | `deepselect-topk-optimizer` | `deepselect-topk-optimizer`, `neural-network-from-scratch` |
+| **`cluster_19_headroom_context_optimizer`**<br>*Headroom Context Optimizer & Domain Peers* | **2** | 1 | 0.50 | `headroom-context-optimizer` | `headroom-context-optimizer`, `token-economizer` |
 
 ---
 
@@ -165,7 +192,7 @@ Below are the 20 strongest affinity edges in the entire graph, ranked by normali
 
 ## 5. Cross-Cluster Macro-Bridges (Conduits)
 
-The graph contains **61 cross-cluster macro-bridges** that enable seamless interoperability across domain boundaries:
+The graph contains **52 cross-cluster macro-bridges** that enable seamless interoperability across domain boundaries:
 
 ```mermaid
 flowchart TD

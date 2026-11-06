@@ -205,6 +205,10 @@ class SkillCardDefinition(BaseModel):
     tools: list[str] = Field(default_factory=list, description="Required tool names")
     card_path: str = Field(default="", description="Path to companion CARD.md")
     skill_path: str = Field(default="", description="Path to authoritative SKILL.md")
+    disable_model_invocation: bool = Field(
+        default=False,
+        description="True if SKILL.md frontmatter declares disable-model-invocation: true",
+    )
 
     @property
     def references(self) -> list[str]:

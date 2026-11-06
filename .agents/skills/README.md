@@ -30,10 +30,10 @@ flowchart TD
 
     subgraph SkillsCatalog[".agents/skills/ (105 Deep-Module Skills)"]
         direction TB
-        D1["Agent Orchestration (12 skills)"]
-        D2["Data Engineering &amp; Graph (9 skills)"]
-        D3["Epistemics &amp; Memory (11 skills)"]
-        D4["Architecture &amp; Docs (18 skills)"]
+        D1["Agent Orchestration &amp; Deliberation (23 skills)"]
+        D2["Data Engineering, Lakehouse &amp; Graph (18 skills)"]
+        D3["Epistemics, Lineage &amp; Memory Lifecycle (13 skills)"]
+        D4["Architecture, Context &amp; Docs-as-Code (51 skills)"]
     end
 
     subgraph MicroKernel["Brain Harness Micro-Kernel"]

@@ -34,6 +34,10 @@ class EmergentCapability(BaseModel):
     target_outcomes: list[str] = Field(
         default_factory=list, description="Tangible artifacts and business outcomes produced"
     )
+    invocation_mode: str = Field(
+        default="autonomous",
+        description="Execution mode: 'autonomous' for agent loops or 'human_only' for interactive skills",
+    )
 
     @property
     def name(self) -> str:

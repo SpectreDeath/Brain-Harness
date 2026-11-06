@@ -47,10 +47,21 @@ class SkillCardParser:
         anti_patterns: list[SkillAntiPatternDefinition] = []
         invariants: list[SkillInvariantDefinition] = []
         references: list[str] = []
+        disable_model_invocation = False
 
         if skill_file.exists():
             skill_text = skill_file.read_text(encoding="utf-8", errors="ignore")
             frontmatter, body = extract_frontmatter(skill_text)
+
+            dmi_val = frontmatter.get(
+                "disable-model-invocation", frontmatter.get("disable_model_invocation")
+            )
+            if dmi_val is True or str(dmi_val).strip().lower() == "true":
+                disable_model_invocation = True
+            elif re.search(
+                r"disable[-_]model[-_]invocation:\s*true", skill_text, re.IGNORECASE
+            ):
+                disable_model_invocation = True
 
             if "name" in frontmatter:
                 name = str(frontmatter["name"]).strip()
@@ -129,6 +140,7 @@ class SkillCardParser:
             tools=[],
             card_path=str(card_file) if card_file.exists() else "",
             skill_path=str(skill_file) if skill_file.exists() else "",
+            disable_model_invocation=disable_model_invocation,
         )
 
     @classmethod

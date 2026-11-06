@@ -15,6 +15,18 @@ logger = structlog.get_logger()
 
 
 def _update_disk_meta(root: Path, ki_id: str, updates: dict[str, Any]) -> None:
+    import os
+
+    if "PYTEST_CURRENT_TEST" in os.environ:
+        resolved = root.resolve()
+        # Prevent tests from dirtying git-tracked repository vault files
+        if (
+            ".harness" in resolved.parts
+            and "pytest" not in str(resolved).lower()
+            and "temp" not in str(resolved).lower()
+        ):
+            return
+
     meta_path = root / ki_id / "metadata.json"
     if meta_path.exists():
         try:
