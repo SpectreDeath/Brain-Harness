@@ -16,15 +16,15 @@ This is a human-GUI job. No headless script, agent check, or HTML export may tic
   - Track 8.1's requirement to *"verify node colors (`viz:color`) and sizes (`viz:size`)"* cannot pass on the current `.gexf` because `src/harness/services/storage/vault_exporters.py` (`export_gexf`) does not emit GEXF `viz:` elements.
   - **Three implementation traps in `vault_exporters.py` that Track 0 below must handle**:
     1. **200-line ceiling (`Rule 11`)**: `src/harness/services/storage/vault_exporters.py` is currently **196 lines**, and `tests/test_storage_decomposition.py::TestStorageServiceDecomposition::test_submodule_line_counts` enforces `<= 200` lines on every `*.py` file in `src/harness/services/storage/`. Track 0 must keep `vault_exporters.py` $\le 200$ lines (or move GEXF viz helpers into a sibling module).
-    2. **Color key (`domain` / `node_kind`, not raw `category`) & full 10-color palette**: `.harness/graph/knowledge_graph.gexf` has **38 distinct `category` values** (e.g., `developer_experience/architecture` [19], `developer_experience/software_engineering` [11]) and **0 nodes** with `category="plugins / external"` (external nodes have `domain = category = node_kind` $\in \{\text{"path"} [116], \text{"skill"} [17], \text{"plugin"} [8], \text{"source"} [1]\}$). Matching raw `n.category` against only the 5 colors named in `docs/reference/knowledge-graph-visual-brief.md` §3 would leave **266 of 451 nodes (59.0%)** default grey. Track 0.2 resolves colors by `n.domain` (with fallback to `n.category.split("/")[0]` and `n.node_kind`) across all 10 canonical buckets.
-    3. **Truncated `label=")"` on 5 parenthesized code-path nodes**: In `src/harness/services/storage/vault_derivation.py:60`, `Path(e.target).name` produces `label=")"` for 5 nodes whose `source_target` ends with `/)` (`Brain Harness (src/harness/services/context_optimizer/)`, `hyperframes/`, `memory_decay/`, `prometheus/`, `pyrit_scanner/`). Stripping trailing `/) ` before extracting `.name` restores readable labels in Gephi.
+    2. **Color key (`domain` / `node_kind`, not raw `category`) & full 10-color palette**: `.harness/graph/knowledge_graph.gexf` has **38 distinct `category` values** (e.g., `developer_experience/architecture` [19], `developer_experience/software_engineering` [11]) and **0 nodes** with `category="plugins / external"` (external nodes have `domain = category = node_kind` $\in \{\text{"path"} [116], \text{"skill"} [17], \text{"plugin"} [8], \text{"source"} [1]\}$). Matching raw `n.category` against only the 5 colors named in `docs/reference/knowledge-graph-visual-brief.md` §3 would leave **278 of 451 nodes (61.6%)** default grey. Track 0.2 resolves colors by `n.domain` (with fallback to `n.category.split("/")[0]` and `n.node_kind`) across all 10 canonical buckets.
+    3. **Truncated `label=")"` on 5 parenthesized code-path nodes**: In `src/harness/services/storage/vault_derivation.py:60`, `Path(e.target).name` produces `label=")"` for 5 nodes whose node id (`e.target`) ends with `/)` (`Brain Harness (src/harness/services/context_optimizer/)`, `hyperframes/`, `memory_decay/`, `prometheus/`, `pyrit_scanner/`). Stripping trailing `/) ` before extracting `.name` restores readable labels in Gephi.
 - **Reference numbers to compare against (and why raw counts differ slightly from the Nov 5 brief)**:
   - `docs/reference/knowledge-graph-visual-brief.md` §2 was computed on an earlier **417-node** snapshot ($226\text{ connected} + 191\text{ isolated} = 417$) and reported: Louvain **$Q = 0.9447$**, **58 communities** (on the 226-node connected subgraph), **248 components**, **191 isolated nodes**, and **largest component = 34 nodes**.
   - On the current **451-node / 218-edge** `.gexf` at `899d618`, the exact ground-truth topology is:
     - **Connected components**: **254** (vs. 248 in the 417-node brief)
     - **Isolated nodes (`degree = 0`)**: **186** (vs. 191 in the brief)
     - **Connected subgraph (`degree >= 1`)**: **265 nodes** (vs. 226 in the brief)
-    - **Largest connected component**: **37 nodes** (Clusters 1 [19] and 2 [15] plus 3 nodes bridged into one component; next largest components are `8, 8, 8, 7, 7, 6, 6, 6, 6`)
+    - **Largest connected component**: **37 nodes** (next largest components are `8, 8, 8, 7, 7, 6, 6, 6, 6`). Whether this 37-node component corresponds to the brief's Clusters 1 (19 nodes) + 2 (15 nodes) is a question for step 5, not established ground truth — membership has shifted since the brief's 417-node snapshot.
     - **Max node degree**: **7** (`ki-deepening-cycle-history`, `ki-topology-map`, `ki_google_repos_bridge`), followed by **6** (`ki-file-size-hotspots`, `ki-hf-datasets-arrow-streaming`, `ki_audit_20260908_02`, `ki_garf_reporting_engine`).
 
 ## Prerequisites
@@ -41,10 +41,11 @@ Deepen the existing exporter in place (`Rule 20`), author the failing test contr
   2. Nodes with higher degree in `fixture_graph` (`ki_01`, degree 3) receive a strictly larger `<viz:size>` than degree-1 nodes (`agent-architect`), and `ki_01` (`developer_experience`) receives `#3498db` (`r="52" g="152" b="219"`).
   3. A `source_target` ending in `/)` (e.g., `"Brain Harness (src/harness/services/pyrit_scanner/)"`) derives node `label="pyrit_scanner"`, never `")"`.
 - [ ] **0.2 (Exporter & label implementation)**:
-  - In `src/harness/services/storage/vault_derivation.py:60`, strip trailing `/) ` before extracting the path basename (`clean_t = e.target.rstrip("/) "); label = Path(clean_t).name if "/" in clean_t or "\\" in clean_t else e.target`).
+  - In `src/harness/services/storage/vault_derivation.py:60`, strip trailing `/) ` before extracting the path basename (`clean_t = e.target.rstrip("/) "); label = Path(clean_t).name if "/" in clean_t or "\\" in clean_t else e.target`). Note: `rstrip("/) ")` would also mangle a hypothetical `...(v2)`-style target — acceptable here, but don't generalize the strip without a test.
   - In `src/harness/services/storage/vault_exporters.py` (`export_gexf`), while keeping `vault_exporters.py` **$\le 200$ lines**:
     1. Register/declare `"xmlns:viz": "http://www.gexf.net/1.3draft/viz"` on the root `<gexf>` element.
-    2. Compute undirected degree `deg[node_id]` across `graph.edges` (`max_deg = max(deg.values(), default=1) or 1`) and emit `<viz:size value="..."/>` using `size = round(min(24.0, 6.0 + 18.0 * (deg[n.id] / max_deg)), 2)` (isolated nodes = `6.0`, max-degree nodes = `24.0`).
+    - **Caveat (unconfirmed):** the official GEXF 1.3 spec uses `http://gexf.net/1.3/viz`; the `1.3draft/viz` URI above is analogy only. If nodes load flat grey in step 2, try the official URI before concluding the exporter is broken.
+    2. Compute undirected degree `deg[node_id]` across `graph.edges` (`max_deg = max(deg.values(), default=1) or 1`) and emit `<viz:size value="..."/>` using `size = round(min(24.0, 6.0 + 18.0 * (deg[n.id] / max_deg)), 2)` (isolated nodes = `6.0`, max-degree nodes = `24.0`). Default isolated nodes to `deg = 0` (`dict.get(n.id, 0)`), or the lookup raises `KeyError`.
     3. Resolve each node's color key via `key = (n.domain or n.category.split("/")[0] or n.node_kind).strip().lower()` and emit `<viz:color r="..." g="..." b="..."/>` from the 10-bucket palette (matching `docs/reference/knowledge-graph-visual-brief.md` §3 + remaining `TaxonomyDomain` / external kinds):
        - `developer_experience`: `#3498db` (`r="52" g="152" b="219"`) — Blue
        - `agent_orchestration`: `#9b59b6` (`r="155" g="89" b="182"`) — Purple
@@ -60,7 +61,7 @@ Deepen the existing exporter in place (`Rule 20`), author the failing test contr
 - [ ] **0.3 (Regenerate & run headless verification suite)**:
   - Regenerate `.harness/graph/knowledge_graph.gexf`:
     ```powershell
-    .\.venv\Scripts\ harness.exe knowledge export --format gexf --out .harness/graph/knowledge_graph.gexf
+    .\.venv\Scripts\harness.exe knowledge export --format gexf --out .harness/graph/knowledge_graph.gexf
     ```
   - Verify counts via PowerShell (`Rule 30` — do not rely on bash `grep -c`):
     ```powershell
@@ -86,7 +87,7 @@ Deepen the existing exporter in place (`Rule 20`), author the failing test contr
   - Run **Expansion** (`Scale factor = 1.2`) once or twice, followed by **Label Adjust** (with node labels toggled on in the Overview/Preview toolbar) and confirm none of the hub labels read `")"`.
 - [ ] **4. Connected Components & Modularity (Unfiltered vs. Connected Subgraph)**:
   - Run **Statistics → Connected Components** (Undirected). Record the total number of weakly connected components (expect **254**), isolated nodes (expect **186** of size 1), and largest component size (expect **37**).
-  - **4a (Unfiltered 451-node graph)**: Run **Statistics → Modularity** (`Randomize = Checked`, `Use edge weights = Checked`, `Resolution = 1.0`). Record unfiltered $Q$ and total modularity classes (note: Gephi counts each of the 186 isolated nodes as its own community, so total unfiltered communities will be $\approx 244\text{–}254$).
+  - **4a (Unfiltered 451-node graph)**: Run **Statistics → Modularity** (`Randomize = Checked`, `Use edge weights = Checked`, `Resolution = 1.0`). Record unfiltered $Q$ and total modularity classes (note: Gephi counts each of the 186 isolated nodes as its own community, so total unfiltered communities will be $\ge 254$ (186 isolated nodes as their own communities, plus at least one per multi-node component).
   - **4b (Connected subgraph `Degree >= 1`, matching the brief's methodology)**: In **Filters → Topology → Degree Range**, drag the lower bound to `1` and click **Filter** (confirming Context shows **265 nodes / 218 edges**, i.e., `58.8%` of nodes). Re-run **Statistics → Modularity** (`Resolution = 1.0`, `Use edge weights = Checked`) on the filtered subgraph. Record connected-subgraph $Q$ and community count, and compare directly against the Nov 5 brief ($Q = 0.9447$, `58` communities on `226` connected nodes).
 - [ ] **5. Inspect Top Epistemic Communities**:
   - In **Data Laboratory → Nodes** (or **Appearance → Nodes → Partition → Modularity Class** preview list), sort/group by `Modularity Class` and inspect the largest communities.
