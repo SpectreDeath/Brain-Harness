@@ -1,7 +1,7 @@
 # Gephi Desktop Session & Topology Verification Report
 
 **Date**: 2026-11-07 11:47 EST  
-**Target Commit**: `b684e7f` (`HEAD`)  
+**Tested tree**: `b684e7f` + uncommitted Track 0 changes, landed as `fc5b2f6` (committed 11:50 EST; session note dated 11:47 EST).  
 **Gephi Version**: `0.11.4` (Desktop GUI session on Windows)  
 **Evaluator**: Human Operator + Antigravity (Pair Programming Verification)  
 **Input Artifact**: `.harness/graph/knowledge_graph.gexf` (451 nodes, 218 edges)  
@@ -41,6 +41,9 @@ The Track 8 manual Gephi desktop verification (`Standing gaps analysis and plan-
   - Teal (`#1abc9c`): `plugin` / `source` / `plugins/external`
   - Gold (`#f1c40f`): `memory_and_epistemics`
   - Green (`#2ecc71`): `infrastructure_and_runtime`
+  - Cyan (`#00bcd4`): `scientific_computing`
+  - Pink (`#e91e63`): `context_engineering`
+  - Deep Violet (`#8e44ad`): `skill`
   - Slate Grey (`#95a5a6`): Code paths and general fallback
 - **Size Ranking**: Nodes scaled proportionally with undirected degree (major hubs like `ki-deepening-cycle-history` and `ki-topology-map` displayed as large circles; isolated leaf nodes as small points).
 
@@ -52,24 +55,32 @@ The Track 8 manual Gephi desktop verification (`Standing gaps analysis and plan-
   - `Prevent Overlap`: `Checked` (`True`)
   - `Tolerance (speed)`: `0.1`
   - `Approximate Repulsion`: `1.2`
+- **Graph Basis & Expansion Execution**:
+  - The layout was executed on the **unfiltered 451-node graph** (Context: 451 nodes, 218 edges).
+  - A separate `Expansion` layout pass was not run; spatial separation was achieved directly via ForceAtlas 2 `Scaling: 2.0` and Barnes-Hut `Approximate Repulsion: 1.2`.
+  - The overview screenshots ([`gephi/gephi-forceatlas2-overview-2026-11-07.jpg`](gephi/gephi-forceatlas2-overview-2026-11-07.jpg) and [`gephi/gephi-preview-labels-2026-11-07.jpg`](gephi/gephi-preview-labels-2026-11-07.jpg)) depict this unfiltered graph, with the 186 isolated nodes visible as an outer constellation framing the connected clusters.
 - **Observation**: The layout smoothly disentangled within ~15 seconds into clean, spatially segregated domain clusters:
   - Central dense giant component: Blue Architecture Deepening + Purple Multi-Agent Swarms.
   - Southern cluster: Red Security & Forensics (PyRIT Red Teaming & Taint Analysis).
   - Western & Northern clusters: Orange Data Engineering (Arrow Streaming, Garf SQL, Lakehouse).
   - North-Eastern cluster: Teal Google ADK Plugin Suite & Multi-Repo Bridge.
   - Outer ring: Small disconnected components and isolated Knowledge Items.
-- **Evidence Screenshot**: [ForceAtlas 2 Overview](gephi/gephi-forceatlas2-overview-2026-11-07.png)
+- **Evidence Screenshot**: [ForceAtlas 2 Overview](gephi/gephi-forceatlas2-overview-2026-11-07.jpg)
 
 ### 2.4 Step 4 — Network Statistics & Modularity
 
-| Metric | Gephi 0.11.4 Output | Reference Brief Baseline (`docs/reference/knowledge-graph-visual-brief.md`) | Analysis / Alignment |
-| :--- | :--- | :--- | :--- |
-| **Weakly Connected Components** | **254** | 248 | Exact match to the 451-node ground truth (+6 components added since earlier 417-node snapshot). |
-| **Strongly Connected Components** | **451** | N/A | Proves graph is a strict DAG without directed cycles. |
-| **Isolated Nodes (`deg = 0`)** | **186** | 191 | 5 previously isolated KIs gained connections in recent derivation cycles. |
-| **Largest Connected Component** | **37 nodes** | 34 nodes | Bridges Cluster 1 (Architecture Deepening) and Cluster 2 (Multi-Agent Swarms). |
-| **Global Modularity ($Q$)** | **$0.953$** | $0.9447$ | Exceeds brief baseline ($Q > 0.70$ indicates exceptional natural community segregation). |
-| **Detected Communities** | **255** | 58 (on 226 connected nodes) | 186 isolated singleton communities + 69 modular communities across connected components. |
+Network statistics were evaluated on both the unfiltered full graph (451 nodes) and the filtered connected subgraph (`Degree >= 1`, 265 nodes) exported to Workspace 2 to enable direct, same-basis comparison against the reference brief.
+
+| Metric | Gephi 0.11.4 Output (Unfiltered Basis, 451 nodes) | Gephi 0.11.4 Output (Connected Subgraph Basis, `deg >= 1`, 265 nodes) | Reference Brief Baseline (`docs/reference/knowledge-graph-visual-brief.md`) | Analysis / Alignment |
+| :--- | :--- | :--- | :--- | :--- |
+| **Weakly Connected Components** | **254** | **68** | 248 (unfiltered) | 254 components total; filtering isolated nodes leaves 68 connected components. |
+| **Strongly Connected Components** | **451** | **265** | N/A | Proves graph is a strict DAG without directed cycles across all components. |
+| **Isolated Nodes (`deg = 0`)** | **186** | **0** | 191 | 186 isolated nodes in current 451-node graph vs. 191 in earlier 417-node snapshot (34 new nodes arrived between snapshots). |
+| **Largest Connected Component** | **37 nodes** | **37 nodes** | 34 nodes | Bridges Cluster 1 (Architecture Deepening) and Cluster 2 (Multi-Agent Swarms). |
+| **Modularity ($Q$)** | **$0.953$** | **$0.953$** | $0.9447$ (on connected subgraph) | Direct like-for-like comparison: connected-subgraph $Q = 0.953$ vs brief $0.9447$. Exceptional community segregation ($Q > 0.70$). |
+| **Detected Communities** | **255** | **69** | 58 (on 226 connected nodes) | Direct like-for-like comparison: 69 communities on 265 connected nodes vs. 58 on 226 connected nodes (+11 communities across +39 connected nodes). The unfiltered 255 count reflects 186 isolated singletons + 69 connected communities. |
+
+- **Step 4b Verification Artifact**: [Connected Subgraph Modularity Report](gephi/gephi-modularity-report-connected-2026-11-07.png) (Gephi community size distribution plot for the 69 communities on Workspace 2).
 
 ### 2.5 Step 5 — Epistemic Community Inspection
 In the Gephi **Preview** pane (with proportional label sizing and Label Adjust active), the primary epistemic clusters correspond directly to the visual brief's top clusters:
@@ -79,7 +90,12 @@ In the Gephi **Preview** pane (with proportional label sizing and Label Adjust a
 4. **Cluster 4**: `Practical Networking for Ethical Hacking`, `Interactive Tool Approval Middleware & Security Sandboxing`, `Multi-Tier OS Process Sandboxing`.
 5. **Cluster 6/7/8**: `In-Database Vector RAG with SQLite-Vec`, `Google Garf Declarative SQL Reporting`, `PyArrow Memory-Mapped Zero-Copy Execution`.
 
-- **Evidence Screenshot**: [Preview with Proportional Labels](gephi/gephi-preview-labels-2026-11-07.png)
+- **Evidence Screenshot**: [Preview with Proportional Labels](gephi/gephi-preview-labels-2026-11-07.jpg)
+
+### 2.6 Step 6 — Visual Artifacts & Vector Export
+- **Vector Graphic Export**: Exported directly from the Gephi 0.11.4 Preview pane as an SVG vector document: [`gephi/gephi-forceatlas2-overview-2026-11-07.svg`](gephi/gephi-forceatlas2-overview-2026-11-07.svg).
+- **Layout Depicted**: Settled ForceAtlas 2 spatial layout across the 451-node graph, preserving exact degree-ranked node radiuses (`<viz:size>` from 6.0 to 24.0) and domain palette fills (`<viz:color>`).
+- **High-Resolution Rasters**: Accompanied by the overview raster ([`gephi/gephi-forceatlas2-overview-2026-11-07.jpg`](gephi/gephi-forceatlas2-overview-2026-11-07.jpg)) and proportional label render ([`gephi/gephi-preview-labels-2026-11-07.jpg`](gephi/gephi-preview-labels-2026-11-07.jpg)).
 
 ---
 
@@ -88,8 +104,10 @@ In the Gephi **Preview** pane (with proportional label sizing and Label Adjust a
 The exported graphical evidence files are stored in `reports/gephi/`:
 
 - [gephi-import-report-2026-11-07.png](gephi/gephi-import-report-2026-11-07.png) — Dialog confirming 451 nodes, 218 edges, 0 issues.
-- [gephi-forceatlas2-overview-2026-11-07.png](gephi/gephi-forceatlas2-overview-2026-11-07.png) — Settled ForceAtlas 2 spatial layout showing color-coded clusters and isolated periphery.
-- [gephi-preview-labels-2026-11-07.png](gephi/gephi-preview-labels-2026-11-07.png) — High-resolution preview render with clean proportional label adjust.
+- [gephi-forceatlas2-overview-2026-11-07.jpg](gephi/gephi-forceatlas2-overview-2026-11-07.jpg) — Settled ForceAtlas 2 spatial layout showing color-coded clusters and isolated periphery.
+- [gephi-forceatlas2-overview-2026-11-07.svg](gephi/gephi-forceatlas2-overview-2026-11-07.svg) — Vector SVG export from Gephi Preview rendering the settled ForceAtlas 2 layout with proportional node sizes and domain colors.
+- [gephi-preview-labels-2026-11-07.jpg](gephi/gephi-preview-labels-2026-11-07.jpg) — High-resolution preview render with clean proportional label adjust.
+- [gephi-modularity-report-connected-2026-11-07.png](gephi/gephi-modularity-report-connected-2026-11-07.png) — Step 4b Louvain modularity report chart showing community size distribution across the 69 communities on the 265-node connected subgraph.
 
 ---
 

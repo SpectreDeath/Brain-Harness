@@ -226,4 +226,4 @@
 
 > **Hard Constraint**: Remains unticked (`[ ]`) until a human operator runs Gephi 0.10+ on a desktop GUI session.
 
-- [x] **6.1 (Human GUI)**: Open `.harness/graph/knowledge_graph.gexf` (`451` nodes, `218` edges) in Gephi 0.10+, run ForceAtlas2 layout (`Scaling = 2.0`, `Gravity = 1.0`, `Prevent Overlap = True`), verify node colors (`viz:color`) and sizes (`viz:size`), and export a dated screenshot or SVG/PDF artifact. *(Verified 2026-11-07 via Gephi 0.11.4 desktop GUI session: see `reports/gephi-session-2026-11-07.md` and `reports/gephi/gephi-preview-labels-2026-11-07.png`).*
+- [x] **6.1 (Human GUI)**: Open `.harness/graph/knowledge_graph.gexf` (`451` nodes, `218` edges) in Gephi 0.10+, run ForceAtlas2 layout (`Scaling = 2.0`, `Gravity = 1.0`, `Prevent Overlap = True`), verify node colors (`viz:color`) and sizes (`viz:size`), and export a dated screenshot or SVG/PDF artifact. *(Verified 2026-11-07 via Gephi 0.11.4 desktop GUI session: see `reports/gephi-session-2026-11-07.md` and `reports/gephi/gephi-preview-labels-2026-11-07.jpg`).*

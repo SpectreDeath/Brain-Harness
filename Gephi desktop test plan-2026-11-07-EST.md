@@ -6,6 +6,8 @@ Run the Track 8 manual Gephi 0.10+ verification on the vault knowledge graph and
 
 This is a human-GUI job. No headless script, agent check, or HTML export may tick Track 8 / Track 6.1.
 
+> **Independent Check Verdict (2026-11-07):** Track 0 fully verified; steps 4 and 6 partially supported (4b never run; no vector export). Independent check at `fc5b2f6`.
+
 ## Starting facts (verified 2026-11-07 at BH HEAD `899d618`)
 
 - **File**: `.harness/graph/knowledge_graph.gexf` — **451 nodes, 218 directed edges** (27 asserted, 191 derived), regenerated Nov 6.
@@ -85,14 +87,14 @@ Deepen the existing exporter in place (`Rule 20`), author the failing test contr
 - [x] **3. Spatial Layout Execution**:
   - In the **Layout** pane, select **ForceAtlas 2**: set `Scaling = 2.0`, `Gravity = 1.0`, `Prevent Overlap (AdjustSizes) = Checked`, `Tolerance (Speed) = 0.1`. Run until the layout stabilizes, then click **Stop**.
   - Run **Expansion** (`Scale factor = 1.2`) once or twice, followed by **Label Adjust** (with node labels toggled on in the Overview/Preview toolbar) and confirm none of the hub labels read `")"`.
-- [x] **4. Connected Components & Modularity (Unfiltered vs. Connected Subgraph)**:
+- [x] **4. Connected Components & Modularity (Unfiltered vs. Connected Subgraph)**: *(Verified 2026-11-07: Unfiltered 254 components, 186 isolated, max 37, Q=0.953, 255 communities; Connected subgraph `deg >= 1` [265 nodes] Q=0.953, 69 communities. Recorded in `reports/gephi-session-2026-11-07.md` §2.4 and `reports/gephi/gephi-modularity-report-connected-2026-11-07.png`.)*
   - Run **Statistics → Connected Components** (Undirected). Record the total number of weakly connected components (expect **254**), isolated nodes (expect **186** of size 1), and largest component size (expect **37**).
   - **4a (Unfiltered 451-node graph)**: Run **Statistics → Modularity** (`Randomize = Checked`, `Use edge weights = Checked`, `Resolution = 1.0`). Record unfiltered $Q$ and total modularity classes (note: Gephi counts each of the 186 isolated nodes as its own community, so total unfiltered communities will be $\ge 254$ (186 isolated nodes as their own communities, plus at least one per multi-node component).
   - **4b (Connected subgraph `Degree >= 1`, matching the brief's methodology)**: In **Filters → Topology → Degree Range**, drag the lower bound to `1` and click **Filter** (confirming Context shows **265 nodes / 218 edges**, i.e., `58.8%` of nodes). Re-run **Statistics → Modularity** (`Resolution = 1.0`, `Use edge weights = Checked`) on the filtered subgraph. Record connected-subgraph $Q$ and community count, and compare directly against the Nov 5 brief ($Q = 0.9447$, `58` communities on `226` connected nodes).
 - [x] **5. Inspect Top Epistemic Communities**:
   - In **Data Laboratory → Nodes** (or **Appearance → Nodes → Partition → Modularity Class** preview list), sort/group by `Modularity Class` and inspect the largest communities.
   - Check whether the top clusters match the brief's §2 top-8 list (Architecture Deepening, Multi-Agent Swarms, Google Repos Bridge, PyRIT Security, Multi-Agent Debate/Critic, Arrow Zero-Copy Datasets, Garf SQL Pipelines, Paperless-NGX/SQLite-Vec) and whether the 37-node giant component bridges Cluster 1 (`Architecture Deepening`) and Cluster 2 (`Multi-Agent Swarms`). Record matches and any surprises.
-- [x] **6. Export Visual Artifacts**:
+- [x] **6. Export Visual Artifacts**: *(Verified 2026-11-07: High-resolution screenshots `gephi-forceatlas2-overview-2026-11-07.jpg`, `gephi-preview-labels-2026-11-07.jpg`, and vector export `gephi-forceatlas2-overview-2026-11-07.svg` saved in `reports/gephi/` and linked in `reports/gephi-session-2026-11-07.md`.)*
   - In **Preview** (with `Show Labels = Checked`, `Proportional size = Checked`) and/or **Overview**, export a dated high-resolution screenshot (`reports/gephi/gephi-overview-2026-11-07.png`) and a vector export (`reports/gephi/gephi-preview-2026-11-07.svg` or `.pdf`).
 - [x] **7. Write the Session Evidence Report**:
   - Author `reports/gephi-session-2026-11-07.md` recording:

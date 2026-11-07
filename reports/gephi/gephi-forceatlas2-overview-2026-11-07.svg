@@ -1,0 +1,2596 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+    "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >
+<svg contentScriptType="text/ecmascript" width="4447.0"
+     xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify"
+     contentStyleType="text/css"
+     viewBox="-2330.000000 -2092.000000 4447.000000 3800.000000" height="3800.0"
+     preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"
+     version="1.1">
+    <g id="edges">
+        <path stroke-linecap="round" fill="none"
+              class="id_ki-deepening-cycle-history id_src/harness/services/compute_assessor.py"
+              d="M -120.351616,301.023407 A 174.675273,174.675273 0,0 1,-63.924076,315.126312"
+              stroke="#649ec0" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki-deepening-cycle-history id_src/harness/services/__init__.py"
+              d="M -119.365364,337.994659 A 102.142076,102.142076 0,0 1,-116.660973,340.217560"
+              stroke="#649ec0" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki-deepening-cycle-history id_src/harness/creator/"
+              d="M -143.842743,255.151871 A 100.895579,100.895579 0,0 1,-142.112030,254.789017"
+              stroke="#649ec0" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki-deepening-cycle-history id_src/harness/cli.py"
+              d="M -130.258041,369.920807 A 137.325243,137.325243 0,0 1,-124.575417,377.147156"
+              stroke="#649ec0" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki-deepening-cycle-history id_src/harness/agent/swarm.py"
+              d="M -249.983627,227.349106 A 158.712737,158.712737 0,0 1,-248.351471,203.999222"
+              stroke="#649ec0" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki-deepening-cycle-history id_src/harness/agent/session.py"
+              d="M -140.103256,259.546265 A 186.096883,186.096883 0,0 1,-41.129761,246.346878"
+              stroke="#649ec0" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki-deepening-cycle-history id_ki_20261014_70_cycle_deepening_corpus"
+              d="M -119.154922,307.634979 A 103.435550,103.435550 0,0 1,-113.420372,309.985687"
+              stroke="#3498db" stroke-width="1.6" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki-topology-map id_src/harness/plugins/catalog.py"
+              d="M 188.241135,125.827232 A 102.924127,102.924127 0,0 1,192.614822,124.452324"
+              stroke="#987fae" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki-topology-map id_src/harness/kernel/runtime.py"
+              d="M 62.838673,281.202789 A 101.103658,101.103658 0,0 1,60.961170,282.045471"
+              stroke="#987fae" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki-topology-map id_src/harness/kernel/lifecycle.py"
+              d="M 30.799715,242.948685 A 219.709820,219.709820 0,0 1,-110.402748,226.797592"
+              stroke="#987fae" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki-topology-map id_src/harness/kernel/graph.py"
+              d="M 218.002151,175.363876 A 102.791916,102.791916 0,0 1,222.230469,176.586731"
+              stroke="#987fae" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki-topology-map id_src/harness/kernel/context.py"
+              d="M 83.575584,107.188705 A 126.541959,126.541959 0,0 1,84.082809,98.317024"
+              stroke="#987fae" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki-topology-map id_src/harness/events/bus.py"
+              d="M 36.566025,253.386627 A 162.498480,162.498480 0,0 1,-33.135941,255.849274"
+              stroke="#987fae" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki-topology-map id_src/harness/agent/swarm.py"
+              d="M 24.707705,226.666092 A 288.526803,288.526803 0,0 1,-158.800049,182.452255"
+              stroke="#987fae" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_google_repos_bridge id_plugin.perfetto_trace_processor"
+              d="M 980.541016,-1586.327515 A 102.806176,102.806176 0,0 1,976.660767,-1587.710693"
+              stroke="#27aabb" stroke-width="2.0" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_google_repos_bridge id_plugin.google_tunix_posttraining"
+              d="M 1017.986511,-1525.407349 A 102.810608,102.810608 0,0 1,1014.168884,-1523.843384"
+              stroke="#27aabb" stroke-width="2.0" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_google_repos_bridge id_plugin.google_styleguide_auditor"
+              d="M 1173.076416,-1571.353516 A 102.822141,102.822141 0,0 1,1175.751099,-1568.191406"
+              stroke="#27aabb" stroke-width="2.0" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_google_repos_bridge id_plugin.google_adk_web_bridge"
+              d="M 1122.197632,-1514.666626 A 102.835823,102.835823 0,0 1,1121.867798,-1510.519165"
+              stroke="#27aabb" stroke-width="2.0" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_google_repos_bridge id_plugin.google_adk_runtime"
+              d="M 988.267578,-1647.189087 A 102.788012,102.788012 0,0 1,985.939514,-1650.557007"
+              stroke="#27aabb" stroke-width="2.0" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_google_repos_bridge id_plugin.google_adk_optimizer"
+              d="M 1167.608521,-1650.788208 A 102.796843,102.796843 0,0 1,1171.709961,-1650.583984"
+              stroke="#27aabb" stroke-width="2.0" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_google_repos_bridge id_plugin.google_adk_docs_navigator"
+              d="M 1099.588013,-1702.592041 A 102.772302,102.772302 0,0 1,1102.325195,-1705.607544"
+              stroke="#27aabb" stroke-width="2.0" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki-file-size-hotspots id_src/harness/services/compute_assessor.py"
+              d="M -5.398875,195.954376 A 192.120735,192.120735 0,0 1,7.369865,289.447449"
+              stroke="#649ec0" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki-file-size-hotspots id_src/harness/creator/reflection.py"
+              d="M 6.467457,64.533119 A 90.281814,90.281814 0,0 1,9.119891,63.808071"
+              stroke="#649ec0" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki-file-size-hotspots id_src/harness/creator/archetypes.py"
+              d="M 23.800013,89.755898 A 90.280027,90.280027 0,0 1,26.536243,90.001999"
+              stroke="#649ec0" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki-file-size-hotspots id_src/harness/cli.py"
+              d="M -26.465439,206.730392 A 262.257044,262.257044 0,0 1,-59.943752,385.842529"
+              stroke="#649ec0" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki-file-size-hotspots id_src/harness/agent/swarm.py"
+              d="M -135.593155,155.714462 A 136.377393,136.377393 0,0 1,-143.904190,155.785309"
+              stroke="#649ec0" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki-file-size-hotspots id_src/harness/agent/session.py"
+              d="M -4.148637,195.063217 A 115.918892,115.918892 0,0 1,-0.749973,218.268188"
+              stroke="#649ec0" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki-hf-datasets-arrow-streaming id_external/datasets/src/datasets/packaged_modules/"
+              d="M -661.152893,991.998474 A 91.187423,91.187423 0,0 1,-665.117981,992.509277"
+              stroke="#bd9164" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki-hf-datasets-arrow-streaming id_external/datasets/src/datasets/iterable_dataset.py"
+              d="M -588.700317,854.035767 A 91.187760,91.187760 0,0 1,-586.596558,850.635620"
+              stroke="#bd9164" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki-hf-datasets-arrow-streaming id_external/datasets/src/datasets/fingerprint.py"
+              d="M -534.991943,1004.966187 A 91.205727,91.205727 0,0 1,-534.160400,1008.902344"
+              stroke="#bd9164" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki-hf-datasets-arrow-streaming id_external/datasets/src/datasets/features/features.py"
+              d="M -597.304321,1026.398071 A 91.197226,91.197226 0,0 1,-599.486816,1029.763794"
+              stroke="#bd9164" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki-hf-datasets-arrow-streaming id_external/datasets/src/datasets/features/bio_structure.py"
+              d="M -667.505493,898.324829 A 91.155347,91.155347 0,0 1,-669.567139,894.951233"
+              stroke="#bd9164" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki-hf-datasets-arrow-streaming id_external/datasets/src/datasets/arrow_dataset.py"
+              d="M -532.598999,877.751953 A 91.179513,91.179513 0,0 1,-528.784668,876.591370"
+              stroke="#bd9164" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_audit_20260908_02 id_src/harness/kernel/context.py"
+              d="M 76.877014,-2.568939 A 113.296771,113.296771 0,0 1,80.398842,2.323408"
+              stroke="#987fae" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_audit_20260908_02 id_src/harness/events/bus.py"
+              d="M 22.127094,37.848385 A 249.788376,249.788376 0,0 1,-41.800873,219.412674"
+              stroke="#987fae" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_audit_20260908_02 id_src/harness/agent/swarm.py"
+              d="M -33.796898,32.172405 A 236.251415,236.251415 0,0 1,-141.675156,116.044067"
+              stroke="#987fae" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_audit_20260908_02 id_src/harness/agent/react.py"
+              d="M -80.780045,-69.117882 A 103.290287,103.290287 0,0 1,-85.684685,-73.526108"
+              stroke="#987fae" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_20260913_claude_coord_02 id_ki_audit_20260908_02"
+              d="M 93.007721,-94.717621 A 117.920998,117.920998 0,0 1,84.915886,-84.757378"
+              stroke="#9b59b6" stroke-width="1.6" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_20260830_claude_02 id_ki_audit_20260908_02"
+              d="M 41.707336,-140.545303 A 117.467647,117.467647 0,0 1,41.751282,-128.317520"
+              stroke="#9b59b6" stroke-width="1.6" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_garf_reporting_engine id_external/garf/libs/io/garf/io/writer.py"
+              d="M -774.754028,-384.012787 A 91.189120,91.189120 0,0 1,-770.959106,-385.277740"
+              stroke="#bd9164" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_garf_reporting_engine id_external/garf/libs/executors/garf/executors/workflows/workflow.py"
+              d="M -830.656189,-233.682205 A 91.140750,91.140750 0,0 1,-832.516235,-230.216141"
+              stroke="#bd9164" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_garf_reporting_engine id_external/garf/libs/core/garf/core/simulator.py"
+              d="M -765.638306,-265.490784 A 91.117048,91.117048 0,0 1,-764.216492,-261.858124"
+              stroke="#bd9164" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_garf_reporting_engine id_external/garf/libs/core/garf/core/report.py"
+              d="M -883.420166,-250.232544 A 91.184937,91.184937 0,0 1,-887.057800,-248.582336"
+              stroke="#bd9164" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_garf_reporting_engine id_external/garf/libs/core/garf/core/query_parser.py"
+              d="M -898.242188,-375.937378 A 91.232665,91.232665 0,0 1,-899.634338,-379.751404"
+              stroke="#bd9164" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_garf_reporting_engine id_external/garf/libs/core/garf/core/query_editor.py"
+              d="M -839.162781,-405.995605 A 91.229696,91.229696 0,0 1,-837.440918,-409.668060"
+              stroke="#bd9164" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki-paperless-ai-rag-sqlite-vec id_external/paperless-ngx/src/paperless_ai/vector_store.py"
+              d="M -681.312561,-713.425415 A 79.428714,79.428714 0,0 1,-682.106262,-716.678223"
+              stroke="#bd9164" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki-paperless-ai-rag-sqlite-vec id_external/paperless-ngx/src/paperless_ai/tables.py"
+              d="M -704.412170,-648.734009 A 79.432662,79.432662 0,0 1,-707.567383,-649.870422"
+              stroke="#bd9164" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki-paperless-ai-rag-sqlite-vec id_external/paperless-ngx/src/paperless_ai/indexing.py"
+              d="M -640.857910,-587.455872 A 79.442886,79.442886 0,0 1,-642.784607,-584.693909"
+              stroke="#bd9164" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki-paperless-ai-rag-sqlite-vec id_external/paperless-ngx/src/paperless_ai/chat.py"
+              d="M -566.698364,-629.235168 A 79.438505,79.438505 0,0 1,-564.680237,-626.546692"
+              stroke="#bd9164" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki-paperless-ai-rag-sqlite-vec id_external/paperless-ngx/src/documents/search/_backend.py"
+              d="M -566.856140,-690.257080 A 79.429598,79.429598 0,0 1,-563.512573,-690.058899"
+              stroke="#bd9164" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki-paperless-ngx-architecture id_external/paperless-ngx/src/paperless/consumers.py"
+              d="M -928.375916,199.883621 A 79.442612,79.442612 0,0 1,-931.204956,198.057510"
+              stroke="#649ec0" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki-paperless-ngx-architecture id_external/paperless-ngx/src/documents/workflows/"
+              d="M -880.039063,137.014053 A 79.416723,79.416723 0,0 1,-879.514282,133.723801"
+              stroke="#649ec0" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki-paperless-ngx-architecture id_external/paperless-ngx/src/documents/parsers/"
+              d="M -796.662720,163.709625 A 79.410474,79.410474 0,0 1,-793.362549,163.318268"
+              stroke="#649ec0" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki-paperless-ngx-architecture id_external/paperless-ngx/src/documents/models.py"
+              d="M -870.889465,276.551849 A 79.422394,79.422394 0,0 1,-873.046265,279.101593"
+              stroke="#649ec0" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki-paperless-ngx-architecture id_external/paperless-ngx/src/documents/consumer.py"
+              d="M -788.446655,232.047226 A 79.421727,79.421727 0,0 1,-786.293579,234.598892"
+              stroke="#649ec0" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_audit_20260908_03 id_src/harness/services/tools.py"
+              d="M -175.932770,-76.267006 A 79.482476,79.482476 0,0 1,-175.071808,-79.578636"
+              stroke="#be7871" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_audit_20260908_03 id_src/harness/kernel/lifecycle.py"
+              d="M -122.878448,57.414127 A 178.747297,178.747297 0,0 1,-125.846588,174.921432"
+              stroke="#be7871" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_audit_20260908_03 id_src/harness/kernel/context.py"
+              d="M -88.531311,-24.802849 A 219.433356,219.433356 0,0 1,61.289505,15.428243"
+              stroke="#be7871" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_audit_20260908_03 id_src/harness/agent/swarm.py"
+              d="M -163.053879,66.664291 A 124.920675,124.920675 0,0 1,-165.878815,73.607056"
+              stroke="#be7871" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_audit_20260908_03 id_src/harness/agent/react.py"
+              d="M -141.053223,-76.222847 A 91.984987,91.984987 0,0 1,-137.008881,-81.180664"
+              stroke="#be7871" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_audit_20260908_07 id_src/harness/services/repomap.py"
+              d="M 1158.697510,60.237774 A 79.440107,79.440107 0,0 1,1157.430664,63.353924"
+              stroke="#be7871" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_audit_20260908_07 id_src/harness/services/data_management.py"
+              d="M 1079.009644,-0.950543 A 79.426902,79.426902 0,0 1,1075.859863,-2.078901"
+              stroke="#be7871" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_audit_20260908_07 id_src/harness/services/cellcog.py"
+              d="M 1089.889160,-51.450542 A 79.420335,79.420335 0,0 1,1088.291870,-54.380138"
+              stroke="#be7871" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_audit_20260908_07 id_src/harness/services/agent_graph.py"
+              d="M 1218.203247,14.932109 A 79.451424,79.451424 0,0 1,1220.370605,17.524782"
+              stroke="#be7871" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_audit_20260908_07 id_src/harness/events/bus.py#L630"
+              d="M 1183.794556,-76.549698 A 79.428803,79.428803 0,0 1,1186.552979,-78.447884"
+              stroke="#be7871" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki-cli-decomposition-pattern id_src/harness/commands/"
+              d="M -25.757378,489.620514 A 67.777396,67.777396 0,0 1,-23.788660,487.635254"
+              stroke="#649ec0" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki-cli-decomposition-pattern id_src/harness/cli.py"
+              d="M -87.037865,505.715546 A 102.031176,102.031176 0,0 1,-89.872093,500.569824"
+              stroke="#649ec0" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki-cli-decomposition-pattern id_ki_self_20260908_03"
+              d="M -75.218605,595.461670 A 92.298752,92.298752 0,0 1,-81.893127,600.411133"
+              stroke="#3498db" stroke-width="1.6" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki-cli-decomposition-pattern id_ki_self_20260907_03"
+              d="M 3.232499,510.234589 A 67.996620,67.996620 0,0 1,7.181607,509.562500"
+              stroke="#3498db" stroke-width="1.6" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki-omarchy-quattro-bridge id_plugins/developer_tooling/omarchy_theming_engine/"
+              d="M 310.455200,454.017029 A 67.676643,67.676643 0,0 1,310.647644,451.364746"
+              stroke="#649ec0" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki-omarchy-quattro-bridge id_plugins/developer_tooling/omarchy_command_router/"
+              d="M 353.770203,563.494812 A 67.628203,67.628203 0,0 1,353.476868,566.071777"
+              stroke="#649ec0" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki-omarchy-quattro-bridge id_plugins/agent_orchestration/omarchy_agent_telemetry/"
+              d="M 306.106506,560.568848 A 67.636093,67.636093 0,0 1,303.990540,562.086975"
+              stroke="#649ec0" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki-omarchy-quattro-bridge id_docs/plugins/omarchy_bridge/"
+              d="M 362.686981,457.326111 A 67.658606,67.658606 0,0 1,364.894745,455.888031"
+              stroke="#649ec0" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_20260821_06 id_ki_20260913_tool_approval_03"
+              d="M 67.604355,842.834106 A 94.653253,94.653253 0,0 1,57.581394,848.310181"
+              stroke="#e74c3c" stroke-width="1.6" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_20260821_06 id_ki_20260830_grok_04"
+              d="M 155.871933,827.682373 A 67.933264,67.933264 0,0 1,157.944336,831.009827"
+              stroke="#e74c3c" stroke-width="1.6" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_20260821_06 id_ki_20260830_grok_03"
+              d="M 64.442017,755.151978 A 92.178742,92.178742 0,0 1,61.291245,747.635071"
+              stroke="#e74c3c" stroke-width="1.6" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_20260821_06 id_ki_20260823_01"
+              d="M 47.454399,808.722595 A 131.008308,131.008308 0,0 1,3.736174,799.515320"
+              stroke="#e74c3c" stroke-width="1.6" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_20260823_01 id_src/harness/plugins/sandbox.py"
+              d="M -100.126160,735.043579 A 67.699430,67.699430 0,0 1,-101.689293,732.854187"
+              stroke="#be7871" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_20260823_01 id_ki_20260913_tool_approval_03"
+              d="M -3.539715,800.971863 A 91.757631,91.757631 0,0 1,0.006380,807.685852"
+              stroke="#e74c3c" stroke-width="1.6" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_20260823_01 id_ki_20260830_grok_03"
+              d="M -11.431340,716.081604 A 102.871115,102.871115 0,0 1,8.022156,705.356995"
+              stroke="#e74c3c" stroke-width="1.6" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_20260831_em3_01 id_ki_self_20261002_05"
+              d="M 661.887512,940.126648 A 152.921073,152.921073 0,0 1,748.084412,942.522095"
+              stroke="#e74c3c" stroke-width="1.6" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_20260831_em3_01 id_ki_self_20260827_02"
+              d="M 642.076660,917.177734 A 102.819858,102.819858 0,0 1,648.368835,912.455017"
+              stroke="#e74c3c" stroke-width="1.6" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_20260831_em3_01 id_ki_20260831_openclaw_02"
+              d="M 554.179077,944.130615 A 68.668719,68.668719 0,0 1,550.958374,940.417236"
+              stroke="#e74c3c" stroke-width="1.6" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_20260823_repo_01 id_ki_20260831_em3_01"
+              d="M 664.037292,1008.480042 A 91.000502,91.000502 0,0 1,657.863586,1006.563171"
+              stroke="#e74c3c" stroke-width="1.6" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_20261028_headroom_context_optimization id_plugins/memory_and_epistemics/headroom_context_optimizer"
+              d="M 603.445618,-209.699570 A 67.515434,67.515434 0,0 1,604.659851,-207.942322"
+              stroke="#85c055" stroke-width="2.0" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_20261028_headroom_context_optimization id_ki_20260913_context_types_04"
+              d="M 503.501160,-271.632263 A 67.678029,67.678029 0,0 1,502.247070,-273.979370"
+              stroke="#ed7139" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_20261028_headroom_context_optimization id_headroom-context-optimizer"
+              d="M 518.962158,-188.976791 A 67.574632,67.574632 0,0 1,517.031250,-187.888992"
+              stroke="#bf845e" stroke-width="2.0" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_20261028_headroom_context_optimization id_external/headroom/headroom/transforms"
+              d="M 600.287598,-271.213318 A 67.500951,67.500951 0,0 1,602.384705,-271.497589"
+              stroke="#85c055" stroke-width="2.0" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_agent_desktop_self_testing_arch id_ki_self_20261104_03_planted_violation_boundary_gate"
+              d="M 1220.225342,390.067932 A 91.076275,91.076275 0,0 1,1226.260864,392.953949"
+              stroke="#3498db" stroke-width="1.6" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_agent_desktop_self_testing_arch id_cloned/agent-desktop/scripts/check_architecture.py#L1-L120"
+              d="M 1196.278442,432.890747 A 79.642865,79.642865 0,0 1,1197.323975,437.505249"
+              stroke="#649ec0" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_agent_desktop_self_testing_arch id_cloned/agent-desktop/Cargo.toml#L1-L35"
+              d="M 1103.892456,373.343292 A 67.962033,67.962033 0,0 1,1101.515869,371.437653"
+              stroke="#649ec0" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_agent_desktop_self_testing_arch id_cloned/agent-desktop/AGENTS.md#L120-L185"
+              d="M 1207.429810,348.470062 A 79.625889,79.625889 0,0 1,1211.969727,347.220062"
+              stroke="#649ec0" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_self_20260827_02 id_ki_self_20261019_pyrit_redteam_01"
+              d="M 675.828979,845.811157 A 94.700568,94.700568 0,0 1,673.217346,834.628296"
+              stroke="#e74c3c" stroke-width="1.6" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_self_20260827_02 id_ki_self_20261002_05"
+              d="M 763.734680,916.827087 A 91.192185,91.192185 0,0 1,768.691895,921.545349"
+              stroke="#e74c3c" stroke-width="1.6" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_20260823_repo_01 id_ki_self_20260827_02"
+              d="M 691.422852,967.666199 A 95.797961,95.797961 0,0 1,690.153992,954.909241"
+              stroke="#e74c3c" stroke-width="1.6" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_self_20260909_01 id_plugins/agent_orchestration/evaluator_critic/main.py"
+              d="M 600.806946,-401.990692 A 67.685945,67.685945 0,0 1,598.146729,-401.741455"
+              stroke="#987fae" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_self_20260909_01 id_plugins/agent_orchestration/critic_loop/main.py"
+              d="M 708.941162,-425.510437 A 79.867805,79.867805 0,0 1,713.246765,-422.907196"
+              stroke="#987fae" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_self_20260909_01 id_plugins/agent_orchestration/critic_loop/config.default.yaml"
+              d="M 629.500366,-488.394348 A 67.637237,67.637237 0,0 1,629.768738,-490.986298"
+              stroke="#987fae" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_self_20260909_01 id_plugins/agent_orchestration/agent_debater/main.py"
+              d="M 593.117493,-446.196594 A 67.679784,67.679784 0,0 1,591.060547,-447.888733"
+              stroke="#987fae" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_20260823_03 id_src/harness/cli.py"
+              d="M -171.126709,448.704987 A 93.209263,93.209263 0,0 1,-163.802643,444.514404"
+              stroke="#61b88b" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_audit_20260915_02 id_src/harness/services/compute_assessor.py"
+              d="M 50.010719,384.679718 A 80.051114,80.051114 0,0 1,45.095726,384.255463"
+              stroke="#be7871" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki-5d-complexity-baseline id_src/harness/services/compute_assessor.py"
+              d="M 54.199093,338.124390 A 67.486887,67.486887 0,0 1,52.856564,339.260803"
+              stroke="#649ec0" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_20260823_03 id_ki_self_20260907_02"
+              d="M -245.926102,470.025177 A 56.416134,56.416134 0,0 1,-248.633408,467.759644"
+              stroke="#2ecc71" stroke-width="1.6" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_20260821_03 id_ki_20260823_03"
+              d="M -254.860703,479.889862 A 56.359530,56.359530 0,0 1,-252.099396,478.621094"
+              stroke="#2ecc71" stroke-width="1.6" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_20260823_repo_01 id_ki_self_20261002_05"
+              d="M 739.446106,975.719055 A 78.361387,78.361387 0,0 1,743.168274,973.610718"
+              stroke="#e74c3c" stroke-width="1.6" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_20260830_claude_02 id_ki_orca_orchestration_engine"
+              d="M 64.342590,-214.219543 A 68.410419,68.410419 0,0 1,69.426559,-216.075821"
+              stroke="#9b59b6" stroke-width="1.6" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_20260830_claude_02 id_ki_20260913_claude_coord_02"
+              d="M 74.947464,-176.005173 A 79.054117,79.054117 0,0 1,79.491653,-173.483627"
+              stroke="#9b59b6" stroke-width="1.6" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_20260830_grok_03 id_ki_20260913_tool_approval_03"
+              d="M 65.514656,742.248840 A 138.662816,138.662816 0,0 1,42.841003,820.753357"
+              stroke="#e74c3c" stroke-width="1.6" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_20260913_claude_coord_02 id_ki_orca_orchestration_engine"
+              d="M 95.034958,-177.424362 A 68.534918,68.534918 0,0 1,94.978180,-183.001358"
+              stroke="#9b59b6" stroke-width="1.6" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_20260923_ethical_hacker_networking id_src/harness/services/network_forensics.py"
+              d="M 469.325806,1108.966309 A 55.772792,55.772792 0,0 1,467.579224,1108.941528"
+              stroke="#be7871" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_20260923_ethical_hacker_networking id_plugins/security_and_forensics/network_forensics/main.py"
+              d="M 472.062714,1067.128418 A 55.740005,55.740005 0,0 1,471.114990,1065.713989"
+              stroke="#be7871" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_20260923_ethical_hacker_networking id_ethical-hacker-networking"
+              d="M 555.651062,1088.950562 A 55.712888,55.712888 0,0 1,556.907532,1089.468994"
+              stroke="#ba4874" stroke-width="2.0" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_agent_desktop_capture_proof id_cloned/agent-desktop/crates/core/src/refs/ref_entry_identity.rs#L1-L80"
+              d="M 1000.741394,916.835815 A 55.832492,55.832492 0,0 1,999.271912,915.750122"
+              stroke="#649ec0" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_agent_desktop_capture_proof id_cloned/agent-desktop/crates/core/src/refs/ref_capture_proof.rs#L1-L162"
+              d="M 1044.531250,971.094421 A 55.772480,55.772480 0,0 1,1043.786011,972.673767"
+              stroke="#649ec0" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_agent_desktop_capture_proof id_cloned/agent-desktop/CONCEPTS.md#L68-L115"
+              d="M 1080.324829,897.998840 A 55.735592,55.735592 0,0 1,1081.974121,897.600647"
+              stroke="#649ec0" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_agent_desktop_disposition_matrix id_cloned/agent-desktop/crates/core/src/response/retry_disposition.rs#L1-L10"
+              d="M -690.378967,-25.342649 A 55.763497,55.763497 0,0 1,-688.795776,-26.050545"
+              stroke="#987fae" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_agent_desktop_disposition_matrix id_cloned/agent-desktop/crates/core/src/response/delivery_disposition.rs#L1-L13"
+              d="M -764.994263,4.412475 A 55.764024,55.764024 0,0 1,-766.494995,3.541886"
+              stroke="#987fae" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_agent_desktop_disposition_matrix id_cloned/agent-desktop/crates/core/src/actionability/evaluate.rs#L78-L110"
+              d="M -686.454590,38.724884 A 55.786162,55.786162 0,0 1,-685.753601,40.344425"
+              stroke="#987fae" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_agent_desktop_interaction_lease id_cloned/agent-desktop/crates/core/src/tree/accname.rs#L1-L50"
+              d="M 759.669556,828.425659 A 55.152516,55.152516 0,0 1,758.840271,828.046753"
+              stroke="#649ec0" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_agent_desktop_interaction_lease id_cloned/agent-desktop/crates/core/src/session/interaction_lease.rs#L1-L125"
+              d="M 811.109497,873.050842 A 55.637268,55.637268 0,0 1,810.660583,874.549500"
+              stroke="#649ec0" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_agent_desktop_interaction_lease id_cloned/agent-desktop/CONCEPTS.md#L50-L66"
+              d="M 769.153931,800.700439 A 55.504752,55.504752 0,0 1,768.514587,799.470581"
+              stroke="#649ec0" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_agent_desktop_mcp_cancellation id_cloned/agent-desktop/src/mcp/mod.rs#L1-L120"
+              d="M 127.769157,501.554810 A 55.715730,55.715730 0,0 1,126.731682,502.863434"
+              stroke="#61b88b" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_agent_desktop_mcp_cancellation id_cloned/agent-desktop/src/mcp/catalog.rs#L1-L95"
+              d="M 168.009247,423.642578 A 55.843084,55.843084 0,0 1,169.687943,422.886047"
+              stroke="#61b88b" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_agent_desktop_mcp_cancellation id_cloned/agent-desktop/src/mcp/calls.rs#L1-L110"
+              d="M 95.135788,470.427643 A 55.678270,55.678270 0,0 1,93.533424,470.191986"
+              stroke="#61b88b" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_chatbotx_dynamic_mcp_orpc id_external/ChatbotX/apps/mcp-server/src/openapi-loader.ts"
+              d="M -1005.307068,-443.444489 A 55.733322,55.733322 0,0 1,-1003.673584,-443.891846"
+              stroke="#61b88b" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_chatbotx_dynamic_mcp_orpc id_external/ChatbotX/apps/builder/src/routers/public.ts"
+              d="M -1030.311646,-370.300659 A 55.841456,55.841456 0,0 1,-1030.712280,-368.505707"
+              stroke="#61b88b" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_chatbotx_dynamic_mcp_orpc id_external/ChatbotX/apps/builder/src/app/api/public-spec.json/route.ts"
+              d="M -1077.491211,-439.264923 A 55.737290,55.737290 0,0 1,-1078.386841,-440.708649"
+              stroke="#61b88b" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_chatbotx_omnichannel_messaging_bus id_external/ChatbotX/packages/sdk/src/index.ts"
+              d="M 1464.977783,-29.635332 A 55.799596,55.799596 0,0 1,1464.926270,-27.853277"
+              stroke="#c3b45a" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_chatbotx_omnichannel_messaging_bus id_external/ChatbotX/packages/flow-config/src/index.ts"
+              d="M 1402.151855,-71.035988 A 55.735961,55.735961 0,0 1,1400.608887,-71.743088"
+              stroke="#c3b45a" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_chatbotx_omnichannel_messaging_bus id_external/ChatbotX/packages/event-bus/src/index.ts"
+              d="M 1483.090454,-98.573914 A 55.791980,55.791980 0,0 1,1484.819702,-98.963356"
+              stroke="#c3b45a" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_self_20260908_01 id_src/harness/services/skill_pipeline.py"
+              d="M -316.598755,-25.476097 A 55.767890,55.767890 0,0 1,-316.935730,-23.768888"
+              stroke="#987fae" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_self_20260908_01 id_src/harness/services/skill_graph.py"
+              d="M -289.808167,-94.584595 A 67.617763,67.617763 0,0 1,-286.471100,-95.360558"
+              stroke="#987fae" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_self_20260908_01 id_deep-repo-auditor"
+              d="M -371.157440,-59.155464 A 55.697026,55.697026 0,0 1,-372.468292,-59.423260"
+              stroke="#944eb1" stroke-width="2.0" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_self_20260908_03 id_media-to-vault-pipeline"
+              d="M -172.812347,604.171021 A 55.762638,55.762638 0,0 1,-173.906540,603.256287"
+              stroke="#616ec4" stroke-width="2.0" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_self_20260908_03 id_context-anti-rot-sync"
+              d="M -84.705673,622.999451 A 55.621552,55.621552 0,0 1,-83.673401,623.679871"
+              stroke="#616ec4" stroke-width="2.0" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_self_20260909_03 id_src/harness/plugins/loader.py"
+              d="M 775.956787,-281.665039 A 55.837476,55.837476 0,0 1,776.521667,-279.920471"
+              stroke="#987fae" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_self_20260909_03 id_plugins/agent_orchestration/google_adk_runtime/main.py"
+              d="M 740.884399,-269.919037 A 55.838379,55.838379 0,0 1,739.954407,-268.337219"
+              stroke="#987fae" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_self_20260909_03 id_plugins/agent_orchestration/critic_loop/main.py"
+              d="M 728.415527,-356.638672 A 67.895581,67.895581 0,0 1,728.346863,-360.433228"
+              stroke="#987fae" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_self_20261019_pyrit_redteam_01 id_ai-red-teaming-architect"
+              d="M 707.279419,750.533020 A 55.619975,55.619975 0,0 1,708.396729,750.008667"
+              stroke="#ba4874" stroke-width="2.0" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_self_20261019_pyrit_redteam_01 id_Brain_Harness_(src/harness/services/pyrit_scanner/)"
+              d="M 675.209106,739.920349 A 55.805961,55.805961 0,0 1,675.853699,738.248962"
+              stroke="#be7871" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_self_20261104_01_powershell_splatting_guard id_tests/test_agent_desktop_operator.py#L42-L56"
+              d="M -534.055664,26.233742 A 55.799507,55.799507 0,0 1,-535.342957,27.466925"
+              stroke="#649ec0" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_self_20261104_01_powershell_splatting_guard id_cloned/agent-desktop/CONCEPTS.md#L30-L35"
+              d="M -558.704590,-34.236507 A 55.747545,55.747545 0,0 1,-559.829834,-35.527798"
+              stroke="#649ec0" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_self_20261104_01_powershell_splatting_guard id_.agents/skills/agent-desktop-operator/SKILL.md#L68-L76"
+              d="M -472.442322,-17.081717 A 55.769899,55.769899 0,0 1,-470.838867,-16.398695"
+              stroke="#649ec0" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_self_20261104_02_simulation_backed_domain_engine id_tests/test_plugin_agent_desktop.py#L50-L75"
+              d="M -483.577576,-494.170074 A 55.773555,55.773555 0,0 1,-482.327881,-495.391937"
+              stroke="#649ec0" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_self_20261104_02_simulation_backed_domain_engine id_plugins/integration_and_io/agent_desktop/engine.py#L20-L80"
+              d="M -454.867828,-446.624786 A 55.720238,55.720238 0,0 1,-453.440399,-445.746399"
+              stroke="#649ec0" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_self_20261104_02_simulation_backed_domain_engine id_.agents/skills/agent-desktop-operator/scripts/desktop_operator_engine.py#L90-L150"
+              d="M -540.800537,-433.477478 A 55.820094,55.820094 0,0 1,-542.610840,-433.493561"
+              stroke="#649ec0" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_self_20261104_03_planted_violation_boundary_gate id_cloned/agent-desktop/scripts/check_architecture.py#L1-L120"
+              d="M 1235.172607,463.313385 A 68.083989,68.083989 0,0 1,1231.733643,465.443848"
+              stroke="#649ec0" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_self_20261104_03_planted_violation_boundary_gate id_cloned/agent-desktop/AGENTS.md#L120-L185"
+              d="M 1242.031128,387.113892 A 67.820991,67.820991 0,0 1,1241.651733,383.437317"
+              stroke="#649ec0" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_umairmirza_precommit_security id_src/harness/services/pre_commit_security_guard.py"
+              d="M 88.510780,953.091675 A 55.795992,55.795992 0,0 1,87.735680,954.691772"
+              stroke="#be7871" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_umairmirza_precommit_security id_pre-commit-security-guard"
+              d="M 56.295082,877.283752 A 132.226710,132.226710 0,0 1,30.089823,782.176636"
+              stroke="#ba4874" stroke-width="2.0" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_umairmirza_precommit_security id_plugins/security_and_forensics/pre_commit_security_guard/main.py"
+              d="M 57.365993,939.790466 A 55.842035,55.842035 0,0 1,55.637737,940.421570"
+              stroke="#be7871" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_self_20260910_02 id_agent-skills-architect"
+              d="M 1004.810303,156.407898 A 56.121703,56.121703 0,0 1,1002.830750,155.345169"
+              stroke="#bb3188" stroke-width="2.0" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_self_20260910_01 id_agent-skills-architect"
+              d="M 952.085144,97.571037 A 56.088534,56.088534 0,0 1,954.010010,98.641899"
+              stroke="#944eb1" stroke-width="2.0" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_20260830_kimi_01 id_ki_self_20260830_01"
+              d="M -865.483459,632.748840 A 44.242679,44.242679 0,0 1,-866.303284,634.649414"
+              stroke="#9b59b6" stroke-width="1.6" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_20260830_kimi_01 id_external/kimi-code-main/kimi-code-main/packages/agent-core-v2/src/_base/di/cascadeEngine.ts"
+              d="M -864.047974,569.938660 A 43.844177,43.844177 0,0 1,-863.812927,569.379761"
+              stroke="#987fae" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_20260831_cellcog_01 id_ki_20260831_cellcog_04"
+              d="M 1858.549316,-1716.424438 A 55.698386,55.698386 0,0 1,1860.909180,-1718.202271"
+              stroke="#3498db" stroke-width="1.6" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_20260831_cellcog_01 id_ki_20260831_cellcog_03"
+              d="M 1827.316895,-1719.247192 A 55.656329,55.656329 0,0 1,1826.968872,-1722.125122"
+              stroke="#3498db" stroke-width="1.6" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_20260831_cellcog_03 id_ki_20260831_cellcog_04"
+              d="M 1866.760132,-1754.504517 A 55.592954,55.592954 0,0 1,1869.350830,-1753.404053"
+              stroke="#3498db" stroke-width="1.6" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_20260831_openclaw_01 id_ki_20260831_openclaw_04"
+              d="M -1345.137817,348.600189 A 56.516582,56.516582 0,0 1,-1349.162231,348.241089"
+              stroke="#9b59b6" stroke-width="1.6" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_20260831_openclaw_01 id_ki_20260831_openclaw_03"
+              d="M -1323.641968,371.554108 A 56.243576,56.243576 0,0 1,-1325.748169,374.569672"
+              stroke="#9b59b6" stroke-width="1.6" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_20260831_openclaw_03 id_ki_20260831_openclaw_04"
+              d="M -1377.206909,372.211761 A 56.510732,56.510732 0,0 1,-1378.924927,368.563477"
+              stroke="#9b59b6" stroke-width="1.6" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_20260922_tau_pi_agent_architecture id_plugins/agent_orchestration/tau_harness_bridge/README.md"
+              d="M 726.541382,-983.289673 A 43.915178,43.915178 0,0 1,725.874207,-983.505188"
+              stroke="#987fae" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_20260922_tau_pi_agent_architecture id_pi-coding-harness"
+              d="M 789.223633,-987.528564 A 43.803646,43.803646 0,0 1,789.453918,-987.458374"
+              stroke="#944eb1" stroke-width="2.0" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_audit_20260908_06 id_src/harness/ui/"
+              d="M 234.644241,774.713074 A 43.934315,43.934315 0,0 1,234.583328,773.988953"
+              stroke="#649ec0" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_audit_20260908_06 id_src/harness/commands/__init__.py"
+              d="M 258.833435,832.566589 A 43.877028,43.877028 0,0 1,258.807922,833.216309"
+              stroke="#649ec0" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_audit_20260915_01 id_src/harness/kernel/lifecycle.py#L45-L110"
+              d="M -787.604126,803.916931 A 43.917661,43.917661 0,0 1,-787.264771,803.299622"
+              stroke="#be7871" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_audit_20260915_01 id_src/harness/kernel/context.py#L25-L95"
+              d="M -794.171936,866.380981 A 43.882861,43.882861 0,0 1,-794.460571,866.972229"
+              stroke="#be7871" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_audit_20260915_02 id_tests/test_compute_assessor.py"
+              d="M 107.844482,363.738312 A 43.887680,43.887680 0,0 1,108.498268,363.619995"
+              stroke="#be7871" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_chatbotx_isolated_vm_execution id_external/ChatbotX/packages/javascript-sandbox/src/index.ts"
+              d="M -365.804993,944.494446 A 43.900914,43.900914 0,0 1,-365.438721,943.919067"
+              stroke="#be7871" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_chatbotx_isolated_vm_execution id_external/ChatbotX/apps/javascript-executor/src/index.ts"
+              d="M -378.407684,1006.041626 A 43.876033,43.876033 0,0 1,-378.765564,1006.582886"
+              stroke="#be7871" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_self_20260908_02 id_src/harness/services/skill_graph.py"
+              d="M -226.182190,-123.746559 A 55.620496,55.620496 0,0 1,-226.745804,-121.933914"
+              stroke="#987fae" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_self_20260908_02 id_src/harness/creator/validator.py"
+              d="M -218.670731,-185.647202 A 43.875801,43.875801 0,0 1,-218.295547,-186.176208"
+              stroke="#987fae" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_self_20260908_04 id_tests/test_data_management_architect.py"
+              d="M 2074.715332,129.264359 A 43.973059,43.973059 0,0 1,2074.730225,128.486130"
+              stroke="#987fae" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_self_20260908_04 id_data-management-architect"
+              d="M 2097.169189,187.937729 A 43.746511,43.746511 0,0 1,2097.170410,188.102127"
+              stroke="#944eb1" stroke-width="2.0" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_self_20260909_02 id_scratch/inspect_omarchy.py"
+              d="M -399.523590,113.408066 A 43.892582,43.892582 0,0 1,-399.131927,112.863312"
+              stroke="#be7871" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_self_20260909_02 id_plugins/geospatial_and_osint/earth_engine_pipeline/main.py"
+              d="M -414.253235,174.478134 A 43.890630,43.890630 0,0 1,-414.629059,175.030807"
+              stroke="#be7871" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_self_20260910_01 id_tests/test_agent_skills_architect_deepened.py"
+              d="M 891.483215,81.387466 A 43.918913,43.918913 0,0 1,890.939331,80.937218"
+              stroke="#987fae" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_self_20260910_02 id_tests/test_agent_skill_sdlc.py"
+              d="M 1066.461670,168.499832 A 43.880741,43.880741 0,0 1,1067.012573,168.854385"
+              stroke="#bf6184" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_self_20261019_hyperframes_video_01 id_hyperframes-video-architect"
+              d="M 659.215759,1520.517700 A 43.923554,43.923554 0,0 1,658.909912,1520.776855"
+              stroke="#616ec4" stroke-width="2.0" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_self_20261019_hyperframes_video_01 id_Brain_Harness_(src/harness/services/hyperframes/)"
+              d="M 689.286011,1465.354614 A 43.775910,43.775910 0,0 1,689.680969,1465.023804"
+              stroke="#649ec0" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_self_20261019_memory_decay_01 id_ebbinghaus-memory-governor"
+              d="M 474.343536,-49.872963 A 43.888901,43.888901 0,0 1,474.697662,-49.891346"
+              stroke="#bf845e" stroke-width="2.0" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_self_20261019_memory_decay_01 id_Brain_Harness_(src/harness/services/memory_decay/)"
+              d="M 416.991699,-24.222450 A 43.807807,43.807807 0,0 1,416.434540,-24.196709"
+              stroke="#c3b45a" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_self_20261019_prometheus_exporter_01 id_cloud-infrastructure-architect"
+              d="M 1000.365723,-435.226166 A 43.911579,43.911579 0,0 1,1000.078674,-435.482605"
+              stroke="#5e888f" stroke-width="2.0" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_self_20261019_prometheus_exporter_01 id_Brain_Harness_(src/harness/services/prometheus/)"
+              d="M 1059.112183,-412.954926 A 43.801493,43.801493 0,0 1,1059.518188,-412.585022"
+              stroke="#61b88b" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_self_20261019_prompt_pruning_01 id_prompt-pruning-architect"
+              d="M -1249.820068,1355.065430 A 43.855058,43.855058 0,0 1,-1249.536499,1355.189453"
+              stroke="#944eb1" stroke-width="2.0" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_self_20261019_prompt_pruning_01 id_Brain_Harness_(src/harness/services/context_optimizer/)"
+              d="M -1312.596680,1352.567017 A 43.802104,43.802104 0,0 1,-1313.101318,1352.347778"
+              stroke="#987fae" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_solla_contract_first_medallion_lakehouse id_ki_solla_dmbok_governance_decision_rights"
+              d="M -1021.631531,-1236.154663 A 55.745708,55.745708 0,0 1,-1018.656128,-1235.652100"
+              stroke="#e67e22" stroke-width="1.6" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_solla_contract_first_medallion_lakehouse id_ki_solla_dikw_data_asset_continuum"
+              d="M -1033.226074,-1206.965698 A 55.739992,55.739992 0,0 1,-1032.175537,-1204.145020"
+              stroke="#e67e22" stroke-width="1.6" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_solla_dikw_data_asset_continuum id_ki_solla_dmbok_governance_decision_rights"
+              d="M -1020.621765,-1197.124390 A 55.730926,55.730926 0,0 1,-1018.711487,-1199.434937"
+              stroke="#e67e22" stroke-width="1.6" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_20260830_kimi_03 id_external/kimi-code-main/kimi-code-main/packages/tree-sitter-bash/src/parser.ts"
+              d="M 11.578817,782.502136 A 89.642508,89.642508 0,0 1,-13.254767,714.852173"
+              stroke="#987fae" stroke-width="1.9" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_20260823_repo_04 id_ki_self_20260829_04"
+              d="M -2289.142334,1084.511841 A 32.013857,32.013857 0,0 1,-2289.382813,1084.619507"
+              stroke="#9b59b6" stroke-width="1.6" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_20260824_repo_01 id_ki_20260913_memgraph_rag_05"
+              d="M -1201.653809,-378.719666 A 32.046485,32.046485 0,0 1,-1201.749146,-378.427917"
+              stroke="#f1c40f" stroke-width="1.6" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_20260830_repo_01 id_ki_20261023_opencode_01"
+              d="M 1750.011108,1238.537964 A 32.057170,32.057170 0,0 1,1750.186035,1238.268677"
+              stroke="#9b59b6" stroke-width="1.6" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_20260831_em3_02 id_ki_20260831_em3_03"
+              d="M 988.110107,-297.467499 A 31.939251,31.939251 0,0 1,988.247986,-297.378998"
+              stroke="#f1c40f" stroke-width="1.6" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_20260831_em3_04 id_ki_20260831_em3_05"
+              d="M -1248.559326,-1911.853027 A 32.022434,32.022434 0,0 1,-1248.721802,-1911.631348"
+              stroke="#9b59b6" stroke-width="1.6" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_20260831_sme_04 id_ki_20260831_sme_05"
+              d="M 1671.722290,-64.652344 A 31.977067,31.977067 0,0 1,1671.760254,-64.441444"
+              stroke="#e74c3c" stroke-width="1.6" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_20260831_strategify_01 id_ki_self_20260831_04"
+              d="M -753.654480,-2067.459961 A 31.933043,31.933043 0,0 1,-753.809570,-2067.448486"
+              stroke="#9b59b6" stroke-width="1.6" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_20260831_strategify_04 id_ki_self_20260831_01"
+              d="M -513.768250,-1360.576782 A 32.015640,32.015640 0,0 1,-513.553284,-1360.733032"
+              stroke="#9b59b6" stroke-width="1.6" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_20260913_pr_lens_overlay id_ki_20260913_pr_lens_schema"
+              d="M 294.283600,-1839.185059 A 31.977598,31.977598 0,0 1,294.073761,-1839.138184"
+              stroke="#f1c40f" stroke-width="1.6" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_auto_20260915_01 id_ki_mindreader_20260911_01"
+              d="M -85.245033,-1166.718872 A 32.000162,32.000162 0,0 1,-85.024529,-1166.825928"
+              stroke="#f1c40f" stroke-width="1.6" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_deepselect_bitmask_filtering id_ki_deepselect_denormal_fp32"
+              d="M -1289.237183,841.246704 A 31.930944,31.930944 0,0 1,-1289.225586,841.094421"
+              stroke="#00bcd4" stroke-width="1.6" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_koos_typescript_harness_from_scratch id_ki_self_20260917_01"
+              d="M -676.059326,1207.317993 A 31.922717,31.922717 0,0 1,-676.015625,1207.183105"
+              stroke="#9b59b6" stroke-width="1.6" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_self_20260829_02 id_ki_self_20260914_05"
+              d="M -644.968018,-1404.791992 A 31.983778,31.983778 0,0 1,-644.784180,-1404.665283"
+              stroke="#9b59b6" stroke-width="1.6" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_self_20260901_02 id_ki_self_20260901_scratch_03"
+              d="M -235.981171,1515.618164 A 31.926755,31.926755 0,0 1,-235.842758,1515.568237"
+              stroke="#2ecc71" stroke-width="1.6" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_self_20260911_01 id_ki_self_20260914_01"
+              d="M -422.807037,282.443970 A 31.852514,31.852514 0,0 1,-422.779327,282.404785"
+              stroke="#3498db" stroke-width="1.6" stroke-opacity="1.0"/>
+        <path stroke-linecap="round" fill="none"
+              class="id_ki_self_20260922_01 id_ki_self_20260924_01"
+              d="M -1119.118652,-241.773163 A 32.097233,32.097233 0,0 1,-1118.973877,-241.427582"
+              stroke="#e74c3c" stroke-width="1.6" stroke-opacity="1.0"/>
+    </g>
+    <g id="arrows">
+        <polyline fill="#649ec0" fill-opacity="1.0"
+                  class="id_ki-deepening-cycle-history id_src/harness/services/compute_assessor.py"
+                  points="-59.213581,318.335876 -65.528854,317.481567 -62.319302,312.771057"
+                  stroke="none"/>
+        <polyline fill="#649ec0" fill-opacity="1.0"
+                  class="id_ki-deepening-cycle-history id_src/harness/services/__init__.py"
+                  points="-112.772156,344.384949 -118.744667,342.161957 -114.577293,338.273163"
+                  stroke="none"/>
+        <polyline fill="#649ec0" fill-opacity="1.0"
+                  class="id_ki-deepening-cycle-history id_src/harness/creator/"
+                  points="-136.431015,254.324142 -141.879593,257.629517 -142.344467,251.948517"
+                  stroke="none"/>
+        <polyline fill="#649ec0" fill-opacity="1.0"
+                  class="id_ki-deepening-cycle-history id_src/harness/cli.py"
+                  points="-122.379166,382.407043 -127.205360,378.245270 -121.945473,376.049042"
+                  stroke="none"/>
+        <polyline fill="#649ec0" fill-opacity="1.0"
+                  class="id_ki-deepening-cycle-history id_src/harness/agent/swarm.py"
+                  points="-246.169678,198.733307 -245.718521,205.090103 -250.984421,202.908310"
+                  stroke="none"/>
+        <polyline fill="#649ec0" fill-opacity="1.0"
+                  class="id_ki-deepening-cycle-history id_src/harness/agent/session.py"
+                  points="-35.591648,247.695694 -41.804169,249.115921 -40.455353,243.577805"
+                  stroke="none"/>
+        <polyline fill="#3498db" fill-opacity="1.0"
+                  class="id_ki-deepening-cycle-history id_ki_20261014_70_cycle_deepening_corpus"
+                  points="-109.274071,312.403992 -114.629517,312.058838 -112.211227,307.912537"
+                  stroke="none"/>
+        <polyline fill="#987fae" fill-opacity="1.0"
+                  class="id_ki-topology-map id_src/harness/plugins/catalog.py"
+                  points="198.234238,123.497253 193.092361,127.262032 192.137283,121.642616"
+                  stroke="none"/>
+        <polyline fill="#987fae" fill-opacity="1.0"
+                  class="id_ki-topology-map id_src/harness/kernel/runtime.py"
+                  points="55.508537,283.706421 60.130688,279.319153 61.791653,284.771790"
+                  stroke="none"/>
+        <polyline fill="#987fae" fill-opacity="1.0"
+                  class="id_ki-topology-map id_src/harness/kernel/lifecycle.py"
+                  points="-115.327065,223.926865 -108.967384,224.335434 -111.838112,229.259750"
+                  stroke="none"/>
+        <polyline fill="#987fae" fill-opacity="1.0"
+                  class="id_ki-topology-map id_src/harness/kernel/graph.py"
+                  points="227.441940,178.895554 221.076065,179.192459 223.384872,173.981003"
+                  stroke="none"/>
+        <polyline fill="#987fae" fill-opacity="1.0"
+                  class="id_ki-topology-map id_src/harness/kernel/context.py"
+                  points="85.736794,92.862274 86.810188,99.144028 81.355431,97.490036"
+                  stroke="none"/>
+        <polyline fill="#987fae" fill-opacity="1.0"
+                  class="id_ki-topology-map id_src/harness/events/bus.py"
+                  points="-38.589024,254.189804 -32.306202,253.122726 -33.965679,258.575806"
+                  stroke="none"/>
+        <polyline fill="#987fae" fill-opacity="1.0"
+                  class="id_ki-topology-map id_src/harness/agent/swarm.py"
+                  points="-163.138428,178.755173 -156.951508,180.283066 -160.648590,184.621445"
+                  stroke="none"/>
+        <polyline fill="#27aabb" fill-opacity="1.0"
+                  class="id_ki_google_repos_bridge id_plugin.perfetto_trace_processor"
+                  points="971.333374,-1590.470947 978.040894,-1590.374390 975.280640,-1585.046997"
+                  stroke="none"/>
+        <polyline fill="#27aabb" fill-opacity="1.0"
+                  class="id_ki_google_repos_bridge id_plugin.google_tunix_posttraining"
+                  points="1008.360168,-1522.340332 1013.417358,-1526.747681 1014.920410,-1520.939087"
+                  stroke="none"/>
+        <polyline fill="#27aabb" fill-opacity="1.0"
+                  class="id_ki_google_repos_bridge id_plugin.google_styleguide_auditor"
+                  points="1178.970825,-1563.128540 1173.219604,-1566.581543 1178.282593,-1569.801270"
+                  stroke="none"/>
+        <polyline fill="#27aabb" fill-opacity="1.0"
+                  class="id_ki_google_repos_bridge id_plugin.google_adk_web_bridge"
+                  points="1120.587158,-1504.657471 1118.936890,-1511.159546 1124.798706,-1509.878784"
+                  stroke="none"/>
+        <polyline fill="#27aabb" fill-opacity="1.0"
+                  class="id_ki_google_repos_bridge id_plugin.google_adk_runtime"
+                  points="983.225830,-1655.908325 988.615112,-1651.913940 983.263916,-1649.200317"
+                  stroke="none"/>
+        <polyline fill="#27aabb" fill-opacity="1.0"
+                  class="id_ki_google_repos_bridge id_plugin.google_adk_optimizer"
+                  points="1177.607300,-1649.478516 1171.157227,-1647.635376 1172.262695,-1653.532593"
+                  stroke="none"/>
+        <polyline fill="#27aabb" fill-opacity="1.0"
+                  class="id_ki_google_repos_bridge id_plugin.google_adk_docs_navigator"
+                  points="1106.920654,-1709.465210 1104.254028,-1703.309814 1100.396362,-1707.905273"
+                  stroke="none"/>
+        <polyline fill="#649ec0" fill-opacity="1.0"
+                  class="id_ki-file-size-hotspots id_src/harness/services/compute_assessor.py"
+                  points="5.787771,294.923492 4.631847,288.656403 10.107883,290.238495"
+                  stroke="none"/>
+        <polyline fill="#649ec0" fill-opacity="1.0"
+                  class="id_ki-file-size-hotspots id_src/harness/creator/reflection.py"
+                  points="14.777798,63.116619 9.465618,66.637024 8.774166,60.979122"
+                  stroke="none"/>
+        <polyline fill="#649ec0" fill-opacity="1.0"
+                  class="id_ki-file-size-hotspots id_src/harness/creator/archetypes.py"
+                  points="32.079689,91.328735 25.872873,92.773720 27.199614,87.230278"
+                  stroke="none"/>
+        <polyline fill="#649ec0" fill-opacity="1.0"
+                  class="id_ki-file-size-hotspots id_src/harness/cli.py"
+                  points="-63.452053,390.334930 -62.189960,384.088379 -57.697544,387.596680"
+                  stroke="none"/>
+        <polyline fill="#649ec0" fill-opacity="1.0"
+                  class="id_ki-file-size-hotspots id_src/harness/agent/swarm.py"
+                  points="-149.327118,154.029831 -143.026443,153.073837 -144.781937,158.496780"
+                  stroke="none"/>
+        <polyline fill="#649ec0" fill-opacity="1.0"
+                  class="id_ki-file-size-hotspots id_src/harness/agent/session.py"
+                  points="-1.413534,223.929428 -3.580595,217.936401 2.080649,218.599976"
+                  stroke="none"/>
+        <polyline fill="#bd9164" fill-opacity="1.0"
+                  class="id_ki-hf-datasets-arrow-streaming id_external/datasets/src/datasets/packaged_modules/"
+                  points="-670.816528,992.381042 -665.053833,989.659973 -665.182129,995.358582"
+                  stroke="none"/>
+        <polyline fill="#bd9164" fill-opacity="1.0"
+                  class="id_ki-hf-datasets-arrow-streaming id_external/datasets/src/datasets/iterable_dataset.py"
+                  points="-582.904053,846.293335 -584.425415,852.481873 -588.767700,848.789368"
+                  stroke="none"/>
+        <polyline fill="#bd9164" fill-opacity="1.0"
+                  class="id_ki-hf-datasets-arrow-streaming id_external/datasets/src/datasets/fingerprint.py"
+                  points="-533.833008,1014.592957 -537.005676,1009.066040 -531.315125,1008.738647"
+                  stroke="none"/>
+        <polyline fill="#bd9164" fill-opacity="1.0"
+                  class="id_ki-hf-datasets-arrow-streaming id_external/datasets/src/datasets/features/features.py"
+                  points="-603.270874,1034.026489 -601.618164,1027.871826 -597.355469,1031.655762"
+                  stroke="none"/>
+        <polyline fill="#bd9164" fill-opacity="1.0"
+                  class="id_ki-hf-datasets-arrow-streaming id_external/datasets/src/datasets/features/bio_structure.py"
+                  points="-671.776855,889.696960 -666.940002,893.846375 -672.194275,896.056091"
+                  stroke="none"/>
+        <polyline fill="#bd9164" fill-opacity="1.0"
+                  class="id_ki-hf-datasets-arrow-streaming id_external/datasets/src/datasets/arrow_dataset.py"
+                  points="-523.144348,875.768982 -528.373474,879.411560 -529.195862,873.771179"
+                  stroke="none"/>
+        <polyline fill="#987fae" fill-opacity="1.0"
+                  class="id_ki_audit_20260908_02 id_src/harness/kernel/context.py"
+                  points="82.466019,7.635353 77.742859,3.356997 83.054810,1.289815"
+                  stroke="none"/>
+        <polyline fill="#987fae" fill-opacity="1.0"
+                  class="id_ki_audit_20260908_02 id_src/harness/events/bus.py"
+                  points="-45.923164,223.349258 -43.769165,217.351532 -39.832581,221.473816"
+                  stroke="none"/>
+        <polyline fill="#987fae" fill-opacity="1.0"
+                  class="id_ki_audit_20260908_02 id_src/harness/agent/swarm.py"
+                  points="-147.260391,117.182121 -142.244186,113.251450 -141.106125,118.836685"
+                  stroke="none"/>
+        <polyline fill="#987fae" fill-opacity="1.0"
+                  class="id_ki_audit_20260908_02 id_src/harness/agent/react.py"
+                  points="-89.024765,-78.144966 -83.375252,-75.196152 -87.994118,-71.856064"
+                  stroke="none"/>
+        <polyline fill="#9b59b6" fill-opacity="1.0"
+                  class="id_ki_20260913_claude_coord_02 id_ki_audit_20260908_02"
+                  points="80.568039,-82.723587 83.898987,-86.931297 85.932770,-82.583458"
+                  stroke="none"/>
+        <polyline fill="#9b59b6" fill-opacity="1.0"
+                  class="id_ki_20260830_claude_02 id_ki_audit_20260908_02"
+                  points="39.677917,-123.988419 39.586723,-129.354202 43.915833,-127.280838"
+                  stroke="none"/>
+        <polyline fill="#bd9164" fill-opacity="1.0"
+                  class="id_ki_garf_reporting_engine id_external/garf/libs/io/garf/io/writer.py"
+                  points="-765.342346,-386.248322 -770.473816,-382.469360 -771.444397,-388.086121"
+                  stroke="none"/>
+        <polyline fill="#bd9164" fill-opacity="1.0"
+                  class="id_ki_garf_reporting_engine id_external/garf/libs/executors/garf/executors/workflows/workflow.py"
+                  points="-835.933350,-225.653961 -834.797302,-231.924698 -830.235168,-228.507584"
+                  stroke="none"/>
+        <polyline fill="#bd9164" fill-opacity="1.0"
+                  class="id_ki_garf_reporting_engine id_external/garf/libs/core/garf/core/simulator.py"
+                  points="-762.956665,-256.299103 -766.996033,-261.228210 -761.436951,-262.488037"
+                  stroke="none"/>
+        <polyline fill="#bd9164" fill-opacity="1.0"
+                  class="id_ki_garf_reporting_engine id_external/garf/libs/core/garf/core/report.py"
+                  points="-892.543213,-247.032990 -887.832458,-251.325027 -886.283142,-245.839645"
+                  stroke="none"/>
+        <polyline fill="#bd9164" fill-opacity="1.0"
+                  class="id_ki_garf_reporting_engine id_external/garf/libs/core/garf/core/query_parser.py"
+                  points="-900.761719,-385.338806 -896.840637,-380.315094 -902.428040,-379.187714"
+                  stroke="none"/>
+        <polyline fill="#bd9164" fill-opacity="1.0"
+                  class="id_ki_garf_reporting_engine id_external/garf/libs/core/garf/core/query_editor.py"
+                  points="-834.273010,-414.406647 -835.071594,-408.084076 -839.810242,-411.251984"
+                  stroke="none"/>
+        <polyline fill="#bd9164" fill-opacity="1.0"
+                  class="id_ki-paperless-ai-rag-sqlite-vec id_external/paperless-ngx/src/paperless_ai/vector_store.py"
+                  points="-682.507019,-722.364136 -679.263306,-716.878601 -684.949219,-716.477844"
+                  stroke="none"/>
+        <polyline fill="#bd9164" fill-opacity="1.0"
+                  class="id_ki-paperless-ai-rag-sqlite-vec id_external/paperless-ngx/src/paperless_ai/tables.py"
+                  points="-712.528931,-652.676270 -706.164429,-652.351196 -708.970337,-647.389648"
+                  stroke="none"/>
+        <polyline fill="#bd9164" fill-opacity="1.0"
+                  class="id_ki-paperless-ai-rag-sqlite-vec id_external/paperless-ngx/src/paperless_ai/indexing.py"
+                  points="-646.785828,-580.634277 -644.814392,-586.694519 -640.754822,-582.693298"
+                  stroke="none"/>
+        <polyline fill="#bd9164" fill-opacity="1.0"
+                  class="id_ki-paperless-ai-rag-sqlite-vec id_external/paperless-ngx/src/paperless_ai/chat.py"
+                  points="-562.073914,-621.477478 -567.214844,-625.243530 -562.145630,-627.849854"
+                  stroke="none"/>
+        <polyline fill="#bd9164" fill-opacity="1.0"
+                  class="id_ki-paperless-ai-rag-sqlite-vec id_external/paperless-ngx/src/documents/search/_backend.py"
+                  points="-557.960327,-688.769531 -564.157288,-687.282776 -562.867859,-692.835022"
+                  stroke="none"/>
+        <polyline fill="#649ec0" fill-opacity="1.0"
+                  class="id_ki-paperless-ngx-architecture id_external/paperless-ngx/src/paperless/consumers.py"
+                  points="-935.405579,194.204620 -929.278503,195.957199 -933.131409,200.157822"
+                  stroke="none"/>
+        <polyline fill="#649ec0" fill-opacity="1.0"
+                  class="id_ki-paperless-ngx-architecture id_external/paperless-ngx/src/documents/workflows/"
+                  points="-877.683228,128.325912 -876.815308,134.639328 -882.213257,132.808273"
+                  stroke="none"/>
+        <polyline fill="#649ec0" fill-opacity="1.0"
+                  class="id_ki-paperless-ngx-architecture id_external/paperless-ngx/src/documents/parsers/"
+                  points="-787.669922,163.607758 -793.507263,166.164597 -793.217834,160.471939"
+                  stroke="none"/>
+        <polyline fill="#649ec0" fill-opacity="1.0"
+                  class="id_ki-paperless-ngx-architecture id_external/paperless-ngx/src/documents/models.py"
+                  points="-877.406677,282.772675 -874.881836,276.921387 -871.210693,281.281799"
+                  stroke="none"/>
+        <polyline fill="#649ec0" fill-opacity="1.0"
+                  class="id_ki-paperless-ngx-architecture id_external/paperless-ngx/src/documents/consumer.py"
+                  points="-783.402405,239.511230 -788.749756,236.044479 -783.837402,233.153305"
+                  stroke="none"/>
+        <polyline fill="#be7871" fill-opacity="1.0"
+                  class="id_ki_audit_20260908_03 id_src/harness/services/tools.py"
+                  points="-172.728546,-84.774712 -172.473770,-78.407013 -177.669846,-80.750275"
+                  stroke="none"/>
+        <polyline fill="#be7871" fill-opacity="1.0"
+                  class="id_ki_audit_20260908_03 id_src/harness/kernel/lifecycle.py"
+                  points="-128.398987,180.018021 -128.394882,173.645233 -123.298294,176.197632"
+                  stroke="none"/>
+        <polyline fill="#be7871" fill-opacity="1.0"
+                  class="id_ki_audit_20260908_03 id_src/harness/kernel/context.py"
+                  points="65.500000,19.270342 59.368454,17.533489 63.210556,13.322994"
+                  stroke="none"/>
+        <polyline fill="#be7871" fill-opacity="1.0"
+                  class="id_ki_audit_20260908_03 id_src/harness/agent/swarm.py"
+                  points="-169.701797,77.834915 -167.992752,71.695564 -163.764877,75.518547"
+                  stroke="none"/>
+        <polyline fill="#be7871" fill-opacity="1.0"
+                  class="id_ki_audit_20260908_03 id_src/harness/agent/react.py"
+                  points="-132.466400,-84.623909 -135.287262,-78.909424 -138.730499,-83.451904"
+                  stroke="none"/>
+        <polyline fill="#be7871" fill-opacity="1.0"
+                  class="id_ki_audit_20260908_07 id_src/harness/services/repomap.py"
+                  points="1154.426392,68.197899 1155.008667,61.851765 1159.852661,64.856087"
+                  stroke="none"/>
+        <polyline fill="#be7871" fill-opacity="1.0"
+                  class="id_ki_audit_20260908_07 id_src/harness/services/data_management.py"
+                  points="1070.893433,-4.876149 1077.258545,-4.562115 1074.461182,0.404313"
+                  stroke="none"/>
+        <polyline fill="#be7871" fill-opacity="1.0"
+                  class="id_ki_audit_20260908_07 id_src/harness/services/cellcog.py"
+                  points="1086.443359,-59.772064 1090.987793,-55.304409 1085.595947,-53.455860"
+                  stroke="none"/>
+        <polyline fill="#be7871" fill-opacity="1.0"
+                  class="id_ki_audit_20260908_07 id_src/harness/services/agent_graph.py"
+                  points="1223.238281,22.450888 1217.907593,18.958614 1222.833618,16.090950"
+                  stroke="none"/>
+        <polyline fill="#be7871" fill-opacity="1.0"
+                  class="id_ki_audit_20260908_07 id_src/harness/events/bus.py#L630"
+                  points="1191.724976,-80.843613 1187.750854,-75.861839 1185.355103,-81.033928"
+                  stroke="none"/>
+        <polyline fill="#649ec0" fill-opacity="1.0"
+                  class="id_ki-cli-decomposition-pattern id_src/harness/commands/"
+                  points="-19.069521,484.438416 -22.190245,489.994812 -25.387075,485.275696"
+                  stroke="none"/>
+        <polyline fill="#649ec0" fill-opacity="1.0"
+                  class="id_ki-cli-decomposition-pattern id_src/harness/cli.py"
+                  points="-90.738846,494.936096 -87.055237,500.136444 -92.688950,501.003204"
+                  stroke="none"/>
+        <polyline fill="#3498db" fill-opacity="1.0"
+                  class="id_ki-cli-decomposition-pattern id_ki_self_20260908_03"
+                  points="-86.450653,601.917480 -82.646278,598.132385 -81.139977,602.689880"
+                  stroke="none"/>
+        <polyline fill="#3498db" fill-opacity="1.0"
+                  class="id_ki-cli-decomposition-pattern id_ki_self_20260907_03"
+                  points="11.979837,509.692810 7.116450,511.961609 7.246763,507.163391"
+                  stroke="none"/>
+        <polyline fill="#649ec0" fill-opacity="1.0"
+                  class="id_ki-omarchy-quattro-bridge id_plugins/developer_tooling/omarchy_theming_engine/"
+                  points="312.145325,445.865021 313.397491,452.113586 307.897797,450.615906"
+                  stroke="none"/>
+        <polyline fill="#649ec0" fill-opacity="1.0"
+                  class="id_ki-omarchy-quattro-bridge id_plugins/developer_tooling/omarchy_command_router/"
+                  points="351.757324,571.506226 350.759644,565.212036 356.194092,566.931519"
+                  stroke="none"/>
+        <polyline fill="#649ec0" fill-opacity="1.0"
+                  class="id_ki-omarchy-quattro-bridge id_plugins/agent_orchestration/omarchy_agent_telemetry/"
+                  points="298.807495,564.458923 302.804565,559.495483 305.176514,564.678467"
+                  stroke="none"/>
+        <polyline fill="#649ec0" fill-opacity="1.0"
+                  class="id_ki-omarchy-quattro-bridge id_docs/plugins/omarchy_bridge/"
+                  points="370.179596,453.752563 365.962463,458.530457 363.827026,453.245605"
+                  stroke="none"/>
+        <polyline fill="#e74c3c" fill-opacity="1.0"
+                  class="id_ki_20260821_06 id_ki_20260913_tool_approval_03"
+                  points="52.852894,849.135620 57.168697,845.945923 57.994091,850.674438"
+                  stroke="none"/>
+        <polyline fill="#e74c3c" fill-opacity="1.0"
+                  class="id_ki_20260821_06 id_ki_20260830_grok_04"
+                  points="159.643127,835.499146 155.699677,831.859192 160.188995,830.160461"
+                  stroke="none"/>
+        <polyline fill="#e74c3c" fill-opacity="1.0"
+                  class="id_ki_20260821_06 id_ki_20260830_grok_03"
+                  points="60.914902,742.849854 63.683853,747.446899 58.898628,747.823242"
+                  stroke="none"/>
+        <polyline fill="#e74c3c" fill-opacity="1.0"
+                  class="id_ki_20260821_06 id_ki_20260823_01"
+                  points="-0.158077,796.709106 5.139278,797.568176 2.333073,801.462463"
+                  stroke="none"/>
+        <polyline fill="#be7871" fill-opacity="1.0"
+                  class="id_ki_20260823_01 id_src/harness/plugins/sandbox.py"
+                  points="-104.046829,727.664551 -99.094490,731.675415 -104.284096,734.032959"
+                  stroke="none"/>
+        <polyline fill="#e74c3c" fill-opacity="1.0"
+                  class="id_ki_20260823_01 id_ki_20260913_tool_approval_03"
+                  points="0.813937,812.417419 -2.359410,808.089661 2.372170,807.282043"
+                  stroke="none"/>
+        <polyline fill="#e74c3c" fill-opacity="1.0"
+                  class="id_ki_20260823_01 id_ki_20260830_grok_03"
+                  points="12.767841,704.637024 8.382171,707.729858 7.662141,702.984131"
+                  stroke="none"/>
+        <polyline fill="#e74c3c" fill-opacity="1.0"
+                  class="id_ki_20260831_em3_01 id_ki_self_20261002_05"
+                  points="752.347412,944.728210 746.981323,944.653564 749.187500,940.390625"
+                  stroke="none"/>
+        <polyline fill="#e74c3c" fill-opacity="1.0"
+                  class="id_ki_20260831_em3_01 id_ki_self_20260827_02"
+                  points="652.967407,911.079041 649.056824,914.754333 647.680847,910.155823"
+                  stroke="none"/>
+        <polyline fill="#e74c3c" fill-opacity="1.0"
+                  class="id_ki_20260831_em3_01 id_ki_20260831_openclaw_02"
+                  points="548.598206,936.237610 553.048218,939.237122 548.868530,941.597351"
+                  stroke="none"/>
+        <polyline fill="#e74c3c" fill-opacity="1.0"
+                  class="id_ki_20260823_repo_01 id_ki_20260831_em3_01"
+                  points="654.173950,1003.492859 659.398743,1004.718384 656.328430,1008.407959"
+                  stroke="none"/>
+        <polyline fill="#85c055" fill-opacity="1.0"
+                  class="id_ki_20261028_headroom_context_optimization id_plugins/memory_and_epistemics/headroom_context_optimizer"
+                  points="607.064392,-202.445206 601.911316,-206.740051 607.408386,-209.144592"
+                  stroke="none"/>
+        <polyline fill="#ed7139" fill-opacity="1.0"
+                  class="id_ki_20261028_headroom_context_optimization id_ki_20260913_context_types_04"
+                  points="500.577545,-279.429382 504.972076,-274.814117 499.522064,-273.144623"
+                  stroke="none"/>
+        <polyline fill="#bf845e" fill-opacity="1.0"
+                  class="id_ki_20261028_headroom_context_optimization id_headroom-context-optimizer"
+                  points="511.336426,-185.999817 516.086670,-190.736404 517.975830,-185.041580"
+                  stroke="none"/>
+        <polyline fill="#85c055" fill-opacity="1.0"
+                  class="id_ki_20261028_headroom_context_optimization id_external/headroom/headroom/transforms"
+                  points="608.374817,-271.153076 602.212463,-268.502533 602.556946,-274.492645"
+                  stroke="none"/>
+        <polyline fill="#3498db" fill-opacity="1.0"
+                  class="id_ki_agent_desktop_self_testing_arch id_ki_self_20261104_03_planted_violation_boundary_gate"
+                  points="1229.738892,396.262085 1224.606812,394.692932 1227.914917,391.214966"
+                  stroke="none"/>
+        <polyline fill="#649ec0" fill-opacity="1.0"
+                  class="id_ki_agent_desktop_self_testing_arch id_cloned/agent-desktop/scripts/check_architecture.py#L1-L120"
+                  points="1197.084351,443.200226 1194.476440,437.385437 1200.171509,437.625061"
+                  stroke="none"/>
+        <polyline fill="#649ec0" fill-opacity="1.0"
+                  class="id_ki_agent_desktop_self_testing_arch id_cloned/agent-desktop/Cargo.toml#L1-L35"
+                  points="1097.846191,367.076019 1103.696655,369.602844 1099.335083,373.272461"
+                  stroke="none"/>
+        <polyline fill="#649ec0" fill-opacity="1.0"
+                  class="id_ki_agent_desktop_self_testing_arch id_cloned/agent-desktop/AGENTS.md#L120-L185"
+                  points="1217.669678,347.197876 1211.980835,350.070038 1211.958618,344.370087"
+                  stroke="none"/>
+        <polyline fill="#e74c3c" fill-opacity="1.0"
+                  class="id_ki_self_20260827_02 id_ki_self_20261019_pyrit_redteam_01"
+                  points="673.686829,829.851318 675.605835,834.863037 670.828857,834.393555"
+                  stroke="none"/>
+        <polyline fill="#e74c3c" fill-opacity="1.0"
+                  class="id_ki_self_20260827_02 id_ki_self_20261002_05"
+                  points="770.973389,925.768494 766.580322,922.686096 770.803467,920.404602"
+                  stroke="none"/>
+        <polyline fill="#e74c3c" fill-opacity="1.0"
+                  class="id_ki_20260823_repo_01 id_ki_self_20260827_02"
+                  points="691.602905,950.333130 692.442017,955.633667 687.865967,954.184814"
+                  stroke="none"/>
+        <polyline fill="#987fae" fill-opacity="1.0"
+                  class="id_ki_self_20260909_01 id_plugins/agent_orchestration/evaluator_critic/main.py"
+                  points="592.475220,-402.311157 598.431580,-404.577179 597.861877,-398.905731"
+                  stroke="none"/>
+        <polyline fill="#987fae" fill-opacity="1.0"
+                  class="id_ki_self_20260909_01 id_plugins/agent_orchestration/critic_loop/main.py"
+                  points="717.177734,-418.779572 711.182922,-420.941711 715.310608,-424.872681"
+                  stroke="none"/>
+        <polyline fill="#987fae" fill-opacity="1.0"
+                  class="id_ki_self_20260909_01 id_plugins/agent_orchestration/critic_loop/config.default.yaml"
+                  points="631.433350,-496.437836 632.494507,-490.153992 627.042969,-491.818604"
+                  stroke="none"/>
+        <polyline fill="#987fae" fill-opacity="1.0"
+                  class="id_ki_self_20260909_01 id_plugins/agent_orchestration/agent_debater/main.py"
+                  points="587.436951,-452.288696 593.260559,-449.700531 588.860535,-446.076935"
+                  stroke="none"/>
+        <polyline fill="#61b88b" fill-opacity="1.0"
+                  class="id_ki_20260823_03 id_src/harness/cli.py"
+                  points="-158.144089,443.828278 -163.459579,447.343689 -164.145706,441.685120"
+                  stroke="none"/>
+        <polyline fill="#be7871" fill-opacity="1.0"
+                  class="id_ki_audit_20260915_02 id_src/harness/services/compute_assessor.py"
+                  points="40.183853,381.363495 46.541710,381.799500 43.649742,386.711365"
+                  stroke="none"/>
+        <polyline fill="#649ec0" fill-opacity="1.0"
+                  class="id_ki-5d-complexity-baseline id_src/harness/services/compute_assessor.py"
+                  points="47.259697,340.340179 52.316875,336.462372 53.396252,342.059235"
+                  stroke="none"/>
+        <polyline fill="#2ecc71" fill-opacity="1.0"
+                  class="id_ki_20260823_03 id_ki_self_20260907_02"
+                  points="-251.507233,463.915009 -246.711090,466.322723 -250.555725,469.196564"
+                  stroke="none"/>
+        <polyline fill="#2ecc71" fill-opacity="1.0"
+                  class="id_ki_20260821_03 id_ki_20260823_03"
+                  points="-247.306671,478.885162 -252.231430,481.017456 -251.967361,476.224731"
+                  stroke="none"/>
+        <polyline fill="#e74c3c" fill-opacity="1.0"
+                  class="id_ki_20260823_repo_01 id_ki_self_20261002_05"
+                  points="747.903992,972.827576 743.559875,975.978577 742.776672,971.242859"
+                  stroke="none"/>
+        <polyline fill="#9b59b6" fill-opacity="1.0"
+                  class="id_ki_20260830_claude_02 id_ki_orca_orchestration_engine"
+                  points="74.222198,-216.280457 69.528885,-213.678009 69.324234,-218.473633"
+                  stroke="none"/>
+        <polyline fill="#9b59b6" fill-opacity="1.0"
+                  class="id_ki_20260830_claude_02 id_ki_20260913_claude_coord_02"
+                  points="82.620819,-169.843811 77.671738,-171.919037 81.311569,-175.048218"
+                  stroke="none"/>
+        <polyline fill="#e74c3c" fill-opacity="1.0"
+                  class="id_ki_20260830_grok_03 id_ki_20260913_tool_approval_03"
+                  points="39.529850,824.228455 41.103462,819.097778 44.578552,822.408936"
+                  stroke="none"/>
+        <polyline fill="#9b59b6" fill-opacity="1.0"
+                  class="id_ki_20260913_claude_coord_02 id_ki_orca_orchestration_engine"
+                  points="96.387009,-187.589951 97.272476,-182.296936 92.683884,-183.705750"
+                  stroke="none"/>
+        <polyline fill="#be7871" fill-opacity="1.0"
+                  class="id_ki_20260923_ethical_hacker_networking id_src/harness/services/network_forensics.py"
+                  points="462.044342,1107.579590 468.260223,1106.174072 466.898224,1111.708984"
+                  stroke="none"/>
+        <polyline fill="#be7871" fill-opacity="1.0"
+                  class="id_ki_20260923_ethical_hacker_networking id_plugins/security_and_forensics/network_forensics/main.py"
+                  points="469.088409,1060.386353 473.778778,1064.700684 468.451202,1066.727295"
+                  stroke="none"/>
+        <polyline fill="#ba4874" fill-opacity="1.0"
+                  class="id_ki_20260923_ethical_hacker_networking id_ethical-hacker-networking"
+                  points="561.798096,1092.945068 555.169556,1091.914307 558.645508,1087.023682"
+                  stroke="none"/>
+        <polyline fill="#649ec0" fill-opacity="1.0"
+                  class="id_ki_agent_desktop_capture_proof id_cloned/agent-desktop/crates/core/src/refs/ref_entry_identity.rs#L1-L80"
+                  points="995.569702,911.416077 1001.438904,913.898987 997.104919,917.601257"
+                  stroke="none"/>
+        <polyline fill="#649ec0" fill-opacity="1.0"
+                  class="id_ki_agent_desktop_capture_proof id_cloned/agent-desktop/crates/core/src/refs/ref_capture_proof.rs#L1-L162"
+                  points="1040.255859,977.148987 1041.548462,970.908630 1046.023560,974.438904"
+                  stroke="none"/>
+        <polyline fill="#649ec0" fill-opacity="1.0"
+                  class="id_ki_agent_desktop_capture_proof id_cloned/agent-desktop/CONCEPTS.md#L68-L115"
+                  points="1087.673828,897.543091 1082.002930,900.450500 1081.945313,894.750793"
+                  stroke="none"/>
+        <polyline fill="#987fae" fill-opacity="1.0"
+                  class="id_ki_agent_desktop_disposition_matrix id_cloned/agent-desktop/crates/core/src/response/retry_disposition.rs#L1-L10"
+                  points="-683.202148,-27.146456 -688.247803,-23.253717 -689.343750,-28.847372"
+                  stroke="none"/>
+        <polyline fill="#987fae" fill-opacity="1.0"
+                  class="id_ki_agent_desktop_disposition_matrix id_cloned/agent-desktop/crates/core/src/response/delivery_disposition.rs#L1-L13"
+                  points="-770.655273,-0.354580 -764.546753,1.461767 -768.443237,5.622004"
+                  stroke="none"/>
+        <polyline fill="#987fae" fill-opacity="1.0"
+                  class="id_ki_agent_desktop_disposition_matrix id_cloned/agent-desktop/crates/core/src/actionability/evaluate.rs#L78-L110"
+                  points="-684.725769,45.950996 -688.556885,40.858334 -682.950317,39.830517"
+                  stroke="none"/>
+        <polyline fill="#649ec0" fill-opacity="1.0"
+                  class="id_ki_agent_desktop_interaction_lease id_cloned/agent-desktop/crates/core/src/tree/accname.rs#L1-L50"
+                  points="754.304871,824.594177 760.566528,825.779053 757.114014,830.314453"
+                  stroke="none"/>
+        <polyline fill="#649ec0" fill-opacity="1.0"
+                  class="id_ki_agent_desktop_interaction_lease id_cloned/agent-desktop/crates/core/src/session/interaction_lease.rs#L1-L125"
+                  points="807.843079,879.504456 808.183105,873.140747 813.138062,875.958252"
+                  stroke="none"/>
+        <polyline fill="#649ec0" fill-opacity="1.0"
+                  class="id_ki_agent_desktop_interaction_lease id_cloned/agent-desktop/CONCEPTS.md#L50-L66"
+                  points="767.079590,793.954163 771.272766,798.753113 765.756409,800.188049"
+                  stroke="none"/>
+        <polyline fill="#61b88b" fill-opacity="1.0"
+                  class="id_ki_agent_desktop_mcp_cancellation id_cloned/agent-desktop/src/mcp/mod.rs#L1-L120"
+                  points="122.277550,506.420227 124.953293,500.636353 128.510071,505.090515"
+                  stroke="none"/>
+        <polyline fill="#61b88b" fill-opacity="1.0"
+                  class="id_ki_agent_desktop_mcp_cancellation id_cloned/agent-desktop/src/mcp/catalog.rs#L1-L95"
+                  points="175.279053,421.777222 170.242355,425.681610 169.133530,420.090485"
+                  stroke="none"/>
+        <polyline fill="#61b88b" fill-opacity="1.0"
+                  class="id_ki_agent_desktop_mcp_cancellation id_cloned/agent-desktop/src/mcp/calls.rs#L1-L110"
+                  points="88.224007,468.118317 94.570259,467.537292 92.496590,472.846680"
+                  stroke="none"/>
+        <polyline fill="#61b88b" fill-opacity="1.0"
+                  class="id_ki_chatbotx_dynamic_mcp_orpc id_external/ChatbotX/apps/mcp-server/src/openapi-loader.ts"
+                  points="-997.978271,-444.122925 -1003.558044,-441.044189 -1003.789124,-446.739502"
+                  stroke="none"/>
+        <polyline fill="#61b88b" fill-opacity="1.0"
+                  class="id_ki_chatbotx_dynamic_mcp_orpc id_external/ChatbotX/apps/builder/src/routers/public.ts"
+                  points="-1033.177246,-363.366302 -1033.281982,-369.738220 -1028.142578,-367.273193"
+                  stroke="none"/>
+        <polyline fill="#61b88b" fill-opacity="1.0"
+                  class="id_ki_chatbotx_dynamic_mcp_orpc id_external/ChatbotX/apps/builder/src/app/api/public-spec.json/route.ts"
+                  points="-1080.225708,-446.103912 -1075.689209,-441.628082 -1081.084473,-439.789215"
+                  stroke="none"/>
+        <polyline fill="#c3b45a" fill-opacity="1.0"
+                  class="id_ki_chatbotx_omnichannel_messaging_bus id_external/ChatbotX/packages/sdk/src/index.ts"
+                  points="1463.481689,-22.339346 1462.169312,-28.575523 1467.683228,-27.131031"
+                  stroke="none"/>
+        <polyline fill="#c3b45a" fill-opacity="1.0"
+                  class="id_ki_chatbotx_omnichannel_messaging_bus id_external/ChatbotX/packages/flow-config/src/index.ts"
+                  points="1396.093750,-75.222122 1402.348389,-74.000648 1398.869385,-69.485527"
+                  stroke="none"/>
+        <polyline fill="#c3b45a" fill-opacity="1.0"
+                  class="id_ki_chatbotx_omnichannel_messaging_bus id_external/ChatbotX/packages/event-bus/src/index.ts"
+                  points="1490.519531,-98.930794 1484.803467,-96.113396 1484.835938,-101.813301"
+                  stroke="none"/>
+        <polyline fill="#987fae" fill-opacity="1.0"
+                  class="id_ki_self_20260908_01 id_src/harness/services/skill_pipeline.py"
+                  points="-319.269989,-18.568760 -319.535797,-24.936007 -314.335663,-22.601767"
+                  stroke="none"/>
+        <polyline fill="#987fae" fill-opacity="1.0"
+                  class="id_ki_self_20260908_01 id_src/harness/services/skill_graph.py"
+                  points="-280.787079,-94.934212 -286.684296,-92.518539 -286.257965,-98.202576"
+                  stroke="none"/>
+        <polyline fill="#944eb1" fill-opacity="1.0"
+                  class="id_ki_self_20260908_01 id_deep-repo-auditor"
+                  points="-377.927094,-61.913517 -371.223175,-62.152664 -373.713409,-56.693855"
+                  stroke="none"/>
+        <polyline fill="#616ec4" fill-opacity="1.0"
+                  class="id_ki_self_20260908_03 id_media-to-vault-pipeline"
+                  points="-177.525604,598.470642 -171.513702,601.446777 -176.299347,605.065796"
+                  stroke="none"/>
+        <polyline fill="#616ec4" fill-opacity="1.0"
+                  class="id_ki_self_20260908_03 id_context-anti-rot-sync"
+                  points="-79.530563,628.020020 -85.843475,625.751282 -81.503326,621.608459"
+                  stroke="none"/>
+        <polyline fill="#987fae" fill-opacity="1.0"
+                  class="id_ki_self_20260909_03 id_src/harness/plugins/loader.py"
+                  points="777.008789,-274.241333 773.682068,-279.676910 779.361267,-280.164032"
+                  stroke="none"/>
+        <polyline fill="#987fae" fill-opacity="1.0"
+                  class="id_ki_self_20260909_03 id_plugins/agent_orchestration/google_adk_runtime/main.py"
+                  points="736.031372,-264.202026 737.886841,-270.298737 742.021973,-266.375702"
+                  stroke="none"/>
+        <polyline fill="#987fae" fill-opacity="1.0"
+                  class="id_ki_self_20260909_03 id_plugins/agent_orchestration/critic_loop/main.py"
+                  points="729.958740,-365.900574 731.080566,-359.627289 725.613159,-361.239166"
+                  stroke="none"/>
+        <polyline fill="#ba4874" fill-opacity="1.0"
+                  class="id_ki_self_20261019_pyrit_redteam_01 id_ai-red-teaming-architect"
+                  points="714.261230,748.740662 709.030701,752.940918 707.762756,747.076416"
+                  stroke="none"/>
+        <polyline fill="#be7871" fill-opacity="1.0"
+                  class="id_ki_self_20261019_pyrit_redteam_01 id_Brain_Harness_(src/harness/services/pyrit_scanner/)"
+                  points="679.050659,733.529907 678.213196,739.847473 673.494202,736.650452"
+                  stroke="none"/>
+        <polyline fill="#649ec0" fill-opacity="1.0"
+                  class="id_ki_self_20261104_01_powershell_splatting_guard id_tests/test_agent_desktop_operator.py#L42-L56"
+                  points="-540.241760,30.381058 -536.800049,25.017548 -533.885864,29.916306"
+                  stroke="none"/>
+        <polyline fill="#649ec0" fill-opacity="1.0"
+                  class="id_ki_self_20261104_01_powershell_splatting_guard id_cloned/agent-desktop/CONCEPTS.md#L30-L35"
+                  points="-562.512085,-40.557274 -557.315125,-36.868916 -562.344543,-34.186680"
+                  stroke="none"/>
+        <polyline fill="#649ec0" fill-opacity="1.0"
+                  class="id_ki_self_20261104_01_powershell_splatting_guard id_.agents/skills/agent-desktop-operator/SKILL.md#L68-L76"
+                  points="-466.232239,-13.041759 -472.517334,-14.095383 -469.160400,-18.702007"
+                  stroke="none"/>
+        <polyline fill="#649ec0" fill-opacity="1.0"
+                  class="id_ki_self_20261104_02_simulation_backed_domain_engine id_tests/test_plugin_agent_desktop.py#L50-L75"
+                  points="-477.459747,-498.356964 -480.845367,-492.957886 -483.810394,-497.825989"
+                  stroke="none"/>
+        <polyline fill="#649ec0" fill-opacity="1.0"
+                  class="id_ki_self_20261104_02_simulation_backed_domain_engine id_plugins/integration_and_io/agent_desktop/engine.py#L20-L80"
+                  points="-449.381378,-441.744598 -455.441284,-443.716888 -451.439514,-447.775909"
+                  stroke="none"/>
+        <polyline fill="#649ec0" fill-opacity="1.0"
+                  class="id_ki_self_20261104_02_simulation_backed_domain_engine id_.agents/skills/agent-desktop-operator/scripts/desktop_operator_engine.py#L90-L150"
+                  points="-548.152405,-434.828094 -541.943542,-436.264343 -543.278137,-430.722778"
+                  stroke="none"/>
+        <polyline fill="#649ec0" fill-opacity="1.0"
+                  class="id_ki_self_20261104_03_planted_violation_boundary_gate id_cloned/agent-desktop/scripts/check_architecture.py#L1-L120"
+                  points="1226.209351,466.847900 1231.031616,462.681671 1232.435669,468.206024"
+                  stroke="none"/>
+        <polyline fill="#649ec0" fill-opacity="1.0"
+                  class="id_ki_self_20261104_03_planted_violation_boundary_gate id_cloned/agent-desktop/AGENTS.md#L120-L185"
+                  points="1242.793091,377.852753 1244.443970,384.007965 1238.859497,382.866669"
+                  stroke="none"/>
+        <polyline fill="#be7871" fill-opacity="1.0"
+                  class="id_ki_umairmirza_precommit_security id_src/harness/services/pre_commit_security_guard.py"
+                  points="84.158867,959.129822 85.516647,952.903381 89.954712,956.480164"
+                  stroke="none"/>
+        <polyline fill="#ba4874" fill-opacity="1.0"
+                  class="id_ki_umairmirza_precommit_security id_pre-commit-security-guard"
+                  points="31.300554,776.300049 33.028111,782.781982 27.151537,781.571289"
+                  stroke="none"/>
+        <polyline fill="#be7871" fill-opacity="1.0"
+                  class="id_ki_umairmirza_precommit_security id_plugins/security_and_forensics/pre_commit_security_guard/main.py"
+                  points="49.980438,941.117981 55.289528,937.592896 55.985939,943.250244"
+                  stroke="none"/>
+        <polyline fill="#bb3188" fill-opacity="1.0"
+                  class="id_ki_self_20260910_02 id_agent-skills-architect"
+                  points="998.882324,150.827408 1005.089600,153.370956 1000.571899,157.319351"
+                  stroke="none"/>
+        <polyline fill="#944eb1" fill-opacity="1.0"
+                  class="id_ki_self_20260910_01 id_agent-skills-architect"
+                  points="957.890991,103.217690 951.722107,100.582397 956.297913,96.701401"
+                  stroke="none"/>
+        <polyline fill="#9b59b6" fill-opacity="1.0"
+                  class="id_ki_20260830_kimi_01 id_ki_self_20260830_01"
+                  points="-869.350464,638.358093 -868.157654,633.125793 -864.448914,636.173035"
+                  stroke="none"/>
+        <polyline fill="#987fae" fill-opacity="1.0"
+                  class="id_ki_20260830_kimi_01 id_external/kimi-code-main/kimi-code-main/packages/agent-core-v2/src/_base/di/cascadeEngine.ts"
+                  points="-860.250061,564.930481 -861.588318,571.161194 -866.037537,567.598328"
+                  stroke="none"/>
+        <polyline fill="#3498db" fill-opacity="1.0"
+                  class="id_ki_20260831_cellcog_01 id_ki_20260831_cellcog_04"
+                  points="1865.511475,-1719.565796 1861.590942,-1715.901123 1860.227417,-1720.503418"
+                  stroke="none"/>
+        <polyline fill="#3498db" fill-opacity="1.0"
+                  class="id_ki_20260831_cellcog_01 id_ki_20260831_cellcog_03"
+                  points="1828.096191,-1726.790894 1829.301758,-1721.561523 1824.635986,-1722.688721"
+                  stroke="none"/>
+        <polyline fill="#3498db" fill-opacity="1.0"
+                  class="id_ki_20260831_cellcog_03 id_ki_20260831_cellcog_04"
+                  points="1872.834229,-1750.101563 1867.699585,-1751.662354 1871.002075,-1755.145752"
+                  stroke="none"/>
+        <polyline fill="#9b59b6" fill-opacity="1.0"
+                  class="id_ki_20260831_openclaw_01 id_ki_20260831_openclaw_04"
+                  points="-1353.482544,346.149475 -1348.116455,346.080933 -1350.208008,350.401245"
+                  stroke="none"/>
+        <polyline fill="#9b59b6" fill-opacity="1.0"
+                  class="id_ki_20260831_openclaw_01 id_ki_20260831_openclaw_03"
+                  points="-1329.708130,377.282440 -1327.104614,372.589722 -1324.391724,376.549622"
+                  stroke="none"/>
+        <polyline fill="#9b59b6" fill-opacity="1.0"
+                  class="id_ki_20260831_openclaw_03 id_ki_20260831_openclaw_04"
+                  points="-1379.300293,363.778198 -1376.532227,368.375824 -1381.317627,368.751129"
+                  stroke="none"/>
+        <polyline fill="#987fae" fill-opacity="1.0"
+                  class="id_ki_20260922_tau_pi_agent_architecture id_plugins/agent_orchestration/tau_harness_bridge/README.md"
+                  points="721.138489,-986.677490 727.460327,-985.873047 724.288086,-981.137329"
+                  stroke="none"/>
+        <polyline fill="#944eb1" fill-opacity="1.0"
+                  class="id_ki_20260922_tau_pi_agent_architecture id_pi-coding-harness"
+                  points="794.497314,-984.208130 787.828796,-984.936707 791.079041,-989.980042"
+                  stroke="none"/>
+        <polyline fill="#649ec0" fill-opacity="1.0"
+                  class="id_ki_audit_20260908_06 id_src/harness/ui/"
+                  points="235.682114,768.395874 237.379868,774.538330 231.786789,773.439575"
+                  stroke="none"/>
+        <polyline fill="#649ec0" fill-opacity="1.0"
+                  class="id_ki_audit_20260908_06 id_src/harness/commands/__init__.py"
+                  points="257.032990,838.632874 256.099609,832.328857 261.516235,834.103760"
+                  stroke="none"/>
+        <polyline fill="#be7871" fill-opacity="1.0"
+                  class="id_ki_audit_20260915_01 id_src/harness/kernel/lifecycle.py#L45-L110"
+                  points="-783.254456,799.248962 -785.239441,805.304749 -789.290100,801.294495"
+                  stroke="none"/>
+        <polyline fill="#be7871" fill-opacity="1.0"
+                  class="id_ki_audit_20260915_01 id_src/harness/kernel/context.py#L25-L95"
+                  points="-798.268738,871.213501 -796.581177,865.068176 -792.339966,868.876282"
+                  stroke="none"/>
+        <polyline fill="#be7871" fill-opacity="1.0"
+                  class="id_ki_audit_20260915_02 id_tests/test_compute_assessor.py"
+                  points="114.170670,364.180237 108.218140,366.456207 108.778397,360.783783"
+                  stroke="none"/>
+        <polyline fill="#be7871" fill-opacity="1.0"
+                  class="id_ki_chatbotx_isolated_vm_execution id_external/ChatbotX/packages/javascript-sandbox/src/index.ts"
+                  points="-361.177338,940.133484 -363.545929,946.049744 -367.331512,941.788391"
+                  stroke="none"/>
+        <polyline fill="#be7871" fill-opacity="1.0"
+                  class="id_ki_chatbotx_isolated_vm_execution id_external/ChatbotX/apps/javascript-executor/src/index.ts"
+                  points="-383.091400,1010.294617 -380.621460,1004.419983 -376.909668,1008.745789"
+                  stroke="none"/>
+        <polyline fill="#987fae" fill-opacity="1.0"
+                  class="id_ki_self_20260908_02 id_src/harness/services/skill_graph.py"
+                  points="-230.234604,-117.426338 -228.999588,-123.678314 -224.492020,-120.189514"
+                  stroke="none"/>
+        <polyline fill="#987fae" fill-opacity="1.0"
+                  class="id_ki_self_20260908_02 id_src/harness/creator/validator.py"
+                  points="-213.850861,-189.744797 -216.511261,-183.953873 -220.079834,-188.398544"
+                  stroke="none"/>
+        <polyline fill="#987fae" fill-opacity="1.0"
+                  class="id_ki_self_20260908_04 id_tests/test_data_management_architect.py"
+                  points="2076.401367,123.036575 2077.455078,129.321640 2072.005371,127.650612"
+                  stroke="none"/>
+        <polyline fill="#944eb1" fill-opacity="1.0"
+                  class="id_ki_self_20260908_04 id_data-management-architect"
+                  points="2095.574463,193.886032 2094.278564,187.304245 2100.062256,188.900009"
+                  stroke="none"/>
+        <polyline fill="#be7871" fill-opacity="1.0"
+                  class="id_ki_self_20260909_02 id_scratch/inspect_omarchy.py"
+                  points="-394.663757,109.324181 -397.362366,115.097397 -400.901489,110.629227"
+                  stroke="none"/>
+        <polyline fill="#be7871" fill-opacity="1.0"
+                  class="id_ki_self_20260909_02 id_plugins/geospatial_and_osint/earth_engine_pipeline/main.py"
+                  points="-419.002930,178.685806 -416.456573,172.843842 -412.801544,177.217743"
+                  stroke="none"/>
+        <polyline fill="#987fae" fill-opacity="1.0"
+                  class="id_ki_self_20260910_01 id_tests/test_agent_skills_architect_deepened.py"
+                  points="887.713440,76.237877 893.289001,79.324287 888.589661,82.550148"
+                  stroke="none"/>
+        <polyline fill="#bf6184" fill-opacity="1.0"
+                  class="id_ki_self_20260910_02 id_tests/test_agent_skill_sdlc.py"
+                  points="1070.777466,173.134018 1064.872803,170.736862 1069.152344,166.971909"
+                  stroke="none"/>
+        <polyline fill="#616ec4" fill-opacity="1.0"
+                  class="id_ki_self_20261019_hyperframes_video_01 id_hyperframes-video-architect"
+                  points="653.444153,1523.251831 657.672424,1518.043945 660.147400,1523.509766"
+                  stroke="none"/>
+        <polyline fill="#649ec0" fill-opacity="1.0"
+                  class="id_ki_self_20261019_hyperframes_video_01 id_Brain_Harness_(src/harness/services/hyperframes/)"
+                  points="694.883728,1462.695557 690.845154,1467.625244 688.516785,1462.422363"
+                  stroke="none"/>
+        <polyline fill="#bf845e" fill-opacity="1.0"
+                  class="id_ki_self_20261019_memory_decay_01 id_ebbinghaus-memory-governor"
+                  points="480.545563,-48.548901 474.026428,-46.967400 475.368896,-52.815292"
+                  stroke="none"/>
+        <polyline fill="#c3b45a" fill-opacity="1.0"
+                  class="id_ki_self_20261019_memory_decay_01 id_Brain_Harness_(src/harness/services/memory_decay/)"
+                  points="410.885437,-25.499680 417.086029,-26.971245 415.783051,-21.422169"
+                  stroke="none"/>
+        <polyline fill="#5e888f" fill-opacity="1.0"
+                  class="id_ki_self_20261019_prometheus_exporter_01 id_cloud-infrastructure-architect"
+                  points="996.871643,-440.553558 1002.614136,-437.086151 997.543213,-433.879059"
+                  stroke="none"/>
+        <polyline fill="#61b88b" fill-opacity="1.0"
+                  class="id_ki_self_20261019_prometheus_exporter_01 id_Brain_Harness_(src/harness/services/prometheus/)"
+                  points="1062.523193,-407.741425 1057.096436,-411.082581 1061.939941,-414.087463"
+                  stroke="none"/>
+        <polyline fill="#944eb1" fill-opacity="1.0"
+                  class="id_ki_self_20261019_prompt_pruning_01 id_prompt-pruning-architect"
+                  points="-1244.908081,1359.007446 -1251.445435,1357.503662 -1247.627563,1352.875244"
+                  stroke="none"/>
+        <polyline fill="#987fae" fill-opacity="1.0"
+                  class="id_ki_self_20261019_prompt_pruning_01 id_Brain_Harness_(src/harness/services/context_optimizer/)"
+                  points="-1317.509521,1348.734375 -1311.294556,1350.143677 -1314.908081,1354.551880"
+                  stroke="none"/>
+        <polyline fill="#e67e22" fill-opacity="1.0"
+                  class="id_ki_solla_contract_first_medallion_lakehouse id_ki_solla_dmbok_governance_decision_rights"
+                  points="-1014.503052,-1233.245483 -1019.859436,-1233.575562 -1017.452820,-1237.728638"
+                  stroke="none"/>
+        <polyline fill="#e67e22" fill-opacity="1.0"
+                  class="id_ki_solla_contract_first_medallion_lakehouse id_ki_solla_dikw_data_asset_continuum"
+                  points="-1032.181763,-1199.345093 -1034.575562,-1204.148193 -1029.775513,-1204.141846"
+                  stroke="none"/>
+        <polyline fill="#e67e22" fill-opacity="1.0"
+                  class="id_ki_solla_dikw_data_asset_continuum id_ki_solla_dmbok_governance_decision_rights"
+                  points="-1014.551025,-1201.828857 -1017.514526,-1197.354736 -1019.908447,-1201.515137"
+                  stroke="none"/>
+        <polyline fill="#616ec4" fill-opacity="1.0"
+                  class="id_ki_self_20261014_01 id_architecture-deepening-workflow"
+                  points="1016.338135,474.883972 1009.630981,474.762634 1012.410889,469.445496"
+                  stroke="none"/>
+        <polyline fill="#c3b45a" fill-opacity="1.0"
+                  class="id_ki_20260830_kimi_04 id_external/kimi-code-main/kimi-code-main/packages/minidb/src/compaction.ts"
+                  points="113.326256,-759.140686 116.677971,-753.720459 111.001137,-753.207153"
+                  stroke="none"/>
+        <polyline fill="#987fae" fill-opacity="1.0"
+                  class="id_ki_20260830_kimi_05 id_external/kimi-code-main/kimi-code-main/packages/pi-tui/src/tui.ts"
+                  points="-124.300163,-1249.255493 -130.670624,-1249.082886 -128.260498,-1254.248169"
+                  stroke="none"/>
+        <polyline fill="#649ec0" fill-opacity="1.0"
+                  class="id_ki_20260830_kimi_02 id_external/kimi-code-main/kimi-code-main/packages/transcript/src/granularity/filterOps.ts"
+                  points="-1477.464844,132.633865 -1483.073486,129.607925 -1478.409180,126.331436"
+                  stroke="none"/>
+        <polyline fill="#987fae" fill-opacity="1.0"
+                  class="id_ki_20260830_kimi_03 id_external/kimi-code-main/kimi-code-main/packages/tree-sitter-bash/src/parser.ts"
+                  points="-12.162828,709.257751 -10.457552,715.398132 -16.051983,714.306213"
+                  stroke="none"/>
+        <polyline fill="#616ec4" fill-opacity="1.0"
+                  class="id_ki-gradio-app-architect id_gradio-app-architect"
+                  points="717.129333,1686.332153 722.312622,1682.073730 723.645996,1687.923584"
+                  stroke="none"/>
+        <polyline fill="#616ec4" fill-opacity="1.0"
+                  class="id_ki-responsible-ai-prototyping id_responsible-ai-prototyping"
+                  points="-439.673584,-955.139587 -433.339233,-952.931396 -437.639526,-948.747192"
+                  stroke="none"/>
+        <polyline fill="#987fae" fill-opacity="1.0"
+                  class="id_ki_20260823_02 id_plugins/memory_and_epistemics/brain_bridge/main.py"
+                  points="-149.728210,527.557312 -154.142624,532.153503 -156.053848,526.783508"
+                  stroke="none"/>
+        <polyline fill="#9b59b6" fill-opacity="1.0"
+                  class="id_ki_20260823_repo_04 id_ki_self_20260829_04"
+                  points="-2294.174561,1084.897827 -2289.521973,1082.223511 -2289.243652,1087.015503"
+                  stroke="none"/>
+        <polyline fill="#f1c40f" fill-opacity="1.0"
+                  class="id_ki_20260824_repo_01 id_ki_20260913_memgraph_rag_05"
+                  points="-1204.765869,-374.694305 -1203.615967,-379.936249 -1199.882324,-376.919586"
+                  stroke="none"/>
+        <polyline fill="#9b59b6" fill-opacity="1.0"
+                  class="id_ki_20260829_cellcog_01 id_ki_20260831_cellcog_02"
+                  points="-81.277969,286.406006 -86.620537,285.899078 -84.077965,281.827789"
+                  stroke="none"/>
+        <polyline fill="#9b59b6" fill-opacity="1.0"
+                  class="id_ki_20260830_repo_01 id_ki_20261023_opencode_01"
+                  points="1754.062012,1235.437134 1751.601807,1240.206665 1748.770264,1236.330688"
+                  stroke="none"/>
+        <polyline fill="#f1c40f" fill-opacity="1.0"
+                  class="id_ki_20260831_em3_02 id_ki_20260831_em3_03"
+                  points="991.105225,-293.522034 986.319519,-295.950378 990.176453,-298.807617"
+                  stroke="none"/>
+        <polyline fill="#9b59b6" fill-opacity="1.0"
+                  class="id_ki_20260831_em3_04 id_ki_20260831_em3_05"
+                  points="-1252.750000,-1909.021118 -1250.026978,-1913.645386 -1247.416626,-1909.617310"
+                  stroke="none"/>
+        <polyline fill="#e74c3c" fill-opacity="1.0"
+                  class="id_ki_20260831_sme_04 id_ki_20260831_sme_05"
+                  points="1670.878540,-59.723122 1669.401123,-64.882301 1674.119385,-64.000587"
+                  stroke="none"/>
+        <polyline fill="#9b59b6" fill-opacity="1.0"
+                  class="id_ki_20260831_strategify_01 id_ki_self_20260831_04"
+                  points="-758.412170,-2068.810791 -753.128357,-2069.749756 -754.490784,-2065.147217"
+                  stroke="none"/>
+        <polyline fill="#9b59b6" fill-opacity="1.0"
+                  class="id_ki_20260831_strategify_04 id_ki_self_20260831_01"
+                  points="-508.921356,-1361.992065 -512.923767,-1358.417114 -514.182800,-1363.048950"
+                  stroke="none"/>
+        <polyline fill="#9b59b6" fill-opacity="1.0"
+                  class="id_ki_20260913_pr_lens_eli5_pedagogy id_ki_agent_skills_progressive_disclosure"
+                  points="-1771.816162,666.497681 -1766.962769,668.787476 -1770.735962,671.754395"
+                  stroke="none"/>
+        <polyline fill="#f1c40f" fill-opacity="1.0"
+                  class="id_ki_20260913_pr_lens_overlay id_ki_20260913_pr_lens_schema"
+                  points="289.322662,-1839.821655 294.415497,-1841.513672 293.732025,-1836.762695"
+                  stroke="none"/>
+        <polyline fill="#be7871" fill-opacity="1.0"
+                  class="id_ki_audit_20260908_05 id_src/harness/services/openrouter_gateway.py#L17"
+                  points="1967.200439,-1203.893555 1962.234009,-1207.886963 1967.415405,-1210.262695"
+                  stroke="none"/>
+        <polyline fill="#61b88b" fill-opacity="1.0"
+                  class="id_ki_audit_20260915_03 id_src/harness/plugins/loader.py#L71-L110"
+                  points="1886.623779,-906.497192 1890.198486,-901.221375 1884.547852,-900.471985"
+                  stroke="none"/>
+        <polyline fill="#f1c40f" fill-opacity="1.0"
+                  class="id_ki_auto_20260915_01 id_ki_mindreader_20260911_01"
+                  points="-80.243446,-1167.251587 -84.811661,-1164.435425 -85.237396,-1169.216431"
+                  stroke="none"/>
+        <polyline fill="#00bcd4" fill-opacity="1.0"
+                  class="id_ki_deepselect_bitmask_filtering id_ki_deepselect_denormal_fp32"
+                  points="-1287.185791,836.749390 -1287.053101,842.114319 -1291.398071,840.074524"
+                  stroke="none"/>
+        <polyline fill="#9b59b6" fill-opacity="1.0"
+                  class="id_ki_koos_typescript_harness_from_scratch id_ki_self_20260917_01"
+                  points="-673.012268,1203.438721 -674.143433,1208.684814 -677.887817,1205.681396"
+                  stroke="none"/>
+        <polyline fill="#9b59b6" fill-opacity="1.0"
+                  class="id_ki_self_20260829_02 id_ki_self_20260914_05"
+                  points="-642.055481,-1400.716431 -646.758667,-1403.300903 -642.809692,-1406.029663"
+                  stroke="none"/>
+        <polyline fill="#2ecc71" fill-opacity="1.0"
+                  class="id_ki_self_20260901_02 id_ki_self_20260901_scratch_03"
+                  points="-231.043427,1515.647827 -235.882538,1517.967896 -235.802979,1513.168579"
+                  stroke="none"/>
+        <polyline fill="#987fae" fill-opacity="1.0"
+                  class="id_ki_self_20260901_03 id_src/harness/mcp"
+                  points="-810.772949,-814.468567 -811.302185,-808.117737 -816.171082,-811.081482"
+                  stroke="none"/>
+        <polyline fill="#3498db" fill-opacity="1.0"
+                  class="id_ki_self_20260911_01 id_ki_self_20260914_01"
+                  points="-418.799713,279.721039 -421.437439,284.394592 -424.121216,280.414978"
+                  stroke="none"/>
+        <polyline fill="#e74c3c" fill-opacity="1.0"
+                  class="id_ki_self_20260922_01 id_ki_self_20260924_01"
+                  points="-1118.817017,-236.630157 -1121.372559,-241.349167 -1116.575195,-241.505997"
+                  stroke="none"/>
+    </g>
+    <g id="nodes">
+        <circle fill-opacity="1.0" fill="#3498db" r="92.0" cx="-218.09886"
+                class="id_ki-deepening-cycle-history" cy="322.1297"
+                stroke="#1a4c6d" stroke-opacity="1.0" stroke-width="16.0"/>
+        <circle fill-opacity="1.0" fill="#9b59b6" r="92.0" cx="121.058495"
+                class="id_ki-topology-map" cy="199.8981" stroke="#4d2c5b"
+                stroke-opacity="1.0" stroke-width="16.0"/>
+        <circle fill-opacity="1.0" fill="#3498db" r="92.0" cx="1078.8254"
+                class="id_ki_google_repos_bridge" cy="-1604.7712"
+                stroke="#1a4c6d" stroke-opacity="1.0" stroke-width="16.0"/>
+        <circle fill-opacity="1.0" fill="#3498db" r="79.38987" cx="-54.859165"
+                class="id_ki-file-size-hotspots" cy="125.24214" stroke="#1a4c6d"
+                stroke-opacity="1.0" stroke-width="13.806933"/>
+        <circle fill-opacity="1.0" fill="#e67e22" r="79.38987" cx="-592.0882"
+                class="id_ki-hf-datasets-arrow-streaming" cy="940.2626"
+                stroke="#733f11" stroke-opacity="1.0" stroke-width="13.806933"/>
+        <circle fill-opacity="1.0" fill="#9b59b6" r="79.38987" cx="2.4035215"
+                class="id_ki_audit_20260908_02" cy="-46.160664" stroke="#4d2c5b"
+                stroke-opacity="1.0" stroke-width="13.806933"/>
+        <circle fill-opacity="1.0" fill="#e67e22" r="79.38987" cx="-832.5731"
+                class="id_ki_garf_reporting_engine" cy="-319.95425"
+                stroke="#733f11" stroke-opacity="1.0" stroke-width="13.806933"/>
+        <circle fill-opacity="1.0" fill="#e67e22" r="66.77974" cx="-632.6398"
+                class="id_ki-paperless-ai-rag-sqlite-vec" cy="-659.5758"
+                stroke="#733f11" stroke-opacity="1.0" stroke-width="11.613867"/>
+        <circle fill-opacity="1.0" fill="#3498db" r="66.77974" cx="-856.0074"
+                class="id_ki-paperless-ngx-architecture" cy="205.50716"
+                stroke="#1a4c6d" stroke-opacity="1.0" stroke-width="11.613867"/>
+        <circle fill-opacity="1.0" fill="#e74c3c" r="66.77974" cx="-158.5822"
+                class="id_ki_audit_20260908_03" cy="-5.7845063" stroke="#73261e"
+                stroke-opacity="1.0" stroke-width="11.613867"/>
+        <circle fill-opacity="1.0" fill="#e74c3c" r="66.77974" cx="1150.7635"
+                class="id_ki_audit_20260908_07" cy="-11.913996" stroke="#73261e"
+                stroke-opacity="1.0" stroke-width="11.613867"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="66.77974" cx="-218.38557"
+                class="id_src/harness/agent/swarm.py" cy="131.67462"
+                stroke="#4a5253" stroke-opacity="1.0" stroke-width="11.613867"/>
+        <circle fill-opacity="1.0" fill="#3498db" r="54.169605" cx="-43.789806"
+                class="id_ki-cli-decomposition-pattern" cy="545.67126"
+                stroke="#1a4c6d" stroke-opacity="1.0" stroke-width="9.4208"/>
+        <circle fill-opacity="1.0" fill="#3498db" r="54.169605" cx="333.23618"
+                class="id_ki-omarchy-quattro-bridge" cy="508.31143"
+                stroke="#1a4c6d" stroke-opacity="1.0" stroke-width="9.4208"/>
+        <circle fill-opacity="1.0" fill="#e74c3c" r="54.169605" cx="105.27"
+                class="id_ki_20260821_06" cy="797.5776" stroke="#73261e"
+                stroke-opacity="1.0" stroke-width="9.4208"/>
+        <circle fill-opacity="1.0" fill="#e74c3c" r="54.169605" cx="-47.9276"
+                class="id_ki_20260823_01" cy="762.2863" stroke="#73261e"
+                stroke-opacity="1.0" stroke-width="9.4208"/>
+        <circle fill-opacity="1.0" fill="#e74c3c" r="54.169605" cx="608.9144"
+                class="id_ki_20260831_em3_01" cy="965.8308" stroke="#73261e"
+                stroke-opacity="1.0" stroke-width="9.4208"/>
+        <circle fill-opacity="1.0" fill="#f1c40f" r="54.169605" cx="551.7492"
+                class="id_ki_20261028_headroom_context_optimization"
+                cy="-237.88348" stroke="#786207" stroke-opacity="1.0"
+                stroke-width="9.4208"/>
+        <circle fill-opacity="1.0" fill="#3498db" r="54.169605" cx="1161.5343"
+                class="id_ki_agent_desktop_self_testing_arch" cy="385.35443"
+                stroke="#1a4c6d" stroke-opacity="1.0" stroke-width="9.4208"/>
+        <circle fill-opacity="1.0" fill="#e74c3c" r="54.169605" cx="709.3761"
+                class="id_ki_self_20260827_02" cy="894.19965" stroke="#73261e"
+                stroke-opacity="1.0" stroke-width="9.4208"/>
+        <circle fill-opacity="1.0" fill="#9b59b6" r="54.169605" cx="650.5952"
+                class="id_ki_self_20260909_01" cy="-433.42288" stroke="#4d2c5b"
+                stroke-opacity="1.0" stroke-width="9.4208"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="54.169605" cx="-99.69221"
+                class="id_src/harness/cli.py" cy="436.7408" stroke="#4a5253"
+                stroke-opacity="1.0" stroke-width="9.4208"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="54.169605" cx="-10.554981"
+                class="id_src/harness/services/compute_assessor.py" cy="351.49"
+                stroke="#4a5253" stroke-opacity="1.0" stroke-width="9.4208"/>
+        <circle fill-opacity="1.0" fill="#2ecc71" r="41.510403" cx="-202.255"
+                class="id_ki_20260823_03" cy="481.36755" stroke="#176638"
+                stroke-opacity="1.0" stroke-width="7.2192"/>
+        <circle fill-opacity="1.0" fill="#e74c3c" r="41.510403" cx="709.1522"
+                class="id_ki_20260823_repo_01" cy="1009.157" stroke="#73261e"
+                stroke-opacity="1.0" stroke-width="7.2192"/>
+        <circle fill-opacity="1.0" fill="#9b59b6" r="41.510403" cx="30.591743"
+                class="id_ki_20260830_claude_02" cy="-184.27467"
+                stroke="#4d2c5b" stroke-opacity="1.0" stroke-width="7.2192"/>
+        <circle fill-opacity="1.0" fill="#e74c3c" r="41.510403" cx="57.377316"
+                class="id_ki_20260830_grok_03" cy="697.8687" stroke="#73261e"
+                stroke-opacity="1.0" stroke-width="7.2192"/>
+        <circle fill-opacity="1.0" fill="#9b59b6" r="41.510403" cx="112.03498"
+                class="id_ki_20260913_claude_coord_02" cy="-135.62946"
+                stroke="#4d2c5b" stroke-opacity="1.0" stroke-width="7.2192"/>
+        <circle fill-opacity="1.0" fill="#e74c3c" r="41.510403" cx="8.404977"
+                class="id_ki_20260913_tool_approval_03" cy="856.8943"
+                stroke="#73261e" stroke-opacity="1.0" stroke-width="7.2192"/>
+        <circle fill-opacity="1.0" fill="#e74c3c" r="41.510403" cx="510.56326"
+                class="id_ki_20260923_ethical_hacker_networking" cy="1090.6555"
+                stroke="#73261e" stroke-opacity="1.0" stroke-width="7.2192"/>
+        <circle fill-opacity="1.0" fill="#3498db" r="41.510403" cx="1044.9259"
+                class="id_ki_agent_desktop_capture_proof" cy="925.97614"
+                stroke="#1a4c6d" stroke-opacity="1.0" stroke-width="7.2192"/>
+        <circle fill-opacity="1.0" fill="#9b59b6" r="41.510403" cx="-720.07184"
+                class="id_ki_agent_desktop_disposition_matrix" cy="8.630099"
+                stroke="#4d2c5b" stroke-opacity="1.0" stroke-width="7.2192"/>
+        <circle fill-opacity="1.0" fill="#3498db" r="41.510403" cx="804.78955"
+                class="id_ki_agent_desktop_interaction_lease" cy="828.3757"
+                stroke="#1a4c6d" stroke-opacity="1.0" stroke-width="7.2192"/>
+        <circle fill-opacity="1.0" fill="#2ecc71" r="41.510403" cx="138.42685"
+                class="id_ki_agent_desktop_mcp_cancellation" cy="457.71158"
+                stroke="#176638" stroke-opacity="1.0" stroke-width="7.2192"/>
+        <circle fill-opacity="1.0" fill="#2ecc71" r="41.510403" cx="-1039.8386"
+                class="id_ki_chatbotx_dynamic_mcp_orpc" cy="-414.40338"
+                stroke="#176638" stroke-opacity="1.0" stroke-width="7.2192"/>
+        <circle fill-opacity="1.0" fill="#f1c40f" r="41.510403" cx="1447.2717"
+                class="id_ki_chatbotx_omnichannel_messaging_bus" cy="-71.136055"
+                stroke="#786207" stroke-opacity="1.0" stroke-width="7.2192"/>
+        <circle fill-opacity="1.0" fill="#9b59b6" r="41.510403" cx="-327.20026"
+                class="id_ki_self_20260908_01" cy="-69.33294" stroke="#4d2c5b"
+                stroke-opacity="1.0" stroke-width="7.2192"/>
+        <circle fill-opacity="1.0" fill="#3498db" r="41.510403" cx="-129.29143"
+                class="id_ki_self_20260908_03" cy="616.07666" stroke="#1a4c6d"
+                stroke-opacity="1.0" stroke-width="7.2192"/>
+        <circle fill-opacity="1.0" fill="#9b59b6" r="41.510403" cx="745.3507"
+                class="id_ki_self_20260909_03" cy="-314.81744" stroke="#4d2c5b"
+                stroke-opacity="1.0" stroke-width="7.2192"/>
+        <circle fill-opacity="1.0" fill="#e74c3c" r="41.510403" cx="792.4194"
+                class="id_ki_self_20261002_05" cy="965.4659" stroke="#73261e"
+                stroke-opacity="1.0" stroke-width="7.2192"/>
+        <circle fill-opacity="1.0" fill="#e74c3c" r="41.510403" cx="678.09985"
+                class="id_ki_self_20261019_pyrit_redteam_01" cy="784.94763"
+                stroke="#73261e" stroke-opacity="1.0" stroke-width="7.2192"/>
+        <circle fill-opacity="1.0" fill="#3498db" r="41.510403" cx="-517.54285"
+                class="id_ki_self_20261104_01_powershell_splatting_guard"
+                cy="-15.756037" stroke="#1a4c6d" stroke-opacity="1.0"
+                stroke-width="7.2192"/>
+        <circle fill-opacity="1.0" fill="#3498db" r="41.510403" cx="-499.66467"
+                class="id_ki_self_20261104_02_simulation_backed_domain_engine"
+                cy="-452.01535" stroke="#1a4c6d" stroke-opacity="1.0"
+                stroke-width="7.2192"/>
+        <circle fill-opacity="1.0" fill="#3498db" r="41.510403" cx="1262.4318"
+                class="id_ki_self_20261104_03_planted_violation_boundary_gate"
+                cy="427.3585" stroke="#1a4c6d" stroke-opacity="1.0"
+                stroke-width="7.2192"/>
+        <circle fill-opacity="1.0" fill="#e74c3c" r="41.510403" cx="89.36429"
+                class="id_ki_umairmirza_precommit_security" cy="907.97974"
+                stroke="#73261e" stroke-opacity="1.0" stroke-width="7.2192"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="41.510403" cx="98.8294"
+                class="id_src/harness/kernel/context.py" cy="49.683594"
+                stroke="#4a5253" stroke-opacity="1.0" stroke-width="7.2192"/>
+        <circle fill-opacity="1.0" fill="#8e44ad" r="28.900269" cx="978.2102"
+                class="id_agent-skills-architect" cy="127.17448"
+                stroke="#472256" stroke-opacity="1.0" stroke-width="5.0261335"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="28.900269" cx="1249.0828"
+                class="id_cloned/agent-desktop/AGENTS.md#L120-L185"
+                cy="347.07553" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="5.0261335"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="28.900269" cx="1195.7639"
+                class="id_cloned/agent-desktop/scripts/check_architecture.py#L1-L120"
+                cy="474.5858" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="5.0261335"/>
+        <circle fill-opacity="1.0" fill="#9b59b6" r="28.900269" cx="-864.82684"
+                class="id_ki_20260830_kimi_01" cy="601.34235" stroke="#4d2c5b"
+                stroke-opacity="1.0" stroke-width="5.0261335"/>
+        <circle fill-opacity="1.0" fill="#3498db" r="28.900269" cx="1840.4829"
+                class="id_ki_20260831_cellcog_01" cy="-1690.7261"
+                stroke="#1a4c6d" stroke-opacity="1.0" stroke-width="5.0261335"/>
+        <circle fill-opacity="1.0" fill="#3498db" r="28.900269" cx="1835.4738"
+                class="id_ki_20260831_cellcog_03" cy="-1757.3256"
+                stroke="#1a4c6d" stroke-opacity="1.0" stroke-width="5.0261335"/>
+        <circle fill-opacity="1.0" fill="#3498db" r="28.900269" cx="1895.6309"
+                class="id_ki_20260831_cellcog_04" cy="-1728.4889"
+                stroke="#1a4c6d" stroke-opacity="1.0" stroke-width="5.0261335"/>
+        <circle fill-opacity="1.0" fill="#9b59b6" r="28.900269" cx="-1314.5402"
+                class="id_ki_20260831_openclaw_01" cy="341.48825"
+                stroke="#4d2c5b" stroke-opacity="1.0" stroke-width="5.0261335"/>
+        <circle fill-opacity="1.0" fill="#9b59b6" r="28.900269" cx="-1355.6234"
+                class="id_ki_20260831_openclaw_03" cy="395.03613"
+                stroke="#4d2c5b" stroke-opacity="1.0" stroke-width="5.0261335"/>
+        <circle fill-opacity="1.0" fill="#9b59b6" r="28.900269" cx="-1381.7566"
+                class="id_ki_20260831_openclaw_04" cy="332.46103"
+                stroke="#4d2c5b" stroke-opacity="1.0" stroke-width="5.0261335"/>
+        <circle fill-opacity="1.0" fill="#9b59b6" r="28.900269" cx="757.89575"
+                class="id_ki_20260922_tau_pi_agent_architecture" cy="-985.2132"
+                stroke="#4d2c5b" stroke-opacity="1.0" stroke-width="5.0261335"/>
+        <circle fill-opacity="1.0" fill="#3498db" r="28.900269" cx="248.52779"
+                class="id_ki_audit_20260908_06" cy="802.89185" stroke="#1a4c6d"
+                stroke-opacity="1.0" stroke-width="5.0261335"/>
+        <circle fill-opacity="1.0" fill="#e74c3c" r="28.900269" cx="-791.6412"
+                class="id_ki_audit_20260915_01" cy="835.06976" stroke="#73261e"
+                stroke-opacity="1.0" stroke-width="5.0261335"/>
+        <circle fill-opacity="1.0" fill="#e74c3c" r="28.900269" cx="81.106995"
+                class="id_ki_audit_20260915_02" cy="380.22784" stroke="#73261e"
+                stroke-opacity="1.0" stroke-width="5.0261335"/>
+        <circle fill-opacity="1.0" fill="#e74c3c" r="28.900269" cx="-371.83615"
+                class="id_ki_chatbotx_isolated_vm_execution" cy="975.32336"
+                stroke="#73261e" stroke-opacity="1.0" stroke-width="5.0261335"/>
+        <circle fill-opacity="1.0" fill="#9b59b6" r="28.900269" cx="105.60697"
+                class="id_ki_orca_orchestration_engine" cy="-217.61977"
+                stroke="#4d2c5b" stroke-opacity="1.0" stroke-width="5.0261335"/>
+        <circle fill-opacity="1.0" fill="#9b59b6" r="28.900269" cx="-226.2416"
+                class="id_ki_self_20260908_02" cy="-155.15984" stroke="#4d2c5b"
+                stroke-opacity="1.0" stroke-width="5.0261335"/>
+        <circle fill-opacity="1.0" fill="#9b59b6" r="28.900269" cx="2085.629"
+                class="id_ki_self_20260908_04" cy="158.72095" stroke="#4d2c5b"
+                stroke-opacity="1.0" stroke-width="5.0261335"/>
+        <circle fill-opacity="1.0" fill="#e74c3c" r="28.900269" cx="-407.28812"
+                class="id_ki_self_20260909_02" cy="143.8467" stroke="#73261e"
+                stroke-opacity="1.0" stroke-width="5.0261335"/>
+        <circle fill-opacity="1.0" fill="#9b59b6" r="28.900269" cx="921.3247"
+                class="id_ki_self_20260910_01" cy="91.1999" stroke="#4d2c5b"
+                stroke-opacity="1.0" stroke-width="5.0261335"/>
+        <circle fill-opacity="1.0" fill="#e91e63" r="28.900269" cx="1035.6641"
+                class="id_ki_self_20260910_02" cy="162.31056" stroke="#740f31"
+                stroke-opacity="1.0" stroke-width="5.0261335"/>
+        <circle fill-opacity="1.0" fill="#3498db" r="28.900269" cx="674.2084"
+                class="id_ki_self_20261019_hyperframes_video_01" cy="1492.913"
+                stroke="#1a4c6d" stroke-opacity="1.0" stroke-width="5.0261335"/>
+        <circle fill-opacity="1.0" fill="#f1c40f" r="28.900269" cx="445.68463"
+                class="id_ki_self_20261019_memory_decay_01" cy="-37.00966"
+                stroke="#786207" stroke-opacity="1.0" stroke-width="5.0261335"/>
+        <circle fill-opacity="1.0" fill="#2ecc71" r="28.900269" cx="1029.7766"
+                class="id_ki_self_20261019_prometheus_exporter_01"
+                cy="-424.18994" stroke="#176638" stroke-opacity="1.0"
+                stroke-width="5.0261335"/>
+        <circle fill-opacity="1.0" fill="#9b59b6" r="28.900269" cx="-1281.2047"
+                class="id_ki_self_20261019_prompt_pruning_01" cy="1353.7245"
+                stroke="#4d2c5b" stroke-opacity="1.0" stroke-width="5.0261335"/>
+        <circle fill-opacity="1.0" fill="#e67e22" r="28.900269" cx="-1052.7135"
+                class="id_ki_solla_contract_first_medallion_lakehouse"
+                cy="-1231.6039" stroke="#733f11" stroke-opacity="1.0"
+                stroke-width="5.0261335"/>
+        <circle fill-opacity="1.0" fill="#e67e22" r="28.900269" cx="-1032.2229"
+                class="id_ki_solla_dikw_data_asset_continuum" cy="-1167.9318"
+                stroke="#733f11" stroke-opacity="1.0" stroke-width="5.0261335"/>
+        <circle fill-opacity="1.0" fill="#e67e22" r="28.900269" cx="-987.3233"
+                class="id_ki_solla_dmbok_governance_decision_rights"
+                cy="-1217.4956" stroke="#733f11" stroke-opacity="1.0"
+                stroke-width="5.0261335"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="28.900269" cx="738.84186"
+                class="id_plugins/agent_orchestration/critic_loop/main.py"
+                cy="-396.03174" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="5.0261335"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="28.900269" cx="-107.43233"
+                class="id_src/harness/agent/react.py" cy="-103.60001"
+                stroke="#4a5253" stroke-opacity="1.0" stroke-width="5.0261335"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="28.900269" cx="-5.0704947"
+                class="id_src/harness/agent/session.py" cy="255.12918"
+                stroke="#4a5253" stroke-opacity="1.0" stroke-width="5.0261335"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="28.900269" cx="-68.64158"
+                class="id_src/harness/events/bus.py" cy="245.04422"
+                stroke="#4a5253" stroke-opacity="1.0" stroke-width="5.0261335"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="28.900269" cx="-142.46552"
+                class="id_src/harness/kernel/lifecycle.py" cy="208.10593"
+                stroke="#4a5253" stroke-opacity="1.0" stroke-width="5.0261335"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="28.900269" cx="-249.46175"
+                class="id_src/harness/services/skill_graph.py" cy="-92.58455"
+                stroke="#4a5253" stroke-opacity="1.0" stroke-width="5.0261335"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-451.9221"
+                class="id_.agents/skills/agent-desktop-operator/SKILL.md#L68-L76"
+                cy="-2.6136646" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-565.36694"
+                class="id_.agents/skills/agent-desktop-operator/scripts/desktop_operator_engine.py#L90-L150"
+                cy="-438.97375" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-1331.2036"
+                class="id_Brain_Harness_(src/harness/services/context_optimizer/)"
+                cy="1337.5094" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="711.04584"
+                class="id_Brain_Harness_(src/harness/services/hyperframes/)"
+                cy="1455.4628" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="393.6476"
+                class="id_Brain_Harness_(src/harness/services/memory_decay/)"
+                cy="-29.547276" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="1071.8577"
+                class="id_Brain_Harness_(src/harness/services/prometheus/)"
+                cy="-392.69507" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="688.9819"
+                class="id_Brain_Harness_(src/harness/services/pyrit_scanner/)"
+                cy="718.87054" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#8e44ad" r="16.290133" cx="731.568"
+                class="id_ai-red-teaming-architect" cy="744.9987"
+                stroke="#472256" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#8e44ad" r="16.290133" cx="1032.0297"
+                class="id_architecture-deepening-workflow" cy="483.0877"
+                stroke="#472256" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-570.84424"
+                class="id_cloned/agent-desktop/CONCEPTS.md#L30-L35" cy="-56.181"
+                stroke="#4a5253" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="762.62195"
+                class="id_cloned/agent-desktop/CONCEPTS.md#L50-L66"
+                cy="776.8178" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="1105.3796"
+                class="id_cloned/agent-desktop/CONCEPTS.md#L68-L115"
+                cy="897.3642" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="1086.4468"
+                class="id_cloned/agent-desktop/Cargo.toml#L1-L35" cy="353.52692"
+                stroke="#4a5253" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-681.53296"
+                class="id_cloned/agent-desktop/crates/core/src/actionability/evaluate.rs#L78-L110"
+                cy="63.367416" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="1029.2893"
+                class="id_cloned/agent-desktop/crates/core/src/refs/ref_capture_proof.rs#L1-L162"
+                cy="991.05084" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="984.06903"
+                class="id_cloned/agent-desktop/crates/core/src/refs/ref_entry_identity.rs#L1-L80"
+                cy="897.9528" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-783.57874"
+                class="id_cloned/agent-desktop/crates/core/src/response/delivery_disposition.rs#L1-L13"
+                cy="-12.458683" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-665.8258"
+                class="id_cloned/agent-desktop/crates/core/src/response/retry_disposition.rs#L1-L10"
+                cy="-30.550827" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="799.0907"
+                class="id_cloned/agent-desktop/crates/core/src/session/interaction_lease.rs#L1-L125"
+                cy="894.8967" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="740.21594"
+                class="id_cloned/agent-desktop/crates/core/src/tree/accname.rs#L1-L50"
+                cy="813.8691" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="71.730675"
+                class="id_cloned/agent-desktop/src/mcp/calls.rs#L1-L110"
+                cy="461.67657" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="192.64745"
+                class="id_cloned/agent-desktop/src/mcp/catalog.rs#L1-L95"
+                cy="418.3327" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="108.44108"
+                class="id_cloned/agent-desktop/src/mcp/mod.rs#L1-L120"
+                cy="517.4691" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#8e44ad" r="16.290133" cx="987.4072"
+                class="id_cloud-infrastructure-architect" cy="-455.51855"
+                stroke="#472256" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#8e44ad" r="16.290133" cx="-67.3046"
+                class="id_context-anti-rot-sync" cy="640.8283" stroke="#472256"
+                stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#8e44ad" r="16.290133" cx="2090.8652"
+                class="id_data-management-architect" cy="210.95496"
+                stroke="#472256" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#8e44ad" r="16.290133" cx="-394.03665"
+                class="id_deep-repo-auditor" cy="-69.262535" stroke="#472256"
+                stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="386.59668"
+                class="id_docs/plugins/omarchy_bridge/" cy="447.1189"
+                stroke="#4a5253" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#8e44ad" r="16.290133" cx="497.80334"
+                class="id_ebbinghaus-memory-governor" cy="-44.587196"
+                stroke="#472256" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#8e44ad" r="16.290133" cx="576.2307"
+                class="id_ethical-hacker-networking" cy="1103.203"
+                stroke="#472256" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-1085.938"
+                class="id_external/ChatbotX/apps/builder/src/app/api/public-spec.json/route.ts"
+                cy="-462.86386" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-1040.8347"
+                class="id_external/ChatbotX/apps/builder/src/routers/public.ts"
+                cy="-347.40103" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-396.52927"
+                class="id_external/ChatbotX/apps/javascript-executor/src/index.ts"
+                cy="1021.825" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-980.28613"
+                class="id_external/ChatbotX/apps/mcp-server/src/openapi-loader.ts"
+                cy="-444.84076" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="1508.226"
+                class="id_external/ChatbotX/packages/event-bus/src/index.ts"
+                cy="-98.829666" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="1382.0679"
+                class="id_external/ChatbotX/packages/flow-config/src/index.ts"
+                cy="-86.02948" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-347.93958"
+                class="id_external/ChatbotX/packages/javascript-sandbox/src/index.ts"
+                cy="928.3739" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="1458.9945"
+                class="id_external/ChatbotX/packages/sdk/src/index.ts"
+                cy="-5.21069" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-505.62296"
+                class="id_external/datasets/src/datasets/arrow_dataset.py"
+                cy="873.2141" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-678.64136"
+                class="id_external/datasets/src/datasets/features/bio_structure.py"
+                cy="873.37506" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-615.02576"
+                class="id_external/datasets/src/datasets/features/features.py"
+                cy="1047.2684" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-532.8161"
+                class="id_external/datasets/src/datasets/fingerprint.py"
+                cy="1032.2704" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-571.43365"
+                class="id_external/datasets/src/datasets/iterable_dataset.py"
+                cy="832.80426" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-688.51874"
+                class="id_external/datasets/src/datasets/packaged_modules/"
+                cy="991.9826" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-824.43207"
+                class="id_external/garf/libs/core/garf/core/query_editor.py"
+                cy="-429.12677" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-904.2638"
+                class="id_external/garf/libs/core/garf/core/query_parser.py"
+                cy="-402.69568" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-909.5832"
+                class="id_external/garf/libs/core/garf/core/report.py"
+                cy="-242.22005" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-759.04315"
+                class="id_external/garf/libs/core/garf/core/simulator.py"
+                cy="-239.03033" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-846.54834"
+                class="id_external/garf/libs/executors/garf/executors/workflows/workflow.py"
+                cy="-211.4819" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-747.8943"
+                class="id_external/garf/libs/io/garf/io/writer.py"
+                cy="-389.26337" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#1abc9c" r="16.290133" cx="626.05225"
+                class="id_external/headroom/headroom/transforms" cy="-270.1363"
+                stroke="#0d5e4e" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-849.18225"
+                class="id_external/kimi-code-main/kimi-code-main/packages/agent-core-v2/src/_base/di/cascadeEngine.ts"
+                cy="551.10913" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="111.731735"
+                class="id_external/kimi-code-main/kimi-code-main/packages/minidb/src/compaction.ts"
+                cy="-776.7754" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-108.25422"
+                class="id_external/kimi-code-main/kimi-code-main/packages/pi-tui/src/tui.ts"
+                cy="-1241.7686" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-1467.2866"
+                class="id_external/kimi-code-main/kimi-code-main/packages/transcript/src/granularity/filterOps.ts"
+                cy="147.12285" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-8.770794"
+                class="id_external/kimi-code-main/kimi-code-main/packages/tree-sitter-bash/src/parser.ts"
+                cy="691.879" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-774.42114"
+                class="id_external/paperless-ngx/src/documents/consumer.py"
+                cy="254.77107" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-890.95197"
+                class="id_external/paperless-ngx/src/documents/models.py"
+                cy="294.17664" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-769.9861"
+                class="id_external/paperless-ngx/src/documents/parsers/"
+                cy="164.50703" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-540.71265"
+                class="id_external/paperless-ngx/src/documents/search/_backend.py"
+                cy="-684.76416" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-871.9952"
+                class="id_external/paperless-ngx/src/documents/workflows/"
+                cy="111.55773" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-948.4545"
+                class="id_external/paperless-ngx/src/paperless/consumers.py"
+                cy="182.23589" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-553.97754"
+                class="id_external/paperless-ngx/src/paperless_ai/chat.py"
+                cy="-605.7303" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-659.2154"
+                class="id_external/paperless-ngx/src/paperless_ai/indexing.py"
+                cy="-568.0235" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-727.94165"
+                class="id_external/paperless-ngx/src/paperless_ai/tables.py"
+                cy="-661.39264" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-683.75195"
+                class="id_external/paperless-ngx/src/paperless_ai/vector_store.py"
+                cy="-740.027" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#8e44ad" r="16.290133" cx="699.8655"
+                class="id_gradio-app-architect" cy="1690.2672" stroke="#472256"
+                stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#8e44ad" r="16.290133" cx="494.53036"
+                class="id_headroom-context-optimizer" cy="-180.42462"
+                stroke="#472256" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#8e44ad" r="16.290133" cx="637.3141"
+                class="id_hyperframes-video-architect" cy="1530.5557"
+                stroke="#472256" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#3498db" r="16.290133" cx="65.92441"
+                class="id_ki-5d-complexity-baseline" cy="324.85626"
+                stroke="#1a4c6d" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#3498db" r="16.290133" cx="733.5468"
+                class="id_ki-gradio-app-architect" cy="1672.5333"
+                stroke="#1a4c6d" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#3498db" r="16.290133" cx="-419.19684"
+                class="id_ki-responsible-ai-prototyping" cy="-948.284"
+                stroke="#1a4c6d" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#2ecc71" r="16.290133" cx="-269.31876"
+                class="id_ki_20260821_03" cy="490.11194" stroke="#176638"
+                stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#9b59b6" r="16.290133" cx="-164.25206"
+                class="id_ki_20260823_02" cy="543.27795" stroke="#4d2c5b"
+                stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#9b59b6" r="16.290133" cx="-2275.6638"
+                class="id_ki_20260823_repo_04" cy="1073.029" stroke="#4d2c5b"
+                stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#f1c40f" r="16.290133" cx="-1201.0997"
+                class="id_ki_20260824_repo_01" cy="-396.41766" stroke="#786207"
+                stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#9b59b6" r="16.290133" cx="-101.29112"
+                class="id_ki_20260829_cellcog_01" cy="285.22583"
+                stroke="#4d2c5b" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#e74c3c" r="16.290133" cx="165.90977"
+                class="id_ki_20260830_grok_04" cy="852.0598" stroke="#73261e"
+                stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#3498db" r="16.290133" cx="-1496.7584"
+                class="id_ki_20260830_kimi_02" cy="122.75213" stroke="#1a4c6d"
+                stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#9b59b6" r="16.290133" cx="25.04826"
+                class="id_ki_20260830_kimi_03" cy="793.9956" stroke="#4d2c5b"
+                stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#f1c40f" r="16.290133" cx="125.071465"
+                class="id_ki_20260830_kimi_04" cy="-741.0055" stroke="#786207"
+                stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#9b59b6" r="16.290133" cx="-145.7517"
+                class="id_ki_20260830_kimi_05" cy="-1248.2465" stroke="#4d2c5b"
+                stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#9b59b6" r="16.290133" cx="1744.9248"
+                class="id_ki_20260830_repo_01" cy="1255.4984" stroke="#4d2c5b"
+                stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#9b59b6" r="16.290133" cx="-66.25945"
+                class="id_ki_20260831_cellcog_02" cy="295.78525"
+                stroke="#4d2c5b" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#f1c40f" r="16.290133" cx="971.1284"
+                class="id_ki_20260831_em3_02" cy="-302.4823" stroke="#786207"
+                stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#f1c40f" r="16.290133" cx="1001.6452"
+                class="id_ki_20260831_em3_03" cy="-279.2941" stroke="#786207"
+                stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#9b59b6" r="16.290133" cx="-1242.5205"
+                class="id_ki_20260831_em3_04" cy="-1928.4982" stroke="#4d2c5b"
+                stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#9b59b6" r="16.290133" cx="-1267.6095"
+                class="id_ki_20260831_em3_05" cy="-1899.392" stroke="#4d2c5b"
+                stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#e74c3c" r="16.290133" cx="539.8917"
+                class="id_ki_20260831_openclaw_02" cy="920.81934"
+                stroke="#73261e" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#e74c3c" r="16.290133" cx="1663.8279"
+                class="id_ki_20260831_sme_04" cy="-80.5018" stroke="#73261e"
+                stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#e74c3c" r="16.290133" cx="1667.626"
+                class="id_ki_20260831_sme_05" cy="-42.31775" stroke="#73261e"
+                stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#9b59b6" r="16.290133" cx="-737.0713"
+                class="id_ki_20260831_strategify_01" cy="-2073.6667"
+                stroke="#4d2c5b" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#9b59b6" r="16.290133" cx="-524.59283"
+                class="id_ki_20260831_strategify_04" cy="-1346.5641"
+                stroke="#4d2c5b" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#e91e63" r="16.290133" cx="495.39136"
+                class="id_ki_20260913_context_types_04" cy="-296.35953"
+                stroke="#740f31" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#f1c40f" r="16.290133" cx="-1215.8939"
+                class="id_ki_20260913_memgraph_rag_05" cy="-360.92148"
+                stroke="#786207" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#9b59b6" r="16.290133" cx="-1751.8029"
+                class="id_ki_20260913_pr_lens_eli5_pedagogy" cy="674.8235"
+                stroke="#4d2c5b" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#f1c40f" r="16.290133" cx="309.78864"
+                class="id_ki_20260913_pr_lens_overlay" cy="-1847.7361"
+                stroke="#786207" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#f1c40f" r="16.290133" cx="271.79642"
+                class="id_ki_20260913_pr_lens_schema" cy="-1842.3428"
+                stroke="#786207" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#3498db" r="16.290133" cx="-93.978806"
+                class="id_ki_20261014_70_cycle_deepening_corpus" cy="321.3248"
+                stroke="#1a4c6d" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#9b59b6" r="16.290133" cx="1768.3597"
+                class="id_ki_20261023_opencode_01" cy="1224.9921"
+                stroke="#4d2c5b" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#9b59b6" r="16.290133" cx="-1782.7606"
+                class="id_ki_agent_skills_progressive_disclosure" cy="652.5784"
+                stroke="#4d2c5b" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#e74c3c" r="16.290133" cx="1950.0326"
+                class="id_ki_audit_20260908_05" cy="-1217.1055" stroke="#73261e"
+                stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#2ecc71" r="16.290133" cx="1899.17"
+                class="id_ki_audit_20260915_03" cy="-888.8102" stroke="#176638"
+                stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#f1c40f" r="16.290133" cx="-98.36679"
+                class="id_ki_auto_20260915_01" cy="-1154.83" stroke="#786207"
+                stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#00bcd4" r="16.290133" cx="-1285.5984"
+                class="id_ki_deepselect_bitmask_filtering" cy="858.57544"
+                stroke="#005e6a" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#00bcd4" r="16.290133" cx="-1279.6613"
+                class="id_ki_deepselect_denormal_fp32" cy="820.72107"
+                stroke="#005e6a" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#9b59b6" r="16.290133" cx="-676.5957"
+                class="id_ki_koos_typescript_harness_from_scratch"
+                cy="1225.0165" stroke="#4d2c5b" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#f1c40f" r="16.290133" cx="-62.606567"
+                class="id_ki_mindreader_20260911_01" cy="-1168.8221"
+                stroke="#786207" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#9b59b6" r="16.290133" cx="-661.7806"
+                class="id_ki_self_20260829_02" cy="-1410.3475" stroke="#4d2c5b"
+                stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#9b59b6" r="16.290133" cx="-2311.8516"
+                class="id_ki_self_20260829_04" cy="1085.9242" stroke="#4d2c5b"
+                stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#9b59b6" r="16.290133" cx="-880.5914"
+                class="id_ki_self_20260830_01" cy="652.03906" stroke="#4d2c5b"
+                stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#9b59b6" r="16.290133" cx="-491.8347"
+                class="id_ki_self_20260831_01" cy="-1366.6366" stroke="#4d2c5b"
+                stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#9b59b6" r="16.290133" cx="-775.39056"
+                class="id_ki_self_20260831_04" cy="-2073.8367" stroke="#4d2c5b"
+                stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#2ecc71" r="16.290133" cx="-250.29666"
+                class="id_ki_self_20260901_02" cy="1526.039" stroke="#176638"
+                stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#9b59b6" r="16.290133" cx="-812.128"
+                class="id_ki_self_20260901_03" cy="-793.0182" stroke="#4d2c5b"
+                stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#2ecc71" r="16.290133" cx="-213.33919"
+                class="id_ki_self_20260901_scratch_03" cy="1515.9413"
+                stroke="#176638" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#2ecc71" r="16.290133" cx="-262.10846"
+                class="id_ki_self_20260907_02" cy="449.73264" stroke="#176638"
+                stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#3498db" r="16.290133" cx="29.679976"
+                class="id_ki_self_20260907_03" cy="510.17352" stroke="#1a4c6d"
+                stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#3498db" r="16.290133" cx="-428.5987"
+                class="id_ki_self_20260911_01" cy="299.17667" stroke="#1a4c6d"
+                stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#3498db" r="16.290133" cx="-404.11932"
+                class="id_ki_self_20260914_01" cy="269.82092" stroke="#1a4c6d"
+                stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#9b59b6" r="16.290133" cx="-631.98956"
+                class="id_ki_self_20260914_05" cy="-1386.1492" stroke="#4d2c5b"
+                stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#9b59b6" r="16.290133" cx="-661.93335"
+                class="id_ki_self_20260917_01" cy="1189.6263" stroke="#4d2c5b"
+                stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#e74c3c" r="16.290133" cx="-1130.2802"
+                class="id_ki_self_20260922_01" cy="-255.51892" stroke="#73261e"
+                stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#e74c3c" r="16.290133" cx="-1118.2385"
+                class="id_ki_self_20260924_01" cy="-218.93294" stroke="#73261e"
+                stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#3498db" r="16.290133" cx="994.87805"
+                class="id_ki_self_20261014_01" cy="474.73853" stroke="#1a4c6d"
+                stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#8e44ad" r="16.290133" cx="-188.20586"
+                class="id_media-to-vault-pipeline" cy="584.34766"
+                stroke="#472256" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#8e44ad" r="16.290133" cx="809.38086"
+                class="id_pi-coding-harness" cy="-974.61615" stroke="#472256"
+                stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#1abc9c" r="16.290133" cx="1120.4824"
+                class="id_plugin.google_adk_docs_navigator" cy="-1720.8496"
+                stroke="#0d5e4e" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#1abc9c" r="16.290133" cx="1195.0109"
+                class="id_plugin.google_adk_optimizer" cy="-1646.2164"
+                stroke="#0d5e4e" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#1abc9c" r="16.290133" cx="975.2174"
+                class="id_plugin.google_adk_runtime" cy="-1671.7004"
+                stroke="#0d5e4e" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#1abc9c" r="16.290133" cx="1116.8075"
+                class="id_plugin.google_adk_web_bridge" cy="-1487.3589"
+                stroke="#0d5e4e" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#1abc9c" r="16.290133" cx="1188.4725"
+                class="id_plugin.google_styleguide_auditor" cy="-1548.1871"
+                stroke="#0d5e4e" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#1abc9c" r="16.290133" cx="991.2181"
+                class="id_plugin.google_tunix_posttraining" cy="-1517.9048"
+                stroke="#0d5e4e" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#1abc9c" r="16.290133" cx="955.61163"
+                class="id_plugin.perfetto_trace_processor" cy="-1598.6167"
+                stroke="#0d5e4e" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="576.1806"
+                class="id_plugins/agent_orchestration/agent_debater/main.py"
+                cy="-465.9569" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="636.6043"
+                class="id_plugins/agent_orchestration/critic_loop/config.default.yaml"
+                cy="-513.3726" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="574.85724"
+                class="id_plugins/agent_orchestration/evaluator_critic/main.py"
+                cy="-404.0808" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="723.84467"
+                class="id_plugins/agent_orchestration/google_adk_runtime/main.py"
+                cy="-251.35641" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="282.70676"
+                class="id_plugins/agent_orchestration/omarchy_agent_telemetry/"
+                cy="571.8273" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="706.4274"
+                class="id_plugins/agent_orchestration/tau_harness_bridge/README.md"
+                cy="-996.5319" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="346.4157"
+                class="id_plugins/developer_tooling/omarchy_command_router/"
+                cy="588.38794" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="316.79785"
+                class="id_plugins/developer_tooling/omarchy_theming_engine/"
+                cy="428.78052" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-432.59015"
+                class="id_plugins/geospatial_and_osint/earth_engine_pipeline/main.py"
+                cy="190.03983" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-436.7723"
+                class="id_plugins/integration_and_io/agent_desktop/engine.py#L20-L80"
+                cy="-429.3133" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-133.04659"
+                class="id_plugins/memory_and_epistemics/brain_bridge/main.py"
+                cy="521.6202" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#1abc9c" r="16.290133" cx="614.1604"
+                class="id_plugins/memory_and_epistemics/headroom_context_optimizer"
+                cy="-186.22263" stroke="#0d5e4e" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="462.79297"
+                class="id_plugins/security_and_forensics/network_forensics/main.py"
+                cy="1043.8367" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="32.406425"
+                class="id_plugins/security_and_forensics/pre_commit_security_guard/main.py"
+                cy="943.2813" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#8e44ad" r="16.290133" cx="34.873554"
+                class="id_pre-commit-security-guard" cy="758.95764"
+                stroke="#472256" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#8e44ad" r="16.290133" cx="-1231.2488"
+                class="id_prompt-pruning-architect" cy="1370.2747"
+                stroke="#472256" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#8e44ad" r="16.290133" cx="-452.0217"
+                class="id_responsible-ai-prototyping" cy="-967.83014"
+                stroke="#472256" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-380.7837"
+                class="id_scratch/inspect_omarchy.py" cy="98.3301"
+                stroke="#4a5253" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-4.4098353"
+                class="id_src/harness/commands/" cy="474.5077" stroke="#4a5253"
+                stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="251.51932"
+                class="id_src/harness/commands/__init__.py" cy="855.4592"
+                stroke="#4a5253" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-118.78334"
+                class="id_src/harness/creator/" cy="252.88008" stroke="#4a5253"
+                stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="49.30002"
+                class="id_src/harness/creator/archetypes.py" cy="95.450165"
+                stroke="#4a5253" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="32.3537"
+                class="id_src/harness/creator/reflection.py" cy="60.96867"
+                stroke="#4a5253" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-200.04376"
+                class="id_src/harness/creator/validator.py" cy="-200.83037"
+                stroke="#4a5253" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="1207.7917"
+                class="id_src/harness/events/bus.py#L630" cy="-88.28579"
+                stroke="#4a5253" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-810.0985"
+                class="id_src/harness/kernel/context.py#L25-L95" cy="884.38855"
+                stroke="#4a5253" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="243.631"
+                class="id_src/harness/kernel/graph.py" cy="186.06775"
+                stroke="#4a5253" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-770.7968"
+                class="id_src/harness/kernel/lifecycle.py#L45-L110"
+                cy="786.66595" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="38.57031"
+                class="id_src/harness/kernel/runtime.py" cy="288.86612"
+                stroke="#4a5253" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-801.5664"
+                class="id_src/harness/mcp" cy="-829.59357" stroke="#4a5253"
+                stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="215.69058"
+                class="id_src/harness/plugins/catalog.py" cy="120.53041"
+                stroke="#4a5253" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="778.5219"
+                class="id_src/harness/plugins/loader.py" cy="-256.59943"
+                stroke="#4a5253" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="1884.296"
+                class="id_src/harness/plugins/loader.py#L71-L110" cy="-924.0502"
+                stroke="#4a5253" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-111.37035"
+                class="id_src/harness/plugins/sandbox.py" cy="711.5434"
+                stroke="#4a5253" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-100.69179"
+                class="id_src/harness/services/__init__.py" cy="357.33063"
+                stroke="#4a5253" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="1232.1465"
+                class="id_src/harness/services/agent_graph.py" cy="37.753498"
+                stroke="#4a5253" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="1080.7009"
+                class="id_src/harness/services/cellcog.py" cy="-76.52172"
+                stroke="#4a5253" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="1055.4656"
+                class="id_src/harness/services/data_management.py"
+                cy="-13.565609" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="444.8506"
+                class="id_src/harness/services/network_forensics.py"
+                cy="1103.3486" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="1974.5806"
+                class="id_src/harness/services/openrouter_gateway.py#L17"
+                cy="-1187.7982" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="73.047745"
+                class="id_src/harness/services/pre_commit_security_guard.py"
+                cy="972.9164" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="1145.0936"
+                class="id_src/harness/services/repomap.py" cy="83.24537"
+                stroke="#4a5253" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-326.52115"
+                class="id_src/harness/services/skill_pipeline.py"
+                cy="-2.4149177" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-165.44937"
+                class="id_src/harness/services/tools.py" cy="-100.91595"
+                stroke="#4a5253" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="239.09543"
+                class="id_src/harness/ui/" cy="751.0213" stroke="#4a5253"
+                stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-555.4594"
+                class="id_tests/test_agent_desktop_operator.py#L42-L56"
+                cy="39.433605" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="1082.473"
+                class="id_tests/test_agent_skill_sdlc.py" cy="186.42839"
+                stroke="#4a5253" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="877.6925"
+                class="id_tests/test_agent_skills_architect_deepened.py"
+                cy="61.639698" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="131.7916"
+                class="id_tests/test_compute_assessor.py" cy="365.92062"
+                stroke="#4a5253" stroke-opacity="1.0" stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="2081.5923"
+                class="id_tests/test_data_management_architect.py"
+                cy="106.107895" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+        <circle fill-opacity="1.0" fill="#95a5a6" r="16.290133" cx="-462.33728"
+                class="id_tests/test_plugin_agent_desktop.py#L50-L75"
+                cy="-507.56766" stroke="#4a5253" stroke-opacity="1.0"
+                stroke-width="2.8330662"/>
+    </g>
+</svg>
