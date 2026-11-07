@@ -36,11 +36,11 @@ This is a human-GUI job. No headless script, agent check, or HTML export may tic
 
 Deepen the existing exporter in place (`Rule 20`), author the failing test contract before editing (`Rule 13`), and respect the $\le 200$-line ceiling on `src/harness/services/storage/*.py` (`Rule 11` / `tests/test_storage_decomposition.py`).
 
-- [ ] **0.1 (Failing test contract)**: In `tests/test_command_knowledge_export.py` (`test_export_gexf_zero_dangling_edges_and_attributes`), add assertions using `ns = {"g": "http://www.gexf.net/1.3draft", "viz": "http://www.gexf.net/1.3draft/viz"}` that:
+- [x] **0.1 (Failing test contract)**: In `tests/test_command_knowledge_export.py` (`test_export_gexf_zero_dangling_edges_and_attributes`), add assertions using `ns = {"g": "http://www.gexf.net/1.3draft", "viz": "http://www.gexf.net/1.3draft/viz"}` that:
   1. Every `<g:node>` contains a `<viz:color r="..." g="..." b="..."/>` child with integer RGB attributes in `0..255` and a `<viz:size value="..."/>` child with `6.0 <= float(val) <= 24.0`.
   2. Nodes with higher degree in `fixture_graph` (`ki_01`, degree 3) receive a strictly larger `<viz:size>` than degree-1 nodes (`agent-architect`), and `ki_01` (`developer_experience`) receives `#3498db` (`r="52" g="152" b="219"`).
   3. A `source_target` ending in `/)` (e.g., `"Brain Harness (src/harness/services/pyrit_scanner/)"`) derives node `label="pyrit_scanner"`, never `")"`.
-- [ ] **0.2 (Exporter & label implementation)**:
+- [x] **0.2 (Exporter & label implementation)**:
   - In `src/harness/services/storage/vault_derivation.py:60`, strip trailing `/) ` before extracting the path basename (`clean_t = e.target.rstrip("/) "); label = Path(clean_t).name if "/" in clean_t or "\\" in clean_t else e.target`). Note: `rstrip("/) ")` would also mangle a hypothetical `...(v2)`-style target — acceptable here, but don't generalize the strip without a test.
   - In `src/harness/services/storage/vault_exporters.py` (`export_gexf`), while keeping `vault_exporters.py` **$\le 200$ lines**:
     1. Register/declare `"xmlns:viz": "http://www.gexf.net/1.3draft/viz"` on the root `<gexf>` element.
@@ -58,7 +58,7 @@ Deepen the existing exporter in place (`Rule 20`), author the failing test contr
        - `context_engineering`: `#e91e63` (`r="233" g="30" b="99"`) — Pink
        - `skill`: `#8e44ad` (`r="142" g="68" b="173"`) — Deep Violet
        - `path` / `general` (default fallback): `#95a5a6` (`r="149" g="165" b="166"`) — Slate Grey
-- [ ] **0.3 (Regenerate & run headless verification suite)**:
+- [x] **0.3 (Regenerate & run headless verification suite)**:
   - Regenerate `.harness/graph/knowledge_graph.gexf`:
     ```powershell
     .\.venv\Scripts\harness.exe knowledge export --format gexf --out .harness/graph/knowledge_graph.gexf
@@ -77,24 +77,24 @@ Deepen the existing exporter in place (`Rule 20`), author the failing test contr
 
 ## Steps (Human Desktop GUI Session in Gephi 0.10+)
 
-- [ ] **1. Import & Census Check**: Open `.harness/graph/knowledge_graph.gexf` in Gephi 0.10+. In the **Import Report** dialog, verify graph type is `Directed` (or `Mixed`), `451` nodes, `218` edges, and `0` parser warnings. Click **OK** and record the exact node/edge counts shown in the **Context** pane.
-- [ ] **2. Verify Pre-Baked `viz:color` & `viz:size` Immediately on Load**: Before touching the **Appearance** pane, inspect the **Overview** graph canvas:
+- [x] **1. Import & Census Check**: Open `.harness/graph/knowledge_graph.gexf` in Gephi 0.10+. In the **Import Report** dialog, verify graph type is `Directed` (or `Mixed`), `451` nodes, `218` edges, and `0` parser warnings. Click **OK** and record the exact node/edge counts shown in the **Context** pane.
+- [x] **2. Verify Pre-Baked `viz:color` & `viz:size` Immediately on Load**: Before touching the **Appearance** pane, inspect the **Overview** graph canvas:
   - Confirm nodes already render in distinct domain colors (Blue, Purple, Orange, Red, Teal, Gold, Green, Cyan, Pink, Violet, Slate Grey) and scaled node sizes (`6.0`–`24.0`) directly from `<viz:color>` and `<viz:size>`.
   - If nodes load as uniform flat grey/black circles of equal size, Track 0's `viz:` emission is defective — **stop and record the defect**; do not mask it by manually clicking **Appearance → Nodes → Partition/Ranking**.
   - *(Optional for edge styling)*: Since GEXF `<viz:color>` on nodes does not style edges by type, you may optionally apply **Appearance → Edges → Color → Partition → `edge_type`** (`became_skill` `#f1c40f`, `became_plugin` `#2ecc71`, `references_code` `#7f8c8d`, `same_domain` `#95a5a6`) if helpful for visual clarity, noting in the session report whether edge colors were applied in Gephi.
-- [ ] **3. Spatial Layout Execution**:
+- [x] **3. Spatial Layout Execution**:
   - In the **Layout** pane, select **ForceAtlas 2**: set `Scaling = 2.0`, `Gravity = 1.0`, `Prevent Overlap (AdjustSizes) = Checked`, `Tolerance (Speed) = 0.1`. Run until the layout stabilizes, then click **Stop**.
   - Run **Expansion** (`Scale factor = 1.2`) once or twice, followed by **Label Adjust** (with node labels toggled on in the Overview/Preview toolbar) and confirm none of the hub labels read `")"`.
-- [ ] **4. Connected Components & Modularity (Unfiltered vs. Connected Subgraph)**:
+- [x] **4. Connected Components & Modularity (Unfiltered vs. Connected Subgraph)**:
   - Run **Statistics → Connected Components** (Undirected). Record the total number of weakly connected components (expect **254**), isolated nodes (expect **186** of size 1), and largest component size (expect **37**).
   - **4a (Unfiltered 451-node graph)**: Run **Statistics → Modularity** (`Randomize = Checked`, `Use edge weights = Checked`, `Resolution = 1.0`). Record unfiltered $Q$ and total modularity classes (note: Gephi counts each of the 186 isolated nodes as its own community, so total unfiltered communities will be $\ge 254$ (186 isolated nodes as their own communities, plus at least one per multi-node component).
   - **4b (Connected subgraph `Degree >= 1`, matching the brief's methodology)**: In **Filters → Topology → Degree Range**, drag the lower bound to `1` and click **Filter** (confirming Context shows **265 nodes / 218 edges**, i.e., `58.8%` of nodes). Re-run **Statistics → Modularity** (`Resolution = 1.0`, `Use edge weights = Checked`) on the filtered subgraph. Record connected-subgraph $Q$ and community count, and compare directly against the Nov 5 brief ($Q = 0.9447$, `58` communities on `226` connected nodes).
-- [ ] **5. Inspect Top Epistemic Communities**:
+- [x] **5. Inspect Top Epistemic Communities**:
   - In **Data Laboratory → Nodes** (or **Appearance → Nodes → Partition → Modularity Class** preview list), sort/group by `Modularity Class` and inspect the largest communities.
   - Check whether the top clusters match the brief's §2 top-8 list (Architecture Deepening, Multi-Agent Swarms, Google Repos Bridge, PyRIT Security, Multi-Agent Debate/Critic, Arrow Zero-Copy Datasets, Garf SQL Pipelines, Paperless-NGX/SQLite-Vec) and whether the 37-node giant component bridges Cluster 1 (`Architecture Deepening`) and Cluster 2 (`Multi-Agent Swarms`). Record matches and any surprises.
-- [ ] **6. Export Visual Artifacts**:
+- [x] **6. Export Visual Artifacts**:
   - In **Preview** (with `Show Labels = Checked`, `Proportional size = Checked`) and/or **Overview**, export a dated high-resolution screenshot (`reports/gephi/gephi-overview-2026-11-07.png`) and a vector export (`reports/gephi/gephi-preview-2026-11-07.svg` or `.pdf`).
-- [ ] **7. Write the Session Evidence Report**:
+- [x] **7. Write the Session Evidence Report**:
   - Author `reports/gephi-session-2026-11-07.md` recording:
     1. Exact commit SHA tested and Gephi version (`0.10.x`).
     2. Imported node/edge counts (`451 / 218`) and verification that `<viz:color>` and `<viz:size>` rendered automatically on load without manual node Partition/Ranking.
@@ -102,7 +102,7 @@ Deepen the existing exporter in place (`Rule 20`), author the failing test contr
     4. Exact Statistics outputs: Connected Components (`254` components, `186` isolated, `37` max component), unfiltered Modularity ($Q$, community count), and connected-subgraph (`Degree >= 1`, `265` nodes) Modularity ($Q$, community count) side-by-side against the Nov 5 brief ($Q = 0.9447$, `58` communities on `226` nodes).
     5. Top community membership comparison and any visual anomalies observed (isolated-node ring clutter, label overlap, attribute gaps).
     6. Relative links (`Rule 47`) to the exported `.png` and `.svg`/`.pdf` under `reports/gephi/`.
-- [ ] **8. Tick the Standing Checkboxes**:
+- [x] **8. Tick the Standing Checkboxes**:
   - Only after `reports/gephi-session-2026-11-07.md` and the screenshot/vector artifact exist on disk, tick `[x]`:
     1. Track **8.1** in `Standing gaps analysis and plan-2026-11-05-1755-EST.md` (line 459).
     2. Track **6.1** in `Post-execution audit and follow-up plan-2026-11-06-EST.md` (line 229).

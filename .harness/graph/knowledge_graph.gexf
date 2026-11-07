@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<gexf xmlns="http://www.gexf.net/1.3draft" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gexf.net/1.3draft http://www.gexf.net/1.3draft/gexf.xsd" version="1.3">
+<gexf xmlns="http://www.gexf.net/1.3draft" xmlns:viz="http://www.gexf.net/1.3draft/viz" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gexf.net/1.3draft http://www.gexf.net/1.3draft/gexf.xsd" version="1.3">
   <meta>
     <creator>Brain Harness</creator>
     <description>Derived Knowledge Graph: 451 nodes, 218 edges (27 asserted, 191 derived)</description>
@@ -24,6 +24,8 @@
     </attributes>
     <nodes>
       <node id=".agents/skills/agent-desktop-operator/SKILL.md#L68-L76" label="SKILL.md#L68-L76">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -34,6 +36,8 @@
         </attvalues>
       </node>
       <node id=".agents/skills/agent-desktop-operator/scripts/desktop_operator_engine.py#L90-L150" label="desktop_operator_engine.py#L90-L150">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -43,7 +47,9 @@
           <attvalue for="6" value="0" />
         </attvalues>
       </node>
-      <node id="Brain Harness (src/harness/services/context_optimizer/)" label=")">
+      <node id="Brain Harness (src/harness/services/context_optimizer/)" label="context_optimizer">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -53,7 +59,9 @@
           <attvalue for="6" value="0" />
         </attvalues>
       </node>
-      <node id="Brain Harness (src/harness/services/hyperframes/)" label=")">
+      <node id="Brain Harness (src/harness/services/hyperframes/)" label="hyperframes">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -63,7 +71,9 @@
           <attvalue for="6" value="0" />
         </attvalues>
       </node>
-      <node id="Brain Harness (src/harness/services/memory_decay/)" label=")">
+      <node id="Brain Harness (src/harness/services/memory_decay/)" label="memory_decay">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -73,7 +83,9 @@
           <attvalue for="6" value="0" />
         </attvalues>
       </node>
-      <node id="Brain Harness (src/harness/services/prometheus/)" label=")">
+      <node id="Brain Harness (src/harness/services/prometheus/)" label="prometheus">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -83,7 +95,9 @@
           <attvalue for="6" value="0" />
         </attvalues>
       </node>
-      <node id="Brain Harness (src/harness/services/pyrit_scanner/)" label=")">
+      <node id="Brain Harness (src/harness/services/pyrit_scanner/)" label="pyrit_scanner">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -94,6 +108,8 @@
         </attvalues>
       </node>
       <node id="agent-skills-architect" label="agent-skills-architect">
+        <viz:size value="11.14" />
+        <viz:color r="142" g="68" b="173" />
         <attvalues>
           <attvalue for="0" value="skill" />
           <attvalue for="1" value="skill" />
@@ -104,6 +120,8 @@
         </attvalues>
       </node>
       <node id="ai-red-teaming-architect" label="ai-red-teaming-architect">
+        <viz:size value="8.57" />
+        <viz:color r="142" g="68" b="173" />
         <attvalues>
           <attvalue for="0" value="skill" />
           <attvalue for="1" value="skill" />
@@ -114,6 +132,8 @@
         </attvalues>
       </node>
       <node id="architecture-deepening-workflow" label="architecture-deepening-workflow">
+        <viz:size value="8.57" />
+        <viz:color r="142" g="68" b="173" />
         <attvalues>
           <attvalue for="0" value="skill" />
           <attvalue for="1" value="skill" />
@@ -124,6 +144,8 @@
         </attvalues>
       </node>
       <node id="cloned/agent-desktop/AGENTS.md#L120-L185" label="AGENTS.md#L120-L185">
+        <viz:size value="11.14" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -134,6 +156,8 @@
         </attvalues>
       </node>
       <node id="cloned/agent-desktop/CONCEPTS.md#L30-L35" label="CONCEPTS.md#L30-L35">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -144,6 +168,8 @@
         </attvalues>
       </node>
       <node id="cloned/agent-desktop/CONCEPTS.md#L50-L66" label="CONCEPTS.md#L50-L66">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -154,6 +180,8 @@
         </attvalues>
       </node>
       <node id="cloned/agent-desktop/CONCEPTS.md#L68-L115" label="CONCEPTS.md#L68-L115">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -164,6 +192,8 @@
         </attvalues>
       </node>
       <node id="cloned/agent-desktop/Cargo.toml#L1-L35" label="Cargo.toml#L1-L35">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -174,6 +204,8 @@
         </attvalues>
       </node>
       <node id="cloned/agent-desktop/crates/core/src/actionability/evaluate.rs#L78-L110" label="evaluate.rs#L78-L110">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -184,6 +216,8 @@
         </attvalues>
       </node>
       <node id="cloned/agent-desktop/crates/core/src/refs/ref_capture_proof.rs#L1-L162" label="ref_capture_proof.rs#L1-L162">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -194,6 +228,8 @@
         </attvalues>
       </node>
       <node id="cloned/agent-desktop/crates/core/src/refs/ref_entry_identity.rs#L1-L80" label="ref_entry_identity.rs#L1-L80">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -204,6 +240,8 @@
         </attvalues>
       </node>
       <node id="cloned/agent-desktop/crates/core/src/response/delivery_disposition.rs#L1-L13" label="delivery_disposition.rs#L1-L13">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -214,6 +252,8 @@
         </attvalues>
       </node>
       <node id="cloned/agent-desktop/crates/core/src/response/retry_disposition.rs#L1-L10" label="retry_disposition.rs#L1-L10">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -224,6 +264,8 @@
         </attvalues>
       </node>
       <node id="cloned/agent-desktop/crates/core/src/session/interaction_lease.rs#L1-L125" label="interaction_lease.rs#L1-L125">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -234,6 +276,8 @@
         </attvalues>
       </node>
       <node id="cloned/agent-desktop/crates/core/src/tree/accname.rs#L1-L50" label="accname.rs#L1-L50">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -244,6 +288,8 @@
         </attvalues>
       </node>
       <node id="cloned/agent-desktop/scripts/check_architecture.py#L1-L120" label="check_architecture.py#L1-L120">
+        <viz:size value="11.14" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -254,6 +300,8 @@
         </attvalues>
       </node>
       <node id="cloned/agent-desktop/src/mcp/calls.rs#L1-L110" label="calls.rs#L1-L110">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -264,6 +312,8 @@
         </attvalues>
       </node>
       <node id="cloned/agent-desktop/src/mcp/catalog.rs#L1-L95" label="catalog.rs#L1-L95">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -274,6 +324,8 @@
         </attvalues>
       </node>
       <node id="cloned/agent-desktop/src/mcp/mod.rs#L1-L120" label="mod.rs#L1-L120">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -284,6 +336,8 @@
         </attvalues>
       </node>
       <node id="cloud-infrastructure-architect" label="cloud-infrastructure-architect">
+        <viz:size value="8.57" />
+        <viz:color r="142" g="68" b="173" />
         <attvalues>
           <attvalue for="0" value="skill" />
           <attvalue for="1" value="skill" />
@@ -294,6 +348,8 @@
         </attvalues>
       </node>
       <node id="context-anti-rot-sync" label="context-anti-rot-sync">
+        <viz:size value="8.57" />
+        <viz:color r="142" g="68" b="173" />
         <attvalues>
           <attvalue for="0" value="skill" />
           <attvalue for="1" value="skill" />
@@ -304,6 +360,8 @@
         </attvalues>
       </node>
       <node id="data-management-architect" label="data-management-architect">
+        <viz:size value="8.57" />
+        <viz:color r="142" g="68" b="173" />
         <attvalues>
           <attvalue for="0" value="skill" />
           <attvalue for="1" value="skill" />
@@ -314,6 +372,8 @@
         </attvalues>
       </node>
       <node id="deep-repo-auditor" label="deep-repo-auditor">
+        <viz:size value="8.57" />
+        <viz:color r="142" g="68" b="173" />
         <attvalues>
           <attvalue for="0" value="skill" />
           <attvalue for="1" value="skill" />
@@ -324,6 +384,8 @@
         </attvalues>
       </node>
       <node id="docs/plugins/omarchy_bridge/" label="omarchy_bridge">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -334,6 +396,8 @@
         </attvalues>
       </node>
       <node id="ebbinghaus-memory-governor" label="ebbinghaus-memory-governor">
+        <viz:size value="8.57" />
+        <viz:color r="142" g="68" b="173" />
         <attvalues>
           <attvalue for="0" value="skill" />
           <attvalue for="1" value="skill" />
@@ -344,6 +408,8 @@
         </attvalues>
       </node>
       <node id="ethical-hacker-networking" label="ethical-hacker-networking">
+        <viz:size value="8.57" />
+        <viz:color r="142" g="68" b="173" />
         <attvalues>
           <attvalue for="0" value="skill" />
           <attvalue for="1" value="skill" />
@@ -354,6 +420,8 @@
         </attvalues>
       </node>
       <node id="external/ChatbotX/apps/builder/src/app/api/public-spec.json/route.ts" label="route.ts">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -364,6 +432,8 @@
         </attvalues>
       </node>
       <node id="external/ChatbotX/apps/builder/src/routers/public.ts" label="public.ts">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -374,6 +444,8 @@
         </attvalues>
       </node>
       <node id="external/ChatbotX/apps/javascript-executor/src/index.ts" label="index.ts">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -384,6 +456,8 @@
         </attvalues>
       </node>
       <node id="external/ChatbotX/apps/mcp-server/src/openapi-loader.ts" label="openapi-loader.ts">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -394,6 +468,8 @@
         </attvalues>
       </node>
       <node id="external/ChatbotX/packages/event-bus/src/index.ts" label="index.ts">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -404,6 +480,8 @@
         </attvalues>
       </node>
       <node id="external/ChatbotX/packages/flow-config/src/index.ts" label="index.ts">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -414,6 +492,8 @@
         </attvalues>
       </node>
       <node id="external/ChatbotX/packages/javascript-sandbox/src/index.ts" label="index.ts">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -424,6 +504,8 @@
         </attvalues>
       </node>
       <node id="external/ChatbotX/packages/sdk/src/index.ts" label="index.ts">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -434,6 +516,8 @@
         </attvalues>
       </node>
       <node id="external/datasets/src/datasets/arrow_dataset.py" label="arrow_dataset.py">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -444,6 +528,8 @@
         </attvalues>
       </node>
       <node id="external/datasets/src/datasets/features/bio_structure.py" label="bio_structure.py">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -454,6 +540,8 @@
         </attvalues>
       </node>
       <node id="external/datasets/src/datasets/features/features.py" label="features.py">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -464,6 +552,8 @@
         </attvalues>
       </node>
       <node id="external/datasets/src/datasets/fingerprint.py" label="fingerprint.py">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -474,6 +564,8 @@
         </attvalues>
       </node>
       <node id="external/datasets/src/datasets/iterable_dataset.py" label="iterable_dataset.py">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -484,6 +576,8 @@
         </attvalues>
       </node>
       <node id="external/datasets/src/datasets/packaged_modules/" label="packaged_modules">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -494,6 +588,8 @@
         </attvalues>
       </node>
       <node id="external/garf/libs/core/garf/core/query_editor.py" label="query_editor.py">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -504,6 +600,8 @@
         </attvalues>
       </node>
       <node id="external/garf/libs/core/garf/core/query_parser.py" label="query_parser.py">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -514,6 +612,8 @@
         </attvalues>
       </node>
       <node id="external/garf/libs/core/garf/core/report.py" label="report.py">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -524,6 +624,8 @@
         </attvalues>
       </node>
       <node id="external/garf/libs/core/garf/core/simulator.py" label="simulator.py">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -534,6 +636,8 @@
         </attvalues>
       </node>
       <node id="external/garf/libs/executors/garf/executors/workflows/workflow.py" label="workflow.py">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -544,6 +648,8 @@
         </attvalues>
       </node>
       <node id="external/garf/libs/io/garf/io/writer.py" label="writer.py">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -554,6 +660,8 @@
         </attvalues>
       </node>
       <node id="external/headroom/headroom/transforms" label="transforms">
+        <viz:size value="8.57" />
+        <viz:color r="26" g="188" b="156" />
         <attvalues>
           <attvalue for="0" value="source" />
           <attvalue for="1" value="source" />
@@ -564,6 +672,8 @@
         </attvalues>
       </node>
       <node id="external/kimi-code-main/kimi-code-main/packages/agent-core-v2/src/_base/di/cascadeEngine.ts" label="cascadeEngine.ts">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -574,6 +684,8 @@
         </attvalues>
       </node>
       <node id="external/kimi-code-main/kimi-code-main/packages/minidb/src/compaction.ts" label="compaction.ts">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -584,6 +696,8 @@
         </attvalues>
       </node>
       <node id="external/kimi-code-main/kimi-code-main/packages/pi-tui/src/tui.ts" label="tui.ts">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -594,6 +708,8 @@
         </attvalues>
       </node>
       <node id="external/kimi-code-main/kimi-code-main/packages/transcript/src/granularity/filterOps.ts" label="filterOps.ts">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -604,6 +720,8 @@
         </attvalues>
       </node>
       <node id="external/kimi-code-main/kimi-code-main/packages/tree-sitter-bash/src/parser.ts" label="parser.ts">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -614,6 +732,8 @@
         </attvalues>
       </node>
       <node id="external/paperless-ngx/src/documents/consumer.py" label="consumer.py">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -624,6 +744,8 @@
         </attvalues>
       </node>
       <node id="external/paperless-ngx/src/documents/models.py" label="models.py">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -634,6 +756,8 @@
         </attvalues>
       </node>
       <node id="external/paperless-ngx/src/documents/parsers/" label="parsers">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -644,6 +768,8 @@
         </attvalues>
       </node>
       <node id="external/paperless-ngx/src/documents/search/_backend.py" label="_backend.py">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -654,6 +780,8 @@
         </attvalues>
       </node>
       <node id="external/paperless-ngx/src/documents/workflows/" label="workflows">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -664,6 +792,8 @@
         </attvalues>
       </node>
       <node id="external/paperless-ngx/src/paperless/consumers.py" label="consumers.py">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -674,6 +804,8 @@
         </attvalues>
       </node>
       <node id="external/paperless-ngx/src/paperless_ai/chat.py" label="chat.py">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -684,6 +816,8 @@
         </attvalues>
       </node>
       <node id="external/paperless-ngx/src/paperless_ai/indexing.py" label="indexing.py">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -694,6 +828,8 @@
         </attvalues>
       </node>
       <node id="external/paperless-ngx/src/paperless_ai/tables.py" label="tables.py">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -704,6 +840,8 @@
         </attvalues>
       </node>
       <node id="external/paperless-ngx/src/paperless_ai/vector_store.py" label="vector_store.py">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -714,6 +852,8 @@
         </attvalues>
       </node>
       <node id="gradio-app-architect" label="gradio-app-architect">
+        <viz:size value="8.57" />
+        <viz:color r="142" g="68" b="173" />
         <attvalues>
           <attvalue for="0" value="skill" />
           <attvalue for="1" value="skill" />
@@ -724,6 +864,8 @@
         </attvalues>
       </node>
       <node id="headroom-context-optimizer" label="headroom-context-optimizer">
+        <viz:size value="8.57" />
+        <viz:color r="142" g="68" b="173" />
         <attvalues>
           <attvalue for="0" value="skill" />
           <attvalue for="1" value="skill" />
@@ -734,6 +876,8 @@
         </attvalues>
       </node>
       <node id="hyperframes-video-architect" label="hyperframes-video-architect">
+        <viz:size value="8.57" />
+        <viz:color r="142" g="68" b="173" />
         <attvalues>
           <attvalue for="0" value="skill" />
           <attvalue for="1" value="skill" />
@@ -744,6 +888,8 @@
         </attvalues>
       </node>
       <node id="ki-5d-complexity-baseline" label="5D Complexity Scoring Baseline (2026-09-01)">
+        <viz:size value="8.57" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience" />
@@ -756,6 +902,8 @@
         </attvalues>
       </node>
       <node id="ki-cli-decomposition-pattern" label="CLI Monolith Decomposition Pattern">
+        <viz:size value="16.29" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience" />
@@ -768,6 +916,8 @@
         </attvalues>
       </node>
       <node id="ki-deepening-cycle-history" label="Architecture Deepening Cycle History — Cycle 2026-09-01">
+        <viz:size value="24.0" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience" />
@@ -780,6 +930,8 @@
         </attvalues>
       </node>
       <node id="ki-empirical-harness-calibration" label="An Empirical Study of Harness Design for Coding Agents">
+        <viz:size value="6.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -792,6 +944,8 @@
         </attvalues>
       </node>
       <node id="ki-file-size-hotspots" label="File Size Hotspot Registry (2026-09-01)">
+        <viz:size value="21.43" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience" />
@@ -804,6 +958,8 @@
         </attvalues>
       </node>
       <node id="ki-gradio-app-architect" label="Gradio Production AI Interface Engineering (Eva J Patel / freeCodeCamp 2026)">
+        <viz:size value="8.57" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience" />
@@ -816,6 +972,8 @@
         </attvalues>
       </node>
       <node id="ki-harnesscompass-evolution" label="HarnessCompass: Guiding Automatic Harness Evolution toward Generalizable and Effective Agent Harnesses">
+        <viz:size value="6.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -828,6 +986,8 @@
         </attvalues>
       </node>
       <node id="ki-hf-datasets-arrow-streaming" label="PyArrow Memory-Mapped Zero-Copy Execution, Lazy Generator Streaming &amp; xxhash Deterministic Caching in Hugging Face Datasets">
+        <viz:size value="21.43" />
+        <viz:color r="230" g="126" b="34" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="data_engineering" />
@@ -840,6 +1000,8 @@
         </attvalues>
       </node>
       <node id="ki-omarchy-quattro-bridge" label="Omarchy Quattro Operating System Bridge &amp; Domain-Partitioned Plugin Synthesis">
+        <viz:size value="16.29" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience" />
@@ -852,6 +1014,8 @@
         </attvalues>
       </node>
       <node id="ki-paperless-ai-rag-sqlite-vec" label="In-Database Vector RAG with SQLite-Vec, LlamaIndex, and Hybrid Tantivy BM25 Dispatch">
+        <viz:size value="18.86" />
+        <viz:color r="230" g="126" b="34" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="data_engineering" />
@@ -864,6 +1028,8 @@
         </attvalues>
       </node>
       <node id="ki-paperless-ngx-architecture" label="Paperless-NGX Document Lifecycle Architecture &amp; Dual-Store Ingestion Engine">
+        <viz:size value="18.86" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience" />
@@ -876,6 +1042,8 @@
         </attvalues>
       </node>
       <node id="ki-rea-facet-availability-semantics" label="Differential Facet Availability Semantics &amp; Multi-Provider Comparison">
+        <viz:size value="6.0" />
+        <viz:color r="231" g="76" b="60" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="security_and_forensics/reverse_engineering" />
@@ -889,6 +1057,8 @@
         </attvalues>
       </node>
       <node id="ki-rea-reconstruction-obligations" label="Reconstruction Obligation Ledgers &amp; Canonical Evidence Records">
+        <viz:size value="6.0" />
+        <viz:color r="231" g="76" b="60" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="security_and_forensics/reverse_engineering" />
@@ -902,6 +1072,8 @@
         </attvalues>
       </node>
       <node id="ki-responsible-ai-prototyping" label="Responsible AI Prototyping &amp; Web App Governance (Eva J Patel / Lovable)">
+        <viz:size value="8.57" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience" />
@@ -914,6 +1086,8 @@
         </attvalues>
       </node>
       <node id="ki-topology-map" label="Harness Hybrid Topology Map">
+        <viz:size value="24.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -926,6 +1100,8 @@
         </attvalues>
       </node>
       <node id="ki_20260821_01" label="Plugin Card + Quickstart Standardization">
+        <viz:size value="6.0" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience" />
@@ -939,6 +1115,8 @@
         </attvalues>
       </node>
       <node id="ki_20260821_02" label="Transcript-Trajectory Debugging Pattern">
+        <viz:size value="6.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -952,6 +1130,8 @@
         </attvalues>
       </node>
       <node id="ki_20260821_03" label="PowerShell String Parsing Pitfall Guard">
+        <viz:size value="8.57" />
+        <viz:color r="46" g="204" b="113" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="infrastructure_and_runtime" />
@@ -965,6 +1145,8 @@
         </attvalues>
       </node>
       <node id="ki_20260821_04" label="Epistemic Habit — Skill SKILL.md as Design Contract">
+        <viz:size value="6.0" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience" />
@@ -978,6 +1160,8 @@
         </attvalues>
       </node>
       <node id="ki_20260821_05" label="Cross-Brain Knowledge Distillation via TF-IDF">
+        <viz:size value="6.0" />
+        <viz:color r="241" g="196" b="15" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="memory_and_epistemics" />
@@ -991,6 +1175,8 @@
         </attvalues>
       </node>
       <node id="ki_20260821_06" label="Verification Standard — Isolated Plugin Sandboxing">
+        <viz:size value="16.29" />
+        <viz:color r="231" g="76" b="60" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="security_and_forensics" />
@@ -1004,6 +1190,8 @@
         </attvalues>
       </node>
       <node id="ki_20260823_01" label="Subprocess Sandbox Boundary &amp; Dynamic Plugin Isolation">
+        <viz:size value="16.29" />
+        <viz:color r="231" g="76" b="60" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="security_and_forensics" />
@@ -1017,6 +1205,8 @@
         </attvalues>
       </node>
       <node id="ki_20260823_02" label="High-Scale Trajectory Ingestion &amp; Overlapping Token Indexing">
+        <viz:size value="8.57" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -1030,6 +1220,8 @@
         </attvalues>
       </node>
       <node id="ki_20260823_03" label="Windows PowerShell Command Delimiter Normalization">
+        <viz:size value="13.71" />
+        <viz:color r="46" g="204" b="113" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="infrastructure_and_runtime" />
@@ -1043,6 +1235,8 @@
         </attvalues>
       </node>
       <node id="ki_20260823_repo_01" label="Multi-Tier OS Process Sandboxing &amp; Policy Transforms">
+        <viz:size value="13.71" />
+        <viz:color r="231" g="76" b="60" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="security_and_forensics" />
@@ -1056,6 +1250,8 @@
         </attvalues>
       </node>
       <node id="ki_20260823_repo_02" label="Deterministic AST-Level Command Authorization via execpolicy">
+        <viz:size value="6.0" />
+        <viz:color r="231" g="76" b="60" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="security_and_forensics" />
@@ -1069,6 +1265,8 @@
         </attvalues>
       </node>
       <node id="ki_20260823_repo_03" label="Subagent Thread Forking &amp; Safety Auditing with guardian-v2">
+        <viz:size value="6.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -1082,6 +1280,8 @@
         </attvalues>
       </node>
       <node id="ki_20260823_repo_04" label="Storage-Neutral Parent/Child Topology with agent-graph-store">
+        <viz:size value="8.57" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -1095,6 +1295,8 @@
         </attvalues>
       </node>
       <node id="ki_20260823_repo_05" label="App-Server Daemon RPC Gate &amp; Automated Rust-to-TS Schema Synchronization">
+        <viz:size value="6.0" />
+        <viz:color r="46" g="204" b="113" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="infrastructure_and_runtime" />
@@ -1108,6 +1310,8 @@
         </attvalues>
       </node>
       <node id="ki_20260824_repo_01" label="Bi-Temporal Edge Invalidation in Dynamic Knowledge Graphs">
+        <viz:size value="8.57" />
+        <viz:color r="241" g="196" b="15" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="memory_and_epistemics" />
@@ -1121,6 +1325,8 @@
         </attvalues>
       </node>
       <node id="ki_20260824_repo_02" label="Tri-brid Search Fusion with Balanced Merge for Knowledge Graphs">
+        <viz:size value="6.0" />
+        <viz:color r="241" g="196" b="15" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="memory_and_epistemics" />
@@ -1134,19 +1340,23 @@
         </attvalues>
       </node>
       <node id="ki_20260824_repo_03" label="Embedded In-Process Graph Database Drivers with Kùzu">
+        <viz:size value="6.0" />
+        <viz:color r="241" g="196" b="15" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="memory_and_epistemics" />
           <attvalue for="2" value="memory_and_epistemics" />
           <attvalue for="3" value="graph_database,kuzu,embedded_database,driver_architecture,testing,in_process" />
           <attvalue for="4" value="DEMOTED" />
-          <attvalue for="5" value="5" />
+          <attvalue for="5" value="9" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-08-24T00:00:00Z" />
           <attvalue for="8" value="https://github.com/getzep/graphiti" />
         </attvalues>
       </node>
       <node id="ki_20260824_repo_04" label="Async Initialization Task Reference Retention &amp; Graceful Cancellation">
+        <viz:size value="6.0" />
+        <viz:color r="241" g="196" b="15" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="memory_and_epistemics" />
@@ -1160,6 +1370,8 @@
         </attvalues>
       </node>
       <node id="ki_20260829_cellcog_01" label="Any-to-Any Sub-Agent Delegation &amp; &lt;SHOW_FILE&gt; Multimodal Protocol">
+        <viz:size value="8.57" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -1173,6 +1385,8 @@
         </attvalues>
       </node>
       <node id="ki_20260829_cellcog_02" label="Pure Copy Multi-Channel Skill Distribution &amp; Drift-Proof Catalogs">
+        <viz:size value="6.0" />
+        <viz:color r="46" g="204" b="113" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="infrastructure_and_runtime" />
@@ -1186,6 +1400,8 @@
         </attvalues>
       </node>
       <node id="ki_20260830_claude_01" label="Async Rewake in Agent Lifecycle Hooks">
+        <viz:size value="6.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -1199,6 +1415,8 @@
         </attvalues>
       </node>
       <node id="ki_20260830_claude_02" label="Aspect-Oriented Multi-Agent Review Swarm">
+        <viz:size value="13.71" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -1212,19 +1430,23 @@
         </attvalues>
       </node>
       <node id="ki_20260830_django_01" label="Thread-Safe Lazy App Registry &amp; Topological Initialization in Multi-Tenant / Plugin Architectures">
+        <viz:size value="6.0" />
+        <viz:color r="230" g="126" b="34" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="data_engineering" />
           <attvalue for="2" value="data_engineering" />
           <attvalue for="3" value="django,architecture,app_registry,ioc_container,plugin_lifecycle,thread_safety" />
           <attvalue for="4" value="DEMOTED" />
-          <attvalue for="5" value="5" />
+          <attvalue for="5" value="9" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-08-30T00:00:00Z" />
           <attvalue for="8" value="external/Django/django-main/django-main/django/apps/registry.py" />
         </attvalues>
       </node>
       <node id="ki_20260830_django_02" label="WeakRef Signal Dispatcher Pattern with Dead-Receiver Garbage Collection">
+        <viz:size value="6.0" />
+        <viz:color r="241" g="196" b="15" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="memory_and_epistemics" />
@@ -1238,6 +1460,8 @@
         </attvalues>
       </node>
       <node id="ki_20260830_django_03" label="Declarative Metaclass Field Descriptors &amp; Deferred QuerySet Compilation">
+        <viz:size value="6.0" />
+        <viz:color r="230" g="126" b="34" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="data_engineering" />
@@ -1251,6 +1475,8 @@
         </attvalues>
       </node>
       <node id="ki_20260830_django_04" label="Transactional Atomic Savepoint Stacks &amp; Multi-Database Router Isolation">
+        <viz:size value="6.0" />
+        <viz:color r="230" g="126" b="34" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="data_engineering" />
@@ -1264,6 +1490,8 @@
         </attvalues>
       </node>
       <node id="ki_20260830_django_05" label="Django 6.x Native Background Tasks Architecture &amp; Result Backend Contracts">
+        <viz:size value="6.0" />
+        <viz:color r="230" g="126" b="34" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="data_engineering" />
@@ -1277,6 +1505,8 @@
         </attvalues>
       </node>
       <node id="ki_20260830_grok_01" label="Hashline Anchoring with Bounded Shift Recovery">
+        <viz:size value="6.0" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience" />
@@ -1290,6 +1520,8 @@
         </attvalues>
       </node>
       <node id="ki_20260830_grok_02" label="Pure Subagent Configuration Precedence Engine">
+        <viz:size value="6.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -1303,6 +1535,8 @@
         </attvalues>
       </node>
       <node id="ki_20260830_grok_03" label="Sandbox Hook Write-Deny Security Boundary">
+        <viz:size value="13.71" />
+        <viz:color r="231" g="76" b="60" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="security_and_forensics" />
@@ -1316,6 +1550,8 @@
         </attvalues>
       </node>
       <node id="ki_20260830_grok_04" label="Two-Tier Guest Path Virtualization with Traversal Clipping">
+        <viz:size value="8.57" />
+        <viz:color r="231" g="76" b="60" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="security_and_forensics" />
@@ -1329,6 +1565,8 @@
         </attvalues>
       </node>
       <node id="ki_20260830_grok_05" label="Preemptive Interjection Buffer &amp; Prompt Queue">
+        <viz:size value="6.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -1342,6 +1580,8 @@
         </attvalues>
       </node>
       <node id="ki_20260830_kimi_01" label="4-Tier Hierarchical DI Scopes &amp; Cascade Engine in Agent Frameworks">
+        <viz:size value="11.14" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -1355,6 +1595,8 @@
         </attvalues>
       </node>
       <node id="ki_20260830_kimi_02" label="4-Layer Isomorphic Transcript Data Engine with Granularity Subscriptions">
+        <viz:size value="8.57" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience" />
@@ -1368,6 +1610,8 @@
         </attvalues>
       </node>
       <node id="ki_20260830_kimi_03" label="Pure-Language Tree-Sitter Bash AST Parsing for Agent Shell Security Gates">
+        <viz:size value="8.57" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -1381,6 +1625,8 @@
         </attvalues>
       </node>
       <node id="ki_20260830_kimi_04" label="Hybrid In-Memory KV with Durable WAL Snapshot Persistence (MiniDb Pattern)">
+        <viz:size value="8.57" />
+        <viz:color r="241" g="196" b="15" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="memory_and_epistemics" />
@@ -1394,6 +1640,8 @@
         </attvalues>
       </node>
       <node id="ki_20260830_kimi_05" label="Differential Terminal Rendering &amp; Synchronized Output Protocol for Agent TUIs">
+        <viz:size value="8.57" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -1407,6 +1655,8 @@
         </attvalues>
       </node>
       <node id="ki_20260830_repo_01" label="Tool Package Decoupling">
+        <viz:size value="8.57" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -1420,6 +1670,8 @@
         </attvalues>
       </node>
       <node id="ki_20260830_repo_02" label="Invariant Verification Gates">
+        <viz:size value="6.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -1433,6 +1685,8 @@
         </attvalues>
       </node>
       <node id="ki_20260831_cellcog_01" label="Zero-Footprint Asynchronous Daemon &amp; WebSocket-to-Polling State Machine">
+        <viz:size value="11.14" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience" />
@@ -1446,6 +1700,8 @@
         </attvalues>
       </node>
       <node id="ki_20260831_cellcog_02" label="Parent Session Tree Fallback DAG &amp; Interim Rewake Heartbeat Delivery">
+        <viz:size value="8.57" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -1459,6 +1715,8 @@
         </attvalues>
       </node>
       <node id="ki_20260831_cellcog_03" label="Pre-Flight File Integrity Verification &amp; Transparent Blob Path Translation">
+        <viz:size value="11.14" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience" />
@@ -1472,6 +1730,8 @@
         </attvalues>
       </node>
       <node id="ki_20260831_cellcog_04" label="Monorepo Golden-Copy Multi-Channel Distribution &amp; ClawHub Slug Optimization">
+        <viz:size value="11.14" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience" />
@@ -1485,6 +1745,8 @@
         </attvalues>
       </node>
       <node id="ki_20260831_em3_01" label="Pre-Execution AST Security Visitor for Dynamic Code Sandboxing">
+        <viz:size value="16.29" />
+        <viz:color r="231" g="76" b="60" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="security_and_forensics" />
@@ -1498,6 +1760,8 @@
         </attvalues>
       </node>
       <node id="ki_20260831_em3_02" label="Zero-Copy Polyglot Memory Substrate via PyArrow IPC Streams">
+        <viz:size value="8.57" />
+        <viz:color r="241" g="196" b="15" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="memory_and_epistemics" />
@@ -1511,6 +1775,8 @@
         </attvalues>
       </node>
       <node id="ki_20260831_em3_03" label="Kit Fine Counterfactual Fault Localization &amp; Truthmaker State Fragment Fusion">
+        <viz:size value="8.57" />
+        <viz:color r="241" g="196" b="15" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="memory_and_epistemics" />
@@ -1524,6 +1790,8 @@
         </attvalues>
       </node>
       <node id="ki_20260831_em3_04" label="Distributed DAG Task Execution with Dynamic Template Value Resolution">
+        <viz:size value="8.57" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -1537,6 +1805,8 @@
         </attvalues>
       </node>
       <node id="ki_20260831_em3_05" label="Autonomous Self-Healing Feedback Loop with AST Patch Synthesis &amp; Rollback">
+        <viz:size value="8.57" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -1550,6 +1820,8 @@
         </attvalues>
       </node>
       <node id="ki_20260831_openclaw_01" label="In-Flight Plain-Text Tool-Call Stream Normalization &amp; Repair">
+        <viz:size value="11.14" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -1563,6 +1835,8 @@
         </attvalues>
       </node>
       <node id="ki_20260831_openclaw_02" label="Trusted Gateway Control Plane &amp; Deterministic Sandboxed Execution">
+        <viz:size value="8.57" />
+        <viz:color r="231" g="76" b="60" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="security_and_forensics" />
@@ -1576,6 +1850,8 @@
         </attvalues>
       </node>
       <node id="ki_20260831_openclaw_03" label="A2A (Agent-to-Agent) Multi-Agent Swarm Federation Protocol">
+        <viz:size value="11.14" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -1589,6 +1865,8 @@
         </attvalues>
       </node>
       <node id="ki_20260831_openclaw_04" label="Deterministic Session Tree Branching &amp; Compaction with UUIDv7">
+        <viz:size value="11.14" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -1602,6 +1880,8 @@
         </attvalues>
       </node>
       <node id="ki_20260831_sme_01" label="MIMO 6D Dynamic Control Surface for Multi-Objective Agentic Harnesses">
+        <viz:size value="6.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -1615,6 +1895,8 @@
         </attvalues>
       </node>
       <node id="ki_20260831_sme_02" label="Agentic Neural Network (ANN) Textual Backpropagation &amp; Momentum Smoothing">
+        <viz:size value="6.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -1628,6 +1910,8 @@
         </attvalues>
       </node>
       <node id="ki_20260831_sme_03" label="4-Stage Candidate Block Validation Filter &amp; SQLite WAL Candidate Pool Storage">
+        <viz:size value="6.0" />
+        <viz:color r="230" g="126" b="34" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="data_engineering" />
@@ -1641,6 +1925,8 @@
         </attvalues>
       </node>
       <node id="ki_20260831_sme_04" label="Cryptographic Merkle Tree Chaining &amp; HDF5 Claim Drift Audit Engine">
+        <viz:size value="8.57" />
+        <viz:color r="231" g="76" b="60" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="security_and_forensics" />
@@ -1654,6 +1940,8 @@
         </attvalues>
       </node>
       <node id="ki_20260831_sme_05" label="Circuit-Breaker Sandboxing &amp; Manifest Schema Verification for Dynamic Plugin Ecosystems">
+        <viz:size value="8.57" />
+        <viz:color r="231" g="76" b="60" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="security_and_forensics" />
@@ -1667,6 +1955,8 @@
         </attvalues>
       </node>
       <node id="ki_20260831_strategify_01" label="SubsystemRegistry &amp; Modular Simulation Orchestration">
+        <viz:size value="8.57" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -1680,6 +1970,8 @@
         </attvalues>
       </node>
       <node id="ki_20260831_strategify_02" label="Multi-Commodity Supply Chain Vulnerability &amp; Shock Engine">
+        <viz:size value="6.0" />
+        <viz:color r="231" g="76" b="60" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="security_and_forensics" />
@@ -1693,6 +1985,8 @@
         </attvalues>
       </node>
       <node id="ki_20260831_strategify_03" label="Multilateral Alliance Hypergraph &amp; Defense Treaty Modeling">
+        <viz:size value="6.0" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience" />
@@ -1706,6 +2000,8 @@
         </attvalues>
       </node>
       <node id="ki_20260831_strategify_04" label="Multi-Persona LLM Swarm Orchestration with Game-Theoretic Voting">
+        <viz:size value="8.57" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -1719,6 +2015,8 @@
         </attvalues>
       </node>
       <node id="ki_20260831_strategify_05" label="Web API Seam Decoupling via AnalysisRegistry &amp; AgentStateAdapter">
+        <viz:size value="6.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -1732,6 +2030,8 @@
         </attvalues>
       </node>
       <node id="ki_20260831_strategify_06" label="Epidemiology MCP Bridge &amp; ODE Parameter Fitting Pipeline">
+        <viz:size value="6.0" />
+        <viz:color r="46" g="204" b="113" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="infrastructure_and_runtime" />
@@ -1745,6 +2045,8 @@
         </attvalues>
       </node>
       <node id="ki_20260831_strategify_07" label="Cross-Language Neuro-Symbolic Logic Bridges (SWI-Prolog &amp; Clojure MCTS)">
+        <viz:size value="6.0" />
+        <viz:color r="241" g="196" b="15" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="memory_and_epistemics" />
@@ -1758,6 +2060,8 @@
         </attvalues>
       </node>
       <node id="ki_20260908_earthengine_01" label="Google Earth Engine Planetary Geospatial Processing &amp; Domain Partitioning Architecture">
+        <viz:size value="6.0" />
+        <viz:color r="46" g="204" b="113" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="infrastructure_and_runtime" />
@@ -1771,6 +2075,8 @@
         </attvalues>
       </node>
       <node id="ki_20260908_magika_01" label="Google Magika Deep Learning Content Type &amp; MIME Detection Architecture">
+        <viz:size value="6.0" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience" />
@@ -1784,6 +2090,8 @@
         </attvalues>
       </node>
       <node id="ki_20260908_mantis_01" label="Google Mantis Decoupled Security Review Pipeline &amp; Sandboxed Crash Verification">
+        <viz:size value="6.0" />
+        <viz:color r="231" g="76" b="60" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="security_and_forensics" />
@@ -1797,6 +2105,8 @@
         </attvalues>
       </node>
       <node id="ki_20260913_claude_coord_02" label="Hierarchical Sub-Agent Task Coordination &amp; Lifecycle States">
+        <viz:size value="13.71" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -1810,6 +2120,8 @@
         </attvalues>
       </node>
       <node id="ki_20260913_context_types_04" label="Context Item Typing &amp; Evidence Boundary Invariants">
+        <viz:size value="8.57" />
+        <viz:color r="233" g="30" b="99" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="context_engineering" />
@@ -1823,6 +2135,8 @@
         </attvalues>
       </node>
       <node id="ki_20260913_memgraph_rag_05" label="Multi-Agent Memory Graph RAG with Temporal Decay">
+        <viz:size value="8.57" />
+        <viz:color r="241" g="196" b="15" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="memory_and_epistemics" />
@@ -1836,6 +2150,8 @@
         </attvalues>
       </node>
       <node id="ki_20260913_pr_lens_byok_provider" label="Normalized BYOK Multi-LLM Provider Architecture">
+        <viz:size value="6.0" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience" />
@@ -1849,6 +2165,8 @@
         </attvalues>
       </node>
       <node id="ki_20260913_pr_lens_eli5_pedagogy" label="Progressive Disclosure Diagram Generation Pedagogy (ELI5)">
+        <viz:size value="8.57" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -1862,6 +2180,8 @@
         </attvalues>
       </node>
       <node id="ki_20260913_pr_lens_overlay" label="Idempotent Human Architectural Overlay Invariant">
+        <viz:size value="8.57" />
+        <viz:color r="241" g="196" b="15" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="memory_and_epistemics" />
@@ -1875,6 +2195,8 @@
         </attvalues>
       </node>
       <node id="ki_20260913_pr_lens_schema" label="Strict Dual-Engine Schema Validation &amp; Integrity Invariants">
+        <viz:size value="8.57" />
+        <viz:color r="241" g="196" b="15" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="memory_and_epistemics" />
@@ -1888,6 +2210,8 @@
         </attvalues>
       </node>
       <node id="ki_20260913_pr_lens_svg_animation" label="Zero-Dependency Standalone Animated SVG Embedding Pattern">
+        <viz:size value="6.0" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience" />
@@ -1901,6 +2225,8 @@
         </attvalues>
       </node>
       <node id="ki_20260913_repomap_01" label="PageRanked AST Context Prioritization &amp; Token Budget Pruning">
+        <viz:size value="6.0" />
+        <viz:color r="233" g="30" b="99" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="context_engineering" />
@@ -1914,6 +2240,8 @@
         </attvalues>
       </node>
       <node id="ki_20260913_stagehand_06" label="Semantic DOM Extraction &amp; Self-Healing Web Action Primitives">
+        <viz:size value="6.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -1927,6 +2255,8 @@
         </attvalues>
       </node>
       <node id="ki_20260913_tool_approval_03" label="Interactive Tool Approval Middleware &amp; Security Sandboxing">
+        <viz:size value="13.71" />
+        <viz:color r="231" g="76" b="60" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="security_and_forensics" />
@@ -1940,6 +2270,8 @@
         </attvalues>
       </node>
       <node id="ki_20260918_gemini_vercel_streaming" label="Plain-Text Chunk Streaming Architecture for Gemini on Vercel Serverless">
+        <viz:size value="6.0" />
+        <viz:color r="46" g="204" b="113" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="infrastructure_and_runtime/integration" />
@@ -1952,6 +2284,8 @@
         </attvalues>
       </node>
       <node id="ki_20260922_gis_geography_open_source" label="Open-Source GIS Architecture &amp; Multicriteria Software Benchmarking">
+        <viz:size value="6.0" />
+        <viz:color r="230" g="126" b="34" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="data_engineering" />
@@ -1964,6 +2298,8 @@
         </attvalues>
       </node>
       <node id="ki_20260922_tau_pi_agent_architecture" label="Pi-Style Minimalist Coding Agent Harness Architecture (Tau v0.4.4 / twotimespi)">
+        <viz:size value="11.14" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -1976,6 +2312,8 @@
         </attvalues>
       </node>
       <node id="ki_20260923_ethical_hacker_networking" label="Practical Networking for Ethical Hacking: Protocol Encapsulation, Tri-State Recon, and 7-Layer Fault Isolation">
+        <viz:size value="13.71" />
+        <viz:color r="231" g="76" b="60" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="security_and_forensics" />
@@ -1989,6 +2327,8 @@
         </attvalues>
       </node>
       <node id="ki_20261010_gev_downward_dependency_architecture" label="Downward-Only Tool Boundary Architecture &amp; Package Isolation Invariant">
+        <viz:size value="6.0" />
+        <viz:color r="0" g="188" b="212" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="scientific_computing/geospatial" />
@@ -2001,6 +2341,8 @@
         </attvalues>
       </node>
       <node id="ki_20261010_gev_inverse_pinhole_reprojection" label="Equirectangular Inverse-Sampling Pinhole Camera Reprojection Engine">
+        <viz:size value="6.0" />
+        <viz:color r="0" g="188" b="212" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="scientific_computing/geospatial" />
@@ -2013,6 +2355,8 @@
         </attvalues>
       </node>
       <node id="ki_20261010_gev_offline_spatial_infrastructure_ingestion" label="Offline Critical Infrastructure Multi-Source Spatial Indexing Engine">
+        <viz:size value="6.0" />
+        <viz:color r="0" g="188" b="212" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="scientific_computing/geospatial" />
@@ -2025,6 +2369,8 @@
         </attvalues>
       </node>
       <node id="ki_20261010_gev_wasm_eccodes_wind_decoding" label="Zero-Copy WebAssembly GRIB Meteorological Grid Decoding via eccodes-wasm">
+        <viz:size value="6.0" />
+        <viz:color r="0" g="188" b="212" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="scientific_computing/geospatial" />
@@ -2037,6 +2383,8 @@
         </attvalues>
       </node>
       <node id="ki_20261014_70_cycle_deepening_corpus" label="Empirical 70-Cycle Architecture Deepening and Monolith Decomposition Corpus">
+        <viz:size value="8.57" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience/architecture" />
@@ -2049,6 +2397,8 @@
         </attvalues>
       </node>
       <node id="ki_20261023_opencode_01" label="Unidirectional Layered Monorepo Architecture in AI Harnesses">
+        <viz:size value="8.57" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -2062,6 +2412,8 @@
         </attvalues>
       </node>
       <node id="ki_20261023_opencode_02" label="Dual-Runtime Plugin Interface Architecture (Effect &amp; Promise)">
+        <viz:size value="6.0" />
+        <viz:color r="46" g="204" b="113" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="infrastructure_and_runtime" />
@@ -2075,6 +2427,8 @@
         </attvalues>
       </node>
       <node id="ki_20261023_opencode_03" label="Persistent PTY Multiplexing Daemon for Long-Running Agents">
+        <viz:size value="6.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -2088,6 +2442,8 @@
         </attvalues>
       </node>
       <node id="ki_20261023_opencode_04" label="AST-Grep Structural Pattern Enforcement over Generic Linters">
+        <viz:size value="6.0" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience" />
@@ -2101,6 +2457,8 @@
         </attvalues>
       </node>
       <node id="ki_20261023_rea_01" label="Zero-Allocation Binary Offset Seeking for High-Scale Model Artifact Inspection">
+        <viz:size value="6.0" />
+        <viz:color r="231" g="76" b="60" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="security_and_forensics" />
@@ -2114,6 +2472,8 @@
         </attvalues>
       </node>
       <node id="ki_20261023_rea_02" label="Multi-Version Magic Header Parsing &amp; Section Map Validation for Unity IL2CPP">
+        <viz:size value="6.0" />
+        <viz:color r="231" g="76" b="60" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="security_and_forensics" />
@@ -2127,6 +2487,8 @@
         </attvalues>
       </node>
       <node id="ki_20261023_rea_03" label="Bounded Worker Control Framing and NUL-Delimited IPC Streams">
+        <viz:size value="6.0" />
+        <viz:color r="46" g="204" b="113" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="infrastructure_and_runtime" />
@@ -2140,6 +2502,8 @@
         </attvalues>
       </node>
       <node id="ki_20261023_rea_04" label="Static Native Boundary Mapping for Managed CLI/PE Runtimes">
+        <viz:size value="6.0" />
+        <viz:color r="231" g="76" b="60" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="security_and_forensics" />
@@ -2153,19 +2517,23 @@
         </attvalues>
       </node>
       <node id="ki_20261024_icm_architect" label="Interpretable Context Methodology (ICM): Folder Structure as Agent Architecture, Five-Layer Hierarchy, Three Primitives, and Verified Stage Checks">
+        <viz:size value="6.0" />
+        <viz:color r="233" g="30" b="99" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="context_engineering/architecture" />
           <attvalue for="2" value="context_engineering" />
           <attvalue for="3" value="interpretable_context_methodology,icm_architecture,folder_structure_as_agent_architecture,five_layer_context_hierarchy,three_primitives,five_forms,pipeline_production_line,record_library,knowledge_bundle,context_map,system_map,cold_walk_test,token_bounding,auditable_stage_checks,placeholder_syntax,production_workspaces" />
           <attvalue for="4" value="ACTIVE" />
-          <attvalue for="5" value="2" />
+          <attvalue for="5" value="3" />
           <attvalue for="6" value="1" />
           <attvalue for="7" value="2026-10-24T16:00:00Z" />
           <attvalue for="8" value="https://arxiv.org/abs/2603.16021" />
         </attvalues>
       </node>
       <node id="ki_20261028_headroom_context_optimization" label="Headroom Context Optimization Layer: Content Routing, SmartCrusher, Cross-Context Retrieval (CCR), and Detector-Only Cache Alignment">
+        <viz:size value="16.29" />
+        <viz:color r="241" g="196" b="15" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="memory_and_epistemics" />
@@ -2179,6 +2547,8 @@
         </attvalues>
       </node>
       <node id="ki_agent_desktop_capture_proof" label="Evidence Tri-State &amp; Capture-Proof Ref Identity Resolution">
+        <viz:size value="13.71" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience/software_engineering" />
@@ -2192,6 +2562,8 @@
         </attvalues>
       </node>
       <node id="ki_agent_desktop_disposition_matrix" label="2D Delivery × Retry Disposition Matrix with Stability Sampling">
+        <viz:size value="13.71" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -2205,6 +2577,8 @@
         </attvalues>
       </node>
       <node id="ki_agent_desktop_interaction_lease" label="Cross-Process Interaction Lease &amp; Web-Wrapper Depth Bypass">
+        <viz:size value="13.71" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience/software_engineering" />
@@ -2218,6 +2592,8 @@
         </attvalues>
       </node>
       <node id="ki_agent_desktop_mcp_cancellation" label="Clap-Derived Dynamic MCP Server with Pre-Spawn Cancel &amp; SIGTERM Input Release">
+        <viz:size value="13.71" />
+        <viz:color r="46" g="204" b="113" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="infrastructure_and_runtime/integration" />
@@ -2231,6 +2607,8 @@
         </attvalues>
       </node>
       <node id="ki_agent_desktop_self_testing_arch" label="Self-Mutating Architecture Linter &amp; Zero-OS-Dependency Core">
+        <viz:size value="16.29" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience/software_engineering" />
@@ -2244,6 +2622,8 @@
         </attvalues>
       </node>
       <node id="ki_agent_reach_layered_backend_fallback" label="Deterministic Multi-Tier Backend Fallback Cascades">
+        <viz:size value="6.0" />
+        <viz:color r="46" g="204" b="113" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="infrastructure_and_runtime/integration" />
@@ -2257,6 +2637,8 @@
         </attvalues>
       </node>
       <node id="ki_agent_reach_session_isolation_and_credential_scrubbing" label="Private HOME Sandboxing, Symlink Defense &amp; Automated URL Credential Redaction">
+        <viz:size value="6.0" />
+        <viz:color r="46" g="204" b="113" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="infrastructure_and_runtime/integration" />
@@ -2270,6 +2652,8 @@
         </attvalues>
       </node>
       <node id="ki_agent_reach_stealth_browser_cdp_loopback" label="Dedicated Profile Sharing, Anti-Fingerprint Stealth &amp; Localhost CDP Reconnection">
+        <viz:size value="6.0" />
+        <viz:color r="46" g="204" b="113" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="infrastructure_and_runtime/integration" />
@@ -2283,6 +2667,8 @@
         </attvalues>
       </node>
       <node id="ki_agent_reach_unified_envelope_taxonomy" label="Schema v1 Result Envelope &amp; Granular Error Classification for Agent Loops">
+        <viz:size value="6.0" />
+        <viz:color r="46" g="204" b="113" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="infrastructure_and_runtime/integration" />
@@ -2296,6 +2682,8 @@
         </attvalues>
       </node>
       <node id="ki_agent_skills_progressive_disclosure" label="Agent Skills Progressive Disclosure &amp; Loose Constraint Architecture">
+        <viz:size value="8.57" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -2309,6 +2697,8 @@
         </attvalues>
       </node>
       <node id="ki_agent_skills_runtime_security_middleware" label="Agent Skills Runtime Security, Approval Middleware &amp; Dynamic DI">
+        <viz:size value="6.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -2322,6 +2712,8 @@
         </attvalues>
       </node>
       <node id="ki_agentwikis_governance" label="AgentWikis Corpus Architecture, Trust Semantics &amp; Data Governance">
+        <viz:size value="6.0" />
+        <viz:color r="241" g="196" b="15" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="memory_and_epistemics/integration" />
@@ -2335,6 +2727,8 @@
         </attvalues>
       </node>
       <node id="ki_antigravity_001" label="Protobuf Struct Serialization &amp; Wire Normalization">
+        <viz:size value="6.0" />
+        <viz:color r="230" g="126" b="34" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="data_engineering" />
@@ -2348,6 +2742,8 @@
         </attvalues>
       </node>
       <node id="ki_antigravity_002" label="4-Stage Hook Lifecycle &amp; Tri-State Policy Evaluation">
+        <viz:size value="6.0" />
+        <viz:color r="231" g="76" b="60" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="security_and_forensics" />
@@ -2361,6 +2757,8 @@
         </attvalues>
       </node>
       <node id="ki_antigravity_003" label="Hierarchical StateStore Shadowing with Scope Isolation">
+        <viz:size value="6.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -2374,6 +2772,8 @@
         </attvalues>
       </node>
       <node id="ki_antigravity_004" label="Reactive Wakeup Triggers &amp; Non-Polling Background Events">
+        <viz:size value="6.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -2387,6 +2787,8 @@
         </attvalues>
       </node>
       <node id="ki_aslanyan_canonical_failures_antidotes" label="The Five Canonical Agent Failure Modes &amp; Architectural Antidotes">
+        <viz:size value="6.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -2400,6 +2802,8 @@
         </attvalues>
       </node>
       <node id="ki_aslanyan_four_level_ladder" label="The Four-Level Ladder &amp; Pre-Flight Agent Scoping Heuristics">
+        <viz:size value="6.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -2413,6 +2817,8 @@
         </attvalues>
       </node>
       <node id="ki_aslanyan_sixty_agent_patterns" label="The Eight Capabilities &amp; Sixty Architectural Agent Patterns">
+        <viz:size value="6.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -2426,6 +2832,8 @@
         </attvalues>
       </node>
       <node id="ki_audit_20260908_01" label="Clock-Sensitive Test Smell in Data Management Tests">
+        <viz:size value="6.0" />
+        <viz:color r="231" g="76" b="60" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="security_and_forensics" />
@@ -2439,6 +2847,8 @@
         </attvalues>
       </node>
       <node id="ki_audit_20260908_02" label="Compound Topology Invariant — Four Concurrent Data Structures">
+        <viz:size value="21.43" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -2452,6 +2862,8 @@
         </attvalues>
       </node>
       <node id="ki_audit_20260908_03" label="Blast Radius Registry — Critical Seam Nodes">
+        <viz:size value="18.86" />
+        <viz:color r="231" g="76" b="60" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="security_and_forensics" />
@@ -2465,6 +2877,8 @@
         </attvalues>
       </node>
       <node id="ki_audit_20260908_04" label="Coverage Threshold Gap — No CI Assertion">
+        <viz:size value="6.0" />
+        <viz:color r="231" g="76" b="60" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="security_and_forensics" />
@@ -2478,6 +2892,8 @@
         </attvalues>
       </node>
       <node id="ki_audit_20260908_05" label="OpenRouter KiloCode Header Coupling in Gateway Service">
+        <viz:size value="8.57" />
+        <viz:color r="231" g="76" b="60" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="security_and_forensics" />
@@ -2491,6 +2907,8 @@
         </attvalues>
       </node>
       <node id="ki_audit_20260908_06" label="Frontend Integration Gap — Vite App Unconnected to Harness CLI">
+        <viz:size value="11.14" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience" />
@@ -2504,6 +2922,8 @@
         </attvalues>
       </node>
       <node id="ki_audit_20260908_07" label="Delta Innovation Summary — 8 Novel Architectural Patterns">
+        <viz:size value="18.86" />
+        <viz:color r="231" g="76" b="60" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="security_and_forensics" />
@@ -2517,6 +2937,8 @@
         </attvalues>
       </node>
       <node id="ki_audit_20260908_08" label="CHANGELOG Absence — Evolution Record Gap">
+        <viz:size value="6.0" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience" />
@@ -2530,6 +2952,8 @@
         </attvalues>
       </node>
       <node id="ki_audit_20260915_01" label="Micro-Kernel IoC Topo-Sort &amp; Domain-Partitioned Plugin Synthesis">
+        <viz:size value="11.14" />
+        <viz:color r="231" g="76" b="60" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="security_and_forensics" />
@@ -2543,6 +2967,8 @@
         </attvalues>
       </node>
       <node id="ki_audit_20260915_02" label="Dynamic 5D Compute Complexity &amp; Reasoning Budget Escalation">
+        <viz:size value="11.14" />
+        <viz:color r="231" g="76" b="60" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="security_and_forensics" />
@@ -2556,6 +2982,8 @@
         </attvalues>
       </node>
       <node id="ki_audit_20260915_03" label="Bounded Directory Traversal &amp; Noise-Root Pruning Invariant">
+        <viz:size value="8.57" />
+        <viz:color r="46" g="204" b="113" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="infrastructure_and_runtime" />
@@ -2569,6 +2997,8 @@
         </attvalues>
       </node>
       <node id="ki_audit_20260915_04" label="Multi-Store Autobiographical Memory &amp; System Protection Boundary Fallback">
+        <viz:size value="6.0" />
+        <viz:color r="230" g="126" b="34" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="data_engineering" />
@@ -2582,6 +3012,8 @@
         </attvalues>
       </node>
       <node id="ki_auto_20260915_01" label="Dual-Store Autobiographical Memory Federation &amp; SQLite Fallback">
+        <viz:size value="8.57" />
+        <viz:color r="241" g="196" b="15" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="memory_and_epistemics" />
@@ -2595,6 +3027,8 @@
         </attvalues>
       </node>
       <node id="ki_auto_20260915_02" label="Bounded Directory Traversal &amp; Deep-Scan Hygiene">
+        <viz:size value="6.0" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience/software_engineering" />
@@ -2608,6 +3042,8 @@
         </attvalues>
       </node>
       <node id="ki_brain_20261003_01" label="Antigravity IDE Brain Workspace Epistemic Topology and Scratch Salvage Invariants">
+        <viz:size value="6.0" />
+        <viz:color r="241" g="196" b="15" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="memory_and_epistemics" />
@@ -2620,6 +3056,8 @@
         </attvalues>
       </node>
       <node id="ki_chatbotx_dynamic_mcp_orpc" label="Dynamic oRPC-to-OpenAPI Schema Pipeline with First-Class MCP Tool Annotations">
+        <viz:size value="13.71" />
+        <viz:color r="46" g="204" b="113" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="infrastructure_and_runtime" />
@@ -2632,6 +3070,8 @@
         </attvalues>
       </node>
       <node id="ki_chatbotx_isolated_vm_execution" label="Multi-Tenant Microservice Sandbox Execution via isolated-vm">
+        <viz:size value="11.14" />
+        <viz:color r="231" g="76" b="60" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="security_and_forensics" />
@@ -2644,6 +3084,8 @@
         </attvalues>
       </node>
       <node id="ki_chatbotx_omnichannel_messaging_bus" label="Omnichannel Unified Messaging &amp; Graph Flow Execution Pipeline">
+        <viz:size value="13.71" />
+        <viz:color r="241" g="196" b="15" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="memory_and_epistemics" />
@@ -2656,6 +3098,8 @@
         </attvalues>
       </node>
       <node id="ki_conversations_20261003_01" label="Multi-Store Autobiographical Trajectory Mining with Proactor-Safe Read-Only Handshake">
+        <viz:size value="6.0" />
+        <viz:color r="241" g="196" b="15" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="memory_and_epistemics" />
@@ -2668,6 +3112,8 @@
         </attvalues>
       </node>
       <node id="ki_deepselect_adaptive_scan" label="Adaptive Randomized Block Scan with Monotonic Threshold Filtering">
+        <viz:size value="6.0" />
+        <viz:color r="0" g="188" b="212" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="scientific_computing" />
@@ -2681,6 +3127,8 @@
         </attvalues>
       </node>
       <node id="ki_deepselect_bitmask_filtering" label="Single-Pass PTX Bitmask Accumulation &amp; Warp-Level Traversal">
+        <viz:size value="8.57" />
+        <viz:color r="0" g="188" b="212" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="scientific_computing" />
@@ -2694,6 +3142,8 @@
         </attvalues>
       </node>
       <node id="ki_deepselect_cluster_partitioning" label="Threadblock Cluster Multi-SM Sequence Partitioning for Wave-Quantization Resilience">
+        <viz:size value="6.0" />
+        <viz:color r="0" g="188" b="212" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="scientific_computing" />
@@ -2707,6 +3157,8 @@
         </attvalues>
       </node>
       <node id="ki_deepselect_denormal_fp32" label="Denormal IEEE-754 FP32 Simulated Addition Bypassing CUDA Core ALU Contention">
+        <viz:size value="8.57" />
+        <viz:color r="0" g="188" b="212" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="scientific_computing" />
@@ -2720,6 +3172,8 @@
         </attvalues>
       </node>
       <node id="ki_egm_antagonistic_review_pipeline" label="5-Stage Antagonistic Review Pipeline with Synthesizer Fan-Out/Fan-In and In-Thread Remediation">
+        <viz:size value="6.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -2733,6 +3187,8 @@
         </attvalues>
       </node>
       <node id="ki_egm_artifact_first_sdd_protocol" label="Artifact-First Spec-Driven Development (SDD) &amp; Altitude Boundary Protocol: Chat Dump Prohibition and Semantic Range Isolation">
+        <viz:size value="6.0" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience/software_engineering" />
@@ -2746,6 +3202,8 @@
         </attvalues>
       </node>
       <node id="ki_egm_bifurcated_context_architecture" label="Elephant &amp; Goldfish Bifurcated Cognitive Context Architecture: Asymmetric Memory Partitioning, Zero-Context Subagents, and Hallucination Suppression">
+        <viz:size value="6.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -2759,6 +3217,8 @@
         </attvalues>
       </node>
       <node id="ki_egm_living_spec_drift_detection" label="Living Specification Governance &amp; Continuous Codebase Drift Detection: AST Differential Auditing across Implementations and Checked-In Specs">
+        <viz:size value="6.0" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience/software_engineering" />
@@ -2772,6 +3232,8 @@
         </attvalues>
       </node>
       <node id="ki_epistemic_graph_traversal_evidence_boundary" label="Epistemic Graph Traversal and the Relation-vs-Inference Boundary">
+        <viz:size value="6.0" />
+        <viz:color r="230" g="126" b="34" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="data_engineering" />
@@ -2785,6 +3247,8 @@
         </attvalues>
       </node>
       <node id="ki_garf_reporting_engine" label="Google Garf Declarative SQL Reporting &amp; Multi-Destination Data Pipeline Architecture">
+        <viz:size value="21.43" />
+        <viz:color r="230" g="126" b="34" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="data_engineering" />
@@ -2797,6 +3261,8 @@
         </attvalues>
       </node>
       <node id="ki_google_agent_skills_enterprise_evals" label="Google Enterprise Agent Skills: Continuous Evals &amp; Product Governance">
+        <viz:size value="6.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -2810,6 +3276,8 @@
         </attvalues>
       </node>
       <node id="ki_google_repos_bridge" label="Google Multi-Repository Architectural Bridge &amp; Plugin Suite">
+        <viz:size value="24.0" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience" />
@@ -2822,6 +3290,8 @@
         </attvalues>
       </node>
       <node id="ki_guarino_precision_coverage_tradeoff" label="Guarino's Precision vs. Coverage Tradeoff in Knowledge Representation">
+        <viz:size value="6.0" />
+        <viz:color r="230" g="126" b="34" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="data_engineering/modeling" />
@@ -2835,6 +3305,8 @@
         </attvalues>
       </node>
       <node id="ki_hermes_001" label="Closed Learning Loop &amp; Autonomous Skill Formation">
+        <viz:size value="6.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -2848,6 +3320,8 @@
         </attvalues>
       </node>
       <node id="ki_hermes_002" label="FTS5 SQLite WAL Session Persistence &amp; Compression Forking">
+        <viz:size value="6.0" />
+        <viz:color r="241" g="196" b="15" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="memory_and_epistemics" />
@@ -2861,6 +3335,8 @@
         </attvalues>
       </node>
       <node id="ki_hermes_003" label="Pre-Commit Verification Evidence Tracking &amp; Stop Interceptors">
+        <viz:size value="6.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -2874,6 +3350,8 @@
         </attvalues>
       </node>
       <node id="ki_hermes_004" label="Unattended Background Cron Scheduler &amp; Incident Classification">
+        <viz:size value="6.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -2887,6 +3365,8 @@
         </attvalues>
       </node>
       <node id="ki_hf_autodoc_mock_virtualization" label="Zero-Dependency Meta-Path Mock Virtualization for AST Introspection">
+        <viz:size value="6.0" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience" />
@@ -2900,6 +3380,8 @@
         </attvalues>
       </node>
       <node id="ki_hf_autoresearch_multi_worker_lab" label="Multi-Agent Autoresearch AI Lab Architecture &amp; Heterogeneous Model Workers">
+        <viz:size value="6.0" />
+        <viz:color r="0" g="188" b="212" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="scientific_computing/machine_learning" />
@@ -2913,6 +3395,8 @@
         </attvalues>
       </node>
       <node id="ki_hf_context_engineering_six_layer_stack" label="The Six-Layer Context Engineering Stack for Autonomous Code Agents">
+        <viz:size value="6.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -2926,6 +3410,8 @@
         </attvalues>
       </node>
       <node id="ki_hf_doc_anchor_graph_integrity" label="Deterministic Markdown Anchor Graph &amp; Cross-Reference Link Verification">
+        <viz:size value="6.0" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience" />
@@ -2939,6 +3425,8 @@
         </attvalues>
       </node>
       <node id="ki_hf_fastmcp_dynamic_tool_protocol" label="FastMCP Universal Adapter Pattern &amp; JSON-RPC Client-Server Transport Seams">
+        <viz:size value="6.0" />
+        <viz:color r="46" g="204" b="113" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="infrastructure_and_runtime/integration" />
@@ -2952,6 +3440,8 @@
         </attvalues>
       </node>
       <node id="ki_hf_lifecycle_hooks_guardrails_dashboard" label="Bidirectional Agent Lifecycle Hook Events &amp; Live Gradio Observability Telemetry">
+        <viz:size value="6.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -2965,6 +3455,8 @@
         </attvalues>
       </node>
       <node id="ki_hf_mdx_component_pipeline" label="Multi-Dialect Unified MDX Transpilation &amp; Hierarchical Search Chunking">
+        <viz:size value="6.0" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience" />
@@ -2978,6 +3470,8 @@
         </attvalues>
       </node>
       <node id="ki_hf_nano_harness_react_sandboxing" label="Minimal ReAct Autonomous Loops, Safe-Path Sandboxing &amp; Bounded Error Self-Repair">
+        <viz:size value="6.0" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience/software_engineering" />
@@ -2991,6 +3485,8 @@
         </attvalues>
       </node>
       <node id="ki_hf_subagent_topology_patterns" label="Multi-Agent Subagent Coordination Topologies &amp; The 10+ Files Context Boundary">
+        <viz:size value="6.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -3004,6 +3500,8 @@
         </attvalues>
       </node>
       <node id="ki_hira_python_system_design_diagrams" label="Diagram-as-Code for Cloud Architecture: Provider Node Hierarchies, Context Canvases, Fan-Out Grouping, Nested Clusters, and Typed Edge Protocols">
+        <viz:size value="6.0" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience/architecture" />
@@ -3017,6 +3515,8 @@
         </attvalues>
       </node>
       <node id="ki_icm_fifteen_conventions" label="The 15 MWP/ICM Workspace Architecture Conventions: Stage Contracts, Output Handoffs, One-Way Dependencies, Checkpoints, and Stage Audits">
+        <viz:size value="6.0" />
+        <viz:color r="233" g="30" b="99" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="context_engineering/architecture" />
@@ -3030,6 +3530,8 @@
         </attvalues>
       </node>
       <node id="ki_icm_placeholder_templating_engine" label="ICM Factory-Configuration Templating: Double-Brace Placeholders, Whole-Section Conditionals, and Questionnaire Onboarding">
+        <viz:size value="6.0" />
+        <viz:color r="233" g="30" b="99" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="context_engineering/templates" />
@@ -3043,6 +3545,8 @@
         </attvalues>
       </node>
       <node id="ki_icm_workspace_builder_metapipeline" label="ICM Workspace-Builder: Self-Hosting 5-Stage Meta-Pipeline for Autonomous Agent Workspace Synthesis and Cold Walk Validation">
+        <viz:size value="6.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -3056,6 +3560,8 @@
         </attvalues>
       </node>
       <node id="ki_koos_typescript_harness_from_scratch" label="Zero-Dependency AI Agent Harness Construction in TypeScript: Provider-Agnostic Loops, Workspace Jailing, Atomic Batch Budgets, and Seeded Failure Testing">
+        <viz:size value="8.57" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -3068,6 +3574,8 @@
         </attvalues>
       </node>
       <node id="ki_mindreader_20260911_01" label="Dual-Store Autobiographical Memory Federation &amp; Anti-Contention SQLite Protocol">
+        <viz:size value="8.57" />
+        <viz:color r="241" g="196" b="15" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="memory_and_epistemics/reflection" />
@@ -3081,6 +3589,8 @@
         </attvalues>
       </node>
       <node id="ki_mindreader_20260911_02" label="External Ingestion Security Boundary Shell Pivot Pattern">
+        <viz:size value="6.0" />
+        <viz:color r="231" g="76" b="60" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="security_and_forensics" />
@@ -3094,6 +3604,8 @@
         </attvalues>
       </node>
       <node id="ki_njoku_dynamic_model_routing" label="Three-Tier Dynamic Model Switching &amp; Resilient Fallbacks">
+        <viz:size value="6.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -3107,6 +3619,8 @@
         </attvalues>
       </node>
       <node id="ki_njoku_uncertainty_aware_systems" label="Deterministic 3-Layer Uncertainty Interception &amp; Overconfidence Mitigation">
+        <viz:size value="6.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -3120,6 +3634,8 @@
         </attvalues>
       </node>
       <node id="ki_okf_agent_memory_v02" label="Open Knowledge Framework (OKF v0.2): Git-Native Agent Memory, BM25 Scoping, and Trust Ordering">
+        <viz:size value="6.0" />
+        <viz:color r="241" g="196" b="15" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="memory_and_epistemics" />
@@ -3133,19 +3649,23 @@
         </attvalues>
       </node>
       <node id="ki_oliinyk_geospatial_disaster_simulation" label="Geospatial Disaster Simulation on Real Maps: Tile-Aligned Canvas Draping, Elevation Inundation, Three.js Shared WebGL Context, and Feature-State Building Collapse Physics">
+        <viz:size value="6.0" />
+        <viz:color r="0" g="188" b="212" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="scientific_computing/geospatial" />
           <attvalue for="2" value="scientific_computing" />
           <attvalue for="3" value="geospatial_simulation,mapbox_gl_js,maplibre_gl,threejs,web_mercator,terrarium_elevation,terrain_rgb,canvas_raster_source,fill_extrusion,feature_state,promote_id,instanced_mesh,seismic_fragility,rigid_body_physics,container_shake" />
           <attvalue for="4" value="ACTIVE" />
-          <attvalue for="5" value="1" />
+          <attvalue for="5" value="2" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-10-23T10:45:00Z" />
           <attvalue for="8" value="https://www.freecodecamp.org/news/disaster-simulation-real-map-mapbox-three-js/" />
         </attvalues>
       </node>
       <node id="ki_ontological_engineering_gruber_criteria" label="Gruber's 5 Criteria for Robust Knowledge Modeling">
+        <viz:size value="6.0" />
+        <viz:color r="230" g="126" b="34" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="data_engineering/modeling" />
@@ -3159,6 +3679,8 @@
         </attvalues>
       </node>
       <node id="ki_orca_orchestration_engine" label="Orca Multi-Agent Orchestration Engine &amp; Worktree Sandboxing">
+        <viz:size value="11.14" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -3172,6 +3694,8 @@
         </attvalues>
       </node>
       <node id="ki_r_c_graphics_device_serialization" label="C-Level R GEdevice Interception &amp; Zero-Dependency JSON Graphics Streaming">
+        <viz:size value="6.0" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience/tooling" />
@@ -3185,6 +3709,8 @@
         </attvalues>
       </node>
       <node id="ki_r_decoupled_syntax_grammar" label="Decoupled Multi-Editor TextMate Syntax Grammar &amp; Tokenization Architecture">
+        <viz:size value="6.0" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience/tooling" />
@@ -3198,6 +3724,8 @@
         </attvalues>
       </node>
       <node id="ki_r_lsp_textsync_and_diagnostics" label="LSP Incremental Text Synchronization &amp; Asynchronous Lintr Diagnostics Pipeline">
+        <viz:size value="6.0" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience/tooling" />
@@ -3211,6 +3739,8 @@
         </attvalues>
       </node>
       <node id="ki_r_session_watcher_reflection" label="Non-Invasive User-Space Session Introspection &amp; Workspace Tracking">
+        <viz:size value="6.0" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience/tooling" />
@@ -3224,6 +3754,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260826_01" label="Click CLI Group Single-Source Consolidation">
+        <viz:size value="6.0" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience" />
@@ -3237,6 +3769,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260826_02" label="Lazy Subprocess Staging for Sandboxed External Plugins">
+        <viz:size value="6.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -3250,6 +3784,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260826_03" label="ReAct Agent Step Transactional Isolation">
+        <viz:size value="6.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -3263,6 +3799,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260826_04" label="Multi-Dimensional Compute Assessment Calibration">
+        <viz:size value="6.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -3276,6 +3814,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260827_01" label="Deterministic Pre-LLM Context Optimization">
+        <viz:size value="6.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -3289,6 +3829,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260827_02" label="Adversarial Red-Teaming Subprocess Isolation">
+        <viz:size value="16.29" />
+        <viz:color r="231" g="76" b="60" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="security_and_forensics" />
@@ -3302,6 +3844,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260827_03" label="Headless CLI Session DAG Inspection &amp; Export">
+        <viz:size value="6.0" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience" />
@@ -3315,6 +3859,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260828_01" label="Agent Instruction File Hygiene &amp; Boundary Control">
+        <viz:size value="6.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -3328,6 +3874,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260828_02" label="Slotted Dataclass Memory &amp; Invariant Architecture">
+        <viz:size value="6.0" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience" />
@@ -3341,6 +3889,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260828_03" label="Inspect-Before-Edit Seam QA &amp; Adversarial Diff Verification">
+        <viz:size value="6.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -3354,6 +3904,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260828_04" label="Relational Recursive CTE Graph Cycle Brakes">
+        <viz:size value="6.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -3367,6 +3919,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260828_05" label="Dual-Mode UI Serving &amp; Zero-Build SPA Fallback">
+        <viz:size value="6.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -3380,6 +3934,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260828_06" label="Subprocess Pipe Transport Lifecycle &amp; Windows Proactor Guard">
+        <viz:size value="6.0" />
+        <viz:color r="46" g="204" b="113" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="infrastructure_and_runtime" />
@@ -3393,6 +3949,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260828_07" label="Secure Credential Handling &amp; Shell-Free Git Push Protocol">
+        <viz:size value="6.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -3406,6 +3964,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260829_01" label="Unified 5-Stage Pre-LLM Context Pipeline Seam">
+        <viz:size value="6.0" />
+        <viz:color r="233" g="30" b="99" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="context_engineering" />
@@ -3419,6 +3979,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260829_02" label="Authoritative Thread DAG Lifecycle &amp; Execution Graph Store">
+        <viz:size value="8.57" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -3432,6 +3994,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260829_03" label="Transactional Git Checkpoints &amp; In-Flight Syntax Diagnostic Self-Repair">
+        <viz:size value="6.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -3445,6 +4009,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260829_04" label="Typed IoC Context Pipeline &amp; Authoritative Swarm DAG Store">
+        <viz:size value="8.57" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -3458,6 +4024,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260830_01" label="Non-Invasive Scoped Metadata Annotations vs. Core Kernel Mutability">
+        <viz:size value="8.57" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -3471,6 +4039,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260830_02" label="In-Place Foundational Deepening over Redundant Plugin Sprawl">
+        <viz:size value="6.0" />
+        <viz:color r="231" g="76" b="60" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="security_and_forensics" />
@@ -3484,6 +4054,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260831_01" label="Formal Social Choice Aggregation for Multi-Persona Agent Swarms">
+        <viz:size value="8.57" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -3497,6 +4069,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260831_02" label="In-Flight Tool-Call Stream Normalization &amp; AST Auto-Repair">
+        <viz:size value="6.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -3510,6 +4084,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260831_03" label="4-Stage Candidate Block Validation for Textual Backprop Loops">
+        <viz:size value="6.0" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience" />
@@ -3523,6 +4099,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260831_04" label="SubsystemRegistry Orchestration for High-Order Multi-Domain Harnesses">
+        <viz:size value="8.57" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -3536,6 +4114,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260901_01" label="Multi-Store Autobiographical Memory Federation">
+        <viz:size value="6.0" />
+        <viz:color r="230" g="126" b="34" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="data_engineering" />
@@ -3549,6 +4129,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260901_02" label="Windows UTF-8 Stream Codec Isolation">
+        <viz:size value="8.57" />
+        <viz:color r="46" g="204" b="113" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="infrastructure_and_runtime" />
@@ -3562,6 +4144,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260901_03" label="Stateless MCP Scientific Bridge Isolation">
+        <viz:size value="8.57" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -3575,6 +4159,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260901_04" label="Dynamic 5D Compute Complexity Budgeting">
+        <viz:size value="6.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -3588,6 +4174,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260901_scratch_01" label="Burrows' Delta Stylometry &amp; Corpus Normalization">
+        <viz:size value="6.0" />
+        <viz:color r="241" g="196" b="15" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="memory_and_epistemics" />
@@ -3601,6 +4189,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260901_scratch_02" label="Isolated Extension Mock Contracts for Forensic Pipelines">
+        <viz:size value="6.0" />
+        <viz:color r="231" g="76" b="60" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="security_and_forensics" />
@@ -3614,6 +4204,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260901_scratch_03" label="PowerShell UTF-16 Stream Redirection Traps &amp; Fixes">
+        <viz:size value="8.57" />
+        <viz:color r="46" g="204" b="113" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="infrastructure_and_runtime" />
@@ -3627,6 +4219,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260902_01" label="PowerShell Multi-Line Python String Escaping &amp; Scratch File Execution">
+        <viz:size value="6.0" />
+        <viz:color r="46" g="204" b="113" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="infrastructure_and_runtime" />
@@ -3640,6 +4234,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260902_02" label="PowerShell Argument Glob Non-Expansion &amp; Keyword Filtering">
+        <viz:size value="6.0" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience/testing" />
@@ -3653,6 +4249,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260902_03" label="Artifact Boundary Isolation &amp; Workspace Tool Scaffolding">
+        <viz:size value="6.0" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience/tooling" />
@@ -3666,6 +4264,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260902_04" label="F-String Brace Collision Avoidance in HTML Brief Generators">
+        <viz:size value="6.0" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience/visualization" />
@@ -3679,6 +4279,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260902_05" label="Deterministic Inward Manifest Probing for Nested Project Roots">
+        <viz:size value="6.0" />
+        <viz:color r="231" g="76" b="60" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="security_and_forensics/auditing" />
@@ -3692,6 +4294,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260903_01" label="ValidationReport Interface Contract &amp; Check Collection Invariant">
+        <viz:size value="6.0" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience/testing" />
@@ -3705,6 +4309,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260903_02" label="Skill Knowledge Graph Catalog Summary &amp; Match Key Standardization">
+        <viz:size value="6.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration/skills" />
@@ -3718,6 +4324,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260903_03" label="Epistemic Memory Promotion Pipeline &amp; Held-Out Judge Invariant">
+        <viz:size value="6.0" />
+        <viz:color r="241" g="196" b="15" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="memory_and_epistemics" />
@@ -3731,6 +4339,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260904_scratch_01" label="Headless Git Authentication, Credential Helper Exclamation Invariant &amp; In-Memory Redaction">
+        <viz:size value="6.0" />
+        <viz:color r="231" g="76" b="60" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="security_and_forensics" />
@@ -3744,6 +4354,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260904_scratch_02" label="Swarm Execution Composite Thread Keying &amp; Session Manager Interface Contracts">
+        <viz:size value="6.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -3757,6 +4369,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260904_scratch_03" label="Typed ServiceContext Container Guarantee over Duck-Typed Introspection">
+        <viz:size value="6.0" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience/architecture" />
@@ -3770,6 +4384,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260905_01" label="Third-Party Engine Dual-API &amp; Mock Spec Invariant">
+        <viz:size value="6.0" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience/testing" />
@@ -3783,6 +4399,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260905_02" label="PluginValidator Coroutine &amp; Dual-Mode Invocation Invariant">
+        <viz:size value="6.0" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience/architecture" />
@@ -3796,6 +4414,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260905_03" label="Skill Knowledge Graph Parser &amp; ASCII Single-Pipe Card Formatting">
+        <viz:size value="6.0" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience/skills" />
@@ -3809,6 +4429,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260905_04" label="Dual-Lens Cognitive Partitioning &amp; Multimedia Transcript Distillation">
+        <viz:size value="6.0" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience/architecture" />
@@ -3822,6 +4444,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260905_05" label="Skill Card ASCII Header Tagging &amp; Zero-Warning Platform Compliance">
+        <viz:size value="6.0" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience/architecture" />
@@ -3835,6 +4459,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260905_06" label="Multi-Pass Cognitive String Salvage &amp; AST Script Hygiene Inspection">
+        <viz:size value="6.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration/tooling" />
@@ -3848,32 +4474,38 @@
         </attvalues>
       </node>
       <node id="ki_self_20260905_07" label="Layered Zero-Fork Skill Configuration &amp; AST Security Scoring Engine">
+        <viz:size value="6.0" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience/architecture" />
           <attvalue for="2" value="developer_experience" />
           <attvalue for="3" value="configuration,skillspector,ast_security,zero_fork,endogenous_memory,self_reflection" />
           <attvalue for="4" value="ACTIVE" />
-          <attvalue for="5" value="0" />
+          <attvalue for="5" value="4" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-09-05T16:09:00Z" />
           <attvalue for="8" value="Brain Harness Execution History" />
         </attvalues>
       </node>
       <node id="ki_self_20260905_08" label="AI-Assisted Codebase Archaeology &amp; Characterization Testing Before Refactoring">
+        <viz:size value="6.0" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience/architecture" />
           <attvalue for="2" value="developer_experience" />
           <attvalue for="3" value="legacy_modernization,characterization_testing,codebase_archaeology,seam_introduction,refactoring_safety_nets,dual_lens_distillation,endogenous_memory,self_reflection" />
           <attvalue for="4" value="ACTIVE" />
-          <attvalue for="5" value="1" />
+          <attvalue for="5" value="2" />
           <attvalue for="6" value="0" />
           <attvalue for="7" value="2026-09-05T19:40:00Z" />
           <attvalue for="8" value="Hugo Teijiz / freeCodeCamp Literature" />
         </attvalues>
       </node>
       <node id="ki_self_20260907_01" label="Deep-Module 3-Layer Architecture Graduation Pattern">
+        <viz:size value="6.0" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience/architecture" />
@@ -3887,6 +4519,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260907_02" label="Windows PowerShell Scratch Script Execution &amp; JSON Null-Field Salvage">
+        <viz:size value="8.57" />
+        <viz:color r="46" g="204" b="113" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="infrastructure_and_runtime/platform" />
@@ -3900,6 +4534,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260907_03" label="Click CLI Group Single-Source Co-Registration Invariant">
+        <viz:size value="8.57" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience/architecture" />
@@ -3913,6 +4549,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260907_04" label="Architecture Deepening Loop Convergence &amp; Verification Metrics">
+        <viz:size value="6.0" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience/velocity" />
@@ -3926,6 +4564,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260908_01" label="SkillPipelineEngine Unification Invariant">
+        <viz:size value="13.71" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -3939,6 +4579,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260908_02" label="BuiltinSkillRegistry Dual-Parser Divergence Gap">
+        <viz:size value="11.14" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -3952,6 +4594,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260908_03" label="Deep-Module Monolithic CLI Extraction Pattern">
+        <viz:size value="13.71" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience" />
@@ -3965,6 +4609,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260908_04" label="Time-Relative Fixture Anchoring Invariant">
+        <viz:size value="11.14" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -3978,6 +4624,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260909_01" label="Authoritative Critic Seam Consolidation &amp; Adapter Pattern">
+        <viz:size value="16.29" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -3991,6 +4639,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260909_02" label="External Ingestion Workspace Scope Boundary &amp; Non-Workspace Shell Fallback">
+        <viz:size value="11.14" />
+        <viz:color r="231" g="76" b="60" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="security_and_forensics" />
@@ -4004,6 +4654,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260909_03" label="Plugin Module Singleton &amp; IoC Container Dynamic Loader Invariant">
+        <viz:size value="13.71" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -4017,6 +4669,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260910_01" label="Markdown AST Codeblock Stripping &amp; Skill Link Portability Invariant">
+        <viz:size value="11.14" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -4030,6 +4684,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260910_02" label="Dual-Tier Skill Prompt Budgeting &amp; Zero-Fork Configuration Governance">
+        <viz:size value="11.14" />
+        <viz:color r="233" g="30" b="99" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="context_engineering" />
@@ -4043,6 +4699,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260911_01" label="Dual-Kernel Micro-Kernel Seam Elevation &amp; O(1) Binary Byte-Offset Seek Slicing">
+        <viz:size value="8.57" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience/architecture" />
@@ -4055,6 +4713,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260914_01" label="Skill-to-IoC Micro-Kernel Seam Elevation Lifecycle">
+        <viz:size value="8.57" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience/architecture" />
@@ -4067,6 +4727,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260914_02" label="Diátaxis 4-Quadrant Docs-as-Code Synchronization Pipeline">
+        <viz:size value="6.0" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience/documentation" />
@@ -4079,6 +4741,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260914_03" label="Scratch Runner UTF-8 Stream Codec &amp; SysPath Precedence Protocol">
+        <viz:size value="6.0" />
+        <viz:color r="46" g="204" b="113" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="infrastructure_and_runtime/sandbox" />
@@ -4091,6 +4755,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260914_04" label="Slotted Triad Pipeline &amp; Dual-Mode Visual Brief Synthesis Invariant">
+        <viz:size value="6.0" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience/software_engineering" />
@@ -4103,6 +4769,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260914_05" label="Authoritative Swarm Thread DAG Lifecycle &amp; Session State Keying">
+        <viz:size value="8.57" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -4115,6 +4783,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260914_06" label="Micro-Kernel ServiceContext Typed Key Provider Contract &amp; Singleton Export">
+        <viz:size value="6.0" />
+        <viz:color r="46" g="204" b="113" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="infrastructure_and_runtime/kernel" />
@@ -4127,6 +4797,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260916_01" label="Atomic Asynchronous Task Settlement Seam Invariant">
+        <viz:size value="6.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -4139,6 +4811,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260916_02" label="ReAct Step Tool Safe-Loop Dispatch Invariant">
+        <viz:size value="6.0" />
+        <viz:color r="46" g="204" b="113" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="infrastructure_and_runtime" />
@@ -4151,6 +4825,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260916_03" label="In-Memory Mock Fallback Schema Parity Invariant">
+        <viz:size value="6.0" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience/testing" />
@@ -4163,6 +4839,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260917_01" label="Five-Part Agent Harness Architecture and Four-Mechanism Reliability Invariant">
+        <viz:size value="8.57" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -4175,6 +4853,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260917_02" label="Three-Layer LLM Evaluation Architecture, Golden Regression Suites, and Paired T-Test Significance Gating">
+        <viz:size value="6.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -4187,6 +4867,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260917_03" label="Deterministic Validation Loops, 3-Tier Spec Validation, and Exact Error Feedback in AI Agent Architectures">
+        <viz:size value="6.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -4199,6 +4881,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260917_04" label="Gradio Production Architecture: Decoupled Logic, Session State Isolation, Multimodal Pipelines, and Hugging Face Deployment">
+        <viz:size value="6.0" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience/ui" />
@@ -4211,6 +4895,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260922_01" label="Subprocess Stderr Drainage, Ring Buffers, and Crash Visibility in Sandboxed Transports">
+        <viz:size value="8.57" />
+        <viz:color r="231" g="76" b="60" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="security_and_forensics/sandboxing" />
@@ -4223,6 +4909,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260922_02" label="IoC Dispose Stack Inverse Accumulator Synchronization &amp; Lifecycle Epoch Caching">
+        <viz:size value="6.0" />
+        <viz:color r="46" g="204" b="113" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="infrastructure_and_runtime/kernel" />
@@ -4235,6 +4923,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260922_03" label="Strict Directed Graph Reachability &amp; YAML Frontmatter Precedence in Skill Knowledge Graphs">
+        <viz:size value="6.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration/skills" />
@@ -4247,6 +4937,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260924_01" label="Win32 Job Object Kernel Memory Boundaries, CPython Baseline Footprint, and Subprocess Termination Triangulation">
+        <viz:size value="8.57" />
+        <viz:color r="231" g="76" b="60" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="security_and_forensics/sandboxing" />
@@ -4259,6 +4951,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260924_02" label="Dual-Silo CLI Consolidation, Slotted Domain Engine Architecture, and IoC Service Elevation (discovery-index-scout)">
+        <viz:size value="6.0" />
+        <viz:color r="230" g="126" b="34" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="data_engineering" />
@@ -4271,6 +4965,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20260924_03" label="Bounded ReAct Context Accumulator Rotation, Interceptor Epoch Invalidation, and AST Codeblock Anti-Pattern Interception">
+        <viz:size value="6.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -4283,6 +4979,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20261002_01" label="Copy-on-Write (COW) Lock-Free Context Registry &amp; Transaction Inverse Compaction">
+        <viz:size value="6.0" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience/architecture" />
@@ -4295,6 +4993,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20261002_02" label="Shared Memory (SHM) IPC Acceleration &amp; Safe Native Engine Graceful Degradation">
+        <viz:size value="6.0" />
+        <viz:color r="46" g="204" b="113" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="infrastructure_and_runtime/sandbox" />
@@ -4307,6 +5007,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20261002_03" label="Stage Artifact Contracts, Dynamic Directed FEEDS Edge Synthesis &amp; Cycle Prevention">
+        <viz:size value="6.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration/skills" />
@@ -4319,6 +5021,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20261002_04" label="Continuous Reflection Daemon, JUnit Test Trajectory Harvesting &amp; CI Distillation">
+        <viz:size value="6.0" />
+        <viz:color r="241" g="196" b="15" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="memory_and_epistemics/reflection" />
@@ -4331,6 +5035,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20261002_05" label="Privilege-Aware Posix Cgroup v2 Isolation &amp; Hierarchical Slice Traversal">
+        <viz:size value="13.71" />
+        <viz:color r="231" g="76" b="60" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="security_and_forensics/sandboxing" />
@@ -4343,6 +5049,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20261003_01" label="Stage-Pillar Heading Disambiguation in Markdown AST Parsers">
+        <viz:size value="6.0" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience/architecture" />
@@ -4355,6 +5063,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20261003_02" label="Dynamic Importlib sys.modules Registration for Slotted/Frozen Dataclasses">
+        <viz:size value="6.0" />
+        <viz:color r="46" g="204" b="113" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="infrastructure_and_runtime" />
@@ -4367,6 +5077,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20261003_03" label="Monotonic Threshold Assertions for Dynamic Skill and Plugin Catalogs">
+        <viz:size value="6.0" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience/testing" />
@@ -4379,6 +5091,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20261003_04" label="Dual-Store Autobiographical Memory Federation Architecture">
+        <viz:size value="6.0" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience/architecture" />
@@ -4391,6 +5105,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20261014_01" label="Skill CLI Script Single-File Self-Containment and Language Server Isolation">
+        <viz:size value="8.57" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience/architecture" />
@@ -4404,6 +5120,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20261014_02" label="Markdown Document Structural Formatting and Unified Unordered List Hygiene">
+        <viz:size value="6.0" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience/documentation" />
@@ -4417,6 +5135,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20261019_hyperframes_video_01" label="Programmatic Motion Graphics Rendering via Node.js Subprocess JSON-RPC and Slotted Models">
+        <viz:size value="11.14" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience/tooling" />
@@ -4430,6 +5150,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20261019_memory_decay_01" label="Ebbinghaus Forgetting Curves and Cognitive Working Memory Retention">
+        <viz:size value="11.14" />
+        <viz:color r="241" g="196" b="15" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="memory_and_epistemics" />
@@ -4443,6 +5165,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20261019_prometheus_exporter_01" label="Zero-Dependency Prometheus Text Exposition Architecture and Observability Seams">
+        <viz:size value="11.14" />
+        <viz:color r="46" g="204" b="113" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="infrastructure_and_runtime/cloud" />
@@ -4456,6 +5180,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20261019_prompt_pruning_01" label="Deterministic 3-Pass Prompt Pruning with Fixed-Point Idempotence">
+        <viz:size value="11.14" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -4469,6 +5195,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20261019_pyrit_redteam_01" label="Subprocess Venv Staging and Adversarial GenAI Red-Teaming Architecture">
+        <viz:size value="13.71" />
+        <viz:color r="231" g="76" b="60" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="security_and_forensics" />
@@ -4482,6 +5210,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20261019_six_vector_expansion_synthesis" label="Six-Vector Brain Harness Expansion Synthesis: Architectural Seams, Invariants, and Zero-Regression Governance">
+        <viz:size value="6.0" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience/architecture" />
@@ -4495,6 +5225,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20261104_01_powershell_splatting_guard" label="PowerShell Qualified Ref Splatting Defense for CLI Agents">
+        <viz:size value="13.71" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience/software_engineering" />
@@ -4508,6 +5240,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20261104_02_simulation_backed_domain_engine" label="Dual-Mode Simulation-Backed Engine for Native System Sandboxes">
+        <viz:size value="13.71" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience/software_engineering" />
@@ -4521,6 +5255,8 @@
         </attvalues>
       </node>
       <node id="ki_self_20261104_03_planted_violation_boundary_gate" label="Planted-Violation Self-Testing Architecture Boundary Gate">
+        <viz:size value="13.71" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience/software_engineering" />
@@ -4534,6 +5270,8 @@
         </attvalues>
       </node>
       <node id="ki_solla_contract_first_medallion_lakehouse" label="Open Data Contracts and Contract-First Medallion Lakehouse Engineering">
+        <viz:size value="11.14" />
+        <viz:color r="230" g="126" b="34" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="data_engineering" />
@@ -4547,6 +5285,8 @@
         </attvalues>
       </node>
       <node id="ki_solla_dikw_data_asset_continuum" label="The DIKW Pyramid &amp; Data Lifecycle Asset Progression">
+        <viz:size value="11.14" />
+        <viz:color r="230" g="126" b="34" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="data_engineering" />
@@ -4560,6 +5300,8 @@
         </attvalues>
       </node>
       <node id="ki_solla_dmbok_governance_decision_rights" label="Data Governance, Stewardship Roles, and RACI Decision Rights">
+        <viz:size value="11.14" />
+        <viz:color r="230" g="126" b="34" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="data_engineering" />
@@ -4573,6 +5315,8 @@
         </attvalues>
       </node>
       <node id="ki_solla_six_dimension_quality_observability" label="The 6 DAMA Quality Dimensions and 5-Pillar Data Observability">
+        <viz:size value="6.0" />
+        <viz:color r="230" g="126" b="34" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="data_engineering" />
@@ -4586,6 +5330,8 @@
         </attvalues>
       </node>
       <node id="ki_system_design_architect" label="Senior Software System Design: The 5-Step Architecture Progression, 5-Dimension Evaluation Matrix, and Distributed Production Case Studies">
+        <viz:size value="6.0" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience/architecture" />
@@ -4598,6 +5344,8 @@
         </attvalues>
       </node>
       <node id="ki_techwithrj_harness_engineering" label="Harness Engineering for AI-Native Organizations: Four Behavioral Gates, Credential-Free MCP, and Continuous Drift Telemetry">
+        <viz:size value="6.0" />
+        <viz:color r="155" g="89" b="182" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="agent_orchestration" />
@@ -4610,6 +5358,8 @@
         </attvalues>
       </node>
       <node id="ki_temp_20261003_01" label="Antigravity Tri-Store Trinity: Ephemeral Runtime Archaeology and Visual Brief Preservation">
+        <viz:size value="6.0" />
+        <viz:color r="241" g="196" b="15" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="memory_and_epistemics" />
@@ -4622,6 +5372,8 @@
         </attvalues>
       </node>
       <node id="ki_token_economizer_dynamic_tool_pruning" label="Empirical Evidence-Based Tool Pruning &amp; Capability Masking">
+        <viz:size value="6.0" />
+        <viz:color r="241" g="196" b="15" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="memory_and_epistemics" />
@@ -4635,6 +5387,8 @@
         </attvalues>
       </node>
       <node id="ki_token_economizer_microskills_lifecycle" label="Experience-Driven Micro-Skills Lifecycle &amp; Asymmetric Contradiction Eviction">
+        <viz:size value="6.0" />
+        <viz:color r="241" g="196" b="15" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="memory_and_epistemics" />
@@ -4648,6 +5402,8 @@
         </attvalues>
       </node>
       <node id="ki_token_economizer_multi_agent_trace_federation" label="Standardized Multi-Harness Session Trajectory &amp; Cost Ledger Federation">
+        <viz:size value="6.0" />
+        <viz:color r="241" g="196" b="15" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="memory_and_epistemics" />
@@ -4661,6 +5417,8 @@
         </attvalues>
       </node>
       <node id="ki_token_economizer_turn_guard_loop_intervention" label="3-Tier Failure-Loop Intervention &amp; Conjunction Gating">
+        <viz:size value="6.0" />
+        <viz:color r="241" g="196" b="15" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="memory_and_epistemics" />
@@ -4674,6 +5432,8 @@
         </attvalues>
       </node>
       <node id="ki_umairmirza_precommit_security" label="Shift-Left Pre-Commit Security: Multi-Engine Division of Labor, Synthetic Failure Smoke Gates, and Dual-Gate CI Parity">
+        <viz:size value="13.71" />
+        <viz:color r="231" g="76" b="60" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="security_and_forensics" />
@@ -4687,6 +5447,8 @@
         </attvalues>
       </node>
       <node id="ki_vudathala_agentic_reliability_harness" label="Agentic AI Reliability Testing Harness: Asymmetric Trust Boundaries, Five Structural Evaluation Levels, PEP Gateways, Behavioral Invariants, and Three-State Release Gates">
+        <viz:size value="6.0" />
+        <viz:color r="52" g="152" b="219" />
         <attvalues>
           <attvalue for="0" value="ki" />
           <attvalue for="1" value="developer_experience/architecture" />
@@ -4700,6 +5462,8 @@
         </attvalues>
       </node>
       <node id="media-to-vault-pipeline" label="media-to-vault-pipeline">
+        <viz:size value="8.57" />
+        <viz:color r="142" g="68" b="173" />
         <attvalues>
           <attvalue for="0" value="skill" />
           <attvalue for="1" value="skill" />
@@ -4710,6 +5474,8 @@
         </attvalues>
       </node>
       <node id="pi-coding-harness" label="pi-coding-harness">
+        <viz:size value="8.57" />
+        <viz:color r="142" g="68" b="173" />
         <attvalues>
           <attvalue for="0" value="skill" />
           <attvalue for="1" value="skill" />
@@ -4720,6 +5486,8 @@
         </attvalues>
       </node>
       <node id="plugin.google_adk_docs_navigator" label="plugin.google_adk_docs_navigator">
+        <viz:size value="8.57" />
+        <viz:color r="26" g="188" b="156" />
         <attvalues>
           <attvalue for="0" value="plugin" />
           <attvalue for="1" value="plugin" />
@@ -4730,6 +5498,8 @@
         </attvalues>
       </node>
       <node id="plugin.google_adk_optimizer" label="plugin.google_adk_optimizer">
+        <viz:size value="8.57" />
+        <viz:color r="26" g="188" b="156" />
         <attvalues>
           <attvalue for="0" value="plugin" />
           <attvalue for="1" value="plugin" />
@@ -4740,6 +5510,8 @@
         </attvalues>
       </node>
       <node id="plugin.google_adk_runtime" label="plugin.google_adk_runtime">
+        <viz:size value="8.57" />
+        <viz:color r="26" g="188" b="156" />
         <attvalues>
           <attvalue for="0" value="plugin" />
           <attvalue for="1" value="plugin" />
@@ -4750,6 +5522,8 @@
         </attvalues>
       </node>
       <node id="plugin.google_adk_web_bridge" label="plugin.google_adk_web_bridge">
+        <viz:size value="8.57" />
+        <viz:color r="26" g="188" b="156" />
         <attvalues>
           <attvalue for="0" value="plugin" />
           <attvalue for="1" value="plugin" />
@@ -4760,6 +5534,8 @@
         </attvalues>
       </node>
       <node id="plugin.google_styleguide_auditor" label="plugin.google_styleguide_auditor">
+        <viz:size value="8.57" />
+        <viz:color r="26" g="188" b="156" />
         <attvalues>
           <attvalue for="0" value="plugin" />
           <attvalue for="1" value="plugin" />
@@ -4770,6 +5546,8 @@
         </attvalues>
       </node>
       <node id="plugin.google_tunix_posttraining" label="plugin.google_tunix_posttraining">
+        <viz:size value="8.57" />
+        <viz:color r="26" g="188" b="156" />
         <attvalues>
           <attvalue for="0" value="plugin" />
           <attvalue for="1" value="plugin" />
@@ -4780,6 +5558,8 @@
         </attvalues>
       </node>
       <node id="plugin.perfetto_trace_processor" label="plugin.perfetto_trace_processor">
+        <viz:size value="8.57" />
+        <viz:color r="26" g="188" b="156" />
         <attvalues>
           <attvalue for="0" value="plugin" />
           <attvalue for="1" value="plugin" />
@@ -4790,6 +5570,8 @@
         </attvalues>
       </node>
       <node id="plugins/agent_orchestration/agent_debater/main.py" label="main.py">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -4800,6 +5582,8 @@
         </attvalues>
       </node>
       <node id="plugins/agent_orchestration/critic_loop/config.default.yaml" label="config.default.yaml">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -4810,6 +5594,8 @@
         </attvalues>
       </node>
       <node id="plugins/agent_orchestration/critic_loop/main.py" label="main.py">
+        <viz:size value="11.14" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -4820,6 +5606,8 @@
         </attvalues>
       </node>
       <node id="plugins/agent_orchestration/evaluator_critic/main.py" label="main.py">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -4830,6 +5618,8 @@
         </attvalues>
       </node>
       <node id="plugins/agent_orchestration/google_adk_runtime/main.py" label="main.py">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -4840,6 +5630,8 @@
         </attvalues>
       </node>
       <node id="plugins/agent_orchestration/omarchy_agent_telemetry/" label="omarchy_agent_telemetry">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -4850,6 +5642,8 @@
         </attvalues>
       </node>
       <node id="plugins/agent_orchestration/tau_harness_bridge/README.md" label="README.md">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -4860,6 +5654,8 @@
         </attvalues>
       </node>
       <node id="plugins/developer_tooling/omarchy_command_router/" label="omarchy_command_router">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -4870,6 +5666,8 @@
         </attvalues>
       </node>
       <node id="plugins/developer_tooling/omarchy_theming_engine/" label="omarchy_theming_engine">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -4880,6 +5678,8 @@
         </attvalues>
       </node>
       <node id="plugins/geospatial_and_osint/earth_engine_pipeline/main.py" label="main.py">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -4890,6 +5690,8 @@
         </attvalues>
       </node>
       <node id="plugins/integration_and_io/agent_desktop/engine.py#L20-L80" label="engine.py#L20-L80">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -4900,6 +5702,8 @@
         </attvalues>
       </node>
       <node id="plugins/memory_and_epistemics/brain_bridge/main.py" label="main.py">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -4910,6 +5714,8 @@
         </attvalues>
       </node>
       <node id="plugins/memory_and_epistemics/headroom_context_optimizer" label="headroom_context_optimizer">
+        <viz:size value="8.57" />
+        <viz:color r="26" g="188" b="156" />
         <attvalues>
           <attvalue for="0" value="plugin" />
           <attvalue for="1" value="plugin" />
@@ -4920,6 +5726,8 @@
         </attvalues>
       </node>
       <node id="plugins/security_and_forensics/network_forensics/main.py" label="main.py">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -4930,6 +5738,8 @@
         </attvalues>
       </node>
       <node id="plugins/security_and_forensics/pre_commit_security_guard/main.py" label="main.py">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -4940,6 +5750,8 @@
         </attvalues>
       </node>
       <node id="pre-commit-security-guard" label="pre-commit-security-guard">
+        <viz:size value="8.57" />
+        <viz:color r="142" g="68" b="173" />
         <attvalues>
           <attvalue for="0" value="skill" />
           <attvalue for="1" value="skill" />
@@ -4950,6 +5762,8 @@
         </attvalues>
       </node>
       <node id="prompt-pruning-architect" label="prompt-pruning-architect">
+        <viz:size value="8.57" />
+        <viz:color r="142" g="68" b="173" />
         <attvalues>
           <attvalue for="0" value="skill" />
           <attvalue for="1" value="skill" />
@@ -4960,6 +5774,8 @@
         </attvalues>
       </node>
       <node id="responsible-ai-prototyping" label="responsible-ai-prototyping">
+        <viz:size value="8.57" />
+        <viz:color r="142" g="68" b="173" />
         <attvalues>
           <attvalue for="0" value="skill" />
           <attvalue for="1" value="skill" />
@@ -4970,6 +5786,8 @@
         </attvalues>
       </node>
       <node id="scratch/inspect_omarchy.py" label="inspect_omarchy.py">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -4980,6 +5798,8 @@
         </attvalues>
       </node>
       <node id="src/harness/agent/react.py" label="react.py">
+        <viz:size value="11.14" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -4990,6 +5810,8 @@
         </attvalues>
       </node>
       <node id="src/harness/agent/session.py" label="session.py">
+        <viz:size value="11.14" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -5000,6 +5822,8 @@
         </attvalues>
       </node>
       <node id="src/harness/agent/swarm.py" label="swarm.py">
+        <viz:size value="18.86" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -5010,6 +5834,8 @@
         </attvalues>
       </node>
       <node id="src/harness/cli.py" label="cli.py">
+        <viz:size value="16.29" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -5020,6 +5846,8 @@
         </attvalues>
       </node>
       <node id="src/harness/commands/" label="commands">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -5030,6 +5858,8 @@
         </attvalues>
       </node>
       <node id="src/harness/commands/__init__.py" label="__init__.py">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -5040,6 +5870,8 @@
         </attvalues>
       </node>
       <node id="src/harness/creator/" label="creator">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -5050,6 +5882,8 @@
         </attvalues>
       </node>
       <node id="src/harness/creator/archetypes.py" label="archetypes.py">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -5060,6 +5894,8 @@
         </attvalues>
       </node>
       <node id="src/harness/creator/reflection.py" label="reflection.py">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -5070,6 +5906,8 @@
         </attvalues>
       </node>
       <node id="src/harness/creator/validator.py" label="validator.py">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -5080,6 +5918,8 @@
         </attvalues>
       </node>
       <node id="src/harness/events/bus.py" label="bus.py">
+        <viz:size value="11.14" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -5090,6 +5930,8 @@
         </attvalues>
       </node>
       <node id="src/harness/events/bus.py#L630" label="bus.py#L630">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -5100,6 +5942,8 @@
         </attvalues>
       </node>
       <node id="src/harness/kernel/context.py" label="context.py">
+        <viz:size value="13.71" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -5110,6 +5954,8 @@
         </attvalues>
       </node>
       <node id="src/harness/kernel/context.py#L25-L95" label="context.py#L25-L95">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -5120,6 +5966,8 @@
         </attvalues>
       </node>
       <node id="src/harness/kernel/graph.py" label="graph.py">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -5130,6 +5978,8 @@
         </attvalues>
       </node>
       <node id="src/harness/kernel/lifecycle.py" label="lifecycle.py">
+        <viz:size value="11.14" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -5140,6 +5990,8 @@
         </attvalues>
       </node>
       <node id="src/harness/kernel/lifecycle.py#L45-L110" label="lifecycle.py#L45-L110">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -5150,6 +6002,8 @@
         </attvalues>
       </node>
       <node id="src/harness/kernel/runtime.py" label="runtime.py">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -5160,6 +6014,8 @@
         </attvalues>
       </node>
       <node id="src/harness/mcp" label="mcp">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -5170,6 +6026,8 @@
         </attvalues>
       </node>
       <node id="src/harness/plugins/catalog.py" label="catalog.py">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -5180,6 +6038,8 @@
         </attvalues>
       </node>
       <node id="src/harness/plugins/loader.py" label="loader.py">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -5190,6 +6050,8 @@
         </attvalues>
       </node>
       <node id="src/harness/plugins/loader.py#L71-L110" label="loader.py#L71-L110">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -5200,6 +6062,8 @@
         </attvalues>
       </node>
       <node id="src/harness/plugins/sandbox.py" label="sandbox.py">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -5210,6 +6074,8 @@
         </attvalues>
       </node>
       <node id="src/harness/services/__init__.py" label="__init__.py">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -5220,6 +6086,8 @@
         </attvalues>
       </node>
       <node id="src/harness/services/agent_graph.py" label="agent_graph.py">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -5230,6 +6098,8 @@
         </attvalues>
       </node>
       <node id="src/harness/services/cellcog.py" label="cellcog.py">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -5240,6 +6110,8 @@
         </attvalues>
       </node>
       <node id="src/harness/services/compute_assessor.py" label="compute_assessor.py">
+        <viz:size value="16.29" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -5250,6 +6122,8 @@
         </attvalues>
       </node>
       <node id="src/harness/services/data_management.py" label="data_management.py">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -5260,6 +6134,8 @@
         </attvalues>
       </node>
       <node id="src/harness/services/network_forensics.py" label="network_forensics.py">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -5270,6 +6146,8 @@
         </attvalues>
       </node>
       <node id="src/harness/services/openrouter_gateway.py#L17" label="openrouter_gateway.py#L17">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -5280,6 +6158,8 @@
         </attvalues>
       </node>
       <node id="src/harness/services/pre_commit_security_guard.py" label="pre_commit_security_guard.py">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -5290,6 +6170,8 @@
         </attvalues>
       </node>
       <node id="src/harness/services/repomap.py" label="repomap.py">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -5300,6 +6182,8 @@
         </attvalues>
       </node>
       <node id="src/harness/services/skill_graph.py" label="skill_graph.py">
+        <viz:size value="11.14" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -5310,6 +6194,8 @@
         </attvalues>
       </node>
       <node id="src/harness/services/skill_pipeline.py" label="skill_pipeline.py">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -5320,6 +6206,8 @@
         </attvalues>
       </node>
       <node id="src/harness/services/tools.py" label="tools.py">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -5330,6 +6218,8 @@
         </attvalues>
       </node>
       <node id="src/harness/ui/" label="ui">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -5340,6 +6230,8 @@
         </attvalues>
       </node>
       <node id="tests/test_agent_desktop_operator.py#L42-L56" label="test_agent_desktop_operator.py#L42-L56">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -5350,6 +6242,8 @@
         </attvalues>
       </node>
       <node id="tests/test_agent_skill_sdlc.py" label="test_agent_skill_sdlc.py">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -5360,6 +6254,8 @@
         </attvalues>
       </node>
       <node id="tests/test_agent_skills_architect_deepened.py" label="test_agent_skills_architect_deepened.py">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -5370,6 +6266,8 @@
         </attvalues>
       </node>
       <node id="tests/test_compute_assessor.py" label="test_compute_assessor.py">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -5380,6 +6278,8 @@
         </attvalues>
       </node>
       <node id="tests/test_data_management_architect.py" label="test_data_management_architect.py">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />
@@ -5390,6 +6290,8 @@
         </attvalues>
       </node>
       <node id="tests/test_plugin_agent_desktop.py#L50-L75" label="test_plugin_agent_desktop.py#L50-L75">
+        <viz:size value="8.57" />
+        <viz:color r="149" g="165" b="166" />
         <attvalues>
           <attvalue for="0" value="path" />
           <attvalue for="1" value="path" />

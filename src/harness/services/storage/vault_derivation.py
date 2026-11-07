@@ -57,7 +57,8 @@ def derive_knowledge_graph(
                     derived=e.derived, confidence=e.confidence, shared_tags=(), description=e.description or "",
                 ))
             if nodes_filter == "all" and e.target not in nodes:
-                label = Path(e.target).name if "/" in e.target or "\\" in e.target else e.target
+                clean_t = e.target.rstrip("/) ")
+                label = Path(clean_t).name if "/" in clean_t or "\\" in clean_t else e.target
                 nodes[e.target] = KnowledgeGraphNode(
                     id=e.target, label=label, node_kind=e.target_kind, category=e.target_kind,
                     domain=e.target_kind, status="EXTERNAL",

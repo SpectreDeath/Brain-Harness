@@ -153,7 +153,7 @@ class TestKnowledgeExporters:
 
         tree = ET.parse(out_file)
         root = tree.getroot()
-        ns = {"g": "http://www.gexf.net/1.3draft"}
+        ns = {"g": "http://www.gexf.net/1.3draft", "viz": "http://www.gexf.net/1.3draft/viz"}
 
         # Check description in meta
         desc = root.find("g:meta/g:description", ns)
@@ -173,6 +173,53 @@ class TestKnowledgeExporters:
             assert e.attrib["target"] in declared_nodes
             weight = float(e.attrib["weight"])
             assert 0.0 <= weight <= 1.0
+
+        # Verify viz:color and viz:size on every node
+        node_elems = root.findall(".//g:node", ns)
+        assert len(node_elems) == 4
+        for n in node_elems:
+            color = n.find("viz:color", ns)
+            assert color is not None, f"Node {n.attrib.get('id')} missing viz:color"
+            r = int(color.attrib["r"])
+            g = int(color.attrib["g"])
+            b = int(color.attrib["b"])
+            assert 0 <= r <= 255 and 0 <= g <= 255 and 0 <= b <= 255
+
+            size = n.find("viz:size", ns)
+            assert size is not None, f"Node {n.attrib.get('id')} missing viz:size"
+            s_val = float(size.attrib["value"])
+            assert 6.0 <= s_val <= 24.0
+
+        # Degree scaling: ki_01 (degree 3) must be strictly larger than agent-architect (degree 1)
+        node_map = {n.attrib["id"]: n for n in node_elems}
+        ki01_size = float(node_map["ki_01"].find("viz:size", ns).attrib["value"])
+        agent_size = float(node_map["agent-architect"].find("viz:size", ns).attrib["value"])
+        assert ki01_size > agent_size
+
+        # Domain palette: ki_01 (developer_experience) must receive #3498db (r=52, g=152, b=219)
+        ki01_color = node_map["ki_01"].find("viz:color", ns)
+        assert ki01_color.attrib["r"] == "52"
+        assert ki01_color.attrib["g"] == "152"
+        assert ki01_color.attrib["b"] == "219"
+
+    def test_derivation_clean_label_trailing_slash_parenthesis(self) -> None:
+        """Rule 13: Edge target ending in /) derives clean basename label, never ')'."""
+        item = KnowledgeItemRecord(
+            id="ki_pyrit",
+            title="PyRIT Security Scanner",
+            category="security_and_forensics",
+            edges=[KnowledgeEdge(
+                source="ki_pyrit",
+                target="Brain Harness (src/harness/services/pyrit_scanner/)",
+                target_kind="path",
+                type="references_code",
+            )],
+        )
+        svc = KnowledgeGraphQueryService()
+        graph = svc.derive_graph([item])
+        path_node = next(n for n in graph.nodes if n.id == "Brain Harness (src/harness/services/pyrit_scanner/)")
+        assert path_node.label == "pyrit_scanner"
+        assert path_node.label != ")"
 
     def test_export_graphml_zero_dangling_edges_and_keys(
         self, fixture_graph: DerivedKnowledgeGraph, tmp_path: Path
