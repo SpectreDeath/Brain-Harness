@@ -30,6 +30,7 @@
 
 1. **`disable-model-invocation: true` filter is a 100% no-op (`src/harness/services/skill_clustering/engine/emergent.py:88-100`)**:
    - In `265aa29`, [`emergent.py`](file:///d:/GitHub/projects/Brain%20Harness/src/harness/services/skill_clustering/engine/emergent.py#L88-L100) added:
+
      ```python
      fm = getattr(s_obj, "frontmatter", None) or {}
      if isinstance(fm, dict) and fm.get("disable-model-invocation") is True:
@@ -37,6 +38,7 @@
      elif getattr(s_obj, "disable_model_invocation", False) is True:
          disable_model = True
      ```
+
    - However, [`SkillCardDefinition`](file:///d:/GitHub/projects/Brain%20Harness/src/harness/services/skill_graph/models.py#L57-L84) defines neither `frontmatter` nor `disable_model_invocation`, and [`SkillCardParser`](file:///d:/GitHub/projects/Brain%20Harness/src/harness/services/skill_graph/parser.py) never extracts `disable-model-invocation` from `SKILL.md` YAML frontmatter.
    - As a result, `disable_model` evaluates to `False` for every single skill in the graph. In the regenerated [`reports/cluster_analysis_data.json`](file:///d:/GitHub/projects/Brain%20Harness/reports/cluster_analysis_data.json):
      - `cap_synth_cluster_01_plugin_seam_and_mirror_auditor` still includes human-only `'claude-handoff'` (`['adversarial-agent-verifier', 'agentwikis-router', 'chatbotx', 'claude-handoff', 'deterministic-validation-loop']`).
@@ -44,9 +46,11 @@
      - `cap_synth_cluster_14_writing_beats` consists entirely of 3 human-only skills (`['writing-beats', 'writing-fragments', 'writing-shape']`) with no `invocation_mode: "human_only"` metadata.
 2. **Kahn's queue initialization still produces alphabetical `0/4`-edge disconnected pipelines (`emergent.py:104-130`)**:
    - [`emergent.py`](file:///d:/GitHub/projects/Brain%20Harness/src/harness/services/skill_clustering/engine/emergent.py#L116) initializes Kahn's algorithm queue with:
+
      ```python
      queue = deque(sorted([m for m in cand_members if in_degree[m] == 0]))
      ```
+
      and then takes `final_pipeline = ordered_pipeline[:5]`.
    - In any cluster where $\ge 5$ skills have `in_degree == 0` (no incoming `REQUIRES`/`PRECEDES`/`FEEDS` edge within the cluster), Kahn's queue pops all zero-in-degree nodes in **alphabetical order** before visiting any downstream edge target. Thus `ordered_pipeline[:5]` is simply the first 5 zero-in-degree skills alphabetically, yielding **`0/4` directed edges** (`alpha=True`) for `cap_synth_cluster_01_plugin_seam_and_mirror_auditor`, `cap_synth_cluster_02_ask_matt`, and `cap_synth_cluster_09_ebbinghaus_memory_governor` (`0/4` edges).
 3. **`synth_desc` (`emergent.py:83-86`) and `primary_skills` (`emergent.py:138`) still use raw `members[:4]` / `members[:5]` instead of `final_pipeline`**:
@@ -114,6 +118,7 @@
 ### Track 1 — Fix `SkillCardParser`, `SkillCardDefinition` & `emergent.py` Pipeline Synthesis (Closes Finding 1 / Original Track 5.1)
 
 **Write Scope**:
+
 - `src/harness/services/skill_graph/models.py`
 - `src/harness/services/skill_graph/parser.py`
 - `src/harness/services/skill_clustering/models.py`
@@ -121,6 +126,7 @@
 - `tests/test_skill_clustering.py`
 
 **Implementation Spec**:
+
 - [x] **1.1 (`SkillCardDefinition` & `SkillCardParser` frontmatter extraction)**: Added `disable_model_invocation: bool = Field(default=False)` to `SkillCardDefinition` (`src/harness/services/skill_graph/models.py`) and wired YAML and regex extraction in `SkillCardParser.parse_directory()` (`src/harness/services/skill_parser/parser.py`). Verified 20/20 Pocock interactive skills correctly identify `disable_model_invocation is True`.
 - [x] **1.2 (`EmergentCapability` invocation mode & connected-subgraph pipeline selection in `emergent.py`)**: Added `invocation_mode: str = "autonomous"` (`"autonomous"` vs `"human_only"`) to `EmergentCapability` (`src/harness/services/skill_clustering/models.py`). In `emergent.py`, filtered `disable_model_invocation` skills from autonomous pipelines, prioritized connected root nodes (`in_degree == 0 and out_degree > 0`) over arbitrary alphabetical pops, set `primary_skills == final_pipeline`, and formatted `synth_desc` from `final_pipeline[:4]`. Clusters with only human-interactive skills (`writing-beats`, `codebase-design`) are cleanly flagged `invocation_mode: "human_only"`.
 - [x] **1.3 (Verification)**: Added contract tests in `tests/test_skill_clustering.py` asserting frontmatter parsing, zero disabled skills in autonomous capabilities, pipeline-primary alignment, and human-only capability flagging. Verified: 5/5 unit tests pass in 4.01s.
@@ -132,6 +138,7 @@
 > **Dependency**: Run immediately after Track 1 completes.
 
 **Write Scope**:
+
 - `reports/cluster_analysis_data.json`
 - `reports/skill_knowledge_graph_cluster_analysis_report.md`
 - `reports/README.md`
@@ -139,6 +146,7 @@
 - `tests/test_skill_clustering.py`
 
 **Implementation Spec**:
+
 - [x] **2.1**: Regenerated `reports/cluster_analysis_data.json` with 140 skills, 996 edges, 19 clusters, 52 bridges, and 22 emergent capabilities.
 - [x] **2.2**: Synchronized Section 3 of `reports/skill_knowledge_graph_cluster_analysis_report.md` (`## 3. The 19 Functional Clusters`), updated Mermaid macro-ecosystem diagram, generated the complete 19-cluster profile table, and aligned Section 5 bridge counts to 52 cross-cluster bridges.
 - [x] **2.3**: Updated `reports/README.md` to reflect 996 directed edges, 19 functional clusters, 52 cross-cluster bridges, and 22 emergent macro-capabilities.
@@ -150,11 +158,13 @@
 ### Track 3 — Fix the Real Step 2 $\to$ Step 4 Handoff Seam in `ContextSyncEngine` & Remove Test Hardcoding (Closes Finding 3 / Original Track 6.2)
 
 **Write Scope**:
+
 - `.agents/skills/context-anti-rot-sync/scripts/context_sync_engine.py`
 - `.agents/skills/agent-instruction-architect/scripts/instruction_architect_engine.py` *(if needed for Step 3 seam)*
 - `tests/test_emergent_capability_trial.py`
 
 **Implementation Spec**:
+
 - [x] **3.1**: Enhanced `ContextSyncEngine.clean_file()` in `.agents/skills/context-anti-rot-sync/scripts/context_sync_engine.py` to: (1) strip compiler/linter error dumps (`ERROR: E501`, `npm ERR!`, `pytest: error:`); (2) inspect backticked paths and prune lines pointing at non-existent files (`src/ghost_module.py`); (3) validate inline npm commands against `package.json` scripts and repair unconfigured commands (`npm run build` $\to$ `npm test`); (4) prune repetitive rule lines when line count > 80 or estimated tokens > 700 while preserving execution seams and negative boundaries.
 - [x] **3.2**: Removed the hardcoded `cleaned_agents_lines` array and manual file overrides from `tests/test_emergent_capability_trial.py:134-165`. Replaced with automated calls to `sync_engine.clean_file("AGENTS.md", "AGENTS.md")` and `sync_engine.clean_file("docs/guide.md", "docs/guide.md")`.
 - [x] **3.3 (Verification)**: Ran `pytest tests/test_emergent_capability_trial.py -v`. All 4 steps passed hermetically in 1.55s, verifying the real Step 2 $\to$ Step 4 handoff seam.
@@ -164,12 +174,14 @@
 ### Track 4 `[NW]` — Sync Standalone `codebase_context_engine.py` & Isolate Knowledge Vault Test Hits (Closes Findings 5 & 6)
 
 **Write Scope**:
+
 - `.agents/skills/codebase-context-architect/scripts/codebase_context_engine.py`
 - `src/harness/services/codebase_context/classifier.py`
 - `src/harness/services/storage/vault_retrieval.py`
 - `tests/test_codebase_context_architect.py`
 
 **Implementation Spec**:
+
 - [x] **4.1 (`codebase_context_engine.py` SSOT parity & `API_ROUTE_RE` root cause fix)**:
   - Verified `.agents/skills/codebase-context-architect/scripts/codebase_context_engine.py` is an SSOT facade delegating directly to `harness.services.codebase_context`.
   - Fixed root cause in `src/harness/services/codebase_context/classifier.py`: corrected `API_ROUTE_RE` so that `docs/HOWTO.md` and `docs/non_existent.md` are correctly recognized as filesystem paths rather than HTTP routes, while preserving MCP JSON-RPC methods (`tools/list`, `tools/call`).
@@ -184,9 +196,11 @@
 ### Track 5 `[NW]` — Execute & Record Isolated Version-Bump Trials + Pydantic V2.11 Instance Field Access Fix (Closes Finding 4 / Original Track 7.3)
 
 **Write Scope**:
+
 - `Standing gaps analysis and plan-2026-11-05-1755-EST.md` *(and this plan's compatibility matrix)*
 
 **Implementation Spec**:
+
 - [x] **5.1 (Fix Pydantic V2.11+ `PydanticDeprecatedSince211` deprecation)**:
   - Verified zero instance `.model_fields` or `.model_computed_fields` calls exist in production codebase (`src/` and `plugins/`). The single deprecation notice came from a scratch audit script using `dir()` introspection.
 - [x] **5.2 (Run Isolated Version-Bump Trials & Dependabot Branch Audit)**:
@@ -195,7 +209,7 @@
 #### Verified Version-Bump Compatibility Matrix (Dated 2026-11-06)
 
 | Package | Current Locked Version | Tested Target Version | Dependabot Remote Branch | Test Suite Executed | Result | Compatibility Verdict |
-|---|---|---|---|---|---|---|
+| --- | --- | --- | --- | --- | --- | --- |
 | `ruff` | `0.11.0` | `0.17.3` | `origin/dependabot/pip/ruff-0.17.3` | `uv run --with ruff==0.17.3 ruff check src tests` | Exit 0 | **PASS / READY TO MERGE** |
 | `fastapi` | `0.141.1` | `>=0.162.0,<1.0.0` | `origin/dependabot/pip/fastapi-gte-0.162.0-and-lt-1.0.0` | `uv run --with "fastapi>=0.162.0,<1.0.0" pytest tests/test_service_dock.py` | 13/13 passed | **PASS / READY TO MERGE** |
 | `httpx` | `0.28.1` | `>=0.28.1` | `origin/dependabot/pip/httpx-gte-0.28.1` | `uv run --with "httpx>=0.28.1" pytest tests/test_service_dock.py` | 13/13 passed | **PASS / READY TO MERGE** |
@@ -213,4 +227,3 @@
 > **Hard Constraint**: Remains unticked (`[ ]`) until a human operator runs Gephi 0.10+ on a desktop GUI session.
 
 - [ ] **6.1 (Human GUI)**: Open `.harness/graph/knowledge_graph.gexf` (`451` nodes, `218` edges) in Gephi 0.10+, run ForceAtlas2 layout (`Scaling = 2.0`, `Gravity = 1.0`, `Prevent Overlap = True`), verify node colors (`viz:color`) and sizes (`viz:size`), and export a dated screenshot or SVG/PDF artifact.
-
