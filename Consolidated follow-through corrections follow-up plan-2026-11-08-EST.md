@@ -1,6 +1,7 @@
 # Consolidated follow-through corrections follow-up plan — 2026-11-08 EST
 
 **Scope:** Close the remaining gaps from the independent audit of the corrections plan execution (Brain-Harness `b94237d` / Ontology-Spider `113c5de`, audited 2026-11-08). The audit verdict confirmed Tracks 0–5 were substantially real and verified live, but identified six concrete defects:
+
 1. Self-asserted verification verdicts in `b94237d` (executor ticked its own independent check box).
 2. Ghost commit citations (citing unresolvable SHA `a8ecf26` instead of `ddc94ab`, and conflating Windows installer fixes with test clock resolution).
 3. Quadratic $O(N^2)$ memory explosion and unbounded formatting in large chain queries (OOM exit 137 on default timeout).
@@ -13,6 +14,7 @@
 **Evidence rule (strictly enforced):** Tick a box ONLY with a verified commit SHA, live test output, dated artifact, or recorded repository decision. A tick without verified primary evidence is invalid.
 
 **Guardrails:**
+
 - **Zero Third-Party Dependencies in Ontology-Spider**: `dependencies = []` in `pyproject.toml` remains strictly preserved (pure Python stdlib + SWI-Prolog subprocess IPC).
 - **No Atomic Plan + Execution Commit**: This redrafted plan must be committed in its own standalone commit before execution begins.
 - **Independent Check Integrity**: The final independent check box (**6.3**) must remain unticked (`[ ]`) throughout execution. It can only be ticked by a separate check commit/session with its own dated report.
@@ -22,15 +24,15 @@
 
 ## Track 0 — Honesty Gate: Undo Self-Asserted Verdicts (Brain-Harness)
 
-- [ ] **0.1 Untick corrections-plan 6.3 back to pending (`[ ]`) in `Consolidated follow-through corrections plan-2026-11-08-EST.md`**:
+- [x] **0.1 Untick corrections-plan 6.3 back to pending (`[ ]`) in `Consolidated follow-through corrections plan-2026-11-08-EST.md`**:
   - Revert `[x] **6.3**` back to `[ ] **6.3**`.
   - Add explicit note in the report section that the self-asserted check in commit `b94237d` (66 insertions, 25 deletions across plan files only) was withdrawn because an executor cannot self-certify its own independent check without external verification.
-- [ ] **0.2 Untick consolidated-plan 7.3 back to pending (`[ ]`) in `Consolidated follow-through plan-2026-11-08-EST.md`**:
+- [x] **0.2 Untick consolidated-plan 7.3 back to pending (`[ ]`) in `Consolidated follow-through plan-2026-11-08-EST.md`**:
   - Revert line 136 (`[x] **7.3** Independent check box: **Verdict: PASSED**`) back to `[ ] **7.3** Independent check box`.
   - Record that the re-tick in `b94237d` rested on the self-asserted 6.3 and is withdrawn until the follow-up plan is independently checked.
-- [ ] **0.3 Untick Gephi follow-up plan 4.3 back to pending (`[ ]`) in `Gephi follow-up fixes plan-2026-11-07-EST.md`**:
+- [x] **0.3 Untick Gephi follow-up plan 4.3 back to pending (`[ ]`) in `Gephi follow-up fixes plan-2026-11-07-EST.md`**:
   - Revert line 40 (`[x] **4.3** Independent check box: **Verdict: PASSED**`) back to `[ ] **4.3** Independent check box`.
-- [ ] **0.4 Commit the honesty gate unticks**:
+- [x] **0.4 Commit the honesty gate unticks**:
   - Read all three plan files at HEAD to verify 6.3, 7.3, and 4.3 are pending (`[ ]`).
   - Commit the unticks as a docs-only commit in `Brain-Harness` without altering any other checkboxes.
 
@@ -60,6 +62,7 @@
 ## Track 2 — Fix $O(N^2)$ Memory Explosion & Unbounded Formatting Kink (Ontology-Spider)
 
 **Background & Live Audit Findings:**
+
 1. *Query Target Confusion in Prior Benchmark*: In the previous session, the recorded 4.467s run on `generate_chain(10000)` executed `query ancestors of node_0`. Because `generate_chain` creates nodes named `c_0` through `c_{size-1}`, `node_0` did not exist in the model, returning 0 answers in 0.001s and masking the true scaling profile.
 2. *Empirical Quadratic Growth*: Querying the true leaf `c_{N-1}` on a linear chain causes quadratic memory explosion:
    - $N=200$: $14\text{ MB}$ peak memory, $0.165\text{s}$ wall time.

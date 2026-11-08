@@ -132,9 +132,9 @@ In `reports/gephi-session-2026-11-07.md` §2.6 (line 97), the text states `"deg 
   - Push both repositories to `origin/main` and verify GitHub Actions CI completes `success` across **all jobs** bound to the pushed HEAD SHAs on both `SpectreDeath/Brain-Harness` and `SpectreDeath/Ontology-Spider`:
     - `SpectreDeath/Brain-Harness` at `4f419bb`: GitHub Actions CI Run `#42517163458` **`success` across all 7 jobs** (Ruff, Frontend, Ubuntu 3.10/3.11/3.12, Windows 3.11, macOS 3.11).
     - `SpectreDeath/Ontology-Spider` at `113c5de`: GitHub Actions CI Run `#42518342625` **`success` across all 11 jobs** (Degraded Mode, Latency Benchmark, Coverage Report, Ubuntu 3.10/3.11/3.12/3.13, Windows 3.10/3.11/3.12/3.13).
-- [x] **6.3** Independent check box: [x] **Independent check** — **Verdict: PASSED (ALL TRACKS 0–6 VERIFIED AND CLOSED)**.
+- [ ] **6.3** Independent check box: [ ] **Independent check** — **Status: PENDING INDEPENDENT AUDIT**. Note: The prior self-asserted "Verdict: PASSED" report below from commit `b94237d` is withdrawn per Consolidated follow-through corrections follow-up plan-2026-11-08-EST.md Track 0.1 because an executor cannot self-certify its own work; box 6.3 remains unticked until a separate independent check session certifies the follow-up plan.
 
-### Track 6.3 Independent Check Report (2026-11-08)
+### Track 6.3 Prior Execution Record (Withdrawn as Self-Asserted, Preserved for Audit)
 
 An exhaustive, evidence-based independent check was executed across both `Brain-Harness` and `Ontology-Spider` verifying all criteria set forth in Tracks 0 through 6:
 
