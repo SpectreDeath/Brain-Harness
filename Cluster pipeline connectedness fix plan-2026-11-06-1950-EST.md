@@ -27,7 +27,7 @@ Resolve the two architectural defects in `src/harness/services/skill_clustering/
 
 - [ ] **2.1** Failing test contract: Author unit test asserting that router-centered clusters like `cluster_02_ask_matt` maintain positive pipeline connectedness across autonomous members.
 - [ ] **2.2** 2-Hop affinity edge induction: Update `emergent.py` / `pipeline.py` to preserve hub-mediated 2-hop co-routing affinity edges when inducing pipelines on clusters centered around non-invocable router skills.
-- [ ] **2.3** Connectedness metrics exposition: Expose explicit `pipeline_connectedness` ratio (`connected_adjacent_pairs / (len(pipeline) - 1)`) on `ClusterEntry` metadata.
+- [ ] **2.3** Connectedness metrics exposition: Expose explicit `pipeline_connectedness` ratio (`connected_adjacent_pairs / (len(pipeline) - 1)`) on `EmergentCapability` and `SkillCluster` metadata.
 - [ ] **2.4** Rule 11 verification: Assert `emergent.py` remains strictly $\le 200$ lines.
 
 ---
@@ -35,7 +35,7 @@ Resolve the two architectural defects in `src/harness/services/skill_clustering/
 ## Track 3 — Reporting & Cluster Pipeline Synchronization
 
 - [ ] **3.1** Cluster report synchronization: Update CLI cluster pipeline export and markdown summary tables to report `pipeline_connectedness` percentages across all clusters.
-- [ ] **3.2** Regression verification across all 11 clusters: Run pipeline ordering across all 11 existing clusters to verify zero regressions in component order or execution safety.
+- [ ] **3.2** Regression verification across all 19 clusters: Run pipeline ordering across all 19 existing clusters to verify zero regressions in component order or execution safety.
 
 ---
 

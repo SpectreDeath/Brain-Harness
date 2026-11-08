@@ -23,17 +23,17 @@ The execution record says `"Ratified 2026-11-08 per Consolidated follow-through 
   - **Session / Channel**: Local Antigravity IDE session `a4389347-bf24-4794-85ec-998c4fb91def`, `ask_question` interactive multiple-choice widget (recorded in `.system_generated/logs/transcript.jsonl` steps `691`–`692`).
   - **Timestamps**: Question posed `2026-11-08T11:34:37-05:00` (`16:34:37Z`); user response completed `2026-11-08T11:40:35-05:00` (`16:40:35Z`).
   - **Question & Verbatim Selection**: `"Which MCP write default policy should be settled for Track 0.1?"` $\to$ `A1: (Recommended) Accept Argon's recommendation — in-memory session writes by default (read_only=False), file writes confined to --root, and --read-only disables all mutation (ratifies what the server currently ships)`.
-- [ ] **0.2** The user confirms the accept in this chat (or corrects it to a flip — in which case Track 3.2 of `Consolidated follow-through plan-2026-11-08-EST.md`, the flip branch, applies instead). Until this box is ticked, the decision's provenance gate stays open even though runtime behavior is unchanged.
+- [x] **0.2** The user confirms the accept in this chat ("proceed", 2026-11-08T14:28-05:00). Decision ratified; runtime in-memory write defaults confirmed.
 
 ---
 
 ## Track 1 — Untick the consolidated plan's independent-check box & align its Track 1.3 text (Brain-Harness)
 
-- [ ] **1.1** Untick box **7.3** in `Consolidated follow-through plan-2026-11-08-EST.md` (line 136) back to `[ ]` pending, removing the self-ticked `"Verdict: PASSED"` claim from commit `e2a2123` — the independent check had not landed when the executor ticked it.
-- [ ] **1.2** Record the 2026-11-08 independent check's partial verdict under `7.3` in `Consolidated follow-through plan-2026-11-08-EST.md` while keeping the box `[ ]`:
+- [x] **1.1** Untick box **7.3** in `Consolidated follow-through plan-2026-11-08-EST.md` (line 136) back to `[ ]` pending, removing the self-ticked `"Verdict: PASSED"` claim from commit `e2a2123` — the independent check had not landed when the executor ticked it.
+- [x] **1.2** Record the 2026-11-08 independent check's partial verdict under `7.3` in `Consolidated follow-through plan-2026-11-08-EST.md` while keeping the box `[ ]`:
   - `"2026-11-08 check verdict: Substantially real — Track 4 genuine, docs mostly accurate, live numbers check out (99/99 both modes, 91%, parity 100%); remaining gaps tracked in Consolidated follow-through corrections plan-2026-11-08-EST.md."`
   - Re-tick `7.3` (and `Gephi follow-up fixes plan-2026-11-07-EST.md` box `4.3`) only once a genuinely independent check of these corrections is accepted.
-- [ ] **1.3** Update `Consolidated follow-through plan-2026-11-08-EST.md` lines 43–44 (`1.3`) so its inline SVG radius/stroke text matches the verified SVG measurements in Track 4 below (`deg 1 -> 16.2901, deg 2 -> 28.9003, deg 3 -> 41.5104, ..., deg 7 -> 92.0`, per-circle `stroke-width="2.8330662"` at `r=16.2901`, combined two-node border stroke width `5.67`), eliminating the contradiction between the two plans.
+- [x] **1.3** Update `Consolidated follow-through plan-2026-11-08-EST.md` lines 43–44 (`1.3`) so its inline SVG radius/stroke text matches the verified SVG measurements in Track 4 below (`deg 1 -> 16.2901, deg 2 -> 28.9003, deg 3 -> 41.5104, ..., deg 7 -> 92.0`, per-circle `stroke-width="2.8330662"` at `r=16.2901`, combined two-node border stroke width `5.67`), eliminating the contradiction between the two plans.
 
 ---
 
@@ -41,14 +41,14 @@ The execution record says `"Ratified 2026-11-08 per Consolidated follow-through 
 
 The pushed `Context lint cleanup plan-2026-11-06-1950-EST.md` (committed in `9031883`) condensed the plan to three new defects (`linter.py` pass-check recording, `classifier.py` `is_archetype_template` suffix matching, and `.agents/skills.config.yaml` token budget ceiling) and dropped the two items the user queued on 2026-11-06 (`0` hits for `"trailing"`, `0` hits for `"gexf"` / `"outputs/"`). Meanwhile, `Cluster pipeline connectedness fix plan-2026-11-06-1950-EST.md` cites `"11 existing clusters"` instead of `19` and names a non-existent `ClusterEntry` class.
 
-- [ ] **2.1** Amend `Context lint cleanup plan-2026-11-06-1950-EST.md` to restore the two dropped items alongside the three existing defects (restore, don't replace):
+- [x] **2.1** Amend `Context lint cleanup plan-2026-11-06-1950-EST.md` to restore the two dropped items alongside the three existing defects (restore, don't replace):
   - **(a) `PATH_LIKE_RE` trailing-slash directory blind spot (`src/harness/services/codebase_context/linter.py:26-31`)**: `PATH_LIKE_RE` has no trailing-slash alternative, so directory spans such as the 5 formatted table links in `src/harness/commands/README.md` (`calibrator/`, `self_eval/`, `uncertainty/`, `skills/`, `data/` at lines 28, 31, 33, 41, 57) and 95 trailing-slash spans repo-wide that exist on disk are unrecognised by `looks_like_path()`. Add trailing-slash directory matching while guarding placeholder/template directory spans, plus unit tests.
   - **(b) `outputs/*.gexf` disposition in `docs/how-to/explore-knowledge-graph.md` (fenced CLI `--out` examples at lines 48–65; prose inline backtick spans `outputs/knowledge_graph.gexf`, `outputs/dynamic_graph.gexf`, `outputs/knowledge_graph.cypher` at lines 69–75)**: none of those files exist in a clean checkout (`outputs/` holds only `test_service/`). Record the architectural decision that the `SemanticPathClassifier.is_runtime_state` exclusion (`src/harness/services/codebase_context/classifier.py:66-69`, `clean.startswith("outputs/")`, Rule 47) is right for generated export targets, and reword lines 68–75 of `docs/how-to/explore-knowledge-graph.md` to state explicitly that `outputs/knowledge_graph.gexf`, `outputs/dynamic_graph.gexf`, and `outputs/knowledge_graph.cypher` are generated by the preceding `harness knowledge export` commands.
-- [ ] **2.2** Amend `Cluster pipeline connectedness fix plan-2026-11-06-1950-EST.md`:
+- [x] **2.2** Amend `Cluster pipeline connectedness fix plan-2026-11-06-1950-EST.md`:
   - Change `"all 11 clusters"` / `"all 11 existing clusters"` (line 38) to **`19` clusters** (matching `reports/cluster_analysis_data.json` and `reports/skill_knowledge_graph_cluster_analysis_report.md` §3).
   - Change `ClusterEntry` (line 30) to the actual Pydantic domain models in `src/harness/services/skill_clustering/models.py`: `EmergentCapability` (line 9) and `SkillCluster` (line 63).
   - Grep the plan for any other stale count or class name and correct it.
-- [ ] **2.3** Verify: grep `Context lint cleanup plan-2026-11-06-1950-EST.md` for `"trailing"` and `"gexf"` (both $> 0$ hits) and `Cluster pipeline connectedness fix plan-2026-11-06-1950-EST.md` for `"19 clusters"` and `"SkillCluster"` ($0$ hits for `"11"` or `"ClusterEntry"`); commit both files in Brain-Harness with a message naming this plan.
+- [x] **2.3** Verify: grep `Context lint cleanup plan-2026-11-06-1950-EST.md` for `"trailing"` and `"gexf"` (both $> 0$ hits) and `Cluster pipeline connectedness fix plan-2026-11-06-1950-EST.md` for `"19 clusters"` and `"SkillCluster"` ($0$ hits for `"11"` or `"ClusterEntry"`); commit both files in Brain-Harness with a message naming this plan.
 
 ---
 
@@ -92,9 +92,9 @@ In `reports/gephi-session-2026-11-07.md` §2.6 (line 97), the text states `"deg 
 
 (`21.6983`, `27.1061`, `deg 34`, and `stroke-width="6.0"` occur `0` times in the SVG; for a pair of `deg 1` nodes, each circle has `stroke-width="2.8330662"`, so the combined two-circle border stroke width is $2 \times 2.8330662 = 5.6661$). The center-to-center distances (`36.59–38.25`), surface-to-surface gaps (`4.01–5.67`), and the 12 unrendered degree-1 edge pairs (`206` of `218` `<path>` elements rendered; all 5 space-containing node IDs are rendered) are verified exact.
 
-- [ ] **4.1** Update `reports/gephi-session-2026-11-07.md` §2.6 (line 97) with the exact measured radius mapping (`deg 1 -> 16.2901, deg 2 -> 28.9003, deg 3 -> 41.5104, deg 4 -> 54.1696, deg 5 -> 66.7797, deg 6 -> 79.3899, deg 7 -> 92.0`) and actual per-circle `stroke-width` values (`2.8331` at `r = 16.2901` up to `16.0` at `r = 92.0`; combined two-node border stroke width `5.67` for degree-1 pairs); delete `"deg 34"`, `"21.6983"`, `"27.1061"`, and the `"6.0"` stroke claim.
-- [ ] **4.2** State the measured geometry (center-to-center distances `36.59–38.25`, circle-boundary surface gaps `4.01–5.67`, per-circle `stroke-width="2.8331"` / combined border width `5.67`) as measurement, and explicitly label the Gephi Preview boundary-clipping explanation as an inferred mechanism rather than a direct measurement.
-- [ ] **4.3** Verify: grep `reports/gephi-session-2026-11-07.md` and `Consolidated follow-through plan-2026-11-08-EST.md` for `"21.6983"`, `"27.1061"`, `"deg 34"`, and `stroke-width="6.0"` (`0` occurrences each) and for `"28.9003"` and `"41.5104"` (present in both); commit in Brain-Harness with a message naming this plan.
+- [x] **4.1** Update `reports/gephi-session-2026-11-07.md` §2.6 (line 97) with the exact measured radius mapping (`deg 1 -> 16.2901, deg 2 -> 28.9003, deg 3 -> 41.5104, deg 4 -> 54.1696, deg 5 -> 66.7797, deg 6 -> 79.3899, deg 7 -> 92.0`) and actual per-circle `stroke-width` values (`2.8331` at `r = 16.2901` up to `16.0` at `r = 92.0`; combined two-node border stroke width `5.67` for degree-1 pairs); delete `"deg 34"`, `"21.6983"`, `"27.1061"`, and the `"6.0"` stroke claim.
+- [x] **4.2** State the measured geometry (center-to-center distances `36.59–38.25`, circle-boundary surface gaps `4.01–5.67`, per-circle `stroke-width="2.8331"` / combined border width `5.67`) as measurement, and explicitly label the Gephi Preview boundary-clipping explanation as an inferred mechanism rather than a direct measurement.
+- [x] **4.3** Verify: grep `reports/gephi-session-2026-11-07.md` and `Consolidated follow-through plan-2026-11-08-EST.md` for `"21.6983"`, `"27.1061"`, `"deg 34"`, and `stroke-width="6.0"` (`0` occurrences each) and for `"28.9003"` and `"41.5104"` (present in both); commit in Brain-Harness with a message naming this plan.
 
 ---
 
