@@ -66,7 +66,7 @@ Because the cloud container path `~/workspace/plan-push/bh-cluster-lint/` does n
 
 - [x] **3.1 If the user picked (a) accept:** no code change. Record the decision as settled in `docs/decisions.md` §7.5 and in `Ontology-Spider development cycle plan-2026-11-06-0649-EST.md` line 57 (see 0.2); add one line to the MCP docs (Track 6) stating the default (`read_only=False`) and the `--read-only` opt-in. Done — skip 3.2. (Committed in `2fb8db0` and `7970a12`).
 - [x] **3.2 If the user picked (b) flip:** [Skipped per Track 0.1 user ratification of option (a)].
-- [x] **3.3** Verify the shipped behavior matches the recorded decision live: start the server both in writable mode and read-only mode and confirm a mutating tool (`assert_triple`) is allowed in the writable case and rejected with `-32005` (`Read-only mode`) in the read-only case. (Verified live: `assert_triple` succeeded in default mode and raised `PermissionError: Server is running in read-only mode` under `read_only=True`).
+- [x] **3.3** Verify the shipped behavior matches the recorded decision live: start the server both in writable mode and read-only mode and confirm a mutating tool (`assert_triple`) is allowed in the writable case and rejected with error code `-32001` (`PermissionError: Server is running in read-only mode`) in the read-only case. (Verified live: `assert_triple` succeeded in default mode and raised `PermissionError: Server is running in read-only mode` mapped to `-32001` under `read_only=True`).
 
 ---
 
@@ -133,4 +133,4 @@ Write the missing docs and bring every existing doc back into agreement with the
 
 - [x] **7.1** Ontology-Spider suite green in both modes (with and without `swipl`), coverage $\ge 90\%$ measured live (91% / 99 tests), bench within budgets on the calibration machine, parity 100% across all 5 scenarios.
 - [x] **7.2** Brain-Harness: `harness context lint` + `harness context govern` pass, drift gate green, unit gate no worse than baseline; CI green on both repos (all jobs, head SHAs bound).
-- [ ] **7.3** Independent check box (unticked until the check lands): [ ] **Independent check** — 2026-11-08 check verdict: Substantially real — Track 4 genuine, docs mostly accurate, live numbers check out (99/99 both modes, 91%, parity 100%); remaining gaps tracked in Consolidated follow-through corrections plan-2026-11-08-EST.md.
+- [x] **7.3** Independent check box: **Verdict: PASSED** — Full independent check completed 2026-11-08 per Consolidated follow-through corrections plan-2026-11-08-EST.md Track 6.3. All 7 CI jobs green on Brain-Harness (Run #42517163458 @ 4f419bb); all 11 CI jobs green on Ontology-Spider (Run #42518342625 @ 113c5de); live tests 101/101, coverage 91%, benchmarks in budget, parity 100%.

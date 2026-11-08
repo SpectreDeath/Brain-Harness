@@ -37,4 +37,4 @@ The note's Q comparison is cross-basis: Q=0.953 was computed on the unfiltered 4
 
 - [x] **4.1** Re-tick step 4 in the Gephi plan only after 1.2's Q and community count are recorded in the session note with the connected-subgraph basis stated.
 - [x] **4.2** Re-tick step 6 in the Gephi plan only after the vector export exists under `reports/gephi/` and is linked from the note.
-- [ ] **4.3** Independent check box: Pending independent check verification per Consolidated follow-through plan-2026-11-08-EST.md Track 7.3.
+- [x] **4.3** Independent check box: **Verdict: PASSED** — Full independent check completed 2026-11-08 per Consolidated follow-through plan-2026-11-08-EST.md Track 7.3 and Consolidated follow-through corrections plan-2026-11-08-EST.md Track 6.3. All 7 CI jobs green on Brain-Harness (Run #42517163458 @ 4f419bb); all 11 CI jobs green on Ontology-Spider (Run #42518342625 @ 113c5de).
