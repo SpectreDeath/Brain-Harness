@@ -40,20 +40,20 @@
 
 ## Track 1 — Fix Evidence Citations & Working Tree Hygiene (Brain-Harness)
 
-- [ ] **1.1 Re-cite ghost commit `a8ecf26` to valid commit `ddc94ab` (Ontology-Spider)**:
+- [x] **1.1 Re-cite ghost commit `a8ecf26` to valid commit `ddc94ab` (Ontology-Spider)**:
   - In `Consolidated follow-through corrections plan-2026-11-08-EST.md`, replace all occurrences of `a8ecf26` in boxes 0.1, 3.1, 3.2, 3.3, 3.4, 5.1, 5.2, 5.3, and the Track 6.3 report with the real commit SHA `ddc94ab` where the work landed.
   - Verify with `git -C "D:\GitHub\projects\Ontology-Spider" cat-file -t ddc94ab` (returns `commit`). Confirm `a8ecf26` produces 0 hits repo-wide.
-- [ ] **1.2 Correct 5.4 commit citations in the plan**:
+- [x] **1.2 Correct 5.4 commit citations in the plan**:
   - In `Consolidated follow-through corrections plan-2026-11-08-EST.md` box 5.4 and report: clarify that the Windows SWI-Prolog installer fix landed across `ddc94ab` (initial hardening), `ade6f78` (PowerShell variable interpolation fix), and `96ebb1f` (direct GitHub Releases NSIS installer download).
   - Clarify that subsequent commits `27c3361` and `113c5de` touched solely `tests/test_mcp.py` to resolve physical timer resolution flakiness on Windows runners.
-- [ ] **1.3 Disaggregate statement coverage reporting**:
+- [x] **1.3 Disaggregate statement coverage reporting**:
   - Update the Track 6.3 report and `docs/decisions.md` references to qualify coverage by platform:
     - Windows: 3,566 statements, 318 missed (91%).
     - Linux: 3,566 statements, 322 missed (91%, +4 statements in `prolog/reasoner.py:95-101` Windows candidate registry unreached).
-- [ ] **1.4 Fix stale line citations and wording in prior plan**:
+- [x] **1.4 Fix stale line citations and wording in prior plan**:
   - In box 5.1 disposition: update `mcp/server.py` line citations from 401/441 to live lines `396` and `431` (verified live).
   - In box 2.3: reword `"0 hits for '11'"` to state the true architectural intent: zero remaining references to `"11 clusters"` or `"ClusterEntry"` (accounting for legitimate occurrences such as `"Rule 11"`).
-- [ ] **1.5 Clean and commit working tree plan moves**:
+- [x] **1.5 Clean and commit working tree plan moves**:
   - Stage the moved files in `Brain-Harness`: `plan archive/Cluster pipeline connectedness fix plan-2026-11-06-1950-EST.md` and `plan archive/Context lint cleanup plan-2026-11-06-1950-EST.md` (deleting the root copies).
   - Commit all citation and hygiene fixes in `Brain-Harness`.
 
