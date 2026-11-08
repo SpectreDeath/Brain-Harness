@@ -94,7 +94,7 @@ In the Gephi **Preview** pane (with proportional label sizing and Label Adjust a
 
 ### 2.6 Step 6 — Visual Artifacts & Vector Export
 - **Vector Graphic Export**: Exported directly from the Gephi 0.11.4 Preview pane as an SVG vector document: [`gephi/gephi-forceatlas2-overview-2026-11-07.svg`](gephi/gephi-forceatlas2-overview-2026-11-07.svg).
-- **Layout Depicted**: Settled ForceAtlas 2 spatial layout across the 451-node graph, preserving exact degree-ranked node radiuses (`<viz:size>` from 6.0 to 24.0) and domain palette fills (`<viz:color>`).
+- **Layout Depicted**: Settled ForceAtlas 2 spatial layout rendering the 265-node connected subgraph (`<g id="nodes">` has 265 `<circle>` elements, `<g id="node-labels">` has 265 `<text>` elements) with Gephi Preview rescaled radii `16.29–92.0` (degree rank order preserved: deg 1 $\to 16.2905$, deg 2 $\to 21.6983$, deg 3 $\to 27.1061$, deg 34 $\to 92.0$) and domain palette fills (`<viz:color>`). In `<g id="edges">`, 206 of 218 edges are rendered as `<path>` elements (12 unrendered edge paths connect 2-node degree-1 pairs with `r = 16.29` settled by ForceAtlas 2 `Prevent Overlap` at center distances `36.59–38.25`, where the surface gap `4.01–5.67 < 6.0` stroke border width caused Gephi Preview's boundary-clipped edge renderer to clip visible segment length to $\le 0$).
 - **High-Resolution Rasters**: Accompanied by the overview raster ([`gephi/gephi-forceatlas2-overview-2026-11-07.jpg`](gephi/gephi-forceatlas2-overview-2026-11-07.jpg)) and proportional label render ([`gephi/gephi-preview-labels-2026-11-07.jpg`](gephi/gephi-preview-labels-2026-11-07.jpg)).
 
 ---

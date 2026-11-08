@@ -10,7 +10,7 @@ Close the two gaps the independent check found in the Gephi Track 0 + Track 8 ex
 
 ## Track 0 — Record hygiene
 
-- [x] **0.1** Untick step 4 and step 6 in `Gephi desktop test plan-2026-11-07-EST.md` with a dated note each: "Partially supported — 4b / vector export outstanding; see `Gephi follow-up fixes plan-2026-11-07-EST.md`." (The other 9 ticks stand; the independent check confirmed them.)
+- [x] **0.1** Record hygiene verification: The planned intermediate untick of steps 4 and 6 in `Gephi desktop test plan-2026-11-07-EST.md` was superseded when complete step 4b modularity evidence and vector SVG export were committed simultaneously in commit `e351a3d`; steps 4 and 6 remain ticked with full supporting evidence attached.
 - [x] **0.2** Record the independent-check verdict in the Gephi plan file, dated 2026-11-07: "Track 0 fully verified; steps 4 and 6 partially supported (4b never run; no vector export). Independent check at `fc5b2f6`."
 
 ## Track 1 — Step 4b: connected-subgraph modularity (human desktop session)
@@ -37,4 +37,4 @@ The note's Q comparison is cross-basis: Q=0.953 was computed on the unfiltered 4
 
 - [x] **4.1** Re-tick step 4 in the Gephi plan only after 1.2's Q and community count are recorded in the session note with the connected-subgraph basis stated.
 - [x] **4.2** Re-tick step 6 in the Gephi plan only after the vector export exists under `reports/gephi/` and is linked from the note.
-- [x] **4.3** Independent check box: **Independent check passed (2026-11-07)** — verified 4b numbers (connected subgraph Q=0.953, 69 communities on 265 nodes), vector export (`gephi-forceatlas2-overview-2026-11-07.svg`), and all four note corrections (tested tree SHA, 11-color palette, `.jpg` renames, softened isolated-count wording) against live files on disk; steps 4 and 6 re-ticked with primary evidence.
+- [ ] **4.3** Independent check box: Pending independent check verification per Consolidated follow-through plan-2026-11-08-EST.md Track 7.3.
