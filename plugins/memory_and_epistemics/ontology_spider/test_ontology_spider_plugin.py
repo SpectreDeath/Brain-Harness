@@ -198,10 +198,18 @@ def test_engine_zero_brain_harness_imports():
         for node in ast.walk(tree):
             if isinstance(node, ast.Import):
                 for alias in node.names:
-                    assert "harness" not in alias.name.lower(), f"Forbidden import {alias.name} in {py_file}"
+                    assert not (
+                        alias.name == "harness"
+                        or alias.name.startswith("harness.")
+                        or alias.name.startswith("plugins.")
+                    ), f"Forbidden import {alias.name} in {py_file}"
             elif isinstance(node, ast.ImportFrom):
                 if node.module:
-                    assert "harness" not in node.module.lower(), f"Forbidden import from {node.module} in {py_file}"
+                    assert not (
+                        node.module == "harness"
+                        or node.module.startswith("harness.")
+                        or node.module.startswith("plugins.")
+                    ), f"Forbidden import from {node.module} in {py_file}"
 
 
 def test_missing_engine_error_message():
