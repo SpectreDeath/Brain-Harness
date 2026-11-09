@@ -47,9 +47,9 @@
   - In `Consolidated follow-through corrections plan-2026-11-08-EST.md` box 5.4 and report: clarify that the Windows SWI-Prolog installer fix landed across `ddc94ab` (initial hardening), `ade6f78` (PowerShell variable interpolation fix), and `96ebb1f` (direct GitHub Releases NSIS installer download).
   - Clarify that subsequent commits `27c3361` and `113c5de` touched solely `tests/test_mcp.py` to resolve physical timer resolution flakiness on Windows runners.
 - [x] **1.3 Disaggregate statement coverage reporting**:
-  - Update the Track 6.3 report and `docs/decisions.md` references to qualify coverage by platform:
-    - Windows: 3,566 statements, 318 missed (91%).
-    - Linux: 3,566 statements, 322 missed (91%, +4 statements in `prolog/reasoner.py:95-101` Windows candidate registry unreached).
+  - Update the Track 6.3 report and `docs/decisions.md` references to qualify coverage by platform and commit:
+    - Pre-`8614a82`: Windows 3,566 statements, 318 missed (91%); Linux 3,566 statements, 322 missed (91%).
+    - Post-`8614a82` (current HEAD): Windows 3,575 statements, 319 missed (91.08%); Linux 3,575 statements, 323 missed (90.96%). The 4-line difference reflects Windows-specific `swipl` path probes in `prolog/reasoner.py:95-101` unreached on Linux.
 - [x] **1.4 Fix stale line citations and wording in prior plan**:
   - In box 5.1 disposition: update `mcp/server.py` line citations from 401/441 to live lines `396` and `431` (verified live).
   - In box 2.3: reword `"0 hits for '11'"` to state the true architectural intent: zero remaining references to `"11 clusters"` or `"ClusterEntry"` (accounting for legitimate occurrences such as `"Rule 11"`).
@@ -63,7 +63,7 @@
 
 **Background & Live Audit Findings:**
 
-1. *Query Target Confusion in Prior Benchmark*: In the previous session, the recorded 4.467s run on `generate_chain(10000)` executed `query ancestors of node_0`. Because `generate_chain` creates nodes named `c_0` through `c_{size-1}`, `node_0` did not exist in the model, returning 0 answers in 0.001s and masking the true scaling profile.
+1. *Unresolved 4.467s Benchmark Figure*: In the previous session, an earlier run on `generate_chain(10000)` recorded a 4.467s execution time. This figure matches no measured live behavior: querying a non-existent entity like `node_0` returns 0 answers in ~0.001s, whereas querying a true 10,000-node leaf pre-fix took ~200s+ before crashing with exit 137 OOM. Most plausible is a smaller chain or a transcription artifact; the 4.467s figure is recorded as honestly unresolved, and no speculative cause is asserted.
 2. *Empirical Quadratic Growth*: Querying the true leaf `c_{N-1}` on a linear chain causes quadratic memory explosion:
    - $N=200$: $14\text{ MB}$ peak memory, $0.165\text{s}$ wall time.
    - $N=500$: $85\text{ MB}$ peak memory, $1.025\text{s}$ wall time.
@@ -74,18 +74,18 @@
    - **Unbounded Formatting Loop**: In `engine.py:260-269`, `Session._execute_query` materializes `"provenance": [asrt.to_dict() for asrt in a.explanation.provenance_assertions]` across all answers without checking query deadline/timeout, allocating tens of millions of dictionary objects outside the reasoner's step guard.
 
 - [x] **2.1 Document live baseline measurements and query target correction**:
-  - Record the empirical baseline numbers ($N=200 \to 14\text{MB}$, $N=500 \to 85\text{MB}$, $N=1,000 \to 338\text{MB}$, $N=10,000 \to \text{OOM}$) and document that the prior 4.467s measurement was an artifact of querying non-existent `node_0`.
+  - Record the empirical baseline numbers ($N=200 \to 14\text{MB}$, $N=500 \to 85\text{MB}$, $N=1,000 \to 338\text{MB}$, $N=10,000 \to \text{OOM}$) and document that the prior 4.467s measurement matches no measured behavior (0.001s for missing nodes; 200s+/OOM for pre-fix 10k leaf) and is recorded as unresolved.
 - [x] **2.2 Architecture Decision & Memory-Safe Query Implementation**:
   - Record formal decision in `docs/decisions.md` §7.11: *Bounded Explanation Provenance & Guarded Result Formatting*.
   - **Reasoner Bounding (`python_backend.py` & `dialog_runner.py`)**: For transitive closure and ancestor graph traversals, decouple the answer entity (`obj`) from unbounded path copying. Store the 1-hop justifying assertion (`a`) directly on the explanation, and bound accumulated explanation path depth (default cap `max_depth=50` or compact parent pointer) to guarantee $O(N)$ memory scaling instead of $O(N^2)$.
   - **Formatting Timeout Guard (`engine.py`)**: In `Session._execute_query`, apply deadline checking during the answer formatting loop and cap per-answer materialized provenance dictionaries to a safe upper bound (e.g. 10 assertions per answer). If formatting exceeds the deadline, raise `QueryTimeoutError`.
 - [x] **2.3 Verification of Large Chain Queries Under Default and Small Timeouts**:
-  - Run `generate_chain(10000)` querying `c_9999` under `timeout_seconds=3.0`: confirm it terminates at $\approx 3.0\text{s}$ with `QueryTimeoutError` (peak memory $< 50\text{MB}$).
-  - Run `generate_chain(10000)` querying `c_9999` under default `timeout_seconds=10.0`: confirm it returns all 9,999 ancestors in $< 5.0\text{s}$ with peak memory strictly bounded ($\le 100\text{MB}$), completely eliminating the OOM crash.
+  - Run `generate_chain(10000)` querying `c_9999` under `timeout_seconds=0.05`: confirm it terminates deterministically at 0.050s with `QueryTimeoutError` (peak memory $< 50\text{MB}$; test at `tests/test_mcp.py:610-613`).
+  - Run `generate_chain(10000)` querying `c_9999` under default `timeout_seconds=10.0`: confirm it returns all 9,999 ancestors in ~0.8–1.15s (measured 0.797s in check, 1.151s in decision record) with peak memory strictly bounded ($\le 100\text{MB}$, measured 83.67MB), completely eliminating the OOM crash.
 - [x] **2.4 Fix `docs/mcp.md` §2 off-by-one**:
   - Correct the text in `docs/mcp.md` §2 (under Operational Caps): a 10,000-node chain generated by `generate_chain(10000)` consists of 9,999 assertions and returns 9,999 ancestors (`c_0` through `c_9998`), not 10,000.
 - [x] **2.5 Author Regression Contract**:
-  - Add unit test `test_large_chain_query_memory_bounded` in `tests/test_reasoning.py` or `tests/test_mcp.py` asserting that a 10,000-node chain query completes within memory budget ($\le 100\text{MB}$) and returns 9,999 answers in both Python and Prolog modes.
+  - Add unit test `test_large_chain_query_memory_bounded` in `tests/test_mcp.py` asserting that a 10,000-node chain query completes within memory budget ($\le 100\text{MB}$) returning 9,999 answers in Python mode. In Prolog mode, test a 200-node chain returning 199 answers without error (lines 616-621); Prolog-at-10k is out of scope at defaults due to the 1,000,000 inference step cap and 1,000 `max_results` limit.
 
 ---
 
@@ -139,7 +139,7 @@
   - Full test suite green in both modes:
     - Normal mode (with SWI-Prolog): $\ge 102$ tests passing (103 passed).
     - Degraded mode (without SWI-Prolog): 89 tests passing, 14 skipped cleanly.
-  - Live statement coverage $\ge 90\%$ verified via `coverage report --fail-under=90` (record Windows and Linux statistics separately: Windows 3,575 stmts, 319 miss, 91%; Linux 91% in CI).
+  - Live statement coverage $\ge 90\%$ verified via `coverage report --fail-under=90`: Windows 3,575 stmts, 319 miss (91.08%); Linux 3,575 stmts, 323 miss (90.96%). Both $\ge 90\%$ across platforms.
   - Benchmark suite passes within calibrated budgets (`bench_budgets.json`).
   - Scenario parity 100% (5/5 scenarios matching across Python and Prolog backends).
   - Memory-safe chain query regression test (Track 2) and Prolog wall-clock timeout test (Track 3) verified green.
