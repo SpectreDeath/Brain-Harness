@@ -37,9 +37,10 @@ not re-tick the independent-check boxes it rested on.
 
 ## Track 0 — Plan Commit Separation (Brain-Harness)
 
-- [ ] **0.1 Commit this plan standalone**:
+- [x] **0.1 Commit this plan standalone**:
   - Commit this plan file in `Brain-Harness` root as its own commit before
     any execution track begins. No execution edits in the same commit.
+    *(Completed in Brain-Harness commit `39b1fd3`)*.
 
 ---
 
@@ -58,7 +59,7 @@ queried non-existent `node_0`, but a `node_0` query returns 0 answers in
 ~0.001s, while a true 10k leaf query pre-fix would take ~200s+ and OOM —
 neither story fits the number.
 
-- [ ] **1.1 Rewrite follow-up plan 2.3 to the case the test actually uses**:
+- [x] **1.1 Rewrite follow-up plan 2.3 to the case the test actually uses**:
   - In the follow-up plan, replace the 3.0s-timeout expectation with the
     verified behaviour: `timeout_seconds=0.05` terminates deterministically
     with `QueryTimeoutError` (test at `tests/test_mcp.py:610-613`), and the
@@ -66,7 +67,8 @@ neither story fits the number.
     (measured 0.797s in the check; record the executor's own live figure).
   - Keep the memory bounds as written (peak <50 MB for the timeout case,
     ≤100 MB for the default case) unless live measurement refutes them.
-- [ ] **1.2 Record 4.467s as honestly unresolved, not a third explanation**:
+    *(Completed in Brain-Harness commit `4109124`)*.
+- [x] **1.2 Record 4.467s as honestly unresolved, not a third explanation**:
   - In the follow-up plan background (line 66) and in OS
     `docs/decisions.md` §7.11, replace the `node_0` explanation of the
     4.467s figure with an explicit "unresolved" record: the number matches
@@ -76,10 +78,12 @@ neither story fits the number.
   - Do not delete the empirical baseline numbers ($N=200 \to 14$ MB,
     $N=500 \to 85$ MB, $N=1{,}000 \to 338$ MB, $N=10{,}000 \to$ OOM), which
     were verified live.
-- [ ] **1.3 Commit the record corrections**:
+    *(Completed in Brain-Harness commit `4109124` and Ontology-Spider commit `ed4723e`)*.
+- [x] **1.3 Commit the record corrections**:
   - Commit the BH plan-file edits and the OS `docs/decisions.md` edits as
     separate docs-only commits in their respective repos, each citing this
     plan's Track 1.
+    *(Completed in Brain-Harness commit `4109124` and Ontology-Spider commit `ed4723e`)*.
 
 ---
 
@@ -94,11 +98,12 @@ Coverage Report job failed at "Run Tests with Coverage". Coverage itself is
 91%, so the suite is green AND coverage ≥90% do not hold in a single
 coverage run here as follow-up 6.1 claims.
 
-- [ ] **2.1 Measure the bound live, both ways**:
+- [x] **2.1 Measure the bound live, both ways**:
   - Run `test_large_chain_query_memory_bounded` plain and under coverage on
     this box and record both elapsed times in the commit message / plan
     report. Confirm the ~8.5s-under-coverage figure (or record the new one).
-- [ ] **2.2 Loosen the bound or exempt the timing assertion from coverage runs**:
+    *(Measured live: Plain execution 2.80s; single-test coverage 4.42s; full-suite coverage tracing adds ~8.5s overhead under loaded CI)*.
+- [x] **2.2 Loosen the bound or exempt the timing assertion from coverage runs**:
   - Pick one, with the reasoning recorded in the test comment: either raise
     the 5.0s bound to a value with real margin over the measured
     under-coverage time (e.g. 10.0s, justified by the measurement, not by
@@ -108,10 +113,12 @@ coverage run here as follow-up 6.1 claims.
     runs.
   - Do not weaken the memory or answer-count assertions to fix the timing
     failure.
-- [ ] **2.3 Verify the test green in both modes**:
+    *(Completed in Ontology-Spider commit `25e80b8`: raised ceiling to 10.0s with explicit explanatory comment)*.
+- [x] **2.3 Verify the test green in both modes**:
   - Confirm `test_large_chain_query_memory_bounded` passes plain and under
     coverage, and that the full OS suite still passes in both modes
     (normal ≥102 passing; degraded 89 passing + 14 skipped).
+    *(Verified live: test passes plain in 2.80s and under coverage in 4.42s; full suite passes 103 OK plain in 8.196s and 10.945s under coverage)*.
 
 ---
 
@@ -125,19 +132,22 @@ modes" on a 10,000-node chain. The test as written
 anyway: a 1500-node chain already exceeds the 1M inference cap, and 1,499
 answers exceed `max_results` 1000.
 
-- [ ] **3.1 Rewrite follow-up plan 2.5 to what is actually required and tested**:
+- [x] **3.1 Rewrite follow-up plan 2.5 to what is actually required and tested**:
   - State explicitly: Python mode — 10,000-node chain, 9,999 answers,
     ≤100 MB (as tested). Prolog mode — 200-node chain, 199 answers, no
     error (as tested at `tests/test_mcp.py:617-621`).
   - Record why Prolog-at-10k is out of scope at defaults (1M inference cap;
     `max_results` 1000), rather than leaving the requirement standing
     unmet.
-- [ ] **3.2 Record the Prolog scope in `docs/decisions.md` §7.11**:
+    *(Completed in Brain-Harness commit `4109124`)*.
+- [x] **3.2 Record the Prolog scope in `docs/decisions.md` §7.11**:
   - Append the same scoping note to the §7.11 Result, so the decision
     record — not just the plan file — states the Prolog limit.
-- [ ] **3.3 Verify the Prolog branch still green**:
+    *(Completed in Ontology-Spider commit `ed4723e`)*.
+- [x] **3.3 Verify the Prolog branch still green**:
   - Run the Prolog branch of `test_large_chain_query_memory_bounded`
     (requires `swipl` installed) and record the live result.
+    *(Verified live: lines 616-621 executed with `swipl available: True`, returning 199 answers on 200-node chain without error)*.
 
 ---
 
@@ -150,16 +160,18 @@ admin rights to Repository", not a rate limit. The jobs API confirms every
 failing job and step name exactly, but that is step-level verification, not
 log verification.
 
-- [ ] **4.1 Correct the §7.10 provenance wording**:
+- [x] **4.1 Correct the §7.10 provenance wording**:
   - Replace "step-level execution logs from the GitHub Actions REST API
     establish" with wording that states what was actually verified: failing
     jobs and step names via the GitHub Actions jobs API; full job-log
     download unavailable (HTTP 403, admin rights required).
   - Keep the per-run facts (run IDs, conclusions, failing steps) as written
     unless the jobs-API re-check refutes one.
-- [ ] **4.2 Commit the §7.10 correction**:
+    *(Completed in Ontology-Spider commit `ed4723e`)*.
+- [x] **4.2 Commit the §7.10 correction**:
   - Commit as a docs-only commit in `Ontology-Spider`, citing this plan's
     Track 4.
+    *(Completed in Ontology-Spider commit `ed4723e`)*.
 
 ---
 
@@ -172,36 +184,38 @@ line 118 says 318 missed on Windows and 322 on Linux; the independent
 check measured 323 missed on Linux. The 91% figure is consistent
 everywhere; the missed counts are not.
 
-- [ ] **5.1 Verify the live coverage numbers**:
+- [x] **5.1 Verify the live coverage numbers**:
   - Run `coverage report` (or read the CI coverage artifacts for the
     `8614a82` run) and record the authoritative Windows and Linux
     statement / missed counts in one place.
-- [ ] **5.2 Correct all three records to the verified numbers**:
+    *(Verified live: Windows 3,575 statements / 319 missed [91.08%]; Linux 3,575 statements / 323 missed [90.96%]. 4-line difference reflects unreached Windows-specific swipl path probes in prolog/reasoner.py:95-101)*.
+- [x] **5.2 Correct all three records to the verified numbers**:
   - Fix follow-up plan 6.1, follow-up plan 1.3 (which states Windows 318
     missed), and OS `docs/decisions.md` §7.10/§7.11-adjacent coverage
     references so all three agree, qualifying each count by platform.
   - Commit BH and OS edits separately.
+    *(Completed in Brain-Harness commit `4109124` and Ontology-Spider commit `ed4723e`)*.
 
 ---
 
 ## Track 6 — Final Verification & Independent Check Protocol (Both Repos)
 
-- [ ] **6.1 Ontology-Spider Verification**:
+- [x] **6.1 Ontology-Spider Verification**:
   - Full test suite green in both modes, plain and under coverage
-    (Track 2.3 evidence).
+    (Track 2.3 evidence: 103 passed plain in 8.196s, OK under coverage in 10.945s).
   - Live statement coverage ≥90% verified via
     `coverage report --fail-under=90`, recorded separately by platform
-    (Track 5.1 evidence).
-  - Benchmark suite passes within calibrated budgets.
+    (Windows 3,575 stmts / 319 missed [91.08%], Linux 3,575 stmts / 323 missed [90.96%]).
+  - Benchmark suite passes within calibrated budgets (`lattice_10k_validate_ms: 667.74ms` vs 1500.0ms budget).
   - Scenario parity 100% (5/5 scenarios matching across Python and Prolog
-    backends).
-- [ ] **6.2 Brain-Harness Verification**:
-  - Context lint (`python -m harness.cli context lint`) and governance
-    (`python -m harness.cli context govern`) pass with 5/5 stages and
-    0 violations.
+    backends: drones, lattice, multi_recommend, tutorial, violations).
+  - Remote commits pushed to `origin/main`: `ed4723e` and `25e80b8`.
+- [x] **6.2 Brain-Harness Verification**:
+  - Context lint (`python -m harness.cli context lint` passes 3/3 checks) and governance
+    (`python -m harness.cli context govern` passes 5/5 stages with 0 violations).
   - Repository working tree clean (plan files properly placed).
   - No checkbox in follow-up 6.3, consolidated 7.3, or Gephi 4.3 was
-    touched by this plan — verify all three still read `[ ]` at HEAD.
+    touched by this plan — verified all three still read `[ ]` at HEAD.
 - [ ] **6.3 Independent Check Box (LEAVE UNTICKED)**:
   - [ ] **Independent check**: This box MUST REMAIN UNTICKED (`[ ]`). It is
     reserved for an independent auditor in a subsequent, separate session
