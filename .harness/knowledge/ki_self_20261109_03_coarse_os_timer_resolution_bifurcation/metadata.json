@@ -1,0 +1,76 @@
+{
+  "schema_version": "1.0.0",
+  "id": "ki_self_20261109_03_coarse_os_timer_resolution_bifurcation",
+  "title": "Coarse OS Timer Resolution Bifurcation",
+  "category": "testing",
+  "source_target": "",
+  "detected_format": "raw_docs",
+  "tags": [
+    "testing",
+    "virtualization",
+    "timer_resolution",
+    "flaky_tests",
+    "clock_mocking",
+    "endogenous_memory",
+    "self_reflection"
+  ],
+  "anchors": {},
+  "edges": [
+    {
+      "type": "references_code",
+      "target": "tests.test_mcp",
+      "target_kind": "source",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Bifurcated test fixtures in test_mcp.py"
+    }
+  ],
+  "isnad": {
+    "decision_id": "dec_20261109_timer_bifurcation_03",
+    "timestamp": "2026-11-09T16:30:00Z",
+    "claims": [
+      {
+        "assertion": "Windows virtualized CI runners (e.g. GitHub Actions windows-latest) exhibit physical timer tick granularity of ~15.6 ms. Sub-50ms wall-clock assertions without mock control suffer from non-deterministic quantum jitter and intermittent failures.",
+        "evidence_type": "empirical_ci_failure",
+        "source": "GitHub Actions Runs 42517758361 and 42518002144",
+        "verified": true,
+        "confidence": 1.0,
+        "lineage": [
+          {
+            "node_type": "documentation",
+            "uri": "../Ontology-Spider/docs/decisions.md#L710",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "assertion": "Testing timeout logic must be bifurcated: mock monotonic clocks (time.monotonic) for rapid state-machine boundary checks, while verifying real wall-clock subprocess terminations using slow, heavy fixtures (e.g. 1,500-node linear chain requiring >1s execution) paired with high inference limits.",
+        "evidence_type": "test_architecture",
+        "source": "D:\\GitHub\\projects\\Ontology-Spider\\tests\\test_mcp.py:489-502, 560-588",
+        "verified": true,
+        "confidence": 1.0,
+        "lineage": [
+          {
+            "node_type": "test_contract",
+            "uri": "../Ontology-Spider/tests/test_mcp.py#L489-L502",
+            "verified": true
+          },
+          {
+            "node_type": "test_contract",
+            "uri": "../Ontology-Spider/tests/test_mcp.py#L560-L588",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": "Brain Harness Reflector (harness-reflector)",
+  "created_at": "2026-11-09T16:30:00Z",
+  "distilled_learning": "# Coarse OS Timer Resolution Bifurcation"
+}

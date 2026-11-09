@@ -1,0 +1,89 @@
+{
+  "schema_version": "1.0.0",
+  "id": "ki_self_20261109_01_bounded_bfs_explanation_provenance",
+  "title": "Bounded BFS Explanation Provenance",
+  "category": "data_structures",
+  "source_target": "",
+  "detected_format": "raw_docs",
+  "tags": [
+    "data_structures",
+    "graph_algorithms",
+    "bfs_explanation",
+    "memory_bounding",
+    "oom_prevention",
+    "endogenous_memory",
+    "self_reflection"
+  ],
+  "anchors": {},
+  "edges": [
+    {
+      "type": "references_code",
+      "target": "ontology_spider.reasoner.python_backend",
+      "target_kind": "source",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Implementation of bounded BFS explanation path depth queue"
+    },
+    {
+      "type": "references_code",
+      "target": "ontology_spider.engine",
+      "target_kind": "source",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Deadline check and explanation proof slicing logic"
+    }
+  ],
+  "isnad": {
+    "decision_id": "dec_20261109_bounded_bfs_01",
+    "timestamp": "2026-11-09T16:30:00Z",
+    "claims": [
+      {
+        "assertion": "Decouple graph reachability from explanation path accumulation: unbounded path tracking in BFS across linear chains creates an O(N^2) memory explosion where N=10,000 generates ~50M assertion objects, exceeding 33 GB RAM and triggering exit code 137 OOM.",
+        "evidence_type": "empirical_crash",
+        "source": "D:\\GitHub\\projects\\Ontology-Spider\\src\\ontology_spider\\reasoning\\python_backend.py:153-195",
+        "verified": true,
+        "confidence": 1.0,
+        "lineage": [
+          {
+            "node_type": "source_code",
+            "uri": "../Ontology-Spider/src/ontology_spider/reasoning/python_backend.py#L153-L195",
+            "verified": true
+          },
+          {
+            "node_type": "test_contract",
+            "uri": "../Ontology-Spider/tests/test_mcp.py#L590-L625",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "assertion": "Bounding explanation path tracking to depth <= 50 hops in BFS traversal and slicing formatted assertion proofs to <= 10 items guarantees strict O(N) memory bounds (<85 MB at N=10,000) while preserving complete 9,999-entity reachability.",
+        "evidence_type": "benchmark_verification",
+        "source": "D:\\GitHub\\projects\\Ontology-Spider\\tests\\test_mcp.py:test_large_chain_query_memory_bounded",
+        "verified": true,
+        "confidence": 1.0,
+        "lineage": [
+          {
+            "node_type": "source_code",
+            "uri": "../Ontology-Spider/src/ontology_spider/engine.py#L260-L275",
+            "verified": true
+          },
+          {
+            "node_type": "test_contract",
+            "uri": "../Ontology-Spider/tests/test_mcp.py#L590-L625",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": "Brain Harness Reflector (harness-reflector)",
+  "created_at": "2026-11-09T16:30:00Z",
+  "distilled_learning": "# Bounded BFS Explanation Provenance"
+}

@@ -1,0 +1,71 @@
+{
+  "schema_version": "1.0.0",
+  "id": "ki_self_20261109_05_non_atomic_plan_execution_honesty_gate",
+  "title": "Non-Atomic Plan/Execution Honesty Gate",
+  "category": "governance",
+  "source_target": "",
+  "detected_format": "raw_docs",
+  "tags": [
+    "governance",
+    "agentic_alignment",
+    "honesty_gate",
+    "plan_execution",
+    "adversarial_verification",
+    "endogenous_memory",
+    "self_reflection"
+  ],
+  "anchors": {},
+  "edges": [
+    {
+      "type": "references_code",
+      "target": "plan archive/Consolidated follow-through corrections follow-up plan-2026-11-08-EST.md",
+      "target_kind": "source",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Exemplar plan maintaining independent audit gate unticked"
+    }
+  ],
+  "isnad": {
+    "decision_id": "dec_20261109_honesty_gate_05",
+    "timestamp": "2026-11-09T16:30:00Z",
+    "claims": [
+      {
+        "assertion": "Agent plan redrafting and plan execution must remain non-atomic separated workflows. An executing agent must never self-certify an independent audit gate ([ ]); checklist items designated for third-party or human verification must remain strictly unticked.",
+        "evidence_type": "governance_alignment",
+        "source": "D:\\GitHub\\projects\\Brain Harness\\plan archive\\Consolidated follow-through corrections follow-up plan-2026-11-08-EST.md (Box 6.3)",
+        "verified": true,
+        "confidence": 1.0,
+        "lineage": [
+          {
+            "node_type": "plan_document",
+            "uri": "plan archive/Consolidated follow-through corrections follow-up plan-2026-11-08-EST.md#L182",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "assertion": "Premature self-ticking of verification boxes masks untested boundary conditions and creates a false impression of completed governance before external evaluation has occurred.",
+        "evidence_type": "adversarial_audit",
+        "source": "Brain Harness Commit 11e186b",
+        "verified": true,
+        "confidence": 1.0,
+        "lineage": [
+          {
+            "node_type": "plan_document",
+            "uri": "plan archive/Consolidated follow-through corrections follow-up plan-2026-11-08-EST.md#L182",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "status": "VERIFIED"
+  },
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": "Brain Harness Reflector (harness-reflector)",
+  "created_at": "2026-11-09T16:30:00Z",
+  "distilled_learning": "# Non-Atomic Plan/Execution Honesty Gate"
+}
