@@ -1,0 +1,58 @@
+{
+  "name": "plugin.evidence_isolation_guard",
+  "version": "1.0.0",
+  "description": "Fail-closed evidence-isolation tripwires (answer keys, grader verdicts) and POSIX-canonical trial identity markers synthesized from google/harness2 (arXiv 2610.14224).",
+  "language": "python",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "source_repo": "https://github.com/Google/harness2",
+  "verified_commit": "23fb5e0516c99ac04a1aa46c193efda2e1b9bb24",
+  "isnad_lineage": {
+    "source_url": "https://github.com/Google/harness2",
+    "commit_hash": "23fb5e0516c99ac04a1aa46c193efda2e1b9bb24",
+    "anchors": [
+      "harness2/core/context.py",
+      "harness2/core/runmark.py"
+    ]
+  },
+  "dependencies": [
+    "structlog"
+  ],
+  "provides": [
+    "service.evidence_isolation"
+  ],
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "assert_no_verdicts",
+      "description": "Scan an evidence directory tree in bounded chunks with overlap and fail closed if grader verdicts or evaluation markers are found.",
+      "parameters": [
+        {
+          "name": "root",
+          "type": "string",
+          "description": "Root path of the evidence directory",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "mark_complete",
+      "description": "Atomically write a completion marker with harness fingerprint and task input digest.",
+      "parameters": [
+        {
+          "name": "where",
+          "type": "string",
+          "description": "Run output directory",
+          "required": true
+        },
+        {
+          "name": "run_id",
+          "type": "string",
+          "description": "Run execution identifier",
+          "required": true
+        }
+      ]
+    }
+  ]
+}

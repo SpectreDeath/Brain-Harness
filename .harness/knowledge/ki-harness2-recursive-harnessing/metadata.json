@@ -1,0 +1,117 @@
+{
+  "id": "ki-harness2-recursive-harnessing",
+  "title": "Recursive Agent Harnessing & Propose-Probe-Compose Architecture",
+  "source_uri": "external/google-harness2",
+  "source_commit": "23fb5e0516c99ac04a1aa46c193efda2e1b9bb24",
+  "created_at": "2026-11-10T16:22:00Z",
+  "category": "agent_orchestration/recursive_refinement",
+  "claims": [
+    {
+      "claim_id": "claim_001",
+      "assertion": "Task-level recursion refines execution harnesses via contrastive Propose-Probe-Compose steps over orthogonal INV and DOM dimensions without modifying LLM weights.",
+      "evidence_quote": "Harness2 is a plug-and-play framework for recursive agent harnessing in an open world... Task-level recursion refines the execution harness for the current task through a contrastive Propose-Probe-Compose step: propose edits, probe their effects on the same task, and compose a refined harness from behavioral contrasts between executions, without ground-truth feedback.",
+      "source_file": "README.md",
+      "source_lines": "L32-L42"
+    },
+    {
+      "claim_id": "claim_002",
+      "assertion": "Strict budget accounting enforces R=4k rollouts and P=3k improvement sessions per mode, checking duplicate run labels before count evaluation.",
+      "evidence_quote": "def expected_rollouts(k: int) -> int:\n    return 4 * int(k)\n\ndef expected_sessions(k: int) -> int:\n    return 3 * int(k)\n\n    def assert_identity(self) -> None:\n        want_r, want_p = expected_rollouts(self.k), expected_sessions(self.k)\n        rl, sl = self.labels('rollout'), self.labels('session')\n        dupes = sorted({label for label in rl if rl.count(label) > 1} | {label for label in sl if sl.count(label) > 1})\n        if not dupes and self.R == want_r and self.P == want_p:\n            return",
+      "source_file": "harness2/core/ledger.py",
+      "source_lines": "L26-L114"
+    },
+    {
+      "claim_id": "claim_003",
+      "assertion": "Editable harness surfaces must autotrigger skills in always-on context and validate all constraints in a single pass returning actionable feedback.",
+      "evidence_quote": "def autotrigger(surface: SurfaceSpec, tree: Tree, *, always_on_max: int | None = None) -> list[str]:\n    # Give every skill a trigger line in always-on text; return the names repaired.\n\ndef validate(surface: SurfaceSpec, tree: Tree, ...) -> dict:\n    # Raise ValueError listing every problem; return a census of the validated tree.",
+      "source_file": "harness2/core/tree.py",
+      "source_lines": "L192-L391"
+    },
+    {
+      "claim_id": "claim_004",
+      "assertion": "Blind selection evaluates anonymized candidate artifacts with stable seeded shuffled IDs, dropping non-answers and falling back neutrally upon selector failure.",
+      "evidence_quote": "def assign_ids(labels: Sequence[str], *, task_id: str, k: int, mode: str) -> dict[str, str]:\n    seed = int(hashlib.sha1(f'{task_id}|{k}|{mode}'.encode()).hexdigest()[:12], 16)\n    ordered = sorted(labels)\n    random.Random(seed).shuffle(ordered)\n    return {_anon_id(i): lbl for i, lbl in enumerate(ordered)}",
+      "source_file": "harness2/core/selection.py",
+      "source_lines": "L71-L86"
+    },
+    {
+      "claim_id": "claim_005",
+      "assertion": "Harnessing-level recursion updates a persistent per-domain experience library with full adopted trees only when supported by cue, lesson, and evidence triples.",
+      "evidence_quote": "def add(self, task_id: str, harness: harness_tree.Tree, *, why: str = '', label: str = '', run_id: str = '', experience: dict | None = None) -> Path | None:\n    if not has_experience(experience):\n        return None\n    context.assert_tree_has_no_grader_verdicts(harness)\n    context.assert_tree_has_no_grader_verdicts({'EXPERIENCE.md': str(experience) + why})",
+      "source_file": "harness2/core/library.py",
+      "source_lines": "L107-L153"
+    },
+    {
+      "claim_id": "claim_006",
+      "assertion": "Evidence isolation tripwires scan in-flight context and harness trees for evaluator verdicts and answer-key leaks, failing closed before model submission.",
+      "evidence_quote": "def assert_no_grader_verdicts(root: Path | str, markers: Sequence[str] = GRADER_VERDICT_MARKERS) -> None:\n    # Refuse a context tree containing the grader's own output, by file name and by content.\n\ndef assert_no_leak_paths(root: Path | str, patterns: Sequence[str]) -> None:\n    # Reject benchmark-declared answer-key paths before a context reaches a model.",
+      "source_file": "harness2/core/context.py",
+      "source_lines": "L400-L491"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "source_target": "external/google-harness2",
+  "detected_format": "python_framework",
+  "tags": [
+    "recursive_harnessing",
+    "propose_probe_compose",
+    "harness_optimization",
+    "evidence_isolation",
+    "experience_library"
+  ],
+  "anchors": {},
+  "edges": [],
+  "isnad": {
+    "claims": [
+      {
+        "claim_id": "claim_001",
+        "assertion": "Task-level recursion refines execution harnesses via contrastive Propose-Probe-Compose steps over orthogonal INV and DOM dimensions without modifying LLM weights.",
+        "evidence_quote": "Harness2 is a plug-and-play framework for recursive agent harnessing in an open world... Task-level recursion refines the execution harness for the current task through a contrastive Propose-Probe-Compose step: propose edits, probe their effects on the same task, and compose a refined harness from behavioral contrasts between executions, without ground-truth feedback.",
+        "source_file": "README.md",
+        "source_lines": "L32-L42"
+      },
+      {
+        "claim_id": "claim_002",
+        "assertion": "Strict budget accounting enforces R=4k rollouts and P=3k improvement sessions per mode, checking duplicate run labels before count evaluation.",
+        "evidence_quote": "def expected_rollouts(k: int) -> int:\n    return 4 * int(k)\n\ndef expected_sessions(k: int) -> int:\n    return 3 * int(k)\n\n    def assert_identity(self) -> None:\n        want_r, want_p = expected_rollouts(self.k), expected_sessions(self.k)\n        rl, sl = self.labels('rollout'), self.labels('session')\n        dupes = sorted({label for label in rl if rl.count(label) > 1} | {label for label in sl if sl.count(label) > 1})\n        if not dupes and self.R == want_r and self.P == want_p:\n            return",
+        "source_file": "harness2/core/ledger.py",
+        "source_lines": "L26-L114"
+      },
+      {
+        "claim_id": "claim_003",
+        "assertion": "Editable harness surfaces must autotrigger skills in always-on context and validate all constraints in a single pass returning actionable feedback.",
+        "evidence_quote": "def autotrigger(surface: SurfaceSpec, tree: Tree, *, always_on_max: int | None = None) -> list[str]:\n    # Give every skill a trigger line in always-on text; return the names repaired.\n\ndef validate(surface: SurfaceSpec, tree: Tree, ...) -> dict:\n    # Raise ValueError listing every problem; return a census of the validated tree.",
+        "source_file": "harness2/core/tree.py",
+        "source_lines": "L192-L391"
+      },
+      {
+        "claim_id": "claim_004",
+        "assertion": "Blind selection evaluates anonymized candidate artifacts with stable seeded shuffled IDs, dropping non-answers and falling back neutrally upon selector failure.",
+        "evidence_quote": "def assign_ids(labels: Sequence[str], *, task_id: str, k: int, mode: str) -> dict[str, str]:\n    seed = int(hashlib.sha1(f'{task_id}|{k}|{mode}'.encode()).hexdigest()[:12], 16)\n    ordered = sorted(labels)\n    random.Random(seed).shuffle(ordered)\n    return {_anon_id(i): lbl for i, lbl in enumerate(ordered)}",
+        "source_file": "harness2/core/selection.py",
+        "source_lines": "L71-L86"
+      },
+      {
+        "claim_id": "claim_005",
+        "assertion": "Harnessing-level recursion updates a persistent per-domain experience library with full adopted trees only when supported by cue, lesson, and evidence triples.",
+        "evidence_quote": "def add(self, task_id: str, harness: harness_tree.Tree, *, why: str = '', label: str = '', run_id: str = '', experience: dict | None = None) -> Path | None:\n    if not has_experience(experience):\n        return None\n    context.assert_tree_has_no_grader_verdicts(harness)\n    context.assert_tree_has_no_grader_verdicts({'EXPERIENCE.md': str(experience) + why})",
+        "source_file": "harness2/core/library.py",
+        "source_lines": "L107-L153"
+      },
+      {
+        "claim_id": "claim_006",
+        "assertion": "Evidence isolation tripwires scan in-flight context and harness trees for evaluator verdicts and answer-key leaks, failing closed before model submission.",
+        "evidence_quote": "def assert_no_grader_verdicts(root: Path | str, markers: Sequence[str] = GRADER_VERDICT_MARKERS) -> None:\n    # Refuse a context tree containing the grader's own output, by file name and by content.\n\ndef assert_no_leak_paths(root: Path | str, patterns: Sequence[str]) -> None:\n    # Reject benchmark-declared answer-key paths before a context reaches a model.",
+        "source_file": "harness2/core/context.py",
+        "source_lines": "L400-L491"
+      }
+    ]
+  },
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": null,
+  "distilled_learning": "# Recursive Agent Harnessing: Mental Models, Invariants, and Architecture"
+}

@@ -1,0 +1,75 @@
+{
+  "name": "plugin.recursive_harness_refiner",
+  "version": "1.0.0",
+  "description": "Recursive agent harnessing through contrastive Propose-Probe-Compose task-level recursion, blind anonymized selection, and per-domain experience retention synthesized from google/harness2 (arXiv 2610.14224).",
+  "language": "python",
+  "entrypoint": "main.py",
+  "isolation": "in_process",
+  "trusted": true,
+  "source_repo": "https://github.com/Google/harness2",
+  "verified_commit": "23fb5e0516c99ac04a1aa46c193efda2e1b9bb24",
+  "isnad_lineage": {
+    "source_url": "https://github.com/Google/harness2",
+    "commit_hash": "23fb5e0516c99ac04a1aa46c193efda2e1b9bb24",
+    "anchors": [
+      "harness2/core/recursion.py",
+      "harness2/core/selection.py",
+      "harness2/core/ledger.py",
+      "harness2/core/library.py"
+    ]
+  },
+  "dependencies": [
+    "structlog"
+  ],
+  "provides": [
+    "service.recursive_refiner"
+  ],
+  "requires": [
+    "service.evidence_isolation"
+  ],
+  "entrypoints": [
+    {
+      "name": "refine_task",
+      "description": "Execute parallel (agg) or sequential (seq) Propose-Probe-Compose task recursion within strict R=4k, P=3k budget bounds.",
+      "parameters": [
+        {
+          "name": "mode",
+          "type": "string",
+          "description": "Recursion mode ('agg' or 'seq')",
+          "required": true
+        },
+        {
+          "name": "task_id",
+          "type": "string",
+          "description": "Task identifier",
+          "required": true
+        },
+        {
+          "name": "k",
+          "type": "integer",
+          "description": "Budget multiplier",
+          "required": false,
+          "default": 1
+        }
+      ]
+    },
+    {
+      "name": "blind_select",
+      "description": "Select the highest-quality candidate artifact blind over shuffled anonymous candidate IDs.",
+      "parameters": [
+        {
+          "name": "task_id",
+          "type": "string",
+          "description": "Task identifier",
+          "required": true
+        },
+        {
+          "name": "k",
+          "type": "integer",
+          "description": "Budget multiplier",
+          "required": true
+        }
+      ]
+    }
+  ]
+}

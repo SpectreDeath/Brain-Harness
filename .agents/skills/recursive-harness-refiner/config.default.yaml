@@ -1,0 +1,18 @@
+# Recursive Harness Refiner Skill — Operational Budgets (Rule 44)
+version: "1.0.0"
+
+refiner:
+  default_mode: "agg"
+  default_k: 1
+  stage_attempts: 2
+  budget:
+    rollouts_per_k: 4
+    sessions_per_k: 3
+  surface:
+    always_on_file: "AGENTS.md"
+    max_chars: 24000
+    description_min_chars: 100
+    description_max_chars: 350
+  selection:
+    pool_kind: "finals"
+    allow_base_fallback: true

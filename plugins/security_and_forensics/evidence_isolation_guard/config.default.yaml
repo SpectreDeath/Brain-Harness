@@ -1,0 +1,21 @@
+# Evidence Isolation Guard — Plugin Operational Budgets (Rule 44)
+version: "1.0.0"
+
+isolation_guard:
+  max_traversal_depth: 8
+  scan_chunk_bytes: 1048576  # 1 MB chunking with overlap
+  fail_closed_on_overflow: true
+  marker_scan_suffixes:
+    - ".md"
+    - ".txt"
+    - ".json"
+    - ".csv"
+    - ".tsv"
+    - ".yaml"
+    - ".yml"
+    - ".html"
+    - ".log"
+    - ".py"
+    - ".js"
+  trial_marker_name: ".refine_complete"
+  hash_algorithm: "sha1"

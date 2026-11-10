@@ -1,0 +1,26 @@
+# Recursive Harness Refiner — Plugin Operational Budgets (Rule 44)
+version: "1.0.0"
+
+refinement_engine:
+  default_mode: "agg"
+  default_budget_k: 1
+  stage_max_attempts: 2
+  phase_width: 2
+  budget_accounting:
+    rollouts_per_k: 4
+    sessions_per_k: 3
+    enforce_strict_identity: true
+  surface:
+    always_on_file: "AGENTS.md"
+    always_on_max_chars: 24000
+    skill_dir: ".agents/skills"
+    subagent_dir: "sub_agents"
+    scripts_dir: "scripts"
+    description_min_chars: 100
+    description_max_chars: 350
+  selection:
+    pool_kind: "finals"
+    allow_base_fallback_in_mixed: true
+  library:
+    store_full_trees: true
+    require_supported_lesson: true

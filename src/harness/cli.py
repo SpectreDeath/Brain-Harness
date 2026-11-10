@@ -62,6 +62,7 @@ from harness.commands.plugins import plugin_group
 from harness.commands.pre_commit_security import pre_commit_security_group
 from harness.commands.rea import rea_group
 from harness.commands.redteam import redteam_group
+from harness.commands.refine import refine_group
 from harness.commands.reflection import knowledge_group, reflect_cli
 from harness.commands.rol import rol_group
 from harness.commands.runtime import apply_cli, config_group, run_cli, ui_cli
@@ -144,6 +145,7 @@ _CANONICAL_GROUPS = [
     ("pre-commit-security", pre_commit_security_group),
     ("rea", rea_group),
     ("redteam", redteam_group),
+    ("refine", refine_group),
     ("rol", rol_group),
     ("router", model_router_group),
     ("session", session_group),
