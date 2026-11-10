@@ -1,0 +1,43 @@
+{
+  "id": "ki-rea-sig-sign_language_detection_model-b20e8353",
+  "title": "Semantic Signatures: sign_language_detection_model.pyc (cpython_pyc)",
+  "domain": "software_engineering",
+  "category": "software_engineering",
+  "tags": [
+    "cpython_pyc",
+    "google_research",
+    "rea-learned",
+    "rea_forensics",
+    "reverse-engineering",
+    "sign_language_detection"
+  ],
+  "status": "validated",
+  "evidence_id": "ev:e9c065c6057cf116370c99d9aeb54f6aa563ef451df617d8973bf4c22c9e15f6",
+  "created_at": "2026-10-31T18:49:00Z",
+  "updated_at": "2026-10-31T18:49:00Z",
+  "isnad": {
+    "status": "VERIFIED",
+    "source_type": "rea_dissection",
+    "source_path": "C:\\Users\\spectre\\.gemini\\antigravity\\brain\\fdc15323-dd5c-4976-8b10-5fd4cf21e2a0\\scratch\\sign_language_detection_model.pyc",
+    "evidence_id": "ev:e9c065c6057cf116370c99d9aeb54f6aa563ef451df617d8973bf4c22c9e15f6",
+    "artifact_sha256": "326971804c54529763baea43738604dd76252285f213a0967f4e1dff4174e3c4",
+    "nodes": [
+      {
+        "source": "plugin.rea_managed_runtime",
+        "timestamp": "2026-10-31T18:49:00Z",
+        "claim": "Extracted 7 semantic signatures from C:\\Users\\spectre\\.gemini\\antigravity\\brain\\fdc15323-dd5c-4976-8b10-5fd4cf21e2a0\\scratch\\sign_language_detection_model.pyc"
+      }
+    ]
+  },
+  "signatures_count": 7,
+  "links": [
+    {
+      "target": "ki-rea-facet-availability-semantics",
+      "relationship": "implements"
+    },
+    {
+      "target": "ki-rea-reconstruction-obligations",
+      "relationship": "verified_by"
+    }
+  ]
+}

@@ -16,6 +16,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import re
 import shutil
 import structlog
 import struct
@@ -769,7 +770,7 @@ class StandardReaToolkitService:
                 polyglot_warnings=tuple(polyglot_warnings),
             )
 
-        # 5. AI Model Artifacts: GGUF & Safetensors
+        # 5. AI Model Artifacts: GGUF, Safetensors, TFLite, HDF5/Keras, SavedModel PB, TF.js Shards
         if header.startswith(b"GGUF") or suffix == ".gguf":
             return ArtifactIdentity(
                 path=str(p),
@@ -795,6 +796,46 @@ class StandardReaToolkitService:
                     )
             except Exception:
                 pass
+        if (len(header) >= 8 and header[4:8] == b"TFL3") or suffix == ".tflite":
+            return ArtifactIdentity(
+                path=str(p),
+                sha256=sha,
+                size_bytes=file_size,
+                detected_kind="ai_model",
+                mime_type="application/x-tflite",
+                magic_summary="TensorFlow Lite FlatBuffer Model (TFL3)",
+                polyglot_warnings=tuple(polyglot_warnings),
+            )
+        if header.startswith(b"\x89HDF\r\n\x1a\n") or suffix in (".h5", ".hdf5", ".keras"):
+            return ArtifactIdentity(
+                path=str(p),
+                sha256=sha,
+                size_bytes=file_size,
+                detected_kind="ai_model",
+                mime_type="application/x-hdf5",
+                magic_summary="Keras / HDF5 Neural Network Weights",
+                polyglot_warnings=tuple(polyglot_warnings),
+            )
+        if file_name == "saved_model.pb" or (suffix == ".pb" and file_size >= 16):
+            return ArtifactIdentity(
+                path=str(p),
+                sha256=sha,
+                size_bytes=file_size,
+                detected_kind="ai_model",
+                mime_type="application/x-protobuf",
+                magic_summary="TensorFlow SavedModel Protocol Buffer",
+                polyglot_warnings=tuple(polyglot_warnings),
+            )
+        if suffix == ".bin" and "shard" in file_name:
+            return ArtifactIdentity(
+                path=str(p),
+                sha256=sha,
+                size_bytes=file_size,
+                detected_kind="ai_model",
+                mime_type="application/octet-stream",
+                magic_summary="TensorFlow.js Binary Weight Shard",
+                polyglot_warnings=tuple(polyglot_warnings),
+            )
 
         # 6. Android APK / ZIP Container
         if header.startswith(b"PK\x03\x04") or suffix == ".apk":
@@ -1296,17 +1337,34 @@ class StandardReaToolkitService:
             raw_model = self.adapter.call_managed("inspect_model_artifact", model_path=target_path, preview_tensors=50)
             if raw_model.get("status") in ("ok", "success"):
                 tensors = raw_model.get("tensors") or []
+                t_count = raw_model.get("tensor_count") if raw_model.get("tensor_count") is not None else raw_model.get("tensors_count", len(tensors))
+                meta_dict = raw_model.get("metadata_preview") if isinstance(raw_model.get("metadata_preview"), dict) else (raw_model.get("metadata") if isinstance(raw_model.get("metadata"), dict) else {})
+                fmt_str = raw_model.get("format", "unknown")
                 facets["model_headers"] = FacetEnvelope(
                     name="model_headers",
                     state="available",
                     availability=FacetAvailability(available=True),
                     coverage=CoverageDeclaration(scope="root", status="complete"),
                     data={
-                        "format": raw_model.get("format"),
-                        "tensors_count": raw_model.get("tensors_count", 0),
-                        "metadata_keys": list(raw_model.get("metadata", {}).keys()) if isinstance(raw_model.get("metadata"), dict) else [],
+                        "format": fmt_str,
+                        "tensors_count": t_count,
+                        "metadata_keys": list(meta_dict.keys()),
                     },
                 )
+                signatures.append(SemanticSignature(
+                    kind="model_format",
+                    name=str(fmt_str),
+                    details={"tensors_count": t_count, "metadata": meta_dict},
+                ))
+                for t_item in tensors[:active_budgets.max_records]:
+                    t_dict = t_item if isinstance(t_item, dict) else (t_item.to_dict() if hasattr(t_item, "to_dict") else {})
+                    t_name = t_dict.get("name", "")
+                    if t_name:
+                        signatures.append(SemanticSignature(
+                            kind="model_tensor",
+                            name=str(t_name),
+                            details={"dtype": t_dict.get("type_name", "unknown"), "shape": t_dict.get("shape", [])},
+                        ))
             else:
                 facets["model_headers"] = FacetEnvelope(
                     name="model_headers",
@@ -1321,18 +1379,42 @@ class StandardReaToolkitService:
         elif kind == "cpython_pyc":
             raw_pyc = self.adapter.call_managed("inspect_python_pyc", pyc_path=target_path, disassemble=True)
             if raw_pyc.get("status") in ("ok", "success"):
+                c_ver = raw_pyc.get("cpython_version", "")
+                c_name = raw_pyc.get("code_object_name") or raw_pyc.get("code_name") or "<module>"
+                op_count = raw_pyc.get("instruction_count") if raw_pyc.get("instruction_count") is not None else raw_pyc.get("opcodes_count", 0)
+                sample_dis = raw_pyc.get("sample_disassembly") or []
                 facets["pyc_code"] = FacetEnvelope(
                     name="pyc_code",
                     state="available",
                     availability=FacetAvailability(available=True),
                     coverage=CoverageDeclaration(scope="root", status="complete"),
                     data={
-                        "cpython_version": raw_pyc.get("cpython_version"),
-                        "code_name": raw_pyc.get("code_name"),
+                        "cpython_version": c_ver,
+                        "code_name": c_name,
                         "argcount": raw_pyc.get("argcount"),
-                        "opcodes_count": raw_pyc.get("opcodes_count", 0),
+                        "opcodes_count": op_count,
                     },
                 )
+                signatures.append(SemanticSignature(
+                    kind="pyc_code_object",
+                    name=str(c_name),
+                    details={"cpython_version": c_ver, "instruction_count": op_count},
+                ))
+                for line in sample_dis:
+                    m_imp = re.search(r"\b(IMPORT_NAME|IMPORT_FROM)\s+\d+\s+\(([^)]+)\)", str(line))
+                    if m_imp:
+                        signatures.append(SemanticSignature(
+                            kind="pyc_import",
+                            name=m_imp.group(2),
+                            details={"opcode": m_imp.group(1)},
+                        ))
+                    m_co = re.search(r"<code object\s+([^\s>]+)\s+at\s+", str(line))
+                    if m_co:
+                        signatures.append(SemanticSignature(
+                            kind="pyc_function",
+                            name=m_co.group(1),
+                            details={"cpython_version": c_ver},
+                        ))
             else:
                 facets["pyc_code"] = FacetEnvelope(
                     name="pyc_code",
@@ -1377,13 +1459,48 @@ class StandardReaToolkitService:
 
         elif kind == "javascript_bundle":
             # Pure static signature extraction from script without writing output tree
+            js_classes: list[str] = []
+            js_functions: list[str] = []
+            try:
+                p_js = Path(target_path)
+                if p_js.is_file():
+                    with open(p_js, "rb") as f_js:
+                        js_sample = f_js.read(min(artifact.size_bytes, 262144)).decode("utf-8", errors="ignore")
+                    for m_cls in re.finditer(r"\bclass\s+([A-Za-z_$][A-Za-z0-9_$]*)", js_sample):
+                        c_name = m_cls.group(1)
+                        if c_name not in js_classes:
+                            js_classes.append(c_name)
+                    for m_fn in re.finditer(r"(?:\bfunction\s+([A-Za-z_$][A-Za-z0-9_$]*)|([A-Za-z_$][A-Za-z0-9_$]*\.prototype\.[A-Za-z_$][A-Za-z0-9_$]*)\s*=)", js_sample):
+                        fn_name = m_fn.group(1) or m_fn.group(2)
+                        if fn_name and fn_name not in js_functions:
+                            js_functions.append(fn_name)
+            except Exception:
+                pass
+
             facets["bundle"] = FacetEnvelope(
                 name="bundle",
                 state="available",
                 availability=FacetAvailability(available=True),
                 coverage=CoverageDeclaration(scope="root", status="complete"),
-                data={"path": target_path, "size_bytes": artifact.size_bytes},
+                data={
+                    "path": target_path,
+                    "size_bytes": artifact.size_bytes,
+                    "classes_count": len(js_classes),
+                    "functions_count": len(js_functions),
+                },
             )
+            for cls_name in js_classes[:active_budgets.max_records]:
+                signatures.append(SemanticSignature(
+                    kind="js_class",
+                    name=cls_name,
+                    details={"source": Path(target_path).name},
+                ))
+            for fn_name in js_functions[:active_budgets.max_records]:
+                signatures.append(SemanticSignature(
+                    kind="js_function",
+                    name=fn_name,
+                    details={"source": Path(target_path).name},
+                ))
             prov = ProviderProvenance(plugin="plugin.rea_javascript", tool="rea_javascript_recover_sources", execution_mode="in_process")
 
         elif kind == "evm_bytecode":

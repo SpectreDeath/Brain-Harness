@@ -7,7 +7,7 @@ Synthesized from REA (morluto/rea) managed and model artifact domain engines.
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import asdict, dataclass, field
 from typing import Any, Protocol, runtime_checkable
 
 from harness.kernel.context import ServiceContext, ServiceKey
@@ -21,6 +21,12 @@ from harness.kernel.context import ServiceContext, ServiceKey
 @dataclass(slots=True, frozen=True)
 class ReaManagedReportBase:
     """Base slotted, frozen dataclass with dictionary-style read compatibility."""
+
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
+
+    def model_dump(self) -> dict[str, Any]:
+        return asdict(self)
 
     def __getitem__(self, key: str) -> Any:
         try:

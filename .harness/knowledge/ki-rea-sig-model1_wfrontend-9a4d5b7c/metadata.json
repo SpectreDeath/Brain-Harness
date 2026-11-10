@@ -1,0 +1,54 @@
+{
+  "id": "ki-rea-sig-model1_wfrontend-9a4d5b7c",
+  "title": "Semantic Signatures: model1_wfrontend.tflite (ai_model)",
+  "domain": "machine_learning",
+  "category": "machine_learning",
+  "tags": [
+    "ai_model",
+    "google_research",
+    "non_semantic_speech_benchmark",
+    "rea-learned",
+    "rea_forensics",
+    "reverse-engineering",
+    "tflite"
+  ],
+  "status": "validated",
+  "evidence_id": "ev:7859c872d76cf5384dcc81ea7ce07942d86c686a2232fbd4dfb3464e30110fb2",
+  "created_at": "2026-10-31T18:49:00Z",
+  "updated_at": "2026-10-31T18:49:00Z",
+  "isnad": {
+    "status": "VERIFIED",
+    "source_type": "rea_dissection",
+    "source_path": "D:\\GitHub\\cloned\\Google\\google-research-master\\google-research-master\\non_semantic_speech_benchmark\\data_prep\\testdata\\model1_wfrontend.tflite",
+    "evidence_id": "ev:7859c872d76cf5384dcc81ea7ce07942d86c686a2232fbd4dfb3464e30110fb2",
+    "artifact_sha256": "0ac5866ae7f30ddd8380c6047b4ba9071d6e2c21a9a8ce0721a98e145a4d5bb4",
+    "nodes": [
+      {
+        "source": "plugin.rea_managed_runtime",
+        "timestamp": "2026-10-31T18:49:00Z",
+        "claim": "Extracted 9 semantic signatures from D:\\GitHub\\cloned\\Google\\google-research-master\\google-research-master\\non_semantic_speech_benchmark\\data_prep\\testdata\\model1_wfrontend.tflite"
+      }
+    ]
+  },
+  "signatures_count": 9,
+  "links": [
+    {
+      "target": "ki-rea-facet-availability-semantics",
+      "relationship": "implements"
+    },
+    {
+      "target": "ki-rea-reconstruction-obligations",
+      "relationship": "verified_by"
+    }
+  ],
+  "edges": [
+    {
+      "type": "same_domain",
+      "target": "ki_20261110_google_research_multitarget_edge_ml",
+      "target_kind": "ki",
+      "derived": true,
+      "confidence": 0.8,
+      "description": null
+    }
+  ]
+}

@@ -351,3 +351,52 @@ def test_learn_commits_canonical_dual_files(tmp_path: Path, synthetic_fixtures: 
     assert "# Semantic Signatures:" in summary
     assert "## Isnad Lineage Chain" in summary
     assert meta["evidence_id"] in summary
+
+
+def test_dissect_extended_ai_models_and_js_signatures(tmp_path: Path, service: StandardReaToolkitService) -> None:
+    """Verify TFLite, HDF5, SavedModel PB, TF.js weight shards, and JS bundle signature extraction."""
+    # 1. TFLite (TFL3 FlatBuffer)
+    tflite_file = tmp_path / "model.tflite"
+    tflite_file.write_bytes(struct.pack("<I", 16) + b"TFL3" + b"\x00" * 16 + b"conv2d/kernel\x00dense/bias\x00")
+    tflite_env = service.dissect(tflite_file)
+    assert tflite_env.artifact.detected_kind == "ai_model"
+    assert tflite_env.facets["model_headers"].state == "available"
+    assert any(s.kind == "model_tensor" and "conv2d/kernel" in s.name for s in tflite_env.signatures)
+
+    # 2. Keras / HDF5
+    h5_file = tmp_path / "model.h5"
+    h5_file.write_bytes(b"\x89HDF\r\n\x1a\n\x00" + b"\x00" * 16 + b"model_config\x00lstm/kernel:0\x00")
+    h5_env = service.dissect(h5_file)
+    assert h5_env.artifact.detected_kind == "ai_model"
+    assert h5_env.facets["model_headers"].state == "available"
+    assert any(s.kind == "model_tensor" and "lstm/kernel:0" in s.name for s in h5_env.signatures)
+
+    # 3. TensorFlow.js shard + sibling model.json
+    tfjs_dir = tmp_path / "tfjs"
+    tfjs_dir.mkdir()
+    shard_file = tfjs_dir / "group1-shard1of1.bin"
+    shard_file.write_bytes(b"\x00" * 64)
+    (tfjs_dir / "model.json").write_text(
+        json.dumps({
+            "format": "layers-model",
+            "generatedBy": "keras v2.3.0-tf",
+            "weightsManifest": [{
+                "paths": ["group1-shard1of1.bin"],
+                "weights": [{"name": "dense/kernel", "shape": [8, 2], "dtype": "float32"}],
+            }],
+        }),
+        encoding="utf-8",
+    )
+    tfjs_env = service.dissect(shard_file)
+    assert tfjs_env.artifact.detected_kind == "ai_model"
+    assert tfjs_env.facets["model_headers"].state == "available"
+    assert any(s.kind == "model_tensor" and s.name == "dense/kernel" for s in tfjs_env.signatures)
+
+    # 4. JavaScript Bundle static symbols
+    js_file = tmp_path / "bundle.js"
+    js_file.write_text("class AntheaEval {} function runSegment() { return 1; }", encoding="utf-8")
+    js_env = service.dissect(js_file)
+    assert js_env.artifact.detected_kind == "javascript_bundle"
+    assert any(s.kind == "js_class" and s.name == "AntheaEval" for s in js_env.signatures)
+    assert any(s.kind == "js_function" and s.name == "runSegment" for s in js_env.signatures)
+

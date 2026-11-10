@@ -8,6 +8,7 @@ without allocating RAM or GPU memory for weight buffers (Rule 48).
 from __future__ import annotations
 
 import json
+import re
 import struct
 from pathlib import Path
 from typing import Any
@@ -18,10 +19,12 @@ from harness.services.rea_managed_runtime import (
 )
 
 GGUF_MAGIC = b"GGUF"  # 0x46554747 little-endian
+HDF5_MAGIC = b"\x89HDF\r\n\x1a\n"
+TFLITE_MAGIC = b"TFL3"
 
 
 class ModelArtifactEngine:
-    """Slotted engine for zero-allocation GGUF and safetensors inspection."""
+    """Slotted engine for zero-allocation AI model artifact inspection."""
 
     __slots__ = ()
 
@@ -51,11 +54,11 @@ class ModelArtifactEngine:
             with open(path, "rb") as f:
                 prefix = f.read(8)
 
-                # Check GGUF
+                # 1. Check GGUF
                 if prefix[:4] == GGUF_MAGIC:
                     return self._parse_gguf(f, path, prefix, preview_tensors)
 
-                # Check Safetensors: uint64 header size
+                # 2. Check Safetensors: uint64 header size
                 (header_len,) = struct.unpack("<Q", prefix)
                 if 2 < header_len < min(file_size - 8, 100_000_000):
                     test_bytes = f.read(2)
@@ -65,11 +68,28 @@ class ModelArtifactEngine:
                             f, path, header_len, preview_tensors
                         )
 
+                # 3. Check TFLite FlatBuffer (TFL3 at offset 4)
+                suffix = path.suffix.lower()
+                if prefix[4:8] == TFLITE_MAGIC or suffix == ".tflite":
+                    return self._parse_tflite(f, path, prefix, file_size, preview_tensors)
+
+                # 4. Check Keras / HDF5 (\x89HDF\r\n\x1a\n)
+                if prefix == HDF5_MAGIC or suffix in (".h5", ".hdf5", ".keras"):
+                    return self._parse_hdf5(f, path, file_size, preview_tensors)
+
+                # 5. Check TensorFlow SavedModel Protobuf (.pb)
+                if suffix == ".pb" or path.name.lower() == "saved_model.pb":
+                    return self._parse_protobuf_model(f, path, prefix, file_size, preview_tensors)
+
+                # 6. Check TensorFlow.js binary weight shard (*shard*.bin)
+                if suffix == ".bin" and "shard" in path.name.lower():
+                    return self._parse_tfjs_shard(path, file_size, preview_tensors)
+
                 return ModelArtifactReport(
                     status="unsupported_format",
                     model_path=str(path),
                     format="unknown",
-                    error="Unrecognized model format; not GGUF or Safetensors",
+                    error="Unrecognized model format; not GGUF, Safetensors, TFLite, HDF5, SavedModel, or TF.js",
                 )
 
         except Exception as exc:
@@ -219,5 +239,174 @@ class ModelArtifactEngine:
             tensor_count=len(header_json) - (1 if "__metadata__" in header_json else 0),
             metadata_kv_count=len(metadata_dict),
             metadata_preview=metadata_dict,
+            tensors=tensors,
+        )
+
+    def _parse_tflite(
+        self,
+        f: Any,
+        path: Path,
+        prefix: bytes,
+        file_size: int,
+        preview_tensors: int,
+    ) -> ModelArtifactReport:
+        """Parse TensorFlow Lite FlatBuffer (TFL3) header and extract tensor identifiers."""
+        root_offset = struct.unpack("<I", prefix[:4])[0]
+        f.seek(0)
+        sample = f.read(min(file_size, 131072))
+        raw_strings = re.findall(rb"[A-Za-z0-9_]+(?:/[A-Za-z0-9_:.]+)+", sample)
+        seen: list[str] = []
+        for s in raw_strings:
+            decoded = s.decode("ascii", errors="ignore")
+            if decoded not in seen:
+                seen.append(decoded)
+        tensors = [
+            ModelTensorDescriptor(name=name, type_name="tflite_tensor", shape=[], offset=0, byte_length=0)
+            for name in seen[:preview_tensors]
+        ]
+        meta = {
+            "flatbuffer_identifier": "TFL3",
+            "root_table_offset": root_offset,
+            "size_bytes": file_size,
+        }
+        return ModelArtifactReport(
+            status="ok",
+            model_path=str(path),
+            format="tflite_v3",
+            version=3,
+            tensor_count=len(seen),
+            metadata_kv_count=len(meta),
+            metadata_preview=meta,
+            tensors=tensors,
+        )
+
+    def _parse_hdf5(
+        self,
+        f: Any,
+        path: Path,
+        file_size: int,
+        preview_tensors: int,
+    ) -> ModelArtifactReport:
+        """Parse Keras / HDF5 superblock header and extract layer weight identifiers."""
+        sb_bytes = f.read(8)
+        sb_version = sb_bytes[0] if sb_bytes else 0
+        f.seek(0)
+        sample = f.read(min(file_size, 131072))
+        layer_matches = re.findall(rb"[a-zA-Z0-9_]+/(?:kernel|bias|gamma|beta|moving_mean|moving_variance|embeddings)(?::0)?", sample)
+        seen: list[str] = []
+        for m in layer_matches:
+            decoded = m.decode("ascii", errors="ignore")
+            if decoded not in seen:
+                seen.append(decoded)
+        tensors = [
+            ModelTensorDescriptor(name=name, type_name="float32", shape=[], offset=0, byte_length=0)
+            for name in seen[:preview_tensors]
+        ]
+        has_keras_cfg = b"model_config" in sample or b"keras_version" in sample
+        meta = {
+            "superblock_version": sb_version,
+            "has_keras_model_config": has_keras_cfg,
+            "size_bytes": file_size,
+        }
+        return ModelArtifactReport(
+            status="ok",
+            model_path=str(path),
+            format=f"hdf5_v{sb_version}",
+            version=sb_version,
+            tensor_count=len(seen),
+            metadata_kv_count=len(meta),
+            metadata_preview=meta,
+            tensors=tensors,
+        )
+
+    def _parse_protobuf_model(
+        self,
+        f: Any,
+        path: Path,
+        prefix: bytes,
+        file_size: int,
+        preview_tensors: int,
+    ) -> ModelArtifactReport:
+        """Parse TensorFlow SavedModel Protocol Buffer (.pb) graph symbols."""
+        f.seek(0)
+        sample = f.read(min(file_size, 131072))
+        node_matches = re.findall(rb"[A-Za-z0-9_]+/[A-Za-z0-9_/]{3,64}", sample)
+        seen: list[str] = []
+        for m in node_matches:
+            decoded = m.decode("ascii", errors="ignore")
+            if decoded not in seen:
+                seen.append(decoded)
+        tensors = [
+            ModelTensorDescriptor(name=name, type_name="pb_graph_node", shape=[], offset=0, byte_length=0)
+            for name in seen[:preview_tensors]
+        ]
+        meta = {
+            "wire_prefix_hex": prefix[:4].hex(),
+            "is_saved_model": path.name.lower() == "saved_model.pb",
+            "size_bytes": file_size,
+        }
+        return ModelArtifactReport(
+            status="ok",
+            model_path=str(path),
+            format="tf_saved_model_pb",
+            version=1,
+            tensor_count=len(seen),
+            metadata_kv_count=len(meta),
+            metadata_preview=meta,
+            tensors=tensors,
+        )
+
+    def _parse_tfjs_shard(
+        self,
+        path: Path,
+        file_size: int,
+        preview_tensors: int,
+    ) -> ModelArtifactReport:
+        """Parse TensorFlow.js binary weight shard and resolve sibling model.json manifest if present."""
+        tensors: list[ModelTensorDescriptor] = []
+        meta: dict[str, Any] = {
+            "shard_name": path.name,
+            "size_bytes": file_size,
+            "float32_elements": file_size // 4,
+        }
+        manifest_file = path.parent / "model.json"
+        if manifest_file.is_file():
+            try:
+                manifest = json.loads(manifest_file.read_text(encoding="utf-8", errors="replace"))
+                meta["format"] = manifest.get("format", "layers-model")
+                meta["generated_by"] = manifest.get("generatedBy", "")
+                meta["converted_by"] = manifest.get("convertedBy", "")
+                offset = 0
+                for group in manifest.get("weightsManifest") or []:
+                    if path.name in (group.get("paths") or []):
+                        for w in group.get("weights") or []:
+                            w_name = w.get("name", "unknown")
+                            w_dtype = w.get("dtype", "float32")
+                            w_shape = w.get("shape") or []
+                            elems = 1
+                            for dim in w_shape:
+                                elems *= max(1, int(dim))
+                            byte_len = elems * 4
+                            if len(tensors) < preview_tensors:
+                                tensors.append(
+                                    ModelTensorDescriptor(
+                                        name=w_name,
+                                        type_name=w_dtype,
+                                        shape=w_shape,
+                                        offset=offset,
+                                        byte_length=byte_len,
+                                    )
+                                )
+                            offset += byte_len
+            except Exception:
+                pass
+        return ModelArtifactReport(
+            status="ok",
+            model_path=str(path),
+            format="tfjs_weight_shard",
+            version=1,
+            tensor_count=len(tensors),
+            metadata_kv_count=len(meta),
+            metadata_preview=meta,
             tensors=tensors,
         )

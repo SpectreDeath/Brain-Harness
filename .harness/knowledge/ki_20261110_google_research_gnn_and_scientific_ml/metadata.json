@@ -1,0 +1,76 @@
+{
+  "schema_version": "1.0.0",
+  "id": "ki_20261110_google_research_gnn_and_scientific_ml",
+  "title": "Graph-Native Program Representations & Differentiable Scientific ML",
+  "category": "machine_learning",
+  "source_target": "external/google-research-master",
+  "detected_format": "raw_docs",
+  "tags": [
+    "machine_learning",
+    "google_research",
+    "graph_neural_networks",
+    "scientific_ml",
+    "jax_dft",
+    "protenn",
+    "aloe",
+    "ipagnn"
+  ],
+  "anchors": {},
+  "edges": [
+    {
+      "type": "references_code",
+      "target": "harness.services.doc_synchronizer",
+      "target_kind": "source",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "AST symbol and docstring coverage auditing across research packages"
+    },
+    {
+      "type": "same_domain",
+      "target": "ki_20261110_google_research_multitarget_edge_ml",
+      "target_kind": "ki",
+      "derived": false,
+      "confidence": 0.95,
+      "description": "Companion Google Research architectural distillation"
+    }
+  ],
+  "isnad": {
+    "decision_id": "dec_20261110_google_research_gnn_sciml_02",
+    "timestamp": "2026-11-10T22:55:00Z",
+    "status": "VERIFIED",
+    "claims": [
+      {
+        "claim_id": "claim_001",
+        "assertion": "Program synthesis and static analysis neural architectures (ipagnn, gfsa, aloe, bustle) represent control-flow graphs and syntax trees as message-passing topologies where execution transitions map to soft instruction-pointer attention weights or differentiable finite-state automata.",
+        "evidence_type": "knowledge_graph_synthesis",
+        "source": "ipagnn/README.md, gfsa/README.md, bustle/models/1000_epochs__64_64__e2__1e-5/saved_model.pb",
+        "verified": true,
+        "confidence": 1.0
+      },
+      {
+        "claim_id": "claim_002",
+        "assertion": "Differentiable quantum and biophysical packages (jax_dft, protenn, al_for_fep) embed learned neural functionals directly inside self-consistent field (SCF) Kohn-Sham loops (jax_dft/scf.py) and per-residue 3D CNN SavedModel exports (protenn saved_model.pb, 331,009 B).",
+        "evidence_type": "artifact_dissection",
+        "source": "jax_dft/scf.py, protenn/testdata/per_residue_saved_model/export/protein_exporter/1691614911/saved_model.pb",
+        "verified": true,
+        "confidence": 1.0
+      },
+      {
+        "claim_id": "claim_003",
+        "assertion": "AST documentation audits via DocSynchronizerService reveal a bimodal documentation distribution across research packages: reusable benchmark harnesses achieve 80.0% symbol docstring coverage (sign_language_detection, 17/17 public symbols), whereas mathematical inner loops exhibit 54.0% (jax_dft, 62/74 symbols) to 7.2% (aloe, 14/119 symbols).",
+        "evidence_type": "ast_doc_audit",
+        "source": "sign_language_detection, jax_dft, aloe",
+        "verified": true,
+        "confidence": 1.0
+      }
+    ]
+  },
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": "Brain Harness Reflector (harness-reflector)",
+  "created_at": "2026-11-10T22:55:00Z",
+  "distilled_learning": "# Graph-Native Program Representations & Differentiable Scientific ML"
+}

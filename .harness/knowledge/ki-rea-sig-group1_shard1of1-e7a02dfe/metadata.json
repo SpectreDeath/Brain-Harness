@@ -1,0 +1,62 @@
+{
+  "id": "ki-rea-sig-group1_shard1of1-e7a02dfe",
+  "title": "Semantic Signatures: group1-shard1of1.bin (ai_model)",
+  "domain": "machine_learning",
+  "category": "machine_learning",
+  "tags": [
+    "ai_model",
+    "google_research",
+    "rea-learned",
+    "rea_forensics",
+    "reverse-engineering",
+    "sign_language_detection",
+    "tfjs"
+  ],
+  "status": "validated",
+  "evidence_id": "ev:92401778d591846ecebe44449462c2a5eb8b0607630c09304ed47bc9db7889c1",
+  "created_at": "2026-10-31T18:49:00Z",
+  "updated_at": "2026-10-31T18:49:00Z",
+  "isnad": {
+    "status": "VERIFIED",
+    "source_type": "rea_dissection",
+    "source_path": "D:\\GitHub\\cloned\\Google\\google-research-master\\google-research-master\\sign_language_detection\\models\\js\\group1-shard1of1.bin",
+    "evidence_id": "ev:92401778d591846ecebe44449462c2a5eb8b0607630c09304ed47bc9db7889c1",
+    "artifact_sha256": "445a582808b7d9a0868f8163eaf18cdea375736476b3c6b50152984dba070a0c",
+    "nodes": [
+      {
+        "source": "plugin.rea_managed_runtime",
+        "timestamp": "2026-10-31T18:49:00Z",
+        "claim": "Extracted 6 semantic signatures from D:\\GitHub\\cloned\\Google\\google-research-master\\google-research-master\\sign_language_detection\\models\\js\\group1-shard1of1.bin"
+      }
+    ]
+  },
+  "signatures_count": 6,
+  "links": [
+    {
+      "target": "ki-rea-facet-availability-semantics",
+      "relationship": "implements"
+    },
+    {
+      "target": "ki-rea-reconstruction-obligations",
+      "relationship": "verified_by"
+    }
+  ],
+  "edges": [
+    {
+      "type": "same_domain",
+      "target": "ki-rea-sig-model1_wfrontend-9a4d5b7c",
+      "target_kind": "ki",
+      "derived": true,
+      "confidence": 0.8,
+      "description": null
+    },
+    {
+      "type": "same_domain",
+      "target": "ki_20261110_google_research_multitarget_edge_ml",
+      "target_kind": "ki",
+      "derived": true,
+      "confidence": 0.8,
+      "description": null
+    }
+  ]
+}

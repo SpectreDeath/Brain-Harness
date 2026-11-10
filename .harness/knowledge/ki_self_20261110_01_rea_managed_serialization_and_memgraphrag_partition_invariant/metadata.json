@@ -1,0 +1,91 @@
+{
+  "schema_version": "1.0.0",
+  "id": "ki_self_20261110_01_rea_managed_serialization_and_memgraphrag_partition_invariant",
+  "title": "REA Slotted Report Serialization & MemGraphRAG Partition Propagation Invariant",
+  "category": "software_engineering",
+  "source_target": "src/harness/services/rea_toolkit.py",
+  "detected_format": "raw_docs",
+  "tags": [
+    "software_engineering",
+    "endogenous_memory",
+    "self_reflection",
+    "rea_toolkit",
+    "memgraphrag",
+    "slotted_dataclasses",
+    "ai_model_forensics"
+  ],
+  "anchors": {},
+  "edges": [
+    {
+      "type": "references_code",
+      "target": "harness.services.rea_managed_runtime",
+      "target_kind": "source",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "ReaManagedReportBase.to_dict and model_dump serialization methods"
+    },
+    {
+      "type": "references_code",
+      "target": "harness.services.rea_toolkit",
+      "target_kind": "source",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "StandardReaToolkitService.detect_artifact and dissect signature extraction"
+    },
+    {
+      "type": "references_code",
+      "target": "harness.services.memgraphrag",
+      "target_kind": "source",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "MemGraphRAGService save_dir partition propagation in retrieve, query, and add_passage"
+    },
+    {
+      "type": "references_code",
+      "target": "plugins.security_and_forensics.rea_managed_runtime.engine.model_artifact",
+      "target_kind": "source",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Zero-allocation TFLite, HDF5, SavedModel PB, and TF.js shard header parsers"
+    }
+  ],
+  "isnad": {
+    "decision_id": "dec_20261110_rea_memgraphrag_seams_01",
+    "timestamp": "2026-11-10T22:55:00Z",
+    "status": "VERIFIED",
+    "claims": [
+      {
+        "claim_id": "claim_001",
+        "assertion": "Slotted, frozen report dataclasses inheriting from ReaManagedReportBase must expose .to_dict() and .model_dump() via dataclasses.asdict(self) so ReaDomainAdapter.call_managed does not fall back to an empty dict {} and falsely report available managed/model facets as unknown.",
+        "evidence_type": "code_audit_and_fix",
+        "source": "src/harness/services/rea_managed_runtime.py:21-35",
+        "verified": true,
+        "confidence": 1.0
+      },
+      {
+        "claim_id": "claim_002",
+        "assertion": "StandardReaToolkitService.detect_artifact and ModelArtifactEngine.inspect_model must recognize TFLite FlatBuffers (TFL3 magic at offset 4), Keras/HDF5 superblocks (\\x89HDF\\r\\n\\x1a\\n), TensorFlow SavedModel Protobufs (saved_model.pb), and TensorFlow.js weight shards (*shard*.bin + sibling model.json) under ai_model prior to generic firmware fallback.",
+        "evidence_type": "code_audit_and_fix",
+        "source": "src/harness/services/rea_toolkit.py:773-835, plugins/security_and_forensics/rea_managed_runtime/engine/model_artifact.py:60-400",
+        "verified": true,
+        "confidence": 1.0
+      },
+      {
+        "claim_id": "claim_003",
+        "assertion": "MemGraphRAGService.retrieve(), query(), and add_passage() must accept and forward save_dir: str = 'outputs/default' so callers indexing into custom graph partitions do not silently query the default partition.",
+        "evidence_type": "code_audit_and_fix",
+        "source": "src/harness/services/memgraphrag.py:136-168, plugins/memory_and_epistemics/memgraphrag/main.py:170-220",
+        "verified": true,
+        "confidence": 1.0
+      }
+    ]
+  },
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": "Brain Harness Reflector (harness-reflector)",
+  "created_at": "2026-11-10T22:55:00Z",
+  "distilled_learning": "# REA Slotted Report Serialization & MemGraphRAG Partition Propagation Invariant"
+}

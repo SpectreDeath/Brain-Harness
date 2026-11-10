@@ -1,0 +1,53 @@
+{
+  "id": "ki-rea-sig-anthea_eval-1f061854",
+  "title": "Semantic Signatures: anthea-eval.js (javascript_bundle)",
+  "domain": "software_engineering",
+  "category": "software_engineering",
+  "tags": [
+    "anthea",
+    "google_research",
+    "javascript_bundle",
+    "rea-learned",
+    "rea_forensics",
+    "reverse-engineering"
+  ],
+  "status": "validated",
+  "evidence_id": "ev:00347af07a8eb1bd70753abf4c691a3eee4c52ce1964a788a8cec1f701eb9d05",
+  "created_at": "2026-10-31T18:49:00Z",
+  "updated_at": "2026-10-31T18:49:00Z",
+  "isnad": {
+    "status": "VERIFIED",
+    "source_type": "rea_dissection",
+    "source_path": "D:\\GitHub\\cloned\\Google\\google-research-master\\google-research-master\\anthea\\anthea-eval.js",
+    "evidence_id": "ev:00347af07a8eb1bd70753abf4c691a3eee4c52ce1964a788a8cec1f701eb9d05",
+    "artifact_sha256": "7ab4aca393b08cdbb053037eb2b2838087a40f80c2d7b5a577ac8ff99aef8c9a",
+    "nodes": [
+      {
+        "source": "plugin.rea_javascript",
+        "timestamp": "2026-10-31T18:49:00Z",
+        "claim": "Extracted 20 semantic signatures from D:\\GitHub\\cloned\\Google\\google-research-master\\google-research-master\\anthea\\anthea-eval.js"
+      }
+    ]
+  },
+  "signatures_count": 20,
+  "links": [
+    {
+      "target": "ki-rea-facet-availability-semantics",
+      "relationship": "implements"
+    },
+    {
+      "target": "ki-rea-reconstruction-obligations",
+      "relationship": "verified_by"
+    }
+  ],
+  "edges": [
+    {
+      "type": "same_domain",
+      "target": "ki-rea-sig-sign_language_detection_model-b20e8353",
+      "target_kind": "ki",
+      "derived": true,
+      "confidence": 0.8,
+      "description": null
+    }
+  ]
+}

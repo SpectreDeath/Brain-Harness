@@ -34,11 +34,22 @@ async def test_memgraphrag_service_key_resolution():
     assert isinstance(res, MemGraphRAGIndexResult)
     assert res.status == "ok"
 
-    ret = await service.retrieve(query="Three-layer memory")
+    ret = await service.retrieve(query="Three-layer memory", save_dir="outputs/test_service")
     assert isinstance(ret, MemGraphRAGRetrieveResult)
+    assert len(ret.passages) >= 1
 
-    ans = await service.query(query="What is three-layer memory?")
+    ans = await service.query(query="What is three-layer memory?", save_dir="outputs/test_service")
     assert isinstance(ans, MemGraphRAGQueryResult)
+    assert len(ans.retrieved_passages) >= 1
+
+    added = await service.add_passage(
+        chunk_id="custom_p2",
+        content="KWS Streaming runs keyword spotting on microcontrollers.",
+        extracted_triples=[["KWS Streaming", "runs_on", "microcontrollers"]],
+        save_dir="outputs/test_service",
+    )
+    assert isinstance(added, PassageResult)
 
     summary = await service.get_summary(save_dir="outputs/test_service")
     assert isinstance(summary, MemGraphRAGSummaryResult)
+    assert summary.num_passages >= 2

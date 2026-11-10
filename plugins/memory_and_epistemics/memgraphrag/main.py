@@ -173,9 +173,11 @@ class MemGraphRAGPlugin(HarnessPlugin, MemGraphRAGService):
         num_to_retrieve: int = 5,
         damping: float = 0.5,
         passage_node_weight: float = 0.1,
+        save_dir: str = "outputs/default",
     ) -> MemGraphRAGRetrieveResult:
         res = memgraphrag_retrieve(
             query=query,
+            save_dir=save_dir,
             num_to_retrieve=num_to_retrieve,
             damping=damping,
             passage_node_weight=passage_node_weight,
@@ -193,8 +195,9 @@ class MemGraphRAGPlugin(HarnessPlugin, MemGraphRAGService):
         self,
         query: str,
         num_passages: int = 5,
+        save_dir: str = "outputs/default",
     ) -> MemGraphRAGQueryResult:
-        res = memgraphrag_query(query=query, num_passages=num_passages)
+        res = memgraphrag_query(query=query, save_dir=save_dir, num_passages=num_passages)
         return MemGraphRAGQueryResult(
             status=res["status"],
             query=res["query"],
@@ -209,12 +212,14 @@ class MemGraphRAGPlugin(HarnessPlugin, MemGraphRAGService):
         content: str,
         extracted_triples: list[list[str]] | None = None,
         schema_tuple: list[str] | None = None,
+        save_dir: str = "outputs/default",
     ) -> PassageResult:
         res = memgraphrag_add_passage(
             chunk_id=chunk_id,
             content=content,
             extracted_triples=extracted_triples,
             schema_tuple=schema_tuple,
+            save_dir=save_dir,
         )
         return PassageResult(**res)
 

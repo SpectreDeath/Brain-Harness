@@ -139,6 +139,7 @@ class MemGraphRAGService(Protocol):
         num_to_retrieve: int = 5,
         damping: float = 0.5,
         passage_node_weight: float = 0.1,
+        save_dir: str = "outputs/default",
     ) -> MemGraphRAGRetrieveResult:
         """Execute hybrid multi-layer graph retrieval (dense vector + Personalized PageRank)."""
         ...
@@ -147,6 +148,7 @@ class MemGraphRAGService(Protocol):
         self,
         query: str,
         num_passages: int = 5,
+        save_dir: str = "outputs/default",
     ) -> MemGraphRAGQueryResult:
         """Synthesize answer using multi-layer graph retrieval evidence."""
         ...
@@ -157,6 +159,7 @@ class MemGraphRAGService(Protocol):
         content: str,
         extracted_triples: list[list[str]] | None = None,
         schema_tuple: list[str] | None = None,
+        save_dir: str = "outputs/default",
     ) -> PassageResult:
         """Incrementally inject a passage chunk and factual triples into memory."""
         ...

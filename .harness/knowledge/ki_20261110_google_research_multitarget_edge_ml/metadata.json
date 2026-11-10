@@ -1,0 +1,75 @@
+{
+  "schema_version": "1.0.0",
+  "id": "ki_20261110_google_research_multitarget_edge_ml",
+  "title": "Multi-Target Edge ML Serialization & Streaming Delay-Line Architecture",
+  "category": "machine_learning",
+  "source_target": "external/google-research-master",
+  "detected_format": "raw_docs",
+  "tags": [
+    "machine_learning",
+    "google_research",
+    "edge_ml",
+    "tflite",
+    "tfjs",
+    "kws_streaming",
+    "sign_language_detection"
+  ],
+  "anchors": {},
+  "edges": [
+    {
+      "type": "references_code",
+      "target": "plugins.security_and_forensics.rea_managed_runtime.engine.model_artifact",
+      "target_kind": "source",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Zero-allocation TFLite, HDF5, SavedModel, and TF.js weight shard header inspection"
+    },
+    {
+      "type": "same_domain",
+      "target": "ki_20261110_google_research_gnn_and_scientific_ml",
+      "target_kind": "ki",
+      "derived": false,
+      "confidence": 0.95,
+      "description": "Companion Google Research architectural distillation"
+    }
+  ],
+  "isnad": {
+    "decision_id": "dec_20261110_google_research_edge_ml_01",
+    "timestamp": "2026-11-10T22:55:00Z",
+    "status": "VERIFIED",
+    "claims": [
+      {
+        "claim_id": "claim_001",
+        "assertion": "Streaming keyword spotting and audio frontends (kws_streaming, non_semantic_speech_benchmark) decouple acoustic frontend feature extraction from neural backbones via dual TFLite FlatBuffer graph exports (model1_wfrontend.tflite at 83 KB vs model1_woutfrontend.tflite at 271 KB) and explicit stateful ring-buffer delay lines.",
+        "evidence_type": "artifact_dissection",
+        "source": "non_semantic_speech_benchmark/data_prep/testdata/model1_wfrontend.tflite",
+        "verified": true,
+        "confidence": 1.0
+      },
+      {
+        "claim_id": "claim_002",
+        "assertion": "Cross-platform sequence-tagging models (sign_language_detection) pair Python Keras HDF5 checkpoints (models/py/model.h5, 109,264 B) with browser-executable TensorFlow.js Layers manifests (models/js/model.json + group1-shard1of1.bin, 92,680 B, 23,170 float32 parameters across lstm/lstm_cell and dense heads).",
+        "evidence_type": "artifact_dissection",
+        "source": "sign_language_detection/models/js/group1-shard1of1.bin",
+        "verified": true,
+        "confidence": 1.0
+      },
+      {
+        "claim_id": "claim_003",
+        "assertion": "Research monorepo packages decouple hyperparameter injection from core model definitions using declarative Gin configuration graphs (321 .gin files across google-research-master) alongside absl.flags CLI entrypoints.",
+        "evidence_type": "repository_census",
+        "source": "sign_language_detection/args.py",
+        "verified": true,
+        "confidence": 0.95
+      }
+    ]
+  },
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": "Brain Harness Reflector (harness-reflector)",
+  "created_at": "2026-11-10T22:55:00Z",
+  "distilled_learning": "# Multi-Target Edge ML Serialization & Streaming Delay-Line Architecture"
+}
