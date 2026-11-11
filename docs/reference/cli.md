@@ -52,6 +52,7 @@ harness [OPTIONS] COMMAND [ARGS]...
 | [`harness pre-commit-security`](#harness-pre-commit-security) | `audit-ci`, `audit-suppressions`, `brief`, `scan`, `smoke-test` | Pre-Commit Security Guard CLI — Shift-left SAST, secret interception & CI defense. |
 | [`harness rea`](#harness-rea) | `callgraph`, `decompile`, `devices`, `diff`, `inspect`, `learn`, `learned`, `list`, `providers`, `signatures` | REA — Reverse-engineering toolkit, multi-provider dissection, and signature learning. |
 | [`harness redteam`](#harness-redteam) | `scan`, `status`, `techniques` | GenAI adversarial red-teaming and prompt vulnerability audits. |
+| [`harness refine`](#harness-refine) | `budget`, `demo`, `fingerprint`, `scan`, `validate` | Recursive agent harness refinement, rollouts budget, and verification. |
 | [`harness rol`](#harness-rol) | `export`, `ingest`, `obligation`, `verify` | Reconstruction Obligation Ledger — Software reverse-engineering evidence and verification proof system. |
 | [`harness router`](#harness-router) | `brief`, `profile`, `route`, `simulate` | Dynamic Model Router CLI — 3-tier switching & resilient failover commands. |
 | [`harness session`](#harness-session) | `export`, `get`, `list`, `tree` | Manage and inspect agent execution sessions and hierarchical trees. |
@@ -2378,6 +2379,39 @@ Show sandbox virtual environment status and isolation metrics.
 #### `harness redteam techniques`
 ```text
 List all supported adversarial red-teaming techniques.
+```
+
+---
+
+## `harness refine`
+
+Recursive agent harness refinement, rollouts budget, and verification.
+
+### Subcommands
+
+#### `harness refine budget`
+```text
+Print the expected rollout/session budget: R = 4k rollouts, P = 3k stages.
+```
+
+#### `harness refine validate`
+```text
+Validate a harness directory against the editable surface; exit 1 with every problem.
+```
+
+#### `harness refine scan`
+```text
+Run the answer-key and grader-verdict tripwires over an evidence tree; exit 1 on a leak.
+```
+
+#### `harness refine fingerprint`
+```text
+Print the stable trial-identity fingerprint of a harness directory.
+```
+
+#### `harness refine demo`
+```text
+Run both recursion modes on a deterministic task; no model credentials required.
 ```
 
 ---
