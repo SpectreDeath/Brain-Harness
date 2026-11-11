@@ -66,7 +66,7 @@
         "claim_id": "claim_002",
         "assertion": "StandardReaToolkitService.detect_artifact and ModelArtifactEngine.inspect_model must recognize TFLite FlatBuffers (TFL3 magic at offset 4), Keras/HDF5 superblocks (\\x89HDF\\r\\n\\x1a\\n), TensorFlow SavedModel Protobufs (saved_model.pb), and TensorFlow.js weight shards (*shard*.bin + sibling model.json) under ai_model prior to generic firmware fallback.",
         "evidence_type": "code_audit_and_fix",
-        "source": "src/harness/services/rea_toolkit.py:773-835, plugins/security_and_forensics/rea_managed_runtime/engine/model_artifact.py:60-412",
+        "source": "src/harness/services/rea_toolkit.py:773-835, plugins/security_and_forensics/rea_managed_runtime/engine/model_artifact.py::ModelArtifactEngine._parse_tflite,_parse_hdf5,_parse_protobuf_model,_parse_tfjs_shard (lines 60-507)",
         "verified": true,
         "confidence": 1.0
       },

@@ -259,9 +259,13 @@ class TestReaManagedRuntimePlugin:
 
     @pytest.mark.unit
     def test_engine_subpackage_line_bounds(self) -> None:
-        """Verify line bounds for REA managed runtime engine subpackage (Rule 11 / Track 3.2)."""
+        """Verify line bounds and capped exemptions for REA modules (Rule 11 / Track 3.4).
+
+        See docs/decisions/rea-size-exemptions.md for durable decision records and split triggers.
+        """
+        repo_root = Path(__file__).parent.parent
         engine_dir = (
-            Path(__file__).parent.parent
+            repo_root
             / "plugins"
             / "security_and_forensics"
             / "rea_managed_runtime"
@@ -269,16 +273,17 @@ class TestReaManagedRuntimePlugin:
         )
         assert engine_dir.is_dir()
 
-        # Documented Rule 11 exemptions with written rationale (Track 3.1 & 3.2)
-        exemptions = {
+        # Documented capped exemptions per docs/decisions/rea-size-exemptions.md
+        capped_exemptions = {
             "model_artifact.py": (
-                "Exempt: Cohesive 507 LOC multi-format zero-allocation binary dispatcher/parser "
-                "(GGUF, Safetensors, TFLite, HDF5, SavedModel PB, TF.js) deepened in-place per Rule 20. "
-                "Splitting would introduce artificial indirection and break cited line ranges (Track 3.1 decision)."
+                600,
+                "Exempt: Cohesive multi-format zero-allocation binary dispatcher deepened in-place per Rule 20. "
+                "Capped at 600 LOC re-trigger per docs/decisions/rea-size-exemptions.md §3.",
             ),
             "managed_pe.py": (
-                "Exempt: Pre-existing 335 LOC legacy PE/CLI parser; out of scope for cf0300a, "
-                "deferred to separate PE decomposition milestone."
+                400,
+                "Exempt: Pre-existing legacy PE/CLI parser; out of scope for cf0300a, "
+                "capped at 400 LOC per docs/decisions/rea-size-exemptions.md §2.",
             ),
         }
 
@@ -287,10 +292,24 @@ class TestReaManagedRuntimePlugin:
 
         for py_file in py_files:
             lines = len(py_file.read_text(encoding="utf-8").splitlines())
-            if py_file.name in exemptions:
+            if py_file.name in capped_exemptions:
+                max_lines, rationale = capped_exemptions[py_file.name]
+                assert lines <= max_lines, (
+                    f"Engine file {py_file.name} has {lines} lines, exceeding capped bound of {max_lines} LOC. "
+                    f"Rationale: {rationale}. See docs/decisions/rea-size-exemptions.md."
+                )
                 continue
             assert lines <= 200, (
                 f"Engine file {py_file.name} has {lines} lines, exceeding 200 LOC bound (Rule 11). "
-                f"If an exemption is warranted, record it in exemptions with rationale."
+                f"See docs/decisions/rea-size-exemptions.md."
             )
+
+        # Enforce rea_toolkit.py service-level deferral trigger (2,200 LOC)
+        rea_toolkit_path = repo_root / "src" / "harness" / "services" / "rea_toolkit.py"
+        assert rea_toolkit_path.is_file()
+        rea_lines = len(rea_toolkit_path.read_text(encoding="utf-8").splitlines())
+        assert rea_lines <= 2200, (
+            f"Service file rea_toolkit.py has {rea_lines} lines, exceeding 2,200 LOC deferral trigger. "
+            f"Decomposition into submodules is now mandatory per docs/decisions/rea-size-exemptions.md §1."
+        )
 

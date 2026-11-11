@@ -469,37 +469,81 @@ def test_dissect_saved_model_protobuf_parser(tmp_path: Path, service: StandardRe
 
 
 def test_dissect_real_tflite_and_hdf5_models(tmp_path: Path, service: StandardReaToolkitService) -> None:
-    """Verify real-file parsing for TFLite and HDF5 models (Track 2.2)."""
-    # 1. Real TFLite file
+    """Verify real-file parsing for TFLite and HDF5 models with fixture fallback in CI (Track 0.2 / 2.2)."""
+    fixtures_dir = Path(__file__).parent / "fixtures" / "rea_model_artifact"
+
+    # 1. TFLite file (real clone path if available, vendored fixture in CI)
     real_tflite = Path(
         r"D:\GitHub\cloned\Google\google-research-master\google-research-master"
         r"\non_semantic_speech_benchmark\data_prep\testdata\model1_wfrontend.tflite"
     )
-    if real_tflite.exists():
-        tflite_env = service.dissect(real_tflite)
-        assert tflite_env.artifact.detected_kind == "ai_model"
-        assert tflite_env.facets["model_headers"].data.get("format") == "tflite_v3"
-        assert tflite_env.facets["model_headers"].data.get("tensors_count") == 7
-        t_names = [s.name for s in tflite_env.signatures if s.kind == "model_tensor"]
-        assert "audio_samples" in t_names
-        assert "Identity" in t_names
-        assert "p/T" not in t_names
-        assert "l/8" not in t_names
-        assert "_/N" not in t_names
+    target_tflite = real_tflite if real_tflite.exists() else (fixtures_dir / "minimal_speech.tflite")
+    assert target_tflite.exists(), f"Neither real clone nor fixture exists: {target_tflite}"
 
-    # 2. Real HDF5 Keras model
+    tflite_env = service.dissect(target_tflite)
+    assert tflite_env.artifact.detected_kind == "ai_model"
+    assert tflite_env.facets["model_headers"].data.get("format") == "tflite_v3"
+    assert tflite_env.facets["model_headers"].data.get("tensors_count") == 7
+    t_names = [s.name for s in tflite_env.signatures if s.kind == "model_tensor"]
+    assert "audio_samples" in t_names
+    assert "Identity" in t_names
+    assert "p/T" not in t_names
+    assert "l/8" not in t_names
+    assert "_/N" not in t_names
+    assert len(t_names) == 7
+
+    # 2. HDF5 Keras model (real clone path if available, vendored fixture in CI)
     real_h5 = Path(
         r"D:\GitHub\cloned\Google\google-research-master\google-research-master"
         r"\sign_language_detection\models\py\model.h5"
     )
-    if real_h5.exists():
-        h5_env = service.dissect(real_h5)
-        assert h5_env.artifact.detected_kind == "ai_model"
-        assert h5_env.facets["model_headers"].data.get("format") == "hdf5_v0"
-        assert h5_env.facets["model_headers"].data.get("tensors_count") == 4
-        h5_names = [s.name for s in h5_env.signatures if s.kind == "model_tensor"]
-        assert any("dense/kernel" in n for n in h5_names)
-        assert any("lstm_cell/kernel" in n for n in h5_names)
+    target_h5 = real_h5 if real_h5.exists() else (fixtures_dir / "minimal_keras.h5")
+    assert target_h5.exists(), f"Neither real clone nor fixture exists: {target_h5}"
+
+    h5_env = service.dissect(target_h5)
+    assert h5_env.artifact.detected_kind == "ai_model"
+    assert h5_env.facets["model_headers"].data.get("format") == "hdf5_v0"
+    assert h5_env.facets["model_headers"].data.get("tensors_count") == 4
+    h5_names = [s.name for s in h5_env.signatures if s.kind == "model_tensor"]
+    assert any("dense/kernel" in n for n in h5_names)
+    assert any("lstm_cell/kernel" in n for n in h5_names)
+    assert len(h5_names) == 4
+
+
+def test_dissect_vendored_fixtures_deterministic_ci_signal(service: StandardReaToolkitService) -> None:
+    """Verify vendored fixtures unconditionally execute exact assertions under pure CI conditions (Track 0.2)."""
+    fixtures_dir = Path(__file__).parent / "fixtures" / "rea_model_artifact"
+    tflite_fixture = fixtures_dir / "minimal_speech.tflite"
+    h5_fixture = fixtures_dir / "minimal_keras.h5"
+
+    assert tflite_fixture.is_file()
+    assert h5_fixture.is_file()
+
+    # Exact TFLite precision: FlatBuffer traversal ignores embedded noise tokens
+    tflite_env = service.dissect(tflite_fixture)
+    assert tflite_env.artifact.detected_kind == "ai_model"
+    assert tflite_env.facets["model_headers"].data.get("format") == "tflite_v3"
+    assert tflite_env.facets["model_headers"].data.get("tensors_count") == 7
+    t_names = [s.name for s in tflite_env.signatures if s.kind == "model_tensor"]
+    assert "audio_samples" in t_names
+    assert "Identity" in t_names
+    assert "p/T" not in t_names
+    assert "l/8" not in t_names
+    assert "_/N" not in t_names
+    assert len(t_names) == 7
+
+    # Exact HDF5 structure: 4 layer weights
+    h5_env = service.dissect(h5_fixture)
+    assert h5_env.artifact.detected_kind == "ai_model"
+    assert h5_env.facets["model_headers"].data.get("format") == "hdf5_v0"
+    assert h5_env.facets["model_headers"].data.get("tensors_count") == 4
+    h5_names = [s.name for s in h5_env.signatures if s.kind == "model_tensor"]
+    assert "dense/kernel:0" in h5_names
+    assert "dense/bias:0" in h5_names
+    assert "lstm_cell/kernel:0" in h5_names
+    assert "lstm_cell/bias:0" in h5_names
+    assert len(h5_names) == 4
+
 
 
 

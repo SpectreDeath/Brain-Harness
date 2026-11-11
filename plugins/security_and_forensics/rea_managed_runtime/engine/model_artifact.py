@@ -3,6 +3,7 @@
 Synthesized from REA (morluto/rea) src/domain/model/modelArtifact.ts.
 Inspects GGUF v2/v3 and safetensors files using direct O(1) byte-offset seeks
 without allocating RAM or GPU memory for weight buffers (Rule 48).
+Size exemption cap: 600 LOC (see docs/decisions/rea-size-exemptions.md).
 """
 
 from __future__ import annotations

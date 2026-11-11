@@ -7,6 +7,7 @@ into an authoritative IoC micro-kernel service seam.
 
 Synthesized from REA (morluto/rea) native, managed runtime, mobile/firmware, and
 JavaScript reverse-engineering domain modules and epistemic verification primitives.
+Decomposition trigger: 2,200 LOC (see docs/decisions/rea-size-exemptions.md).
 """
 
 from __future__ import annotations

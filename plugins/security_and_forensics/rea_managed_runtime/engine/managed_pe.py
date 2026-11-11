@@ -2,6 +2,7 @@
 
 Synthesized from REA (morluto/rea) src/domain/dotnet/ and src/contracts/managed/.
 Parses PE headers, CLR 2.0 runtime headers, metadata streams, and P/Invoke boundaries.
+Size exemption cap: 400 LOC (see docs/decisions/rea-size-exemptions.md).
 """
 
 from __future__ import annotations
