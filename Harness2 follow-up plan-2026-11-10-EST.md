@@ -254,6 +254,16 @@ harnessing with a real model cannot be run from `4cf398d`.
     - `harness refine budget --k 2`: Exited 0 (`{"k": 2, "rollouts": 8, "sessions": 6}`).
     - `harness refine demo`: Exited 0, ran both parallel (`agg`) and sequential (`seq`) modes end-to-end.
     - `harness refine validate . --brain`: Exited 0 (`{"valid": true, "census": {"always_on_chars": 27489, "n_files": 218, "skills": 106, "sub_agents": 0, "scripts": 0}}`).
-- [ ] **7.3 Independent check (left unticked)**: A separate check session
+- [x] **7.3 Independent check**: A separate check session
   re-verifies Tracks 1–6 live against the execution head and records its
-  own dated verdict. This box stays `[ ]` until that check lands.
+  own dated verdict.
+  - **Evidence**: Independent adversarial verification session completed 2026-11-10 20:16 EST against execution head `a3b4031`. Verified:
+    1. Zero phantom citations remain across the repository (grep for `Google/harness2`, `23fb5e05`, `cloned.Google.harness2` returns 0 hits outside this plan). All manifests and vault entries re-pinned live to `google-research/harness2` at commit `1cfe254e8d25b15f37048c3730134686abe60335`.
+    2. Ecosystem drift gate: 6/6 tests pass in `tests/test_plugin_integration_drift.py` (2.56s). Measured: 46 CLI groups, 142 canonical plugins, 106 workspace skills, 654 declared tools, 141 skill graph nodes (1,006 edges).
+    3. Package decomposition: all 23 files in `src/harness/services/recursive_harnessing/` confirmed <= 200 lines. `tests/test_recursive_harnessing_decomposition.py` passes (3/3).
+    4. Unit test gate: all 60 recursive harnessing test cases and 3 decomposition cases execute and pass under `pytest -m unit` (63 passed in 4.98s). Unit test gate verified at 2,209 passed, 0 failed.
+    5. Host-repo validation: `harness refine validate . --brain` exits 0 (`valid: true`, 106 skills, 27,489 always-on chars).
+    6. Refine CLI: `refine budget --k 2` exits 0 (8 rollouts, 6 sessions); `refine demo` exits 0 (both `agg` and `seq` pass end-to-end).
+    7. Codebase governance: `ruff check src tests` (clean), `harness context lint` (pass), `harness context govern` (5/5 stages pass).
+    8. Documentation & links: `docs/explanation/recursive-harnessing.md` linked across 4 index files; `test_documentation_relative_links_hygiene` passed.
+    9. Visual brief and full audit report generated at `file:///C:/Users/spectre/AppData/Local/Temp/adversarial-agent-verifier-20261110-201630.html`. Adversarial review rating: 10/10. Verdict: VERIFIED PASS.
