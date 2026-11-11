@@ -14,7 +14,7 @@
   "status": "validated",
   "evidence_id": "ev:e9c065c6057cf116370c99d9aeb54f6aa563ef451df617d8973bf4c22c9e15f6",
   "created_at": "2026-10-31T18:49:00Z",
-  "updated_at": "2026-10-31T18:49:00Z",
+  "updated_at": "2026-11-11T13:55:00Z",
   "isnad": {
     "status": "VERIFIED",
     "source_type": "rea_dissection",
@@ -26,6 +26,11 @@
         "source": "plugin.rea_managed_runtime",
         "timestamp": "2026-10-31T18:49:00Z",
         "claim": "Extracted 7 semantic signatures from C:\\Users\\spectre\\.gemini\\antigravity\\brain\\fdc15323-dd5c-4976-8b10-5fd4cf21e2a0\\scratch\\sign_language_detection_model.pyc"
+      },
+      {
+        "source": "audit.provenance_review",
+        "timestamp": "2026-11-11T13:55:00Z",
+        "claim": "Artifact is an external IDE scratch file generated during session execution, not a checked-in repository file. Not independently re-verifiable from repository state alone."
       }
     ]
   },

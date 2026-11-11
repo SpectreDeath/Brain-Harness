@@ -253,17 +253,112 @@ class ModelArtifactEngine:
         """Parse TensorFlow Lite FlatBuffer (TFL3) header and extract tensor identifiers."""
         root_offset = struct.unpack("<I", prefix[:4])[0]
         f.seek(0)
-        sample = f.read(min(file_size, 131072))
-        raw_strings = re.findall(rb"[A-Za-z0-9_]+(?:/[A-Za-z0-9_:.]+)+", sample)
+        data = f.read(min(file_size, 1048576))
+
+        tensors: list[ModelTensorDescriptor] = []
         seen: list[str] = []
-        for s in raw_strings:
-            decoded = s.decode("ascii", errors="ignore")
-            if decoded not in seen:
-                seen.append(decoded)
-        tensors = [
-            ModelTensorDescriptor(name=name, type_name="tflite_tensor", shape=[], offset=0, byte_length=0)
-            for name in seen[:preview_tensors]
-        ]
+
+        # 1. Primary path: Traverse FlatBuffer table structure (Model.subgraphs.tensors)
+        try:
+            buf_len = len(data)
+
+            def _read_u32(off: int) -> int:
+                return struct.unpack_from("<I", data, off)[0]
+
+            def _read_i32(off: int) -> int:
+                return struct.unpack_from("<i", data, off)[0]
+
+            def _read_u16(off: int) -> int:
+                return struct.unpack_from("<H", data, off)[0]
+
+            def _get_field_offset(tbl_off: int, f_idx: int) -> int:
+                if tbl_off < 0 or tbl_off + 4 > buf_len:
+                    return 0
+                vtable_rel = _read_i32(tbl_off)
+                vtable_off = tbl_off - vtable_rel
+                if vtable_off < 0 or vtable_off + 4 > buf_len:
+                    return 0
+                vtable_size = _read_u16(vtable_off)
+                f_entry = vtable_off + 4 + 2 * f_idx
+                if f_entry + 2 <= vtable_off + vtable_size and f_entry + 2 <= buf_len:
+                    return _read_u16(f_entry)
+                return 0
+
+            def _read_string(off: int) -> str:
+                if off < 0 or off + 4 > buf_len:
+                    return ""
+                s_off = off + _read_u32(off)
+                if s_off < 0 or s_off + 4 > buf_len:
+                    return ""
+                s_len = _read_u32(s_off)
+                if s_off + 4 + s_len > buf_len:
+                    return ""
+                return data[s_off + 4 : s_off + 4 + s_len].decode("utf-8", errors="replace")
+
+            if root_offset < buf_len:
+                # Model.subgraphs is field 2
+                sg_field = _get_field_offset(root_offset, 2)
+                if sg_field:
+                    vec_off = root_offset + sg_field
+                    vec_start = vec_off + _read_u32(vec_off)
+                    vec_len = _read_u32(vec_start)
+                    for sg_idx in range(min(vec_len, 20)):
+                        sg_tbl = vec_start + 4 + sg_idx * 4
+                        sg_off = sg_tbl + _read_u32(sg_tbl)
+                        # SubGraph.tensors is field 0
+                        t_field = _get_field_offset(sg_off, 0)
+                        if t_field:
+                            t_vec_off = sg_off + t_field
+                            t_vec_start = t_vec_off + _read_u32(t_vec_off)
+                            t_vec_len = _read_u32(t_vec_start)
+                            for t_idx in range(t_vec_len):
+                                t_tbl = t_vec_start + 4 + t_idx * 4
+                                t_off = t_tbl + _read_u32(t_tbl)
+                                name_field = _get_field_offset(t_off, 3)
+                                shape_field = _get_field_offset(t_off, 0)
+                                t_name = _read_string(t_off + name_field) if name_field else ""
+                                if not t_name:
+                                    continue
+                                shape: list[int] = []
+                                if shape_field:
+                                    s_vec_off = t_off + shape_field
+                                    s_vec_start = s_vec_off + _read_u32(s_vec_off)
+                                    s_vec_len = _read_u32(s_vec_start)
+                                    shape = [
+                                        _read_i32(s_vec_start + 4 + i * 4)
+                                        for i in range(min(s_vec_len, 16))
+                                    ]
+                                if t_name not in seen:
+                                    seen.append(t_name)
+                                    tensors.append(
+                                        ModelTensorDescriptor(
+                                            name=t_name,
+                                            type_name="tflite_tensor",
+                                            shape=shape,
+                                            offset=0,
+                                            byte_length=0,
+                                        )
+                                    )
+        except Exception:
+            pass
+
+        # 2. Defensive fallback for synthetic/incomplete test buffers lacking valid vtables
+        if not tensors:
+            for chunk in data.split(b"\x00"):
+                if re.match(rb"^[A-Za-z0-9_]{2,}(?:/[A-Za-z0-9_.-]{2,})+$", chunk):
+                    name = chunk.decode("ascii", errors="ignore")
+                    if name not in seen:
+                        seen.append(name)
+                        tensors.append(
+                            ModelTensorDescriptor(
+                                name=name,
+                                type_name="tflite_tensor",
+                                shape=[],
+                                offset=0,
+                                byte_length=0,
+                            )
+                        )
+
         meta = {
             "flatbuffer_identifier": "TFL3",
             "root_table_offset": root_offset,
@@ -277,7 +372,7 @@ class ModelArtifactEngine:
             tensor_count=len(seen),
             metadata_kv_count=len(meta),
             metadata_preview=meta,
-            tensors=tensors,
+            tensors=tensors[:preview_tensors],
         )
 
     def _parse_hdf5(

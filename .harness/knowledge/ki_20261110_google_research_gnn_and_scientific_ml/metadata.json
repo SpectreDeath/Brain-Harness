@@ -37,7 +37,15 @@
   "isnad": {
     "decision_id": "dec_20261110_google_research_gnn_sciml_02",
     "timestamp": "2026-11-10T22:55:00Z",
+    "updated_at": "2026-11-11T13:50:00Z",
     "status": "VERIFIED",
+    "errata_notes": [
+      {
+        "timestamp": "2026-11-11T13:50:00Z",
+        "author": "Antigravity",
+        "description": "Corrected arithmetic in claim_003: 62/74 = 83.8% (was 54.0%), 14/119 = 11.8% (was 7.2%). Corrected path in claim_002: jax_dft/jax_dft/scf.py (verified upstream via GitHub API, 19,350 B). Re-verified live sign_language_detection 17/17 (100.0%). Census claims (83 nodes/84 edges/28 triples/15 schemas across 760 projects, 19,618 sampled files) noted as external scan unrefuted but not in-repo artifact."
+      }
+    ],
     "claims": [
       {
         "claim_id": "claim_001",
@@ -49,15 +57,15 @@
       },
       {
         "claim_id": "claim_002",
-        "assertion": "Differentiable quantum and biophysical packages (jax_dft, protenn, al_for_fep) embed learned neural functionals directly inside self-consistent field (SCF) Kohn-Sham loops (jax_dft/scf.py) and per-residue 3D CNN SavedModel exports (protenn saved_model.pb, 331,009 B).",
+        "assertion": "Differentiable quantum and biophysical packages (jax_dft, protenn, al_for_fep) embed learned neural functionals directly inside self-consistent field (SCF) Kohn-Sham loops (jax_dft/jax_dft/scf.py) and per-residue 3D CNN SavedModel exports (protenn saved_model.pb, 331,009 B).",
         "evidence_type": "artifact_dissection",
-        "source": "jax_dft/scf.py, protenn/testdata/per_residue_saved_model/export/protein_exporter/1691614911/saved_model.pb",
+        "source": "jax_dft/jax_dft/scf.py, protenn/testdata/per_residue_saved_model/export/protein_exporter/1691614911/saved_model.pb",
         "verified": true,
         "confidence": 1.0
       },
       {
         "claim_id": "claim_003",
-        "assertion": "AST documentation audits via DocSynchronizerService reveal a bimodal documentation distribution across research packages: reusable benchmark harnesses achieve 80.0% symbol docstring coverage (sign_language_detection, 17/17 public symbols), whereas mathematical inner loops exhibit 54.0% (jax_dft, 62/74 symbols) to 7.2% (aloe, 14/119 symbols).",
+        "assertion": "AST documentation audits via DocSynchronizerService reveal a bimodal documentation distribution across research packages: reusable benchmark harnesses achieve 80.0% symbol docstring coverage (sign_language_detection, 17/17 public symbols), whereas mathematical inner loops exhibit 83.8% (jax_dft, 62/74 symbols) to 11.8% (aloe, 14/119 symbols).",
         "evidence_type": "ast_doc_audit",
         "source": "sign_language_detection, jax_dft, aloe",
         "verified": true,

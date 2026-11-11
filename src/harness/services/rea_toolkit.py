@@ -1466,11 +1466,34 @@ class StandardReaToolkitService:
                 if p_js.is_file():
                     with open(p_js, "rb") as f_js:
                         js_sample = f_js.read(min(artifact.size_bytes, 262144)).decode("utf-8", errors="ignore")
-                    for m_cls in re.finditer(r"\bclass\s+([A-Za-z_$][A-Za-z0-9_$]*)", js_sample):
+
+                    def _strip_comments(src: str) -> str:
+                        def _replacer(match: re.Match[str]) -> str:
+                            s = match.group(0)
+                            if s.startswith("/"):
+                                return " "
+                            return s
+                        pat = re.compile(
+                            r"//.*?$|/\*.*?\*/|'(?:\\.|[^\\'])*'|\"(?:\\.|[^\\\"])*\"|`(?:\\.|[^\\`])*`",
+                            re.DOTALL | re.MULTILINE,
+                        )
+                        return pat.sub(_replacer, src)
+
+                    clean_js = _strip_comments(js_sample)
+
+                    for m_cls in re.finditer(
+                        r"\bclass\s+([A-Za-z_$][A-Za-z0-9_$]*)\s*(?:extends\s+[A-Za-z_$][A-Za-z0-9_$.]*)?\s*\{",
+                        clean_js,
+                    ):
                         c_name = m_cls.group(1)
                         if c_name not in js_classes:
                             js_classes.append(c_name)
-                    for m_fn in re.finditer(r"(?:\bfunction\s+([A-Za-z_$][A-Za-z0-9_$]*)|([A-Za-z_$][A-Za-z0-9_$]*\.prototype\.[A-Za-z_$][A-Za-z0-9_$]*)\s*=)", js_sample):
+
+                    fn_pattern = re.compile(
+                        r"(?:\b(?:async\s+)?function\s*(?:\*\s*)?([A-Za-z_$][A-Za-z0-9_$]*)\s*\(|"
+                        r"([A-Za-z_$][A-Za-z0-9_$]*(?:\.prototype\.[A-Za-z_$][A-Za-z0-9_$]*|\.[A-Za-z_$][A-Za-z0-9_$]*))\s*=\s*(?:async\s+)?function\s*\()"
+                    )
+                    for m_fn in fn_pattern.finditer(clean_js):
                         fn_name = m_fn.group(1) or m_fn.group(2)
                         if fn_name and fn_name not in js_functions:
                             js_functions.append(fn_name)

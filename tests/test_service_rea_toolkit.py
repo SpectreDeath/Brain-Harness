@@ -400,3 +400,106 @@ def test_dissect_extended_ai_models_and_js_signatures(tmp_path: Path, service: S
     assert any(s.kind == "js_class" and s.name == "AntheaEval" for s in js_env.signatures)
     assert any(s.kind == "js_function" and s.name == "runSegment" for s in js_env.signatures)
 
+
+def test_rea_parser_precision_regressions(tmp_path: Path, service: StandardReaToolkitService) -> None:
+    """Verify precision fixes: probe JS with only comments yields 0 signatures, and real TFLite yields no junk fragments."""
+    # 1. Probe JS with prose comments and no declarations must yield zero signatures
+    probe_js = tmp_path / "probe_comments_only.js"
+    probe_js.write_text(
+        "// This class keeps track of user interactions.\n"
+        "// Another class names the active element.\n"
+        "// In this class encapsulating the view is important.\n"
+        "// This function always checks preconditions.\n"
+        "// This function also computes the hash.\n"
+        "// This function will fail if empty.\n",
+        encoding="utf-8",
+    )
+    js_env = service.dissect(probe_js, artifact_type="javascript_bundle")
+    assert len(js_env.signatures) == 0, f"Expected 0 signatures from comment-only JS probe, got {js_env.signatures}"
+
+    # 2. Real model1_wfrontend.tflite yields no junk fragments (Track 0.6)
+    real_tflite = Path(
+        r"D:\GitHub\cloned\Google\google-research-master\google-research-master"
+        r"\non_semantic_speech_benchmark\data_prep\testdata\model1_wfrontend.tflite"
+    )
+    if real_tflite.exists():
+        tflite_env = service.dissect(real_tflite)
+        tensor_names = [s.name for s in tflite_env.signatures if s.kind == "model_tensor"]
+        assert "p/T" not in tensor_names
+        assert "l/8" not in tensor_names
+        assert "_/N" not in tensor_names
+        assert "audio_samples" in tensor_names
+        assert "Identity" in tensor_names
+        assert len(tensor_names) == 7
+    else:
+        noise_tflite = tmp_path / "noise.tflite"
+        noise_tflite.write_bytes(
+            struct.pack("<I", 16) + b"TFL3" + b"\x00" * 16 + b"p/T\x00l/8\x00_/N\x00valid/tensor\x00"
+        )
+        tflite_env = service.dissect(noise_tflite)
+        tensor_names = [s.name for s in tflite_env.signatures if s.kind == "model_tensor"]
+        assert "p/T" not in tensor_names
+        assert "l/8" not in tensor_names
+        assert "_/N" not in tensor_names
+        assert "valid/tensor" in tensor_names
+
+
+def test_dissect_saved_model_protobuf_parser(tmp_path: Path, service: StandardReaToolkitService) -> None:
+    """Verify SavedModel PB parser (_parse_protobuf_model) extracts graph symbols (Track 2.1)."""
+    real_pb = Path(
+        r"D:\GitHub\cloned\Google\google-research-master\google-research-master"
+        r"\bustle\models\1000_epochs__64_64__e2__1e-5\saved_model.pb"
+    )
+    if real_pb.exists():
+        pb_env = service.dissect(real_pb)
+        assert pb_env.artifact.detected_kind == "ai_model"
+        assert pb_env.facets["model_headers"].state == "available"
+        assert pb_env.facets["model_headers"].data.get("format") == "tf_saved_model_pb"
+        assert pb_env.facets["model_headers"].data.get("tensors_count", 0) > 0
+        tensor_names = [s.name for s in pb_env.signatures if s.kind == "model_tensor"]
+        assert any("dense/kernel" in name for name in tensor_names)
+        assert any("embedding/embeddings" in name for name in tensor_names)
+    else:
+        pb_file = tmp_path / "saved_model.pb"
+        pb_file.write_bytes(b"\x08\x01\x12\x04node\x1a\x12embedding/embeddings\x1a\x0cdense/kernel\x00" + b"\x00" * 32)
+        pb_env = service.dissect(pb_file)
+        assert pb_env.artifact.detected_kind == "ai_model"
+        assert pb_env.facets["model_headers"].state == "available"
+        assert any("dense/kernel" in s.name for s in pb_env.signatures)
+
+
+def test_dissect_real_tflite_and_hdf5_models(tmp_path: Path, service: StandardReaToolkitService) -> None:
+    """Verify real-file parsing for TFLite and HDF5 models (Track 2.2)."""
+    # 1. Real TFLite file
+    real_tflite = Path(
+        r"D:\GitHub\cloned\Google\google-research-master\google-research-master"
+        r"\non_semantic_speech_benchmark\data_prep\testdata\model1_wfrontend.tflite"
+    )
+    if real_tflite.exists():
+        tflite_env = service.dissect(real_tflite)
+        assert tflite_env.artifact.detected_kind == "ai_model"
+        assert tflite_env.facets["model_headers"].data.get("format") == "tflite_v3"
+        assert tflite_env.facets["model_headers"].data.get("tensors_count") == 7
+        t_names = [s.name for s in tflite_env.signatures if s.kind == "model_tensor"]
+        assert "audio_samples" in t_names
+        assert "Identity" in t_names
+        assert "p/T" not in t_names
+        assert "l/8" not in t_names
+        assert "_/N" not in t_names
+
+    # 2. Real HDF5 Keras model
+    real_h5 = Path(
+        r"D:\GitHub\cloned\Google\google-research-master\google-research-master"
+        r"\sign_language_detection\models\py\model.h5"
+    )
+    if real_h5.exists():
+        h5_env = service.dissect(real_h5)
+        assert h5_env.artifact.detected_kind == "ai_model"
+        assert h5_env.facets["model_headers"].data.get("format") == "hdf5_v0"
+        assert h5_env.facets["model_headers"].data.get("tensors_count") == 4
+        h5_names = [s.name for s in h5_env.signatures if s.kind == "model_tensor"]
+        assert any("dense/kernel" in n for n in h5_names)
+        assert any("lstm_cell/kernel" in n for n in h5_names)
+
+
+

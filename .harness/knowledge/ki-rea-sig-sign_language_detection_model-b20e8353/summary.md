@@ -26,4 +26,5 @@
 
 ## Isnad Lineage Chain
 - Grounded in empirical observation `ev:e9c065c6057cf116370c99d9aeb54f6aa563ef451df617d8973bf4c22c9e15f6` produced by `plugin.rea_managed_runtime`.
+- **Provenance & Reproducibility Note (2026-11-11)**: The analyzed artifact `sign_language_detection_model.pyc` is an Antigravity external scratch file (`C:\Users\spectre\.gemini\antigravity\brain\fdc15323-dd5c-4976-8b10-5fd4cf21e2a0\scratch\sign_language_detection_model.pyc`), generated during dynamic session execution and NOT tracked as an in-repo file. It is not independently re-verifiable from repository sources alone.
 - All unobserved facets strictly quarantined as `UNKNOWN` rather than conflated with zero.

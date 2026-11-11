@@ -256,3 +256,41 @@ class TestReaManagedRuntimePlugin:
         # Rule 43: assert immutability using direct assignment
         with pytest.raises((AttributeError, TypeError)):
             report.status = "mutated"  # type: ignore[misc]
+
+    @pytest.mark.unit
+    def test_engine_subpackage_line_bounds(self) -> None:
+        """Verify line bounds for REA managed runtime engine subpackage (Rule 11 / Track 3.2)."""
+        engine_dir = (
+            Path(__file__).parent.parent
+            / "plugins"
+            / "security_and_forensics"
+            / "rea_managed_runtime"
+            / "engine"
+        )
+        assert engine_dir.is_dir()
+
+        # Documented Rule 11 exemptions with written rationale (Track 3.1 & 3.2)
+        exemptions = {
+            "model_artifact.py": (
+                "Exempt: Cohesive 507 LOC multi-format zero-allocation binary dispatcher/parser "
+                "(GGUF, Safetensors, TFLite, HDF5, SavedModel PB, TF.js) deepened in-place per Rule 20. "
+                "Splitting would introduce artificial indirection and break cited line ranges (Track 3.1 decision)."
+            ),
+            "managed_pe.py": (
+                "Exempt: Pre-existing 335 LOC legacy PE/CLI parser; out of scope for cf0300a, "
+                "deferred to separate PE decomposition milestone."
+            ),
+        }
+
+        py_files = list(engine_dir.glob("*.py"))
+        assert len(py_files) >= 5, f"Expected at least 5 engine files, found {len(py_files)}"
+
+        for py_file in py_files:
+            lines = len(py_file.read_text(encoding="utf-8").splitlines())
+            if py_file.name in exemptions:
+                continue
+            assert lines <= 200, (
+                f"Engine file {py_file.name} has {lines} lines, exceeding 200 LOC bound (Rule 11). "
+                f"If an exemption is warranted, record it in exemptions with rationale."
+            )
+
