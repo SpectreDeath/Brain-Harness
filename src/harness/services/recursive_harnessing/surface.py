@@ -1,6 +1,6 @@
 """The editable harness surface: read, validate, repair, write and diff component trees.
 
-Distilled from google/harness2 `core.tree`. Everything that differs between agent frameworks
+Distilled from google-research/harness2 `core.tree`. Everything that differs between agent frameworks
 is data on `SurfaceSpec`; the logic exists once. The edit contract is *omitted-is-inherited*:
 a proposal emits only what it changes. Validation collects **every** problem into one
 `ValueError` written as actionable prose, because that message is fed back verbatim as the
@@ -13,11 +13,29 @@ import re
 from functools import lru_cache
 from pathlib import Path
 
-from harness.services.recursive_harnessing.guards import iter_files
 from harness.services.recursive_harnessing.models import SurfaceSpec, Tree
+from harness.services.recursive_harnessing.surface_tree import (
+    diff_summary,
+    diversity,
+    read_tree,
+    write_tree,
+)
+
+__all__ = [
+    "always_on_text",
+    "autotrigger",
+    "diff_summary",
+    "diversity",
+    "is_allowed",
+    "normalize_rel",
+    "read_tree",
+    "skill_names",
+    "subagent_names",
+    "validate",
+    "write_tree",
+]
 
 _NAME = r"[a-z0-9][a-z0-9_\-]*"
-_READ_DEPTH = 12
 
 
 @lru_cache(maxsize=16)
@@ -65,39 +83,6 @@ def subagent_names(spec: SurfaceSpec, tree: Tree) -> list[str]:
 
 def always_on_text(spec: SurfaceSpec, tree: Tree) -> str:
     return "\n\n".join(tree.get(a, "") for a in spec.always_on)
-
-
-def read_tree(spec: SurfaceSpec, d: Path | str, *, rejected: list[str] | None = None) -> Tree:
-    """rel -> content for every file on the editable surface; off-surface paths go to `rejected`."""
-    root, out = Path(d), {}
-    if not root.is_dir():
-        return out
-    for p in iter_files(root, max_depth=_READ_DEPTH):
-        rel = p.relative_to(root).as_posix()
-        if not is_allowed(spec, rel):
-            if rejected is not None:
-                rejected.append(rel)
-            continue
-        out[rel] = p.read_text(encoding="utf-8", errors="replace")
-    return out
-
-
-def write_tree(spec: SurfaceSpec, tree: Tree, dest: Path | str) -> Path:
-    """Materialise an exact editable tree; files outside the editable surface are preserved."""
-    root = Path(dest)
-    root.mkdir(parents=True, exist_ok=True)
-    for p in list(iter_files(root, max_depth=_READ_DEPTH)):
-        if is_allowed(spec, p.relative_to(root).as_posix()):
-            p.unlink()
-    for a in spec.always_on:
-        if a not in tree and not (root / a).exists():
-            (root / a).parent.mkdir(parents=True, exist_ok=True)
-            (root / a).write_text("", encoding="utf-8")
-    for rel, content in tree.items():
-        target = root / normalize_rel(rel)
-        target.parent.mkdir(parents=True, exist_ok=True)
-        target.write_text(content, encoding="utf-8")
-    return root
 
 
 def _frontmatter(text: str) -> str:
@@ -151,7 +136,7 @@ def _check_skills(spec: SurfaceSpec, tree: Tree, body: str, errs: list[str]) -> 
                 f"{rel} needs frontmatter `name: {name}` matching its directory (a "
                 f"mismatch is dropped SILENTLY at load)"
             )
-        if name not in body:
+        if spec.require_always_on_triggers and name not in body:
             errs.append(
                 f"skill '{name}' is never named in the always-on text, so the agent will "
                 f"not know to invoke it -- add a line such as: "
@@ -172,9 +157,14 @@ def _check_scripts(spec: SurfaceSpec, tree: Tree, errs: list[str]) -> None:
                 errs.append(f"{rel} does not compile: {type(exc).__name__}: {exc}{where}"[:200])
         if not (r["skill"].fullmatch(rel) or rel in spec.always_on):
             continue
+        m_skill = r["skill"].fullmatch(rel)
         for ref in r["script_ref"].findall(src):
-            if ref.rsplit("/", 1)[-1] not in spec.reserved_scripts and ref not in have:
-                errs.append(f"{rel} invokes `{ref}` but that file is not in the harness")
+            if ref.rsplit("/", 1)[-1] in spec.reserved_scripts or ref in have:
+                continue
+            if m_skill and ref.startswith(f"{spec.scripts_dir}/"):
+                if f"{spec.skill_dir}/{m_skill.group(1)}/{ref}" in have:
+                    continue
+            errs.append(f"{rel} invokes `{ref}` but that file is not in the harness")
 
 
 def validate(spec: SurfaceSpec, tree: Tree) -> dict:
@@ -202,27 +192,3 @@ def validate(spec: SurfaceSpec, tree: Tree) -> dict:
         "sub_agents": len(subs),
         "scripts": sum(1 for r in tree if _rx(spec)["script"].fullmatch(r)),
     }
-
-
-def diff_summary(spec: SurfaceSpec, before: Tree, after: Tree) -> dict:
-    return {
-        "added": sorted(set(after) - set(before)),
-        "removed": sorted(set(before) - set(after)),
-        "modified": sorted(r for r in set(before) & set(after) if before[r] != after[r]),
-        "always_on_char_delta": len(always_on_text(spec, after)) - len(always_on_text(spec, before)),
-    }
-
-
-def diversity(trees: dict[str, Tree]) -> dict:
-    """Pairwise line-Jaccard over candidate trees, so collapse to one body is visible."""
-    names = sorted(trees)
-    if len(names) < 2:
-        return {"n": len(names), "n_distinct": len(names), "mean_line_jaccard": 1.0}
-    sets = {n: {f"{r}:{ln}" for r, c in trees[n].items() for ln in c.splitlines() if ln.strip()} for n in names}
-    sims = []
-    for i, a in enumerate(names):
-        for b in names[i + 1 :]:
-            u = sets[a] | sets[b]
-            sims.append(len(sets[a] & sets[b]) / len(u) if u else 1.0)
-    distinct = len({tuple(sorted(t.items())) for t in trees.values()})
-    return {"n": len(names), "n_distinct": distinct, "mean_line_jaccard": round(sum(sims) / len(sims), 4)}

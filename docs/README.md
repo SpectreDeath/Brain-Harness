@@ -43,6 +43,7 @@ Deep architectural discussions illuminating design choices, invariants, and mech
 - [ReAct Agent Step Engine](EXPLANATION.md#2-react-agent-step-engine--context-optimization): In-flight tool repair, context optimization, and transactional isolation.
 - [Subprocess Sandboxing & IPC](EXPLANATION.md#3-subprocess-sandboxing--ipc-transports): Lazy virtual environment staging and process isolation.
 - [Immutable Event Bus](EXPLANATION.md#5-immutable-event-bus--telemetry): Append-only state logging and reactive telemetry streams.
+- [Recursive Agent Harnessing (Harness²)](explanation/recursive-harnessing.md): Propose-Probe-Compose task recursion, budget identity (R=4k/P=3k), and experience library.
 
 ### 4. [Reference Specifications](reference/README.md) — Information-Oriented
 Deterministic, technical catalogs and API signatures for day-to-day engineering.

@@ -2,8 +2,8 @@
 
 ## Epistemic Lineage & Provenance Snapshot
 
-- **Primary Source Codebase**: `D:\GitHub\cloned\Google\harness2` (`Google/harness2`)
-- **Verified Commit**: `23fb5e0516c99ac04a1aa46c193efda2e1b9bb24`
+- **Primary Source Codebase**: `https://github.com/google-research/harness2` (`google-research/harness2`)
+- **Verified Commit**: `1cfe254e8d25b15f37048c3730134686abe60335`
 - **Reference Paper**: *Recursive Agent Harnessing for an Open World* (arXiv:2610.14224, Oct 2026)
 - **Source Modules**: `harness2/core/recursion.py`, `harness2/core/context.py`, `harness2/core/ledger.py`, `harness2/core/selection.py`, `harness2/core/library.py`, `harness2/core/tree.py`, `harness2/core/runmark.py`
 

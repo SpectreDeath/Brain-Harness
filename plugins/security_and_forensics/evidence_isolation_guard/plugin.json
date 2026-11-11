@@ -6,11 +6,11 @@
   "entrypoint": "main.py",
   "isolation": "in_process",
   "trusted": true,
-  "source_repo": "https://github.com/Google/harness2",
-  "verified_commit": "23fb5e0516c99ac04a1aa46c193efda2e1b9bb24",
+  "source_repo": "https://github.com/google-research/harness2",
+  "verified_commit": "1cfe254e8d25b15f37048c3730134686abe60335",
   "isnad_lineage": {
-    "source_url": "https://github.com/Google/harness2",
-    "commit_hash": "23fb5e0516c99ac04a1aa46c193efda2e1b9bb24",
+    "source_url": "https://github.com/google-research/harness2",
+    "commit_hash": "1cfe254e8d25b15f37048c3730134686abe60335",
     "anchors": [
       "harness2/core/context.py",
       "harness2/core/runmark.py"

@@ -70,6 +70,7 @@ def _skill(name: str, desc: str = "review documents carefully") -> str:
 
 
 # ----------------------------------------------------------------------------- Contract 1
+@pytest.mark.unit
 class TestValueObjects:
     def test_frozen_surface_and_runview(self, tmp_path: Path) -> None:
         with pytest.raises((AttributeError, TypeError)):
@@ -91,6 +92,7 @@ class TestValueObjects:
 
 
 # ----------------------------------------------------------------------------- Contract 2
+@pytest.mark.unit
 class TestSurface:
     def test_path_escape_rejected_and_allowlist(self) -> None:
         with pytest.raises(ValueError):
@@ -167,6 +169,7 @@ class TestSurface:
 
 
 # ----------------------------------------------------------------------------- Contract 3
+@pytest.mark.unit
 class TestEvidenceIsolation:
     def test_leak_paths_raise(self, tmp_path: Path) -> None:
         (tmp_path / "sub").mkdir()
@@ -211,6 +214,7 @@ class TestEvidenceIsolation:
 
 
 # ----------------------------------------------------------------------------- Contract 4
+@pytest.mark.unit
 class TestTrialIdentity:
     def test_fingerprints(self, tmp_path: Path) -> None:
         assert fingerprint_dir(None) == "base" and fingerprint_dir(tmp_path / "nope") == "absent"
@@ -248,6 +252,7 @@ class TestTrialIdentity:
 
 
 # ----------------------------------------------------------------------------- Contract 5
+@pytest.mark.unit
 class TestBudgetLedger:
     def test_identity_formula(self) -> None:
         assert expected_rollouts(3) == 12 and expected_sessions(3) == 9
@@ -296,6 +301,7 @@ def _runs(adapter: DemoAdapter, labels: list[str], delivered: bool = True) -> di
     return out
 
 
+@pytest.mark.unit
 class TestBlindSelection:
     def test_assign_ids_stable_seeded_and_alphabet(self) -> None:
         a = assign_ids(["agg1", "agg2", "agg3"], task_id="t", k=3, mode="agg")
@@ -380,6 +386,7 @@ class TestBlindSelection:
 EXP = {"cue": "series of sequential acts", "lesson": "add a checklist skill", "evidence": "run inv1 step 4"}
 
 
+@pytest.mark.unit
 class TestExperienceLibrary:
     def test_add_requires_supported_lesson(self, tmp_path: Path) -> None:
         lib = ExperienceLibrary(tmp_path, "legal/contracts", SPEC)
@@ -483,6 +490,7 @@ def _stage(tmp_path: Path, proposer, ad: DemoAdapter, **kw):
     )
 
 
+@pytest.mark.unit
 class TestStage:
     def test_invalid_then_valid_retries_with_feedback(self, tmp_path: Path) -> None:
         ad, _ = _setup(tmp_path)
@@ -545,6 +553,7 @@ class TestStage:
         assert st.fell_back and "could not build evidence" in st.error and "answer_key" in st.error
 
 
+@pytest.mark.unit
 class TestRecursionModes:
     @pytest.mark.parametrize("k", [1, 2])
     def test_parallel_budget_identity_and_finals(self, tmp_path: Path, k: int) -> None:
@@ -653,6 +662,7 @@ class TestRecursionModes:
 
 
 # ----------------------------------------------------------------------------- Contract 9
+@pytest.mark.unit
 class TestIoCSeams:
     def test_protocol_conformance_and_resolvers(self) -> None:
         assert isinstance(DefaultEvidenceIsolationService(), EvidenceIsolationService)
@@ -729,6 +739,7 @@ class TestIoCSeams:
 
 
 # ----------------------------------------------------------------------------- Contract 10
+@pytest.mark.unit
 class TestCLI:
     @pytest.fixture
     def grp(self):
@@ -768,6 +779,7 @@ class TestCLI:
 
 
 # ----------------------------------------------------------------------------- Contract 11
+@pytest.mark.unit
 class TestSkillAndKnowledgeHygiene:
     @pytest.fixture
     def repo(self) -> Path:

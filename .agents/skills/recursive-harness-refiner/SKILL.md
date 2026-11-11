@@ -5,7 +5,7 @@ description: Refine autonomous agent harnesses through contrastive Propose-Probe
 
 # Recursive Harness Refiner: Task-Level & Harnessing-Level Adaptation
 
-`recursive-harness-refiner` executes recursive agent harnessing without altering underlying model weights, synthesized from Google Harness² (`Google/harness2`, arXiv:2610.14224).
+`recursive-harness-refiner` executes recursive agent harnessing without altering underlying model weights, synthesized from Google Harness² (`google-research/harness2`, arXiv:2610.14224).
 
 It connects two levels of recursion:
 1. **Task-Level Recursion**: Proposes orthogonal harness edits along Invariant (**INV**) and Domain (**DOM**) dimensions, probes them on identical task executions, and composes refined harnesses from behavioral contrasts across trajectories.

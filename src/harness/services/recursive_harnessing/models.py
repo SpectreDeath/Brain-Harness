@@ -29,6 +29,7 @@ class SurfaceSpec:
     reserved_scripts: frozenset[str] = frozenset()
     description_bounds: tuple[int, int] | None = None
     scripts_dir: str = "scripts"
+    require_always_on_triggers: bool = True
 
     def __post_init__(self) -> None:
         if not self.always_on:
@@ -44,9 +45,10 @@ class SurfaceSpec:
 BRAIN_SURFACE = SurfaceSpec(
     name="brain",
     always_on=("AGENTS.md",),
-    always_on_max=24_000,
+    always_on_max=32_000,
     skill_dir=".agents/skills",
     description_bounds=(100, 350),  # Rule 44 Tier-1 catalog budget
+    require_always_on_triggers=False,
 )
 
 

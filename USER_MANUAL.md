@@ -33,6 +33,7 @@
    - [GenAI Red-Teaming & Adversarial Probing (`redteam`)](#genai-red-teaming--adversarial-probing)
    - [Model Context Protocol (MCP) Server (`mcp`)](#model-context-protocol-mcp-server)
    - [Ecosystem Bridge Management (`bridge`)](#ecosystem-bridge-management)
+   - [Recursive Harnessing Seams (`refine`)](#recursive-harnessing-seams)
    - [Runtime Introspection, Telemetry & Web Dashboard (`introspect`, `services`, `events`, `run`, `ui`, `/metrics`)](#runtime-introspection-telemetry--web-dashboard)
 5. [Plugin Developer Guide](#5-plugin-developer-guide)
    - [Plugin Structure & Manifest (`plugin.json`)](#plugin-structure--manifest-pluginjson)
@@ -74,9 +75,9 @@ Rather than shipping a rigid, pre-packaged bundle of hardcoded domain tools, **H
 - **Immutable Event Stream:** All system transitions, tool executions, agent reasoning steps, and errors are appended to an immutable audit log.
 
 ### Ecosystem Scale at a Glance
-- **140 Canonical Harness Plugins** (+ 1 external Pocock skill bundle with 35 entrypoints) totaling **650 tool entrypoints** across 10 architectural categories.
-- **105 Workspace Skills packages (140 Skill Graph nodes)** (`SKILL.md` + `CARD.md`) indexed in the dynamic Skill Knowledge Graph.
-- **45 Canonical CLI Command Groups** (`Rule 6` consolidated) exposing headless introspection, diagnostics, and operational workflows.
+- **142 Canonical Harness Plugins** (+ 1 external Pocock skill bundle with 35 entrypoints) totaling **654 tool entrypoints** across 10 architectural categories.
+- **106 Workspace Skills packages (141 Skill Graph nodes)** (`SKILL.md` + `CARD.md`) indexed in the dynamic Skill Knowledge Graph.
+- **46 Canonical CLI Command Groups** (`Rule 6` consolidated) exposing headless introspection, diagnostics, and operational workflows.
 - **309 Verified Knowledge Items** grounded with cryptographic Isnad provenance in the Epistemic Knowledge Vault.
 
 ---
@@ -704,6 +705,40 @@ Open [http://127.0.0.1:8080](http://127.0.0.1:8080) in your browser to inspect:
 - **Interactive Graph Canvas**: Toggle between **Kernel Architecture** (plugin dependencies and service IoC graph) and **Skill Clusters** (Leiden/Louvain cluster partitions, modularity scores, cross-cluster bridges, and emergent capabilities).
 - **REST APIs**: Query `/api/skills/clusters` for raw clustering data and `/api/skills/clusters/mermaid` for pre-rendered Mermaid DAG diagrams.
 - **Prometheus Metrics**: Scrape runtime metrics at `/metrics` conforming to Prometheus 0.0.4 text exposition format (`harness_agent_steps_total`, `harness_step_duration_seconds`, `harness_events_published_total`, `harness_active_sessions`).
+
+### Recursive Harnessing Seams (`refine`)
+
+The `harness refine` command group exposes headless inspection, budgeting, validation, and demo execution for Google Harness² recursive agent harnessing (arXiv:2610.14224). For architectural details, see the [Recursive Agent Harnessing Guide](docs/explanation/recursive-harnessing.md).
+
+#### `harness refine budget --k <int>`
+Computes the exact $R = 4k$ rollouts and $P = 3k$ sessions budget allocation.
+```bash
+harness refine budget --k 2
+```
+
+#### `harness refine validate <harness_dir> [OPTIONS]`
+Validates an editable harness tree against surface constraints and catalog token bounds.
+```bash
+harness refine validate . --brain
+```
+
+#### `harness refine scan <evidence_dir> [OPTIONS]`
+Scans evidence directories for answer-key leaks and grader verdict tripwires.
+```bash
+harness refine scan ./evidence_dir
+```
+
+#### `harness refine fingerprint <harness_dir>`
+Outputs stable trial identity fingerprints for harness trees.
+```bash
+harness refine fingerprint .
+```
+
+#### `harness refine demo [OPTIONS]`
+Executes an end-to-end deterministic recursive refinement run without model credentials.
+```bash
+harness refine demo --output ./demo_run --k 1 --mode both
+```
 
 ---
 

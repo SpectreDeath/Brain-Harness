@@ -11,9 +11,9 @@
 When you install and configure plugins, **your harness becomes a direct reflection of your brain** — tailored to your exact domain, knowledge, and workflow.
 
 ### 📊 Ecosystem Scale at a Glance
-- **140 Canonical Harness Plugins** (+ 1 external Pocock skill bundle with 35 entrypoints) totaling **650 tool entrypoints** across 10 architectural categories.
-- **105 Workspace Skills packages (140 Skill Graph nodes)** (`SKILL.md` + `CARD.md`) indexed in the dynamic Skill Knowledge Graph.
-- **45 Canonical CLI Command Groups** (`Rule 6` consolidated) exposing headless introspection, diagnostics, and operational workflows.
+- **142 Canonical Harness Plugins** (+ 1 external Pocock skill bundle with 35 entrypoints) totaling **654 tool entrypoints** across 10 architectural categories.
+- **106 Workspace Skills packages (141 Skill Graph nodes)** (`SKILL.md` + `CARD.md`) indexed in the dynamic Skill Knowledge Graph.
+- **46 Canonical CLI Command Groups** (`Rule 6` consolidated) exposing headless introspection, diagnostics, and operational workflows.
 - **309 Verified Knowledge Items** grounded with cryptographic Isnad provenance in the Epistemic Knowledge Vault.
 
 ---
@@ -127,6 +127,7 @@ harness ui --port 8080
   - **[Getting Started Tutorial](docs/TUTORIAL.md)**: Step-by-step walkthrough from installation to autonomous agent execution and transcript inspection.
   - **[How-To Guides](docs/HOWTO.md)**: Practical recipes for plugin authoring, tool registration, skill crafting, and multi-agent swarms.
   - **[Architecture & Design Concepts](docs/EXPLANATION.md)**: Deep architectural examination of the micro-kernel, ReAct engine, and sandboxing.
+  - **[Recursive Agent Harnessing](docs/explanation/recursive-harnessing.md)**: Propose-Probe-Compose task recursion, budget identity ($R=4k$, $P=3k$), and experience library.
   - **[Technical Reference Catalog](docs/reference/README.md)**: API references for [Kernel](docs/reference/kernel.md), [Agent](docs/reference/agent.md), [Services](docs/reference/services.md), and [CLI](docs/reference/cli.md).
 - **[User Manual & Reference Guide](USER_MANUAL.md)**: Comprehensive guide covering all CLI commands, plugin authoring, sandbox configurations, MCP server/client setup, and Python SDK usage.
 - **[Agent Standards (AGENTS.md)](AGENTS.md)**: Architectural invariants, code style conventions, and testing guidelines.

@@ -87,3 +87,13 @@ Every transition in Brain Harness emits a structured event:
 Task planning evaluates composite 5D complexity (Span, Depth, Concurrency, Rigor, Domain Heterogeneity):
 - Low-complexity tasks utilize lightweight models (e.g. Gemini Flash) with reasoning off for sub-second responses.
 - High-complexity tasks ($\ge 0.75$) automatically escalate to advanced models (e.g. Claude Sonnet / Opus) with reasoning budgets locked to High and subprocess timeouts expanded to 300s+.
+
+---
+
+## 7. Recursive Agent Harnessing (Harness²)
+
+Evolving agent execution harnesses while holding model weights fixed:
+- **Two Recursion Tiers**: Task-level Propose-Probe-Compose cycles (INV/DOM dimensions) and harnessing-level persistent domain experience libraries.
+- **Budget Identity**: Strict $R = 4k$ rollouts and $P = 3k$ sessions per mode with duplicate label guards.
+- **Fail-Closed Evidence Isolation**: Tripwires scrubbing answer keys and grader verdicts.
+- See the dedicated deep dive: [Recursive Agent Harnessing](explanation/recursive-harnessing.md).

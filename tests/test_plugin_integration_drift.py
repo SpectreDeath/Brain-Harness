@@ -1,7 +1,7 @@
 """Automated drift gate asserting plugin integration invariants, counts, and skills (Track 8).
 
 Verifies:
-1. Canonical CLI groups count equals 45 and all integrated subcommands exist in cli.py.
+1. Canonical CLI groups count equals 46 and all integrated subcommands exist in cli.py.
 2. Canonical plugin count (134 plugins) excludes .claude-plugin directories.
 3. Plugins declare non-empty provides and co-located config.default.yaml (Rule 44).
 4. New skills pass deep-module craft validation rules (Rule 37, Rule 44).
@@ -30,8 +30,8 @@ class TestPluginIntegrationDrift:
     """Rigorous drift gate verifying the entire plugin integration surface."""
 
     def test_canonical_cli_groups_count(self) -> None:
-        """Verify that exactly 45 canonical CLI command groups are registered per Rule 6."""
-        assert len(_CANONICAL_GROUPS) == 45
+        """Verify that exactly 46 canonical CLI command groups are registered per Rule 6."""
+        assert len(_CANONICAL_GROUPS) == 46
         group_names = [name for name, _ in _CANONICAL_GROUPS]
         assert "gev" in group_names
         assert "mantis" in group_names
