@@ -124,10 +124,26 @@ class StdioJsonRpcTransport:
         except (asyncio.CancelledError, OSError):
             pass
 
+    async def _flush_stderr_and_suffix(self, *, wait_drain: bool = True) -> str:
+        """Optionally let the stderr drain task finish briefly and format trailing stderr lines."""
+        if (
+            wait_drain
+            and self._stderr_task is not None
+            and not self._stderr_task.done()
+            and not self.is_running
+        ):
+            try:
+                await asyncio.wait_for(asyncio.shield(self._stderr_task), timeout=0.2)
+            except (asyncio.TimeoutError, asyncio.CancelledError, Exception):
+                pass
+        recent = list(self._stderr_buffer)[-5:]
+        return f" (stderr: {'; '.join(recent)})" if recent else ""
+
     async def _read_stdout_loop(self) -> None:
         """Continuously read lines from stdout and fulfill pending JSON-RPC futures."""
         if not self._process or not self._process.stdout:
             return
+        cancelled = False
         try:
             while True:
                 line = await self._process.stdout.readline()
@@ -145,15 +161,26 @@ class StdioJsonRpcTransport:
                             fut.set_result(data)
                 except Exception as e:
                     logger.debug("Failed parsing JSON-RPC line", command=self.command, output=line_str, error=str(e))
-        except (asyncio.CancelledError, OSError):
+        except asyncio.CancelledError:
+            cancelled = True
+        except OSError:
             pass
         finally:
+            if not cancelled and self._pending_futures:
+                if (
+                    self._stderr_task is not None
+                    and not self._stderr_task.done()
+                ):
+                    try:
+                        await asyncio.wait_for(asyncio.shield(self._stderr_task), timeout=0.2)
+                    except (asyncio.TimeoutError, asyncio.CancelledError, Exception):
+                        pass
             recent_stderr = list(self._stderr_buffer)[-5:]
             suffix = f" (stderr: {'; '.join(recent_stderr)})" if recent_stderr else ""
-            err_payload = {"error": f"Process stdout stream closed unexpectedly{suffix}"}
-            for req_id, fut in list(self._pending_futures.items()):
+            err_msg = f"Process stdout stream closed unexpectedly{suffix}"
+            for _req_id, fut in list(self._pending_futures.items()):
                 if not fut.done():
-                    fut.set_result(err_payload)
+                    fut.set_exception(TransportError(err_msg))
             self._pending_futures.clear()
 
     async def start(self, *, negotiate: bool = False) -> None:
@@ -270,8 +297,7 @@ class StdioJsonRpcTransport:
             JSON-RPC response dictionary containing 'result' or 'error'.
         """
         if not self.is_running or not self._process or self._process.stdin is None or self._process.stdout is None:
-            recent_stderr = list(self._stderr_buffer)[-5:]
-            suffix = f" (stderr: {'; '.join(recent_stderr)})" if recent_stderr else ""
+            suffix = await self._flush_stderr_and_suffix(wait_drain=self._process is not None)
             raise TransportError(f"Process '{self.command}' is not running{suffix}")
 
         loop = asyncio.get_running_loop()

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import asyncio
+import sys
 from pathlib import Path
 from typing import Any
 
@@ -181,7 +182,7 @@ for line in sys.stdin:
         )
 
         transport = StdioJsonRpcTransport(
-            "python",
+            sys.executable,
             [str(server_script)],
         )
         await transport.start()
@@ -207,11 +208,10 @@ sys.exit(1)
         )
 
         transport = StdioJsonRpcTransport(
-            "python",
+            sys.executable,
             [str(crash_script)],
         )
         await transport.start()
-        await asyncio.sleep(0.05)
 
         with pytest.raises(TransportError) as exc_info:
             await transport.call("check")
