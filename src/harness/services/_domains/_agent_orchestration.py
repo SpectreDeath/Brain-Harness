@@ -269,3 +269,24 @@ from harness.services.skill_eval_assurance import (
     SkillEvalAssuranceProtocol,
     ToolConstraintGrade,
 )
+
+from harness.services.harness_spawner import (
+    DEFAULT_K,
+    DEFAULT_MAX_ROLLOUTS,
+    DEFAULT_MAX_SESSIONS,
+    DEFAULT_MAX_SPAWN_DEPTH,
+    DEFAULT_MAX_TOKENS,
+    EXPERIENCE_LIBRARY_KEY,
+    HARD_MAX_SPAWN_DEPTH,
+    HARNESS_SPAWNER_SERVICE_KEY,
+    SPAWN_DEPTH_KEY,
+    SPAWN_MAX_DEPTH_KEY,
+    HarnessSpawnerEngine,
+    HarnessSpawnerProtocol,
+    SpawnBudgetSpec,
+    SpawnedHarnessRecord,
+    SpawnLifecycleState,
+    SpawnMergeProposal,
+    SpawnSpec,
+    SpawnTrialResult,
+)

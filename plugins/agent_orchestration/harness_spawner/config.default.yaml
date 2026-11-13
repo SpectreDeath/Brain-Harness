@@ -1,0 +1,10 @@
+# Baseline operational budgets for harness_spawner plugin (Rule 44)
+max_spawn_depth: 1
+hard_max_spawn_depth: 3
+default_max_tokens: 16000
+default_k: 1
+default_max_rollouts: 4
+default_max_sessions: 3
+save_dir: ".harness/spawns"
+timeout_seconds: 30.0
+subprocess_timeout_seconds: 30.0

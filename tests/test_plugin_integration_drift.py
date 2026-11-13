@@ -1,7 +1,7 @@
 """Automated drift gate asserting plugin integration invariants, counts, and skills (Track 8).
 
 Verifies:
-1. Canonical CLI groups count equals 46 and all integrated subcommands exist in cli.py.
+1. Canonical CLI groups count equals 47 and all integrated subcommands exist in cli.py.
 2. Canonical plugin count (134 plugins) excludes .claude-plugin directories.
 3. Plugins declare non-empty provides and co-located config.default.yaml (Rule 44).
 4. New skills pass deep-module craft validation rules (Rule 37, Rule 44).
@@ -30,8 +30,8 @@ class TestPluginIntegrationDrift:
     """Rigorous drift gate verifying the entire plugin integration surface."""
 
     def test_canonical_cli_groups_count(self) -> None:
-        """Verify that exactly 46 canonical CLI command groups are registered per Rule 6."""
-        assert len(_CANONICAL_GROUPS) == 46
+        """Verify that exactly 47 canonical CLI command groups are registered per Rule 6."""
+        assert len(_CANONICAL_GROUPS) == 47
         group_names = [name for name, _ in _CANONICAL_GROUPS]
         assert "gev" in group_names
         assert "mantis" in group_names
@@ -40,6 +40,7 @@ class TestPluginIntegrationDrift:
         assert "skills" in group_names
         assert "knowledge" in group_names
         assert "rea" in group_names
+        assert "spawn" in group_names
 
     def test_integrated_subcommands_exist(self) -> None:
         """Verify that all newly integrated toolkits and subcommands exist on Click groups."""
@@ -87,6 +88,11 @@ class TestPluginIntegrationDrift:
         doc_cmd = main.commands["doc"]
         assert "wiki-compile" in doc_cmd.commands, "Missing doc wiki-compile"
         assert "wiki-lint" in doc_cmd.commands, "Missing doc wiki-lint"
+
+        # Spawn subcommands
+        spawn_cmd = main.commands["spawn"]
+        for sub in ["run", "list", "retire", "propose", "adopt"]:
+            assert sub in spawn_cmd.commands, f"Missing spawn subcommand: {sub}"
 
     def test_canonical_plugin_counts_and_exclusion(self) -> None:
         """Verify canonical count of 134 plugins, 1 external bundle, and .claude-plugin exclusion."""

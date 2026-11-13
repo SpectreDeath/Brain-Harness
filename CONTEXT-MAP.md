@@ -48,6 +48,8 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
 
   - `skill_eval_assurance_runner` — Small-N Wilson confidence intervals, unbiased pass^k reliability, deterministic trajectory graders, preflight boundary honesty, and sealed digest verification.
 
+  - `harness_spawner` — First-class child harness spawning service with isolated `ServiceContext` realms, `k=1` probe trial gates, dual token/rollout budgets, DAG lifecycle tracking, and reviewed knowledge merge-back.
+
 - **Member Skills**:
 
   - [`elephant-goldfish-governor`](.agents/skills/elephant-goldfish-governor/SKILL.md) — Govern AI agent design and review workflows using the Elephant-Goldfish bifurcated context architecture, artifact-first spec drafting, 5-stage antagonistic review gates, and living spec drift detection.

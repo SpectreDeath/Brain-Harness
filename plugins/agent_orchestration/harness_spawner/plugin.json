@@ -1,0 +1,68 @@
+{
+  "name": "harness.plugin.harness_spawner",
+  "version": "0.1.0",
+  "description": "First-class child harness spawning service with child ServiceContext isolation, k=1 probe trial gates, dual token/rollout budgets, DAG lifecycle tracking, and reviewed knowledge merge-back",
+  "language": "python",
+  "entrypoint": "main.py",
+  "isolation": "subprocess",
+  "trusted": true,
+  "author": "Brain Harness Authors",
+  "provides": [
+    "service.harness_spawner"
+  ],
+  "requires": [],
+  "sandbox": {
+    "trusted": true,
+    "network": false
+  },
+  "entrypoints": [
+    {
+      "name": "spawn_child_harness",
+      "description": "Spawn an isolated child harness validated by SurfaceSpec and a k=1 deterministic probe gate",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "Short lowercase identifier for the child harness",
+          "required": true
+        },
+        {
+          "name": "domain",
+          "type": "string",
+          "description": "Domain scope for the child ExperienceLibrary partition",
+          "required": true
+        },
+        {
+          "name": "task",
+          "type": "string",
+          "description": "Task description assigned to the spawned child harness",
+          "required": false
+        },
+        {
+          "name": "max_tokens",
+          "type": "integer",
+          "description": "Token ceiling for dual budget enforcement (default 16000)",
+          "required": false
+        },
+        {
+          "name": "max_spawn_depth",
+          "type": "integer",
+          "description": "Maximum allowed recursion depth in [1, 3] (default 1)",
+          "required": false
+        },
+        {
+          "name": "lifetime",
+          "type": "string",
+          "description": "Lifecycle policy: 'persistent' or 'task'",
+          "required": false
+        },
+        {
+          "name": "save_dir",
+          "type": "string",
+          "description": "Root directory for isolated child partitions",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

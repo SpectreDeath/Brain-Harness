@@ -219,9 +219,17 @@ Validation before a child runs (all existing gates, composed): `validate(spec.su
 ## Open questions for the user
 
 1. **What is "Prime"? — ANSWERED 2026-11-13.** "Prime" is the user's term for the original — the GitHub repository Main is the prime; in the user's words, it is just a way to say the entire current repository, it has everything, and a sub is something derived from it (the opposite of a sub; same as child/parent). Inheritance is therefore "child context of the running parent (the original)", not "child of a Prime deployment".
-2. **Should a spawned harness be able to spawn?** If yes, what is the recursion depth limit and who enforces it (the spawn service, the ledger, or the DAG)?
-3. **Knowledge merge-back: automatic, reviewed, or never?** The recommendation is reviewed (explicit adoption). If the user wants automatic, say so — it changes the design (merge becomes a service, not a step).
-4. **Budget currency:** tokens (TokenGovernor), dollars (BudgetLedger cost_usd), rollouts/sessions (R/P), or all three? And what is the default budget for a swarm mini-harness?
-5. **Lifetime:** should a child ever outlive its parent? If yes, it needs its own persistence (option C or D), not a child context.
-6. **Visibility:** should spawned harnesses appear in the control-room UI and `session tree`, or stay headless until the user asks?
-7. **"Create a harness from a description" — who writes the description?** The user in chat, an agent in a swarm, or another harness? The answer decides whether the proposer needs a chat-facing front end or only a service API.
+2. **Should a spawned harness be able to spawn? — ANSWERED 2026-11-13.** Default `max_spawn_depth = 1` (`Prime` at depth `0` can spawn children at depth `1`; children cannot spawn grandchildren unless `max_spawn_depth > 1` is explicitly set in `SpawnSpec`), hard-capped at `3` and enforced by `HarnessSpawnerEngine` (`SpawnService`) and recorded in `AgentExecutionGraphService` node metadata.
+3. **Knowledge merge-back: automatic, reviewed, or never? — ANSWERED 2026-11-13.** **Reviewed only.** A child writes to its own isolated `ExperienceLibrary` partition under `save_dir` and drafts canonical dual-file KIs (`metadata.json` + `summary.md` under `draft_kis/`); parent adopts only via explicit `adopt_merge_proposal()` / `harness spawn adopt`.
+4. **Budget currency — ANSWERED 2026-11-13.** Dual budget enforced fail-closed by default: token cap (`TokenGovernor`-compatible `max_tokens = 16,000`) plus rollout/session cap (`k = 1` -> `max_rollouts = 4`, `max_sessions = 3`).
+5. **Lifetime — ANSWERED 2026-11-13.** Supports both task-scoped (`lifetime="task"`, auto-retired upon completion) and persistent (`lifetime="persistent"`, kept alive in the registry until explicit `harness spawn retire <id>` or automatic cascade when the parent `ServiceContext` disposes).
+6. **Visibility — ANSWERED 2026-11-13.** Headless CLI (`harness session tree` + `harness spawn list`) by default, keeping the Web Control Room UI unchanged until explicitly requested.
+7. **Who writes the description / Step 1 admission gate — ANSWERED 2026-11-13.** Step 1 builds **Option A (`SpawnService` + `harness spawn` CLI)** with `SurfaceSpec` / `Tree` validation plus a `k=1` deterministic probe trial gate (`SPAWNED -> VALIDATED -> RUNNING`) before any child harness is admitted to execute, deferring Option B (`description -> harness` LLM proposer) to Step 2.
+
+### Settled Decisions Summary (2026-11-13)
+
+- **Scope (Step 1)**: Option A (`HarnessSpawnerEngine` + `plugins/agent_orchestration/harness_spawner` + `harness spawn` CLI) and doc drift fix in `docs/reference/kernel.md:25`.
+- **Recursion Cap**: `DEFAULT_MAX_SPAWN_DEPTH = 1`, `HARD_MAX_SPAWN_DEPTH = 3`.
+- **Merge-Back**: Child partition (`save_dir/<spawn_id>/library` + `draft_kis/`) -> explicit review (`adopt_merge_proposal` / `harness spawn adopt`).
+- **Budget**: Dual cap (`max_tokens=16_000`, `k=1` -> `max_rollouts=4`, `max_sessions=3`), fail-closed on exhaustion.
+- **Dispose Cascade**: Registered via `parent_context.effect(...)` (Rule 19 non-invasive extension; `ServiceContext.__init__` untouched).

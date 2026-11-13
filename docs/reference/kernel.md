@@ -22,7 +22,7 @@ Hierarchical dependency injection container supporting child scopes, typed resol
 - `require(key: ServiceKey[T]) -> T`: Resolves a mandatory service or raises `KeyError`.
 - `optional(key: ServiceKey[T]) -> T | None`: Resolves a service if present, else returns `None`.
 - `transaction() -> AsyncContextManager[ContextTransaction]`: Creates an isolated transaction scope. Errors trigger automatic rollback.
-- `create_child_context() -> ServiceContext`: Spawns a child context inheriting parent registrations.
+- `child() -> ServiceContext`: Spawns a child context inheriting parent registrations.
 - `revoke(key: ServiceKey[T]) -> None`: Revokes a registered service and executes matching cleanup closures (Rule 54).
 
 ---

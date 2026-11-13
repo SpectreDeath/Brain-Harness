@@ -69,6 +69,7 @@ from harness.commands.runtime import apply_cli, config_group, run_cli, ui_cli
 from harness.commands.self_eval import eval_group
 from harness.commands.session import session_group
 from harness.commands.skills import skills_group
+from harness.commands.spawn import spawn_group
 from harness.commands.system import introspect_cli, services_cli
 from harness.commands.tau import tau_group
 from harness.commands.temp_miner import temp_miner_group
@@ -150,6 +151,7 @@ _CANONICAL_GROUPS = [
     ("router", model_router_group),
     ("session", session_group),
     ("skills", skills_group),
+    ("spawn", spawn_group),
     ("tau", tau_group),
     ("temp", temp_miner_group),
     ("tool", tool_group),

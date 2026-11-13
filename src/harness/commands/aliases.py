@@ -86,6 +86,8 @@ CLI_ALIASES: dict[str, str] = {
     "differential-facet": "facet",
     "reverse-engineering": "rea",
     "dissect": "rea",
+    # Harness Spawning
+    "harness-spawner": "spawn",
 }
 
 

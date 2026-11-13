@@ -11,9 +11,9 @@
 When you install and configure plugins, **your harness becomes a direct reflection of your brain** — tailored to your exact domain, knowledge, and workflow.
 
 ### 📊 Ecosystem Scale at a Glance
-- **145 Canonical Harness Plugins** (+ 1 external Pocock skill bundle with 35 entrypoints) totaling **667 tool entrypoints** across 10 architectural categories.
+- **146 Canonical Harness Plugins** (+ 1 external Pocock skill bundle with 35 entrypoints) totaling **668 tool entrypoints** across 10 architectural categories.
 - **109 Workspace Skills packages (144 Skill Graph nodes)** (`SKILL.md` + `CARD.md`) indexed in the dynamic Skill Knowledge Graph.
-- **46 Canonical CLI Command Groups** (`Rule 6` consolidated) exposing headless introspection, diagnostics, and operational workflows.
+- **47 Canonical CLI Command Groups** (`Rule 6` consolidated) exposing headless introspection, diagnostics, and operational workflows.
 - **334 Verified Knowledge Items** grounded with cryptographic Isnad provenance in the Epistemic Knowledge Vault.
 
 ---
