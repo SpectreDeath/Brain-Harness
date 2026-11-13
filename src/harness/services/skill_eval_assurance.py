@@ -120,11 +120,7 @@ class SkillEvalAssuranceEngine:
         confidence_level: float | None = None,
     ) -> ConfidenceIntervalResult:
         """Compute a Wilson score interval clamped to [0, 1] for small-N (3-10) agent evals."""
-        level = (
-            self._default_confidence_level
-            if confidence_level is None
-            else confidence_level
-        )
+        level = self._default_confidence_level if confidence_level is None else confidence_level
         if not (0.0 < level < 1.0):
             raise ValueError("confidence_level must be strictly between 0 and 1")
         if trials < 1:
@@ -185,9 +181,7 @@ class SkillEvalAssuranceEngine:
         """Grade actual tool sequence against expected trajectory using F1 + sequence rules."""
         if not expected_actions:
             raise ValueError("expected_actions must contain at least one action")
-        mode: MatchingMode = (
-            self._default_matching_mode if matching_mode is None else matching_mode
-        )
+        mode: MatchingMode = self._default_matching_mode if matching_mode is None else matching_mode
         if mode not in ("exact_match", "in_order_match", "any_order_match"):
             raise ValueError(f"Unsupported matching_mode: {mode}")
 
@@ -197,11 +191,7 @@ class SkillEvalAssuranceEngine:
 
         precision = overlap / len(actual_actions) if actual_actions else 0.0
         recall = overlap / len(expected_actions)
-        f1 = (
-            (2.0 * precision * recall / (precision + recall))
-            if (precision + recall) > 0.0
-            else 0.0
-        )
+        f1 = (2.0 * precision * recall / (precision + recall)) if (precision + recall) > 0.0 else 0.0
 
         if mode == "exact_match":
             passed = actual_actions == expected_actions
@@ -230,16 +220,10 @@ class SkillEvalAssuranceEngine:
     ) -> ToolConstraintGrade:
         """Evaluate tool call observations against expected/rejected case-insensitive regex patterns."""
         if not expect_tools and not reject_tools and not allow_only:
-            raise ValueError(
-                "At least one of expect_tools, reject_tools, or allow_only must be configured"
-            )
+            raise ValueError("At least one of expect_tools, reject_tools, or allow_only must be configured")
 
-        compiled_expect = [
-            (pat, re.compile(pat, re.IGNORECASE)) for pat in expect_tools
-        ]
-        compiled_reject = [
-            (pat, re.compile(pat, re.IGNORECASE)) for pat in reject_tools
-        ]
+        compiled_expect = [(pat, re.compile(pat, re.IGNORECASE)) for pat in expect_tools]
+        compiled_reject = [(pat, re.compile(pat, re.IGNORECASE)) for pat in reject_tools]
 
         matched_expected: list[str] = []
         violations: list[str] = []
@@ -288,11 +272,7 @@ class SkillEvalAssuranceEngine:
                 )
             )
         if requested_tools is not None:
-            mode = (
-                "requested-deny-all"
-                if len(requested_tools) == 0
-                else "requested-allowlist"
-            )
+            mode = "requested-deny-all" if len(requested_tools) == 0 else "requested-allowlist"
             findings.append(
                 PreflightBoundaryFinding(
                     rule_id="boundary.requested_policy",
@@ -307,9 +287,7 @@ class SkillEvalAssuranceEngine:
     def seal_json_envelope(self, payload: dict[str, Any]) -> str:
         """Compute canonical SHA-256 digest over payload with any 'digest' member stripped."""
         canonical_obj = {k: v for k, v in payload.items() if k != "digest"}
-        encoded = json.dumps(canonical_obj, sort_keys=True, separators=(",", ":")).encode(
-            "utf-8"
-        )
+        encoded = json.dumps(canonical_obj, sort_keys=True, separators=(",", ":")).encode("utf-8")
         return hashlib.sha256(encoded).hexdigest()
 
     def verify_sealed_envelope(self, payload: dict[str, Any]) -> SealedEnvelopeCheck:

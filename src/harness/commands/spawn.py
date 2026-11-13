@@ -110,9 +110,7 @@ def run_cmd(
     if harness_dir is not None:
         tree = surface_ops.read_tree(BRAIN_SURFACE, harness_dir)
     else:
-        tree = {
-            "AGENTS.md": f"# Spawned Harness: {name}\n\nDomain: {domain}\nTask: {task}\n"
-        }
+        tree = {"AGENTS.md": f"# Spawned Harness: {name}\n\nDomain: {domain}\nTask: {task}\n"}
 
     engine = HarnessSpawnerEngine(state_file=save_dir / "registry.json")
     try:

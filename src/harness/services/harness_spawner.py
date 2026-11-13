@@ -116,13 +116,9 @@ class SpawnSpec:
         if self.current_depth < 0:
             raise ValueError(f"SpawnSpec.current_depth must be >= 0, got {self.current_depth}")
         if self.max_spawn_depth < 1 or self.max_spawn_depth > HARD_MAX_SPAWN_DEPTH:
-            raise ValueError(
-                f"SpawnSpec.max_spawn_depth={self.max_spawn_depth} must be in [1, {HARD_MAX_SPAWN_DEPTH}]"
-            )
+            raise ValueError(f"SpawnSpec.max_spawn_depth={self.max_spawn_depth} must be in [1, {HARD_MAX_SPAWN_DEPTH}]")
         if self.lifetime not in ("task", "persistent"):
-            raise ValueError(
-                f"SpawnSpec.lifetime must be 'task' or 'persistent', got {self.lifetime!r}"
-            )
+            raise ValueError(f"SpawnSpec.lifetime must be 'task' or 'persistent', got {self.lifetime!r}")
         if not isinstance(self.save_dir, Path):
             object.__setattr__(self, "save_dir", Path(self.save_dir))
 
@@ -320,9 +316,7 @@ class HarnessSpawnerProtocol(Protocol):
     def list_proposals(self, *, status: str | None = None) -> list[SpawnMergeProposal]: ...
 
 
-HARNESS_SPAWNER_SERVICE_KEY: ServiceKey[HarnessSpawnerProtocol] = ServiceKey(
-    "service.harness_spawner"
-)
+HARNESS_SPAWNER_SERVICE_KEY: ServiceKey[HarnessSpawnerProtocol] = ServiceKey("service.harness_spawner")
 
 
 def _slugify(value: str) -> str:
@@ -423,6 +417,7 @@ def _dispose_contexts_sync(contexts: tuple[ServiceContext, ...]) -> None:
                     except Exception as exc:
                         logger.warning("sync_context_inverse_error", error=str(exc))
             if async_inverses:
+
                 async def _drain(items: list[Any] = async_inverses) -> None:
                     for item in items:
                         try:
@@ -458,6 +453,7 @@ class HarnessSpawnerEngine(HarnessSpawnerProtocol):
         self._effect_disposer: Any = None
 
         if parent_context is not None:
+
             def _register_cascade() -> Any:
                 async def _cascade_inverse() -> None:
                     await self.aretire_all()
@@ -530,9 +526,7 @@ class HarnessSpawnerEngine(HarnessSpawnerProtocol):
             child_depth = inherited_depth + 1
             inherited_max = base_ctx.optional(SPAWN_MAX_DEPTH_KEY)
             effective_max_depth = (
-                min(spec.max_spawn_depth, inherited_max)
-                if inherited_max is not None
-                else spec.max_spawn_depth
+                min(spec.max_spawn_depth, inherited_max) if inherited_max is not None else spec.max_spawn_depth
             )
         else:
             child_depth = spec.current_depth + 1
@@ -577,6 +571,7 @@ class HarnessSpawnerEngine(HarnessSpawnerProtocol):
                 isolated_meta.append((key_obj, key_realm))
 
         for iso_key, iso_realm in isolated_meta:
+
             def _make_isolation_guard(
                 _key: ServiceKey[Any] = iso_key,
                 _realm: str = iso_realm,
@@ -670,12 +665,8 @@ class HarnessSpawnerEngine(HarnessSpawnerProtocol):
                 disposed=True,
             )
             _dispose_contexts_sync(tuple(child_scopes))
-            self._graph_store.update_thread_status(
-                node_id, "failed", tokens_used=probe_tokens, completed=False
-            )
-            self._graph_store.close_spawn_edge(
-                parent_node_id, node_id, ThreadSpawnStatus.FAILED
-            )
+            self._graph_store.update_thread_status(node_id, "failed", tokens_used=probe_tokens, completed=False)
+            self._graph_store.close_spawn_edge(parent_node_id, node_id, ThreadSpawnStatus.FAILED)
             self._save_state()
             return rec
 
@@ -784,9 +775,7 @@ class HarnessSpawnerEngine(HarnessSpawnerProtocol):
         if tokens_used:
             rec = self.record_usage(spawn_id, tokens=tokens_used)
 
-        final_state = (
-            SpawnLifecycleState.RETIRED if rec.lifetime == "task" else SpawnLifecycleState.COMPLETED
-        )
+        final_state = SpawnLifecycleState.RETIRED if rec.lifetime == "task" else SpawnLifecycleState.COMPLETED
         updated = dataclasses.replace(rec, state=final_state)
         self._records[spawn_id] = updated
         self._safe_update_graph(
@@ -812,9 +801,7 @@ class HarnessSpawnerEngine(HarnessSpawnerProtocol):
             _dispose_contexts_sync(handle.contexts)
             handle.disposed = True
         target_state = (
-            SpawnLifecycleState.FAILED
-            if rec.state == SpawnLifecycleState.FAILED
-            else SpawnLifecycleState.RETIRED
+            SpawnLifecycleState.FAILED if rec.state == SpawnLifecycleState.FAILED else SpawnLifecycleState.RETIRED
         )
         updated = dataclasses.replace(rec, state=target_state)
         self._records[spawn_id] = updated
@@ -971,9 +958,7 @@ class HarnessSpawnerEngine(HarnessSpawnerProtocol):
         if proposal is None:
             raise KeyError(f"Unknown merge proposal: {proposal_id!r}")
         if proposal.status != "pending":
-            raise ValueError(
-                f"Proposal '{proposal_id}' is already {proposal.status!r} and cannot be re-adopted"
-            )
+            raise ValueError(f"Proposal '{proposal_id}' is already {proposal.status!r} and cannot be re-adopted")
 
         rec = self._require_record(proposal.spawn_id)
         handle = self._handles.get(proposal.spawn_id)
@@ -999,11 +984,7 @@ class HarnessSpawnerEngine(HarnessSpawnerProtocol):
         if lib_entry is None:
             raise ValueError(f"Parent library rejected proposal '{proposal_id}'")
 
-        kn_root = (
-            Path(parent_knowledge_root)
-            if parent_knowledge_root is not None
-            else Path(".harness/knowledge")
-        )
+        kn_root = Path(parent_knowledge_root) if parent_knowledge_root is not None else Path(".harness/knowledge")
         ki_dir = kn_root / proposal.ki_id
         _write_ki_dual_file(
             ki_dir,
