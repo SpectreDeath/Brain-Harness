@@ -1,5 +1,7 @@
 # Waza: Static Preflight Boundary Honesty vs Preventive Runtime Enforcement
 
+**Upstream Repository**: https://github.com/microsoft/waza @ `cc6afc5e`
+
 ## Key Invariant
 - **No False Static Security Proof (`internal/preflight/boundary.go#L11-L43`)**:
   - `boundary.post_run`: Marks referenced boundary graders `Unresolved` because post-run observation does not prevent runtime side effects.

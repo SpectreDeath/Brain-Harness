@@ -6,15 +6,15 @@
   "summary": "Evaluates agent execution transcripts deterministically across three complementary graders: `action_sequence` (`exact_match`, `in_order_match`, `any_order_match` with Precision/Recall/F1), `tool_constraint` (case-insensitive compiled regexes for `tool`, `command_pattern`, `skill_pattern`, `path_pattern`), and `skill_invocation` (`required_skills`, `forbidden_skills`, `allow_extra`).",
   "references": [
     {
-      "path": "internal/graders/action_sequence_grader.go#L11-L80",
+      "path": "internal/graders/action_sequence_grader.go#L11-L192",
       "description": "Action sequence matching modes and Precision/Recall/F1 scoring"
     },
     {
-      "path": "internal/graders/tool_constraint_grader.go#L89-L119",
+      "path": "internal/graders/tool_constraint_grader.go#L83-L119",
       "description": "Tool, command, skill, and path regex constraint compilation"
     },
     {
-      "path": "internal/graders/skill_invocation_grader.go#L12-L90",
+      "path": "internal/graders/skill_invocation_grader.go#L12-L139",
       "description": "Required/forbidden skill invocation grader with allow_extra control"
     }
   ],
@@ -37,7 +37,7 @@
       "target_kind": "external_repo",
       "derived": true,
       "confidence": 0.98,
-      "description": "internal/graders/action_sequence_grader.go#L11-L80"
+      "description": "internal/graders/action_sequence_grader.go#L11-L192"
     },
     {
       "type": "distilled_from",
@@ -45,7 +45,7 @@
       "target_kind": "external_repo",
       "derived": true,
       "confidence": 0.98,
-      "description": "internal/graders/tool_constraint_grader.go#L89-L119"
+      "description": "internal/graders/tool_constraint_grader.go#L83-L119"
     },
     {
       "type": "distilled_from",
@@ -53,17 +53,17 @@
       "target_kind": "external_repo",
       "derived": true,
       "confidence": 0.98,
-      "description": "internal/graders/skill_invocation_grader.go#L12-L90"
+      "description": "internal/graders/skill_invocation_grader.go#L12-L139"
     }
   ],
   "isnad": {
     "source_repo": "https://github.com/microsoft/waza",
     "commit": "cc6afc5e",
-    "verified_at": "2026-11-13T15:28:00-05:00",
+    "verified_at": "2026-11-13T18:50:08-05:00",
     "citations": [
-      "internal/graders/action_sequence_grader.go#L11-L80",
-      "internal/graders/tool_constraint_grader.go#L89-L119",
-      "internal/graders/skill_invocation_grader.go#L12-L90"
+      "internal/graders/action_sequence_grader.go#L11-L192",
+      "internal/graders/tool_constraint_grader.go#L83-L119",
+      "internal/graders/skill_invocation_grader.go#L12-L139"
     ]
   },
   "retrieval_count": 0,

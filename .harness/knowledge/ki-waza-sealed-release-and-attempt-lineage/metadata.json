@@ -6,11 +6,11 @@
   "summary": "Release policies seal JSON documents by stripping `digest`, computing a canonical JSON-v1 SHA-256 digest (`SealJSON`), and decoding with `DisallowUnknownFields()` and strict key checks before admission. Logical execution attempts (`exec-<64 hex>`) track `distinct`, `retry`/`branch` DAG edges (1,024-record cycle limit), and digest-pinned `reuse` without re-invoking engines.",
   "references": [
     {
-      "path": "internal/releasepolicy/admission.go#L30-L90",
+      "path": "internal/releasepolicy/admission.go#L30-L97",
       "description": "SealJSON and strict DisallowUnknownFields digest verification"
     },
     {
-      "path": "internal/releasepolicy/assess.go#L85-L100",
+      "path": "internal/releasepolicy/assess.go#L85-L102",
       "description": "7-dimension release decision and explicit honesty limitations"
     },
     {
@@ -37,7 +37,7 @@
       "target_kind": "external_repo",
       "derived": true,
       "confidence": 0.98,
-      "description": "internal/releasepolicy/admission.go#L30-L90"
+      "description": "internal/releasepolicy/admission.go#L30-L97"
     },
     {
       "type": "distilled_from",
@@ -45,7 +45,7 @@
       "target_kind": "external_repo",
       "derived": true,
       "confidence": 0.98,
-      "description": "internal/releasepolicy/assess.go#L85-L100"
+      "description": "internal/releasepolicy/assess.go#L85-L102"
     },
     {
       "type": "distilled_from",
@@ -59,10 +59,10 @@
   "isnad": {
     "source_repo": "https://github.com/microsoft/waza",
     "commit": "cc6afc5e",
-    "verified_at": "2026-11-13T15:28:00-05:00",
+    "verified_at": "2026-11-13T18:50:08-05:00",
     "citations": [
-      "internal/releasepolicy/admission.go#L30-L90",
-      "internal/releasepolicy/assess.go#L85-L100",
+      "internal/releasepolicy/admission.go#L30-L97",
+      "internal/releasepolicy/assess.go#L85-L102",
       "docs/EXECUTION_ATTEMPTS.md#L15-L48"
     ]
   },
