@@ -238,3 +238,30 @@ class TestOpenSourceGisCatalogDecompositionContracts:
         assert rec is not None
         assert rec.primary.engine.name == "Whitebox GAT"
         assert rec.routing_path == "lidar_hydrology_whitebox_gat"
+
+    def test_route_workload_fallback_when_all_routes_miss(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        """Verify route_workload falls back to cartography profile without TypeError when specialized routes return None."""
+        from harness.services.open_source_gis.catalog import GISEngineCatalog, router
+
+        cat = GISEngineCatalog()
+        monkeypatch.setattr(router, "try_environmental_routes", lambda *_: None)
+        monkeypatch.setattr(router, "try_statistical_routes", lambda *_: None)
+
+        calls: list[SpatialWorkloadProfile] = []
+        orig_vec = router.try_vector_web_routes
+
+        def _spy_vec(engines: dict, prof: SpatialWorkloadProfile):  # type: ignore[no-untyped-def]
+            calls.append(prof)
+            if len(calls) == 1:
+                return None
+            return orig_vec(engines, prof)
+
+        monkeypatch.setattr(router, "try_vector_web_routes", _spy_vec)
+
+        profile = SpatialWorkloadProfile(geometry_type="vector", domain="unmatched_domain")
+        engines_by_name = {e.name: e for e in cat.engines}
+        rec = router.route_workload(engines_by_name, profile)
+        assert rec is not None
+        assert len(calls) == 2
+        assert calls[1].geometry_type == "vector"
+        assert calls[1].domain == "cartography"

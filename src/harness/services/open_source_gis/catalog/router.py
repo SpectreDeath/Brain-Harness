@@ -30,7 +30,11 @@ def route_workload(
     if vec_result is not None:
         return vec_result
 
-    fallback_profile = SpatialWorkloadProfile(domain="cartography", analysis="mapping")
+    fallback_profile = SpatialWorkloadProfile(
+        geometry_type="vector",
+        domain="cartography",
+        analysis="mapping",
+    )
     fallback_res = try_vector_web_routes(engines_by_name, fallback_profile)
     assert fallback_res is not None
     return fallback_res

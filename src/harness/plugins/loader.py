@@ -192,9 +192,11 @@ class PluginLoader:
         is_trusted = trusted if trusted is not None else False
         for py_file in sorted(directory.glob("**/*.py")):
             if (
-                py_file.parent in processed_dirs
-                or any(p.name.startswith(".") for p in py_file.parents)
-                or py_file.name.startswith(".")
+                any(parent in processed_dirs for parent in py_file.parents)
+                or any(p.name.startswith((".", "__")) for p in py_file.parents)
+                or py_file.name.startswith((".", "__"))
+                or py_file.name.startswith("test_")
+                or py_file.name.endswith("_test.py")
             ):
                 continue
             try:

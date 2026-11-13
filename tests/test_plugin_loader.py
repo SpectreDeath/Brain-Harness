@@ -338,3 +338,23 @@ class TestManifestPlugin:
         assert "🎯 When to Use" in guide
         assert "🛠️ How to Use" in guide
         assert "code-review" in guide
+
+    def test_skips_manifest_subdirectories_init_and_tests(self, tmp_path: Path, caplog: pytest.LogCaptureFixture) -> None:
+        """Subdirectories of manifest plugins, __init__.py, __pycache__, and test files must not be scanned as plugins."""
+        plugin_dir = tmp_path / "pkg-plugin"
+        (plugin_dir / "engine").mkdir(parents=True)
+        (plugin_dir / "__pycache__").mkdir(parents=True)
+        (plugin_dir / "plugin.json").write_text(
+            json.dumps({"name": "pkg-plugin", "version": "1.0.0", "description": "Manifest plugin"})
+        )
+        (plugin_dir / "engine" / "helper.py").write_text("from . import something\n")
+        (plugin_dir / "engine" / "__init__.py").write_text("")
+        (plugin_dir / "__pycache__" / "helper.cpython-312.py").write_text("")
+        (tmp_path / "__init__.py").write_text("")
+        (tmp_path / "test_helper.py").write_text("def test_noop(): pass\n")
+
+        loader = PluginLoader(plugin_dirs=[tmp_path])
+        plugins = loader.load_from_directory(tmp_path)
+
+        assert len(plugins) == 1
+        assert plugins[0].name == "pkg-plugin"

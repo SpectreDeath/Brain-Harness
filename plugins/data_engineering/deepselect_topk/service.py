@@ -155,8 +155,9 @@ class DeepSelectTopkService:
         finally:
             # Enforce Rule 14 pipe transport disposal invariant across all proactor transports
             for pipe in (proc.stdin, proc.stdout, proc.stderr):
-                if pipe is not None:
+                close_fn = getattr(pipe, "close", None)
+                if callable(close_fn):
                     try:
-                        pipe.close()
+                        close_fn()
                     except Exception:
                         pass
