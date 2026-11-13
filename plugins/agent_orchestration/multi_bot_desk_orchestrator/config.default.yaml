@@ -1,0 +1,5 @@
+# Baseline operational budgets for plugin.multi_bot_desk_orchestrator
+max_hop_depth: 3
+max_room_fanout: 3
+max_screens_per_computer: 4
+subprocess_timeout_seconds: 30.0

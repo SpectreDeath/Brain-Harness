@@ -1,0 +1,142 @@
+{
+  "name": "plugin.proactive_ticket_orchestrator",
+  "version": "1.0.0",
+  "description": "Proactive ticket orchestrator providing deterministic admission gates, follow-up ownership routing, and serialized transactional outbox planning",
+  "language": "python",
+  "entrypoint": "main.py",
+  "isolation": "subprocess",
+  "trusted": true,
+  "author": "Brain Harness Authors",
+  "provides": [
+    "service.proactive_ticket_orchestrator"
+  ],
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "proactive_evaluate_gate",
+      "description": "Evaluate a trigger envelope against an admission rule set deterministically",
+      "parameters": [
+        {
+          "name": "trigger_id",
+          "type": "string",
+          "description": "Unique trigger identifier",
+          "required": true
+        },
+        {
+          "name": "thread_key",
+          "type": "string",
+          "description": "Thread identifier",
+          "required": true
+        },
+        {
+          "name": "sender_id",
+          "type": "string",
+          "description": "Sender identifier",
+          "required": true
+        },
+        {
+          "name": "source_kind",
+          "type": "string",
+          "description": "Source kind (github, feishu, etc.)",
+          "required": false
+        },
+        {
+          "name": "addressed",
+          "type": "boolean",
+          "description": "Whether the trigger directly addresses the agent",
+          "required": false
+        },
+        {
+          "name": "is_bot",
+          "type": "boolean",
+          "description": "Whether the sender is a bot",
+          "required": false
+        },
+        {
+          "name": "allowed_senders",
+          "type": "array",
+          "description": "List of allowed human sender IDs",
+          "required": false
+        },
+        {
+          "name": "accept_mode",
+          "type": "string",
+          "description": "Accept mode: on, off, or record_only",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "proactive_route_trigger",
+      "description": "Route a trigger to owning Ticket Executors or to a fresh Eval queue",
+      "parameters": [
+        {
+          "name": "trigger_id",
+          "type": "string",
+          "description": "Unique trigger identifier",
+          "required": true
+        },
+        {
+          "name": "thread_key",
+          "type": "string",
+          "description": "Thread identifier",
+          "required": true
+        },
+        {
+          "name": "sender_id",
+          "type": "string",
+          "description": "Sender identifier",
+          "required": true
+        },
+        {
+          "name": "subscribed_ticket_ids",
+          "type": "array",
+          "description": "Ticket IDs subscribed to this thread",
+          "required": false
+        },
+        {
+          "name": "handed_back_by",
+          "type": "array",
+          "description": "Ticket IDs that already handed back this trigger",
+          "required": false
+        },
+        {
+          "name": "addressed",
+          "type": "boolean",
+          "description": "Whether the trigger directly addresses the agent",
+          "required": false
+        },
+        {
+          "name": "is_bot",
+          "type": "boolean",
+          "description": "Whether the sender is a bot",
+          "required": false
+        },
+        {
+          "name": "allowed_senders",
+          "type": "array",
+          "description": "List of allowed human sender IDs",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "proactive_plan_outbox",
+      "description": "Plan serialized outbox delivery per (ticket_id, channel_id) lane",
+      "parameters": [
+        {
+          "name": "pending_items",
+          "type": "array",
+          "description": "List of pending outbound message dicts",
+          "required": true
+        },
+        {
+          "name": "in_flight_lanes",
+          "type": "array",
+          "description": "List of currently busy '<ticket_id>::<channel_id>' lane keys",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

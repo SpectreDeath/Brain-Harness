@@ -42,6 +42,10 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
 
   - `elephant_goldfish` — Bifurcated cognitive context spec drafting, 5-stage zero-context review pipeline, and AST codebase drift detection.
 
+  - `proactive_ticket_orchestrator` — Deterministic admission gates, follow-up ownership routing, and serialized transactional outbox planning.
+
+  - `multi_bot_desk_orchestrator` — Per-bot serial turn queues, bounded hop-depth guards, in-band MCP tool approvals, and isolated display/gateway leases.
+
 - **Member Skills**:
 
   - [`elephant-goldfish-governor`](.agents/skills/elephant-goldfish-governor/SKILL.md) — Govern AI agent design and review workflows using the Elephant-Goldfish bifurcated context architecture, artifact-first spec drafting, 5-stage antagonistic review gates, and living spec drift detection.
@@ -85,6 +89,10 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - [`ts-agent-harness-constructor`](.agents/skills/ts-agent-harness-constructor/SKILL.md) — Construct, validate, and harden zero-dependency AI agent runtime harnesses in TypeScript/Node.js: provider-agnostic loop, contract registry, workspace jail, atomic batch budgets, context windowing, and seeded failure testing. Do not use for harness selection, framework wrappers, or prompt-only scripts.
 
   - [`agentic-reliability-harness`](.agents/skills/agentic-reliability-harness/SKILL.md) — Build, verify, and govern agentic AI reliability testing harnesses across the Five Evaluation Levels, PEP gateway trust boundaries, loop detectors, chaos fault injection, and 3-state release gates. Do not use for generic web scraping, single-turn chatbots, or unauthenticated database administration.
+
+  - [`proactive-ticket-orchestrator`](.agents/skills/proactive-ticket-orchestrator/SKILL.md) — Orchestrate proactive coding agent tickets using deterministic admission gates, follow-up ownership, and serialized transactional outbox delivery. Do not use for single-turn chat prompts or unauthenticated webhook injection.
+
+  - [`multi-bot-desk-orchestrator`](.agents/skills/multi-bot-desk-orchestrator/SKILL.md) — Orchestrate multi-bot agent teams with per-bot serial turn queues, bounded hop-depth guards, in-band MCP tool approvals, and isolated display/gateway leases. Do not use for single-bot stateless chat or raw VNC tunneling.
 
 
 

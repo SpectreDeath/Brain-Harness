@@ -1,0 +1,7 @@
+# Baseline operational budgets for proactive-ticket-orchestrator (Rule 44)
+accept_mode: on
+max_attention_questions: 1
+pass_interval_seconds: 2.0
+outbox_backoff_initial_seconds: 5.0
+outbox_backoff_max_seconds: 300.0
+subprocess_timeout_seconds: 30.0

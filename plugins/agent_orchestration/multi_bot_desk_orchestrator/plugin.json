@@ -1,0 +1,130 @@
+{
+  "name": "plugin.multi_bot_desk_orchestrator",
+  "version": "1.0.0",
+  "description": "Multi-bot desk orchestrator providing hop-depth guards, in-band MCP approval gates, and isolated display/gateway leases",
+  "language": "python",
+  "entrypoint": "main.py",
+  "isolation": "subprocess",
+  "trusted": true,
+  "author": "Brain Harness Authors",
+  "provides": [
+    "service.multi_bot_desk_orchestrator"
+  ],
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "desk_evaluate_bot_hop",
+      "description": "Evaluate whether a bot-to-bot or room-chat dispatch is permitted under hop-depth and fan-out bounds",
+      "parameters": [
+        {
+          "name": "from_bot_id",
+          "type": "string",
+          "description": "Source bot identifier",
+          "required": true
+        },
+        {
+          "name": "to_bot_id",
+          "type": "string",
+          "description": "Target bot or room identifier",
+          "required": true
+        },
+        {
+          "name": "message_text",
+          "type": "string",
+          "description": "Message payload",
+          "required": false
+        },
+        {
+          "name": "current_depth",
+          "type": "integer",
+          "description": "Current relay depth",
+          "required": false
+        },
+        {
+          "name": "max_depth",
+          "type": "integer",
+          "description": "Maximum allowed hop depth (default 3)",
+          "required": false
+        },
+        {
+          "name": "is_room_broadcast",
+          "type": "boolean",
+          "description": "Whether the target is a group room",
+          "required": false
+        },
+        {
+          "name": "room_member_ids",
+          "type": "array",
+          "description": "Bot IDs in the group room",
+          "required": false
+        },
+        {
+          "name": "mentioned_bot_ids",
+          "type": "array",
+          "description": "Explicitly @mentioned bot IDs",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "desk_evaluate_mcp_approval",
+      "description": "Evaluate an in-band MCP tool call against read-only, always-allow, and user-interrupt rules",
+      "parameters": [
+        {
+          "name": "bot_id",
+          "type": "string",
+          "description": "Bot identifier",
+          "required": true
+        },
+        {
+          "name": "tool_name",
+          "type": "string",
+          "description": "MCP tool name",
+          "required": true
+        },
+        {
+          "name": "is_read_only",
+          "type": "boolean",
+          "description": "Whether the tool is read-only",
+          "required": false
+        },
+        {
+          "name": "always_allowed_tools",
+          "type": "array",
+          "description": "Tools with stored always-allow policies",
+          "required": false
+        },
+        {
+          "name": "user_interrupted",
+          "type": "boolean",
+          "description": "Whether a new user message superseded the turn",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "desk_allocate_lease",
+      "description": "Allocate an isolated display, gateway port, and CDP port lease for a primary or managed bot",
+      "parameters": [
+        {
+          "name": "bot_id",
+          "type": "string",
+          "description": "Bot identifier",
+          "required": true
+        },
+        {
+          "name": "is_primary",
+          "type": "boolean",
+          "description": "Whether this is the host primary bot",
+          "required": false
+        },
+        {
+          "name": "occupied_displays",
+          "type": "array",
+          "description": "Display indices already leased",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

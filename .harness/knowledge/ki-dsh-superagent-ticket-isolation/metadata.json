@@ -1,0 +1,63 @@
+{
+  "id": "ki-dsh-superagent-ticket-isolation",
+  "title": "DSH Superagent: Per-Ticket Execution Isolation & Serialized Channel Replies",
+  "created": "2026-11-13T09:15:30-05:00",
+  "updated": "2026-11-13T09:15:30-05:00",
+  "summary": "Each Ticket binds to an isolated Executor session and directory with scoped read visibility (excluding other Tickets and Decisions). Outbound channel replies are serialized per (Ticket, Conversation) so acknowledgements never overtake results.",
+  "references": [
+    {
+      "path": "docs/003-execution.md",
+      "description": "Restart recovery, unread input replay, and channel failure backoff"
+    },
+    {
+      "path": "docs/007-architecture.md",
+      "description": "Scoped read pages and per-ticket session isolation"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "category": "agent_orchestration",
+  "source_target": "D:\\GitHub\\cloned\\deepseek-ai\\dsh-superagent-prototype",
+  "detected_format": "typescript_cordis_bundle",
+  "tags": [
+    "dsh-superagent",
+    "isolation",
+    "outbox_ordering",
+    "crash_recovery"
+  ],
+  "anchors": {},
+  "edges": [
+    {
+      "type": "distilled_from",
+      "target": "D:\\GitHub\\cloned\\deepseek-ai\\dsh-superagent-prototype",
+      "target_kind": "external_repo",
+      "derived": true,
+      "confidence": 0.98,
+      "description": "docs/003-execution.md"
+    },
+    {
+      "type": "distilled_from",
+      "target": "D:\\GitHub\\cloned\\deepseek-ai\\dsh-superagent-prototype",
+      "target_kind": "external_repo",
+      "derived": true,
+      "confidence": 0.98,
+      "description": "docs/007-architecture.md"
+    }
+  ],
+  "isnad": {
+    "source_repo": "D:\\GitHub\\cloned\\deepseek-ai\\dsh-superagent-prototype",
+    "commit": "8c32a9d",
+    "verified_at": "2026-11-13T09:15:30-05:00",
+    "citations": [
+      "docs/003-execution.md",
+      "docs/007-architecture.md"
+    ]
+  },
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": "repo-triad-forge",
+  "created_at": "2026-11-13T09:15:30-05:00",
+  "distilled_learning": "Each Ticket binds to an isolated Executor session and directory with scoped read visibility (excluding other Tickets and Decisions). Outbound channel replies are serialized per (Ticket, Conversation) so acknowledgements never overtake results."
+}

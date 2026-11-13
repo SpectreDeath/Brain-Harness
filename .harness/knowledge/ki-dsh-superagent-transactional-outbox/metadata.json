@@ -1,0 +1,76 @@
+{
+  "id": "ki-dsh-superagent-transactional-outbox",
+  "title": "DSH Superagent: Synchronous Hexagonal Core & Transactional Outbox",
+  "created": "2026-11-13T09:15:30-05:00",
+  "updated": "2026-11-13T09:15:30-05:00",
+  "summary": "Engine is a synchronous transactional core coordinating 5 unidirectional EngineParts (Intake, Evals, Tickets, Assignments, Replies) inside Repositories.atomic(). External Assessor, Executor, and Outbox work is queued inside the transaction and pumped post-commit.",
+  "references": [
+    {
+      "path": "src/core/engine.ts#L25-L88",
+      "description": "Single synchronous transactional entry point"
+    },
+    {
+      "path": "src/core/ports.ts#L1-L120",
+      "description": "Hexagonal ports: Repositories, Assessor, Executor, Outbox"
+    },
+    {
+      "path": "src/app/passes.ts#L22-L68",
+      "description": "Serialized 2s pass loop with coalesced pump()"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "category": "agent_orchestration",
+  "source_target": "D:\\GitHub\\cloned\\deepseek-ai\\dsh-superagent-prototype",
+  "detected_format": "typescript_cordis_bundle",
+  "tags": [
+    "dsh-superagent",
+    "hexagonal_architecture",
+    "transactional_outbox",
+    "passes"
+  ],
+  "anchors": {},
+  "edges": [
+    {
+      "type": "distilled_from",
+      "target": "D:\\GitHub\\cloned\\deepseek-ai\\dsh-superagent-prototype",
+      "target_kind": "external_repo",
+      "derived": true,
+      "confidence": 0.98,
+      "description": "src/core/engine.ts#L25-L88"
+    },
+    {
+      "type": "distilled_from",
+      "target": "D:\\GitHub\\cloned\\deepseek-ai\\dsh-superagent-prototype",
+      "target_kind": "external_repo",
+      "derived": true,
+      "confidence": 0.98,
+      "description": "src/core/ports.ts#L1-L120"
+    },
+    {
+      "type": "distilled_from",
+      "target": "D:\\GitHub\\cloned\\deepseek-ai\\dsh-superagent-prototype",
+      "target_kind": "external_repo",
+      "derived": true,
+      "confidence": 0.98,
+      "description": "src/app/passes.ts#L22-L68"
+    }
+  ],
+  "isnad": {
+    "source_repo": "D:\\GitHub\\cloned\\deepseek-ai\\dsh-superagent-prototype",
+    "commit": "8c32a9d",
+    "verified_at": "2026-11-13T09:15:30-05:00",
+    "citations": [
+      "src/core/engine.ts#L25-L88",
+      "src/core/ports.ts#L1-L120",
+      "src/app/passes.ts#L22-L68"
+    ]
+  },
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": "repo-triad-forge",
+  "created_at": "2026-11-13T09:15:30-05:00",
+  "distilled_learning": "Engine is a synchronous transactional core coordinating 5 unidirectional EngineParts (Intake, Evals, Tickets, Assignments, Replies) inside Repositories.atomic(). External Assessor, Executor, and Outbox work is queued inside the transaction and pumped post-commit."
+}

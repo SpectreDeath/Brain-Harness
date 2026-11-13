@@ -1,0 +1,5 @@
+# Baseline operational budgets for plugin.proactive_ticket_orchestrator
+accept_mode: on
+max_attention_questions: 1
+pass_interval_seconds: 2.0
+subprocess_timeout_seconds: 30.0

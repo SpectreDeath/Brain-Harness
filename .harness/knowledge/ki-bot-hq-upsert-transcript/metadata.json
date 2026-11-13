@@ -1,0 +1,51 @@
+{
+  "id": "ki-bot-hq-upsert-transcript",
+  "title": "Bot HQ: Append-Mostly (seq, updatedSeq) Upsert Transcript Model",
+  "created": "2026-11-13T09:40:30-05:00",
+  "updated": "2026-11-13T09:40:30-05:00",
+  "summary": "Conversation rows carry (seq, updatedSeq) so streaming assistant replies and live tool-call state transitions upsert idempotently over SSE without duplicate rows, while a per-bot generation counter cleanly resets sessions.",
+  "references": [
+    {
+      "path": "docs/ARCHITECTURE.md#L48-L55",
+      "description": "Transcript row kinds, seq/updatedSeq upsert, and generation counter"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "category": "agent_orchestration",
+  "source_target": "D:\\GitHub\\cloned\\bot-hq",
+  "detected_format": "typescript_hono_react_monorepo",
+  "tags": [
+    "bot-hq",
+    "transcript",
+    "sse",
+    "streaming",
+    "sqlite"
+  ],
+  "anchors": {},
+  "edges": [
+    {
+      "type": "distilled_from",
+      "target": "D:\\GitHub\\cloned\\bot-hq",
+      "target_kind": "external_repo",
+      "derived": true,
+      "confidence": 0.98,
+      "description": "docs/ARCHITECTURE.md#L48-L55"
+    }
+  ],
+  "isnad": {
+    "source_repo": "D:\\GitHub\\cloned\\bot-hq",
+    "commit": "decf9a2",
+    "verified_at": "2026-11-13T09:40:30-05:00",
+    "citations": [
+      "docs/ARCHITECTURE.md#L48-L55"
+    ]
+  },
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": "repo-triad-forge",
+  "created_at": "2026-11-13T09:40:30-05:00",
+  "distilled_learning": "Conversation rows carry (seq, updatedSeq) so streaming assistant replies and live tool-call state transitions upsert idempotently over SSE without duplicate rows, while a per-bot generation counter cleanly resets sessions."
+}

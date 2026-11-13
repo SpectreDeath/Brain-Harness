@@ -1,0 +1,63 @@
+{
+  "id": "ki-dsh-superagent-attention-philosophy",
+  "title": "DSH Superagent: Attention-Minimizing Proactive Agent Philosophy",
+  "created": "2026-11-13T09:15:30-05:00",
+  "updated": "2026-11-13T09:15:30-05:00",
+  "summary": "Proactive coding agents must minimize human attention cost: act only on explicit request or written team rules, confirm once, stay silent while working, ask one concrete structured question at a time, and stop by impact rather than effort.",
+  "references": [
+    {
+      "path": "docs/000-philosophy.md#L1-L40",
+      "description": "Core attention-cost principle and operator rules"
+    },
+    {
+      "path": "docs/001-domain.md#L1-L50",
+      "description": "Attention concept and minimal domain vocabulary"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "category": "agent_orchestration",
+  "source_target": "D:\\GitHub\\cloned\\deepseek-ai\\dsh-superagent-prototype",
+  "detected_format": "typescript_cordis_bundle",
+  "tags": [
+    "dsh-superagent",
+    "proactive_agent",
+    "attention_budget",
+    "ux_governance"
+  ],
+  "anchors": {},
+  "edges": [
+    {
+      "type": "distilled_from",
+      "target": "D:\\GitHub\\cloned\\deepseek-ai\\dsh-superagent-prototype",
+      "target_kind": "external_repo",
+      "derived": true,
+      "confidence": 0.98,
+      "description": "docs/000-philosophy.md#L1-L40"
+    },
+    {
+      "type": "distilled_from",
+      "target": "D:\\GitHub\\cloned\\deepseek-ai\\dsh-superagent-prototype",
+      "target_kind": "external_repo",
+      "derived": true,
+      "confidence": 0.98,
+      "description": "docs/001-domain.md#L1-L50"
+    }
+  ],
+  "isnad": {
+    "source_repo": "D:\\GitHub\\cloned\\deepseek-ai\\dsh-superagent-prototype",
+    "commit": "8c32a9d",
+    "verified_at": "2026-11-13T09:15:30-05:00",
+    "citations": [
+      "docs/000-philosophy.md#L1-L40",
+      "docs/001-domain.md#L1-L50"
+    ]
+  },
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": "repo-triad-forge",
+  "created_at": "2026-11-13T09:15:30-05:00",
+  "distilled_learning": "Proactive coding agents must minimize human attention cost: act only on explicit request or written team rules, confirm once, stay silent while working, ask one concrete structured question at a time, and stop by impact rather than effort."
+}

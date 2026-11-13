@@ -1,0 +1,64 @@
+{
+  "id": "ki-bot-hq-serial-queue-hop-guard",
+  "title": "Bot HQ: Per-Bot Serial Turn Queue & Bounded Hop-Depth Guard",
+  "created": "2026-11-13T09:40:30-05:00",
+  "updated": "2026-11-13T09:40:30-05:00",
+  "summary": "Turns are serialized per botId via chained promises. New user messages expire pending tool approvals, markSilent() suppresses closing prose after ask_user, and bot-to-bot messaging enforces a strict hop-depth cap of 3 to prevent ping-pong loops.",
+  "references": [
+    {
+      "path": "server/src/agent/loop.ts#L25-L85",
+      "description": "Per-bot serial queue, expireApprovals, turnDepth, and markSilent"
+    },
+    {
+      "path": "docs/ARCHITECTURE.md#L68-L73",
+      "description": "Bot-to-bot send_to_bot and group chat fan-out limits"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "category": "agent_orchestration",
+  "source_target": "D:\\GitHub\\cloned\\bot-hq",
+  "detected_format": "typescript_hono_react_monorepo",
+  "tags": [
+    "bot-hq",
+    "turn_queue",
+    "hop_depth",
+    "silent_turn",
+    "concurrency"
+  ],
+  "anchors": {},
+  "edges": [
+    {
+      "type": "distilled_from",
+      "target": "D:\\GitHub\\cloned\\bot-hq",
+      "target_kind": "external_repo",
+      "derived": true,
+      "confidence": 0.98,
+      "description": "server/src/agent/loop.ts#L25-L85"
+    },
+    {
+      "type": "distilled_from",
+      "target": "D:\\GitHub\\cloned\\bot-hq",
+      "target_kind": "external_repo",
+      "derived": true,
+      "confidence": 0.98,
+      "description": "docs/ARCHITECTURE.md#L68-L73"
+    }
+  ],
+  "isnad": {
+    "source_repo": "D:\\GitHub\\cloned\\bot-hq",
+    "commit": "decf9a2",
+    "verified_at": "2026-11-13T09:40:30-05:00",
+    "citations": [
+      "server/src/agent/loop.ts#L25-L85",
+      "docs/ARCHITECTURE.md#L68-L73"
+    ]
+  },
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": "repo-triad-forge",
+  "created_at": "2026-11-13T09:40:30-05:00",
+  "distilled_learning": "Turns are serialized per botId via chained promises. New user messages expire pending tool approvals, markSilent() suppresses closing prose after ask_user, and bot-to-bot messaging enforces a strict hop-depth cap of 3 to prevent ping-pong loops."
+}

@@ -228,3 +228,32 @@ from harness.services.elephant_goldfish import (
     GoldfishReviewReportData,
     SemanticBoundaryData,
 )
+
+from harness.services.proactive_ticket import (
+    PROACTIVE_TICKET_SERVICE_KEY,
+    AcceptMode,
+    AdmissionRuleSet,
+    AdmissionStrength,
+    GateOutcome,
+    OutboxDeliveryPlan,
+    OutboxReplyItem,
+    ProactiveTicketEngine,
+    ProactiveTicketProtocol,
+    ProactiveTicketStatus,
+    TicketRouteOutcome,
+    TriggerEnvelope,
+    TriggerKind,
+)
+
+from harness.services.multi_bot_desk import (
+    MULTI_BOT_DESK_SERVICE_KEY,
+    ApprovalDecision,
+    BotDeskLease,
+    BotHopDispatchOutcome,
+    BotHopDispatchRequest,
+    BotRoleKind,
+    McpApprovalOutcome,
+    McpApprovalRequest,
+    MultiBotDeskEngine,
+    MultiBotDeskProtocol,
+)

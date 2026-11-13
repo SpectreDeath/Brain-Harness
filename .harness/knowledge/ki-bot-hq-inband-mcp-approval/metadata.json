@@ -1,0 +1,63 @@
+{
+  "id": "ki-bot-hq-inband-mcp-approval",
+  "title": "Bot HQ: In-Band MCP Tool Approval Gate",
+  "created": "2026-11-13T09:40:30-05:00",
+  "updated": "2026-11-13T09:40:30-05:00",
+  "summary": "Tool approvals execute in-band inside POST /mcp/<botId> so every engine and external messaging channel shares one safety boundary: read-only tools run immediately while write tools block on an interactive card (Allow, Always allow, Don't allow, skipped).",
+  "references": [
+    {
+      "path": "docs/ARCHITECTURE.md#L56-L65",
+      "description": "In-band MCP approval protocol and refusal semantics"
+    },
+    {
+      "path": "docs/ARCHITECTURE.md#L16",
+      "description": "Per-bot MCP endpoint with SESSION_SECRET bearer token"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "category": "agent_orchestration",
+  "source_target": "D:\\GitHub\\cloned\\bot-hq",
+  "detected_format": "typescript_hono_react_monorepo",
+  "tags": [
+    "bot-hq",
+    "mcp",
+    "approval_gate",
+    "human_in_the_loop"
+  ],
+  "anchors": {},
+  "edges": [
+    {
+      "type": "distilled_from",
+      "target": "D:\\GitHub\\cloned\\bot-hq",
+      "target_kind": "external_repo",
+      "derived": true,
+      "confidence": 0.98,
+      "description": "docs/ARCHITECTURE.md#L56-L65"
+    },
+    {
+      "type": "distilled_from",
+      "target": "D:\\GitHub\\cloned\\bot-hq",
+      "target_kind": "external_repo",
+      "derived": true,
+      "confidence": 0.98,
+      "description": "docs/ARCHITECTURE.md#L16"
+    }
+  ],
+  "isnad": {
+    "source_repo": "D:\\GitHub\\cloned\\bot-hq",
+    "commit": "decf9a2",
+    "verified_at": "2026-11-13T09:40:30-05:00",
+    "citations": [
+      "docs/ARCHITECTURE.md#L56-L65",
+      "docs/ARCHITECTURE.md#L16"
+    ]
+  },
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": "repo-triad-forge",
+  "created_at": "2026-11-13T09:40:30-05:00",
+  "distilled_learning": "Tool approvals execute in-band inside POST /mcp/<botId> so every engine and external messaging channel shares one safety boundary: read-only tools run immediately while write tools block on an interactive card (Allow, Always allow, Don't allow, skipped)."
+}

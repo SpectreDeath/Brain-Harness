@@ -1,0 +1,7 @@
+# Baseline operational budgets for multi-bot-desk-orchestrator (Rule 44)
+max_hop_depth: 3
+max_room_fanout: 3
+max_screens_per_computer: 4
+base_gateway_port: 8650
+base_cdp_port: 9200
+subprocess_timeout_seconds: 30.0
