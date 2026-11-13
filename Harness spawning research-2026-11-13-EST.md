@@ -10,7 +10,7 @@
 2. **"Create a harness from a description" is a proposer over the tree, not a new compiler.** The `HarnessProposer` protocol (an agentic session that edits a harness directory) already exists, and `refine demo` already produces a harness directory on disk. The missing piece is a live proposer implementation — everything downstream of it (validation, trial identity, evidence isolation, blind selection, the experience library) is built.
 3. **Nothing a child learns merges back silently.** A child writes to its own experience-library partition and drafts vault items; the parent adopts them through an explicit, reviewable step. This mirrors the existing guardrails (no silent LLM in the engine, no silent learning into VERIFIED vault items) and the repo's own history of catching wrong learnings after the fact.
 
-**Terminology flag — read before the rest:** the user called the parent "Brain Harness Prime". **"Prime" is NOT a repo concept.** I grepped the repo — there is no `Prime` class, service, config, or doc concept (only incidental phrases like "primes the agent"). This report treats "Prime" as the user's term for the **top-level/parent harness instance that spawns children**, and every recommendation below uses "parent" in that sense. If the user means something else — a distinct Prime edition, deployment, or role — say so; it is open question #1 below, and it matters for the inheritance design.
+**Terminology flag — settled 2026-11-13 (user):** the user called the parent "Brain Harness Prime". **"Prime" is NOT a repo concept** — there is no `Prime` class, service, config, or doc concept (only incidental phrases like "primes the agent"). The user clarified: "Prime" is their term for the **original — the GitHub repository Main is the prime**. So "parent" in this report means the original harness running from main, and a spawned harness is a child of that original. No distinct Prime edition, deployment, or role is meant; the report's assumption is confirmed.
 
 ## What a harness instance is, concretely in this codebase
 
@@ -154,7 +154,7 @@ The tree model already answers half of this: a child's tree **inherits** every p
 # Sketch only — names to be settled in the plan, not asserted here.
 class SpawnSpec(BaseModel):
     name: str
-    parent: str = "prime"            # see open question 1
+    parent: str = "prime"            # the original harness (GitHub repo Main); settled 2026-11-13
     surface: SurfaceSpec             # always-on files, caps, skill/subagent/script dirs
     tree: Tree                       # overrides only; omitted paths inherit from the parent
     plugin_set: list[str] | None = None   # None = parent's set (option A); a list forces option B
@@ -218,7 +218,7 @@ Validation before a child runs (all existing gates, composed): `validate(spec.su
 
 ## Open questions for the user
 
-1. **What is "Prime"?** Parent instance, or a distinct edition/deployment/role? This decides whether inheritance is "child context of the running parent" or "child of a Prime deployment".
+1. **What is "Prime"? — ANSWERED 2026-11-13.** "Prime" is the user's term for the original — the GitHub repository Main is the prime. Inheritance is therefore "child context of the running parent (the original)", not "child of a Prime deployment".
 2. **Should a spawned harness be able to spawn?** If yes, what is the recursion depth limit and who enforces it (the spawn service, the ledger, or the DAG)?
 3. **Knowledge merge-back: automatic, reviewed, or never?** The recommendation is reviewed (explicit adoption). If the user wants automatic, say so — it changes the design (merge becomes a service, not a step).
 4. **Budget currency:** tokens (TokenGovernor), dollars (BudgetLedger cost_usd), rollouts/sessions (R/P), or all three? And what is the default budget for a swarm mini-harness?
