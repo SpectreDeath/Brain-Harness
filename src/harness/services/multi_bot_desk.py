@@ -8,13 +8,16 @@ Distilled from bot-hq:
 
 from __future__ import annotations
 
+import asyncio
+from collections.abc import Awaitable, Callable
 from dataclasses import dataclass, field
-from typing import Any, Literal, Protocol, runtime_checkable
+from typing import Any, Literal, Protocol, TypeVar, runtime_checkable
 
 from harness.kernel.context import ServiceKey
 
-ApprovalDecision = Literal["auto_allow", "require_approval", "deny", "skipped"]
-BotRoleKind = Literal["primary", "managed", "room"]
+ApprovalDecision = Literal["auto_allow", "require_approval", "skipped"]
+BotRoleKind = Literal["primary", "managed"]
+T = TypeVar("T")
 
 
 @dataclass(slots=True, frozen=True)
@@ -99,12 +102,37 @@ class BotDeskLease:
 
 
 class MultiBotDeskEngine:
-    """Pure, deterministic domain engine for multi-bot desk orchestration."""
+    """Domain engine for multi-bot desk orchestration with per-bot serial turn queues."""
 
     MAX_SCREENS_PER_COMPUTER = 4
     MAX_ROOM_FANOUT = 3
     BASE_GATEWAY_PORT = 8650
     BASE_CDP_PORT = 9200
+
+    def __init__(
+        self,
+        *,
+        max_screens_per_computer: int = MAX_SCREENS_PER_COMPUTER,
+        max_room_fanout: int = MAX_ROOM_FANOUT,
+        base_gateway_port: int = BASE_GATEWAY_PORT,
+        base_cdp_port: int = BASE_CDP_PORT,
+    ) -> None:
+        self._max_screens = max_screens_per_computer
+        self._max_room_fanout = max_room_fanout
+        self._base_gateway_port = base_gateway_port
+        self._base_cdp_port = base_cdp_port
+        self._bot_locks: dict[str, asyncio.Lock] = {}
+
+    async def enqueue_bot_turn(
+        self, bot_id: str, turn_fn: Callable[[], Awaitable[T]]
+    ) -> T:
+        """Serialize async turns per bot_id while allowing distinct bots to run concurrently."""
+        key = bot_id.strip()
+        if not key:
+            raise ValueError("bot_id must be non-empty")
+        lock = self._bot_locks.setdefault(key, asyncio.Lock())
+        async with lock:
+            return await turn_fn()
 
     def evaluate_bot_hop_dispatch(
         self, request: BotHopDispatchRequest
@@ -124,11 +152,11 @@ class MultiBotDeskEngine:
                     b
                     for b in request.mentioned_bot_ids
                     if b in request.room_member_ids and b != request.from_bot_id
-                )[: self.MAX_ROOM_FANOUT]
+                )[: self._max_room_fanout]
             else:
                 targets = tuple(
                     b for b in request.room_member_ids if b != request.from_bot_id
-                )[: self.MAX_ROOM_FANOUT]
+                )[: self._max_room_fanout]
 
             if not targets:
                 return BotHopDispatchOutcome(
@@ -219,20 +247,20 @@ class MultiBotDeskEngine:
 
         used = set(occupied_displays) | {0}
         free_slot = next(
-            (i for i in range(1, self.MAX_SCREENS_PER_COMPUTER) if i not in used),
+            (i for i in range(1, self._max_screens) if i not in used),
             None,
         )
         if free_slot is None:
             raise ValueError(
-                f"No free screen slots remaining (max {self.MAX_SCREENS_PER_COMPUTER})"
+                f"No free screen slots remaining (max {self._max_screens})"
             )
 
         return BotDeskLease(
             bot_id=bot_id,
             role="managed",
             display_index=free_slot,
-            gateway_port=self.BASE_GATEWAY_PORT + free_slot,
-            cdp_port=self.BASE_CDP_PORT + free_slot,
+            gateway_port=self._base_gateway_port + free_slot,
+            cdp_port=self._base_cdp_port + free_slot,
             mutates_primary_config=False,
             metadata={"isolation": "managed_hermes_home"},
         )
@@ -241,6 +269,10 @@ class MultiBotDeskEngine:
 @runtime_checkable
 class MultiBotDeskProtocol(Protocol):
     """Typed IoC service protocol for multi-bot desk orchestration."""
+
+    async def enqueue_bot_turn(
+        self, bot_id: str, turn_fn: Callable[[], Awaitable[T]]
+    ) -> T: ...
 
     def evaluate_bot_hop_dispatch(
         self, request: BotHopDispatchRequest

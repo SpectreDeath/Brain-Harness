@@ -6,17 +6,21 @@
   "summary": "The primary Hermes gateway on the host is never restarted or mutated; managed bots receive isolated Hermes homes, dedicated gateway ports (8650+), separate BH_HOME browser helpers, Chrome DevTools ports (9200+display), and Orgo X screen leases.",
   "references": [
     {
-      "path": "docs/ARCHITECTURE.md#L27-L34",
-      "description": "Primary engine non-interference rules and managed isolation"
+      "path": "docs/ARCHITECTURE.md#L18",
+      "description": "Primary vs managed engine ports and BH_HOME"
     },
     {
-      "path": "docs/ARCHITECTURE.md#L38-L45",
+      "path": "docs/ARCHITECTURE.md#L28-L34",
+      "description": "Primary engine non-interference rules"
+    },
+    {
+      "path": "docs/ARCHITECTURE.md#L38-L43",
       "description": "Screen and browser helper (BH_HOME) isolation"
     }
   ],
   "schema_version": "1.0.0",
   "category": "agent_orchestration",
-  "source_target": "D:\\GitHub\\cloned\\bot-hq",
+  "source_target": "https://github.com/nickvasilescu/bot-hq",
   "detected_format": "typescript_hono_react_monorepo",
   "tags": [
     "bot-hq",
@@ -29,28 +33,37 @@
   "edges": [
     {
       "type": "distilled_from",
-      "target": "D:\\GitHub\\cloned\\bot-hq",
+      "target": "https://github.com/nickvasilescu/bot-hq",
       "target_kind": "external_repo",
       "derived": true,
       "confidence": 0.98,
-      "description": "docs/ARCHITECTURE.md#L27-L34"
+      "description": "docs/ARCHITECTURE.md#L18"
     },
     {
       "type": "distilled_from",
-      "target": "D:\\GitHub\\cloned\\bot-hq",
+      "target": "https://github.com/nickvasilescu/bot-hq",
       "target_kind": "external_repo",
       "derived": true,
       "confidence": 0.98,
-      "description": "docs/ARCHITECTURE.md#L38-L45"
+      "description": "docs/ARCHITECTURE.md#L28-L34"
+    },
+    {
+      "type": "distilled_from",
+      "target": "https://github.com/nickvasilescu/bot-hq",
+      "target_kind": "external_repo",
+      "derived": true,
+      "confidence": 0.98,
+      "description": "docs/ARCHITECTURE.md#L38-L43"
     }
   ],
   "isnad": {
-    "source_repo": "D:\\GitHub\\cloned\\bot-hq",
+    "source_repo": "https://github.com/nickvasilescu/bot-hq",
     "commit": "decf9a2",
     "verified_at": "2026-11-13T09:40:30-05:00",
     "citations": [
-      "docs/ARCHITECTURE.md#L27-L34",
-      "docs/ARCHITECTURE.md#L38-L45"
+      "docs/ARCHITECTURE.md#L18",
+      "docs/ARCHITECTURE.md#L28-L34",
+      "docs/ARCHITECTURE.md#L38-L43"
     ]
   },
   "retrieval_count": 0,

@@ -1,7 +1,7 @@
 {
   "name": "plugin.proactive_ticket_orchestrator",
   "version": "1.0.0",
-  "description": "Proactive ticket orchestrator providing deterministic admission gates, follow-up ownership routing, and serialized transactional outbox planning",
+  "description": "Proactive ticket orchestrator providing deterministic admission gates, follow-up ownership routing, and serialized outbox delivery planning",
   "language": "python",
   "entrypoint": "main.py",
   "isolation": "subprocess",

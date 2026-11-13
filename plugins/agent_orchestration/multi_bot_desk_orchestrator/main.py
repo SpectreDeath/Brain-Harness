@@ -3,11 +3,14 @@
 from __future__ import annotations
 
 import sys
+from collections.abc import Awaitable, Callable
 from dataclasses import asdict
 from pathlib import Path
-from typing import Any
+from typing import Any, TypeVar
 
 import structlog
+
+T = TypeVar("T")
 
 if sys.platform == "win32":
     if hasattr(sys.stdout, "reconfigure"):
@@ -76,6 +79,11 @@ class MultiBotDeskOrchestratorPlugin(HarnessPlugin, MultiBotDeskProtocol):
 
     async def disable(self, context: Any = None) -> None:
         await self.on_disable()
+
+    async def enqueue_bot_turn(
+        self, bot_id: str, turn_fn: Callable[[], Awaitable[T]]
+    ) -> T:
+        return await self._service.enqueue_bot_turn(bot_id, turn_fn)
 
     def evaluate_bot_hop_dispatch(
         self, request: BotHopDispatchRequest

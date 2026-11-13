@@ -10,13 +10,21 @@
       "description": "Per-bot serial queue, expireApprovals, turnDepth, and markSilent"
     },
     {
-      "path": "docs/ARCHITECTURE.md#L68-L73",
-      "description": "Bot-to-bot send_to_bot and group chat fan-out limits"
+      "path": "docs/ARCHITECTURE.md#L17",
+      "description": "Per-Bot serial queue overview"
+    },
+    {
+      "path": "docs/ARCHITECTURE.md#L63-L67",
+      "description": "Bot-to-bot send_to_bot and group chat overview"
+    },
+    {
+      "path": "server/src/agent/rooms.ts#L14,L41-L69",
+      "description": "MAX_RESPONDERS = 3 group chat fan-out limit"
     }
   ],
   "schema_version": "1.0.0",
   "category": "agent_orchestration",
-  "source_target": "D:\\GitHub\\cloned\\bot-hq",
+  "source_target": "https://github.com/nickvasilescu/bot-hq",
   "detected_format": "typescript_hono_react_monorepo",
   "tags": [
     "bot-hq",
@@ -29,7 +37,7 @@
   "edges": [
     {
       "type": "distilled_from",
-      "target": "D:\\GitHub\\cloned\\bot-hq",
+      "target": "https://github.com/nickvasilescu/bot-hq",
       "target_kind": "external_repo",
       "derived": true,
       "confidence": 0.98,
@@ -37,20 +45,29 @@
     },
     {
       "type": "distilled_from",
-      "target": "D:\\GitHub\\cloned\\bot-hq",
+      "target": "https://github.com/nickvasilescu/bot-hq",
       "target_kind": "external_repo",
       "derived": true,
       "confidence": 0.98,
-      "description": "docs/ARCHITECTURE.md#L68-L73"
+      "description": "docs/ARCHITECTURE.md#L17"
+    },
+    {
+      "type": "distilled_from",
+      "target": "https://github.com/nickvasilescu/bot-hq",
+      "target_kind": "external_repo",
+      "derived": true,
+      "confidence": 0.98,
+      "description": "docs/ARCHITECTURE.md#L63-L67"
     }
   ],
   "isnad": {
-    "source_repo": "D:\\GitHub\\cloned\\bot-hq",
+    "source_repo": "https://github.com/nickvasilescu/bot-hq",
     "commit": "decf9a2",
     "verified_at": "2026-11-13T09:40:30-05:00",
     "citations": [
       "server/src/agent/loop.ts#L25-L85",
-      "docs/ARCHITECTURE.md#L68-L73"
+      "docs/ARCHITECTURE.md#L17",
+      "docs/ARCHITECTURE.md#L63-L67"
     ]
   },
   "retrieval_count": 0,

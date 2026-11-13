@@ -21,6 +21,7 @@ if _HARNESS_SRC.exists() and str(_HARNESS_SRC) not in sys.path:
 
 from harness.services.multi_bot_desk import (  # noqa: E402
     BotHopDispatchRequest,
+    McpApprovalRequest,
     MultiBotDeskEngine,
 )
 
@@ -36,6 +37,18 @@ def main(argv: list[str] | None = None) -> int:
     hop_p.add_argument("--depth", type=int, default=0)
     hop_p.add_argument("--max-depth", type=int, default=3)
 
+    app_p = sub.add_parser("approval", help="Evaluate in-band MCP tool approval")
+    app_p.add_argument("--bot-id", required=True)
+    app_p.add_argument("--tool-name", required=True)
+    app_p.add_argument("--read-only", action="store_true")
+    app_p.add_argument("--always-allowed", default="")
+    app_p.add_argument("--user-interrupted", action="store_true")
+
+    lease_p = sub.add_parser("lease", help="Allocate isolated bot desk lease")
+    lease_p.add_argument("--bot-id", required=True)
+    lease_p.add_argument("--primary", action="store_true")
+    lease_p.add_argument("--occupied-displays", default="")
+
     args = parser.parse_args(argv)
     engine = MultiBotDeskEngine()
 
@@ -48,6 +61,30 @@ def main(argv: list[str] | None = None) -> int:
             max_depth=args.max_depth,
         )
         print(json.dumps(asdict(engine.evaluate_bot_hop_dispatch(req)), indent=2))
+        return 0
+
+    if args.command == "approval":
+        allowed = tuple(s.strip() for s in args.always_allowed.split(",") if s.strip())
+        req = McpApprovalRequest(
+            bot_id=args.bot_id,
+            tool_name=args.tool_name,
+            is_read_only=args.read_only,
+            always_allowed_tools=allowed,
+            user_interrupted=args.user_interrupted,
+        )
+        print(json.dumps(asdict(engine.evaluate_mcp_tool_approval(req)), indent=2))
+        return 0
+
+    if args.command == "lease":
+        occupied = tuple(
+            int(s.strip()) for s in args.occupied_displays.split(",") if s.strip()
+        )
+        lease = engine.allocate_bot_desk_lease(
+            args.bot_id,
+            is_primary=args.primary,
+            occupied_displays=occupied,
+        )
+        print(json.dumps(asdict(lease), indent=2))
         return 0
 
     return 1

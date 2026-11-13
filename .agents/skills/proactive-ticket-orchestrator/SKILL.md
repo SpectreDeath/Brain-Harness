@@ -1,6 +1,6 @@
 ---
 name: proactive-ticket-orchestrator
-description: Orchestrate proactive coding agent tickets using deterministic admission gates, follow-up ownership, and serialized transactional outbox delivery. Do not use for single-turn chat prompts or unauthenticated webhook injection.
+description: Orchestrate proactive coding agent tickets using deterministic admission gates, follow-up ownership, and serialized outbox delivery planning. Do not use for single-turn chat prompts or unauthenticated webhook injection.
 ---
 
 # Proactive Ticket Orchestrator
@@ -36,12 +36,12 @@ Prevent duplicate tickets and authority creep on active threads:
 
 ---
 
-## 3. Transactional Outbox & Serialized Replies
+## 3. Serialized Outbox Delivery Planning
 
-Decouple synchronous domain mutations from asynchronous channel I/O:
+Order outbound replies per `(ticket_id, channel_id)` lane without claiming atomic DB/outbox commits:
 
-1. **Synchronous Core + Post-Commit Effects**: Mutate Ticket/Thread state inside one atomic transaction and queue `OutboxReplyItem` payloads alongside state changes.
-2. **Per-(Ticket, Channel) Serialization**: Serialize outbound messages within each `(ticket_id, channel_id)` lane so acknowledgements always precede results while unrelated tickets proceed in parallel.
+1. **Deterministic Sequence Ordering**: Partition pending `OutboxReplyItem` payloads by `(ticket_id, channel_id)` lane and sequence order so acknowledgements precede results while unrelated tickets proceed in parallel.
+2. **Per-(Ticket, Channel) Serialization**: Hold items behind an in-flight lane in `blocked_behind_head` while emitting the lane head in `ready_to_send`.
 
 > **Completion criterion**: Outbound replies partitioned into `ready_to_send` and `blocked_behind_head` lanes.
 

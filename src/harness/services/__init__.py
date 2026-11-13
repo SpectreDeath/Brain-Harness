@@ -604,7 +604,6 @@ __all__ = [
     "OutboxReplyItem",
     "ProactiveTicketEngine",
     "ProactiveTicketProtocol",
-    "ProactiveTicketStatus",
     "TicketRouteOutcome",
     "TriggerEnvelope",
     "TriggerKind",

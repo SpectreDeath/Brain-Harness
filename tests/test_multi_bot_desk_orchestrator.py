@@ -104,3 +104,52 @@ class TestMultiBotDeskModelsAndEngine:
         )
         report = SkillValidator().validate(skill_dir)
         assert report.valid, f"Skill validation failed: {[c.message for c in report.checks if not c.passed]}"
+
+    @pytest.mark.asyncio
+    async def test_per_bot_serial_turn_queue(self) -> None:
+        import asyncio
+
+        engine = MultiBotDeskEngine()
+        events: list[str] = []
+        active_per_bot: dict[str, int] = {"bot-a": 0, "bot-b": 0}
+        max_concurrent_a = 0
+
+        async def turn(bot_id: str, label: str, delay: float) -> str:
+            nonlocal max_concurrent_a
+            active_per_bot[bot_id] += 1
+            if bot_id == "bot-a":
+                max_concurrent_a = max(max_concurrent_a, active_per_bot[bot_id])
+            events.append(f"start:{label}")
+            await asyncio.sleep(delay)
+            events.append(f"end:{label}")
+            active_per_bot[bot_id] -= 1
+            return label
+
+        results = await asyncio.gather(
+            engine.enqueue_bot_turn("bot-a", lambda: turn("bot-a", "a1", 0.03)),
+            engine.enqueue_bot_turn("bot-a", lambda: turn("bot-a", "a2", 0.01)),
+            engine.enqueue_bot_turn("bot-b", lambda: turn("bot-b", "b1", 0.01)),
+        )
+        assert results == ["a1", "a2", "b1"]
+        assert max_concurrent_a == 1
+        assert events.index("end:a1") < events.index("start:a2")
+        assert events.index("end:b1") < events.index("end:a1")
+
+    def test_cli_subcommands(self) -> None:
+        import importlib.util
+
+        script = (
+            Path(__file__).resolve().parent.parent
+            / ".agents"
+            / "skills"
+            / "multi-bot-desk-orchestrator"
+            / "scripts"
+            / "multi_bot_desk_engine.py"
+        )
+        spec = importlib.util.spec_from_file_location("multi_bot_desk_cli", script)
+        assert spec is not None and spec.loader is not None
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        assert mod.main(["hop", "--from-bot", "a", "--to-bot", "b"]) == 0
+        assert mod.main(["approval", "--bot-id", "a", "--tool-name", "read_file", "--read-only"]) == 0
+        assert mod.main(["lease", "--bot-id", "bot-2", "--occupied-displays", "1"]) == 0

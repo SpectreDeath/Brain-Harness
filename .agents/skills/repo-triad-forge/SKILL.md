@@ -86,6 +86,7 @@ Enforce human-in-the-loop governance before committing persistent memory:
 3. **Commit Canonical Dual-File Directories (Rule 40)**:
    - For all user-approved items, write dual files to `.harness/knowledge/<ki_id>/`:
      - `metadata.json`: Machine-readable isnad claims, sha256 hashes, status, and tags.
+       - **Provenance Rule (2026-11-13)**: Never store local clone paths (e.g. `D:\GitHub\cloned\...` or `C:\Users\...`) in `source_target`, `edges[].target`, or `isnad.source_repo`. Always record the canonical upstream repository identity (e.g. `https://github.com/<owner>/<repo>`) paired with its pinned commit SHA (`isnad.commit`).
      - `summary.md`: Epistemic introspection, mental models, decision heuristics, and anti-pattern defenses.
 
 > **Completion criterion**: Interactive checkpoint approved and dual-file KIs persisted to `.harness/knowledge/`.

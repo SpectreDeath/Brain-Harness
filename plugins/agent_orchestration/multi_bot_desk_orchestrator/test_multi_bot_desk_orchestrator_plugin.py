@@ -46,3 +46,23 @@ async def test_desk_plugin_lifecycle_and_validator() -> None:
 
     report = PluginValidator().validate_sync(Path(__file__).resolve().parent)
     assert report.valid, f"Plugin validation failed: {[c.message for c in report.checks if not c.passed]}"
+
+
+@pytest.mark.asyncio
+async def test_plugin_serial_turn_queue() -> None:
+    import asyncio
+
+    order: list[str] = []
+
+    async def step(tag: str, delay: float) -> str:
+        order.append(f"start:{tag}")
+        await asyncio.sleep(delay)
+        order.append(f"end:{tag}")
+        return tag
+
+    r1, r2 = await asyncio.gather(
+        plugin.enqueue_bot_turn("bot-x", lambda: step("1", 0.02)),
+        plugin.enqueue_bot_turn("bot-x", lambda: step("2", 0.01)),
+    )
+    assert (r1, r2) == ("1", "2")
+    assert order == ["start:1", "end:1", "start:2", "end:2"]

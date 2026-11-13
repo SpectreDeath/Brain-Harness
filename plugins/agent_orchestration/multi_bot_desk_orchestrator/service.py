@@ -4,8 +4,11 @@ from __future__ import annotations
 
 import asyncio
 import sys
+from collections.abc import Awaitable, Callable
 from pathlib import Path
-from typing import Any
+from typing import Any, TypeVar
+
+T = TypeVar("T")
 
 from harness.services.multi_bot_desk import (
     BotDeskLease,
@@ -24,6 +27,11 @@ class DefaultMultiBotDeskService(MultiBotDeskProtocol):
     def __init__(self, root_dir: Path | None = None) -> None:
         self._root_dir = root_dir or Path(__file__).resolve().parents[3]
         self._engine = MultiBotDeskEngine()
+
+    async def enqueue_bot_turn(
+        self, bot_id: str, turn_fn: Callable[[], Awaitable[T]]
+    ) -> T:
+        return await self._engine.enqueue_bot_turn(bot_id, turn_fn)
 
     def evaluate_bot_hop_dispatch(
         self, request: BotHopDispatchRequest

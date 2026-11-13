@@ -122,6 +122,29 @@ class TestProactiveTicketModelsAndEngine:
         assert isinstance(engine, ProactiveTicketProtocol)
         assert PROACTIVE_TICKET_SERVICE_KEY.name == "service.proactive_ticket_orchestrator"
 
+    def test_cli_subcommands(self) -> None:
+        import importlib.util
+        import json
+
+        script = (
+            Path(__file__).resolve().parent.parent
+            / ".agents"
+            / "skills"
+            / "proactive-ticket-orchestrator"
+            / "scripts"
+            / "proactive_ticket_engine.py"
+        )
+        spec = importlib.util.spec_from_file_location("proactive_ticket_cli", script)
+        assert spec is not None and spec.loader is not None
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        assert mod.main(["gate", "--trigger-id", "t1", "--thread-key", "gh:1", "--sender-id", "alice", "--allowed-senders", "alice"]) == 0
+        assert mod.main(["route", "--trigger-id", "t1", "--thread-key", "gh:1", "--sender-id", "alice", "--allowed-senders", "alice", "--subscribed-tickets", "tkt-1"]) == 0
+        payload = json.dumps([
+            {"message_id": "m1", "channel_id": "gh:1", "kind": "acknowledgement", "text": "ack", "ticket_id": "tkt-1", "sequence": 1}
+        ])
+        assert mod.main(["outbox", "--items-json", payload]) == 0
+
     def test_skill_package_validation(self) -> None:
         from harness.creator.skills import SkillValidator
 

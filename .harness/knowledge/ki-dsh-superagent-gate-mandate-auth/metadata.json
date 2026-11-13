@@ -20,7 +20,7 @@
   ],
   "schema_version": "1.0.0",
   "category": "agent_orchestration",
-  "source_target": "D:\\GitHub\\cloned\\deepseek-ai\\dsh-superagent-prototype",
+  "source_target": "https://github.com/deepseek-ai/dsh-superagent-prototype",
   "detected_format": "typescript_cordis_bundle",
   "tags": [
     "dsh-superagent",
@@ -33,7 +33,7 @@
   "edges": [
     {
       "type": "distilled_from",
-      "target": "D:\\GitHub\\cloned\\deepseek-ai\\dsh-superagent-prototype",
+      "target": "https://github.com/deepseek-ai/dsh-superagent-prototype",
       "target_kind": "external_repo",
       "derived": true,
       "confidence": 0.98,
@@ -41,7 +41,7 @@
     },
     {
       "type": "distilled_from",
-      "target": "D:\\GitHub\\cloned\\deepseek-ai\\dsh-superagent-prototype",
+      "target": "https://github.com/deepseek-ai/dsh-superagent-prototype",
       "target_kind": "external_repo",
       "derived": true,
       "confidence": 0.98,
@@ -49,7 +49,7 @@
     },
     {
       "type": "distilled_from",
-      "target": "D:\\GitHub\\cloned\\deepseek-ai\\dsh-superagent-prototype",
+      "target": "https://github.com/deepseek-ai/dsh-superagent-prototype",
       "target_kind": "external_repo",
       "derived": true,
       "confidence": 0.98,
@@ -57,7 +57,7 @@
     }
   ],
   "isnad": {
-    "source_repo": "D:\\GitHub\\cloned\\deepseek-ai\\dsh-superagent-prototype",
+    "source_repo": "https://github.com/deepseek-ai/dsh-superagent-prototype",
     "commit": "8c32a9d",
     "verified_at": "2026-11-13T09:15:30-05:00",
     "citations": [

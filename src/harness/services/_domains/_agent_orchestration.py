@@ -239,7 +239,6 @@ from harness.services.proactive_ticket import (
     OutboxReplyItem,
     ProactiveTicketEngine,
     ProactiveTicketProtocol,
-    ProactiveTicketStatus,
     TicketRouteOutcome,
     TriggerEnvelope,
     TriggerKind,

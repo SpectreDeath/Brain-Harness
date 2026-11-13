@@ -87,7 +87,7 @@ class TicketRouteOutcome:
 
 @dataclass(slots=True, frozen=True)
 class OutboxReplyItem:
-    """Immutable outbound channel message queued inside an atomic domain transaction."""
+    """Immutable outbound channel message scheduled by the outbox delivery planner."""
 
     message_id: str
     channel_id: str
@@ -110,16 +110,6 @@ class OutboxDeliveryPlan:
     ready_to_send: tuple[OutboxReplyItem, ...] = ()
     blocked_behind_head: tuple[OutboxReplyItem, ...] = ()
     lane_keys: tuple[str, ...] = ()
-
-
-@dataclass(slots=True, frozen=True)
-class ProactiveTicketStatus:
-    """Health and budget snapshot for ProactiveTicketOrchestrator."""
-
-    service_name: str = "proactive_ticket_orchestrator"
-    default_accept_mode: AcceptMode = "on"
-    max_attention_questions: int = 1
-    metadata: dict[str, Any] = field(default_factory=dict)
 
 
 class ProactiveTicketEngine:
@@ -317,7 +307,6 @@ __all__ = [
     "PROACTIVE_TICKET_SERVICE_KEY",
     "ProactiveTicketEngine",
     "ProactiveTicketProtocol",
-    "ProactiveTicketStatus",
     "TicketRouteOutcome",
     "TriggerEnvelope",
     "TriggerKind",

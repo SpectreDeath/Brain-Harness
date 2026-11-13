@@ -21,29 +21,45 @@ if _HARNESS_SRC.exists() and str(_HARNESS_SRC) not in sys.path:
 
 from harness.services.proactive_ticket import (  # noqa: E402
     AdmissionRuleSet,
+    OutboxReplyItem,
     ProactiveTicketEngine,
     TriggerEnvelope,
 )
+
+
+def _split_csv(raw: str) -> tuple[str, ...]:
+    return tuple(s.strip() for s in raw.split(",") if s.strip())
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Proactive Ticket Orchestrator CLI")
     sub = parser.add_subparsers(dest="command", required=True)
 
-    gate_p = sub.add_parser("gate", help="Evaluate deterministic admission gate")
-    gate_p.add_argument("--trigger-id", required=True)
-    gate_p.add_argument("--thread-key", required=True)
-    gate_p.add_argument("--sender-id", required=True)
-    gate_p.add_argument("--source-kind", default="github")
-    gate_p.add_argument("--addressed", action="store_true")
-    gate_p.add_argument("--is-bot", action="store_true")
-    gate_p.add_argument("--allowed-senders", default="")
-    gate_p.add_argument("--accept-mode", default="on", choices=("on", "off", "record_only"))
+    for cmd_name, help_text in (
+        ("gate", "Evaluate deterministic admission gate"),
+        ("route", "Route trigger disposition and follow-up ownership"),
+    ):
+        p = sub.add_parser(cmd_name, help=help_text)
+        p.add_argument("--trigger-id", required=True)
+        p.add_argument("--thread-key", required=True)
+        p.add_argument("--sender-id", required=True)
+        p.add_argument("--source-kind", default="github")
+        p.add_argument("--addressed", action="store_true")
+        p.add_argument("--is-bot", action="store_true")
+        p.add_argument("--allowed-senders", default="")
+        p.add_argument("--accept-mode", default="on", choices=("on", "off", "record_only"))
+        if cmd_name == "route":
+            p.add_argument("--subscribed-tickets", default="")
+            p.add_argument("--handed-back-by", default="")
+
+    outbox_p = sub.add_parser("outbox", help="Plan serialized per-(ticket, channel) outbox delivery")
+    outbox_p.add_argument("--items-json", required=True, help="JSON list of OutboxReplyItem dicts")
+    outbox_p.add_argument("--in-flight-lanes", default="")
 
     args = parser.parse_args(argv)
     engine = ProactiveTicketEngine()
 
-    if args.command == "gate":
+    if args.command in ("gate", "route"):
         trigger = TriggerEnvelope(
             trigger_id=args.trigger_id,
             source_kind=args.source_kind,
@@ -53,11 +69,28 @@ def main(argv: list[str] | None = None) -> int:
             is_bot=args.is_bot,
         )
         rules = AdmissionRuleSet(
-            allowed_senders=tuple(s.strip() for s in args.allowed_senders.split(",") if s.strip()),
+            allowed_senders=_split_csv(args.allowed_senders),
             accept_mode=args.accept_mode,
         )
-        outcome = engine.evaluate_admission_gate(trigger, rules)
+        if args.command == "gate":
+            outcome = engine.evaluate_admission_gate(trigger, rules)
+        else:
+            outcome = engine.route_trigger_disposition(
+                trigger,
+                rules,
+                subscribed_ticket_ids=_split_csv(args.subscribed_tickets),
+                handed_back_by=_split_csv(args.handed_back_by),
+            )
         print(json.dumps(asdict(outcome), indent=2))
+        return 0
+
+    if args.command == "outbox":
+        raw_items = json.loads(args.items_json)
+        items = tuple(OutboxReplyItem(**entry) for entry in raw_items)
+        plan = engine.plan_outbox_delivery(
+            items, in_flight_lanes=_split_csv(args.in_flight_lanes)
+        )
+        print(json.dumps(asdict(plan), indent=2))
         return 0
 
     return 1
