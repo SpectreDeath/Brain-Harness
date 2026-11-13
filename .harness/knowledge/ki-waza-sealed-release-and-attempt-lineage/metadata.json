@@ -1,0 +1,77 @@
+{
+  "id": "ki-waza-sealed-release-and-attempt-lineage",
+  "title": "Waza: Canonical SealJSON Admission & Immutable Execution Attempt DAG",
+  "created": "2026-11-13T15:28:00-05:00",
+  "updated": "2026-11-13T15:28:00-05:00",
+  "summary": "Release policies seal JSON documents by stripping `digest`, computing a canonical JSON-v1 SHA-256 digest (`SealJSON`), and decoding with `DisallowUnknownFields()` and strict key checks before admission. Logical execution attempts (`exec-<64 hex>`) track `distinct`, `retry`/`branch` DAG edges (1,024-record cycle limit), and digest-pinned `reuse` without re-invoking engines.",
+  "references": [
+    {
+      "path": "internal/releasepolicy/admission.go#L30-L90",
+      "description": "SealJSON and strict DisallowUnknownFields digest verification"
+    },
+    {
+      "path": "internal/releasepolicy/assess.go#L85-L100",
+      "description": "7-dimension release decision and explicit honesty limitations"
+    },
+    {
+      "path": "docs/EXECUTION_ATTEMPTS.md#L15-L48",
+      "description": "executionattempt DAG (retry/branch) and digest-verified reuse"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "category": "agent_orchestration",
+  "source_target": "https://github.com/microsoft/waza",
+  "detected_format": "go_ts_monorepo",
+  "tags": [
+    "waza",
+    "release_policy",
+    "canonical_digest",
+    "execution_attempts",
+    "lineage"
+  ],
+  "anchors": {},
+  "edges": [
+    {
+      "type": "distilled_from",
+      "target": "https://github.com/microsoft/waza",
+      "target_kind": "external_repo",
+      "derived": true,
+      "confidence": 0.98,
+      "description": "internal/releasepolicy/admission.go#L30-L90"
+    },
+    {
+      "type": "distilled_from",
+      "target": "https://github.com/microsoft/waza",
+      "target_kind": "external_repo",
+      "derived": true,
+      "confidence": 0.98,
+      "description": "internal/releasepolicy/assess.go#L85-L100"
+    },
+    {
+      "type": "distilled_from",
+      "target": "https://github.com/microsoft/waza",
+      "target_kind": "external_repo",
+      "derived": true,
+      "confidence": 0.98,
+      "description": "docs/EXECUTION_ATTEMPTS.md#L15-L48"
+    }
+  ],
+  "isnad": {
+    "source_repo": "https://github.com/microsoft/waza",
+    "commit": "cc6afc5e",
+    "verified_at": "2026-11-13T15:28:00-05:00",
+    "citations": [
+      "internal/releasepolicy/admission.go#L30-L90",
+      "internal/releasepolicy/assess.go#L85-L100",
+      "docs/EXECUTION_ATTEMPTS.md#L15-L48"
+    ]
+  },
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": "repo-triad-forge",
+  "created_at": "2026-11-13T15:28:00-05:00",
+  "distilled_learning": "Release policies seal JSON documents by stripping `digest`, computing a canonical JSON-v1 SHA-256 digest (`SealJSON`), and decoding with `DisallowUnknownFields()` and strict key checks before admission. Logical execution attempts (`exec-<64 hex>`) track `distinct`, `retry`/`branch` DAG edges (1,024-record cycle limit), and digest-pinned `reuse` without re-invoking engines."
+}

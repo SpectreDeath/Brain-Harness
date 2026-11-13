@@ -1,0 +1,65 @@
+{
+  "id": "ki-waza-small-n-binomial-statistics",
+  "title": "Waza: Small-N Wilson CI, Unbiased Pass^k, Seeded Bootstrap & Hake Gain",
+  "created": "2026-11-13T15:28:00-05:00",
+  "updated": "2026-11-13T15:28:00-05:00",
+  "summary": "Eval suites with 3-10 trials use Wilson score intervals (`WilsonCI`, bounded in [0, 1]), unbiased `PassHatK` (`C(successes, k) / C(trials, k)`), seeded 10,000-resample percentile bootstrap CIs (`BootstrapCIWithSeed`), and Hake's normalized gain `(post - pre) / (1 - pre)` to prevent small-sample coverage collapse and ceiling effects.",
+  "references": [
+    {
+      "path": "internal/statistics/binomial.go#L5-L42",
+      "description": "WilsonCI and unbiased PassHatK estimator"
+    },
+    {
+      "path": "internal/statistics/bootstrap.go#L19-L110",
+      "description": "Seeded 10k-resample BootstrapCI, IsSignificant, and Hake NormalizedGain"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "category": "agent_orchestration",
+  "source_target": "https://github.com/microsoft/waza",
+  "detected_format": "go_ts_monorepo",
+  "tags": [
+    "waza",
+    "statistics",
+    "wilson_ci",
+    "pass_hat_k",
+    "bootstrap",
+    "hake_gain"
+  ],
+  "anchors": {},
+  "edges": [
+    {
+      "type": "distilled_from",
+      "target": "https://github.com/microsoft/waza",
+      "target_kind": "external_repo",
+      "derived": true,
+      "confidence": 0.98,
+      "description": "internal/statistics/binomial.go#L5-L42"
+    },
+    {
+      "type": "distilled_from",
+      "target": "https://github.com/microsoft/waza",
+      "target_kind": "external_repo",
+      "derived": true,
+      "confidence": 0.98,
+      "description": "internal/statistics/bootstrap.go#L19-L110"
+    }
+  ],
+  "isnad": {
+    "source_repo": "https://github.com/microsoft/waza",
+    "commit": "cc6afc5e",
+    "verified_at": "2026-11-13T15:28:00-05:00",
+    "citations": [
+      "internal/statistics/binomial.go#L5-L42",
+      "internal/statistics/bootstrap.go#L19-L110"
+    ]
+  },
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": "repo-triad-forge",
+  "created_at": "2026-11-13T15:28:00-05:00",
+  "distilled_learning": "Eval suites with 3-10 trials use Wilson score intervals (`WilsonCI`, bounded in [0, 1]), unbiased `PassHatK` (`C(successes, k) / C(trials, k)`), seeded 10,000-resample percentile bootstrap CIs (`BootstrapCIWithSeed`), and Hake's normalized gain `(post - pre) / (1 - pre)` to prevent small-sample coverage collapse and ceiling effects."
+}

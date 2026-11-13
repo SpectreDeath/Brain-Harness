@@ -1,0 +1,4 @@
+# Baseline operational budgets for skill_eval_assurance_runner plugin (Rule 44)
+default_confidence_level: 0.95
+default_matching_mode: in_order_match
+subprocess_timeout_seconds: 30.0

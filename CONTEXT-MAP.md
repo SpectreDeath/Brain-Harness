@@ -46,6 +46,8 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
 
   - `multi_bot_desk_orchestrator` — Per-bot serial turn queues, bounded hop-depth guards, in-band MCP tool approvals, and isolated display/gateway leases.
 
+  - `skill_eval_assurance_runner` — Small-N Wilson confidence intervals, unbiased pass^k reliability, deterministic trajectory graders, preflight boundary honesty, and sealed digest verification.
+
 - **Member Skills**:
 
   - [`elephant-goldfish-governor`](.agents/skills/elephant-goldfish-governor/SKILL.md) — Govern AI agent design and review workflows using the Elephant-Goldfish bifurcated context architecture, artifact-first spec drafting, 5-stage antagonistic review gates, and living spec drift detection.
@@ -93,6 +95,8 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - [`proactive-ticket-orchestrator`](.agents/skills/proactive-ticket-orchestrator/SKILL.md) — Orchestrate proactive coding agent tickets using deterministic admission gates, follow-up ownership, and serialized outbox delivery planning. Do not use for single-turn chat prompts or unauthenticated webhook injection.
 
   - [`multi-bot-desk-orchestrator`](.agents/skills/multi-bot-desk-orchestrator/SKILL.md) — Orchestrate multi-bot agent teams with per-bot serial turn queues, bounded hop-depth guards, in-band MCP tool approvals, and isolated display/gateway leases. Do not use for single-bot stateless chat or raw VNC tunneling.
+
+  - [`skill-eval-assurance-runner`](.agents/skills/skill-eval-assurance-runner/SKILL.md) — Evaluate and assure agent skills using small-N Wilson confidence intervals, unbiased pass^k reliability, deterministic trajectory graders, preflight boundary honesty, and sealed digest verification. Do not use for subjective prose review or unconstrained production deployment.
 
 
 

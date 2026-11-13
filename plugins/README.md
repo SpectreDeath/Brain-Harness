@@ -12,7 +12,7 @@ Welcome to the Brain Harness Plugin Architecture Hub. The Brain Harness micro-ke
 flowchart TD
     User([Developer / AI Agent]) -->|CLI / API / MCP| Kernel[Brain Harness Micro-Kernel]
     Kernel -->|IoC Registration & Lifecycle| Registry[Plugin Registry & ServiceContext]
-    Registry -->|Topological Resolution| Plugins[11 Domain Plugin Categories / 144 Plugins]
+    Registry -->|Topological Resolution| Plugins[11 Domain Plugin Categories / 145 Plugins]
     Plugins -->|Subprocess RPC stdio| Sandbox[Subprocess Sandbox Transports]
     Plugins -->|In-Process Execution| CoreServices[Trusted Kernel In-Memory Services]
     Plugins -->|Network / External APIs| External[(External APIs: LLMs, OSINT, Cloud, Databases)]

@@ -1,0 +1,130 @@
+{
+  "name": "plugin.skill_eval_assurance_runner",
+  "version": "1.0.0",
+  "description": "Skill evaluation assurance runner providing small-N Wilson confidence intervals, unbiased pass^k reliability, deterministic trajectory graders, preflight boundary honesty, and sealed digest verification",
+  "language": "python",
+  "entrypoint": "main.py",
+  "isolation": "subprocess",
+  "trusted": true,
+  "author": "Brain Harness Authors",
+  "provides": [
+    "service.skill_eval_assurance_runner"
+  ],
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "assurance_wilson_ci",
+      "description": "Compute small-N Wilson score confidence interval clamped to [0, 1]",
+      "parameters": [
+        {
+          "name": "successes",
+          "type": "integer",
+          "description": "Number of successful trials",
+          "required": true
+        },
+        {
+          "name": "trials",
+          "type": "integer",
+          "description": "Total number of trials",
+          "required": true
+        },
+        {
+          "name": "confidence_level",
+          "type": "number",
+          "description": "Confidence level strictly in (0, 1)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "assurance_pass_hat_k",
+      "description": "Compute unbiased tau-bench pass^k = C(successes, k) / C(trials, k)",
+      "parameters": [
+        {
+          "name": "successes",
+          "type": "integer",
+          "description": "Number of passing trials",
+          "required": true
+        },
+        {
+          "name": "trials",
+          "type": "integer",
+          "description": "Total trials",
+          "required": true
+        },
+        {
+          "name": "k",
+          "type": "integer",
+          "description": "Consecutive fresh trials horizon k",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "assurance_grade_action_sequence",
+      "description": "Grade agent tool call sequence with exact_match, in_order_match, or any_order_match and F1",
+      "parameters": [
+        {
+          "name": "actual_actions",
+          "type": "array",
+          "description": "Actual tool names invoked",
+          "required": true
+        },
+        {
+          "name": "expected_actions",
+          "type": "array",
+          "description": "Expected tool sequence",
+          "required": true
+        },
+        {
+          "name": "matching_mode",
+          "type": "string",
+          "description": "exact_match, in_order_match, or any_order_match",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "assurance_grade_tool_constraints",
+      "description": "Evaluate observed tool calls against expect_tools, reject_tools, and allow_only constraints",
+      "parameters": [
+        {
+          "name": "observed_tools",
+          "type": "array",
+          "description": "Observed tool names",
+          "required": true
+        },
+        {
+          "name": "expect_tools",
+          "type": "array",
+          "description": "Expected regex patterns",
+          "required": false
+        },
+        {
+          "name": "reject_tools",
+          "type": "array",
+          "description": "Forbidden regex patterns",
+          "required": false
+        },
+        {
+          "name": "allow_only",
+          "type": "boolean",
+          "description": "Disallow any tool outside expect_tools",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "assurance_verify_sealed_envelope",
+      "description": "Verify canonical SHA-256 digest of a sealed evaluation envelope",
+      "parameters": [
+        {
+          "name": "payload",
+          "type": "object",
+          "description": "Envelope JSON dictionary containing a digest field",
+          "required": true
+        }
+      ]
+    }
+  ]
+}

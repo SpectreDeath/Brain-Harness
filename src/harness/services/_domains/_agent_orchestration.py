@@ -256,3 +256,16 @@ from harness.services.multi_bot_desk import (
     MultiBotDeskEngine,
     MultiBotDeskProtocol,
 )
+
+from harness.services.skill_eval_assurance import (
+    SKILL_EVAL_ASSURANCE_SERVICE_KEY,
+    ActionSequenceGrade,
+    BoundaryState,
+    ConfidenceIntervalResult,
+    MatchingMode,
+    PreflightBoundaryFinding,
+    SealedEnvelopeCheck,
+    SkillEvalAssuranceEngine,
+    SkillEvalAssuranceProtocol,
+    ToolConstraintGrade,
+)

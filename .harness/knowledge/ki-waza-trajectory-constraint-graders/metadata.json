@@ -1,0 +1,77 @@
+{
+  "id": "ki-waza-trajectory-constraint-graders",
+  "title": "Waza: Deterministic Trajectory, Tool Constraint & Skill Invocation Graders",
+  "created": "2026-11-13T15:28:00-05:00",
+  "updated": "2026-11-13T15:28:00-05:00",
+  "summary": "Evaluates agent execution transcripts deterministically across three complementary graders: `action_sequence` (`exact_match`, `in_order_match`, `any_order_match` with Precision/Recall/F1), `tool_constraint` (case-insensitive compiled regexes for `tool`, `command_pattern`, `skill_pattern`, `path_pattern`), and `skill_invocation` (`required_skills`, `forbidden_skills`, `allow_extra`).",
+  "references": [
+    {
+      "path": "internal/graders/action_sequence_grader.go#L11-L80",
+      "description": "Action sequence matching modes and Precision/Recall/F1 scoring"
+    },
+    {
+      "path": "internal/graders/tool_constraint_grader.go#L89-L119",
+      "description": "Tool, command, skill, and path regex constraint compilation"
+    },
+    {
+      "path": "internal/graders/skill_invocation_grader.go#L12-L90",
+      "description": "Required/forbidden skill invocation grader with allow_extra control"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "category": "agent_orchestration",
+  "source_target": "https://github.com/microsoft/waza",
+  "detected_format": "go_ts_monorepo",
+  "tags": [
+    "waza",
+    "graders",
+    "action_sequence",
+    "tool_constraint",
+    "skill_invocation"
+  ],
+  "anchors": {},
+  "edges": [
+    {
+      "type": "distilled_from",
+      "target": "https://github.com/microsoft/waza",
+      "target_kind": "external_repo",
+      "derived": true,
+      "confidence": 0.98,
+      "description": "internal/graders/action_sequence_grader.go#L11-L80"
+    },
+    {
+      "type": "distilled_from",
+      "target": "https://github.com/microsoft/waza",
+      "target_kind": "external_repo",
+      "derived": true,
+      "confidence": 0.98,
+      "description": "internal/graders/tool_constraint_grader.go#L89-L119"
+    },
+    {
+      "type": "distilled_from",
+      "target": "https://github.com/microsoft/waza",
+      "target_kind": "external_repo",
+      "derived": true,
+      "confidence": 0.98,
+      "description": "internal/graders/skill_invocation_grader.go#L12-L90"
+    }
+  ],
+  "isnad": {
+    "source_repo": "https://github.com/microsoft/waza",
+    "commit": "cc6afc5e",
+    "verified_at": "2026-11-13T15:28:00-05:00",
+    "citations": [
+      "internal/graders/action_sequence_grader.go#L11-L80",
+      "internal/graders/tool_constraint_grader.go#L89-L119",
+      "internal/graders/skill_invocation_grader.go#L12-L90"
+    ]
+  },
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": "repo-triad-forge",
+  "created_at": "2026-11-13T15:28:00-05:00",
+  "distilled_learning": "Evaluates agent execution transcripts deterministically across three complementary graders: `action_sequence` (`exact_match`, `in_order_match`, `any_order_match` with Precision/Recall/F1), `tool_constraint` (case-insensitive compiled regexes for `tool`, `command_pattern`, `skill_pattern`, `path_pattern`), and `skill_invocation` (`required_skills`, `forbidden_skills`, `allow_extra`)."
+}

@@ -1,0 +1,50 @@
+{
+  "id": "ki-waza-preflight-boundary-honesty",
+  "title": "Waza: Static Preflight Boundary Honesty vs Preventive Runtime Enforcement",
+  "created": "2026-11-13T15:28:00-05:00",
+  "updated": "2026-11-13T15:28:00-05:00",
+  "summary": "Preflight inspection classifies `boundary` requirements and `.agent.md` tool allowlists (`requested-allowlist` / `requested-deny-all`) explicitly as `Unresolved`: static declarations and post-run graders observe recorded evidence after execution and never prove preventive runtime enforcement.",
+  "references": [
+    {
+      "path": "internal/preflight/boundary.go#L11-L43",
+      "description": "boundary.post_run and boundary.requested_policy unresolved diagnostics"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "category": "agent_orchestration",
+  "source_target": "https://github.com/microsoft/waza",
+  "detected_format": "go_ts_monorepo",
+  "tags": [
+    "waza",
+    "preflight",
+    "boundary_honesty",
+    "security"
+  ],
+  "anchors": {},
+  "edges": [
+    {
+      "type": "distilled_from",
+      "target": "https://github.com/microsoft/waza",
+      "target_kind": "external_repo",
+      "derived": true,
+      "confidence": 0.98,
+      "description": "internal/preflight/boundary.go#L11-L43"
+    }
+  ],
+  "isnad": {
+    "source_repo": "https://github.com/microsoft/waza",
+    "commit": "cc6afc5e",
+    "verified_at": "2026-11-13T15:28:00-05:00",
+    "citations": [
+      "internal/preflight/boundary.go#L11-L43"
+    ]
+  },
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": "repo-triad-forge",
+  "created_at": "2026-11-13T15:28:00-05:00",
+  "distilled_learning": "Preflight inspection classifies `boundary` requirements and `.agent.md` tool allowlists (`requested-allowlist` / `requested-deny-all`) explicitly as `Unresolved`: static declarations and post-run graders observe recorded evidence after execution and never prove preventive runtime enforcement."
+}
