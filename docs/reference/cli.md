@@ -57,6 +57,7 @@ harness [OPTIONS] COMMAND [ARGS]...
 | [`harness router`](#harness-router) | `brief`, `profile`, `route`, `simulate` | Dynamic Model Router CLI — 3-tier switching & resilient failover commands. |
 | [`harness session`](#harness-session) | `export`, `get`, `list`, `tree` | Manage and inspect agent execution sessions and hierarchical trees. |
 | [`harness skills`](#harness-skills) | `bridges`, `capabilities`, `chain`, `check-chain`, `clusters`, `create`, `graph`, `guidance`, `index`, `info`, `intercept`, `joint-query`, `list`, `prereqs`, `route`, `run`, `select`, `validate` | Manage and query the agent skill knowledge graph. |
+| [`harness spawn`](#harness-spawn) | `adopt`, `list`, `propose`, `retire`, `run` | Spawn, inspect, retire, and adopt learnings from isolated child harnesses. |
 | [`harness tau`](#harness-tau) | `append-journal`, `repair-history`, `resolve-path`, `tree`, `trust-check` | Pi-style coding agent harness commands (DAG trees, journals, repair, trust). |
 | [`harness temp`](#harness-temp) | `bifurcate`, `salvage`, `sandbox`, `scan`, `tail` | Ephemeral workspace archaeology, HTML visual brief extraction, and sandbox triage. |
 | [`harness tool`](#harness-tool) | `disable`, `enable`, `list` | Inspect and manage granular tool and skill enablement. |
@@ -2704,6 +2705,74 @@ Intelligently select skills and compile an execution plan for a given task.
 ```text
 Validate an agent skill package against deep-module craft standards.
 ```
+
+---
+
+## `harness spawn`
+
+Spawn, inspect, retire, and adopt learnings from isolated child harnesses.
+
+### Subcommands
+
+#### `harness spawn adopt`
+```text
+Explicitly review and adopt a staged child proposal into parent stores.
+```
+
+**Options:**
+- `--save-dir`: Root directory containing registry state. [default: .harness\spawns]
+- `--library-root`: Parent ExperienceLibrary root to adopt into. [default: .harness\experience]
+- `--knowledge-root`: Parent Knowledge Vault root to adopt the dual-file KI into. [default: .harness\knowledge]
+
+#### `harness spawn list`
+```text
+List registered child harnesses and their lifecycle state / budget usage.
+```
+
+**Options:**
+- `--save-dir`: Root directory containing registry state. [default: .harness\spawns]
+- `--state`: Filter records by lifecycle state.
+
+#### `harness spawn propose`
+```text
+Stage a reviewed learning and dual-file KI draft in the child partition.
+```
+
+**Options:**
+- `--task-id` *(required)*: Task identifier associated with the lesson.
+- `--cue` *(required)*: Transferable cue triggering this lesson.
+- `--lesson` *(required)*: Distilled transferable lesson.
+- `--evidence` *(required)*: Supporting empirical evidence.
+- `--why`: Rationale for adoption review. [default: ]
+- `--ki-id`: Optional KI slug identifier. [default: ]
+- `--save-dir`: Root directory containing registry state. [default: .harness\spawns]
+
+#### `harness spawn retire`
+```text
+Retire a spawned child harness (or all active ones) and close its DAG edge.
+```
+
+**Options:**
+- `--all`: Retire all active child harnesses. [default: False]
+- `--save-dir`: Root directory containing registry state. [default: .harness\spawns]
+
+#### `harness spawn run`
+```text
+Validate, probe-gate, and spawn an isolated child harness.
+```
+
+**Options:**
+- `--name` *(required)*: Short identifier for the spawned child harness.
+- `--domain` *(required)*: Domain partition for isolated ExperienceLibrary storage.
+- `--task`: Assigned task summary. [default: spawned_harness]
+- `--harness-dir`: Optional harness directory to read initial editable tree from.
+- `--max-tokens`: Token budget ceiling. [default: 16000]
+- `--k`: Recursion scale parameter k (R=4k rollouts, P=3k sessions). [default: 1]
+- `--max-depth`: Maximum recursion depth allowed (hard cap 3). [default: 1]
+- `--depth`: Caller depth (0 for Prime). [default: 0]
+- `--parent-spawn-id`: Optional parent spawn ID when nesting.
+- `--lifetime`: Child lifetime policy. [default: persistent]
+- `--save-dir`: Root directory for child harness artifacts and registry state. [default: .harness\spawns]
 
 ---
 
