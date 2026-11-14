@@ -1,0 +1,62 @@
+{
+  "id": "ki-shim-bounded-session-and-layered-skill-loader",
+  "title": "Shim: Cryptographic JSONL Session Store, Bounded Agent Loop & 4-Layer Precedence Skill Loader",
+  "created": "2026-11-14T13:34:00-05:00",
+  "updated": "2026-11-14T13:34:00-05:00",
+  "summary": "Shim runs its agent loop in internal/agent/agent.go with MaxSteps defaulting to 16 and MaxTokens=8192 while embedding AGENTS.md capped at 64 KiB (64<<10) and active skill summaries into SystemPrompt with read-before-edit and untrusted-data framing. internal/session/session.go creates YYYYMMDD-HHMMSS-<4-byte crypto/rand hex> session IDs validated via validID() (1..64 chars [A-Za-z0-9-_]) in 0o700 dirs / 0o600 append-only JSONL files scanned up to 16 MiB (16<<20). internal/skills/skills.go discovers skills across GlobalDir < .shim/skills < .agents/skills < .claude/skills (last-wins override), caps frontmatter/body reads at 1 MiB (1<<20), and registers lazy load_skill.",
+  "references": [
+    {
+      "path": "internal/agent/agent.go#L28-L102",
+      "description": "SystemPrompt with 64 KiB AGENTS.md cap, MaxSteps=16, and MaxTokens=8192 loop"
+    },
+    {
+      "path": "internal/session/session.go#L27-L133",
+      "description": "crypto/rand session ID generator, validID() 1..64 char guard, 0o700/0o600 JSONL persistence, and 16 MiB scanner cap"
+    },
+    {
+      "path": "internal/skills/skills.go#L31-L150",
+      "description": "4-tier last-wins skill precedence, 1 MiB parse/load limit, and lazy load_skill read tool"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "category": "agent_orchestration",
+  "source_target": "https://github.com/Balanov/shim",
+  "detected_format": "go_cli_module",
+  "tags": [
+    "shim",
+    "session-store",
+    "layered-skills",
+    "bounded-loop",
+    "jsonl"
+  ],
+  "anchors": {},
+  "edges": [
+    {
+      "type": "distilled_from",
+      "target": "https://github.com/Balanov/shim",
+      "target_kind": "external_repo",
+      "derived": true,
+      "confidence": 0.97,
+      "description": "Pinned commit 3b5acfdf: internal/agent/agent.go#L28-L102, internal/session/session.go#L27-L133, internal/skills/skills.go#L31-L150"
+    }
+  ],
+  "isnad": {
+    "source_repo": "https://github.com/Balanov/shim",
+    "commit": "3b5acfdf",
+    "verified_at": "2026-11-14T13:34:00-05:00",
+    "citations": [
+      "internal/agent/agent.go#L28-L102",
+      "internal/session/session.go#L27-L133",
+      "internal/skills/skills.go#L31-L150"
+    ],
+    "sha256": "6f73f9a2aec1597ede1b5523d1914a66670f614c2789d74a6b0d91d2ae341374"
+  },
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": "repo-triad-forge",
+  "created_at": "2026-11-14T13:34:00-05:00",
+  "distilled_learning": "Bound agent loops at MaxSteps=16 and AGENTS.md at 64 KiB, validate cryptographic JSONL session IDs with 0o700/0o600 permissions, and resolve layered skills with Global < .shim < .agents < .claude last-wins precedence."
+}

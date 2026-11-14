@@ -52,6 +52,8 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
 
   - `agora_mcp_workbench` — Agora Workbench MCP sidecar lifecycle auditing, unified state graph workflow planning, gateway/dispatcher connector routing, and data-lake transfer validation.
 
+  - `shim_harness_governor` — Shim 4-tier tool permission and ancestor-symlink containment auditing, deterministic-first allowlisted slash command routing, MCP namespacing, and bounded session/4-tier skill governance.
+
 - **Member Skills**:
 
   - [`elephant-goldfish-governor`](.agents/skills/elephant-goldfish-governor/SKILL.md) — Govern AI agent design and review workflows using the Elephant-Goldfish bifurcated context architecture, artifact-first spec drafting, 5-stage antagonistic review gates, and living spec drift detection.
@@ -103,6 +105,8 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - [`skill-eval-assurance-runner`](.agents/skills/skill-eval-assurance-runner/SKILL.md) — Evaluate and assure agent skills using small-N Wilson confidence intervals, unbiased pass^k reliability, deterministic trajectory graders, preflight boundary honesty, and sealed digest verification. Do not use for subjective prose review or unconstrained production deployment.
 
   - [`agora-mcp-workbench-architect`](.agents/skills/agora-mcp-workbench-architect/SKILL.md) — Architect, audit, and orchestrate Agora Workbench MCP servers, loopback sidecars, unified state graphs, gateway/dispatcher connectors, and policy-enforced data lakes. Do not use for static frontend CSS styling or non-MCP desktop GUI automation.
+
+  - [`shim-harness-governor`](.agents/skills/shim-harness-governor/SKILL.md) — Govern universal CLI agent loops, 4-tier tool permissions, ancestor-symlink workspace sandboxes, deterministic-first command routing, collision-safe MCP namespacing, and layered skill loading. Do not use for static UI styling or external SQL analytics.
 
 
 

@@ -12,7 +12,7 @@ Welcome to the Brain Harness Plugin Architecture Hub. The Brain Harness micro-ke
 flowchart TD
     User([Developer / AI Agent]) -->|CLI / API / MCP| Kernel[Brain Harness Micro-Kernel]
     Kernel -->|IoC Registration & Lifecycle| Registry[Plugin Registry & ServiceContext]
-    Registry -->|Topological Resolution| Plugins[11 Domain Plugin Categories / 150 Plugins]
+    Registry -->|Topological Resolution| Plugins[11 Domain Plugin Categories / 151 Plugins]
     Plugins -->|Subprocess RPC stdio| Sandbox[Subprocess Sandbox Transports]
     Plugins -->|In-Process Execution| CoreServices[Trusted Kernel In-Memory Services]
     Plugins -->|Network / External APIs| External[(External APIs: LLMs, OSINT, Cloud, Databases)]
@@ -78,7 +78,7 @@ The plugin ecosystem is cleanly partitioned into 11 single-responsibility domain
 
 | Category | Plugins Count | Domain Focus | Scope Summary |
 |---|---|---|---|
-| [agent_orchestration](agent_orchestration/README.md) | 34 | Agent Orchestration & Multi-Agent Swarms | Multi-agent coordination loops, supervisor/worker hierarchies, debater pairs, ReAct step execution engines, tool repair, and autonomous cognitive execution workflows. |
+| [agent_orchestration](agent_orchestration/README.md) | 41 | Agent Orchestration & Multi-Agent Swarms | Multi-agent coordination loops, supervisor/worker hierarchies, debater pairs, ReAct step execution engines, tool repair, Shim harness governance, and autonomous cognitive execution workflows. |
 | [data_engineering](data_engineering/README.md) | 14 | Data Engineering & High-Throughput Analytics | High-throughput array operations, DeepSelect TopK selection, compiler-style Markdown wiki generation, SQL database integrations, synthetic data generation, and dataset profiling. |
 | [developer_tooling](developer_tooling/README.md) | 10 | Developer Tooling & Docs-as-Code Automation | Automated repository documentation synchronization, AST linter engines, modular CLI command routing, and developer experience theming. |
 | [external](external/README.md) | 1 | External Plugins & Sandboxed Ecosystem Bridges | Subprocess-sandboxed external community plugins, third-party agent skills, and isolated Python virtual environment execution boundaries. |

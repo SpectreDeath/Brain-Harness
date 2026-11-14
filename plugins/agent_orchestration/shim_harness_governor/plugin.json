@@ -1,0 +1,202 @@
+{
+  "name": "plugin.shim_harness_governor",
+  "version": "1.0.0",
+  "description": "Shim Universal AI Harness Governor plugin providing 4-tier tool permission & symlink containment auditing, deterministic-first allowlisted slash command routing, MCP namespacing & env-ref config checks, and bounded session/4-tier skill loading",
+  "language": "python",
+  "entrypoint": "main.py",
+  "isolation": "subprocess",
+  "trusted": true,
+  "author": "Brain Harness Authors",
+  "provides": [
+    "service.shim_harness_governor"
+  ],
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "shim_audit_tool_execution",
+      "description": "Audit 4-tier permission modes, closed additionalProperties=false schemas, ancestor symlink workspace containment, and file/shell caps",
+      "parameters": [
+        {
+          "name": "permission_mode",
+          "type": "string",
+          "description": "Active permission mode (ask, read-only, auto)",
+          "required": true
+        },
+        {
+          "name": "tool_level",
+          "type": "string",
+          "description": "Tool capability level (read, write, shell, external)",
+          "required": true
+        },
+        {
+          "name": "workspace_root",
+          "type": "string",
+          "description": "Workspace root directory path",
+          "required": true
+        },
+        {
+          "name": "target_path",
+          "type": "string",
+          "description": "Target file or command working directory path",
+          "required": true
+        },
+        {
+          "name": "tool_schema",
+          "type": "object",
+          "description": "Optional JSON schema inspected for additionalProperties=false",
+          "required": false
+        },
+        {
+          "name": "file_bytes",
+          "type": "integer",
+          "description": "Requested file byte size",
+          "required": false
+        },
+        {
+          "name": "line_count",
+          "type": "integer",
+          "description": "Requested file line count",
+          "required": false
+        },
+        {
+          "name": "has_nul_bytes",
+          "type": "boolean",
+          "description": "Whether file contains NUL bytes",
+          "required": false
+        },
+        {
+          "name": "confirmed",
+          "type": "boolean",
+          "description": "Interactive confirmation flag for ask mode",
+          "required": false
+        },
+        {
+          "name": "shell_output_bytes",
+          "type": "integer",
+          "description": "Shell stdout+stderr byte count",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "shim_route_command",
+      "description": "Route operator command deterministically before bounded MaxTokens=300 compilation and closed /command allowlist verification",
+      "parameters": [
+        {
+          "name": "raw_input",
+          "type": "string",
+          "description": "Raw operator text or slash command",
+          "required": true
+        },
+        {
+          "name": "llm_compiled_command",
+          "type": "string",
+          "description": "Optional fallback command string emitted by compiler LLM",
+          "required": false
+        },
+        {
+          "name": "compiler_max_tokens",
+          "type": "integer",
+          "description": "Token cap applied to compiler LLM fallback",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "shim_audit_mcp_discovery",
+      "description": "Sanitize MCP tool names to <=64 chars with collision detection, audit 30s/60s timeouts, verify api_key_env indirection, and sort 900ms local endpoints",
+      "parameters": [
+        {
+          "name": "server_name",
+          "type": "string",
+          "description": "MCP server identifier",
+          "required": true
+        },
+        {
+          "name": "tool_names",
+          "type": "array",
+          "description": "Tool names exposed by the MCP server",
+          "required": true
+        },
+        {
+          "name": "init_timeout_seconds",
+          "type": "number",
+          "description": "MCP initialization timeout in seconds",
+          "required": false
+        },
+        {
+          "name": "call_timeout_seconds",
+          "type": "number",
+          "description": "MCP tool call timeout in seconds",
+          "required": false
+        },
+        {
+          "name": "config_payload",
+          "type": "object",
+          "description": "Optional provider configuration payload inspected for api_key_env compliance",
+          "required": false
+        },
+        {
+          "name": "discovery_timeout_ms",
+          "type": "integer",
+          "description": "Local discovery timeout in milliseconds",
+          "required": false
+        },
+        {
+          "name": "discovered_endpoints",
+          "type": "array",
+          "description": "Discovered local runtime endpoint descriptors",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "shim_audit_session_skills",
+      "description": "Validate JSONL session ID format and 0o700/0o600 permissions, MaxSteps=16 and 64 KiB AGENTS.md caps, and 4-tier last-wins skill loading",
+      "parameters": [
+        {
+          "name": "session_id",
+          "type": "string",
+          "description": "Candidate session identifier",
+          "required": true
+        },
+        {
+          "name": "skill_candidates",
+          "type": "array",
+          "description": "Skill candidate descriptors with name, tier, size_bytes, and has_closed_frontmatter",
+          "required": false
+        },
+        {
+          "name": "dir_mode",
+          "type": "integer",
+          "description": "Directory permission mode (expected 448 / 0o700)",
+          "required": false
+        },
+        {
+          "name": "file_mode",
+          "type": "integer",
+          "description": "File permission mode (expected 384 / 0o600)",
+          "required": false
+        },
+        {
+          "name": "scanner_max_bytes",
+          "type": "integer",
+          "description": "JSONL line scanner ceiling in bytes",
+          "required": false
+        },
+        {
+          "name": "max_agent_steps",
+          "type": "integer",
+          "description": "Maximum loop steps per turn",
+          "required": false
+        },
+        {
+          "name": "agents_md_bytes",
+          "type": "integer",
+          "description": "Byte length of loaded AGENTS.md instructions",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

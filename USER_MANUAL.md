@@ -75,10 +75,10 @@ Rather than shipping a rigid, pre-packaged bundle of hardcoded domain tools, **H
 - **Immutable Event Stream:** All system transitions, tool executions, agent reasoning steps, and errors are appended to an immutable audit log.
 
 ### Ecosystem Scale at a Glance
-- **150 Canonical Harness Plugins** (+ 1 external Pocock skill bundle with 35 entrypoints) totaling **682 tool entrypoints** across 10 architectural categories.
-- **113 Workspace Skills packages (148 Skill Graph nodes)** (`SKILL.md` + `CARD.md`) indexed in the dynamic Skill Knowledge Graph.
+- **151 Canonical Harness Plugins** (+ 1 external Pocock skill bundle with 35 entrypoints) totaling **686 tool entrypoints** across 10 architectural categories.
+- **114 Workspace Skills packages (149 Skill Graph nodes)** (`SKILL.md` + `CARD.md`) indexed in the dynamic Skill Knowledge Graph.
 - **47 Canonical CLI Command Groups** (`Rule 6` consolidated) exposing headless introspection, diagnostics, and operational workflows.
-- **350 Verified Knowledge Items** grounded with cryptographic Isnad provenance in the Epistemic Knowledge Vault.
+- **354 Verified Knowledge Items** grounded with cryptographic Isnad provenance in the Epistemic Knowledge Vault.
 
 ---
 

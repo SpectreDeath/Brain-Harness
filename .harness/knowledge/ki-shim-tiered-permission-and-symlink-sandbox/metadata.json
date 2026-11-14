@@ -1,0 +1,62 @@
+{
+  "id": "ki-shim-tiered-permission-and-symlink-sandbox",
+  "title": "Shim: 4-Tier Capability Permission Gating, Ancestor Symlink Sandbox & Bounded File/Shell Execution",
+  "created": "2026-11-14T13:34:00-05:00",
+  "updated": "2026-11-14T13:34:00-05:00",
+  "summary": "Shim partitions every tool under four capability levels (read, write, shell, external) and gates Executor.Execute() across three permission modes: read-only rejects any level != read, ask prompts interactive y/yes verification for non-read tools, and auto permits execution without prompts while requiring strict JSON Schema additionalProperties=false. FileTools.secure() canonicalizes the workspace root and walks both targets and deepest existing ancestor directories with filepath.EvalSymlinks + within() containment to defeat symlink escapes, capping file reads at 2 MiB (2<<20), 2000 lines, and rejecting NUL-byte binaries, while shell execution caps buffered stdout+stderr at 1 MiB (1<<20) with a 2-minute timeout.",
+  "references": [
+    {
+      "path": "internal/tools/tools.go#L18-L134",
+      "description": "Level enum (Read/Write/Shell/External), mutex Registry, Executor permission modes, and Schema() with additionalProperties=false"
+    },
+    {
+      "path": "internal/tools/files.go#L40-L128",
+      "description": "FileTools.secure() ancestor EvalSymlinks + within() containment and 2 MiB / 2000-line / NUL-byte read guards"
+    },
+    {
+      "path": "internal/tools/shell.go#L44-L100",
+      "description": "Shell timeout default (2m) and cappedBuffer 1 MiB (1<<20) output cap"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "category": "agent_orchestration",
+  "source_target": "https://github.com/Balanov/shim",
+  "detected_format": "go_cli_module",
+  "tags": [
+    "shim",
+    "permissions",
+    "symlink-sandbox",
+    "tool-gating",
+    "bounded-execution"
+  ],
+  "anchors": {},
+  "edges": [
+    {
+      "type": "distilled_from",
+      "target": "https://github.com/Balanov/shim",
+      "target_kind": "external_repo",
+      "derived": true,
+      "confidence": 0.97,
+      "description": "Pinned commit 3b5acfdf: internal/tools/tools.go#L18-L134, internal/tools/files.go#L40-L128, internal/tools/shell.go#L44-L100"
+    }
+  ],
+  "isnad": {
+    "source_repo": "https://github.com/Balanov/shim",
+    "commit": "3b5acfdf",
+    "verified_at": "2026-11-14T13:34:00-05:00",
+    "citations": [
+      "internal/tools/tools.go#L18-L134",
+      "internal/tools/files.go#L40-L128",
+      "internal/tools/shell.go#L44-L100"
+    ],
+    "sha256": "361823d74fa0b7a73b3a9940b9a788b4cfc6a8d79b1636a8acdc536d8add8f3c"
+  },
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": "repo-triad-forge",
+  "created_at": "2026-11-14T13:34:00-05:00",
+  "distilled_learning": "Enforce 4-level tool permissions, ancestor EvalSymlinks workspace containment, strict schema closed-object validation, and bounded 2 MiB/2000-line file and 1 MiB/120s shell guards on every agent tool step."
+}

@@ -1,0 +1,57 @@
+{
+  "id": "ki-shim-deterministic-first-allowlisted-command-router",
+  "title": "Shim: Deterministic-First Command Router, Closed Slash Allowlist & Mutating Classification",
+  "created": "2026-11-14T13:34:00-05:00",
+  "updated": "2026-11-14T13:34:00-05:00",
+  "summary": "Shim routes natural-language slash intents in two strict stages via internal/router/router.go: Stage 1 (Deterministic) checks normalized multilingual readOnly and mutating keyword tables plus usePattern model selection regexes to resolve commands like /help, /status, /models, /skills, /tools, /mcps, /doctor, /discover --add, /session new, and /model use NAME at zero LLM cost. Stage 2 (Compile) invokes a bounded MaxTokens=300 LLM call only on deterministic miss, strips markdown fences, and passes output through Validate(), which tokenizes arguments via Split() and permits only a closed allowlist of slash commands with explicit Mutating classification.",
+  "references": [
+    {
+      "path": "internal/router/router.go#L14-L130",
+      "description": "Deterministic() zero-LLM lookup tables, usePattern regex, and Compile() MaxTokens=300 fallback"
+    },
+    {
+      "path": "internal/router/router.go#L106-L220",
+      "description": "Validate() closed slash-command allowlist, Mutating classification, and Split() shell-style tokenizer"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "category": "agent_orchestration",
+  "source_target": "https://github.com/Balanov/shim",
+  "detected_format": "go_cli_module",
+  "tags": [
+    "shim",
+    "command-router",
+    "allowlist",
+    "deterministic-routing",
+    "mutating-classification"
+  ],
+  "anchors": {},
+  "edges": [
+    {
+      "type": "distilled_from",
+      "target": "https://github.com/Balanov/shim",
+      "target_kind": "external_repo",
+      "derived": true,
+      "confidence": 0.97,
+      "description": "Pinned commit 3b5acfdf: internal/router/router.go#L14-L130, internal/router/router.go#L106-L220"
+    }
+  ],
+  "isnad": {
+    "source_repo": "https://github.com/Balanov/shim",
+    "commit": "3b5acfdf",
+    "verified_at": "2026-11-14T13:34:00-05:00",
+    "citations": [
+      "internal/router/router.go#L14-L130",
+      "internal/router/router.go#L106-L220"
+    ],
+    "sha256": "6cbeccf045fa88cb6115da1a273c470235693f277f767f52ca6f8cbfb72a1250"
+  },
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": "repo-triad-forge",
+  "created_at": "2026-11-14T13:34:00-05:00",
+  "distilled_learning": "Route common operator commands deterministically before spending model tokens, and gate any LLM-compiled command behind strict argument tokenization and a closed slash-command allowlist with mutating flags."
+}

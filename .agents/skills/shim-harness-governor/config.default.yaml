@@ -1,0 +1,27 @@
+schema_version: "1.0.0"
+service_key: "service.shim_harness_governor"
+agent:
+  max_steps: 16
+  max_tokens: 8192
+  agents_md_max_bytes: 65536
+tools:
+  file_read_max_bytes: 2097152
+  file_read_max_lines: 2000
+  shell_output_max_bytes: 1048576
+  shell_timeout_seconds: 120
+router:
+  compiler_max_tokens: 300
+mcp:
+  protocol_version: "2025-03-26"
+  init_timeout_seconds: 30.0
+  call_timeout_seconds: 60.0
+  tool_max_len: 64
+discovery:
+  timeout_ms: 900
+session:
+  id_max_len: 64
+  scan_max_bytes: 16777216
+  dir_mode: 448
+  file_mode: 384
+skills:
+  max_bytes: 1048576
