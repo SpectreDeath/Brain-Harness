@@ -26,9 +26,7 @@ async def execute_transaction(
         yield tx_ctx
         with context._mutation_lock:
             # Record pre-images of existing entries that will be overwritten
-            prior_entries = {
-                k: context._entries[k] for k in tx_ctx._entries if k in context._entries
-            }
+            prior_entries = {k: context._entries[k] for k in tx_ctx._entries if k in context._entries}
             if prior_entries:
 
                 def _restore_priors() -> None:

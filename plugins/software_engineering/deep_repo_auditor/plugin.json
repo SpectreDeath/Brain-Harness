@@ -1,0 +1,75 @@
+{
+  "name": "plugin.deep_repo_auditor",
+  "version": "1.0.0",
+  "description": "4-axis repository introspection, 5D compute complexity scoring, and HTML visual brief generator",
+  "entrypoint": "main.py",
+  "isolation": "subprocess",
+  "trusted": false,
+  "category": "software_engineering",
+  "author": "Brain Harness Deep Auditor Engine",
+  "provides": [
+    "service.deep_auditor"
+  ],
+  "entrypoints": [
+    {
+      "name": "deep_audit_repo",
+      "description": "Execute 5D compute assessment, bounded scan, and 4-axis introspection on a repository",
+      "parameters": [
+        {
+          "name": "repo_path",
+          "type": "string",
+          "description": "Path to target repository root",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "deep_audit_briefs",
+      "description": "Generate 3 dark-mode HTML visual briefs for a repository audit",
+      "parameters": [
+        {
+          "name": "repo_path",
+          "type": "string",
+          "description": "Path to target repository root",
+          "required": true
+        },
+        {
+          "name": "output_dir",
+          "type": "string",
+          "description": "Optional directory where HTML briefs will be written",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "deep_audit_ki_candidates",
+      "description": "Extract portable Knowledge Item candidates anchored to audited axes",
+      "parameters": [
+        {
+          "name": "repo_path",
+          "type": "string",
+          "description": "Path to target repository root",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "deep_audit_full",
+      "description": "Run complete 4-axis audit, HTML visual brief generation, and KI extraction",
+      "parameters": [
+        {
+          "name": "repo_path",
+          "type": "string",
+          "description": "Path to target repository root",
+          "required": true
+        },
+        {
+          "name": "output_dir",
+          "type": "string",
+          "description": "Optional directory where HTML briefs will be written",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0.0",
+  "id": "ki_self_20261114_03_fenced_codeblock_isolation_for_planned_paths",
+  "title": "ADR Hygiene: Fenced Codeblock Isolation for Aspirational Future Paths Under Context Lint",
+  "category": "software_engineering",
+  "source_target": "docs/decisions/rea-size-exemptions.md",
+  "detected_format": "endogenous_reflection",
+  "tags": [
+    "software_engineering",
+    "endogenous_memory",
+    "self_reflection",
+    "context_lint",
+    "rule_47",
+    "adr_hygiene"
+  ],
+  "anchors": {},
+  "edges": [
+    {
+      "type": "references_code",
+      "target": "docs/decisions/rea-size-exemptions.md",
+      "target_kind": "doc",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "ADR listing future REA decomposition target files isolated in fenced blocks"
+    }
+  ],
+  "isnad": {
+    "decision_id": "dec_20261114_self_03",
+    "timestamp": "2026-11-14T19:13:30Z",
+    "status": "VERIFIED",
+    "claims": [
+      {
+        "claim_id": "claim_001",
+        "assertion": "Inline backticked relative file paths outside fenced code blocks are checked by harness.cli context lint [path_existence]; hypothetical future decomposition targets in ADRs such as docs/decisions/rea-size-exemptions.md must reside inside fenced text code blocks to eliminate false-positive missing-path failures.",
+        "evidence_type": "cli_linter_verification",
+        "source": "harness.cli context lint 9 [path_existence] findings in docs/decisions/rea-size-exemptions.md -> 0 findings after fenced codeblock isolation; AGENTS.md Rule 47",
+        "verified": true,
+        "confidence": 1.0
+      }
+    ]
+  },
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": "Brain Harness Reflector (harness-reflector)",
+  "created_at": "2026-11-14T19:13:30Z",
+  "distilled_learning": "# ADR Hygiene: Fenced Codeblock Isolation for Aspirational Future Paths Under Context Lint"
+}

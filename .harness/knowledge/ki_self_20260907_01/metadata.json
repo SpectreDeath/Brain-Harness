@@ -39,7 +39,16 @@
   "distilled_learning": "# Deep-Module 3-Layer Architecture Graduation Pattern",
   "schema_version": "1.0.0",
   "anchors": {},
-  "edges": [],
+  "edges": [
+    {
+      "type": "same_domain",
+      "target": "ki_self_20261114_08_rule44_backfill_and_deep_auditor_ioc_elevation",
+      "target_kind": "ki",
+      "derived": true,
+      "confidence": 0.8,
+      "description": null
+    }
+  ],
   "retrieval_count": 0,
   "success_count": 0,
   "last_retrieved_at": null,

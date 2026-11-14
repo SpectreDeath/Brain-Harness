@@ -55,9 +55,7 @@ def get_dependents(entries: dict[str, PluginEntry], name: str) -> list[str]:
     if entry is None:
         return []
 
-    provided_key_names = {
-        k.name if hasattr(k, "name") else str(k) for k in entry.plugin.provides
-    }
+    provided_key_names = {k.name if hasattr(k, "name") else str(k) for k in entry.plugin.provides}
     if not provided_key_names:
         return []
 
@@ -65,18 +63,13 @@ def get_dependents(entries: dict[str, PluginEntry], name: str) -> list[str]:
     for other_name, other_entry in entries.items():
         if other_name == name:
             continue
-        req_names = {
-            k.name if hasattr(k, "name") else str(k)
-            for k in other_entry.plugin.requires
-        }
+        req_names = {k.name if hasattr(k, "name") else str(k) for k in other_entry.plugin.requires}
         if req_names & provided_key_names:
             dependents.append(other_name)
     return dependents
 
 
-def check_satisfaction(
-    context: Any, entries: dict[str, PluginEntry], name: str
-) -> tuple[bool, list[str]]:
+def check_satisfaction(context: Any, entries: dict[str, PluginEntry], name: str) -> tuple[bool, list[str]]:
     """Check coeffect satisfaction predicate (sigma |= d) for a plugin (Definition 24)."""
     entry = entries.get(name)
     if entry is None:
@@ -89,9 +82,7 @@ def check_satisfaction(
     return len(missing) == 0, missing
 
 
-async def execute_load(
-    context: Any, entry: PluginEntry, emit_event_fn: Any, name: str
-) -> None:
+async def execute_load(context: Any, entry: PluginEntry, emit_event_fn: Any, name: str) -> None:
     """Execute plugin on_load hook with scoped context."""
     from harness.events.types import EventType
 
@@ -101,14 +92,8 @@ async def execute_load(
         emit_event_fn(
             EventType.PLUGIN_LOADED,
             name,
-            provides=[
-                k.name if hasattr(k, "name") else str(k)
-                for k in getattr(entry.plugin, "provides", [])
-            ],
-            requires=[
-                k.name if hasattr(k, "name") else str(k)
-                for k in getattr(entry.plugin, "requires", [])
-            ],
+            provides=[k.name if hasattr(k, "name") else str(k) for k in getattr(entry.plugin, "provides", [])],
+            requires=[k.name if hasattr(k, "name") else str(k) for k in getattr(entry.plugin, "requires", [])],
         )
     except Exception as e:
         entry.state = PluginState.ERROR
@@ -135,8 +120,7 @@ async def execute_validate(
                 key in other.plugin.provides
                 for other_name, other in entries.items()
                 if other_name != name
-                and other.state
-                in (PluginState.LOADED, PluginState.VALIDATED, PluginState.ENABLED)
+                and other.state in (PluginState.LOADED, PluginState.VALIDATED, PluginState.ENABLED)
             )
             if not provided_by_others:
                 missing.append(key.name if hasattr(key, "name") else str(key))
@@ -156,9 +140,7 @@ async def execute_validate(
     emit_event_fn(EventType.PLUGIN_VALIDATED, name)
 
 
-async def execute_enable(
-    context: Any, entry: PluginEntry, emit_event_fn: Any, name: str
-) -> None:
+async def execute_enable(context: Any, entry: PluginEntry, emit_event_fn: Any, name: str) -> None:
     """Execute plugin on_enable hook and activate services in context."""
     from harness.events.types import EventType
 

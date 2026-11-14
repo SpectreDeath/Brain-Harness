@@ -7,7 +7,8 @@ from typing import Any
 
 import structlog
 
-from harness.kernel.context import ServiceKey
+from harness.kernel.context import ServiceContext, ServiceKey
+from harness.plugins.base import HarnessPlugin
 from plugins.data_engineering.wiki_compiler.compiler_core import (
     WikiGraphQuery,
     build_graph,
@@ -304,3 +305,21 @@ class WikiCompilerService:
 
 
 WIKI_COMPILER_SERVICE_KEY = ServiceKey[WikiCompilerService]("domain.wiki_compiler")
+
+
+class WikiCompilerPlugin(HarnessPlugin):
+    """Harness plugin registering WikiCompilerService into the IoC container."""
+
+    name = "domain.wiki_compiler"
+    version = "1.0.0"
+    trusted = True
+
+    @property
+    def provides(self) -> list[ServiceKey[Any]]:
+        return [WIKI_COMPILER_SERVICE_KEY]
+
+    async def on_load(self, ctx: ServiceContext) -> None:
+        ctx.provide(WIKI_COMPILER_SERVICE_KEY, WikiCompilerService(), provider=self.name, allow_override=True)
+
+
+plugin = WikiCompilerPlugin()

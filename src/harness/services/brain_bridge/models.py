@@ -11,6 +11,7 @@ from pydantic import BaseModel, Field as PydanticField
 # Slotted & Frozen Internal Domain Entities (AGENTS.md Rule 12 & 43)
 # -----------------------------------------------------------------------------
 
+
 @dataclass(slots=True, frozen=True)
 class BrainMountRecord:
     """Slotted and immutable record of an attached brain mount."""
@@ -70,6 +71,7 @@ class SearchScoreMatch:
 # Typed Pydantic Result Models (Public API / Backward Compatible)
 # -----------------------------------------------------------------------------
 
+
 class BrainAttachResult(BaseModel):
     """Result of attaching an external brain or repository."""
 
@@ -90,7 +92,9 @@ class BrainQueryResult(BaseModel):
     query: str = PydanticField(default="", description="Queried search terms")
     searched_brains: list[str] = PydanticField(default_factory=list, description="Aliases of searched brain mounts")
     results_count: int = PydanticField(default=0, description="Total matching results returned")
-    results: list[dict[str, Any]] = PydanticField(default_factory=list, description="Scored document and trajectory chunks")
+    results: list[dict[str, Any]] = PydanticField(
+        default_factory=list, description="Scored document and trajectory chunks"
+    )
     note: str | None = PydanticField(default=None, description="Informational notice")
     error: str | None = PydanticField(default=None, description="Error explanation if query failed")
 
@@ -100,7 +104,9 @@ class BrainListResult(BaseModel):
 
     status: str = PydanticField(default="ok", description="Status indicator (ok, error)")
     attached_count: int = PydanticField(default=0, description="Total active brain mounts")
-    brains: list[dict[str, Any]] = PydanticField(default_factory=list, description="List of brain mount metadata objects")
+    brains: list[dict[str, Any]] = PydanticField(
+        default_factory=list, description="List of brain mount metadata objects"
+    )
 
 
 class BrainDetachResult(BaseModel):

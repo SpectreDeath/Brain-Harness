@@ -56,9 +56,7 @@ async def dispose_context(context: ServiceContext) -> None:
     with context._mutation_lock:
         stack = list(context._dispose_stack)
         context._dispose_stack.clear()
-        teardown_epoch = context._teardown_epoch = (
-            getattr(context, "_teardown_epoch", 0) + 1
-        )
+        teardown_epoch = context._teardown_epoch = getattr(context, "_teardown_epoch", 0) + 1
 
     while stack:
         inverse = stack.pop()
@@ -113,10 +111,7 @@ def create_service_inverse(
                 if r is not context:
                     r._interceptor_epoch += 1
 
-            if (
-                context._parent is not None
-                and context._parent._entries.get(realm_key) is entry
-            ):
+            if context._parent is not None and context._parent._entries.get(realm_key) is entry:
                 new_pe = dict(context._parent._entries)
                 new_pe.pop(realm_key, None)
                 context._parent._entries = new_pe
@@ -126,10 +121,7 @@ def create_service_inverse(
                     pr._interceptor_epoch += 1
 
             if provider:
-                if (
-                    provider in context._plugin_services
-                    and realm_key in context._plugin_services[provider]
-                ):
+                if provider in context._plugin_services and realm_key in context._plugin_services[provider]:
                     context._plugin_services[provider].remove(realm_key)
                 if (
                     context._parent is not None

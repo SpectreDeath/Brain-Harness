@@ -69,7 +69,7 @@ Commands are strictly decoupled from Click CLI option parsers:
 | [`brain_miner.py`](brain_miner.py) | `harness brain-miner` | `miner`, `artifact-miner` | Brain workspace archaeology, scratch tool salvage, and transcript introspection. |
 | [`trajectory_miner.py`](trajectory_miner.py) | `harness trajectory` | `trajectory-miner`, `conversation-miner` | Autobiographical execution trajectory archaeology and cognitive bifurcation. |
 | [`temp_miner.py`](temp_miner.py) | `harness temp` | `temp-miner`, `ephemeral-miner` | Ephemeral workspace archaeology, HTML visual brief extraction, and sandbox triage. |
-| [`reflection.py`](reflection.py) | `harness knowledge`, `reflect` | — | Knowledge Vault inspection, Isnad lineage, and endogenous reflection loop. |
+| [`reflection/`](reflection/) | `harness knowledge`, `reflect` | — | Knowledge Vault inspection, Isnad lineage, and endogenous reflection loop. |
 | [`bridges.py`](bridges.py) | `harness bridge` | — | Inspect and manage ecosystem bridges (Em-Cubed, Memtext, Skill Flywheel). |
 | [`antigravity.py`](antigravity.py) | `harness antigravity` | — | Google Antigravity SDK & CLI headless inspection seams. |
 | [`runtime.py`](runtime.py) | `harness config`, `apply`, `run`, `ui` | — | Configuration tree validation, declarative apply, interactive run, and web UI. |

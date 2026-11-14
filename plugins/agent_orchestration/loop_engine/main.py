@@ -6,7 +6,8 @@ from typing import Any
 
 import structlog
 
-from harness.kernel.context import ServiceKey
+from harness.kernel.context import ServiceContext, ServiceKey
+from harness.plugins.base import HarnessPlugin
 from plugins.agent_orchestration.loop_engine.loop_core import (
     DecisionFixture,
     LoopController,
@@ -333,3 +334,21 @@ class LoopEngineService:
 
 
 LOOP_ENGINE_SERVICE_KEY = ServiceKey[LoopEngineService]("domain.loop_engine")
+
+
+class LoopEnginePlugin(HarnessPlugin):
+    """Harness plugin exposing Goal-Directed Loop Engine service via IoC."""
+
+    name = "domain.loop_engine"
+    version = "1.1.0"
+    trusted = True
+
+    @property
+    def provides(self) -> list[ServiceKey[Any]]:
+        return [LOOP_ENGINE_SERVICE_KEY]
+
+    async def on_load(self, ctx: ServiceContext) -> None:
+        ctx.provide(LOOP_ENGINE_SERVICE_KEY, LoopEngineService(), provider=self.name, allow_override=True)
+
+
+plugin = LoopEnginePlugin()

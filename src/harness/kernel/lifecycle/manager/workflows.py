@@ -18,9 +18,7 @@ if TYPE_CHECKING:
 logger = structlog.get_logger()
 
 
-async def ensure_enabled(
-    manager: PluginLifecycle, entries: dict[str, PluginEntry], name: str
-) -> bool:
+async def ensure_enabled(manager: PluginLifecycle, entries: dict[str, PluginEntry], name: str) -> bool:
     """Advance a plugin from its current state directly to ENABLED."""
     entry = entries.get(name)
     if entry is None:
@@ -50,17 +48,13 @@ async def ensure_enabled(
         return False
 
 
-async def register_and_enable(
-    manager: PluginLifecycle, plugin: HarnessPlugin
-) -> bool:
+async def register_and_enable(manager: PluginLifecycle, plugin: HarnessPlugin) -> bool:
     """Atomically register, load, validate, and enable a plugin in one call."""
     manager.discover(plugin)
     return await manager.ensure_enabled(plugin.name)
 
 
-async def reload_plugin(
-    manager: PluginLifecycle, entries: dict[str, PluginEntry], plugin: HarnessPlugin
-) -> bool:
+async def reload_plugin(manager: PluginLifecycle, entries: dict[str, PluginEntry], plugin: HarnessPlugin) -> bool:
     """Atomically reload or hot-swap an active or modified plugin instance."""
     name = plugin.name
     if name in entries:

@@ -155,7 +155,9 @@ class DefaultBrainBridgeService(BrainBridgeService):
                 note="No brains or repositories attached. Run brain_attach first.",
             )
 
-        targets = [self._mounts[brain_alias]] if brain_alias and brain_alias in self._mounts else list(self._mounts.values())
+        targets = (
+            [self._mounts[brain_alias]] if brain_alias and brain_alias in self._mounts else list(self._mounts.values())
+        )
         if brain_alias and brain_alias not in self._mounts:
             return BrainQueryResult(
                 status="error",
@@ -183,16 +185,18 @@ class DefaultBrainBridgeService(BrainBridgeService):
 
                 score = sum(q_weight * chunk["vector"].get(term, 0.0) for term, q_weight in q_vec.items())
                 if score > 0.01:
-                    scored_results.append({
-                        "score": round(score, 4),
-                        "brain_alias": mount["alias"],
-                        "brain_format": mount["format"],
-                        "type": chunk_type,
-                        "file": chunk["file"],
-                        "start_line": chunk["start_line"],
-                        "end_line": chunk["end_line"],
-                        "snippet": chunk["content"][:350] + ("..." if len(chunk["content"]) > 350 else ""),
-                    })
+                    scored_results.append(
+                        {
+                            "score": round(score, 4),
+                            "brain_alias": mount["alias"],
+                            "brain_format": mount["format"],
+                            "type": chunk_type,
+                            "file": chunk["file"],
+                            "start_line": chunk["start_line"],
+                            "end_line": chunk["end_line"],
+                            "snippet": chunk["content"][:350] + ("..." if len(chunk["content"]) > 350 else ""),
+                        }
+                    )
 
         scored_results.sort(key=lambda x: x["score"], reverse=True)
         top_results = scored_results[:top_k]
@@ -212,9 +216,7 @@ class DefaultBrainBridgeService(BrainBridgeService):
         include_trajectories: bool = True,
         top_k: int = 5,
     ) -> BrainQueryResult:
-        return await asyncio.to_thread(
-            self.query, query, brain_alias, include_trajectories, top_k
-        )
+        return await asyncio.to_thread(self.query, query, brain_alias, include_trajectories, top_k)
 
     def list_attached(self) -> BrainListResult:
         mount_list = [

@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0.0",
+  "id": "ki_self_20261114_08_rule44_backfill_and_deep_auditor_ioc_elevation",
+  "title": "Rule 44 Zero-Fork Configuration Backfill and Deep Repo Auditor IoC Kernel Elevation",
+  "category": "architecture",
+  "source_target": "src/harness/services/deep_auditor/__init__.py",
+  "detected_format": "endogenous_reflection",
+  "tags": [
+    "architecture",
+    "rule44",
+    "rule49",
+    "deep_auditor",
+    "ioc"
+  ],
+  "anchors": {},
+  "edges": [
+    {
+      "type": "references_code",
+      "target": "src/harness/services/deep_auditor/__init__.py",
+      "target_kind": "source",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Elevates 4-axis repository audit, 5D compute vector scoring, and HTML visual briefs into DEEP_AUDITOR_SERVICE_KEY"
+    },
+    {
+      "type": "references_code",
+      "target": "plugins/software_engineering/deep_repo_auditor/main.py",
+      "target_kind": "source",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Subprocess-isolated HarnessPlugin adapter registering service.deep_auditor"
+    },
+    {
+      "type": "references_code",
+      "target": ".agents/skills/deep-repo-auditor/scripts/run_audit.py",
+      "target_kind": "source",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Thin CLI skill script delegating directly to DefaultDeepRepoAuditorService"
+    }
+  ],
+  "isnad": {
+    "decision_id": "dec_20261114_self_08",
+    "timestamp": "2026-11-14T20:15:00Z",
+    "status": "VERIFIED",
+    "claims": [
+      {
+        "claim_id": "claim_001",
+        "assertion": "All workspace skills and internal plugins must carry co-located config.default.yaml manifests (Rule 44), and core skill engines like /deep-repo-auditor elevate cleanly into slotted kernel services (Rule 49) using .replace() template substitution rather than raw f-string CSS braces (Rule 51).",
+        "evidence_type": "self_audit_remediation",
+        "source": "src/harness/services/deep_auditor/__init__.py; plugins/software_engineering/deep_repo_auditor/main.py; tests/test_service_deep_auditor.py",
+        "verified": true,
+        "confidence": 1.0
+      }
+    ]
+  },
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": "Brain Harness Deep Repo Auditor",
+  "created_at": "2026-11-14T20:15:00Z",
+  "distilled_learning": "# Rule 44 Zero-Fork Configuration Backfill and Deep Repo Auditor IoC Kernel Elevation"
+}

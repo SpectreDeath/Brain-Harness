@@ -121,3 +121,22 @@ async def test_async_bridge_methods(tmp_path: Path) -> None:
     query_res = await service.query_async("isnad chains", brain_alias="async_mount")
     assert query_res.status == "ok"
     assert query_res.results_count > 0
+
+
+def test_index_text_files_skips_external_and_ingested_fixtures(tmp_path: Path) -> None:
+    """Verify test_ingested_plugins and external directories are excluded from BrainBridge indexing."""
+    from harness.services.brain_bridge import index_text_files
+
+    (tmp_path / "src").mkdir()
+    (tmp_path / "src" / "core.py").write_text("def core_engine() -> str:\n    return 'core'\n", encoding="utf-8")
+
+    (tmp_path / "test_ingested_plugins" / "pkg").mkdir(parents=True)
+    (tmp_path / "test_ingested_plugins" / "pkg" / "noise.md").write_text("# Duplicate Noise\n", encoding="utf-8")
+
+    (tmp_path / "plugins" / "external" / "bundle").mkdir(parents=True)
+    (tmp_path / "plugins" / "external" / "bundle" / "noise2.md").write_text("# External Noise\n", encoding="utf-8")
+
+    chunks, _, _, _ = index_text_files(tmp_path)
+    indexed_files = {c["file"] for c in chunks}
+    assert any("core.py" in f for f in indexed_files)
+    assert not any("test_ingested_plugins" in f or "external" in f for f in indexed_files)

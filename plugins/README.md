@@ -12,7 +12,7 @@ Welcome to the Brain Harness Plugin Architecture Hub. The Brain Harness micro-ke
 flowchart TD
     User([Developer / AI Agent]) -->|CLI / API / MCP| Kernel[Brain Harness Micro-Kernel]
     Kernel -->|IoC Registration & Lifecycle| Registry[Plugin Registry & ServiceContext]
-    Registry -->|Topological Resolution| Plugins[11 Domain Plugin Categories / 151 Plugins]
+    Registry -->|Topological Resolution| Plugins[11 Domain Plugin Categories / 152 Plugins]
     Plugins -->|Subprocess RPC stdio| Sandbox[Subprocess Sandbox Transports]
     Plugins -->|In-Process Execution| CoreServices[Trusted Kernel In-Memory Services]
     Plugins -->|Network / External APIs| External[(External APIs: LLMs, OSINT, Cloud, Databases)]
@@ -88,7 +88,7 @@ The plugin ecosystem is cleanly partitioned into 11 single-responsibility domain
 | [machine_learning](machine_learning/README.md) | 1 | Machine Learning & Model Post-Training | Supervised fine-tuning harnesses, post-training optimization pipelines, and model evaluation telemetry using Tunix. |
 | [memory_and_epistemics](memory_and_epistemics/README.md) | 19 | Memory, Epistemics & Context Engineering | Multi-store autobiographical memory federation, OKF memory governance, Graphiti knowledge graphs, MemGraphRAG, context compactor/compiler pipelines, decay scoring, and prompt pruning layers. |
 | [security_and_forensics](security_and_forensics/README.md) | 21 | Security, Forensics & Execution Policy Gates | Codex execution policies, runtime policy gates, Vibe dynamic security scanners, secret leak detection, network/log forensic analysis, and trajectory audits. |
-| [software_engineering](software_engineering/README.md) | 14 | Software Engineering & Code Archaeology | Architectural linting, isolated code execution, transactional Git filesystem checkpoints, automated refactoring engines, PR lens architectural diff visualizers, and repo triad forge pipelines. |
+| [software_engineering](software_engineering/README.md) | 15 | Software Engineering & Code Archaeology | Architectural linting, isolated code execution, transactional Git filesystem checkpoints, automated refactoring engines, PR lens architectural diff visualizers, and repo triad forge pipelines. |
 
 ---
 

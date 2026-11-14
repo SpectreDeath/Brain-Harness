@@ -202,7 +202,7 @@ class EbbinghausMemoryEngine:
 class DecaySessionStore:
     """Thread-safe authoritative store managing active and archived memory sessions."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self._lock = threading.Lock()
         self._sessions: dict[str, EbbinghausMemoryEngine] = {}
 
@@ -290,7 +290,7 @@ def generate_session(config: SessionConfig) -> list[tuple[str, str, Any]]:
         is_found = k in foundational_set
         events.append(("register", k, {"is_foundational": is_found, "content": f"Fact about {k}"}))
 
-    registered_so_far = []
+    registered_so_far: list[str] = []
     for turn in range(1, config.num_turns + 1):
         if all_keys and len(registered_so_far) < len(all_keys):
             next_k = all_keys[len(registered_so_far)]

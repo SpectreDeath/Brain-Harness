@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.0.0",
+  "id": "ki_self_20261114_04_brainbridge_external_plugin_pruning",
+  "title": "BrainBridge Indexer Pruning of test_ingested_plugins and external Directories",
+  "category": "software_engineering",
+  "source_target": "src/harness/services/brain_bridge/indexers.py",
+  "detected_format": "endogenous_reflection",
+  "tags": [
+    "software_engineering",
+    "brain_bridge",
+    "rule52",
+    "directory_pruning",
+    "self_audit"
+  ],
+  "anchors": {},
+  "edges": [
+    {
+      "type": "references_code",
+      "target": "src/harness/services/brain_bridge/indexers.py",
+      "target_kind": "source",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Prunes test_ingested_plugins and external directories via dirs[:] mutation during os.walk"
+    },
+    {
+      "type": "references_code",
+      "target": "tests/test_brain_bridge_deepened_service.py",
+      "target_kind": "source",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Verifies fixture external/ingested files are excluded during text indexing"
+    }
+  ],
+  "isnad": {
+    "decision_id": "dec_20261114_self_04",
+    "timestamp": "2026-11-14T20:15:00Z",
+    "status": "VERIFIED",
+    "claims": [
+      {
+        "claim_id": "claim_001",
+        "assertion": "Repository and brain indexers mutating dirs[:] in os.walk must exclude test_ingested_plugins and external alongside build/cache directories per Rule 52 so ingested external bundles and test fixtures never pollute internal semantic search results.",
+        "evidence_type": "self_audit_remediation",
+        "source": "src/harness/services/brain_bridge/indexers.py; tests/test_brain_bridge_deepened_service.py",
+        "verified": true,
+        "confidence": 1.0
+      }
+    ]
+  },
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": "Brain Harness Deep Repo Auditor",
+  "created_at": "2026-11-14T20:15:00Z",
+  "distilled_learning": "# BrainBridge Indexer Pruning of test_ingested_plugins and external Directories"
+}

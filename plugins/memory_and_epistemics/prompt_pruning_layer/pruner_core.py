@@ -250,7 +250,7 @@ def generate_corpus(num_turns: int = 100, workload: WorkloadConfig = WORKLOAD_TO
         f"Standard documentation excerpt {i} regarding system configuration and runtime parameters."
         for i in range(8)
     ]
-    defined_keys_pool = []
+    defined_keys_pool: list[tuple[str, str]] = []
 
     for t in range(1, num_turns + 1):
         # 1. User message

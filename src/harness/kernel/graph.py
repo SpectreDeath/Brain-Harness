@@ -29,6 +29,7 @@ class CyclicDependencyError(Exception):
 
 class GraphCycleError(CyclicDependencyError):
     """Semantic graph cycle detection error."""
+
     pass
 
 

@@ -34,6 +34,10 @@ jobs:
         run: |
           ruff check .
 
+      - name: Run Scoped Ruff Format Check
+        run: |
+          ruff format --check src/harness/kernel src/harness/services/brain_bridge src/harness/services/deep_auditor src/harness/services/harness_spawner src/harness/services/dock src/harness/commands/reflection plugins/software_engineering/deep_repo_auditor tests/test_service_deep_auditor.py
+
   frontend:
     name: Frontend Build & Lint
     runs-on: ubuntu-latest
@@ -97,6 +101,13 @@ jobs:
       - name: Fast Unit Tests (Gate)
         run: |
           pytest -m "unit" -q --timeout=60
+
+      - name: Architectural & Epistemic Hygiene Gates
+        if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.11'
+        run: |
+          mypy src/harness/kernel --ignore-missing-imports
+          python -m harness.cli context lint
+          python -m harness.cli knowledge sync --strict
 
       - name: Integration & Contract Tests (Coverage)
         run: |

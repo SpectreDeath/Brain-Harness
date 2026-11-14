@@ -14,9 +14,11 @@
 - **Split Trigger**: **2,200 LOC**.
 - **Rationale**: The service provides cohesive, high-throughput routing across four sandboxed plugins (`rea_native`, `rea_managed_runtime`, `rea_mobile_firmware`, `rea_javascript`). Splitting before 2,200 LOC introduces unnecessary indirection and cross-file imports for stable routing tables and alias maps.
 - **Decomposition Target**: When line count reaches 2,200 LOC, decompose into:
-  - `src/harness/services/rea/routing.py` (Artifact routing tables and alias resolution)
-  - `src/harness/services/rea/detection.py` (Heuristic artifact type detection)
-  - `src/harness/services/rea/service.py` (StandardReaToolkitService facade)
+```text
+src/harness/services/rea/routing.py    (Artifact routing tables and alias resolution)
+src/harness/services/rea/detection.py  (Heuristic artifact type detection)
+src/harness/services/rea/service.py    (StandardReaToolkitService facade)
+```
 
 ---
 
@@ -26,7 +28,10 @@
 - **Decision**: Temporary sizing exemption under Rule 11.
 - **Ceiling Cap**: **400 LOC**.
 - **Rationale**: Pre-existing legacy PE/CLI parser ported from the TypeScript upstream. Out of scope for commit `cf0300a` / `f0460de` model artifact hardening. Deferred to a dedicated PE decomposition milestone.
-- **Decomposition Target**: When modified or reaching 400 LOC, factor out CLI metadata directory parsing into `engine/pe_cli.py`.
+- **Decomposition Target**: When modified or reaching 400 LOC, factor out CLI metadata directory parsing:
+```text
+engine/pe_cli.py
+```
 
 ---
 
@@ -35,12 +40,14 @@
 - **Role**: Zero-allocation pure-Python AI model artifact inspection engine (GGUF, Safetensors, TFLite FlatBuffers, Keras/HDF5, TensorFlow SavedModel PB, TF.js weight shards).
 - **Decision**: Sizing exemption under Rule 20 (cohesive binary dispatcher deepened in-place).
 - **Ceiling Cap / Re-trigger**: **600 LOC**.
-- **Trajectory**: File expanded from 412 LOC to 507 LOC (+95 lines) to implement true FlatBuffer table traversal for TFLite models (`Model.subgraphs.tensors`) and TF.js sibling `model.json` parsing.
+- **Trajectory**: File expanded from 412 LOC to 507 LOC (+95 lines) to implement true FlatBuffer table traversal for TFLite models (`Model.subgraphs.tensors`) and TF.js sibling weight manifest parsing.
 - **Decomposition Target**: If further precision parsers expand this module beyond 600 LOC, split into `engine/model_parsers/` subpackage:
-  - `tflite_parser.py` (FlatBuffer traversal)
-  - `hdf5_parser.py` (Superblock and layer weight extraction)
-  - `gguf_safetensors.py` (Zero-allocation tensor metadata)
-  - `protobuf_tfjs.py` (SavedModel PB and weight shard manifests)
+```text
+tflite_parser.py    (FlatBuffer traversal)
+hdf5_parser.py      (Superblock and layer weight extraction)
+gguf_safetensors.py (Zero-allocation tensor metadata)
+protobuf_tfjs.py    (SavedModel PB and weight shard manifests)
+```
 
 ---
 

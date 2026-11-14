@@ -33,21 +33,15 @@ async def execute_disable(
     if cascade:
         dependents = get_dependents(entries, name)
         active_dependents = [
-            dep
-            for dep in dependents
-            if entries.get(dep) and entries[dep].state == PluginState.ENABLED
+            dep for dep in dependents if entries.get(dep) and entries[dep].state == PluginState.ENABLED
         ]
         if active_dependents:
             try:
-                all_active = [
-                    n for n, e in entries.items() if e.state == PluginState.ENABLED
-                ]
+                all_active = [n for n, e in entries.items() if e.state == PluginState.ENABLED]
                 graph = manager.build_dependency_graph(all_active)
                 trans_deps = graph.transitive_dependents(name)
                 active_trans_deps = [
-                    dep
-                    for dep in trans_deps
-                    if entries.get(dep) and entries[dep].state == PluginState.ENABLED
+                    dep for dep in trans_deps if entries.get(dep) and entries[dep].state == PluginState.ENABLED
                 ]
                 target_deps = active_trans_deps or active_dependents
                 order = manager.resolve_enable_order(target_deps)
@@ -85,21 +79,15 @@ async def execute_unload(
     else:
         dependents = get_dependents(entries, name)
         active_dependents = [
-            dep
-            for dep in dependents
-            if entries.get(dep) and entries[dep].state == PluginState.ENABLED
+            dep for dep in dependents if entries.get(dep) and entries[dep].state == PluginState.ENABLED
         ]
         if active_dependents:
             try:
-                all_active = [
-                    n for n, e in entries.items() if e.state == PluginState.ENABLED
-                ]
+                all_active = [n for n, e in entries.items() if e.state == PluginState.ENABLED]
                 graph = manager.build_dependency_graph(all_active)
                 trans_deps = graph.transitive_dependents(name)
                 active_trans_deps = [
-                    dep
-                    for dep in trans_deps
-                    if entries.get(dep) and entries[dep].state == PluginState.ENABLED
+                    dep for dep in trans_deps if entries.get(dep) and entries[dep].state == PluginState.ENABLED
                 ]
                 target_deps = active_trans_deps or active_dependents
                 order = manager.resolve_enable_order(target_deps)

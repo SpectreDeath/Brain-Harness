@@ -9,7 +9,7 @@ from harness.kernel.context import ServiceContext, ServiceKey
 from harness.kernel.runtime.tools import export_runtime_session
 
 if TYPE_CHECKING:
-    from harness.agent.session import AgentSessionManagerService
+    from harness.agent.session import AgentSessionManager
 
 # Windows UTF-8 Stream Codec Entrypoint Invariant (Rule 23)
 if sys.platform == "win32":
@@ -55,7 +55,7 @@ class RuntimeServicesMixin:
         return self._context.optional(AGENT_LOOP_KEY)
 
     @property
-    def sessions(self) -> AgentSessionManagerService | None:
+    def sessions(self) -> AgentSessionManager | None:
         """Agent session manager service if available."""
         from harness.agent.session import AGENT_SESSION_MANAGER_KEY
 

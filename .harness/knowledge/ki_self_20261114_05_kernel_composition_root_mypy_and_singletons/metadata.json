@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0.0",
+  "id": "ki_self_20261114_05_kernel_composition_root_mypy_and_singletons",
+  "title": "Micro-Kernel Composition Root Boundary, Transitive Mypy Hygiene & Rule 45 Singletons",
+  "category": "software_engineering",
+  "source_target": "src/harness/kernel/README.md",
+  "detected_format": "endogenous_reflection",
+  "tags": [
+    "software_engineering",
+    "micro_kernel",
+    "mypy",
+    "rule45",
+    "ioc"
+  ],
+  "anchors": {},
+  "edges": [
+    {
+      "type": "references_code",
+      "target": "src/harness/kernel/README.md",
+      "target_kind": "source",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Documents the Composition Root Boundary invariant keeping domain plugins decoupled from kernel internals"
+    },
+    {
+      "type": "references_code",
+      "target": "src/harness/kernel/context/interceptors.py",
+      "target_kind": "source",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Annotates interceptor chain list with strict mypy compliance"
+    },
+    {
+      "type": "references_code",
+      "target": "plugins/agent_orchestration/loop_engine/main.py",
+      "target_kind": "source",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Exports HarnessPlugin subclass and module-level plugin singleton per Rule 45"
+    }
+  ],
+  "isnad": {
+    "decision_id": "dec_20261114_self_05",
+    "timestamp": "2026-11-14T20:15:00Z",
+    "status": "VERIFIED",
+    "claims": [
+      {
+        "claim_id": "claim_001",
+        "assertion": "The micro-kernel (src/harness/kernel/) remains strictly statically typed (mypy --ignore-missing-imports with 0 errors across 37 files) as the composition root, while every first-party plugin under plugins/ must subclass HarnessPlugin and export a module-level plugin singleton per Rule 45.",
+        "evidence_type": "self_audit_remediation",
+        "source": "src/harness/kernel/README.md; src/harness/kernel/context/interceptors.py; plugins/agent_orchestration/loop_engine/main.py",
+        "verified": true,
+        "confidence": 1.0
+      }
+    ]
+  },
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": "Brain Harness Deep Repo Auditor",
+  "created_at": "2026-11-14T20:15:00Z",
+  "distilled_learning": "# Micro-Kernel Composition Root Boundary, Transitive Mypy Hygiene & Rule 45 Singletons"
+}

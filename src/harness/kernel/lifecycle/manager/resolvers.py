@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, cast
 
 from harness.kernel.lifecycle.manager.core import PluginLifecycle
 from harness.kernel.lifecycle.models import PLUGIN_LIFECYCLE_KEY
@@ -11,14 +11,14 @@ from harness.kernel.lifecycle.models import PLUGIN_LIFECYCLE_KEY
 def resolve_plugin_lifecycle(context: Any) -> PluginLifecycle:
     """Resolve or instantiate PluginLifecycle through single-seam IoC (Rule 58)."""
     if hasattr(context, "lifecycle") and isinstance(context.lifecycle, PluginLifecycle):
-        return context.lifecycle
+        return cast(PluginLifecycle, context.lifecycle)
     if hasattr(context, "_lifecycle") and isinstance(context._lifecycle, PluginLifecycle):
-        return context._lifecycle
+        return cast(PluginLifecycle, context._lifecycle)
 
     if hasattr(context, "optional") and callable(context.optional):
         existing = context.optional(PLUGIN_LIFECYCLE_KEY)
         if existing is not None and isinstance(existing, PluginLifecycle):
-            return existing
+            return cast(PluginLifecycle, existing)
 
     lc = PluginLifecycle(context)
     if hasattr(context, "provide") and callable(context.provide):

@@ -50,9 +50,7 @@ class ServiceContext:
     ) -> None:
         self._entries: dict[str, ServiceEntry] = {}
         self._parent = parent
-        self._event_bus: Any | None = event_bus or (
-            parent._event_bus if parent else None
-        )
+        self._event_bus: Any | None = event_bus or (parent._event_bus if parent else None)
         self._plugin_services: dict[str, list[str]] = {}
         self._dispose_stack: list[Any] = []
         self._realms: dict[str, str] = {}
@@ -85,9 +83,7 @@ class ServiceContext:
             curr = curr._parent
         return curr
 
-    def intercept(
-        self, key: ServiceKey[T], wrapper: Callable[[T], T]
-    ) -> ServiceContext:
+    def intercept(self, key: ServiceKey[T], wrapper: Callable[[T], T]) -> ServiceContext:
         return create_intercepted_context(self, key, wrapper)
 
     def _collect_interceptors(self, key_name: str) -> list[Callable[[Any], Any]]:
@@ -109,9 +105,7 @@ class ServiceContext:
     def subscribe(self, event_type: Any, handler: Any) -> Any:
         return subscribe_event(self, event_type, handler)
 
-    def _emit_event(
-        self, event_type: Any, source: str, payload: dict[str, Any]
-    ) -> None:
+    def _emit_event(self, event_type: Any, source: str, payload: dict[str, Any]) -> None:
         if self._event_bus is not None:
             from harness.events.types import HarnessEvent
 
@@ -138,9 +132,7 @@ class ServiceContext:
         provider: str | None = None,
         allow_override: bool = False,
     ) -> None:
-        provide_service(
-            self, key, instance, provider=provider, allow_override=allow_override
-        )
+        provide_service(self, key, instance, provider=provider, allow_override=allow_override)
 
     def require(self, key: ServiceKey[T]) -> T:
         return require_service(self, key)

@@ -14,6 +14,7 @@ Brain Harness strictly separates kernel mechanisms from domain capabilities:
 - **Subprocess Transport Disposal (Rule 14 & Rule 53)**: Subprocess sandbox IPC transports drain and close `stdin`/`stdout`/`stderr` inside `finally` blocks, draining stderr into a bounded ring buffer to prevent OS pipe deadlocks.
 - **Dispose Stack Synchronization (Rule 54)**: Inverse effect closures in `_dispose_stack` carry realm key and provider metadata, purging matching closures upon service revocation.
 - **Non-Invasive Extensibility (Rule 19)**: Extensibility is achieved through adapters, metadata decorators, and inspectors without mutating core `ServiceContext` constructor contracts.
+- **Composition Root Boundary (`runtime/` vs `context/` & `lifecycle/`)**: `kernel/context/` and `kernel/lifecycle/` remain pure micro-kernel dependency-injection and DAG-sorting engines decoupled from concrete domain implementations; only `kernel/runtime/` acts as the bootstrap composition root binding runtime defaults (storage, tools, bridges, sessions, and agent loops).
 
 ---
 

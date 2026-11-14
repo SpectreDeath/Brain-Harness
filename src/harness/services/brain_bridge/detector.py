@@ -41,7 +41,15 @@ def detect_brain_format(root: Path) -> str:
         except (OSError, UnicodeDecodeError):
             pass
 
-    manifest_markers = ["pyproject.toml", "package.json", "Cargo.toml", "go.mod", "pom.xml", "build.gradle", "CMakeLists.txt"]
+    manifest_markers = [
+        "pyproject.toml",
+        "package.json",
+        "Cargo.toml",
+        "go.mod",
+        "pom.xml",
+        "build.gradle",
+        "CMakeLists.txt",
+    ]
     if any((root / marker).exists() for marker in manifest_markers):
         return "git_repository"
     return "raw_docs"

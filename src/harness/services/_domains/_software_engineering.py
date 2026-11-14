@@ -197,3 +197,18 @@ from harness.services.ui_behavior_architect import (
     UIBehaviorArchitectEngine,
     UIBehaviorArchitectProtocol,
 )
+
+from harness.services.deep_auditor import (
+    DEEP_AUDITOR_SERVICE_KEY,
+    AxisFinding,
+    ComputeDimensionVector,
+    DeepAuditCollector,
+    DeepAuditReport,
+    DeepRepoAuditorService,
+    DefaultDeepRepoAuditorService,
+    TopologyNodeSummary,
+    VisualBriefPaths,
+    generate_audit_visual_briefs,
+    resolve_deep_repo_auditor,
+    resolve_nested_project_root,
+)

@@ -1,0 +1,58 @@
+{
+  "schema_version": "1.0.0",
+  "id": "ki_self_20261114_01_python310_timezone_utc_ci_matrix_gate",
+  "title": "Python 3.10 Matrix Compatibility: Prefer datetime.timezone.utc Over 3.11+ datetime.UTC",
+  "category": "software_engineering",
+  "source_target": "src/harness/services/graphiti_zep_memory.py",
+  "detected_format": "endogenous_reflection",
+  "tags": [
+    "software_engineering",
+    "endogenous_memory",
+    "self_reflection",
+    "python310",
+    "ci_matrix",
+    "datetime_utc"
+  ],
+  "anchors": {},
+  "edges": [
+    {
+      "type": "references_code",
+      "target": "src/harness/services/graphiti_zep_memory.py",
+      "target_kind": "source",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Replaced Python 3.11+ datetime.UTC import with Python 3.10+ timezone.utc in commit c8bebbe"
+    },
+    {
+      "type": "references_code",
+      "target": "src/harness/services/__init__.py",
+      "target_kind": "source",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Eagerly exports domain services at package import time across all matrix versions"
+    }
+  ],
+  "isnad": {
+    "decision_id": "dec_20261114_self_01",
+    "timestamp": "2026-11-14T19:13:30Z",
+    "status": "VERIFIED",
+    "claims": [
+      {
+        "claim_id": "claim_001",
+        "assertion": "Importing datetime.UTC breaks pytest collection across shared service exports on Python 3.10 matrix runners because datetime.UTC was introduced in Python 3.11; modules imported via harness.services.__init__ must use from datetime import datetime, timezone and timezone.utc.",
+        "evidence_type": "ci_telemetry_and_fix",
+        "source": "GitHub Actions run_id=43628036027 job_id=132548282341 (266 collection errors on ubuntu-latest Python 3.10) -> commit c8bebbe run_id=43629131238 (7/7 jobs passed); src/harness/services/graphiti_zep_memory.py#L14,L183-L184",
+        "verified": true,
+        "confidence": 1.0
+      }
+    ]
+  },
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": "Brain Harness Reflector (harness-reflector)",
+  "created_at": "2026-11-14T19:13:30Z",
+  "distilled_learning": "# Python 3.10 Matrix Compatibility: Use datetime.timezone.utc Instead of 3.11+ datetime.UTC"
+}

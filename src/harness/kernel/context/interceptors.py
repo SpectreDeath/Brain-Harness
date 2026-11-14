@@ -40,17 +40,17 @@ def collect_interceptors(
     root_epoch = getattr(root, "_interceptor_epoch", 0)
     cached = context._compiled_interceptors.get(key_name)
     if cached is not None and isinstance(cached, tuple):
-        cached_epoch, chain = cached
+        cached_epoch, cached_chain = cached
         if cached_epoch == root_epoch:
-            return list(chain)
+            return list(cached_chain)
 
     with root._mutation_lock:
         root_epoch = getattr(root, "_interceptor_epoch", 0)
         cached = context._compiled_interceptors.get(key_name)
         if cached is not None and isinstance(cached, tuple):
-            cached_epoch, chain = cached
+            cached_epoch, cached_chain = cached
             if cached_epoch == root_epoch:
-                return list(chain)
+                return list(cached_chain)
 
         chain: list[Callable[[Any], Any]] = []
         if context._parent is not None:

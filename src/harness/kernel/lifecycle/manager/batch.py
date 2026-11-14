@@ -68,9 +68,7 @@ async def enable_all_plugins(
         logger.error("Cannot enable plugins: cyclic dependencies detected")
         raise
 
-    results: dict[str, bool] = {
-        n: True for n, e in entries.items() if e.state == PluginState.ENABLED
-    }
+    results: dict[str, bool] = {n: True for n, e in entries.items() if e.state == PluginState.ENABLED}
     failed_names: set[str] = set()
     graph = manager.build_dependency_graph(to_enable)
 
@@ -80,10 +78,10 @@ async def enable_all_plugins(
             if any(dep in failed_names for dep in graph.transitive_dependencies(name)):
                 failed_names.add(name)
                 results[name] = False
-                entry = entries.get(name)
-                if entry and entry.state != PluginState.ERROR:
-                    entry.state = PluginState.ERROR
-                    entry.error = "Prerequisite plugin failure in dependencies"
+                failed_entry: PluginEntry | None = entries.get(name)
+                if failed_entry and failed_entry.state != PluginState.ERROR:
+                    failed_entry.state = PluginState.ERROR
+                    failed_entry.error = "Prerequisite plugin failure in dependencies"
             else:
                 runnable.append(name)
 
@@ -91,10 +89,7 @@ async def enable_all_plugins(
             continue
 
         wave_results = await asyncio.gather(
-            *[
-                asyncio.wait_for(manager.enable(n), timeout=enable_timeout)
-                for n in runnable
-            ],
+            *[asyncio.wait_for(manager.enable(n), timeout=enable_timeout) for n in runnable],
             return_exceptions=True,
         )
 
@@ -102,14 +97,12 @@ async def enable_all_plugins(
             if isinstance(res, Exception):
                 failed_names.add(name)
                 results[name] = False
-                entry = entries.get(name)
-                if entry and entry.state != PluginState.ERROR:
-                    entry.state = PluginState.ERROR
-                    entry.error = str(res) or f"Timed out after {enable_timeout}s"
+                wave_entry: PluginEntry | None = entries.get(name)
+                if wave_entry and wave_entry.state != PluginState.ERROR:
+                    wave_entry.state = PluginState.ERROR
+                    wave_entry.error = str(res) or f"Timed out after {enable_timeout}s"
                 context.set_plugin_services_active(name, False)
-                logger.error(
-                    "Failed to enable plugin in wave", plugin=name, error=str(res)
-                )
+                logger.error("Failed to enable plugin in wave", plugin=name, error=str(res))
             else:
                 results[name] = True
 
@@ -123,9 +116,7 @@ async def disable_all_plugins(
 ) -> dict[str, bool]:
     """Disable all enabled plugins in reverse dependency order, optionally excluding specific plugins."""
     exclude_set = exclude or set()
-    enabled = [
-        n for n, e in entries.items() if e.state == PluginState.ENABLED and n not in exclude_set
-    ]
+    enabled = [n for n, e in entries.items() if e.state == PluginState.ENABLED and n not in exclude_set]
 
     try:
         order = manager.resolve_enable_order(enabled)
@@ -144,9 +135,7 @@ async def disable_all_plugins(
     return results
 
 
-async def unload_all_plugins(
-    manager: PluginLifecycle, entries: dict[str, PluginEntry]
-) -> dict[str, bool]:
+async def unload_all_plugins(manager: PluginLifecycle, entries: dict[str, PluginEntry]) -> dict[str, bool]:
     """Unload all plugins, disabling them first if needed."""
     await manager.disable_all()
 

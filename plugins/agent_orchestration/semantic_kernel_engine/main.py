@@ -12,6 +12,9 @@ import re
 import urllib.parse
 from typing import Any
 
+from harness.kernel.context import ServiceContext, ServiceKey
+from harness.plugins.base import HarnessPlugin
+
 
 def _tokenize(text: str) -> list[str]:
     """Tokenize text into lowercase alphanumeric terms."""
@@ -329,3 +332,82 @@ def execute_openapi_plugin(
         "endpoint": full_url,
         "response": mock_response
     }
+
+
+class SemanticKernelEngineService:
+    """Service class exposing Microsoft Semantic Kernel orchestration primitives."""
+
+    def orchestrate_group_chat(
+        self,
+        agents: list[dict[str, Any]],
+        task: str,
+        strategy: str = "round_robin",
+        max_rounds: int = 6,
+        termination_keyword: str = "APPROVED",
+    ) -> dict[str, Any]:
+        return orchestrate_group_chat(
+            agents=agents,
+            task=task,
+            strategy=strategy,
+            max_rounds=max_rounds,
+            termination_keyword=termination_keyword,
+        )
+
+    def execute_kernel_process(
+        self,
+        process_name: str,
+        steps: list[dict[str, Any]],
+        initial_state: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        return execute_kernel_process(process_name=process_name, steps=steps, initial_state=initial_state)
+
+    def render_semantic_prompt(
+        self,
+        template: str,
+        variables: dict[str, Any],
+        engine: str = "handlebars",
+    ) -> dict[str, Any]:
+        return render_semantic_prompt(template=template, variables=variables, engine=engine)
+
+    def search_semantic_memory(
+        self,
+        query: str,
+        documents: list[dict[str, Any]],
+        limit: int = 5,
+        min_relevance: float = 0.5,
+    ) -> dict[str, Any]:
+        return search_semantic_memory(query=query, documents=documents, limit=limit, min_relevance=min_relevance)
+
+    def execute_openapi_plugin(
+        self,
+        openapi_spec: dict[str, Any],
+        operation_id: str,
+        arguments: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        return execute_openapi_plugin(openapi_spec=openapi_spec, operation_id=operation_id, arguments=arguments)
+
+
+SEMANTIC_KERNEL_ENGINE_KEY = ServiceKey[SemanticKernelEngineService]("domain.semantic_kernel_engine")
+
+
+class SemanticKernelEnginePlugin(HarnessPlugin):
+    """Harness plugin registering SemanticKernelEngineService into the IoC container."""
+
+    name = "domain.semantic_kernel_engine"
+    version = "1.0.0"
+    trusted = True
+
+    @property
+    def provides(self) -> list[ServiceKey[Any]]:
+        return [SEMANTIC_KERNEL_ENGINE_KEY]
+
+    async def on_load(self, ctx: ServiceContext) -> None:
+        ctx.provide(
+            SEMANTIC_KERNEL_ENGINE_KEY,
+            SemanticKernelEngineService(),
+            provider=self.name,
+            allow_override=True,
+        )
+
+
+plugin = SemanticKernelEnginePlugin()

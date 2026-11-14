@@ -38,7 +38,9 @@ class PluginConfigEntry(BaseModel):
     name: str = Field(..., description="Plugin module name or registered identifier")
     source: str | None = Field(None, description="Optional GitHub URL, local path, or package name")
     config: dict[str, Any] = Field(default_factory=dict, description="Configuration parameters passed to plugin")
-    isolate: dict[str, str] = Field(default_factory=dict, description="Coeffect isolation realm mappings (key -> realm)")
+    isolate: dict[str, str] = Field(
+        default_factory=dict, description="Coeffect isolation realm mappings (key -> realm)"
+    )
     disabled: bool = Field(False, description="Whether the plugin is administratively disabled")
 
 
@@ -77,13 +79,7 @@ class ConfigurationDriftReport:
 
     @property
     def has_drift(self) -> bool:
-        return bool(
-            self.to_add
-            or self.to_remove
-            or self.to_update
-            or self.to_disable
-            or self.to_enable
-        )
+        return bool(self.to_add or self.to_remove or self.to_update or self.to_disable or self.to_enable)
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -117,9 +113,7 @@ class ConfigurationReconciler:
     ) -> ConfigurationDriftReport:
         """Compute pre-flight declarative drift without applying any lifecycle mutations."""
         if isinstance(config, list):
-            target_tree = HarnessConfigTree(
-                plugins=[PluginConfigEntry.model_validate(item) for item in config]
-            )
+            target_tree = HarnessConfigTree(plugins=[PluginConfigEntry.model_validate(item) for item in config])
         elif isinstance(config, dict):
             target_tree = HarnessConfigTree.model_validate(config)
         else:
@@ -145,10 +139,7 @@ class ConfigurationReconciler:
                     report.to_disable.append(plugin_name)
                 elif not target_entry.disabled and old_entry.disabled:
                     report.to_enable.append(plugin_name)
-                elif (
-                    target_entry.config != old_entry.config
-                    or target_entry.isolate != old_entry.isolate
-                ):
+                elif target_entry.config != old_entry.config or target_entry.isolate != old_entry.isolate:
                     report.to_update.append(plugin_name)
                 else:
                     report.unchanged.append(plugin_name)
@@ -179,9 +170,7 @@ class ConfigurationReconciler:
             ReconciliationResult with detailed change metrics.
         """
         if isinstance(config, list):
-            target_tree = HarnessConfigTree(
-                plugins=[PluginConfigEntry.model_validate(item) for item in config]
-            )
+            target_tree = HarnessConfigTree(plugins=[PluginConfigEntry.model_validate(item) for item in config])
         elif isinstance(config, dict):
             target_tree = HarnessConfigTree.model_validate(config)
         else:
@@ -235,6 +224,7 @@ class ConfigurationReconciler:
                         # Apply isolation realms to context if configured
                         for key_name, realm in target_entry.isolate.items():
                             from harness.kernel.context import ServiceKey
+
                             self._runtime.context.isolate(ServiceKey(key_name), realm)
 
                         result.updated.append(plugin_name)
@@ -249,6 +239,7 @@ class ConfigurationReconciler:
                     # Apply isolation realms if defined
                     for key_name, realm in target_entry.isolate.items():
                         from harness.kernel.context import ServiceKey
+
                         self._runtime.context.isolate(ServiceKey(key_name), realm)
 
                     # Ingest if external source is provided

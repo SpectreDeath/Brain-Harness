@@ -1,0 +1,58 @@
+{
+  "schema_version": "1.0.0",
+  "id": "ki_self_20261114_02_skill_card_single_key_lines_and_numbered_stages",
+  "title": "SkillCardParser Grammar: Single-Key CARD.md Header Lines & Numbered SKILL.md Stage Headings",
+  "category": "agent_orchestration",
+  "source_target": "src/harness/services/skill_knowledge_graph.py",
+  "detected_format": "endogenous_reflection",
+  "tags": [
+    "agent_orchestration",
+    "endogenous_memory",
+    "self_reflection",
+    "skill_card_parser",
+    "skills_hygiene",
+    "crafting_skills"
+  ],
+  "anchors": {},
+  "edges": [
+    {
+      "type": "references_code",
+      "target": "tests/test_skills_hygiene.py",
+      "target_kind": "test",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Enforces len(node.stages) >= 2 across all discovered skills"
+    },
+    {
+      "type": "references_code",
+      "target": ".agents/skills/shim-harness-governor/SKILL.md",
+      "target_kind": "skill",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Fixed numbered ## 1. / ## 2. / ## 3. stage headings and CARD.md single-key lines"
+    }
+  ],
+  "isnad": {
+    "decision_id": "dec_20261114_self_02",
+    "timestamp": "2026-11-14T19:13:30Z",
+    "status": "VERIFIED",
+    "claims": [
+      {
+        "claim_id": "claim_001",
+        "assertion": "SkillCardParser captures everything after Category:/Domain: on a header line into the node category and requires >= 2 numbered section headings ('## 1. ...', '## 2. ...') in SKILL.md; multi-column CARD.md header lines pollute skills index categories and unnumbered pillar lists yield stages=[] in test_all_skills_parser_and_pillars.",
+        "evidence_type": "test_failure_and_index_audit",
+        "source": "harness.cli skills index --json category pollution + tests/test_skills_hygiene.py::TestSkillsEcosystemHygiene::test_all_skills_parser_and_pillars failure (stages=0 -> 46 passed after fix); .agents/skills/shim-harness-governor/{CARD.md,SKILL.md}",
+        "verified": true,
+        "confidence": 1.0
+      }
+    ]
+  },
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": "Brain Harness Reflector (harness-reflector)",
+  "created_at": "2026-11-14T19:13:30Z",
+  "distilled_learning": "# SkillCardParser Grammar: Single-Key CARD.md Lines & Numbered SKILL.md Stage Headings"
+}

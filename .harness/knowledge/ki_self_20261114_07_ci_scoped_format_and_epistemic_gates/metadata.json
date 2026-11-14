@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.0.0",
+  "id": "ki_self_20261114_07_ci_scoped_format_and_epistemic_gates",
+  "title": "Scoped Ruff Formatting & Architectural/Epistemic Hygiene Gates in GitHub Actions CI",
+  "category": "software_engineering",
+  "source_target": ".github/workflows/ci.yml",
+  "detected_format": "endogenous_reflection",
+  "tags": [
+    "software_engineering",
+    "ci_cd",
+    "ruff",
+    "mypy",
+    "epistemic_gates"
+  ],
+  "anchors": {},
+  "edges": [
+    {
+      "type": "references_code",
+      "target": ".github/workflows/ci.yml",
+      "target_kind": "source",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Enforces scoped ruff format --check alongside kernel mypy, harness.cli context lint, and knowledge sync --strict"
+    },
+    {
+      "type": "references_code",
+      "target": "pyproject.toml",
+      "target_kind": "source",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Configures ruff line-length=120 and mypy target settings"
+    }
+  ],
+  "isnad": {
+    "decision_id": "dec_20261114_self_07",
+    "timestamp": "2026-11-14T20:15:00Z",
+    "status": "VERIFIED",
+    "claims": [
+      {
+        "claim_id": "claim_001",
+        "assertion": "CI quality enforcement in mixed-history repositories must scope ruff format --check to hardened and newly refactored packages rather than reformatting unrelated legacy modules, while gating pull requests on kernel mypy, context lint, and knowledge sync --strict on Ubuntu Python 3.11.",
+        "evidence_type": "self_audit_remediation",
+        "source": ".github/workflows/ci.yml; pyproject.toml",
+        "verified": true,
+        "confidence": 1.0
+      }
+    ]
+  },
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": "Brain Harness Deep Repo Auditor",
+  "created_at": "2026-11-14T20:15:00Z",
+  "distilled_learning": "# Scoped Ruff Formatting & Architectural/Epistemic Hygiene Gates in GitHub Actions CI"
+}

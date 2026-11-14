@@ -762,4 +762,17 @@ __all__ = [
     "ShimHarnessGovernorEngine",
     "ShimHarnessGovernorProtocol",
     "WorkspaceToolSecurityReport",
+    # Deep Repo Auditor Service
+    "DEEP_AUDITOR_SERVICE_KEY",
+    "AxisFinding",
+    "ComputeDimensionVector",
+    "DeepAuditCollector",
+    "DeepAuditReport",
+    "DeepRepoAuditorService",
+    "DefaultDeepRepoAuditorService",
+    "TopologyNodeSummary",
+    "VisualBriefPaths",
+    "generate_audit_visual_briefs",
+    "resolve_deep_repo_auditor",
+    "resolve_nested_project_root",
 ]

@@ -7,7 +7,8 @@ from typing import Any
 
 import structlog
 
-from harness.kernel.context import ServiceKey
+from harness.kernel.context import ServiceContext, ServiceKey
+from harness.plugins.base import HarnessPlugin
 from plugins.memory_and_epistemics.context_compiler.compiler_core import (
     ContextCompiler,
     SymbolResolver,
@@ -197,3 +198,26 @@ class ContextCompilerService:
 
 
 CONTEXT_COMPILER_SERVICE_KEY = ServiceKey[ContextCompilerService]("domain.context_compiler")
+
+
+class ContextCompilerPlugin(HarnessPlugin):
+    """Harness plugin registering ContextCompilerService into the IoC container."""
+
+    name = "domain.context_compiler"
+    version = "1.0.0"
+    trusted = True
+
+    @property
+    def provides(self) -> list[ServiceKey[Any]]:
+        return [CONTEXT_COMPILER_SERVICE_KEY]
+
+    async def on_load(self, ctx: ServiceContext) -> None:
+        ctx.provide(
+            CONTEXT_COMPILER_SERVICE_KEY,
+            ContextCompilerService(),
+            provider=self.name,
+            allow_override=True,
+        )
+
+
+plugin = ContextCompilerPlugin()

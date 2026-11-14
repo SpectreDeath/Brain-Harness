@@ -56,9 +56,7 @@ def parse_runtime_config(config: Any) -> HarnessConfigTree:
     elif isinstance(config, dict):
         return HarnessConfigTree.model_validate(config)
     elif isinstance(config, list):
-        return HarnessConfigTree(
-            plugins=[PluginConfigEntry.model_validate(item) for item in config]
-        )
+        return HarnessConfigTree(plugins=[PluginConfigEntry.model_validate(item) for item in config])
     else:
         raise TypeError(f"Unsupported config type: {type(config)}")
 

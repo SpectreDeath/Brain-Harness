@@ -134,7 +134,7 @@ class ModelArtifactEngine:
             if str_len > 10_000_000:
                 return None
             val_bytes = f.read(str_len)
-            return val_bytes.decode("utf-8", errors="replace")
+            return str(val_bytes.decode("utf-8", errors="replace"))
 
         def skip_gguf_value(val_type: int) -> Any:
             # Type mapping: 0=U8, 1=I8, 2=U16, 3=I16, 4=U32, 5=I32, 6=F32, 7=BOOL,
@@ -264,13 +264,13 @@ class ModelArtifactEngine:
             buf_len = len(data)
 
             def _read_u32(off: int) -> int:
-                return struct.unpack_from("<I", data, off)[0]
+                return int(struct.unpack_from("<I", data, off)[0])
 
             def _read_i32(off: int) -> int:
-                return struct.unpack_from("<i", data, off)[0]
+                return int(struct.unpack_from("<i", data, off)[0])
 
             def _read_u16(off: int) -> int:
-                return struct.unpack_from("<H", data, off)[0]
+                return int(struct.unpack_from("<H", data, off)[0])
 
             def _get_field_offset(tbl_off: int, f_idx: int) -> int:
                 if tbl_off < 0 or tbl_off + 4 > buf_len:
@@ -294,7 +294,7 @@ class ModelArtifactEngine:
                 s_len = _read_u32(s_off)
                 if s_off + 4 + s_len > buf_len:
                     return ""
-                return data[s_off + 4 : s_off + 4 + s_len].decode("utf-8", errors="replace")
+                return str(data[s_off + 4 : s_off + 4 + s_len].decode("utf-8", errors="replace"))
 
             if root_offset < buf_len:
                 # Model.subgraphs is field 2

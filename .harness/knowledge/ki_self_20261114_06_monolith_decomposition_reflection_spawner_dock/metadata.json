@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0.0",
+  "id": "ki_self_20261114_06_monolith_decomposition_reflection_spawner_dock",
+  "title": "Subpackage Decomposition of Reflection Commands, Harness Spawner, and Repository Dock",
+  "category": "software_engineering",
+  "source_target": "src/harness/commands/reflection/__init__.py",
+  "detected_format": "endogenous_reflection",
+  "tags": [
+    "software_engineering",
+    "decomposition",
+    "rule6",
+    "click",
+    "architecture"
+  ],
+  "anchors": {},
+  "edges": [
+    {
+      "type": "references_code",
+      "target": "src/harness/commands/reflection/__init__.py",
+      "target_kind": "source",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Preserves single knowledge_group attachment (Rule 6) and __all__ re-exports across 10 focused submodules"
+    },
+    {
+      "type": "references_code",
+      "target": "src/harness/services/harness_spawner/__init__.py",
+      "target_kind": "source",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Decomposes HarnessSpawnerEngine into models, constants, protocols, helpers, and 4 lifecycle/merge mixins"
+    },
+    {
+      "type": "references_code",
+      "target": "src/harness/services/dock/__init__.py",
+      "target_kind": "source",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Decomposes DefaultDockService into models, safety, manifest, protocols, store, and execution mixins"
+    }
+  ],
+  "isnad": {
+    "decision_id": "dec_20261114_self_06",
+    "timestamp": "2026-11-14T20:15:00Z",
+    "status": "VERIFIED",
+    "claims": [
+      {
+        "claim_id": "claim_001",
+        "assertion": "Large orchestrator modules (commands/reflection, services/harness_spawner, services/dock) should decompose into cohesive <= 250-LOC submodules using mixin composition, shared single-group declarations (Rule 6), and full package-root __all__ re-exports so callers and Click subcommands retain zero-breakage compatibility.",
+        "evidence_type": "self_audit_remediation",
+        "source": "src/harness/commands/reflection/__init__.py; src/harness/services/harness_spawner/__init__.py; src/harness/services/dock/__init__.py",
+        "verified": true,
+        "confidence": 1.0
+      }
+    ]
+  },
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": "Brain Harness Deep Repo Auditor",
+  "created_at": "2026-11-14T20:15:00Z",
+  "distilled_learning": "# Subpackage Decomposition of Reflection Commands, Harness Spawner, and Repository Dock"
+}

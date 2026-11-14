@@ -21,6 +21,9 @@ from typing import Any
 
 import structlog
 
+from harness.kernel.context import ServiceContext, ServiceKey
+from harness.plugins.base import HarnessPlugin
+
 from plugins.security_and_forensics.vibe_scanner.scanner_core import (
     DETECTORS,
     Finding,
@@ -329,3 +332,24 @@ class VibeScannerService:
 
     def generate_json(self, dir_path: str, output_path: str) -> dict[str, Any]:
         return generate_json_report(dir_path, output_path)
+
+
+VIBE_SCANNER_SERVICE_KEY = ServiceKey[VibeScannerService]("plugin.vibe_scanner")
+
+
+class VibeScannerPlugin(HarnessPlugin):
+    """Harness plugin registering VibeScannerService into the IoC container."""
+
+    name = "plugin.vibe_scanner"
+    version = "1.0.0"
+    trusted = True
+
+    @property
+    def provides(self) -> list[ServiceKey[Any]]:
+        return [VIBE_SCANNER_SERVICE_KEY]
+
+    async def on_load(self, ctx: ServiceContext) -> None:
+        ctx.provide(VIBE_SCANNER_SERVICE_KEY, VibeScannerService(), provider=self.name, allow_override=True)
+
+
+plugin = VibeScannerPlugin()

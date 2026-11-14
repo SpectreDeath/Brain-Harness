@@ -30,9 +30,7 @@ def provide_service(
         if realm_key in context._entries and not allow_override:
             raise DuplicateServiceError(key)
 
-        entry = ServiceEntry(
-            key=key, instance=instance, provider_plugin=provider, is_active=True
-        )
+        entry = ServiceEntry(key=key, instance=instance, provider_plugin=provider, is_active=True)
         new_entries = dict(context._entries)
         new_entries[realm_key] = entry
         context._entries = new_entries
@@ -78,9 +76,7 @@ def revoke_service(context: ServiceContext, key: ServiceKey[Any]) -> bool:
                 root._interceptor_epoch += 1
 
             context._dispose_stack = [
-                inv
-                for inv in context._dispose_stack
-                if getattr(inv, "_realm_key", None) not in (realm_key, key.name)
+                inv for inv in context._dispose_stack if getattr(inv, "_realm_key", None) not in (realm_key, key.name)
             ]
             logger.debug(
                 "Service revoked",
@@ -121,14 +117,10 @@ def hot_swap_service(
             old_provider = old_entry.provider_plugin
 
         context._dispose_stack = [
-            inv
-            for inv in context._dispose_stack
-            if getattr(inv, "_realm_key", None) not in (realm_key, key.name)
+            inv for inv in context._dispose_stack if getattr(inv, "_realm_key", None) not in (realm_key, key.name)
         ]
 
-    provide_service(
-        context, key, new_instance, provider=provider, allow_override=True
-    )
+    provide_service(context, key, new_instance, provider=provider, allow_override=True)
     logger.info(
         "Service hot-swapped",
         service=key.name,
@@ -170,8 +162,7 @@ def revoke_all_from_provider(context: ServiceContext, provider: str) -> list[str
             context._dispose_stack = [
                 inv
                 for inv in context._dispose_stack
-                if getattr(inv, "_provider", None) != provider
-                and getattr(inv, "_realm_key", None) not in revoked_set
+                if getattr(inv, "_provider", None) != provider and getattr(inv, "_realm_key", None) not in revoked_set
             ]
         logger.info(
             "Services revoked for plugin",

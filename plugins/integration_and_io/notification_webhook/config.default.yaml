@@ -1,0 +1,12 @@
+# plugin.notification_webhook Configuration Defaults (Rule 44 Zero-Fork Config)
+version: "1.0.0"
+
+operational_budgets:
+  timeout_seconds: 120
+  token_budget_limit: 8000
+  max_retries: 3
+  cache_ttl_seconds: 300
+
+runtime:
+  strict_mode: true
+  subprocess_isolation: false

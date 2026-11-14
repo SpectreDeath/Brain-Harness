@@ -4,17 +4,17 @@
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-emerald.svg)](LICENSE)
-[![Tests](https://img.shields.io/badge/tests-2820%2B%20passed-brightgreen.svg)](tests/)
+[![Tests](https://img.shields.io/badge/tests-3130%2B%20passed-brightgreen.svg)](tests/)
 
 **Brain Harness** is an unopinionated, high-performance agent runtime engineered on an IoC micro-kernel architecture. Rather than locking you into a static collection of hardcoded tools, Harness is a **blank cognitive canvas** that ingests any GitHub repository, local project, ZIP archive, OpenAPI specification, or custom skill into an isolated, sandboxed plugin.
 
 When you install and configure plugins, **your harness becomes a direct reflection of your brain** — tailored to your exact domain, knowledge, and workflow.
 
 ### 📊 Ecosystem Scale at a Glance
-- **151 Canonical Harness Plugins** (+ 1 external Pocock skill bundle with 35 entrypoints) totaling **686 tool entrypoints** across 10 architectural categories.
+- **152 Canonical Harness Plugins** (+ 1 external Pocock skill bundle with 35 entrypoints) totaling **690 tool entrypoints** across 10 architectural categories.
 - **114 Workspace Skills packages (149 Skill Graph nodes)** (`SKILL.md` + `CARD.md`) indexed in the dynamic Skill Knowledge Graph.
 - **47 Canonical CLI Command Groups** (`Rule 6` consolidated) exposing headless introspection, diagnostics, and operational workflows.
-- **354 Verified Knowledge Items** grounded with cryptographic Isnad provenance in the Epistemic Knowledge Vault.
+- **362 Verified Knowledge Items** grounded with cryptographic Isnad provenance in the Epistemic Knowledge Vault.
 
 ---
 

@@ -51,7 +51,12 @@ class RuntimePluginOpsMixin:
     ) -> HarnessPlugin:
         """Ingest a plugin from GitHub URL, ZIP archive, or local path and register it."""
         return await ingest_plugin_from_source(
-            self, source, ref=ref, force=force, token=token, auto_enable=auto_enable  # type: ignore[arg-type]
+            self,  # type: ignore[arg-type]
+            source,
+            ref=ref,
+            force=force,
+            token=token,
+            auto_enable=auto_enable,
         )
 
     def summary(self) -> dict[str, str]:

@@ -28,15 +28,39 @@ def index_text_files(
     manifests_found: list[str] = []
 
     manifest_names = {
-        "pyproject.toml", "package.json", "cargo.toml", "go.mod", "pom.xml",
-        "build.gradle", "cmakelists.txt", "requirements.txt", "setup.py",
-        "gemfile", "dockerfile", "agents.md", "claude.md",
+        "pyproject.toml",
+        "package.json",
+        "cargo.toml",
+        "go.mod",
+        "pom.xml",
+        "build.gradle",
+        "cmakelists.txt",
+        "requirements.txt",
+        "setup.py",
+        "gemfile",
+        "dockerfile",
+        "agents.md",
+        "claude.md",
     }
 
     for current_root, dirs, files in os.walk(root):
         dirs[:] = [
-            d for d in dirs
-            if not d.startswith(".") and d not in ("__pycache__", "venv", ".venv", "node_modules", "target", "dist", "build", ".git")
+            d
+            for d in dirs
+            if not d.startswith(".")
+            and d
+            not in (
+                "__pycache__",
+                "venv",
+                ".venv",
+                "node_modules",
+                "target",
+                "dist",
+                "build",
+                ".git",
+                "test_ingested_plugins",
+                "external",
+            )
         ]
         for file_name in files:
             file_path = Path(current_root) / file_name

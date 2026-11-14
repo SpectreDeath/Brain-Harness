@@ -155,8 +155,12 @@ class PluginLifecycle:
         enable_timeout: float = 30.0,
     ) -> dict[str, bool]:
         return await enable_all_plugins(
-            self, self._context, self._entries,
-            trusted_only=trusted_only, skip_user_plugins=skip_user_plugins, enable_timeout=enable_timeout
+            self,
+            self._context,
+            self._entries,
+            trusted_only=trusted_only,
+            skip_user_plugins=skip_user_plugins,
+            enable_timeout=enable_timeout,
         )
 
     async def disable_all(self, exclude: set[str] | None = None) -> dict[str, bool]:

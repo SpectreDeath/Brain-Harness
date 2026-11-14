@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, Optional, cast
 
 from harness.kernel.context import ServiceContext
 from harness.services.rea_javascript import REA_JAVASCRIPT_KEY
@@ -19,7 +19,7 @@ def resolve_rea_javascript_engine(
         try:
             svc = ctx.optional(REA_JAVASCRIPT_KEY)
             if svc is not None and hasattr(svc, "_engine"):
-                return svc._engine
+                return cast("ReaJavaScriptEngine", svc._engine)
         except Exception:
             pass
     from . import ReaJavaScriptEngine

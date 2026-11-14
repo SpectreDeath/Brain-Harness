@@ -30,13 +30,9 @@ async def start_runtime(runtime: HarnessRuntime) -> None:
     from harness.events.bus import EVENT_BUS_KEY
     from harness.services.dock import DOCK_SERVICE_KEY, DefaultDockService
 
-    runtime.context.provide(
-        EVENT_BUS_KEY, runtime.event_bus, provider="harness", allow_override=True
-    )
+    runtime.context.provide(EVENT_BUS_KEY, runtime.event_bus, provider="harness", allow_override=True)
     if not runtime.context.has(DOCK_SERVICE_KEY):
-        runtime.context.provide(
-            DOCK_SERVICE_KEY, DefaultDockService(), provider="harness", allow_override=True
-        )
+        runtime.context.provide(DOCK_SERVICE_KEY, DefaultDockService(), provider="harness", allow_override=True)
 
     if runtime._auto_load_user_plugins:
         user_plugins = runtime.loader.discover_all()
@@ -46,9 +42,7 @@ async def start_runtime(runtime: HarnessRuntime) -> None:
     if getattr(runtime, "_initial_config_tree", None) is not None:
         await runtime.reconcile(runtime._initial_config_tree)
 
-    results = await runtime.lifecycle.enable_all(
-        trusted_only=False, skip_user_plugins=runtime._lazy_external_plugins
-    )
+    results = await runtime.lifecycle.enable_all(trusted_only=False, skip_user_plugins=runtime._lazy_external_plugins)
     runtime._is_running = True
 
     await runtime.event_bus.emit(

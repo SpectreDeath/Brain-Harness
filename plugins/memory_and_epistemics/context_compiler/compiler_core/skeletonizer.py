@@ -5,7 +5,9 @@ from __future__ import annotations
 import ast
 import json
 from pathlib import Path
-from typing import Any
+from typing import Any, TypeVar
+
+_FnNodeT = TypeVar("_FnNodeT", ast.FunctionDef, ast.AsyncFunctionDef)
 
 
 class CodeSkeletonizer(ast.NodeTransformer):
@@ -27,7 +29,7 @@ class CodeSkeletonizer(ast.NodeTransformer):
             return body[0]
         return None
 
-    def _strip_body(self, node: ast.FunctionDef | ast.AsyncFunctionDef) -> ast.FunctionDef | ast.AsyncFunctionDef:
+    def _strip_body(self, node: _FnNodeT) -> _FnNodeT:
         self.functions_stripped += 1
         doc = self._docstring_node(node)
         placeholder = ast.Expr(
@@ -49,7 +51,7 @@ class CodeSkeletonizer(ast.NodeTransformer):
     def visit_Module(self, node: ast.Module) -> ast.Module:
         """Keep only top-level imports, classes, and function defs."""
         self.generic_visit(node)
-        kept_body = []
+        kept_body: list[ast.stmt] = []
         for item in node.body:
             if isinstance(item, (ast.Import, ast.ImportFrom, ast.ClassDef, ast.FunctionDef, ast.AsyncFunctionDef)):
                 kept_body.append(item)

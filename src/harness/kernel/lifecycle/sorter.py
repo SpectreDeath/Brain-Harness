@@ -24,8 +24,7 @@ def build_dependency_graph(
         names = [
             n
             for n, e in entries.items()
-            if e.state
-            in (PluginState.VALIDATED, PluginState.LOADED, PluginState.DISABLED)
+            if e.state in (PluginState.VALIDATED, PluginState.LOADED, PluginState.DISABLED)
         ]
 
     graph = DependencyGraph[str]()

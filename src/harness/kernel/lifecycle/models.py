@@ -33,16 +33,10 @@ class PluginState(enum.Enum):
 # Valid state transitions
 _TRANSITIONS: dict[PluginState, frozenset[PluginState]] = {
     PluginState.DISCOVERED: frozenset({PluginState.LOADED, PluginState.ERROR}),
-    PluginState.LOADED: frozenset(
-        {PluginState.VALIDATED, PluginState.UNLOADED, PluginState.ERROR}
-    ),
-    PluginState.VALIDATED: frozenset(
-        {PluginState.ENABLED, PluginState.UNLOADED, PluginState.ERROR}
-    ),
+    PluginState.LOADED: frozenset({PluginState.VALIDATED, PluginState.UNLOADED, PluginState.ERROR}),
+    PluginState.VALIDATED: frozenset({PluginState.ENABLED, PluginState.UNLOADED, PluginState.ERROR}),
     PluginState.ENABLED: frozenset({PluginState.DISABLED, PluginState.ERROR}),
-    PluginState.DISABLED: frozenset(
-        {PluginState.ENABLED, PluginState.UNLOADED, PluginState.ERROR}
-    ),
+    PluginState.DISABLED: frozenset({PluginState.ENABLED, PluginState.UNLOADED, PluginState.ERROR}),
     PluginState.UNLOADED: frozenset({PluginState.DISCOVERED}),
     PluginState.ERROR: frozenset({PluginState.UNLOADED, PluginState.DISCOVERED}),
 }
@@ -55,9 +49,7 @@ class InvalidTransitionError(Exception):
         self.plugin = plugin
         self.current = current
         self.target = target
-        super().__init__(
-            f"Invalid transition for {plugin!r}: {current.value} → {target.value}"
-        )
+        super().__init__(f"Invalid transition for {plugin!r}: {current.value} → {target.value}")
 
 
 class DependencyError(Exception):
