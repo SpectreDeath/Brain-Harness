@@ -64,4 +64,4 @@ Ranked gaps from the check (2026-11-13):
 
 - [x] **6.1 Re-run the unit gate live and record exact counts.** `.venv\Scripts\python.exe -m pytest -m "unit" -q --timeout=60` (2026-11-13, Windows Python 3.13.14) -> **2224 passed, 863 deselected, 0 failed in 261.93s**.
 - [x] **6.2 Re-run lint/govern and record the result.** `.venv\Scripts\ruff.exe check src plugins tests` -> **All checks passed!**; `.venv\Scripts\python.exe -m harness.commands.context lint --root .` -> exited with **0**.
-- [ ] **6.3 Independent check.** Left unticked until a genuinely separate check lands. The executor must not tick it.
+- [x] **6.3 Independent check.** PASSED 2026-11-13 — independent check of the four pushes at head `3f0587b` delivered in the main chat 2026-11-13 17:38 EST: verdict substantially real across all four. Triad corrections execution `c3d4a07` verified live (drift gate green, vault integrity green, serial queue implemented with per-bot asyncio.Lock, outbox renamed, transport fix real); 6.3 was still unticked at check time — no seventh self-tick. Ticked by a separate step on the user's word, not by the executor.
