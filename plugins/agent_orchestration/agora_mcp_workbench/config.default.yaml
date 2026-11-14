@@ -1,0 +1,8 @@
+# Baseline operational budgets for plugin.agora_mcp_workbench (Rule 44)
+timeout_seconds: 30.0
+termination_grace_seconds: 10.0
+health_poll_interval_seconds: 1.0
+max_transfer_size_bytes: 268435456
+max_streaming_envelope_bytes: 65536
+max_correlation_id_length: 128
+streaming_transfer_version: "2"

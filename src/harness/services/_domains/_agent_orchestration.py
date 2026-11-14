@@ -1,4 +1,5 @@
 """Domain-partitioned service exports: _agent_orchestration."""
+
 from __future__ import annotations
 
 from harness.services.agent_graph import (
@@ -289,4 +290,25 @@ from harness.services.harness_spawner import (
     SpawnMergeProposal,
     SpawnSpec,
     SpawnTrialResult,
+)
+
+from harness.services.agora_workbench import (
+    AGORA_WORKBENCH_SERVICE_KEY,
+    CATALOG_POLICY_MODES,
+    DISPATCHER_STRATEGIES,
+    HEALTH_POLL_INTERVAL_SECONDS,
+    LOOPBACK_HOSTS,
+    MAX_CORRELATION_ID_LENGTH,
+    MAX_STREAMING_ENVELOPE_BYTES,
+    MAX_TRANSFER_SIZE_BYTES,
+    PARALLEL_COMPANION_TOOLS,
+    STREAMING_TRANSFER_VERSION,
+    TERMINATION_GRACE_SECONDS,
+    WORKER_FAILURE_POLICIES,
+    AgoraWorkbenchEngine,
+    AgoraWorkbenchProtocol,
+    ConnectorRoutingDecision,
+    DataLakeTransferReport,
+    SidecarAuditReport,
+    StateGraphPlanResult,
 )

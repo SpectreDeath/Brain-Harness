@@ -1,0 +1,70 @@
+{
+  "id": "ki-getzep-community-clustering-and-typed-ontology",
+  "title": "GetZep: Weighted Label Propagation Communities, Per-Group Sequential Queues & Typed Ontology Builder",
+  "created": "2026-11-14T12:55:00-05:00",
+  "updated": "2026-11-14T12:55:00-05:00",
+  "summary": "Graphiti detects entity communities via edge-count weighted label_propagation (candidate_rank > 1 promotion with max tie-breaking) and serializes per-group episode mutations through isolated asyncio.Queue workers in QueueService. Zep Python's build_ontology() compiles EntityModel and EdgeModel declarations into typed wire payloads (text, int, float, boolean), enforcing non-empty docstrings/descriptions, Identity markers restricted to entities, and Excluded field omissions.",
+  "references": [
+    {
+      "path": "graphiti_core/utils/maintenance/community_operations.py#L96-L171",
+      "description": "Edge-weighted synchronous label_propagation community detection and summarize_pair"
+    },
+    {
+      "path": "mcp_server/src/services/queue_service.py#L28-L160",
+      "description": "Per-group_id sequential asyncio.Queue episode ingestion worker isolation"
+    },
+    {
+      "path": "src/zep_cloud/ontology.py#L71-L217",
+      "description": "build_ontology compiling PropertyType (text/int/float/boolean), Identity, and Excluded annotations"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "category": "memory_and_epistemics",
+  "source_target": "https://github.com/getzep/graphiti",
+  "detected_format": "python_package",
+  "tags": [
+    "getzep",
+    "graphiti",
+    "zep-python",
+    "label-propagation",
+    "typed-ontology"
+  ],
+  "anchors": {},
+  "edges": [
+    {
+      "type": "distilled_from",
+      "target": "https://github.com/getzep/graphiti",
+      "target_kind": "external_repo",
+      "derived": true,
+      "confidence": 0.96,
+      "description": "Pinned commit ed231965: graphiti_core/utils/maintenance/community_operations.py#L96-L171, mcp_server/src/services/queue_service.py#L28-L160, src/zep_cloud/ontology.py#L71-L217"
+    },
+    {
+      "type": "distilled_from",
+      "target": "https://github.com/getzep/zep-python",
+      "target_kind": "external_repo",
+      "derived": true,
+      "confidence": 0.96,
+      "description": "Pinned commit 305d8b3a: src/zep_cloud/ontology.py#L71-L217"
+    }
+  ],
+  "isnad": {
+    "source_repo": "https://github.com/getzep/graphiti",
+    "commit": "ed231965",
+    "verified_at": "2026-11-14T12:55:00-05:00",
+    "citations": [
+      "graphiti_core/utils/maintenance/community_operations.py#L96-L171",
+      "mcp_server/src/services/queue_service.py#L28-L160",
+      "src/zep_cloud/ontology.py#L71-L217"
+    ],
+    "sha256": "00424daa70f14612e740a828d87fdcb7d009a47ef83eab39ba23831c224a7b13"
+  },
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": "repo-triad-forge",
+  "created_at": "2026-11-14T12:55:00-05:00",
+  "distilled_learning": "Cluster entities with edge-weighted label propagation, serialize mutations per group_id via dedicated queues, and compile typed entity/edge ontologies with explicit identity and exclusion guards."
+}

@@ -1,0 +1,56 @@
+{
+  "id": "ki-vercel-ui-sdk-expert-scope-governance",
+  "title": "Vercel UI SDK: Git-Diff Framework Expert Routing (expert-scope.mjs) & Multi-Skill Agent Hygiene",
+  "created": "2026-11-14T10:33:00-05:00",
+  "updated": "2026-11-14T10:33:00-05:00",
+  "summary": "Multi-framework monorepo governance routes git diffs automatically to framework experts (react, vue, svelte, solid, web) via scripts/expert-scope.mjs: package-specific files route only to their owning framework expert, while shared packages/core/, tests/specs/, and tests/fixtures.ts fan out to all five experts from per-expert Last reviewed commits, enforced alongside AGENTS.md rules on zero runtime deps, comment brevity, and ui-sdk-write-code -> ui-sdk-unslop -> ui-sdk-expert-review workflows.",
+  "references": [
+    {
+      "path": "scripts/expert-scope.mjs#L17-L95",
+      "description": "owns(framework, file), shared(file) fan-out rules, and per-expert Last reviewed base commit resolution"
+    },
+    {
+      "path": "AGENTS.md#L27-L56",
+      "description": "Monorepo coding rules: zero runtime deps, comment length cap, internal .agents/skills vs shipped packages/core/skills/ui-sdk"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "category": "software_engineering",
+  "source_target": "https://github.com/vercel-labs/ui",
+  "detected_format": "ts_monorepo",
+  "tags": [
+    "ui-sdk",
+    "expert-routing",
+    "agent-skills",
+    "unslop",
+    "monorepo-governance"
+  ],
+  "anchors": {},
+  "edges": [
+    {
+      "type": "distilled_from",
+      "target": "https://github.com/vercel-labs/ui",
+      "target_kind": "external_repo",
+      "derived": true,
+      "confidence": 0.95,
+      "description": "scripts/expert-scope.mjs#L17-L95;AGENTS.md#L27-L56"
+    }
+  ],
+  "isnad": {
+    "source_repo": "https://github.com/vercel-labs/ui",
+    "commit": "220c1a0d",
+    "verified_at": "2026-11-14T10:33:00-05:00",
+    "citations": [
+      "scripts/expert-scope.mjs#L17-L95",
+      "AGENTS.md#L27-L56"
+    ]
+  },
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": "repo-triad-forge",
+  "created_at": "2026-11-14T10:33:00-05:00",
+  "distilled_learning": "Multi-framework UI monorepos scale review hygiene by routing shared core/spec diffs to every adapter expert while isolating framework-owned changes and separating internal authoring skills from shipped user skills."
+}

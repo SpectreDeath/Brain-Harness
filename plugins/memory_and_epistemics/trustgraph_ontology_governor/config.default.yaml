@@ -1,0 +1,17 @@
+# Baseline operational budgets for trustgraph_ontology_governor plugin (Rule 44)
+timeout_seconds: 30.0
+policy_graph_uri: "urn:graph:policy"
+source_graph_uri: "urn:graph:source"
+retrieval_graph_uri: "urn:graph:retrieval"
+default_policy_order: 99
+query_cache_ttl_seconds: 30
+query_cache_max_entries: 256
+sparql_cache_max_entries: 64
+node_cache_ttl_seconds: 60
+node_cache_max_entries: 1024
+bypass_selector_below: 5
+laya_temp_min: 0.5
+laya_temp_max: 5.0
+laya_max_seq_len: 512
+laya_head_max_len: 192
+laya_min_opt_budget: 16

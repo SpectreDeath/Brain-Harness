@@ -1,0 +1,61 @@
+{
+  "id": "ki-vercel-ui-sdk-aria-ssr-rtl-verification",
+  "title": "Vercel UI SDK: Tri-Modal UI Verification — WAI-ARIA APG Key Checks, Clock/DOM-Isolated SSR & Mirrored RTL Parity",
+  "created": "2026-11-14T10:33:00-05:00",
+  "updated": "2026-11-14T10:33:00-05:00",
+  "summary": "@ui-sdk/core/testing enforces three orthogonal deterministic contracts on every primitive: checkPattern aggregates all WAI-ARIA APG role, reference, and keyboard navigation defects across 15 patterns into a single error; checkServer isolates globals (document, window, navigator, localStorage, sessionStorage, matchMedia) and throws on Date.now, new Date(), performance.now, Math.random, and crypto randomness; checkDirection verifies ArrowRight in LTR matches ArrowLeft in RTL on focus and mirrored direction/side state.",
+  "references": [
+    {
+      "path": "packages/core/src/testing/check-pattern.ts#L28-L117",
+      "description": "checkPattern supporting 15 WAI-ARIA APG patterns and collecting all violations into one unified report"
+    },
+    {
+      "path": "packages/core/src/testing/check-server.ts#L63-L129",
+      "description": "isolated() SSR safety harness blocking DOM globals, clocks (Date.now/new Date/performance.now), and randomness"
+    },
+    {
+      "path": "packages/core/src/testing/check-direction.ts#L10-L124",
+      "description": "checkDirection asserting mirrored LTR ArrowRight and RTL ArrowLeft focus targets and direction/side state"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "category": "software_engineering",
+  "source_target": "https://github.com/vercel-labs/ui",
+  "detected_format": "ts_monorepo",
+  "tags": [
+    "ui-sdk",
+    "wai-aria",
+    "ssr-isolation",
+    "rtl-parity",
+    "deterministic-testing"
+  ],
+  "anchors": {},
+  "edges": [
+    {
+      "type": "distilled_from",
+      "target": "https://github.com/vercel-labs/ui",
+      "target_kind": "external_repo",
+      "derived": true,
+      "confidence": 0.97,
+      "description": "packages/core/src/testing/check-pattern.ts#L28-L117,check-server.ts#L63-L129,check-direction.ts#L10-L124"
+    }
+  ],
+  "isnad": {
+    "source_repo": "https://github.com/vercel-labs/ui",
+    "commit": "220c1a0d",
+    "verified_at": "2026-11-14T10:33:00-05:00",
+    "citations": [
+      "packages/core/src/testing/check-pattern.ts#L28-L117",
+      "packages/core/src/testing/check-server.ts#L63-L129",
+      "packages/core/src/testing/check-direction.ts#L10-L124"
+    ]
+  },
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": "repo-triad-forge",
+  "created_at": "2026-11-14T10:33:00-05:00",
+  "distilled_learning": "Headless UI primitives require tri-modal automated verification: exhaustive APG pattern checks (15 patterns), strict SSR clock/DOM/entropy isolation, and mirrored LTR-vs-RTL keyboard state parity."
+}

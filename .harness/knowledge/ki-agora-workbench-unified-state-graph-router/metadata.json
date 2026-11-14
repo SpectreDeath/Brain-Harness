@@ -1,0 +1,72 @@
+{
+  "id": "ki-agora-workbench-unified-state-graph-router",
+  "title": "Agora Workbench: Unified Workflow State Graph, Cross-Server Synthetic Bridge Edges & Router Skill Disambiguation",
+  "created": "2026-11-14T11:00:00-05:00",
+  "updated": "2026-11-14T11:00:00-05:00",
+  "summary": "StateGraph unifies tool state_requires/state_produces contracts, domain Enum state definitions, STATE_AFFORDANCES phrases, and SKILL.md frontmatter state tokens into a workflow planner. RouterServer validates configured BridgeEdge objects against upstream catalogs, injects synthetic bridge:{from}->{to} transitions for BFS path discovery (_find_path), and requires explicit upstream disambiguation when two upstream servers register skills with colliding names.",
+  "references": [
+    {
+      "path": "src/agora_workbench/code_execution/tools/search/state_graph.py#L160-L230",
+      "description": "StateGraph initialization indexing tool transitions, domain states.py Enums, affordances, and SKILL.md state metadata"
+    },
+    {
+      "path": "src/agora_workbench/code_execution/tools/search/state_graph.py#L231-L306",
+      "description": "StateGraph.inject_bridges inserting synthetic bridge ToolInfo nodes and _infer_states_from_tools vocabulary inference"
+    },
+    {
+      "path": "src/agora_workbench/code_execution/tools/search/state_graph.py#L336-L371",
+      "description": "BFS shortest tool-transition pathfinder (_find_path) between state tokens"
+    },
+    {
+      "path": "src/agora_workbench/connector/models.py#L51-L110",
+      "description": "BridgeEdge and RouterConfig schemas binding cross-server navigation links"
+    },
+    {
+      "path": "src/agora_workbench/connector/router.py#L57-L160",
+      "description": "RouterServer._register_unified_load_skill tracking cross-upstream duplicate skill names"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "category": "agent_orchestration",
+  "source_target": "https://github.com/microsoft/agora-workbench",
+  "detected_format": "python_package",
+  "tags": [
+    "agora-workbench",
+    "state-graph",
+    "mcp-router",
+    "bridge-edges",
+    "bfs-workflow-planning"
+  ],
+  "anchors": {},
+  "edges": [
+    {
+      "type": "distilled_from",
+      "target": "https://github.com/microsoft/agora-workbench",
+      "target_kind": "external_repo",
+      "derived": true,
+      "confidence": 0.96,
+      "description": "Pinned commit a8ae030b: src/agora_workbench/code_execution/tools/search/state_graph.py#L160-L230, src/agora_workbench/code_execution/tools/search/state_graph.py#L231-L306, src/agora_workbench/code_execution/tools/search/state_graph.py#L336-L371, src/agora_workbench/connector/models.py#L51-L110, src/agora_workbench/connector/router.py#L57-L160"
+    }
+  ],
+  "isnad": {
+    "source_repo": "https://github.com/microsoft/agora-workbench",
+    "commit": "a8ae030b",
+    "verified_at": "2026-11-14T11:00:00-05:00",
+    "citations": [
+      "src/agora_workbench/code_execution/tools/search/state_graph.py#L160-L230",
+      "src/agora_workbench/code_execution/tools/search/state_graph.py#L231-L306",
+      "src/agora_workbench/code_execution/tools/search/state_graph.py#L336-L371",
+      "src/agora_workbench/connector/models.py#L51-L110",
+      "src/agora_workbench/connector/router.py#L57-L160"
+    ],
+    "sha256": "92f5d1852008663d8cf724224b0dbbbf4929a97db9ff1554d0d6337322633944"
+  },
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": "repo-triad-forge",
+  "created_at": "2026-11-14T11:00:00-05:00",
+  "distilled_learning": "Cross-server MCP workflow discovery combines BFS tool-transition pathfinding, startup-validated synthetic BridgeEdge links, and deterministic upstream skill name disambiguation."
+}

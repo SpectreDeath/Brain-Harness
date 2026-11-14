@@ -1,0 +1,57 @@
+{
+  "id": "ki-trustgraph-ontology-rag-subclass-validation",
+  "title": "TrustGraph: OntologyRAG Small-Schema Bypass & Cycle-Safe Subclass Domain/Range Validation",
+  "created": "2026-11-14T12:00:00-05:00",
+  "updated": "2026-11-14T12:00:00-05:00",
+  "summary": "TrustGraph's OntologyRAG pipeline pairs OntologySelector (top_k=10, similarity_threshold=0.3, bypass_selector_below=5) with TripleConverter strict class-constraint enforcement. Small ontologies whose total classes, object properties, and datatype properties fall below bypass_selector_below skip vector pruning in full. TripleConverter._get_ancestor_classes performs cycle-safe superclass traversal so convert_relationship enforces both domain and range and convert_attribute enforces domain constraints.",
+  "references": [
+    {
+      "path": "trustgraph-flow/trustgraph/extract/kg/ontology/ontology_selector.py#L20-L160",
+      "description": "OntologySubset and OntologySelector with top_k=10, similarity_threshold=0.3, and bypass_selector_below=5"
+    },
+    {
+      "path": "trustgraph-flow/trustgraph/extract/kg/ontology/triple_converter.py#L21-L240",
+      "description": "TripleConverter._get_ancestor_classes cycle guard, _matches_class_constraint, convert_relationship, and convert_attribute"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "category": "memory_and_epistemics",
+  "source_target": "https://github.com/trustgraph-ai/trustgraph",
+  "detected_format": "python_package",
+  "tags": [
+    "trustgraph",
+    "ontology-rag",
+    "triple-validation",
+    "subclass-closure",
+    "knowledge-extraction"
+  ],
+  "anchors": {},
+  "edges": [
+    {
+      "type": "distilled_from",
+      "target": "https://github.com/trustgraph-ai/trustgraph",
+      "target_kind": "external_repo",
+      "derived": true,
+      "confidence": 0.96,
+      "description": "Pinned commit 17e5d742: trustgraph-flow/trustgraph/extract/kg/ontology/ontology_selector.py#L20-L160, trustgraph-flow/trustgraph/extract/kg/ontology/triple_converter.py#L21-L240"
+    }
+  ],
+  "isnad": {
+    "source_repo": "https://github.com/trustgraph-ai/trustgraph",
+    "commit": "17e5d742",
+    "verified_at": "2026-11-14T12:00:00-05:00",
+    "citations": [
+      "trustgraph-flow/trustgraph/extract/kg/ontology/ontology_selector.py#L20-L160",
+      "trustgraph-flow/trustgraph/extract/kg/ontology/triple_converter.py#L21-L240"
+    ],
+    "sha256": "975b1c19f8e516adf293cf14e455697e3566c76b48d02776b417ddd21dfda3bd"
+  },
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": "repo-triad-forge",
+  "created_at": "2026-11-14T12:00:00-05:00",
+  "distilled_learning": "Bypass vector ontology pruning below small-schema element thresholds and validate extracted triples against domain/range constraints via cycle-safe superclass closure."
+}

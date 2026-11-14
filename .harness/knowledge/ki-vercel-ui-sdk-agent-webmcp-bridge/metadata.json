@@ -1,0 +1,66 @@
+{
+  "id": "ki-vercel-ui-sdk-agent-webmcp-bridge",
+  "title": "Vercel UI SDK: Agent Bridge (snapshot/act/query), Retired-Ref Hysteresis, Guarded DOM Marks & WebMCP Tools",
+  "created": "2026-11-14T10:33:00-05:00",
+  "updated": "2026-11-14T10:33:00-05:00",
+  "summary": "The @ui-sdk/core page agent bridge shares an instance registry with observe, preserves component refs across unmount/remount cycles via a 500-entry retired FIFO queue, retains off-page snapshots for closed tabs, enforces data-agent-hidden / data-agent-secret / data-agent-confirm DOM marks (200-char prompt ceiling), and registers snapshot/act/query JSON Schemas into browser WebMCP (document.modelContext.registerTool) with mandatory allow gating.",
+  "references": [
+    {
+      "path": "packages/core/src/page/observe/registry.ts#L21-L91",
+      "description": "ObservedChange, Entry WeakRef tracking, retired FIFO queue (retiredLimit = 500), and offPage snapshot retention"
+    },
+    {
+      "path": "packages/core/src/page/observe/marks.ts#L11-L58",
+      "description": "DOM safety marks: data-agent-confirm (200 char max), data-agent-hidden (isOffLimits), and data-agent-secret (isSecret)"
+    },
+    {
+      "path": "packages/core/src/page/agent/agent.ts#L36-L117",
+      "description": "AgentComponent, AgentStep, AgentAction types, mutating verb regex, and action synonym mappings"
+    },
+    {
+      "path": "packages/core/src/page/agent/agent.ts#L1923-L2026",
+      "description": "registerTools WebMCP integration with readOnlyHint/untrustedContentHint/consequentialHint and agentTools JSON Schema"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "category": "agent_orchestration",
+  "source_target": "https://github.com/vercel-labs/ui",
+  "detected_format": "ts_monorepo",
+  "tags": [
+    "ui-sdk",
+    "webmcp",
+    "agent-bridge",
+    "dom-marks",
+    "ref-hysteresis"
+  ],
+  "anchors": {},
+  "edges": [
+    {
+      "type": "distilled_from",
+      "target": "https://github.com/vercel-labs/ui",
+      "target_kind": "external_repo",
+      "derived": true,
+      "confidence": 0.96,
+      "description": "packages/core/src/page/observe/registry.ts#L21-L91,marks.ts#L11-L58;page/agent/agent.ts#L36-L117,L1923-L2026"
+    }
+  ],
+  "isnad": {
+    "source_repo": "https://github.com/vercel-labs/ui",
+    "commit": "220c1a0d",
+    "verified_at": "2026-11-14T10:33:00-05:00",
+    "citations": [
+      "packages/core/src/page/observe/registry.ts#L21-L91",
+      "packages/core/src/page/observe/marks.ts#L11-L58",
+      "packages/core/src/page/agent/agent.ts#L36-L117",
+      "packages/core/src/page/agent/agent.ts#L1923-L2026"
+    ]
+  },
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": "repo-triad-forge",
+  "created_at": "2026-11-14T10:33:00-05:00",
+  "distilled_learning": "UI agent bridges require WeakRef component registries with bounded retired-ref hysteresis, DOM-level confirm/hidden/secret boundary marks, and explicit allow gates for WebMCP tool registration."
+}

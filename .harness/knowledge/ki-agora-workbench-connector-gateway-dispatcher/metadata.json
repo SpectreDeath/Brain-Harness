@@ -1,0 +1,72 @@
+{
+  "id": "ki-agora-workbench-connector-gateway-dispatcher",
+  "title": "Agora Workbench: Stateless MCP Gateway Policy Cascades & Dispatcher Pool Routing Strategies",
+  "created": "2026-11-14T11:00:00-05:00",
+  "updated": "2026-11-14T11:00:00-05:00",
+  "summary": "GatewayServer and DispatcherServer decouple governance and scaling from CodeExecutionServer kernels. GatewayServer cascades parallel_execute blocks to suppress companion poll/collect/cancel tools, filters submitted code against blocked_tools and allowed_tools, and enforces per-user 60-second sliding-window rate limits. DispatcherServer coordinates identical worker pools under an asyncio.Lock using weighted round_robin, least_loaded active call tracking, session affinity, and configurable error/reroute failure policies.",
+  "references": [
+    {
+      "path": "src/agora_workbench/connector/models.py#L30-L49",
+      "description": "GatewayPolicy configuration for allowed_tools, blocked_tools, and max_calls_per_minute"
+    },
+    {
+      "path": "src/agora_workbench/connector/gateway.py#L53-L160",
+      "description": "GatewayServer companion tool block cascades and 60s sliding-window rate-limit enforcement"
+    },
+    {
+      "path": "src/agora_workbench/connector/models.py#L141-L160",
+      "description": "WorkerConfig weights and DispatcherConfig pool routing settings"
+    },
+    {
+      "path": "src/agora_workbench/connector/dispatcher.py#L48-L120",
+      "description": "DispatcherServer lifecycle, per-(connector_session, worker) upstream session tracking, and background health task"
+    },
+    {
+      "path": "src/agora_workbench/connector/dispatcher.py#L215-L342",
+      "description": "_select_worker under _routing_lock supporting round_robin weights, least_loaded active counts, and failure rerouting"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "category": "agent_orchestration",
+  "source_target": "https://github.com/microsoft/agora-workbench",
+  "detected_format": "python_package",
+  "tags": [
+    "agora-workbench",
+    "mcp-gateway",
+    "mcp-dispatcher",
+    "load-balancing",
+    "session-affinity"
+  ],
+  "anchors": {},
+  "edges": [
+    {
+      "type": "distilled_from",
+      "target": "https://github.com/microsoft/agora-workbench",
+      "target_kind": "external_repo",
+      "derived": true,
+      "confidence": 0.96,
+      "description": "Pinned commit a8ae030b: src/agora_workbench/connector/models.py#L30-L49, src/agora_workbench/connector/gateway.py#L53-L160, src/agora_workbench/connector/models.py#L141-L160, src/agora_workbench/connector/dispatcher.py#L48-L120, src/agora_workbench/connector/dispatcher.py#L215-L342"
+    }
+  ],
+  "isnad": {
+    "source_repo": "https://github.com/microsoft/agora-workbench",
+    "commit": "a8ae030b",
+    "verified_at": "2026-11-14T11:00:00-05:00",
+    "citations": [
+      "src/agora_workbench/connector/models.py#L30-L49",
+      "src/agora_workbench/connector/gateway.py#L53-L160",
+      "src/agora_workbench/connector/models.py#L141-L160",
+      "src/agora_workbench/connector/dispatcher.py#L48-L120",
+      "src/agora_workbench/connector/dispatcher.py#L215-L342"
+    ],
+    "sha256": "2d7524839e5892428bcddcbcab88747932103af32db99badb91383df3bbc5ee0"
+  },
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": "repo-triad-forge",
+  "created_at": "2026-11-14T11:00:00-05:00",
+  "distilled_learning": "Stateless MCP connector proxies enforce cascading tool allow/deny policies and 60s rate windows in GatewayServer while separating affinity-preserving worker selection under asyncio.Lock in DispatcherServer."
+}

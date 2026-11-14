@@ -1,0 +1,66 @@
+{
+  "id": "ki-vercel-ui-sdk-primitive-asleep-lifecycle",
+  "title": "Vercel UI SDK: Headless definePrimitive Kernel, Asleep Lazy Wake-Up & Provisional Render Isolation",
+  "created": "2026-11-14T10:33:00-05:00",
+  "updated": "2026-11-14T10:33:00-05:00",
+  "summary": "Headless UI primitives in @ui-sdk/core isolate state transitions, controlled option syncing, and slot attributes from framework renderers via definePrimitive. Instances configured with asleep stay dormant (skipping api construction and DOM bind callbacks) until the first handled interaction or instance.api read, while part(slot, props, rendering) fences speculative renders (React StrictMode / concurrent retries) until commit, and renderVersion ignores high-frequency live key updates.",
+  "references": [
+    {
+      "path": "packages/core/src/foundation/kernel/primitive.ts#L74-L140",
+      "description": "definePrimitive contract: state, live, asleep, sync, controlled, commits, api, slots, and agent metadata"
+    },
+    {
+      "path": "packages/core/src/foundation/kernel/primitive.ts#L210-L245",
+      "description": "part(slot, props, rendering) provisional render isolation preventing uncommitted renders from mutating committed handlers"
+    },
+    {
+      "path": "packages/core/src/foundation/kernel/primitive.ts#L295-L310",
+      "description": "wake() and owner.sleeping deferring api construction and DOM bind until first event or api access"
+    },
+    {
+      "path": "packages/core/src/foundation/kernel/primitive.ts#L499-L524",
+      "description": "schemaOf WeakMap memoization and renderVersion counter skipping live-only state updates"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "category": "software_engineering",
+  "source_target": "https://github.com/vercel-labs/ui",
+  "detected_format": "ts_monorepo",
+  "tags": [
+    "ui-sdk",
+    "headless-primitives",
+    "lazy-wakeup",
+    "provisional-render",
+    "state-store"
+  ],
+  "anchors": {},
+  "edges": [
+    {
+      "type": "distilled_from",
+      "target": "https://github.com/vercel-labs/ui",
+      "target_kind": "external_repo",
+      "derived": true,
+      "confidence": 0.96,
+      "description": "packages/core/src/foundation/kernel/primitive.ts#L74-L140,L210-L245,L295-L310,L499-L524"
+    }
+  ],
+  "isnad": {
+    "source_repo": "https://github.com/vercel-labs/ui",
+    "commit": "220c1a0d",
+    "verified_at": "2026-11-14T10:33:00-05:00",
+    "citations": [
+      "packages/core/src/foundation/kernel/primitive.ts#L74-L140",
+      "packages/core/src/foundation/kernel/primitive.ts#L210-L245",
+      "packages/core/src/foundation/kernel/primitive.ts#L295-L310",
+      "packages/core/src/foundation/kernel/primitive.ts#L499-L524"
+    ]
+  },
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": "repo-triad-forge",
+  "created_at": "2026-11-14T10:33:00-05:00",
+  "distilled_learning": "Headless UI primitives built via definePrimitive decouple framework rendering from DOM state using provisional render fencing, asleep lazy wake-up, live-key render exclusion, and WeakMap-memoized schemas."
+}

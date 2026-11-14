@@ -1,0 +1,13 @@
+# Baseline operational budgets for graphiti_zep_memory_governor plugin (Rule 44)
+timeout_seconds: 30.0
+name_entropy_threshold: 1.5
+min_name_length: 6
+min_token_count: 2
+fuzzy_jaccard_threshold: 0.9
+minhash_permutations: 32
+minhash_band_size: 4
+entity_base_label: "Entity"
+default_rrf_rank_const: 1
+default_mmr_lambda: 0.5
+default_mmr_min_score: -2.0
+center_node_self_distance: 0.1

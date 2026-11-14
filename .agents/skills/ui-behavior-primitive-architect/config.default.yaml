@@ -1,0 +1,10 @@
+# Baseline operational budgets for ui-behavior-primitive-architect skill (Rule 44)
+timeout_seconds: 30.0
+retired_ref_limit: 500
+confirm_max_chars: 200
+default_frameworks:
+  - react
+  - vue
+  - svelte
+  - solid
+  - web

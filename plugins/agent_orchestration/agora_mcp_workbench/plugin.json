@@ -1,0 +1,268 @@
+{
+  "name": "plugin.agora_mcp_workbench",
+  "version": "1.0.0",
+  "description": "Agora Workbench MCP plugin providing sidecar lifecycle auditing, unified StateGraph workflow planning, Gateway/Dispatcher routing decisions, and Data Lake/v2 streaming transfer validation",
+  "language": "python",
+  "entrypoint": "main.py",
+  "isolation": "subprocess",
+  "trusted": true,
+  "author": "Brain Harness Authors",
+  "provides": [
+    "service.agora_mcp_workbench"
+  ],
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "agora_audit_sidecar",
+      "description": "Validate a SidecarConfig and enforce SIDECAR_HOST/SIDECAR_PORT address locking and loopback containment",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "Logical sidecar name",
+          "required": true
+        },
+        {
+          "name": "command",
+          "type": "array",
+          "description": "Argument vector for the sidecar process",
+          "required": true
+        },
+        {
+          "name": "url_env_var",
+          "type": "string",
+          "description": "Environment variable exporting the sidecar base URL",
+          "required": true
+        },
+        {
+          "name": "port",
+          "type": "integer",
+          "description": "TCP port assigned to the sidecar",
+          "required": true
+        },
+        {
+          "name": "host",
+          "type": "string",
+          "description": "Loopback bind host (default 127.0.0.1)",
+          "required": false
+        },
+        {
+          "name": "health_path",
+          "type": "string",
+          "description": "Readiness HTTP path",
+          "required": false
+        },
+        {
+          "name": "use_env_python",
+          "type": "boolean",
+          "description": "Whether to prepend kernel environment Python",
+          "required": false
+        },
+        {
+          "name": "kernel_python_path",
+          "type": "string",
+          "description": "Kernel Python executable path",
+          "required": false
+        },
+        {
+          "name": "env_overrides",
+          "type": "object",
+          "description": "Caller env overrides inspected for SIDECAR_HOST/PORT override attempts",
+          "required": false
+        },
+        {
+          "name": "existing_names",
+          "type": "array",
+          "description": "Already registered sidecar names",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "agora_plan_state_workflow",
+      "description": "Validate synthetic BridgeEdge transitions and compute shortest BFS workflow path across StateGraph tools",
+      "parameters": [
+        {
+          "name": "source_state",
+          "type": "string",
+          "description": "Starting state token",
+          "required": true
+        },
+        {
+          "name": "target_state",
+          "type": "string",
+          "description": "Goal state token",
+          "required": true
+        },
+        {
+          "name": "tools",
+          "type": "array",
+          "description": "Tool definitions with requires and produces lists",
+          "required": true
+        },
+        {
+          "name": "bridges",
+          "type": "array",
+          "description": "Optional cross-server BridgeEdge definitions",
+          "required": false
+        },
+        {
+          "name": "skills",
+          "type": "array",
+          "description": "Optional skill metadata entries checked for upstream duplication",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "agora_evaluate_connector",
+      "description": "Evaluate GatewayServer policy cascades/rate limits or DispatcherServer worker selection",
+      "parameters": [
+        {
+          "name": "mode",
+          "type": "string",
+          "description": "Connector mode ('gateway' or 'dispatcher')",
+          "required": true
+        },
+        {
+          "name": "code",
+          "type": "string",
+          "description": "Submitted code inspected by gateway allow/deny filters",
+          "required": false
+        },
+        {
+          "name": "blocked_tools",
+          "type": "array",
+          "description": "Tools blocked by GatewayPolicy",
+          "required": false
+        },
+        {
+          "name": "allowed_tools",
+          "type": "array",
+          "description": "Explicit tool allow-list when enforced",
+          "required": false
+        },
+        {
+          "name": "calls_in_last_minute",
+          "type": "integer",
+          "description": "Sliding 60s user call counter",
+          "required": false
+        },
+        {
+          "name": "max_calls_per_minute",
+          "type": "integer",
+          "description": "Configured gateway per-minute call limit",
+          "required": false
+        },
+        {
+          "name": "workers",
+          "type": "array",
+          "description": "Worker definitions for DispatcherServer",
+          "required": false
+        },
+        {
+          "name": "healthy_workers",
+          "type": "array",
+          "description": "Currently healthy worker names",
+          "required": false
+        },
+        {
+          "name": "strategy",
+          "type": "string",
+          "description": "Dispatcher routing strategy",
+          "required": false
+        },
+        {
+          "name": "round_robin_index",
+          "type": "integer",
+          "description": "Round-robin index cursor",
+          "required": false
+        },
+        {
+          "name": "session_affinity_worker",
+          "type": "string",
+          "description": "Sticky worker bound to the session",
+          "required": false
+        },
+        {
+          "name": "worker_failure_policy",
+          "type": "string",
+          "description": "Policy when affine worker is unhealthy ('reroute' or 'error')",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "agora_validate_datalake_transfer",
+      "description": "Validate PolicyEnforcedCatalogProvider scope/cursor guards and bounded v2 streaming object transfer",
+      "parameters": [
+        {
+          "name": "policy_mode",
+          "type": "string",
+          "description": "CatalogPolicyMode ('homogeneous_source' or 'per_artifact')",
+          "required": true
+        },
+        {
+          "name": "has_per_artifact_enforcer",
+          "type": "boolean",
+          "description": "Whether a backend CatalogPolicyEnforcer was supplied",
+          "required": true
+        },
+        {
+          "name": "requested_sources",
+          "type": "array",
+          "description": "Requested catalog source identifiers",
+          "required": true
+        },
+        {
+          "name": "permitted_sources",
+          "type": "array",
+          "description": "Authorized catalog source identifiers",
+          "required": true
+        },
+        {
+          "name": "has_cursor",
+          "type": "boolean",
+          "description": "Whether a pagination continuation cursor was provided",
+          "required": false
+        },
+        {
+          "name": "target_source_permitted",
+          "type": "boolean",
+          "description": "Whether single-item get/resolve source is authorized",
+          "required": false
+        },
+        {
+          "name": "size_bytes",
+          "type": "integer",
+          "description": "Payload size in bytes",
+          "required": false
+        },
+        {
+          "name": "transfer_version",
+          "type": "string",
+          "description": "Object transfer header version",
+          "required": false
+        },
+        {
+          "name": "envelope_bytes",
+          "type": "integer",
+          "description": "Encoded streaming metadata header size in bytes",
+          "required": false
+        },
+        {
+          "name": "has_duplicate_json_keys",
+          "type": "boolean",
+          "description": "Whether duplicate JSON keys exist in prefix/suffix envelope",
+          "required": false
+        },
+        {
+          "name": "correlation_id",
+          "type": "string",
+          "description": "Optional transfer correlation identifier",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

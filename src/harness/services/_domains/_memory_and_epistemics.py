@@ -1,4 +1,5 @@
 """Domain-partitioned service exports: _memory_and_epistemics."""
+
 from __future__ import annotations
 
 from harness.services.brain_bridge import (
@@ -192,6 +193,28 @@ from harness.services.headroom_optimizer import (
     ThinkingCompactResult,
 )
 
+from harness.services.graphiti_zep_memory import (
+    CENTER_NODE_SELF_DISTANCE,
+    DEFAULT_MMR_LAMBDA,
+    DEFAULT_MMR_MIN_SCORE,
+    DEFAULT_RRF_RANK_CONST,
+    ENTITY_BASE_LABEL,
+    FUZZY_JACCARD_THRESHOLD,
+    GRAPHITI_ZEP_MEMORY_KEY,
+    MIN_NAME_LENGTH,
+    MIN_TOKEN_COUNT,
+    MINHASH_BAND_SIZE,
+    MINHASH_PERMUTATIONS,
+    NAME_ENTROPY_THRESHOLD,
+    SUPPORTED_RERANK_METHODS,
+    ZEP_WIRE_PROPERTY_TYPES,
+    BiTemporalEdgeNormalizationReport,
+    CommunityAndOntologyReport,
+    EntityDedupResolutionReport,
+    GraphitiZepMemoryEngine,
+    GraphitiZepMemoryProtocol,
+    HybridRerankReport,
+)
 from harness.services.token_economizer import (
     TOKEN_ECONOMIZER_SERVICE_KEY,
     MicroSkillFact,
@@ -200,4 +223,36 @@ from harness.services.token_economizer import (
     ToolPrunePolicy,
     TrajectoryTrace,
     TurnGuardDecision,
+)
+from harness.services.trustgraph_governor import (
+    DEFAULT_BYPASS_SELECTOR_BELOW,
+    DEFAULT_POLICY_ORDER,
+    DEFAULT_SELECTOR_SIMILARITY_THRESHOLD,
+    DEFAULT_SELECTOR_TOP_K,
+    EXPLAINABILITY_STAGES,
+    EXPLAINABILITY_URN_PREFIX,
+    EXTRACTION_PROVENANCE_PREFIX,
+    LAYA_DEFAULT_REPO,
+    LAYA_HEAD_MAX_LEN,
+    LAYA_MAX_SEQ_LEN,
+    LAYA_MIN_OPT_BUDGET,
+    LAYA_OPTION_TOKEN_CAP,
+    LAYA_QUESTION_TYPES,
+    LAYA_TEMP_MAX,
+    LAYA_TEMP_MIN,
+    NODE_CACHE_MAX_ENTRIES,
+    NODE_CACHE_TTL_SECONDS,
+    POLICY_GRAPH_URI,
+    QUERY_CACHE_MAX_ENTRIES,
+    QUERY_CACHE_TTL_SECONDS,
+    RETRIEVAL_GRAPH_URI,
+    SOURCE_GRAPH_URI,
+    SPARQL_CACHE_MAX_ENTRIES,
+    TRUSTGRAPH_GOVERNOR_KEY,
+    LayaDecisionScoreReport,
+    OntologyValidationReport,
+    ProvenanceTraceEnvelope,
+    ShaclPolicyFilterReport,
+    TrustGraphGovernorEngine,
+    TrustGraphGovernorProtocol,
 )

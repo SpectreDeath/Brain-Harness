@@ -1,0 +1,57 @@
+{
+  "id": "ki-getzep-graphiti-bitemporal-edge-normalization",
+  "title": "Graphiti: Bi-Temporal Edge Timelines, Future-Tense Clamping & Contradiction Invalidation",
+  "created": "2026-11-14T12:55:00-05:00",
+  "updated": "2026-11-14T12:55:00-05:00",
+  "summary": "Graphiti tracks dual temporal coordinates per EntityEdge: transaction ingestion (created_at, expired_at) and real-world validity (valid_at, invalid_at). normalize_future_temporal_bounds() detects planned or scheduled assertions via _FUTURE_ASSERTION_RE, clamps valid_at > reference_time to reference_time, and clears false invalid_at values caused by soft deadlines (_DEADLINE_RE without _ONGOING_STATE_END_RE). resolve_edge_contradictions() sets invalid_at = new_edge.valid_at and expired_at = utc_now().",
+  "references": [
+    {
+      "path": "graphiti_core/utils/maintenance/temporal_edge_utils.py#L14-L96",
+      "description": "_FUTURE_ASSERTION_RE, _DEADLINE_RE, _ONGOING_STATE_END_RE, normalize_future_temporal_bounds, and apply_extracted_timestamps"
+    },
+    {
+      "path": "graphiti_core/utils/maintenance/edge_operations.py#L250-L380",
+      "description": "Bi-temporal resolve_edge_contradictions invalidating superseded edges with valid_at/expired_at"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "category": "memory_and_epistemics",
+  "source_target": "https://github.com/getzep/graphiti",
+  "detected_format": "python_package",
+  "tags": [
+    "getzep",
+    "graphiti",
+    "bitemporal",
+    "temporal-edges",
+    "contradiction-resolution"
+  ],
+  "anchors": {},
+  "edges": [
+    {
+      "type": "distilled_from",
+      "target": "https://github.com/getzep/graphiti",
+      "target_kind": "external_repo",
+      "derived": true,
+      "confidence": 0.96,
+      "description": "Pinned commit ed231965: graphiti_core/utils/maintenance/temporal_edge_utils.py#L14-L96, graphiti_core/utils/maintenance/edge_operations.py#L250-L380"
+    }
+  ],
+  "isnad": {
+    "source_repo": "https://github.com/getzep/graphiti",
+    "commit": "ed231965",
+    "verified_at": "2026-11-14T12:55:00-05:00",
+    "citations": [
+      "graphiti_core/utils/maintenance/temporal_edge_utils.py#L14-L96",
+      "graphiti_core/utils/maintenance/edge_operations.py#L250-L380"
+    ],
+    "sha256": "0f2024c5592d14b06640bb63e80aeff66fe67c28885d483cf6d331b5c71e0b97"
+  },
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": "repo-triad-forge",
+  "created_at": "2026-11-14T12:55:00-05:00",
+  "distilled_learning": "Track transaction vs event timelines separately, clamp future assertion start dates to statement reference time while ignoring soft deadlines, and expire contradicted facts deterministically."
+}

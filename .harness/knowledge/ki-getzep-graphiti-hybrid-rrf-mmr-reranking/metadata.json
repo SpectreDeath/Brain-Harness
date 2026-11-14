@@ -1,0 +1,57 @@
+{
+  "id": "ki-getzep-graphiti-hybrid-rrf-mmr-reranking",
+  "title": "Graphiti: Hybrid BM25/Vector RRF Fusion, Maximal Marginal Relevance & Shortest-Hop Node Distance Reranking",
+  "created": "2026-11-14T12:55:00-05:00",
+  "updated": "2026-11-14T12:55:00-05:00",
+  "summary": "Graphiti composes BM25 fulltext, dense cosine vector search, and BFS graph traversals via Reciprocal Rank Fusion rrf(results, rank_const=1, min_score=0). Diverse result selection applies L2-normalized Maximal Marginal Relevance mmr(query_vector, candidates, mmr_lambda=0.5, min_score=-2.0) maximizing lambda*(q.c) + (lambda-1)*max_sim(c). Locality-focused retrieval uses node_distance_reranker weighting center_node at 0.1 (score 10.0), 1-hop neighbors at 1.0, and unreachable nodes at infinity (0.0).",
+  "references": [
+    {
+      "path": "graphiti_core/search/search_utils.py#L1785-L1951",
+      "description": "rrf, node_distance_reranker, and mmr implementations over candidate UUIDs and vectors"
+    },
+    {
+      "path": "graphiti_core/search/search_config.py#L1-L120",
+      "description": "Search configuration defaults combining rerankers and score thresholds"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "category": "memory_and_epistemics",
+  "source_target": "https://github.com/getzep/graphiti",
+  "detected_format": "python_package",
+  "tags": [
+    "getzep",
+    "graphiti",
+    "hybrid-search",
+    "rrf",
+    "mmr"
+  ],
+  "anchors": {},
+  "edges": [
+    {
+      "type": "distilled_from",
+      "target": "https://github.com/getzep/graphiti",
+      "target_kind": "external_repo",
+      "derived": true,
+      "confidence": 0.96,
+      "description": "Pinned commit ed231965: graphiti_core/search/search_utils.py#L1785-L1951, graphiti_core/search/search_config.py#L1-L120"
+    }
+  ],
+  "isnad": {
+    "source_repo": "https://github.com/getzep/graphiti",
+    "commit": "ed231965",
+    "verified_at": "2026-11-14T12:55:00-05:00",
+    "citations": [
+      "graphiti_core/search/search_utils.py#L1785-L1951",
+      "graphiti_core/search/search_config.py#L1-L120"
+    ],
+    "sha256": "325fa6a9764a549eebc5aa5b07d4257d1ce2ad5770da06aa7286fb10a2d86af7"
+  },
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": "repo-triad-forge",
+  "created_at": "2026-11-14T12:55:00-05:00",
+  "distilled_learning": "Fuse heterogeneous sparse/dense/graph rankings using Reciprocal Rank Fusion, balance novelty vs relevance via MMR, and score graph neighborhood centrality by inverse hop distance."
+}

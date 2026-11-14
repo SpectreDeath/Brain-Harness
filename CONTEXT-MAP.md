@@ -50,6 +50,8 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
 
   - `harness_spawner` — First-class child harness spawning service with isolated `ServiceContext` realms, `k=1` probe trial gates, dual token/rollout budgets, DAG lifecycle tracking, and reviewed knowledge merge-back.
 
+  - `agora_mcp_workbench` — Agora Workbench MCP sidecar lifecycle auditing, unified state graph workflow planning, gateway/dispatcher connector routing, and data-lake transfer validation.
+
 - **Member Skills**:
 
   - [`elephant-goldfish-governor`](.agents/skills/elephant-goldfish-governor/SKILL.md) — Govern AI agent design and review workflows using the Elephant-Goldfish bifurcated context architecture, artifact-first spec drafting, 5-stage antagonistic review gates, and living spec drift detection.
@@ -100,6 +102,8 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
 
   - [`skill-eval-assurance-runner`](.agents/skills/skill-eval-assurance-runner/SKILL.md) — Evaluate and assure agent skills using small-N Wilson confidence intervals, unbiased pass^k reliability, deterministic trajectory graders, preflight boundary honesty, and sealed digest verification. Do not use for subjective prose review or unconstrained production deployment.
 
+  - [`agora-mcp-workbench-architect`](.agents/skills/agora-mcp-workbench-architect/SKILL.md) — Architect, audit, and orchestrate Agora Workbench MCP servers, loopback sidecars, unified state graphs, gateway/dispatcher connectors, and policy-enforced data lakes. Do not use for static frontend CSS styling or non-MCP desktop GUI automation.
+
 
 
 ### 2. [Memory & Epistemics](./docs/domains/memory-and-epistemics/EXPLANATION.md)
@@ -132,6 +136,8 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
 
   - `token_economizer` — Experience-driven black-box cost control for coding agents with micro-skills lifecycle, dynamic tool pruning, and 3-tier failure-loop turn guard intervention.
   - `ontology_spider` — Web dataset discovery, Dublin Core / schema.org harvesting, and ontology knowledge expansion.
+  - `trustgraph_ontology_governor` — Subprocess-isolated TrustGraph SHACL-AF `PolicyFilter`, `OntologyRAG` small-schema bypass & cycle-safe `subClassOf` validation, PROV-O dual named-graph explainability, and Laya entropy decision scoring.
+  - `graphiti_zep_memory_governor` — Subprocess-isolated Graphiti/Zep bi-temporal edge normalization, entropy-gated 32-perm MinHash/LSH entity dedup, RRF/MMR/hop-distance reranking, weighted label propagation, and typed ontology compilation.
 
 - **Member Skills**:
 
@@ -152,6 +158,8 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - [`temp-artifact-miner`](.agents/skills/temp-artifact-miner/SKILL.md) — Ephemeral visual brief salvage, pytest sandbox triage, and Knowledge Vault cognitive bifurcation.
 
   - [`token-economizer`](.agents/skills/token-economizer/SKILL.md) — Control coding agent token waste through experience-driven micro-skills lifecycle, empirical evidence-based tool pruning, and 3-tier failure-loop turn guard intervention.
+  - [`trustgraph-ontology-governor`](.agents/skills/trustgraph-ontology-governor/SKILL.md) — Govern knowledge graphs with SHACL-AF subject-IRI policy filters, cycle-safe `subClassOf` domain/range validation, dual named-graph PROV-O explainability, and Laya entropy decision scoring.
+  - [`graphiti-zep-memory-governor`](.agents/skills/graphiti-zep-memory-governor/SKILL.md) — Govern bi-temporal knowledge graphs with Graphiti future-edge clamping, MinHash/LSH entity dedup, RRF/MMR reranking, and Zep typed ontologies.
 
 
 
@@ -247,6 +255,8 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
 
   - `r_editor_bridge` — R editor tooling bridge integrating languageserver LSP 3.17, jgd C-level graphics streaming, and session watcher reflection.
 
+  - `ui_behavior_primitive_architect` — Headless `definePrimitive` auditing, WebMCP agent bridge safety checks, WAI-ARIA/SSR/RTL tri-modal verification, and framework expert routing.
+
 - **Member Skills**:
 
   - [`icm-workspace-architect`](.agents/skills/icm-workspace-architect/SKILL.md) — Design, scaffold, audit, and restructure workspaces using Interpretable Context Methodology (ICM, arXiv:2603.16021). Binds folder hierarchy to context scoping (L0-L4), replaces framework code with plain contracts, and validates with the walk test.
@@ -294,6 +304,8 @@ This context map defines the bounded domains for the Brain Harness ecosystem, pa
   - [`python-diagrams-architect`](.agents/skills/python-diagrams-architect/SKILL.md) — Architect, generate, validate, and lint production system architecture and cloud infrastructure diagrams in Python using Diagrams-as-Code.
 
   - [`r-language-server-toolkit`](.agents/skills/r-language-server-toolkit/SKILL.md) — Scaffold, configure, and inspect R language server protocol runtimes, C-level graphics devices (jgd), and session watchers for R execution environments.
+
+  - [`ui-behavior-primitive-architect`](.agents/skills/ui-behavior-primitive-architect/SKILL.md) — Architect, audit, and verify zero-dependency headless UI behavior primitives, WebMCP agent bridges, WAI-ARIA/SSR/RTL tri-modal checks, and framework expert routing.
 
 
 

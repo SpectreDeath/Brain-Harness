@@ -1,0 +1,52 @@
+{
+  "id": "ki-trustgraph-laya-onnx-entropy-decision-scoring",
+  "title": "TrustGraph: Laya ONNX Decision Scoring, Temperature Clamping, Normalized Entropy Confidence & Head-Budgeting",
+  "created": "2026-11-14T12:00:00-05:00",
+  "updated": "2026-11-14T12:00:00-05:00",
+  "summary": "TrustGraph Laya (onnx-community/laya-multilingual-ONNX) scores structured routing decisions across three question types (choice=0, score=1, noul=2). Temperatures are safely sanitized and clamped to [0.5, 5.0] (NaN/Inf mapped to 1.0), quantized into temperature buckets, and scored with normalized Shannon entropy confidence (1 - H(p)/ln(k), returning 1.0 when k < 2). Sequence assembly enforces max_len=512 and head_max_len=192 with opt_budget = head_max_len - k * (1 + min(48, option_tokens_each)).",
+  "references": [
+    {
+      "path": "trustgraph-laya/trustgraph/model/decision_scoring/laya/engine.py#L1-L140",
+      "description": "DEFAULT_REPO, QTYPES={'choice':0,'score':1,'noul':2}, TEMP_MIN=0.5, TEMP_MAX=5.0, _clamp_temperature, _temp_bucket, _confidence_from_probs, and _build_sequence"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "category": "memory_and_epistemics",
+  "source_target": "https://github.com/trustgraph-ai/trustgraph",
+  "detected_format": "python_package",
+  "tags": [
+    "trustgraph",
+    "laya",
+    "decision-scoring",
+    "shannon-entropy",
+    "onnx"
+  ],
+  "anchors": {},
+  "edges": [
+    {
+      "type": "distilled_from",
+      "target": "https://github.com/trustgraph-ai/trustgraph",
+      "target_kind": "external_repo",
+      "derived": true,
+      "confidence": 0.96,
+      "description": "Pinned commit 17e5d742: trustgraph-laya/trustgraph/model/decision_scoring/laya/engine.py#L1-L140"
+    }
+  ],
+  "isnad": {
+    "source_repo": "https://github.com/trustgraph-ai/trustgraph",
+    "commit": "17e5d742",
+    "verified_at": "2026-11-14T12:00:00-05:00",
+    "citations": [
+      "trustgraph-laya/trustgraph/model/decision_scoring/laya/engine.py#L1-L140"
+    ],
+    "sha256": "877584fec8be59db897105916ea4e862929e99932558625863551ef2036ae47c"
+  },
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": "repo-triad-forge",
+  "created_at": "2026-11-14T12:00:00-05:00",
+  "distilled_learning": "Quantify structured LLM/agent decision confidence using clamped temperature calibration, normalized Shannon entropy (1 - H(p)/ln(k)), and bounded option-header token budgeting."
+}

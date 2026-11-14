@@ -1,0 +1,202 @@
+{
+  "name": "plugin.ui_behavior_primitive_architect",
+  "version": "1.0.0",
+  "description": "UI Behavior Primitive Architect plugin providing definePrimitive auditing, WebMCP agent bridge safety checks, WAI-ARIA/SSR/RTL tri-modal verification, and framework expert scope routing",
+  "language": "python",
+  "entrypoint": "main.py",
+  "isolation": "subprocess",
+  "trusted": true,
+  "author": "Brain Harness Authors",
+  "provides": [
+    "service.ui_behavior_primitive_architect"
+  ],
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "ui_audit_primitive",
+      "description": "Audit a headless definePrimitive contract for naming, render-prop, controlled/default collisions, live overlap, and agent action binding",
+      "parameters": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "Primitive kebab-case name",
+          "required": true
+        },
+        {
+          "name": "state_keys",
+          "type": "array",
+          "description": "State keys defined on the primitive",
+          "required": false
+        },
+        {
+          "name": "live_keys",
+          "type": "array",
+          "description": "Non-rendering live keys",
+          "required": false
+        },
+        {
+          "name": "controlled_keys",
+          "type": "array",
+          "description": "Explicit controlled state keys",
+          "required": false
+        },
+        {
+          "name": "provided_options",
+          "type": "array",
+          "description": "Initial options passed to the primitive",
+          "required": false
+        },
+        {
+          "name": "api_methods",
+          "type": "array",
+          "description": "Methods exposed on instance.api",
+          "required": false
+        },
+        {
+          "name": "agent_actions",
+          "type": "array",
+          "description": "Actions declared in primitive agent.actions",
+          "required": false
+        },
+        {
+          "name": "has_asleep_predicate",
+          "type": "boolean",
+          "description": "Whether asleep lazy wake-up predicate is configured",
+          "required": false
+        },
+        {
+          "name": "has_render_as_prop",
+          "type": "boolean",
+          "description": "Whether an invalid as prop is used instead of render",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "ui_evaluate_agent_step",
+      "description": "Evaluate a WebMCP / page agent bridge step against DOM marks (hidden/secret/confirm) and action synonyms",
+      "parameters": [
+        {
+          "name": "ref",
+          "type": "string",
+          "description": "Stable component reference",
+          "required": true
+        },
+        {
+          "name": "component",
+          "type": "string",
+          "description": "Component kind",
+          "required": true
+        },
+        {
+          "name": "action",
+          "type": "string",
+          "description": "Requested action or synonym",
+          "required": true
+        },
+        {
+          "name": "available_actions",
+          "type": "array",
+          "description": "Live actions exposed by the component",
+          "required": false
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "description": "Current or target component value",
+          "required": false
+        },
+        {
+          "name": "confirm_attr",
+          "type": "string",
+          "description": "Optional data-agent-confirm prompt",
+          "required": false
+        },
+        {
+          "name": "hidden",
+          "type": "boolean",
+          "description": "Whether inside data-agent-hidden",
+          "required": false
+        },
+        {
+          "name": "secret",
+          "type": "boolean",
+          "description": "Whether inside data-agent-secret or sensitive field",
+          "required": false
+        },
+        {
+          "name": "person_approved",
+          "type": "boolean",
+          "description": "Explicit human approval result for confirm steps",
+          "required": false
+        },
+        {
+          "name": "tool_name",
+          "type": "string",
+          "description": "WebMCP tool name (snapshot, act, or query)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "ui_verify_tri_modal",
+      "description": "Aggregate WAI-ARIA APG pattern checks, SSR clock/DOM isolation findings, and mirrored LTR vs RTL parity checks",
+      "parameters": [
+        {
+          "name": "pattern",
+          "type": "string",
+          "description": "WAI-ARIA APG pattern name",
+          "required": true
+        },
+        {
+          "name": "aria_violations",
+          "type": "array",
+          "description": "Observed ARIA or keyboard focus defects",
+          "required": false
+        },
+        {
+          "name": "ssr_globals_accessed",
+          "type": "array",
+          "description": "Browser/clock/entropy globals accessed during server render",
+          "required": false
+        },
+        {
+          "name": "ltr_focus",
+          "type": "string",
+          "description": "Focused target after ArrowRight in LTR",
+          "required": false
+        },
+        {
+          "name": "rtl_focus",
+          "type": "string",
+          "description": "Focused target after ArrowLeft in RTL",
+          "required": false
+        },
+        {
+          "name": "ltr_state",
+          "type": "object",
+          "description": "Normalized state object from LTR mount",
+          "required": false
+        },
+        {
+          "name": "rtl_state",
+          "type": "object",
+          "description": "Normalized state object from RTL mount",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "ui_plan_expert_scope",
+      "description": "Compute triggered framework experts (react, vue, svelte, solid, web) from changed repository file paths",
+      "parameters": [
+        {
+          "name": "changed_files",
+          "type": "array",
+          "description": "List of changed workspace-relative file paths",
+          "required": true
+        }
+      ]
+    }
+  ]
+}

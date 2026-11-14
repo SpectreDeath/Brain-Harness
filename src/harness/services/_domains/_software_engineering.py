@@ -1,4 +1,5 @@
 """Domain-partitioned service exports: _software_engineering."""
+
 from __future__ import annotations
 
 from harness.services.doc_builder import (
@@ -179,4 +180,20 @@ from harness.services.r_runtime import (
     RRuntimeProtocol,
     RSessionInspectionData,
     resolve_r_runtime,
+)
+
+from harness.services.ui_behavior_architect import (
+    ACTION_SYNONYMS,
+    CONFIRM_MAX_CHARS,
+    FORBIDDEN_SSR_GLOBALS,
+    FRAMEWORK_EXPERTS,
+    RETIRED_REF_LIMIT,
+    SUPPORTED_ARIA_PATTERNS,
+    UI_BEHAVIOR_ARCHITECT_KEY,
+    AgentBridgeStepDecision,
+    ExpertScopeRoute,
+    PrimitiveAuditReport,
+    TriModalVerificationReport,
+    UIBehaviorArchitectEngine,
+    UIBehaviorArchitectProtocol,
 )

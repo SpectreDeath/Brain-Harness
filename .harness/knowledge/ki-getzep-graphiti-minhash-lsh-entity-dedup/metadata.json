@@ -1,0 +1,57 @@
+{
+  "id": "ki-getzep-graphiti-minhash-lsh-entity-dedup",
+  "title": "Graphiti: Shannon Entropy Gate, 32-Perm MinHash/LSH Entity Deduplication & Dangling Endpoint Pruning",
+  "created": "2026-11-14T12:55:00-05:00",
+  "updated": "2026-11-14T12:55:00-05:00",
+  "summary": "Graphiti filters low-specificity entity names using character Shannon entropy (_NAME_ENTROPY_THRESHOLD=1.5, _MIN_NAME_LENGTH=6, _MIN_TOKEN_COUNT=2) before fuzzy matching, sending ambiguous names to LLM resolution. High-entropy names convert to 3-gram shingles, 32-permutation 64-bit blake2b MinHash signatures, and 4-band LSH buckets verified at Jaccard >= 0.9, promoting merged labels via _promote_resolved_node(). Missing edge endpoints are materialized and later pruned via prune_unreferenced_materialized_nodes().",
+  "references": [
+    {
+      "path": "graphiti_core/utils/maintenance/dedup_helpers.py#L31-L190",
+      "description": "Shannon entropy gate (_name_entropy/_has_high_entropy), 3-gram shingles, 32-perm blake2b MinHash, 4-band LSH, and label promotion"
+    },
+    {
+      "path": "graphiti_core/utils/maintenance/dangling_endpoints.py#L26-L74",
+      "description": "materialize_dangling_endpoint_node and prune_unreferenced_materialized_nodes"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "category": "memory_and_epistemics",
+  "source_target": "https://github.com/getzep/graphiti",
+  "detected_format": "python_package",
+  "tags": [
+    "getzep",
+    "graphiti",
+    "entity-deduplication",
+    "minhash-lsh",
+    "shannon-entropy"
+  ],
+  "anchors": {},
+  "edges": [
+    {
+      "type": "distilled_from",
+      "target": "https://github.com/getzep/graphiti",
+      "target_kind": "external_repo",
+      "derived": true,
+      "confidence": 0.96,
+      "description": "Pinned commit ed231965: graphiti_core/utils/maintenance/dedup_helpers.py#L31-L190, graphiti_core/utils/maintenance/dangling_endpoints.py#L26-L74"
+    }
+  ],
+  "isnad": {
+    "source_repo": "https://github.com/getzep/graphiti",
+    "commit": "ed231965",
+    "verified_at": "2026-11-14T12:55:00-05:00",
+    "citations": [
+      "graphiti_core/utils/maintenance/dedup_helpers.py#L31-L190",
+      "graphiti_core/utils/maintenance/dangling_endpoints.py#L26-L74"
+    ],
+    "sha256": "7e8a64ca67080cdf198a6e5d2865a5ae3ffdb1c35a2ccab6d6428a06fb18497f"
+  },
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": "repo-triad-forge",
+  "created_at": "2026-11-14T12:55:00-05:00",
+  "distilled_learning": "Gate MinHash/LSH Jaccard entity deduplication behind character Shannon entropy thresholds and clean up materialized dangling edge endpoints that lose surviving references."
+}

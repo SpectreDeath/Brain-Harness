@@ -1,0 +1,178 @@
+{
+  "name": "plugin.graphiti_zep_memory_governor",
+  "version": "1.0.0",
+  "description": "Graphiti / Zep temporal memory governor plugin providing bi-temporal edge normalization, entropy-gated MinHash/LSH entity dedup with dangling endpoint cleanup, RRF/MMR/hop-distance reranking, weighted label propagation, and typed Zep ontology compilation",
+  "language": "python",
+  "entrypoint": "main.py",
+  "isolation": "subprocess",
+  "trusted": true,
+  "author": "Brain Harness Authors",
+  "provides": [
+    "service.graphiti_zep_memory"
+  ],
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "zep_normalize_bitemporal_edges",
+      "description": "Clamp future-tense assertion valid_at dates to reference_time, filter soft deadlines, and partition contradicted vs surviving edge IDs",
+      "parameters": [
+        {
+          "name": "fact",
+          "type": "string",
+          "description": "Natural-language fact statement associated with the edge",
+          "required": true
+        },
+        {
+          "name": "reference_time",
+          "type": "string",
+          "description": "Statement episode ISO-8601 UTC timestamp",
+          "required": true
+        },
+        {
+          "name": "valid_at",
+          "type": "string",
+          "description": "Optional extracted valid_at ISO-8601 timestamp",
+          "required": false
+        },
+        {
+          "name": "invalid_at",
+          "type": "string",
+          "description": "Optional extracted invalid_at ISO-8601 timestamp",
+          "required": false
+        },
+        {
+          "name": "existing_edges",
+          "type": "array",
+          "description": "Existing candidate edges inspected for contradiction partitioning",
+          "required": false
+        },
+        {
+          "name": "contradicted_ids",
+          "type": "array",
+          "description": "UUIDs of edges superseded by the new fact",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "zep_resolve_entities_and_endpoints",
+      "description": "Resolve extracted entities via character Shannon entropy gating, 32-perm blake2b MinHash and 4-band LSH, promote labels, and prune unreferenced materialized dangling endpoints",
+      "parameters": [
+        {
+          "name": "extracted_entities",
+          "type": "array",
+          "description": "Extracted entity dictionaries containing name and labels",
+          "required": true
+        },
+        {
+          "name": "existing_entities",
+          "type": "array",
+          "description": "Existing canonical entity nodes to match against",
+          "required": false
+        },
+        {
+          "name": "edge_endpoints",
+          "type": "array",
+          "description": "List of [source, target] pairs referenced by extracted edges",
+          "required": false
+        },
+        {
+          "name": "kept_edge_endpoints",
+          "type": "array",
+          "description": "Surviving [source, target] pairs after edge filtering used to prune orphan materialized endpoints",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "zep_rerank_hybrid_search",
+      "description": "Rerank retrieval candidates using Reciprocal Rank Fusion (rrf), L2-normalized Maximal Marginal Relevance (mmr), or shortest-hop centrality (node_distance)",
+      "parameters": [
+        {
+          "name": "method",
+          "type": "string",
+          "description": "Reranking algorithm: rrf, mmr, or node_distance",
+          "required": true
+        },
+        {
+          "name": "ranked_lists",
+          "type": "array",
+          "description": "Ranked UUID lists fused when method=rrf",
+          "required": false
+        },
+        {
+          "name": "query_vector",
+          "type": "array",
+          "description": "Dense query embedding for method=mmr",
+          "required": false
+        },
+        {
+          "name": "candidate_vectors",
+          "type": "object",
+          "description": "Mapping of candidate UUID to dense embedding for method=mmr",
+          "required": false
+        },
+        {
+          "name": "center_node_uuid",
+          "type": "string",
+          "description": "Center entity UUID pinned at 0.1 distance for method=node_distance",
+          "required": false
+        },
+        {
+          "name": "hop_distances",
+          "type": "object",
+          "description": "Mapping of candidate UUID to graph hop distance for method=node_distance",
+          "required": false
+        },
+        {
+          "name": "rank_const",
+          "type": "integer",
+          "description": "Smoothing rank constant k for RRF (default 1)",
+          "required": false
+        },
+        {
+          "name": "mmr_lambda",
+          "type": "number",
+          "description": "Relevance vs diversity tradeoff parameter for MMR (default 0.5)",
+          "required": false
+        },
+        {
+          "name": "min_score",
+          "type": "number",
+          "description": "Minimum post-rerank score cutoff (default 0.0)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "zep_cluster_and_compile_ontology",
+      "description": "Cluster entity communities via edge-weighted label propagation, verify per-group sequential episode queues, and compile typed EntityModel/EdgeModel ontologies",
+      "parameters": [
+        {
+          "name": "neighbor_projection",
+          "type": "object",
+          "description": "Mapping from node UUID to neighbor dicts with node_uuid and edge_count",
+          "required": true
+        },
+        {
+          "name": "episode_batches",
+          "type": "array",
+          "description": "Episode batch dictionaries validated for non-empty group_id queue serialization",
+          "required": false
+        },
+        {
+          "name": "entity_schemas",
+          "type": "array",
+          "description": "Zep EntityModel declarations checked for docstrings, valid wire types, Identity and Excluded markers",
+          "required": false
+        },
+        {
+          "name": "edge_schemas",
+          "type": "array",
+          "description": "Zep EdgeModel declarations enforcing non-empty descriptions and forbidding Identity on edges",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

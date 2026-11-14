@@ -1,0 +1,184 @@
+{
+  "name": "plugin.trustgraph_ontology_governor",
+  "version": "1.0.0",
+  "description": "TrustGraph ontology governor plugin providing SHACL-AF subject-IRI PolicyFilter, OntologyRAG small-schema bypass and cycle-safe subClassOf validation, PROV-O dual named-graph explainability, and Laya entropy decision scoring",
+  "language": "python",
+  "entrypoint": "main.py",
+  "isolation": "subprocess",
+  "trusted": true,
+  "author": "Brain Harness Authors",
+  "provides": [
+    "service.trustgraph_ontology_governor"
+  ],
+  "requires": [],
+  "entrypoints": [
+    {
+      "name": "tg_evaluate_shacl_policy",
+      "description": "Evaluate SHACL-AF subject-IRI policies in sh:order precedence with first-match-wins semantics and explicit open-mode fallback",
+      "parameters": [
+        {
+          "name": "triples",
+          "type": "array",
+          "description": "List of triple dictionaries containing s, p, and o keys",
+          "required": true
+        },
+        {
+          "name": "policies",
+          "type": "array",
+          "description": "Optional list of SHACL-AF sh:NodeShape policy rule dictionaries",
+          "required": false
+        },
+        {
+          "name": "subject_attributes",
+          "type": "object",
+          "description": "Mapping from subject IRI to attribute/type metadata for policy evaluation",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "tg_validate_ontology_triples",
+      "description": "Validate extracted relationship and attribute triples using OntologySelector bypass thresholds and cycle-safe subClassOf closure",
+      "parameters": [
+        {
+          "name": "ontology",
+          "type": "object",
+          "description": "Ontology dictionary with classes, object_properties, and datatype_properties",
+          "required": true
+        },
+        {
+          "name": "triples",
+          "type": "array",
+          "description": "Extracted relationship or attribute triple dictionaries",
+          "required": true
+        },
+        {
+          "name": "bypass_selector_below",
+          "type": "integer",
+          "description": "Bypass vector selector when total ontology elements fall below this threshold (default 5)",
+          "required": false
+        },
+        {
+          "name": "top_k",
+          "type": "integer",
+          "description": "Selector top-k parameter preserved for OntologySelector parity",
+          "required": false
+        },
+        {
+          "name": "similarity_threshold",
+          "type": "number",
+          "description": "Selector cosine similarity threshold (default 0.3)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "tg_build_provenance_trace",
+      "description": "Build dual named-graph PROV-O extraction lineage (urn:graph:source) and 5-stage query explainability traces (urn:graph:retrieval)",
+      "parameters": [
+        {
+          "name": "question_id",
+          "type": "string",
+          "description": "Unique query identifier anchoring urn:trustgraph:question and stage URIs",
+          "required": true
+        },
+        {
+          "name": "query_text",
+          "type": "string",
+          "description": "Natural language query string recorded on the question node",
+          "required": true
+        },
+        {
+          "name": "document_id",
+          "type": "string",
+          "description": "Optional source document ID emitted under https://trustgraph.ai/doc/ into urn:graph:source",
+          "required": false
+        },
+        {
+          "name": "extraction_triples",
+          "type": "array",
+          "description": "Optional source extraction triples scoped to urn:graph:source",
+          "required": false
+        },
+        {
+          "name": "stage_details",
+          "type": "object",
+          "description": "Optional comments mapped by explainability stage name",
+          "required": false
+        },
+        {
+          "name": "prompt_tokens",
+          "type": "integer",
+          "description": "Prompt token count attached to synthesis PROV-O triples",
+          "required": false
+        },
+        {
+          "name": "completion_tokens",
+          "type": "integer",
+          "description": "Completion token count attached to synthesis PROV-O triples",
+          "required": false
+        },
+        {
+          "name": "total_tokens",
+          "type": "integer",
+          "description": "Optional explicit total token override",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "tg_score_laya_decision",
+      "description": "Score Laya ONNX routing decisions with clamped temperature calibration, normalized Shannon entropy confidence, and head-token option budgeting",
+      "parameters": [
+        {
+          "name": "question_type",
+          "type": "string",
+          "description": "Laya decision type: choice, score, or noul",
+          "required": true
+        },
+        {
+          "name": "options",
+          "type": "array",
+          "description": "Candidate option labels evaluated by Laya",
+          "required": true
+        },
+        {
+          "name": "logits_or_probs",
+          "type": "array",
+          "description": "Raw model logits or pre-normalized option probabilities",
+          "required": true
+        },
+        {
+          "name": "temperature",
+          "type": "number",
+          "description": "Sampling temperature safely clamped to [0.5, 5.0] with non-finite fallback to 1.0",
+          "required": false
+        },
+        {
+          "name": "question_tokens",
+          "type": "integer",
+          "description": "Question prefix token count",
+          "required": false
+        },
+        {
+          "name": "option_tokens_each",
+          "type": "integer",
+          "description": "Estimated tokens per option entry",
+          "required": false
+        },
+        {
+          "name": "probs_already_normalized",
+          "type": "boolean",
+          "description": "Treat input array as simplex probabilities rather than raw logits",
+          "required": false
+        },
+        {
+          "name": "temp_buckets",
+          "type": "integer",
+          "description": "Bucket quantization granularity (default 10)",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

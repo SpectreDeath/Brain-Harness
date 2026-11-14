@@ -1,0 +1,57 @@
+{
+  "id": "ki-trustgraph-shacl-af-policy-filter",
+  "title": "TrustGraph: SHACL-AF Subject-IRI Policy Filter, Bounded Query/Node Caches & Open-Mode Fallback",
+  "created": "2026-11-14T12:00:00-05:00",
+  "updated": "2026-11-14T12:00:00-05:00",
+  "summary": "TrustGraph evaluates fine-grained knowledge graph access policies stored in urn:graph:policy via PolicyFilter. Loaded sh:NodeShape rules are ordered by sh:order (default 99) and evaluated with first-match-wins precedence, where tg-pol:blocks defaults to True and filters triples by blocked subject IRI. When zero policies are loaded, PolicyFilter enters open mode; otherwise it uses bounded TTL/size caches (QUERY_CACHE_TTL=30s/256, SPARQL_CACHE_MAX=64, NODE_CACHE_TTL=60s/1024).",
+  "references": [
+    {
+      "path": "trustgraph-flow/trustgraph/policy/policy_filter.py#L1-L410",
+      "description": "POLICY_GRAPH='urn:graph:policy', bounded cache constants, LoadedPolicy/PolicyEvaluation schemas, and sh:order sorting"
+    },
+    {
+      "path": "trustgraph-flow/trustgraph/policy/policy_filter.py#L615-L865",
+      "description": "PolicyFilter first-match-wins subject-IRI evaluation, tg-pol:blocks default True, and open-mode fallback"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "category": "memory_and_epistemics",
+  "source_target": "https://github.com/trustgraph-ai/trustgraph",
+  "detected_format": "python_package",
+  "tags": [
+    "trustgraph",
+    "shacl-af",
+    "policy-filter",
+    "access-control",
+    "knowledge-graph"
+  ],
+  "anchors": {},
+  "edges": [
+    {
+      "type": "distilled_from",
+      "target": "https://github.com/trustgraph-ai/trustgraph",
+      "target_kind": "external_repo",
+      "derived": true,
+      "confidence": 0.96,
+      "description": "Pinned commit 17e5d742: trustgraph-flow/trustgraph/policy/policy_filter.py#L1-L410, trustgraph-flow/trustgraph/policy/policy_filter.py#L615-L865"
+    }
+  ],
+  "isnad": {
+    "source_repo": "https://github.com/trustgraph-ai/trustgraph",
+    "commit": "17e5d742",
+    "verified_at": "2026-11-14T12:00:00-05:00",
+    "citations": [
+      "trustgraph-flow/trustgraph/policy/policy_filter.py#L1-L410",
+      "trustgraph-flow/trustgraph/policy/policy_filter.py#L615-L865"
+    ],
+    "sha256": "28d93efd0f0333eb96146d696cacf3dd8701345d9a1b215f99a8a3eb2dd1e2de"
+  },
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": "repo-triad-forge",
+  "created_at": "2026-11-14T12:00:00-05:00",
+  "distilled_learning": "Order SHACL-AF policy shapes by integer sh:order with first-match-wins subject-IRI evaluation, bounded TTL query/node caches, and explicit open-mode vs fail-safe deny semantics."
+}

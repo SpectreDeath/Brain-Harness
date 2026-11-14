@@ -1,0 +1,67 @@
+{
+  "id": "ki-agora-workbench-sidecar-process-lifecycle",
+  "title": "Agora Workbench: Co-Located Loopback Sidecar Process Lifecycle, Host/Port Env Lock & Atomic Teardown",
+  "created": "2026-11-14T11:00:00-05:00",
+  "updated": "2026-11-14T11:00:00-05:00",
+  "summary": "Agora Workbench shares heavy global runtime dependencies (such as ML models) across isolated CodeExecutionServer kernel sessions by launching co-located loopback HTTP sidecars via SidecarManager. On start_all(), duplicate names fail early, partial startup failures trigger atomic stop_all() rollback, SIDECAR_HOST and SIDECAR_PORT overwrite caller spec.env overrides so readiness polling targets the configured loopback socket, and stop_all() tears down process groups via SIGTERM before a 10.0s grace timeout escalates to SIGKILL.",
+  "references": [
+    {
+      "path": "src/agora_workbench/code_execution/code_execution_models.py#L95-L160",
+      "description": "SidecarConfig schema defining command, use_env_python, url_env_var, host=127.0.0.1, port, health_path, and readiness_timeout_s"
+    },
+    {
+      "path": "src/agora_workbench/code_execution/sidecar.py#L46-L112",
+      "description": "SidecarManager.start_all and _start_one with duplicate-name rejection, start_new_session=True, atomic rollback, and url_env_var export"
+    },
+    {
+      "path": "src/agora_workbench/code_execution/sidecar.py#L114-L161",
+      "description": "_resolve_argv requiring built kernel Python, _build_env locking SIDECAR_HOST/SIDECAR_PORT, and 1.0s health polling loop"
+    },
+    {
+      "path": "src/agora_workbench/code_execution/sidecar.py#L166-L195",
+      "description": "Process-group SIGTERM shutdown with _TERMINATION_GRACE_S=10.0 escalation to SIGKILL and env cleanup"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "category": "agent_orchestration",
+  "source_target": "https://github.com/microsoft/agora-workbench",
+  "detected_format": "python_package",
+  "tags": [
+    "agora-workbench",
+    "mcp-sidecar",
+    "process-lifecycle",
+    "loopback-isolation",
+    "kernel-sharing"
+  ],
+  "anchors": {},
+  "edges": [
+    {
+      "type": "distilled_from",
+      "target": "https://github.com/microsoft/agora-workbench",
+      "target_kind": "external_repo",
+      "derived": true,
+      "confidence": 0.96,
+      "description": "Pinned commit a8ae030b: src/agora_workbench/code_execution/code_execution_models.py#L95-L160, src/agora_workbench/code_execution/sidecar.py#L46-L112, src/agora_workbench/code_execution/sidecar.py#L114-L161, src/agora_workbench/code_execution/sidecar.py#L166-L195"
+    }
+  ],
+  "isnad": {
+    "source_repo": "https://github.com/microsoft/agora-workbench",
+    "commit": "a8ae030b",
+    "verified_at": "2026-11-14T11:00:00-05:00",
+    "citations": [
+      "src/agora_workbench/code_execution/code_execution_models.py#L95-L160",
+      "src/agora_workbench/code_execution/sidecar.py#L46-L112",
+      "src/agora_workbench/code_execution/sidecar.py#L114-L161",
+      "src/agora_workbench/code_execution/sidecar.py#L166-L195"
+    ],
+    "sha256": "f366fa56e6f87707e4948603006f828bb237e22f84419b2f3b2ad561265f0e3d"
+  },
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": "repo-triad-forge",
+  "created_at": "2026-11-14T11:00:00-05:00",
+  "distilled_learning": "Co-located loopback sidecars amortize heavy global state across isolated execution kernels while preventing startup leaks via atomic rollback and reserved SIDECAR_HOST/SIDECAR_PORT env locking."
+}

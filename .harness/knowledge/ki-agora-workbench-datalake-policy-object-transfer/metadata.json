@@ -1,0 +1,67 @@
+{
+  "id": "ki-agora-workbench-datalake-policy-object-transfer",
+  "title": "Agora Workbench: Data Lake Authorization Scope Enforcement & Bounded v2 Streaming Object Transfer",
+  "created": "2026-11-14T11:00:00-05:00",
+  "updated": "2026-11-14T11:00:00-05:00",
+  "summary": "PolicyEnforcedCatalogProvider protects multi-source data catalogs by requiring matching per-artifact enforcers, constraining search/list requests prior to pagination, rejecting continuation cursors whenever effective authorized source_ids shift, and collapsing unauthorized get/resolve calls to not-found errors. Alongside catalog auth, object_transfer bounds cross-kernel object streaming at 256 MB using v2 64 KB metadata headers, 4-byte aligned incremental base64 decoding, strict correlation IDs, and duplicate JSON key rejection.",
+  "references": [
+    {
+      "path": "src/agora_workbench/data_lake/policy.py#L50-L131",
+      "description": "PolicyEnforcedCatalogProvider mode validation and pre-pagination _constrain_request execution"
+    },
+    {
+      "path": "src/agora_workbench/data_lake/policy.py#L132-L280",
+      "description": "Non-enumerable not-found masking and cursor invalidation on effective source_ids mismatch"
+    },
+    {
+      "path": "src/agora_workbench/code_execution/object_transfer.py#L45-L106",
+      "description": "256 MB transfer limit, STREAMING_TRANSFER_VERSION='2', 64 KB header cap, and _IncrementalBase64Decoder"
+    },
+    {
+      "path": "src/agora_workbench/code_execution/object_transfer.py#L153-L245",
+      "description": "Correlation ID regex enforcement, _reject_duplicate_streaming_keys, and receive_legacy_streaming_transfer"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "category": "agent_orchestration",
+  "source_target": "https://github.com/microsoft/agora-workbench",
+  "detected_format": "python_package",
+  "tags": [
+    "agora-workbench",
+    "data-lake-policy",
+    "cursor-scope-guard",
+    "object-transfer",
+    "streaming-base64"
+  ],
+  "anchors": {},
+  "edges": [
+    {
+      "type": "distilled_from",
+      "target": "https://github.com/microsoft/agora-workbench",
+      "target_kind": "external_repo",
+      "derived": true,
+      "confidence": 0.96,
+      "description": "Pinned commit a8ae030b: src/agora_workbench/data_lake/policy.py#L50-L131, src/agora_workbench/data_lake/policy.py#L132-L280, src/agora_workbench/code_execution/object_transfer.py#L45-L106, src/agora_workbench/code_execution/object_transfer.py#L153-L245"
+    }
+  ],
+  "isnad": {
+    "source_repo": "https://github.com/microsoft/agora-workbench",
+    "commit": "a8ae030b",
+    "verified_at": "2026-11-14T11:00:00-05:00",
+    "citations": [
+      "src/agora_workbench/data_lake/policy.py#L50-L131",
+      "src/agora_workbench/data_lake/policy.py#L132-L280",
+      "src/agora_workbench/code_execution/object_transfer.py#L45-L106",
+      "src/agora_workbench/code_execution/object_transfer.py#L153-L245"
+    ],
+    "sha256": "a242e4c1b98596310322c2b26088e7cea3c5526e987c529b033746ae3f22e585"
+  },
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "author": "repo-triad-forge",
+  "created_at": "2026-11-14T11:00:00-05:00",
+  "distilled_learning": "Data-plane isolation combines pre-pagination cursor-scope validation and non-enumerable denial masking with bounded 256 MB, duplicate-key-rejected streaming transfer envelopes."
+}
