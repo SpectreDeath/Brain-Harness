@@ -1,60 +1,138 @@
 {
   "name": "plugin.ontology_spider",
   "version": "0.2.0",
-  "description": "Formal logic reasoning, multi-hop dependency traversal, and schema validation over Brain Harness vaults",
+  "description": "Ontology-Spider reasoning plugin bridging Brain Harness Knowledge Vaults via the ModelSource seam for formal transitive traversals, proof explanations, entropy ranking, competency evaluation, and epistemic audits.",
+  "language": "python",
   "entrypoint": "main.py",
   "isolation": "in_process",
   "trusted": true,
-  "category": "memory_and_epistemics",
-  "author": "Brain Harness Epistemics Engine",
   "dependencies": [
     "ontology-spider>=0.2.0"
   ],
   "provides": [
     "service.ontology_spider",
-    "service.ontology_reasoner"
+    "service.ontology_reasoner",
+    "memory.ontology_spider_service"
   ],
   "requires": [],
   "entrypoints": [
     {
       "name": "load_vault_ontology",
-      "description": "Load a vault-shaped knowledge graph export or directory into an Ontology-Spider model",
+      "description": "Load Brain Harness vault items, canonical edges, and isnad metadata into an OntologyModel",
       "parameters": [
         {
-          "name": "vault_source",
+          "name": "vault_path",
           "type": "string",
-          "description": "Path to vault JSON file, directory, or raw JSON string",
+          "description": "Path to vault directory or JSON export",
           "required": true
+        },
+        {
+          "name": "as_of",
+          "type": "string",
+          "description": "Optional ISO timestamp filter for bi-temporal edge slicing",
+          "required": false
+        },
+        {
+          "name": "min_confidence",
+          "type": "number",
+          "description": "Minimum edge confidence threshold (0.0 to 1.0)",
+          "required": false
         }
       ]
     },
     {
       "name": "query_ontology",
-      "description": "Execute a logic reasoning query (ancestors, transitive, recommend, pattern) with proof explanations",
+      "description": "Execute a controlled .dialog query (what is, ancestors, transitive, recommend, path, not, count) over the vault",
       "parameters": [
         {
-          "name": "vault_source",
+          "name": "vault_path",
           "type": "string",
-          "description": "Path to vault JSON file or directory",
+          "description": "Path to vault directory or JSON export",
           "required": true
         },
         {
-          "name": "query",
+          "name": "query_str",
           "type": "string",
-          "description": "Controlled Dialog query (e.g. 'query transitive depends_on from impl_plugin')",
+          "description": "Dialog query statement",
           "required": true
+        },
+        {
+          "name": "rank_by_distance",
+          "type": "boolean",
+          "description": "Attach hop_distance/distance_score and sort answers by hop distance",
+          "required": false
         }
       ]
     },
     {
       "name": "validate_ontology",
-      "description": "Validate schema constraints, acyclicity, domain/range, and disjointness across vault ontology",
+      "description": "Run schema integrity checks (cycles, domain/range, disjointness) over the vault",
       "parameters": [
         {
-          "name": "vault_source",
+          "name": "vault_path",
           "type": "string",
-          "description": "Path to vault JSON file or directory",
+          "description": "Path to vault directory or JSON export",
           "required": true
+        }
+      ]
+    },
+    {
+      "name": "export_ontology",
+      "description": "Export the loaded vault ontology to json, dialog, dot, or html",
+      "parameters": [
+        {
+          "name": "vault_path",
+          "type": "string",
+          "description": "Path to vault directory or JSON export",
+          "required": true
+        },
+        {
+          "name": "format",
+          "type": "string",
+          "description": "Output format: json, dialog, dot, or html",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "evaluate_competency_questions",
+      "description": "Run .dialog competency queries and compute the Gruber 5-criteria ontology scorecard",
+      "parameters": [
+        {
+          "name": "vault_path",
+          "type": "string",
+          "description": "Path to vault directory or JSON export",
+          "required": true
+        },
+        {
+          "name": "questions",
+          "type": "array",
+          "description": "List of .dialog competency queries",
+          "required": true
+        }
+      ]
+    },
+    {
+      "name": "audit_vault_epistemics",
+      "description": "Run combined structural validation, isnad verification audit, attribute entropy ranking, and Gruber coherence check",
+      "parameters": [
+        {
+          "name": "vault_path",
+          "type": "string",
+          "description": "Path to vault directory or JSON export",
+          "required": true
+        },
+        {
+          "name": "as_of",
+          "type": "string",
+          "description": "Optional ISO timestamp filter for bi-temporal edge slicing",
+          "required": false
+        },
+        {
+          "name": "min_confidence",
+          "type": "number",
+          "description": "Minimum edge confidence threshold",
+          "required": false
         }
       ]
     }

@@ -256,3 +256,12 @@ from harness.services.trustgraph_governor import (
     TrustGraphGovernorEngine,
     TrustGraphGovernorProtocol,
 )
+
+from harness.services.ontology_spider import (
+    ONTOLOGY_SPIDER_SERVICE_KEY,
+    AttributeEntropyRank,
+    CompetencyScorecardReport,
+    EpistemicVaultAuditReport,
+    OntologySpiderKernelService,
+    OntologySpiderProtocol,
+)

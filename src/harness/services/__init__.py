@@ -712,6 +712,13 @@ __all__ = [
     "ShaclPolicyFilterReport",
     "TrustGraphGovernorEngine",
     "TrustGraphGovernorProtocol",
+    # Ontology-Spider Micro-Kernel Service
+    "ONTOLOGY_SPIDER_SERVICE_KEY",
+    "AttributeEntropyRank",
+    "CompetencyScorecardReport",
+    "EpistemicVaultAuditReport",
+    "OntologySpiderKernelService",
+    "OntologySpiderProtocol",
     # Graphiti / Zep Temporal Memory Governor Service
     "CENTER_NODE_SELF_DISTANCE",
     "DEFAULT_MMR_LAMBDA",
