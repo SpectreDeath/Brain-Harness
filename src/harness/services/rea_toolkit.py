@@ -14,6 +14,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 import hashlib
+import importlib
 import json
 import os
 from pathlib import Path
@@ -581,13 +582,30 @@ class ReaDomainAdapter:
                 except Exception as e:
                     logger.debug("sandboxed_invoke_fallback", error=str(e))
 
-        # Fallback to in-process domain engine singleton
-        from plugins.security_and_forensics.rea_native.main import _GLOBAL_ENGINE
-        fn = getattr(_GLOBAL_ENGINE, method_name, None)
+        # Fallback to in-process domain engine singleton via dynamic import (Rule 1)
+        return self._invoke_fallback_engine(
+            "plugins.security_and_forensics.rea_native.main",
+            method_name,
+            kwargs,
+            "native engine",
+        )
+
+    def _invoke_fallback_engine(
+        self, module_name: str, method_name: str, kwargs: dict[str, Any], label: str
+    ) -> dict[str, Any]:
+        mod = importlib.import_module(module_name)
+        engine = getattr(mod, "_GLOBAL_ENGINE", None)
+        fn = getattr(engine, method_name, None)
         if fn and callable(fn):
             res = fn(**kwargs)
-            return res if isinstance(res, dict) else (res.model_dump() if hasattr(res, "model_dump") else {})
-        return {"status": "error", "error": f"Method {method_name} not available on native engine"}
+            if isinstance(res, dict):
+                return res
+            if hasattr(res, "model_dump"):
+                return res.model_dump()
+            if hasattr(res, "to_dict"):
+                return res.to_dict()
+            return {}
+        return {"status": "error", "error": f"Method {method_name} not available on {label}"}
 
     def call_managed(self, method_name: str, **kwargs: Any) -> dict[str, Any]:
         from harness.services.rea_managed_runtime import REA_MANAGED_RUNTIME_KEY
@@ -598,12 +616,12 @@ class ReaDomainAdapter:
                 res = getattr(prov, method_name)(**kwargs)
                 return res if isinstance(res, dict) else (res.model_dump() if hasattr(res, "model_dump") else res.to_dict() if hasattr(res, "to_dict") else {})
 
-        from plugins.security_and_forensics.rea_managed_runtime.main import _GLOBAL_ENGINE
-        fn = getattr(_GLOBAL_ENGINE, method_name, None)
-        if fn and callable(fn):
-            res = fn(**kwargs)
-            return res if isinstance(res, dict) else (res.model_dump() if hasattr(res, "model_dump") else (res.to_dict() if hasattr(res, "to_dict") else {}))
-        return {"status": "error", "error": f"Method {method_name} not available on managed runtime engine"}
+        return self._invoke_fallback_engine(
+            "plugins.security_and_forensics.rea_managed_runtime.main",
+            method_name,
+            kwargs,
+            "managed runtime engine",
+        )
 
     def call_mobile(self, method_name: str, **kwargs: Any) -> dict[str, Any]:
         from harness.services.rea_mobile_firmware import REA_MOBILE_FIRMWARE_KEY
@@ -614,12 +632,12 @@ class ReaDomainAdapter:
                 res = getattr(prov, method_name)(**kwargs)
                 return res if isinstance(res, dict) else res.model_dump()
 
-        from plugins.security_and_forensics.rea_mobile_firmware.main import _GLOBAL_ENGINE
-        fn = getattr(_GLOBAL_ENGINE, method_name, None)
-        if fn and callable(fn):
-            res = fn(**kwargs)
-            return res if isinstance(res, dict) else (res.model_dump() if hasattr(res, "model_dump") else {})
-        return {"status": "error", "error": f"Method {method_name} not available on mobile/firmware engine"}
+        return self._invoke_fallback_engine(
+            "plugins.security_and_forensics.rea_mobile_firmware.main",
+            method_name,
+            kwargs,
+            "mobile/firmware engine",
+        )
 
     def call_js(self, method_name: str, **kwargs: Any) -> dict[str, Any]:
         from harness.services.rea_javascript import REA_JAVASCRIPT_KEY
@@ -630,12 +648,12 @@ class ReaDomainAdapter:
                 res = getattr(prov, method_name)(**kwargs)
                 return res if isinstance(res, dict) else res.model_dump()
 
-        from plugins.data_engineering.rea_javascript.main import _GLOBAL_ENGINE
-        fn = getattr(_GLOBAL_ENGINE, method_name, None)
-        if fn and callable(fn):
-            res = fn(**kwargs)
-            return res if isinstance(res, dict) else (res.model_dump() if hasattr(res, "model_dump") else {})
-        return {"status": "error", "error": f"Method {method_name} not available on javascript engine"}
+        return self._invoke_fallback_engine(
+            "plugins.data_engineering.rea_javascript.main",
+            method_name,
+            kwargs,
+            "javascript engine",
+        )
 
 
 # -----------------------------------------------------------------------------

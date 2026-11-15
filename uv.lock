@@ -1960,7 +1960,7 @@ wheels = [
 [[package]]
 name = "ontology-spider"
 version = "0.2.0"
-source = { git = "https://github.com/SpectreDeath/Ontology-Spider.git#2d14257dbd7041f7e7fcae0f07ee400f0b6a9932" }
+source = { git = "https://github.com/SpectreDeath/Ontology-Spider.git#9d8c96034b74c4277437e372a06fef3fb0c1c428" }
 
 [[package]]
 name = "openai"

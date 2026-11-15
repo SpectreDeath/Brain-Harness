@@ -189,8 +189,9 @@ def resolve_memgraphrag(ctx: Any = None) -> MemGraphRAGService:
         if svc is not None:
             return svc
 
-    from plugins.memory_and_epistemics.memgraphrag.main import plugin
-    return plugin
+    import importlib
+
+    return importlib.import_module("plugins.memory_and_epistemics.memgraphrag.main").plugin
 
 
 __all__ = [

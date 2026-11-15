@@ -40,6 +40,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--vault", default=".harness/knowledge", help="Vault directory or JSON path")
     parser.add_argument("--as-of", default=None, help="Optional ISO timestamp for bi-temporal edge slicing")
     parser.add_argument("--min-confidence", type=float, default=0.0, help="Minimum edge confidence threshold")
+    parser.add_argument("--max-results", type=int, default=5000, help="Maximum query answer cap")
     parser.add_argument("--query", default=None, help="Controlled .dialog query string")
     parser.add_argument("--rank-by-distance", action="store_true", help="Attach hop distance scores and sort")
     parser.add_argument("--validate", action="store_true", help="Run structural integrity checks")
@@ -64,6 +65,7 @@ def main(argv: list[str] | None = None) -> int:
             rank_by_distance=args.rank_by_distance,
             as_of=args.as_of,
             min_confidence=args.min_confidence,
+            max_results=args.max_results,
         )
     if args.validate:
         payload["violations"] = service.validate(vault, as_of=args.as_of, min_confidence=args.min_confidence)

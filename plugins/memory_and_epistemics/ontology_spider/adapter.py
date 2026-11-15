@@ -216,6 +216,38 @@ class HarnessVaultModelSource(ModelSource):
             items.append(item_rec)
             edges.extend(item_edges)
 
+        # Auto-declare canonical ontology schema (concept taxonomy + domain/range)
+        # for directory vaults so structural & Gruber coherence checks pass cleanly.
+        builtin_schema_preds = {
+            "instance_of",
+            "subclass_of",
+            "domain",
+            "range",
+            "disjoint_with",
+            "acyclic",
+        }
+        schema_edges: list[dict[str, Any]] = []
+        seen_subtypes: set[str] = set()
+        seen_predicates: set[str] = set()
+
+        for item in items:
+            item_type = str(item.get("type") or "")
+            if item_type and item_type != "concept" and item_type not in seen_subtypes:
+                seen_subtypes.add(item_type)
+                schema_edges.append({"from": item_type, "rel": "subclass_of", "to": "concept"})
+
+        for edge in edges:
+            target_kind = _sanitize_identifier(edge.get("target_kind") or "")
+            if edge.get("target_kind") and target_kind != "concept" and target_kind not in seen_subtypes:
+                seen_subtypes.add(target_kind)
+                schema_edges.append({"from": target_kind, "rel": "subclass_of", "to": "concept"})
+            rel = str(edge.get("rel") or "")
+            if rel and rel not in builtin_schema_preds and rel not in seen_predicates:
+                seen_predicates.add(rel)
+                schema_edges.append({"from": rel, "rel": "domain", "to": "concept"})
+                schema_edges.append({"from": rel, "rel": "range", "to": "concept"})
+
+        edges.extend(schema_edges)
         return {"vault_id": dir_path.name, "items": items, "edges": edges}
 
     def _within_temporal_window(self, edge: dict[str, Any], edge_meta: dict[str, Any]) -> bool:

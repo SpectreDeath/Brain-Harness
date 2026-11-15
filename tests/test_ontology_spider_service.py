@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import ast
 import json
 from pathlib import Path
 import subprocess
@@ -142,7 +143,13 @@ def test_live_harness_knowledge_vault_ingestion_and_runner() -> None:
     audit = service.audit_vault_epistemics(vault_dir)
     assert audit.entities_count > 100
     assert audit.assertions_count > 100
+    assert audit.status == "verified"
+    assert len(audit.structural_violations) == 0
+    assert audit.gruber_coherence == 1.0
     assert isinstance(audit.top_discriminating_attributes, tuple)
+
+    rec_res = service.query(vault_dir, "query recommend concept where isnad_verified=True")
+    assert len(rec_res["answers"]) > 100
 
     runner_path = Path(".agents/skills/ontology-spider/scripts/ontology_spider_runner.py")
     proc = subprocess.run(
@@ -177,3 +184,56 @@ def test_skill_and_plugin_validators_pass() -> None:
     )
     failing_plugin_checks = [c.message for c in plugin_report.checks if not c.passed]
     assert plugin_report.valid, f"Plugin validation failed: {failing_plugin_checks}"
+
+
+def test_kernel_layer_has_zero_static_plugin_imports() -> None:
+    """Verify Rule 1: no module in src/harness/kernel/ statically imports plugins.* transitively."""
+    src_root = Path("src")
+    kernel_dir = src_root / "harness" / "kernel"
+    if not kernel_dir.exists():
+        pytest.skip("src/harness/kernel missing")
+
+    def _module_name(py_file: Path) -> str:
+        rel = py_file.relative_to(src_root).with_suffix("")
+        parts = list(rel.parts)
+        if parts and parts[-1] == "__init__":
+            parts = parts[:-1]
+        return ".".join(parts)
+
+    harness_files = {
+        _module_name(py_file): py_file
+        for py_file in (src_root / "harness").rglob("*.py")
+        if _module_name(py_file)
+    }
+
+    visited: set[str] = set()
+    stack = [m for m in harness_files if m.startswith("harness.kernel")]
+    leaks: list[tuple[str, str]] = []
+
+    while stack:
+        mod = stack.pop()
+        if mod in visited:
+            continue
+        visited.add(mod)
+        fpath = harness_files.get(mod)
+        if not fpath:
+            continue
+        tree = ast.parse(fpath.read_text(encoding="utf-8", errors="ignore"), filename=str(fpath))
+        for node in ast.walk(tree):
+            targets: list[str] = []
+            if isinstance(node, ast.Import):
+                targets = [alias.name for alias in node.names]
+            elif isinstance(node, ast.ImportFrom) and node.module:
+                targets = [node.module]
+            for imp in targets:
+                if imp == "plugins" or imp.startswith("plugins."):
+                    leaks.append((mod, imp))
+                parts = imp.split(".")
+                while parts:
+                    cand = ".".join(parts)
+                    if cand in harness_files and cand not in visited:
+                        stack.append(cand)
+                        break
+                    parts.pop()
+
+    assert leaks == [], f"Rule 1 kernel -> plugins static AST leaks detected: {leaks}"

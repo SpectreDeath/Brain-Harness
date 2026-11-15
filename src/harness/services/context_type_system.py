@@ -184,5 +184,6 @@ def resolve_context_type_system(
             return service
 
     # Fallback to in-process plugin implementation
-    from plugins.memory_and_epistemics.context_type_system.main import plugin
-    return plugin
+    import importlib
+
+    return importlib.import_module("plugins.memory_and_epistemics.context_type_system.main").plugin

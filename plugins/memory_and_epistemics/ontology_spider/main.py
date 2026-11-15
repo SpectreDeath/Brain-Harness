@@ -93,6 +93,7 @@ def query_ontology(
     rank_by_distance: bool = False,
     as_of: str | None = None,
     min_confidence: float = 0.0,
+    max_results: int | None = 5000,
 ) -> dict[str, Any]:
     """Execute a controlled .dialog query against the vault."""
     return OntologySpiderService().query(
@@ -101,6 +102,7 @@ def query_ontology(
         rank_by_distance=rank_by_distance,
         as_of=as_of,
         min_confidence=min_confidence,
+        max_results=max_results,
     )
 
 

@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from collections.abc import Sequence
 from dataclasses import dataclass
+import importlib
+import inspect
 from pathlib import Path
 from typing import Any, Protocol, Union, runtime_checkable
 
@@ -106,6 +108,7 @@ class OntologySpiderProtocol(Protocol):
         rank_by_distance: bool = False,
         as_of: str | None = None,
         min_confidence: float = 0.0,
+        max_results: int | None = 5000,
     ) -> dict[str, Any]: ...
     def validate(
         self, vault_source: Union[str, Path, dict[str, Any]], *, as_of: str | None = None, min_confidence: float = 0.0
@@ -164,7 +167,9 @@ class OntologySpiderKernelService(OntologySpiderProtocol):
         self, vault_source: Union[str, Path, dict[str, Any]], *, as_of: str | None = None, min_confidence: float = 0.0
     ) -> Any:
         _require_engine()
-        from plugins.memory_and_epistemics.ontology_spider.adapter import HarnessVaultModelSource
+        HarnessVaultModelSource = importlib.import_module(
+            "plugins.memory_and_epistemics.ontology_spider.adapter"
+        ).HarnessVaultModelSource
 
         return HarnessVaultModelSource(vault_source, as_of=as_of, min_confidence=min_confidence).load()
 
@@ -176,9 +181,22 @@ class OntologySpiderKernelService(OntologySpiderProtocol):
         rank_by_distance: bool = False,
         as_of: str | None = None,
         min_confidence: float = 0.0,
+        max_results: int | None = 5000,
     ) -> dict[str, Any]:
         model = self.load_vault(vault_source, as_of=as_of, min_confidence=min_confidence)
-        raw = run_query(model, query_str).to_dict()
+        if max_results is not None and "max_results" in inspect.signature(run_query).parameters:
+            raw = run_query(model, query_str, max_results=max_results).to_dict()
+        elif max_results is not None:
+            from ontology_spider.engine import Session
+            from ontology_spider.prolog.reasoner import PrologReasoner
+            from ontology_spider.reasoning.python_backend import PythonReasoner
+
+            prolog = PrologReasoner(max_results=max_results)
+            reasoner = prolog if prolog.is_available else PythonReasoner()
+            results = Session(model=model, reasoner=reasoner).execute(query_str)
+            raw = results[-1].to_dict() if results else {"query": query_str, "statement_type": "query", "summary": "No results.", "answers": [], "explanation": None}
+        else:
+            raw = run_query(model, query_str).to_dict()
         if not rank_by_distance:
             return raw
         reranked: list[dict[str, Any]] = []
