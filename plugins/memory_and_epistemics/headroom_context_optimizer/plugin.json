@@ -10,6 +10,9 @@
   "provides": [
     "memory.headroom_context_optimizer"
   ],
+  "requires": [
+    "tools.registry"
+  ],
   "entrypoints": [
     {
       "name": "headroom_compress_content",

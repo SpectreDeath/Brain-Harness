@@ -98,13 +98,11 @@ def _resolve_transcript_input(
     target_video = video_url or resolved_id or kwargs.get("url", "")
     if target_video:
         try:
-            from plugins.integration_and_io.youtube_transcript_fetcher.main import (
-                extract_video_id,
-                fetch_transcript,
-            )
+            import importlib
 
-            resolved_id = extract_video_id(target_video)
-            res = fetch_transcript(video_id=resolved_id)
+            yt_mod = importlib.import_module("plugins.integration_and_io.youtube_transcript_fetcher.main")
+            resolved_id = yt_mod.extract_video_id(target_video)
+            res = yt_mod.fetch_transcript(video_id=resolved_id)
             if res.get("status") == "ok":
                 return res, resolved_id
         except Exception:

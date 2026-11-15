@@ -8,6 +8,9 @@
   "isolation": "subprocess",
   "trusted": true,
   "dependencies": [],
+  "provides": [
+    "domain.prompt_pruning_layer"
+  ],
   "entrypoints": [
     {
       "name": "prune_messages",

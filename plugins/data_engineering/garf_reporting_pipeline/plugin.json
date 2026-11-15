@@ -7,7 +7,7 @@
   "isolation": "subprocess",
   "trusted": true,
   "provides": [
-    "data_engineering.garf_reporting"
+    "garf_reporting_service"
   ],
   "entrypoints": [
     {

@@ -6,9 +6,11 @@
   "isolation": "in_process",
   "trusted": true,
   "provides": [
+    "service.agent_debater"
+  ],
+  "requires": [
     "service.critic_evaluation"
   ],
-  "requires": [],
   "entrypoints": [
     {
       "name": "conduct_dialectical_debate",

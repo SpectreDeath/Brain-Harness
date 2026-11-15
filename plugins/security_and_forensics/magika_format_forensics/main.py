@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import importlib
 import os
 from pathlib import Path
 from typing import Any, Protocol, runtime_checkable
@@ -9,11 +10,12 @@ import structlog
 
 from harness.kernel.context import ServiceContext, ServiceKey
 from harness.plugins.base import HarnessPlugin
-from plugins.security_and_forensics.magika_content_detector.main import (
-    MAGIKA_CONTENT_DETECTOR_KEY,
-    MagikaContentDetectorEngine,
-    _GLOBAL_DETECTOR,
-)
+
+MAGIKA_CONTENT_DETECTOR_KEY: ServiceKey[Any] = ServiceKey("service.magika_content_detector")
+
+
+def _default_detector() -> Any:
+    return importlib.import_module("plugins.security_and_forensics.magika_content_detector.main")._GLOBAL_DETECTOR
 
 logger = structlog.get_logger(__name__)
 
@@ -38,8 +40,13 @@ MAGIKA_FORMAT_FORENSICS_KEY: ServiceKey[MagikaFormatForensicsService] = ServiceK
 class MagikaFormatForensicsEngine:
     """Forensic engine analyzing file discrepancies, masquerading payloads, and polyglots."""
 
-    def __init__(self, detector: MagikaContentDetectorEngine | None = None) -> None:
-        self._detector = detector or _GLOBAL_DETECTOR
+    def __init__(self, detector: Any | None = None) -> None:
+        self._detector = detector
+
+    def _get_detector(self) -> Any:
+        if self._detector is None:
+            self._detector = _default_detector()
+        return self._detector
 
     def audit_extension_mismatch(self, target_path: str, recursive: bool = True) -> dict[str, Any]:
         p = Path(target_path)
@@ -58,7 +65,7 @@ class MagikaFormatForensicsEngine:
 
         for f in targets:
             audited_count += 1
-            info = self._detector.identify_path(str(f))
+            info = self._get_detector().identify_path(str(f))
             if info.get("status") != "ok":
                 continue
 
@@ -110,7 +117,7 @@ class MagikaFormatForensicsEngine:
         if not p.exists() or not p.is_file():
             return {"status": "error", "error": f"File not found: {file_path}"}
 
-        info = self._detector.identify_path(str(p))
+        info = self._get_detector().identify_path(str(p))
         if info.get("status") != "ok":
             return info
 
@@ -167,7 +174,7 @@ class MagikaFormatForensicsEngine:
             return {"status": "error", "error": f"File not found: {file_path}"}
 
         blocks = [g.lower() for g in (blocked_groups or ["executable", "code"])]
-        info = self._detector.identify_path(str(p))
+        info = self._get_detector().identify_path(str(p))
         if info.get("status") != "ok":
             return info
 
@@ -240,6 +247,9 @@ class MagikaFormatForensicsPlugin(HarnessPlugin, MagikaFormatForensicsService):
 
     async def on_load(self, ctx: ServiceContext) -> None:
         logger.info("loading_plugin", plugin=self.name)
+        det = ctx.optional(MAGIKA_CONTENT_DETECTOR_KEY)
+        if det is not None:
+            self._engine._detector = det
         ctx.provide(MAGIKA_FORMAT_FORENSICS_KEY, self, provider=self.name)
 
     async def on_enable(self) -> None:

@@ -10,19 +10,32 @@ Verifies:
 
 from __future__ import annotations
 
+import ast
+import importlib
 import json
 from pathlib import Path
 import re
 import pytest
 
 from harness.cli import main, _CANONICAL_GROUPS
-from harness.creator.validator import ValidationContext
+from harness.creator.validator import PluginValidator, ValidationContext, ValidationPipeline
+from harness.creator.validator.sandbox import SandboxDryRunRule
 from harness.creator.skills.rules import (
     SkillCardRule,
     SkillDirectoryRule,
     SkillFrontmatterRule,
     SkillPillarRule,
 )
+
+
+def _iter_canonical_plugin_dirs(repo_root: Path) -> list[Path]:
+    """Return sorted canonical plugin directories excluding .claude-plugin bundles."""
+    plugins_root = repo_root / "plugins"
+    return [
+        p.parent
+        for p in sorted(plugins_root.rglob("plugin.json"))
+        if ".claude-plugin" not in p.relative_to(plugins_root).parts
+    ]
 
 
 @pytest.mark.unit
@@ -264,4 +277,75 @@ class TestPluginIntegrationDrift:
                 if clean_target:
                     target_path = (doc.parent / clean_target).resolve()
                     assert target_path.exists(), f"Broken relative link in {doc.name}: [{label}]({target})"
+
+    def test_no_cross_plugin_static_imports(self) -> None:
+        """Verify internal plugins do not statically import sibling plugins (Rule 2)."""
+        repo_root = Path.cwd()
+        violations: list[str] = []
+        for pdir in _iter_canonical_plugin_dirs(repo_root):
+            cat, slug = pdir.parent.name, pdir.name
+            own_prefix = f"plugins.{cat}.{slug}"
+            for py_file in pdir.rglob("*.py"):
+                if "tests" in py_file.parts or py_file.name.startswith("test_"):
+                    continue
+                tree = ast.parse(py_file.read_text(encoding="utf-8", errors="replace"), filename=str(py_file))
+                for node in ast.walk(tree):
+                    mod = ""
+                    if isinstance(node, ast.ImportFrom) and node.module and node.level == 0:
+                        mod = node.module
+                    elif isinstance(node, ast.Import):
+                        for alias in node.names:
+                            if alias.name.startswith("plugins.") and not alias.name.startswith(own_prefix):
+                                violations.append(f"{py_file.relative_to(repo_root)}: import {alias.name}")
+                    if mod.startswith("plugins.") and not mod.startswith(own_prefix):
+                        violations.append(f"{py_file.relative_to(repo_root)}: from {mod}")
+        assert not violations, f"Found direct cross-plugin static imports: {violations}"
+
+    def test_no_duplicate_plugin_provides_keys(self) -> None:
+        """Verify no ServiceKey string is provided by multiple canonical plugins."""
+        repo_root = Path.cwd()
+        owners: dict[str, list[str]] = {}
+        for pdir in _iter_canonical_plugin_dirs(repo_root):
+            data = json.loads((pdir / "plugin.json").read_text(encoding="utf-8"))
+            for key in data.get("provides") or []:
+                owners.setdefault(str(key), []).append(str(pdir.relative_to(repo_root)))
+        duplicates = {k: v for k, v in owners.items() if len(v) > 1}
+        assert not duplicates, f"Duplicate plugin provides keys: {duplicates}"
+
+    def test_manifest_code_provides_requires_parity(self) -> None:
+        """Verify manifest provides/requires match code HarnessPlugin declarations for all internal plugins."""
+        repo_root = Path.cwd()
+        drifts: list[str] = []
+        for pdir in _iter_canonical_plugin_dirs(repo_root):
+            if not (pdir / "main.py").exists():
+                continue
+            data = json.loads((pdir / "plugin.json").read_text(encoding="utf-8"))
+            mod = importlib.import_module(f"plugins.{pdir.parent.name}.{pdir.name}.main")
+            plug = getattr(mod, "plugin", None)
+            if plug is None:
+                continue
+            code_prov = sorted(str(getattr(k, "name", k)) for k in (getattr(plug, "provides", None) or []))
+            code_req = sorted(str(getattr(k, "name", k)) for k in (getattr(plug, "requires", None) or []))
+            man_prov = sorted(str(x) for x in (data.get("provides") or []))
+            man_req = sorted(str(x) for x in (data.get("requires") or []))
+            if man_prov != code_prov or man_req != code_req:
+                drifts.append(
+                    f"{pdir.relative_to(repo_root)}: man_prov={man_prov} vs code_prov={code_prov}, "
+                    f"man_req={man_req} vs code_req={code_req}"
+                )
+        assert not drifts, f"Manifest vs code provides/requires drifts: {drifts}"
+
+    def test_all_canonical_plugins_pass_static_validator(self) -> None:
+        """Verify every canonical plugin passes PluginValidator structural & AST checks."""
+        repo_root = Path.cwd()
+        static_pipeline = ValidationPipeline(
+            rules=[r for r in ValidationPipeline.default_rules() if not isinstance(r, SandboxDryRunRule)]
+        )
+        failures: list[str] = []
+        for pdir in _iter_canonical_plugin_dirs(repo_root):
+            report = PluginValidator.validate_sync(pdir, dry_run=True, timeout=5.0, pipeline=static_pipeline)
+            if not report.valid:
+                failed_checks = [(c.rule, c.message) for c in report.checks if not c.passed]
+                failures.append(f"{pdir.relative_to(repo_root)}: {failed_checks}")
+        assert not failures, f"PluginValidator failures: {failures}"
 

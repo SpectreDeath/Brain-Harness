@@ -31,6 +31,11 @@ class ValidationCheck:
     details: dict[str, Any] = field(default_factory=dict)
     remediated: bool = False
 
+    @property
+    def rule(self) -> str:
+        """Backward-compatible alias matching SkillValidator check interface (Rule 34)."""
+        return self.name
+
 
 @dataclass(slots=True)
 class ValidationReport:

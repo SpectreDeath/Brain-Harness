@@ -8,9 +8,10 @@
   "category": "memory_and_epistemics",
   "author": "Brain Harness Forge Engine",
   "provides": [
+    "service.skill_clustering",
+    "service.skill_intelligence",
     "service.skill_knowledge_graph",
-    "service.skill_registry",
-    "service.skill_clustering"
+    "service.skill_registry"
   ],
   "entrypoints": [
     {

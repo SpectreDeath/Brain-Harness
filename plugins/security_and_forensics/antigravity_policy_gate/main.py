@@ -30,7 +30,14 @@ def add_policy_rule(tool_pattern: str, decision: str, rationale: str = "") -> di
 # -----------------------------------------------------------------------------
 # Harness Plugin Class & IoC Singleton (Rule 45)
 # -----------------------------------------------------------------------------
+from harness.kernel.context import ServiceContext, ServiceKey
 from harness.plugins.base import HarnessPlugin
+from plugins.security_and_forensics.antigravity_policy_gate.service import (
+    ANTIGRAVITY_POLICY_KEY,
+    AntigravityPolicyService,
+)
+
+
 class DomainAntigravityPolicyGatePlugin(HarnessPlugin):
     """Google Antigravity declarative security policy gate enforcing tri-state allow/deny/ask_user tool evaluation"""
 
@@ -38,6 +45,16 @@ class DomainAntigravityPolicyGatePlugin(HarnessPlugin):
     version = "1.0.0"
     description = """Google Antigravity declarative security policy gate enforcing tri-state allow/deny/ask_user tool evaluation"""
     trusted = True
+
+    def __init__(self) -> None:
+        self._service = AntigravityPolicyService()
+
+    @property
+    def provides(self) -> list[ServiceKey[Any]]:
+        return [ANTIGRAVITY_POLICY_KEY]
+
+    async def on_load(self, ctx: ServiceContext) -> None:
+        ctx.provide(ANTIGRAVITY_POLICY_KEY, self._service, provider=self.name)
 
 
 plugin = DomainAntigravityPolicyGatePlugin()

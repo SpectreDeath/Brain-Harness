@@ -305,6 +305,7 @@ class WikiCompilerService:
 
 
 WIKI_COMPILER_SERVICE_KEY = ServiceKey[WikiCompilerService]("domain.wiki_compiler")
+WIKI_COMPILER_CANONICAL_KEY = ServiceKey[WikiCompilerService]("service.wiki_compiler")
 
 
 class WikiCompilerPlugin(HarnessPlugin):
@@ -316,10 +317,12 @@ class WikiCompilerPlugin(HarnessPlugin):
 
     @property
     def provides(self) -> list[ServiceKey[Any]]:
-        return [WIKI_COMPILER_SERVICE_KEY]
+        return [WIKI_COMPILER_SERVICE_KEY, WIKI_COMPILER_CANONICAL_KEY]
 
     async def on_load(self, ctx: ServiceContext) -> None:
-        ctx.provide(WIKI_COMPILER_SERVICE_KEY, WikiCompilerService(), provider=self.name, allow_override=True)
+        svc = WikiCompilerService()
+        ctx.provide(WIKI_COMPILER_SERVICE_KEY, svc, provider=self.name, allow_override=True)
+        ctx.provide(WIKI_COMPILER_CANONICAL_KEY, svc, provider=self.name, allow_override=True)
 
 
 plugin = WikiCompilerPlugin()

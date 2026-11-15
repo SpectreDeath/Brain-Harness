@@ -9,6 +9,7 @@
   "trusted": true,
   "dependencies": [],
   "provides": [
+    "domain.wiki_compiler",
     "service.wiki_compiler"
   ],
   "entrypoints": [

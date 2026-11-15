@@ -8,6 +8,9 @@
   "isolation": "subprocess",
   "trusted": true,
   "dependencies": [],
+  "provides": [
+    "domain.loop_engine"
+  ],
   "entrypoints": [
     {
       "name": "run_loop",

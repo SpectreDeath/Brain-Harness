@@ -5,6 +5,9 @@
   "entrypoint": "main.py",
   "isolation": "in_process",
   "trusted": true,
+  "provides": [
+    "service.django_bridge"
+  ],
   "entrypoints": [
     {
       "name": "django_inspect_project",

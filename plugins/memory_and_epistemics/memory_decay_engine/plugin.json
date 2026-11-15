@@ -9,6 +9,7 @@
   "trusted": true,
   "dependencies": [],
   "provides": [
+    "domain.memory_decay_engine",
     "service.memory_decay"
   ],
   "entrypoints": [

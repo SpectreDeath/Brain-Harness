@@ -58,7 +58,12 @@ def manage_scale_to_zero(idle_timeout_seconds: int = 300) -> dict[str, Any]:
 # -----------------------------------------------------------------------------
 # Harness Plugin Class & IoC Singleton (Rule 45)
 # -----------------------------------------------------------------------------
+from harness.kernel.context import ServiceContext, ServiceKey
 from harness.plugins.base import HarnessPlugin
+
+HERMES_GATEWAY_RELAY_KEY: ServiceKey[Any] = ServiceKey("service.hermes_gateway_relay")
+
+
 class DomainHermesGatewayRelayPlugin(HarnessPlugin):
     """Hermes multi-platform gateway relay, WebSocket telemetry streamer, and scale-to-zero lifecycle manager"""
 
@@ -66,6 +71,13 @@ class DomainHermesGatewayRelayPlugin(HarnessPlugin):
     version = "1.0.0"
     description = """Hermes multi-platform gateway relay, WebSocket telemetry streamer, and scale-to-zero lifecycle manager"""
     trusted = True
+
+    @property
+    def provides(self) -> list[ServiceKey[Any]]:
+        return [HERMES_GATEWAY_RELAY_KEY]
+
+    async def on_load(self, ctx: ServiceContext) -> None:
+        ctx.provide(HERMES_GATEWAY_RELAY_KEY, self, provider=self.name)
 
 
 plugin = DomainHermesGatewayRelayPlugin()

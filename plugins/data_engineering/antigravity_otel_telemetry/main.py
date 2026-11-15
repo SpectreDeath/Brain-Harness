@@ -42,7 +42,14 @@ def get_statusline_payload(mode: str = "idle") -> dict[str, Any]:
 # -----------------------------------------------------------------------------
 # Harness Plugin Class & IoC Singleton (Rule 45)
 # -----------------------------------------------------------------------------
+from harness.kernel.context import ServiceContext, ServiceKey
 from harness.plugins.base import HarnessPlugin
+from plugins.data_engineering.antigravity_otel_telemetry.service import (
+    ANTIGRAVITY_TELEMETRY_KEY,
+    AntigravityTelemetryService,
+)
+
+
 class DomainAntigravityOtelTelemetryPlugin(HarnessPlugin):
     """Google Antigravity OpenTelemetry distributed trace exporter and dynamic CLI statusline IPC metric generator"""
 
@@ -50,6 +57,16 @@ class DomainAntigravityOtelTelemetryPlugin(HarnessPlugin):
     version = "1.0.0"
     description = """Google Antigravity OpenTelemetry distributed trace exporter and dynamic CLI statusline IPC metric generator"""
     trusted = True
+
+    def __init__(self) -> None:
+        self._service = AntigravityTelemetryService()
+
+    @property
+    def provides(self) -> list[ServiceKey[Any]]:
+        return [ANTIGRAVITY_TELEMETRY_KEY]
+
+    async def on_load(self, ctx: ServiceContext) -> None:
+        ctx.provide(ANTIGRAVITY_TELEMETRY_KEY, self._service, provider=self.name)
 
 
 plugin = DomainAntigravityOtelTelemetryPlugin()

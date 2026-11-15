@@ -38,7 +38,14 @@ def get_session_telemetry(session_id: str) -> dict[str, Any]:
 # -----------------------------------------------------------------------------
 # Harness Plugin Class & IoC Singleton (Rule 45)
 # -----------------------------------------------------------------------------
+from harness.kernel.context import ServiceContext, ServiceKey
 from harness.plugins.base import HarnessPlugin
+from plugins.agent_orchestration.antigravity_core_bridge.service import (
+    ANTIGRAVITY_CONNECTION_KEY,
+    AntigravityConnectionService,
+)
+
+
 class DomainAntigravityCoreBridgePlugin(HarnessPlugin):
     """Google Antigravity SDK core bridge providing LocalConnection proactor transport, streaming step ingestion, and subagent orchestration"""
 
@@ -46,6 +53,16 @@ class DomainAntigravityCoreBridgePlugin(HarnessPlugin):
     version = "1.0.0"
     description = """Google Antigravity SDK core bridge providing LocalConnection proactor transport, streaming step ingestion, and subagent orchestration"""
     trusted = True
+
+    def __init__(self) -> None:
+        self._service = AntigravityConnectionService()
+
+    @property
+    def provides(self) -> list[ServiceKey[Any]]:
+        return [ANTIGRAVITY_CONNECTION_KEY]
+
+    async def on_load(self, ctx: ServiceContext) -> None:
+        ctx.provide(ANTIGRAVITY_CONNECTION_KEY, self._service, provider=self.name)
 
 
 plugin = DomainAntigravityCoreBridgePlugin()

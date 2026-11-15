@@ -6,6 +6,9 @@
   "isolation": "subprocess",
   "trusted": true,
   "category": "agent_orchestration",
+  "provides": [
+    "domain.semantic_kernel_engine"
+  ],
   "entrypoints": [
     {
       "name": "orchestrate_group_chat",

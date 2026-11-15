@@ -8,6 +8,9 @@
   "isolation": "subprocess",
   "trusted": true,
   "dependencies": [],
+  "provides": [
+    "service.pyrit_scanner"
+  ],
   "entrypoints": [
     {
       "name": "redteam_fuzz_prompt",
@@ -158,7 +161,12 @@
           "type": "array",
           "description": "List of harm categories to assess (e.g. ['violence', 'hate', 'pii', 'jailbreak', 'self_harm'])",
           "required": false,
-          "default": ["jailbreak", "toxicity", "pii", "harmful_content"]
+          "default": [
+            "jailbreak",
+            "toxicity",
+            "pii",
+            "harmful_content"
+          ]
         },
         {
           "name": "scorer_type",

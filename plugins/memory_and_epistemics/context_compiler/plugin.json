@@ -8,6 +8,9 @@
   "isolation": "subprocess",
   "trusted": true,
   "dependencies": [],
+  "provides": [
+    "domain.context_compiler"
+  ],
   "entrypoints": [
     {
       "name": "compile_context",

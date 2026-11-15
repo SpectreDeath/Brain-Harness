@@ -7,6 +7,7 @@
   "isolation": "subprocess",
   "trusted": true,
   "provides": [
+    "open_source_gis_service",
     "service.open_source_gis"
   ],
   "requires": [],

@@ -35,7 +35,14 @@ def fire_reactive_trigger(trigger_id: str, payload: dict[str, Any]) -> dict[str,
 # -----------------------------------------------------------------------------
 # Harness Plugin Class & IoC Singleton (Rule 45)
 # -----------------------------------------------------------------------------
+from harness.kernel.context import ServiceContext, ServiceKey
 from harness.plugins.base import HarnessPlugin
+from plugins.agent_orchestration.antigravity_trigger_runtime.service import (
+    ANTIGRAVITY_TRIGGER_KEY,
+    AntigravityTriggerService,
+)
+
+
 class DomainAntigravityTriggerRuntimePlugin(HarnessPlugin):
     """Google Antigravity reactive trigger scheduling engine providing async interval and file watcher wakeup without polling"""
 
@@ -43,6 +50,16 @@ class DomainAntigravityTriggerRuntimePlugin(HarnessPlugin):
     version = "1.0.0"
     description = """Google Antigravity reactive trigger scheduling engine providing async interval and file watcher wakeup without polling"""
     trusted = True
+
+    def __init__(self) -> None:
+        self._service = AntigravityTriggerService()
+
+    @property
+    def provides(self) -> list[ServiceKey[Any]]:
+        return [ANTIGRAVITY_TRIGGER_KEY]
+
+    async def on_load(self, ctx: ServiceContext) -> None:
+        ctx.provide(ANTIGRAVITY_TRIGGER_KEY, self._service, provider=self.name)
 
 
 plugin = DomainAntigravityTriggerRuntimePlugin()

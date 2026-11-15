@@ -138,7 +138,12 @@ def nudge_learning_persistence(
 # -----------------------------------------------------------------------------
 # Harness Plugin Class & IoC Singleton (Rule 45)
 # -----------------------------------------------------------------------------
+from harness.kernel.context import ServiceContext, ServiceKey
 from harness.plugins.base import HarnessPlugin
+
+HERMES_COGNITIVE_ENGINE_KEY: ServiceKey[Any] = ServiceKey("service.hermes_cognitive_engine")
+
+
 class DomainHermesCognitiveEnginePlugin(HarnessPlugin):
     """Hermes closed learning loop, autonomous skill formation, verification evidence evaluator, and think stream scrubber"""
 
@@ -146,6 +151,13 @@ class DomainHermesCognitiveEnginePlugin(HarnessPlugin):
     version = "1.0.0"
     description = """Hermes closed learning loop, autonomous skill formation, verification evidence evaluator, and think stream scrubber"""
     trusted = True
+
+    @property
+    def provides(self) -> list[ServiceKey[Any]]:
+        return [HERMES_COGNITIVE_ENGINE_KEY]
+
+    async def on_load(self, ctx: ServiceContext) -> None:
+        ctx.provide(HERMES_COGNITIVE_ENGINE_KEY, self, provider=self.name)
 
 
 plugin = DomainHermesCognitiveEnginePlugin()

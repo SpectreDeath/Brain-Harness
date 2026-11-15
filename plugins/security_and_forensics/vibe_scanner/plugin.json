@@ -13,6 +13,9 @@
     "ai_code_safety",
     "sarif"
   ],
+  "provides": [
+    "plugin.vibe_scanner"
+  ],
   "entrypoints": [
     {
       "name": "scan_code",

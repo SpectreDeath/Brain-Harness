@@ -123,4 +123,80 @@ class RecursiveHarnessRefinerPlugin(HarnessPlugin, RecursiveRefinerService):
         return self._service.select(task_id, k, mode, candidates, adapter=adapter, selector=selector, work_dir=work_dir)
 
 
+def refine_task(
+    mode: str,
+    task_id: str,
+    k: int = 1,
+    base: Sequence[RunView] | None = None,
+    *,
+    adapter: TaskAdapter | None = None,
+    proposer: HarnessProposer | None = None,
+    work_dir: Path | str | None = None,
+    run_id_of: Callable[[str], str] | None = None,
+    base_tree: Tree | None = None,
+    library_dir: Path | None = None,
+    **kwargs: Any,
+) -> Any:
+    """Execute Propose-Probe-Compose task recursion or initialize validated budget ledger."""
+    if (
+        base is not None
+        and adapter is not None
+        and proposer is not None
+        and work_dir is not None
+        and run_id_of is not None
+        and base_tree is not None
+    ):
+        return plugin.refine(
+            mode,
+            task_id,
+            k,
+            base,
+            adapter=adapter,
+            proposer=proposer,
+            work_dir=work_dir,
+            run_id_of=run_id_of,
+            base_tree=base_tree,
+            library_dir=library_dir,
+        )
+    ledger = plugin.new_ledger(mode, task_id, k)
+    return {
+        "status": "ok",
+        "mode": ledger.mode,
+        "task_id": ledger.task_id,
+        "k": ledger.k,
+        "expected_rollouts": 4 * int(ledger.k),
+        "expected_sessions": 3 * int(ledger.k),
+    }
+
+
+def blind_select(
+    task_id: str,
+    k: int,
+    mode: str = "agg",
+    candidates: dict[str, RunView] | None = None,
+    *,
+    adapter: TaskAdapter | None = None,
+    selector: CandidateSelector | None = None,
+    work_dir: Path | str | None = None,
+    **kwargs: Any,
+) -> Any:
+    """Select the highest-quality candidate blind over shuffled anonymous candidate IDs."""
+    if candidates is not None and adapter is not None and selector is not None and work_dir is not None:
+        return plugin.select(
+            task_id,
+            k,
+            mode,
+            candidates,
+            adapter=adapter,
+            selector=selector,
+            work_dir=work_dir,
+        )
+    return {
+        "status": "error",
+        "task_id": task_id,
+        "k": k,
+        "error": "blind_select requires candidates, adapter, selector, and work_dir",
+    }
+
+
 plugin = RecursiveHarnessRefinerPlugin()

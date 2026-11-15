@@ -138,7 +138,12 @@ def manage_blueprint_catalog(
 # -----------------------------------------------------------------------------
 # Harness Plugin Class & IoC Singleton (Rule 45)
 # -----------------------------------------------------------------------------
+from harness.kernel.context import ServiceContext, ServiceKey
 from harness.plugins.base import HarnessPlugin
+
+HERMES_CRON_SCHEDULER_KEY: ServiceKey[Any] = ServiceKey("service.hermes_cron_scheduler")
+
+
 class DomainHermesCronSchedulerPlugin(HarnessPlugin):
     """Hermes unattended natural language cron scheduler, incident classification, and blueprint catalog manager"""
 
@@ -146,6 +151,13 @@ class DomainHermesCronSchedulerPlugin(HarnessPlugin):
     version = "1.0.0"
     description = """Hermes unattended natural language cron scheduler, incident classification, and blueprint catalog manager"""
     trusted = True
+
+    @property
+    def provides(self) -> list[ServiceKey[Any]]:
+        return [HERMES_CRON_SCHEDULER_KEY]
+
+    async def on_load(self, ctx: ServiceContext) -> None:
+        ctx.provide(HERMES_CRON_SCHEDULER_KEY, self, provider=self.name)
 
 
 plugin = DomainHermesCronSchedulerPlugin()

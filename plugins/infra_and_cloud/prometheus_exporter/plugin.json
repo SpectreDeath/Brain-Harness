@@ -8,6 +8,9 @@
   "isolation": "subprocess",
   "trusted": true,
   "dependencies": [],
+  "provides": [
+    "service.prometheus_exporter"
+  ],
   "entrypoints": [
     {
       "name": "prometheus_record_metric",

@@ -151,6 +151,9 @@ def gis_architect_workload(
 # ---------------------------------------------------------------------------
 
 
+OPEN_SOURCE_GIS_CANONICAL_KEY: ServiceKey[OpenSourceGisService] = ServiceKey("service.open_source_gis")
+
+
 class OpenSourceGisPlugin(HarnessPlugin, OpenSourceGisService):
     """Brain Harness plugin exposing open-source GIS engine selection, CRS validation & topology auditing."""
 
@@ -168,7 +171,7 @@ class OpenSourceGisPlugin(HarnessPlugin, OpenSourceGisService):
 
     @property
     def provides(self) -> list[ServiceKey[Any]]:
-        return [OPEN_SOURCE_GIS_SERVICE_KEY]
+        return [OPEN_SOURCE_GIS_SERVICE_KEY, OPEN_SOURCE_GIS_CANONICAL_KEY]
 
     @property
     def requires(self) -> list[ServiceKey[Any]]:
@@ -176,6 +179,7 @@ class OpenSourceGisPlugin(HarnessPlugin, OpenSourceGisService):
 
     async def on_load(self, context: ServiceContext) -> None:
         context.provide(OPEN_SOURCE_GIS_SERVICE_KEY, self)
+        context.provide(OPEN_SOURCE_GIS_CANONICAL_KEY, self)
         logger.info("open_source_gis_plugin_loaded")
 
     async def on_enable(self) -> None:

@@ -139,7 +139,12 @@ def query_session_provenance(message_id: str) -> dict[str, Any]:
 # -----------------------------------------------------------------------------
 # Harness Plugin Class & IoC Singleton (Rule 45)
 # -----------------------------------------------------------------------------
+from harness.kernel.context import ServiceContext, ServiceKey
 from harness.plugins.base import HarnessPlugin
+
+HERMES_STATE_FTS5_KEY: ServiceKey[Any] = ServiceKey("service.hermes_state_fts5")
+
+
 class DomainHermesStateFts5Plugin(HarnessPlugin):
     """Hermes SQLite WAL state storage with FTS5 search, parent-child session compression splitting, and cross-session recall"""
 
@@ -147,6 +152,13 @@ class DomainHermesStateFts5Plugin(HarnessPlugin):
     version = "1.0.0"
     description = """Hermes SQLite WAL state storage with FTS5 search, parent-child session compression splitting, and cross-session recall"""
     trusted = True
+
+    @property
+    def provides(self) -> list[ServiceKey[Any]]:
+        return [HERMES_STATE_FTS5_KEY]
+
+    async def on_load(self, ctx: ServiceContext) -> None:
+        ctx.provide(HERMES_STATE_FTS5_KEY, self, provider=self.name)
 
 
 plugin = DomainHermesStateFts5Plugin()

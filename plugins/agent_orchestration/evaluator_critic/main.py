@@ -23,32 +23,43 @@ if __name__ not in sys.modules:
 from harness.kernel.context import ServiceContext, ServiceKey
 from harness.plugins.base import HarnessPlugin
 
-from plugins.agent_orchestration.critic_loop.main import (
-    CRITIC_EVALUATION_SERVICE_KEY,
-    CriticEvaluationService,
-    _EVAL_INSTANCE,
-)
-
 logger = structlog.get_logger(__name__)
+
+EVALUATOR_CRITIC_SERVICE_KEY: ServiceKey[Any] = ServiceKey("service.evaluator_critic")
+CRITIC_EVALUATION_SERVICE_KEY: ServiceKey[Any] = ServiceKey("service.critic_evaluation")
+
+
+def _resolve_critic_eval(ctx: ServiceContext | None = None) -> Any:
+    """Resolve CriticEvaluationService from IoC container or dynamic critic_loop fallback."""
+    if ctx is not None:
+        svc = ctx.optional(CRITIC_EVALUATION_SERVICE_KEY)
+        if svc is not None:
+            return svc
+    import importlib
+
+    return importlib.import_module("plugins.agent_orchestration.critic_loop.main")._EVAL_INSTANCE
 
 
 def critic_check_safety(command: str) -> dict[str, Any]:
     """Scan a shell command for dangerous, destructive, or irreversible operations."""
-    return _EVAL_INSTANCE.check_command_safety(command)
+    return _resolve_critic_eval().check_command_safety(command)
 
 
 def critic_evaluate_code(code: str, language: str = "python") -> dict[str, Any]:
     """Statically analyze code syntax, metrics, and safety anti-patterns."""
-    return _EVAL_INSTANCE.evaluate_code_ast(code, language)
+    return _resolve_critic_eval().evaluate_code_ast(code, language)
 
 
 def critic_review_plan(goal: str, steps: list[str]) -> dict[str, Any]:
     """Evaluate plan steps for completeness, verification, and risk mitigation."""
-    return _EVAL_INSTANCE.review_plan_feasibility(goal, steps)
+    return _resolve_critic_eval().review_plan_feasibility(goal, steps)
 
 
 class EvaluatorCriticPlugin(HarnessPlugin):
     """Adapter plugin registering Evaluator Critic into the IoC container."""
+
+    def __init__(self) -> None:
+        self._delegate: Any | None = None
 
     @property
     def name(self) -> str:
@@ -67,15 +78,16 @@ class EvaluatorCriticPlugin(HarnessPlugin):
 
     @property
     def provides(self) -> list[ServiceKey[Any]]:
-        return [CRITIC_EVALUATION_SERVICE_KEY]
+        return [EVALUATOR_CRITIC_SERVICE_KEY]
 
     @property
     def requires(self) -> list[ServiceKey[Any]]:
-        return []
+        return [CRITIC_EVALUATION_SERVICE_KEY]
 
     async def on_load(self, ctx: ServiceContext) -> None:
-        ctx.provide(CRITIC_EVALUATION_SERVICE_KEY, _EVAL_INSTANCE, provider=self.name)
-        logger.info("EvaluatorCritic provided CriticEvaluationService", plugin=self.name)
+        self._delegate = _resolve_critic_eval(ctx)
+        ctx.provide(EVALUATOR_CRITIC_SERVICE_KEY, self._delegate, provider=self.name)
+        logger.info("EvaluatorCritic provided EvaluatorCriticService", plugin=self.name)
 
     async def enable(self, context: ServiceContext) -> None:
         await self.on_load(context)
