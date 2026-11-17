@@ -55,12 +55,16 @@ class DefaultDeepRepoAuditorService(DeepRepoAuditorService):
             try:
                 vault_candidate = Path.cwd() / ".harness" / "knowledge"
                 v_dir = vault_candidate if vault_candidate.is_dir() else None
-                ontology_data = OntologySpiderKernelService().analyze_repository(
-                    resolved_root,
-                    vault_dir=v_dir,
-                    max_depth=3,
-                    max_files_per_unit=60,
-                ).to_dict()
+                ontology_data = (
+                    OntologySpiderKernelService()
+                    .analyze_repository(
+                        resolved_root,
+                        vault_dir=v_dir,
+                        max_depth=3,
+                        max_files_per_unit=60,
+                    )
+                    .to_dict()
+                )
             except Exception:
                 ontology_data = None
         return DeepAuditReport(
