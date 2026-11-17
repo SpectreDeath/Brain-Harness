@@ -155,3 +155,15 @@ def test_deep_auditor_and_repo_triad_forge_wire_repo_ontology(tmp_path: Path) ->
     assert len(triad_ins.ontology_summary.get("cycle_violations", [])) >= 1
     kis = triad_plugin.extract_kis(str(outer))
     assert len(kis) >= 3
+
+
+@skip_if_no_engine
+def test_domain_classifier_handles_llm_reasoning_keywords() -> None:
+    """_classify_domain maps plural LLMs / self-consistency / prompting repos to nlp_and_llm_project."""
+    from plugins.memory_and_epistemics.ontology_spider.repo_adapter import _classify_domain
+
+    readme = (
+        '# Code for "Confidence Improves Self-Consistency in LLMs"\n'
+        "Self-consistency decoding enhances LLMs performance via confidence prompting.\n"
+    )
+    assert _classify_domain("cisc", readme) == "nlp_and_llm_project"

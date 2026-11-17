@@ -1,0 +1,93 @@
+{
+  "id": "ki_google_research_uq_benchmark_2019_calibration_shift",
+  "title": "Google Research UQ Benchmark 2019: Predictive Uncertainty Under Dataset Shift, Brier Decomposition & Confidence-Threshold Coverage",
+  "category": "agent_orchestration",
+  "schema_version": "1.0.0",
+  "source_target": "https://github.com/google-research/google-research",
+  "detected_format": "git_repository",
+  "created_at": "2026-11-17T10:25:00Z",
+  "author": "repo-triad-forge",
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "tags": [
+    "uq_benchmark_2019",
+    "google_research",
+    "uncertainty_quantification",
+    "dataset_shift",
+    "brier_decomposition",
+    "calibration",
+    "arxiv_1906_02530"
+  ],
+  "anchors": {
+    "repo": "https://github.com/google-research/google-research",
+    "subproject": "uq_benchmark_2019",
+    "arxiv": "https://arxiv.org/abs/1906.02530"
+  },
+  "edges": [
+    {
+      "type": "distilled_from",
+      "target": "https://github.com/google-research/google-research",
+      "target_kind": "external_repo",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Subproject uq_benchmark_2019 in snapshot google-research-master (archive snapshot, non-git); arXiv:1906.02530"
+    },
+    {
+      "type": "same_domain",
+      "target": "ki_google_research_cisc_confidence_voting",
+      "target_kind": "knowledge_item",
+      "derived": true,
+      "confidence": 0.92,
+      "description": "Pairs dataset-shift calibration evaluation, Brier resolution/reliability decomposition, and confidence-threshold accuracy curves with CISC weighted voting"
+    },
+    {
+      "type": "same_domain",
+      "target": "ki_njoku_uncertainty_aware_systems",
+      "target_kind": "knowledge_item",
+      "derived": true,
+      "confidence": 0.9,
+      "description": "Supports threshold-sweep selective abstention over OOD/shifted inputs"
+    },
+    {
+      "type": "applicable_to",
+      "target": "src/harness/services/uncertainty_guard.py",
+      "target_kind": "module",
+      "derived": true,
+      "confidence": 0.88,
+      "description": "Provides accuracy-vs-threshold selectivity evaluation and Brier resolution/reliability diagnostics"
+    }
+  ],
+  "isnad": {
+    "status": "VERIFIED",
+    "source_repo": "https://github.com/google-research/google-research",
+    "snapshot": "google-research-master (archive snapshot, non-git)",
+    "subproject": "uq_benchmark_2019",
+    "verified_at": "2026-11-17T10:25:00Z",
+    "claims": [
+      {
+        "assertion": "uq_benchmark_2019 benchmarks Vanilla, Temperature Scaling, Deep Ensemble, MC Dropout, SVI, and Last-Layer variants under dataset shift (MNIST-rot, CIFAR-10-C, ImageNet-C, Criteo-corrupt, 20 Newsgroups/LM1B), showing post-hoc temperature scaling falls short under shift relative to model marginalization/ensembles.",
+        "file": "uq_benchmark_2019/README.md",
+        "lines": "L5-L33",
+        "verified": true
+      },
+      {
+        "assertion": "metrics_lib.py implements expected_calibration_error(), expected_calibration_error_multiclass(), compute_accuracies_at_confidences() threshold-coverage sweeps, brier_decomposition() into uncertainty/resolution/reliability, and quantile binning with 0->1e-8 guard for np.digitize.",
+        "file": "uq_benchmark_2019/metrics_lib.py",
+        "lines": "L30-L391",
+        "sha256_hash": "d8a27d5c62eb04f0d6396ea8326ece44c2f3b41f1503182451a64aede67247f2",
+        "verified": true
+      },
+      {
+        "assertion": "calibration_lib.py fits maximum-likelihood temperature via scipy.optimize.bisect over TF Categorical/Bernoulli NLL gradients in find_scaling_temperature() and applies it via apply_temperature_scaling().",
+        "file": "uq_benchmark_2019/calibration_lib.py",
+        "lines": "L30-L78",
+        "sha256_hash": "67a4be866f682fedd56262e2356343c06fd8df071a83837000dac14938c7d164",
+        "verified": true
+      }
+    ]
+  },
+  "distilled_learning": "Evaluate predictive uncertainty under distribution shift using confidence-threshold selectivity sweeps (compute_accuracies_at_confidences) and Brier uncertainty/resolution/reliability decomposition rather than trusting in-distribution temperature scaling alone."
+}

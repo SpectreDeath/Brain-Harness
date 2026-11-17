@@ -1,0 +1,71 @@
+{
+  "id": "ki_google_research_scaling_transformer_inference",
+  "title": "Google Research Scaling Transformer Inference Efficiency: 2D/3D Mesh Sharding Rules, Prefix-Shared KV Slices & Decode Layout",
+  "category": "agent_orchestration",
+  "schema_version": "1.0.0",
+  "source_target": "https://github.com/google-research/google-research",
+  "detected_format": "git_repository",
+  "created_at": "2026-11-17T10:25:00Z",
+  "author": "repo-triad-forge",
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "tags": [
+    "scaling_transformer_inference_efficiency",
+    "google_research",
+    "transformer_inference",
+    "kv_cache",
+    "sharding",
+    "jax",
+    "arxiv_2211_05102"
+  ],
+  "anchors": {
+    "repo": "https://github.com/google-research/google-research",
+    "subproject": "scaling_transformer_inference_efficiency",
+    "arxiv": "https://arxiv.org/abs/2211.05102"
+  },
+  "edges": [
+    {
+      "type": "distilled_from",
+      "target": "https://github.com/google-research/google-research",
+      "target_kind": "external_repo",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Subproject scaling_transformer_inference_efficiency in snapshot google-research-master (archive snapshot, non-git); arXiv:2211.05102"
+    },
+    {
+      "type": "related_to",
+      "target": "ki_google_research_cisc_confidence_voting",
+      "target_kind": "knowledge_item",
+      "derived": true,
+      "confidence": 0.85,
+      "description": "Prefix-shared batch decoding (batch % prefix_batch == 0) reduces KV memory traffic when sampling multiple self-consistency reasoning traces per prompt"
+    }
+  ],
+  "isnad": {
+    "status": "VERIFIED",
+    "source_repo": "https://github.com/google-research/google-research",
+    "snapshot": "google-research-master (archive snapshot, non-git)",
+    "subproject": "scaling_transformer_inference_efficiency",
+    "verified_at": "2026-11-17T10:25:00Z",
+    "claims": [
+      {
+        "assertion": "partitioning.py separates logical tensor dimensions from physical 3D TPU mesh axes (x, y, z) using make_rules_two_d, make_rules_one_d, make_rules_weight_gathered, AttnAllToAll collective modes, and thread-local PartitioningRules context scoping.",
+        "file": "scaling_transformer_inference_efficiency/partitioning.py",
+        "lines": "L42-L173",
+        "sha256_hash": "d478358ffbf77fe918ae57cfd17e4b317b40ab24b2844a55b0a47c0a7c548c05",
+        "verified": true
+      },
+      {
+        "assertion": "inference.py infer() shares prefix KV caches across multi-sample decode batches (batch % prefix_batch == 0), pre-slices RoPE sin/cos tables once per prefix via lax.dynamic_slice_in_dim + vmap, and performs in-place static KV buffer updates with lax.dynamic_update_index_in_dim.",
+        "file": "scaling_transformer_inference_efficiency/inference.py",
+        "lines": "L60-L109",
+        "sha256_hash": "3f4130f2fa61748df9dcd5323cdf4fdd01efc74e0d1d714e268b82552d4b53fa",
+        "verified": true
+      }
+    ]
+  },
+  "distilled_learning": "Decouple logical tensor partitioning rules from physical device meshes and share prompt-prefix KV caches (batch % prefix_batch == 0) when generating multiple continuation samples."
+}

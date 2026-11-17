@@ -69,6 +69,44 @@
         }
       ],
       "returns": "object"
+    },
+    {
+      "name": "aggregate_confidence_votes",
+      "description": "Aggregate multi-trace candidate answers using CISC normalized confidence weights",
+      "parameters": [
+        {
+          "name": "answers",
+          "type": "array",
+          "description": "List of candidate answer strings",
+          "required": true
+        },
+        {
+          "name": "confidences",
+          "type": "array",
+          "description": "Confidence scores aligned with answers",
+          "required": true
+        }
+      ],
+      "returns": "object"
+    },
+    {
+      "name": "evaluate_uncertainty_calibration",
+      "description": "Compute ECE, Brier decomposition, and confidence-threshold selectivity curve",
+      "parameters": [
+        {
+          "name": "probabilities",
+          "type": "array",
+          "description": "1D positive-class probabilities or 2D class probability matrix",
+          "required": true
+        },
+        {
+          "name": "labels",
+          "type": "array",
+          "description": "Ground-truth integer class labels",
+          "required": true
+        }
+      ],
+      "returns": "object"
     }
   ]
 }

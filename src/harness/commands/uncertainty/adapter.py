@@ -8,10 +8,12 @@ from typing import Any
 
 from harness.services.uncertainty_guard import (
     BoundaryReportData,
+    ConfidenceVotingReportData,
     DocDebtClusterData,
     LogprobReportData,
     PipelineReportData,
     RetrievalReportData,
+    UncertaintyCalibrationReportData,
     UncertaintyGuardService,
 )
 
@@ -118,3 +120,37 @@ class UncertaintyEngineAdapter(UncertaintyGuardService):
         output_path: str | Path | None = None,
     ) -> Path:
         return self._eng.generate_visual_brief(pipeline_result, output_path)
+
+    def aggregate_confidence_votes(
+        self,
+        answers: list[str | None] | tuple[str | None, ...],
+        confidences: list[float | None] | tuple[float | None, ...],
+        *,
+        normalization: str = "softmax",
+        temperature: float = 1.0,
+        only_tie_break: bool = False,
+    ) -> ConfidenceVotingReportData:
+        res = self._eng.aggregate_confidence_votes(
+            answers,
+            confidences,
+            normalization=normalization,
+            temperature=temperature,
+            only_tie_break=only_tie_break,
+        )
+        return ConfidenceVotingReportData.from_engine(res)
+
+    def evaluate_uncertainty_calibration(
+        self,
+        probabilities: list[float] | list[list[float]],
+        labels: list[int],
+        *,
+        bins: int = 15,
+        thresholds: tuple[float, ...] = (0.5, 0.6, 0.75, 0.9),
+    ) -> UncertaintyCalibrationReportData:
+        res = self._eng.evaluate_uncertainty_calibration(
+            probabilities,
+            labels,
+            bins=bins,
+            thresholds=thresholds,
+        )
+        return UncertaintyCalibrationReportData.from_engine(res)

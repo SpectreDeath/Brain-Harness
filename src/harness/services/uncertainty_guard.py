@@ -137,6 +137,79 @@ class DocDebtClusterData(BaseModel):
     )
 
 
+class ConfidenceVotingReportData(BaseModel):
+    """Payload representing CISC confidence-informed self-consistency voting outcome."""
+
+    chosen_answer: str | None = Field(
+        default=None, description="Selected answer after normalized confidence voting"
+    )
+    confidence: float = Field(..., description="Normalized support ratio for chosen answer")
+    normalization: str = Field(
+        ..., description="Normalization mode: none | linear | softmax"
+    )
+    temperature: float = Field(..., description="Scaling temperature applied to scores")
+    only_tie_break: bool = Field(
+        default=False, description="Whether confidence resolved only unweighted ties"
+    )
+    valid_trace_count: int = Field(..., description="Valid non-NaN trace count")
+    total_trace_count: int = Field(..., description="Total submitted trace count")
+    answer_weights: dict[str, float] = Field(
+        default_factory=dict, description="Normalized cumulative weights per answer"
+    )
+
+    @classmethod
+    def from_engine(cls, res: Any) -> ConfidenceVotingReportData:
+        return cls(
+            chosen_answer=res.chosen_answer,
+            confidence=res.confidence,
+            normalization=res.normalization,
+            temperature=res.temperature,
+            only_tie_break=res.only_tie_break,
+            valid_trace_count=res.valid_trace_count,
+            total_trace_count=res.total_trace_count,
+            answer_weights=dict(res.answer_weights),
+        )
+
+
+class CalibrationSelectivityPointData(BaseModel):
+    """Accuracy and coverage fraction at a single confidence threshold."""
+
+    threshold: float
+    accuracy: float
+    coverage_count: int
+    coverage_ratio: float
+
+
+class UncertaintyCalibrationReportData(BaseModel):
+    """Payload representing ECE, Brier decomposition, and confidence-threshold curve."""
+
+    ece: float
+    brier_score: float
+    brier_uncertainty: float
+    brier_resolution: float
+    brier_reliability: float
+    selectivity_curve: list[CalibrationSelectivityPointData] = Field(default_factory=list)
+
+    @classmethod
+    def from_engine(cls, res: Any) -> UncertaintyCalibrationReportData:
+        return cls(
+            ece=res.ece,
+            brier_score=res.brier_score,
+            brier_uncertainty=res.brier_uncertainty,
+            brier_resolution=res.brier_resolution,
+            brier_reliability=res.brier_reliability,
+            selectivity_curve=[
+                CalibrationSelectivityPointData(
+                    threshold=p.threshold,
+                    accuracy=p.accuracy,
+                    coverage_count=p.coverage_count,
+                    coverage_ratio=p.coverage_ratio,
+                )
+                for p in res.selectivity_curve
+            ],
+        )
+
+
 @runtime_checkable
 class UncertaintyGuardService(Protocol):
     """Protocol for 3-layer deterministic uncertainty interception and overconfidence mitigation."""
@@ -191,6 +264,29 @@ class UncertaintyGuardService(Protocol):
         output_path: str | Path | None = None,
     ) -> Path:
         """Generate interactive HTML visual brief in %TEMP% summarizing uncertainty interception."""
+        ...
+
+    def aggregate_confidence_votes(
+        self,
+        answers: list[str | None] | tuple[str | None, ...],
+        confidences: list[float | None] | tuple[float | None, ...],
+        *,
+        normalization: str = "softmax",
+        temperature: float = 1.0,
+        only_tie_break: bool = False,
+    ) -> ConfidenceVotingReportData:
+        """Aggregate multi-trace candidate answers using CISC normalized confidence weights."""
+        ...
+
+    def evaluate_uncertainty_calibration(
+        self,
+        probabilities: list[float] | list[list[float]],
+        labels: list[int],
+        *,
+        bins: int = 15,
+        thresholds: tuple[float, ...] = (0.5, 0.6, 0.75, 0.9),
+    ) -> UncertaintyCalibrationReportData:
+        """Compute ECE, Brier decomposition, and confidence-threshold selectivity curve."""
         ...
 
 

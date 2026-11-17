@@ -40,12 +40,14 @@ from harness.plugins.base import HarnessPlugin
 from harness.services.uncertainty_guard import (
     UNCERTAINTY_GUARD_SERVICE_KEY,
     BoundaryReportData,
+    ConfidenceVotingReportData,
     DocDebtClusterData,
     EscalationTicketData,
     LogprobReportData,
     PipelineReportData,
     RetrievalReportData,
     ScoredChunkData,
+    UncertaintyCalibrationReportData,
     UncertaintyGuardService,
 )
 
@@ -291,6 +293,42 @@ class UncertaintyGuardPlugin(HarnessPlugin, UncertaintyGuardService):
         else:
             raw = pipeline_result
         return self._engine.generate_visual_brief(raw, output_path=output_path)
+
+    def aggregate_confidence_votes(
+        self,
+        answers: list[str | None] | tuple[str | None, ...],
+        confidences: list[float | None] | tuple[float | None, ...],
+        *,
+        normalization: str = "softmax",
+        temperature: float = 1.0,
+        only_tie_break: bool = False,
+    ) -> ConfidenceVotingReportData:
+        """Aggregate multi-trace answers via CISC confidence-weighted voting."""
+        res = self._engine.aggregate_confidence_votes(
+            answers,
+            confidences,
+            normalization=normalization,
+            temperature=temperature,
+            only_tie_break=only_tie_break,
+        )
+        return ConfidenceVotingReportData.from_engine(res)
+
+    def evaluate_uncertainty_calibration(
+        self,
+        probabilities: list[float] | list[list[float]],
+        labels: list[int],
+        *,
+        bins: int = 15,
+        thresholds: tuple[float, ...] = (0.5, 0.6, 0.75, 0.9),
+    ) -> UncertaintyCalibrationReportData:
+        """Evaluate ECE, Brier decomposition, and confidence-threshold selectivity."""
+        res = self._engine.evaluate_uncertainty_calibration(
+            probabilities,
+            labels,
+            bins=bins,
+            thresholds=thresholds,
+        )
+        return UncertaintyCalibrationReportData.from_engine(res)
 
 
 # Module-level singleton provider required by Rule 45

@@ -1,0 +1,71 @@
+{
+  "id": "ki_google_research_etcmodel_long_structured_attention",
+  "title": "Google Research ETCModel: Fused Global-Local Attention & Clipped Relative Position Encoding for Structured Long Contexts",
+  "category": "data_engineering",
+  "schema_version": "1.0.0",
+  "source_target": "https://github.com/google-research/google-research",
+  "detected_format": "git_repository",
+  "created_at": "2026-11-17T10:25:30Z",
+  "author": "repo-triad-forge",
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "tags": [
+    "etcmodel",
+    "google_research",
+    "long_context",
+    "global_local_attention",
+    "relative_attention",
+    "structured_inputs",
+    "arxiv_2004_08483"
+  ],
+  "anchors": {
+    "repo": "https://github.com/google-research/google-research",
+    "subproject": "etcmodel",
+    "arxiv": "https://arxiv.org/abs/2004.08483"
+  },
+  "edges": [
+    {
+      "type": "distilled_from",
+      "target": "https://github.com/google-research/google-research",
+      "target_kind": "external_repo",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Subproject etcmodel in snapshot google-research-master (archive snapshot, non-git); EMNLP 2020 / arXiv:2004.08483"
+    },
+    {
+      "type": "related_to",
+      "target": "ki_20261110_google_research_gnn_and_scientific_ml",
+      "target_kind": "knowledge_item",
+      "derived": false,
+      "confidence": 0.9,
+      "description": "Sibling structured/graph modeling work in https://github.com/google-research/google-research"
+    }
+  ],
+  "isnad": {
+    "status": "VERIFIED",
+    "source_repo": "https://github.com/google-research/google-research",
+    "snapshot": "google-research-master (archive snapshot, non-git)",
+    "subproject": "etcmodel",
+    "verified_at": "2026-11-17T10:25:30Z",
+    "claims": [
+      {
+        "assertion": "FusedGlobalLocalAttention fuses long-to-long (l2l) and long-to-global (l2g) attention under one softmax and global-to-global (g2g) + global-to-long (g2l) under a second softmax, recovering standard Transformer attention when local_radius covers the full sequence and projections are shared.",
+        "file": "etcmodel/layers/attention.py",
+        "lines": "L223-L290",
+        "sha256_hash": "4bc561f65cf206d23f4733de85193ec9c61a8c631019ecc1085b2bc917e64c91",
+        "verified": true
+      },
+      {
+        "assertion": "RelativePositionGenerator computes clipped relative_att_ids with relative_vocab_size = 2 * max_distance + 1 (directional) or max_distance + 1 (symmetric via ignore_direction=True) using a tiled shifted pattern tensor.",
+        "file": "etcmodel/feature_utils.py",
+        "lines": "L30-L110",
+        "sha256_hash": "da7e451ee01db6fe4d43cbe5621fd7365f14d4a7ae810072eae146a51105caa9",
+        "verified": true
+      }
+    ]
+  },
+  "distilled_learning": "Fuse global summary tokens and bounded-radius local tokens under joint attention softmaxes (l2l+l2g, g2g+g2l) with clipped relative positions to encode long hierarchical contexts without quadratic attention cost."
+}

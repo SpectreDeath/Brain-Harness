@@ -181,6 +181,65 @@ class PipelineInterceptionResult:
         assert self.total_latency_ms >= 0.0, "total_latency_ms must be non-negative"
 
 
+@dataclass(slots=True, frozen=True)
+class ConfidenceVotingResult:
+    """Outcome of CISC confidence-informed self-consistency aggregation (arXiv:2502.06233)."""
+
+    chosen_answer: str | None
+    confidence: float
+    normalization: str
+    temperature: float
+    only_tie_break: bool
+    valid_trace_count: int
+    total_trace_count: int
+    answer_weights: tuple[tuple[str, float], ...] = ()
+
+    def __post_init__(self) -> None:
+        assert self.normalization in ("none", "linear", "softmax"), (
+            f"Unsupported normalization: {self.normalization}"
+        )
+        assert self.temperature > 0.0, "temperature must be positive"
+        assert 0.0 <= self.confidence <= 1.0, (
+            f"confidence must be in [0, 1], got {self.confidence}"
+        )
+        assert 0 <= self.valid_trace_count <= self.total_trace_count
+
+
+@dataclass(slots=True, frozen=True)
+class CalibrationSelectivityPoint:
+    """Accuracy and retained coverage at a single confidence threshold (uq_benchmark_2019)."""
+
+    threshold: float
+    accuracy: float
+    coverage_count: int
+    coverage_ratio: float
+
+    def __post_init__(self) -> None:
+        assert 0.0 <= self.threshold <= 1.0
+        assert 0.0 <= self.accuracy <= 1.0
+        assert self.coverage_count >= 0
+        assert 0.0 <= self.coverage_ratio <= 1.0
+
+
+@dataclass(slots=True, frozen=True)
+class UncertaintyCalibrationReport:
+    """Predictive uncertainty calibration, Brier decomposition, and selectivity report."""
+
+    ece: float
+    brier_score: float
+    brier_uncertainty: float
+    brier_resolution: float
+    brier_reliability: float
+    selectivity_curve: tuple[CalibrationSelectivityPoint, ...] = ()
+
+    def __post_init__(self) -> None:
+        assert 0.0 <= self.ece <= 1.0
+        assert 0.0 <= self.brier_score <= 2.0
+        assert 0.0 <= self.brier_uncertainty <= 1.0
+        assert self.brier_resolution >= 0.0
+        assert self.brier_reliability >= 0.0
+
+
 # ---------------------------------------------------------------------------
 # Zero-Dependency Semantic Matcher (Sub-Millisecond Execution)
 # ---------------------------------------------------------------------------
@@ -975,3 +1034,197 @@ graph LR
             f.write(html)
 
         return target_file
+
+    def aggregate_confidence_votes(
+        self,
+        answers: list[str | None] | tuple[str | None, ...],
+        confidences: list[float | None] | tuple[float | None, ...],
+        *,
+        normalization: str = "softmax",
+        temperature: float = 1.0,
+        only_tie_break: bool = False,
+    ) -> ConfidenceVotingResult:
+        """Aggregate multi-trace answers using CISC normalized confidence weights.
+
+        Follows cisc/src/post_processing/aggregators.py#L105-L188: filters NaN/empty
+        traces while explicitly preserving valid 0.0 confidence scores, normalizes via
+        softmax/linear/none, and optionally breaks only unweighted plurality ties.
+        """
+        if len(answers) != len(confidences):
+            raise ValueError("answers and confidences must have the same length")
+        if normalization not in ("none", "linear", "softmax"):
+            raise ValueError(f"Unsupported normalization: {normalization}")
+        if temperature <= 0.0 or not math.isfinite(temperature):
+            raise ValueError(f"temperature must be finite and > 0, got {temperature}")
+
+        valid_pairs: list[tuple[str, float]] = []
+        for ans, conf in zip(answers, confidences):
+            if ans is None or conf is None:
+                continue
+            if isinstance(ans, float) and math.isnan(ans):
+                continue
+            ans_s = str(ans).strip()
+            if not ans_s:
+                continue
+            try:
+                c_val = float(conf)
+            except (TypeError, ValueError):
+                continue
+            if not math.isfinite(c_val):
+                continue
+            valid_pairs.append((ans_s, c_val))
+
+        total_n = len(answers)
+        valid_n = len(valid_pairs)
+        if valid_n == 0:
+            return ConfidenceVotingResult(
+                chosen_answer=None,
+                confidence=0.0,
+                normalization=normalization,
+                temperature=float(temperature),
+                only_tie_break=bool(only_tie_break),
+                valid_trace_count=0,
+                total_trace_count=total_n,
+                answer_weights=(),
+            )
+
+        raw_confs = np.array([c for _, c in valid_pairs], dtype=float)
+        if normalization == "softmax":
+            scaled = (raw_confs - float(np.max(raw_confs))) * float(temperature)
+            exp_w = np.exp(scaled)
+            weights = exp_w / float(np.sum(exp_w))
+        elif normalization == "linear":
+            min_c = float(np.min(raw_confs))
+            weights = float(temperature) * (raw_confs - min_c) + 1.0
+        else:
+            weights = np.maximum(raw_confs, 0.0)
+
+        weighted_totals: dict[str, float] = {}
+        unweighted_counts: collections.Counter[str] = collections.Counter()
+        for (ans_s, _), w in zip(valid_pairs, weights):
+            unweighted_counts[ans_s] += 1
+            weighted_totals[ans_s] = weighted_totals.get(ans_s, 0.0) + float(w)
+
+        total_weight = sum(weighted_totals.values())
+        if only_tie_break:
+            max_cnt = max(unweighted_counts.values())
+            tied = [a for a, cnt in unweighted_counts.items() if cnt == max_cnt]
+            chosen = max(tied, key=lambda a: weighted_totals[a])
+        else:
+            chosen = max(weighted_totals, key=lambda a: weighted_totals[a])
+
+        chosen_conf = (
+            min(1.0, max(0.0, weighted_totals[chosen] / total_weight))
+            if total_weight > 0.0
+            else 0.0
+        )
+        ordered_weights = tuple(
+            (ans_s, round(w, 6))
+            for ans_s, w in sorted(weighted_totals.items(), key=lambda kv: (-kv[1], kv[0]))
+        )
+        return ConfidenceVotingResult(
+            chosen_answer=chosen,
+            confidence=round(chosen_conf, 6),
+            normalization=normalization,
+            temperature=float(temperature),
+            only_tie_break=bool(only_tie_break),
+            valid_trace_count=valid_n,
+            total_trace_count=total_n,
+            answer_weights=ordered_weights,
+        )
+
+    def evaluate_uncertainty_calibration(
+        self,
+        probabilities: list[float] | list[list[float]],
+        labels: list[int],
+        *,
+        bins: int = 15,
+        thresholds: tuple[float, ...] = (0.5, 0.6, 0.75, 0.9),
+    ) -> UncertaintyCalibrationReport:
+        """Compute ECE, Murphy Brier decomposition, and confidence-threshold selectivity.
+
+        Grounded in uq_benchmark_2019/metrics_lib.py: guards exact 0.0 probabilities before
+        binning, decomposes Brier error across predicted-class strata, and sweeps thresholds.
+        """
+        probs_arr = np.asarray(probabilities, dtype=float)
+        labels_arr = np.asarray(labels, dtype=np.int64)
+        if probs_arr.ndim == 1:
+            if probs_arr.shape[0] != labels_arr.shape[0]:
+                raise ValueError("probabilities and labels must have matching length")
+            probs_2d = np.stack([1.0 - probs_arr, probs_arr], axis=-1)
+        elif probs_arr.ndim == 2:
+            if probs_arr.shape[0] != labels_arr.shape[0]:
+                raise ValueError("probabilities and labels must have matching length")
+            probs_2d = probs_arr
+        else:
+            raise ValueError("probabilities must be 1D binary or 2D multiclass array")
+
+        n_samples, n_classes = probs_2d.shape
+        if n_samples == 0 or n_classes < 2:
+            raise ValueError("Need at least 1 sample and 2 classes for calibration evaluation")
+        if float(np.min(probs_2d)) < 0.0 or float(np.max(probs_2d)) > 1.0:
+            raise ValueError("All probabilities must lie in [0.0, 1.0]")
+
+        pred_class = np.argmax(probs_2d, axis=-1)
+        top_conf = np.max(probs_2d, axis=-1)
+        correct = (pred_class == labels_arr).astype(float)
+
+        # Expected Calibration Error with metrics_lib.py 0 -> 1e-8 guard for np.digitize
+        safe_conf = np.where(top_conf == 0.0, 1e-8, top_conf)
+        counts, bin_edges = np.histogram(safe_conf, bins=max(1, int(bins)), range=(0.0, 1.0))
+        bin_idx = np.digitize(safe_conf, bin_edges, right=True)
+        ece_val = 0.0
+        for b_i in range(1, len(bin_edges)):
+            cnt = int(counts[b_i - 1])
+            if cnt > 0:
+                mask = bin_idx == b_i
+                bin_acc = float(np.mean(correct[mask]))
+                bin_conf = float(np.mean(safe_conf[mask]))
+                ece_val += (cnt / float(n_samples)) * abs(bin_conf - bin_acc)
+
+        y_onehot = np.zeros_like(probs_2d)
+        y_onehot[np.arange(n_samples), labels_arr] = 1.0
+        brier = float(np.mean(np.sum((probs_2d - y_onehot) ** 2, axis=-1)))
+
+        # Brier decomposition across predicted class strata (uq_benchmark_2019/metrics_lib.py#L326-L353)
+        conf_mat = np.zeros((n_classes, n_classes), dtype=float)
+        for pc, yt in zip(pred_class, labels_arr):
+            conf_mat[int(pc), int(yt)] += 1.0
+        class_counts = np.sum(conf_mat, axis=1)
+        dist_weights = class_counts / float(n_samples)
+        pbar = np.sum(conf_mat, axis=0) / float(n_samples)
+        dist_mean = np.divide(
+            conf_mat,
+            np.where(class_counts[:, None] > 0.0, class_counts[:, None], 1.0),
+        )
+        b_uncertainty = max(0.0, 1.0 - float(np.sum(pbar ** 2)))
+        b_resolution = float(
+            np.sum(dist_weights * np.sum((pbar[None, :] - dist_mean) ** 2, axis=1))
+        )
+        b_reliability = float(
+            np.mean(np.sum((dist_mean[pred_class] - probs_2d) ** 2, axis=1))
+        )
+
+        curve: list[CalibrationSelectivityPoint] = []
+        for thresh in thresholds:
+            t_val = float(thresh)
+            mask = top_conf >= t_val
+            cov_count = int(np.sum(mask))
+            acc = float(np.mean(correct[mask])) if cov_count > 0 else 0.0
+            curve.append(
+                CalibrationSelectivityPoint(
+                    threshold=t_val,
+                    accuracy=round(acc, 6),
+                    coverage_count=cov_count,
+                    coverage_ratio=round(cov_count / float(n_samples), 6),
+                )
+            )
+
+        return UncertaintyCalibrationReport(
+            ece=round(min(1.0, ece_val), 6),
+            brier_score=round(brier, 6),
+            brier_uncertainty=round(b_uncertainty, 6),
+            brier_resolution=round(b_resolution, 6),
+            brier_reliability=round(b_reliability, 6),
+            selectivity_curve=tuple(curve),
+        )

@@ -1,0 +1,78 @@
+{
+  "id": "ki_google_research_imp_multimodal_config_registry",
+  "title": "Google Research IMP/MAX: Locked Dataclass Config Governance, Registry Binding & Hierarchical Overrides",
+  "category": "software_engineering",
+  "schema_version": "1.0.0",
+  "source_target": "https://github.com/google-research/google-research",
+  "detected_format": "git_repository",
+  "created_at": "2026-11-17T10:25:30Z",
+  "author": "repo-triad-forge",
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "tags": [
+    "imp",
+    "google_research",
+    "config_validation",
+    "registry_pattern",
+    "dataclass",
+    "multimodal",
+    "arxiv_2305_06324"
+  ],
+  "anchors": {
+    "repo": "https://github.com/google-research/google-research",
+    "subproject": "imp",
+    "arxiv": "https://arxiv.org/abs/2305.06324"
+  },
+  "edges": [
+    {
+      "type": "distilled_from",
+      "target": "https://github.com/google-research/google-research",
+      "target_kind": "external_repo",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Subproject imp in snapshot google-research-master (archive snapshot, non-git); NeurIPS 2023 / arXiv:2305.06324"
+    },
+    {
+      "type": "related_to",
+      "target": "ki_google_repos_bridge",
+      "target_kind": "knowledge_item",
+      "derived": false,
+      "confidence": 0.85,
+      "description": "Shares typed Python configuration & registry discipline across Google repos"
+    }
+  ],
+  "isnad": {
+    "status": "VERIFIED",
+    "source_repo": "https://github.com/google-research/google-research",
+    "snapshot": "google-research-master (archive snapshot, non-git)",
+    "subproject": "imp",
+    "verified_at": "2026-11-17T10:25:30Z",
+    "claims": [
+      {
+        "assertion": "validators.lock and validators.validate inspect typing.get_type_hints() on dataclass subclasses against _ATTRIBUTES_BASE_CLS, rejecting undeclared attributes and incompatible types while optionally allowing Optional/Union narrowing via unwrap_types=True.",
+        "file": "imp/max/config/validators.py",
+        "lines": "L23-L110",
+        "sha256_hash": "65d238cfc78ee0ac742dd2b089098b4546e396bc0b5e8ef38025184529001650",
+        "verified": true
+      },
+      {
+        "assertion": "Registrar maintains dual _CONFIG_REGISTRY and _CLASS_REGISTRY maps keyed by config.name with duplicate-overwrite protection unless overwrite=True.",
+        "file": "imp/max/config/registry.py",
+        "lines": "L27-L110",
+        "sha256_hash": "71f7aa3e796ddab065e5c9fb920cd200cec6b476e30bf47f56f4880ef9d1ef44",
+        "verified": true
+      },
+      {
+        "assertion": "Config provides copy_and_override(), list-index path overrides, YAML export(), and class-level lock_attributes()/get_attribute_lock() hooks.",
+        "file": "imp/max/config/base.py",
+        "lines": "L77-L232",
+        "sha256_hash": "f9b828b008e1cbbeb95075f0a7b92cfe2c3aa8a63736970cfede4f6815f55665",
+        "verified": true
+      }
+    ]
+  },
+  "distilled_learning": "Lock base dataclass schemas with attribute-set and type-hint validators (@validators.lock/@validators.validate) paired with duplicate-checked config-to-class Registrar mappings so experiment variants cannot silently diverge on typos."
+}

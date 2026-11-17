@@ -66,7 +66,7 @@ class TestKnowledgeVaultDataIntegrity:
             if src_sum.exists():
                 dst_sum = target_vault / ki_dir.name / "summary.md"
                 assert dst_sum.exists()
-                assert len(dst_sum.read_bytes()) == len(src_sum.read_bytes())
+                assert dst_sum.read_text(encoding="utf-8") == src_sum.read_text(encoding="utf-8")
 
         # Re-sync from fresh target vault
         storage_fresh = SQLiteStorageService(":memory:")
