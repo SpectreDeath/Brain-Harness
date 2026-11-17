@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Any, Protocol, runtime_checkable
 
 from harness.kernel.context import ServiceContext, ServiceKey
+from harness.services.ontology_spider import HAS_ONTOLOGY_SPIDER, OntologySpiderKernelService
 
 from .briefs import generate_audit_visual_briefs
 from .collector import DeepAuditCollector
@@ -43,12 +44,25 @@ class DefaultDeepRepoAuditorService(DeepRepoAuditorService):
     def __init__(self, collector: DeepAuditCollector | None = None) -> None:
         self._collector = collector or DeepAuditCollector()
 
-    def audit_repo(self, repo_path: str | Path) -> DeepAuditReport:
-        """Resolve project root, score 5D compute complexity, and evaluate all 4 axes."""
+    def audit_repo(self, repo_path: str | Path, *, include_ontology: bool = True) -> DeepAuditReport:
+        """Resolve project root, score 5D compute complexity, evaluate 4 axes, and run Ontology-Spider analysis."""
         root = Path(repo_path).resolve()
         if not root.is_dir():
             raise FileNotFoundError(f"Repository path does not exist or is not a directory: {root}")
         resolved_root, topology, compute, axes = self._collector.collect(root)
+        ontology_data: dict[str, Any] | None = None
+        if include_ontology and HAS_ONTOLOGY_SPIDER:
+            try:
+                vault_candidate = Path.cwd() / ".harness" / "knowledge"
+                v_dir = vault_candidate if vault_candidate.is_dir() else None
+                ontology_data = OntologySpiderKernelService().analyze_repository(
+                    resolved_root,
+                    vault_dir=v_dir,
+                    max_depth=3,
+                    max_files_per_unit=60,
+                ).to_dict()
+            except Exception:
+                ontology_data = None
         return DeepAuditReport(
             repo_root=str(root),
             resolved_root=str(resolved_root),
@@ -56,6 +70,7 @@ class DefaultDeepRepoAuditorService(DeepRepoAuditorService):
             compute=compute,
             topology=topology,
             axes=axes,
+            ontology_analysis=ontology_data,
         )
 
     def generate_briefs(

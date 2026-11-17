@@ -39,6 +39,8 @@ class AttributeEntropyRank:
     coverage: float
     distinct_values: int
     laya_score: float
+    classification_score: float = 0.0
+    is_identifier_like: bool = False
 
     def __post_init__(self) -> None:
         if (
@@ -46,6 +48,7 @@ class AttributeEntropyRank:
             or not (0.0 <= self.coverage <= 1.0)
             or self.distinct_values < 0
             or self.laya_score < 0.0
+            or self.classification_score < 0.0
         ):
             raise ValueError("AttributeEntropyRank metrics out of valid range")
 
@@ -85,12 +88,71 @@ class EpistemicVaultAuditReport:
     top_discriminating_attributes: tuple[AttributeEntropyRank, ...]
     gruber_coherence: float
     status: str
+    verified_entities_count: int = 0
+    unverified_entities_count: int = 0
+    isnad_verification_rate: float = 1.0
+    epistemic_status: str = "verified"
 
     def __post_init__(self) -> None:
-        if self.entities_count < 0 or self.assertions_count < 0:
-            raise ValueError("EpistemicVaultAuditReport counts must be non-negative")
+        if (
+            self.entities_count < 0
+            or self.assertions_count < 0
+            or self.verified_entities_count < 0
+            or self.unverified_entities_count < 0
+            or not (0.0 <= self.isnad_verification_rate <= 1.0)
+        ):
+            raise ValueError("EpistemicVaultAuditReport counts/rates out of bounds")
         if self.status not in ("verified", "violations_detected"):
             raise ValueError("EpistemicVaultAuditReport.status must be 'verified' or 'violations_detected'")
+        if self.epistemic_status not in ("verified", "partial_unverified", "violations_detected"):
+            raise ValueError("EpistemicVaultAuditReport.epistemic_status invalid")
+
+
+@dataclass(slots=True, frozen=True)
+class RepoOntologyAnalysisReport:
+    """Slotted immutable ontology analysis report over a code or research repository."""
+
+    repo_root: str
+    resolved_root: str
+    entities_count: int
+    assertions_count: int
+    projects_count: int
+    cycle_violations: tuple[dict[str, Any], ...]
+    dependency_hubs: tuple[tuple[str, int], ...]
+    top_discriminating_attributes: tuple[AttributeEntropyRank, ...]
+    unlearned_tested_projects: tuple[str, ...]
+    gruber_scorecard: dict[str, Any]
+
+    def __post_init__(self) -> None:
+        if not self.repo_root.strip() or not self.resolved_root.strip():
+            raise ValueError("RepoOntologyAnalysisReport requires non-empty repo paths")
+        if self.entities_count < 0 or self.assertions_count < 0 or self.projects_count < 0:
+            raise ValueError("RepoOntologyAnalysisReport counts must be non-negative")
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "repo_root": self.repo_root,
+            "resolved_root": self.resolved_root,
+            "entities_count": self.entities_count,
+            "assertions_count": self.assertions_count,
+            "projects_count": self.projects_count,
+            "cycle_violations": list(self.cycle_violations),
+            "dependency_hubs": [[h, c] for h, c in self.dependency_hubs],
+            "top_discriminating_attributes": [
+                {
+                    "attribute": r.attribute,
+                    "entropy_bits": r.entropy_bits,
+                    "coverage": r.coverage,
+                    "distinct_values": r.distinct_values,
+                    "laya_score": r.laya_score,
+                    "classification_score": r.classification_score,
+                    "is_identifier_like": r.is_identifier_like,
+                }
+                for r in self.top_discriminating_attributes
+            ],
+            "unlearned_tested_projects": list(self.unlearned_tested_projects),
+            "gruber_scorecard": dict(self.gruber_scorecard),
+        }
 
 
 @runtime_checkable
@@ -134,6 +196,14 @@ class OntologySpiderProtocol(Protocol):
     def audit_vault_epistemics(
         self, vault_source: Union[str, Path, dict[str, Any]], *, as_of: str | None = None, min_confidence: float = 0.0
     ) -> EpistemicVaultAuditReport: ...
+    def analyze_repository(
+        self,
+        repo_path: Union[str, Path],
+        *,
+        vault_dir: Union[str, Path] | None = None,
+        max_depth: int = 4,
+        max_files_per_unit: int | None = 120,
+    ) -> RepoOntologyAnalysisReport: ...
 
 
 ONTOLOGY_SPIDER_SERVICE_KEY: ServiceKey[OntologySpiderProtocol] = ServiceKey("memory.ontology_spider_service")
@@ -155,6 +225,8 @@ def _to_entropy_ranks(raw_ranks: Sequence[dict[str, Any]]) -> tuple[AttributeEnt
             coverage=float(item["coverage"]),
             distinct_values=int(item["distinct_values"]),
             laya_score=float(item["laya_score"]),
+            classification_score=float(item.get("classification_score", item["laya_score"])),
+            is_identifier_like=bool(item.get("is_identifier_like", False)),
         )
         for item in raw_ranks
     )
@@ -259,11 +331,24 @@ class OntologySpiderKernelService(OntologySpiderProtocol):
     ) -> EpistemicVaultAuditReport:
         model = self.load_vault(vault_source, as_of=as_of, min_confidence=min_confidence)
         violations = tuple(validate_model(model))
+        verified_ids = [
+            eid for eid, ent in model.entities.items() if ent.attributes.get("isnad_verified") is True
+        ]
         unverified = tuple(
             sorted(eid for eid, ent in model.entities.items() if ent.attributes.get("isnad_verified") is False)
         )
+        verified_count = len(verified_ids)
+        unverified_count = len(unverified)
+        denom = verified_count + unverified_count
+        ver_rate = round(verified_count / denom, 4) if denom > 0 else 1.0
         ranked = _to_entropy_ranks(rank_discriminating_attributes(model)[:5])
         coherence = 1.0 if not violations else round(max(0.0, 1.0 - 0.25 * len(violations)), 4)
+        if violations:
+            ep_status = "violations_detected"
+        elif unverified:
+            ep_status = "partial_unverified"
+        else:
+            ep_status = "verified"
         return EpistemicVaultAuditReport(
             vault_uri=model.uri,
             entities_count=len(model.entities),
@@ -273,4 +358,76 @@ class OntologySpiderKernelService(OntologySpiderProtocol):
             top_discriminating_attributes=ranked,
             gruber_coherence=coherence,
             status="violations_detected" if violations else "verified",
+            verified_entities_count=verified_count,
+            unverified_entities_count=unverified_count,
+            isnad_verification_rate=ver_rate,
+            epistemic_status=ep_status,
+        )
+
+    def analyze_repository(
+        self,
+        repo_path: Union[str, Path],
+        *,
+        vault_dir: Union[str, Path] | None = None,
+        max_depth: int = 4,
+        max_files_per_unit: int | None = 120,
+    ) -> RepoOntologyAnalysisReport:
+        """Build a formal OntologyModel from a repository and extract cycles, hubs, entropy, and unlearned gaps."""
+        _require_engine()
+        from ontology_spider.engine import Session
+        from ontology_spider.reasoning.python_backend import PythonReasoner
+
+        RepoOntologyModelSource = importlib.import_module(
+            "plugins.memory_and_epistemics.ontology_spider.repo_adapter"
+        ).RepoOntologyModelSource
+
+        source = RepoOntologyModelSource(
+            repo_path,
+            vault_dir=vault_dir,
+            max_depth=max_depth,
+            max_files_per_unit=max_files_per_unit,
+        )
+        model = source.load()
+        violations = validate_model(model)
+        cycle_violations = tuple(v for v in violations if v.get("check_type") == "cycle_violation")
+
+        hub_counts: dict[str, int] = {}
+        for asrt in model.query(predicate="depends_on_project"):
+            target = asrt.relation.object
+            hub_counts[target] = hub_counts.get(target, 0) + 1
+        hubs = tuple(sorted(hub_counts.items(), key=lambda kv: (-kv[1], kv[0]))[:20])
+
+        project_ids = [
+            eid for eid, ent in model.entities.items() if "raw_name" in ent.attributes
+        ]
+        ranked = _to_entropy_ranks(rank_discriminating_attributes(model, project_ids)[:8])
+
+        sess = Session(model=model, reasoner=PythonReasoner())
+        unlearned_res = sess.execute(
+            "query recommend research_project [has_tests=true, harness_learned=false]"
+        )[-1]
+        unlearned_tested = tuple(
+            sorted(str(a["value"]) for a in unlearned_res.answers)
+        )
+
+        scorecard = evaluate_competency_questions(
+            model,
+            [
+                "query recommend research_project",
+                "query count recommend research_project [has_tests=true]",
+            ],
+        )
+        compact_scorecard = {k: v for k, v in scorecard.items() if k != "question_results"}
+
+        return RepoOntologyAnalysisReport(
+            repo_root=str(source.repo_path),
+            resolved_root=str(source.resolved_root),
+            entities_count=len(model.entities),
+            assertions_count=len(model.assertions),
+            projects_count=len(project_ids),
+            cycle_violations=cycle_violations,
+            dependency_hubs=hubs,
+            top_discriminating_attributes=ranked,
+            unlearned_tested_projects=unlearned_tested,
+            gruber_scorecard=compact_scorecard,
         )

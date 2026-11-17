@@ -149,4 +149,21 @@ def audit_vault_epistemics(
     )
 
 
+def analyze_repo_ontology(
+    repo_path: Union[str, Path],
+    *,
+    vault_path: Union[str, Path] | None = ".harness/knowledge",
+    max_depth: int = 4,
+    max_files_per_unit: int | None = 120,
+) -> dict[str, Any]:
+    """Extract repository ontology and report cycles, dependency hubs, entropy, and unlearned targets."""
+    v_dir = Path(vault_path) if vault_path and Path(vault_path).exists() else None
+    return OntologySpiderService().analyze_repository(
+        repo_path,
+        vault_dir=v_dir,
+        max_depth=max_depth,
+        max_files_per_unit=max_files_per_unit,
+    ).to_dict()
+
+
 plugin = OntologySpiderPlugin()

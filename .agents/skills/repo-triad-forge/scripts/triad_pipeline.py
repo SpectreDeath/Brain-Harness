@@ -31,6 +31,8 @@ class RepoInspectionResult:
     composite_complexity: float
     total_files: int
     blast_radius_roots: tuple[str, ...] = field(default_factory=tuple)
+    resolved_root: str = ""
+    ontology_summary: dict[str, Any] = field(default_factory=dict)
 
     def __post_init__(self) -> None:
         if not self.repo_path or not self.repo_path.strip():
@@ -72,34 +74,57 @@ class RepoTriadPipelineEngine:
     """Core domain engine for the repository triad pipeline."""
 
     @staticmethod
+    def _resolve_nested_root(target: Path) -> Path:
+        current = target
+        for _ in range(3):
+            if any((current / m).is_file() for m in ("pyproject.toml", "setup.py", "package.json", "Cargo.toml", "go.mod", "README.md")):
+                return current
+            subdirs = [
+                d
+                for d in sorted(current.iterdir(), key=lambda p: p.name)
+                if d.is_dir()
+                and not d.name.startswith(".")
+                and d.name not in ("node_modules", "__pycache__", ".venv", "venv", "dist", "build", "target")
+            ]
+            if len(subdirs) != 1:
+                return current
+            current = subdirs[0]
+        return current
+
+    @staticmethod
     def inspect_repository(repo_path: str | Path) -> RepoInspectionResult:
-        """Inspect repository structure, language manifests, and evaluate 5D compute complexity."""
+        """Inspect repository structure, language manifests, Ontology-Spider graph, and 5D compute complexity."""
         target = Path(repo_path).resolve()
         if not target.exists() or not target.is_dir():
             raise FileNotFoundError(f"Repository directory does not exist: {target}")
 
         repo_name = target.name
-        has_git = (target / ".git").exists()
+        resolved_target = RepoTriadPipelineEngine._resolve_nested_root(target)
+        has_git = (target / ".git").exists() or (resolved_target / ".git").exists()
 
         languages: set[str] = set()
         packages: list[str] = []
         blast_roots: list[str] = []
         total_files = 0
+        root_depth = len(resolved_target.parts)
 
-        # Scan for manifests
-        for root, dirs, files in os.walk(target):
+        # Bounded scan for manifests and blast-radius roots (Rule 52)
+        for root, dirs, files in os.walk(resolved_target):
+            cur_depth = len(Path(root).parts) - root_depth
             # Skip noise, vendored, and state directories
             dirs[:] = [
-                d for d in dirs
-                if d not in (
+                d for d in sorted(dirs)
+                if cur_depth < 4
+                and d not in (
                     ".git", "node_modules", ".venv", "venv", "__pycache__",
+                    ".mypy_cache", ".ruff_cache", ".pytest_cache", ".gemini",
                     "dist", "build", ".harness", ".system_generated", "test_ingested_plugins",
-                    "3rdparty", "third_party", "cutlass", "vendor"
+                    "external", "3rdparty", "third_party", "cutlass", "vendor"
                 )
             ]
             total_files += len(files)
 
-            rel_root = Path(root).relative_to(target)
+            rel_root = Path(root).relative_to(resolved_target)
 
             if "package.json" in files:
                 languages.add("TypeScript/JavaScript")
@@ -107,6 +132,8 @@ class RepoTriadPipelineEngine:
                     packages.append(str(rel_root))
             if "pyproject.toml" in files or "setup.py" in files or "requirements.txt" in files:
                 languages.add("Python")
+                if str(rel_root) != "." and len(rel_root.parts) == 1:
+                    packages.append(str(rel_root))
             if "Cargo.toml" in files:
                 languages.add("Rust")
             if "go.mod" in files:
@@ -126,7 +153,7 @@ class RepoTriadPipelineEngine:
         has_async = False
         for br in blast_roots[:10]:
             try:
-                candidate_path = target / br
+                candidate_path = resolved_target / br
                 if candidate_path.is_file() and candidate_path.stat().st_size < 100_000:
                     text_sample = candidate_path.read_text(encoding="utf-8", errors="ignore")
                     if any(marker in text_sample for marker in ("async def ", "Promise<", "async ", "go func", "tokio::", "__global__", "__device__", "cudaStream", "threadIdx", "cluster")):
@@ -145,16 +172,38 @@ class RepoTriadPipelineEngine:
         composite = (span + depth + concurrency + rigor + heterogeneity) / 5.0
         tier = "High" if composite >= 0.70 else "Medium"
 
+        ontology_summary: dict[str, Any] = {}
+        try:
+            src_root = Path(__file__).resolve().parents[4] / "src"
+            repo_root_dir = Path(__file__).resolve().parents[4]
+            for cand in (str(src_root), str(repo_root_dir)):
+                if cand not in sys.path:
+                    sys.path.insert(0, cand)
+            from harness.services.ontology_spider import HAS_ONTOLOGY_SPIDER, OntologySpiderKernelService  # noqa: E402
+
+            if HAS_ONTOLOGY_SPIDER:
+                vault_dir = repo_root_dir / ".harness" / "knowledge"
+                ontology_summary = OntologySpiderKernelService().analyze_repository(
+                    resolved_target,
+                    vault_dir=vault_dir if vault_dir.is_dir() else None,
+                    max_depth=3,
+                    max_files_per_unit=60,
+                ).to_dict()
+        except Exception:
+            ontology_summary = {}
+
         return RepoInspectionResult(
             repo_path=str(target),
             repo_name=repo_name,
             languages=tuple(sorted(languages)),
-            packages=tuple(sorted(packages)),
+            packages=tuple(sorted(set(packages))),
             has_git=has_git,
             compute_tier=tier,
             composite_complexity=round(composite, 2),
             total_files=total_files,
             blast_radius_roots=tuple(sorted(set(blast_roots))[:8]),
+            resolved_root=str(resolved_target),
+            ontology_summary=ontology_summary,
         )
 
     @staticmethod
@@ -166,6 +215,10 @@ class RepoTriadPipelineEngine:
         target_dir = output_dir or Path(os.environ.get("TEMP", "/tmp"))
         target_dir.mkdir(parents=True, exist_ok=True)
 
+        onto = inspection.ontology_summary or {}
+        onto_projects = onto.get("projects_count", len(inspection.packages) or 1)
+        onto_cycles = len(onto.get("cycle_violations") or [])
+        onto_unlearned = len(onto.get("unlearned_tested_projects") or [])
         brief_configs = [
             (
                 "compute-assessor",
@@ -184,10 +237,10 @@ class RepoTriadPipelineEngine:
                 "data-topology-review",
                 "Causal DAG & Data Topology Map",
                 f"""graph TD
-    Ingest["Repository Ingestion ({inspection.repo_name})"] --> Parse["AST & File Scanner"]
-    Parse --> Graph["Causal DAG Extraction"]
+    Ingest["Repository Ingestion ({inspection.repo_name})"] --> Parse["AST & File Scanner ({onto_projects} units)"]
+    Parse --> Graph["Ontology-Spider Graph (Cycles: {onto_cycles})"]
     Graph --> Models["Slotted / Frozen Domain Models"]
-    Graph --> Vault["Knowledge Vault Candidates"]
+    Graph --> Vault["Unlearned Tested Targets ({onto_unlearned})"]
     style Ingest fill:#21262d,stroke:#30363d,color:#c9d1d9
     style Graph fill:#1f6feb,stroke:#58a6ff,color:#ffffff
     style Models fill:#238636,stroke:#3fb950,color:#ffffff"""

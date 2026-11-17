@@ -45,6 +45,8 @@ class RepoTriadForgeServiceImpl(RepoTriadForgeService):
             composite_complexity=res.composite_complexity,
             total_files=res.total_files,
             blast_radius_roots=list(res.blast_radius_roots),
+            resolved_root=res.resolved_root or res.repo_path,
+            ontology_summary=dict(res.ontology_summary),
         )
 
     def generate_briefs(

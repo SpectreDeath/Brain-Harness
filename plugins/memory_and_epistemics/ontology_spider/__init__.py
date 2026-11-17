@@ -8,6 +8,7 @@ from __future__ import annotations
 
 from .adapter import HAS_ONTOLOGY_SPIDER, HarnessVaultModelSource
 from .main import OntologySpiderPlugin, plugin
+from .repo_adapter import RepoOntologyModelSource
 from .service import OntologySpiderService
 
 __all__ = [
@@ -15,5 +16,6 @@ __all__ = [
     "HarnessVaultModelSource",
     "OntologySpiderPlugin",
     "OntologySpiderService",
+    "RepoOntologyModelSource",
     "plugin",
 ]

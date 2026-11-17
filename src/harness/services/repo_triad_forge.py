@@ -21,6 +21,8 @@ class RepoInspectionData(BaseModel):
     composite_complexity: float = Field(default=0.8, description="5D composite complexity score 0.0-1.0")
     total_files: int = Field(default=0, description="Total source files discovered")
     blast_radius_roots: list[str] = Field(default_factory=list, description="Core architectural blast-radius files")
+    resolved_root: str = Field(default="", description="Resolved nested repository root path")
+    ontology_summary: dict[str, Any] = Field(default_factory=dict, description="Ontology-Spider structural & gap telemetry")
 
 
 class KiCandidateData(BaseModel):

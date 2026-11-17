@@ -1,0 +1,104 @@
+{
+  "id": "ki_google_research_cisc_confidence_voting",
+  "title": "Google Research CISC: Confidence-Informed Self-Consistency & Within-Question Discrimination (WQD)",
+  "category": "agent_orchestration",
+  "schema_version": "1.0.0",
+  "source_target": "https://github.com/google-research/google-research",
+  "detected_format": "git_repository",
+  "created_at": "2026-11-17T07:32:00Z",
+  "author": "repo-triad-forge",
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "tags": [
+    "cisc",
+    "google_research",
+    "google-research",
+    "self_consistency",
+    "confidence_scoring",
+    "llm_reasoning",
+    "wqd",
+    "weighted_voting",
+    "arxiv_2502_06233"
+  ],
+  "anchors": {
+    "repo": "https://github.com/google-research/google-research",
+    "subproject": "cisc",
+    "arxiv": "https://arxiv.org/abs/2502.06233"
+  },
+  "edges": [
+    {
+      "type": "distilled_from",
+      "target": "https://github.com/google-research/google-research",
+      "target_kind": "external_repo",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Subproject cisc in snapshot google-research-master (archive snapshot, non-git); arXiv:2502.06233"
+    },
+    {
+      "type": "same_domain",
+      "target": "ki_njoku_uncertainty_aware_systems",
+      "target_kind": "knowledge_item",
+      "derived": true,
+      "confidence": 0.9,
+      "description": "Complements 3-layer uncertainty interception with trace-level confidence extraction and Softmax weighted majority voting"
+    },
+    {
+      "type": "same_domain",
+      "target": "ki-trustgraph-laya-onnx-entropy-decision-scoring",
+      "target_kind": "knowledge_item",
+      "derived": true,
+      "confidence": 0.88,
+      "description": "Shares temperature-scaled confidence calibration prior to discrete selection"
+    },
+    {
+      "type": "related_to",
+      "target": "ki_20261110_google_research_gnn_and_scientific_ml",
+      "target_kind": "knowledge_item",
+      "derived": false,
+      "confidence": 0.95,
+      "description": "Sibling subproject distillation from https://github.com/google-research/google-research"
+    },
+    {
+      "type": "applicable_to",
+      "target": "src/harness/services/uncertainty_guard.py",
+      "target_kind": "module",
+      "derived": true,
+      "confidence": 0.85,
+      "description": "Candidate confidence-weighted aggregation pattern for multi-trace verification and consensus"
+    }
+  ],
+  "isnad": {
+    "status": "VERIFIED",
+    "source_repo": "https://github.com/google-research/google-research",
+    "snapshot": "google-research-master (archive snapshot, non-git)",
+    "subproject": "cisc",
+    "verified_at": "2026-11-17T07:32:00Z",
+    "claims": [
+      {
+        "assertion": "CISC extracts per-trace confidence via ConfidenceExtractionConfig (temperature=0.0, num_tokens=10, verbal_eos_pattern=')') and ConfidenceExtractionType variants (NONE, BINARY, BINARY_FT, BINARY_FT01, BINARY_MP, HUNDRED), bundled in AggregatedConfidenceExtractionConfig across verbal_confidence, confidence_likelihoods, and run_sequence_probability.",
+        "file": "cisc/src/confidence_extraction.py",
+        "lines": "L24-L106",
+        "sha256_hash": "83c2efec11bd43a37072509fde0073c85453bc21c872cf6ef9b4e133e670f8f4",
+        "verified": true
+      },
+      {
+        "assertion": "majority_with_conf() implements confidence-weighted self-consistency voting supporting NormalizationType (NONE, LINEAR, SOFTMAX), frozen AggregatorConfig validation across four confidence column families, zero-confidence retention while filtering NaN/empty entries, tie-break-only mode, and normalized chosen-answer confidence output.",
+        "file": "cisc/src/post_processing/aggregators.py",
+        "lines": "L32-L188",
+        "sha256_hash": "785708c2801aa04fd83abb7bb29e2853cb8c9a013890a1fb6f407f0796f827dd",
+        "verified": true
+      },
+      {
+        "assertion": "calculate_metrics_at_position() produces frozen ResultMetrics quantifying comparable_baseline_traces_needed vs standard SC (>40% path reduction across 9 models and 4 datasets per cisc/README.md), paired with calibration_util.py (compute_ece, compute_brier, TemperatureScaling) and WQD discrimination analysis over ECE.",
+        "file": "cisc/src/post_processing/metrics_calculators.py",
+        "lines": "L26-L83",
+        "sha256_hash": "2ebb5289347aec3cec0b32a26c0d7c2c21b525dd3461542b791e9a0f4545e53c",
+        "verified": true
+      }
+    ]
+  },
+  "distilled_learning": "Replace unweighted self-consistency majority voting with temperature-normalized confidence-weighted voting (CISC majority_with_conf + SOFTMAX/LINEAR normalization) and evaluate selection quality via Within-Question Discrimination (WQD) rather than global calibration (ECE) alone."
+}

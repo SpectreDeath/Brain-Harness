@@ -72,10 +72,21 @@ def _render_topology_body(report: DeepAuditReport) -> str:
     t = report.topology
     mods = "\n".join(f"  Root --> M{idx}[{html.escape(m)}]" for idx, m in enumerate(t.blast_radius_modules, 1))
     mermaid = f"graph TD\n  Root[{html.escape(t.root_manifest)}] --> Pattern[{html.escape(t.topology_pattern)}]\n{mods}"
+    onto_card = ""
+    if report.ontology_analysis:
+        oa = report.ontology_analysis
+        onto_card = (
+            '<div class="card"><h2>Ontology-Spider Structural Summary</h2>'
+            f"<p>Projects: <strong>{oa.get('projects_count', 0)}</strong> | "
+            f"Entities: <strong>{oa.get('entities_count', 0)}</strong> | "
+            f"Assertions: <strong>{oa.get('assertions_count', 0)}</strong> | "
+            f"Cycles: <strong>{len(oa.get('cycle_violations') or [])}</strong> | "
+            f"Unlearned Tested: <strong>{len(oa.get('unlearned_tested_projects') or [])}</strong></p></div>"
+        )
     return (
         '<div class="card"><h2>Structural & Data Topology</h2>'
         f"<p>Pattern: <strong>{html.escape(t.topology_pattern)}</strong> | Files: {t.total_files_scanned} | Tests: {t.test_file_count}</p>"
-        f'<pre class="mermaid">{mermaid}</pre></div>'
+        f'<pre class="mermaid">{mermaid}</pre></div>{onto_card}'
     )
 
 

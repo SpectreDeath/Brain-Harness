@@ -7,6 +7,7 @@ provenance claims, and temporal validity bounds into an ``OntologyModel``.
 
 from __future__ import annotations
 
+import hashlib
 import json
 import logging
 from pathlib import Path
@@ -42,25 +43,71 @@ def _sanitize_identifier(raw: Any) -> str:
     return cleaned or "unknown"
 
 
+def _alloc_unique_identifier(
+    raw_id: Any,
+    raw_to_safe: dict[str, str],
+    safe_to_raw: dict[str, str],
+) -> str:
+    """Allocate a collision-free .dialog-safe identifier preserving raw_id mappings."""
+    key = str(raw_id)
+    if key in raw_to_safe:
+        return raw_to_safe[key]
+    base = _sanitize_identifier(key)
+    candidate = base
+    if candidate in safe_to_raw and safe_to_raw[candidate] != key:
+        digest = hashlib.sha1(key.encode("utf-8")).hexdigest()[:6]
+        candidate = f"{base}_{digest}"
+        counter = 2
+        while candidate in safe_to_raw and safe_to_raw[candidate] != key:
+            candidate = f"{base}_{digest}_{counter}"
+            counter += 1
+    raw_to_safe[key] = candidate
+    safe_to_raw[candidate] = key
+    return candidate
+
+
+def _claim_is_verified(entry: dict[str, Any]) -> bool:
+    """Return True when a claim or envelope carries verifiable isnad evidence."""
+    if bool(
+        entry.get("verified_at")
+        or entry.get("sha256")
+        or entry.get("artifact_sha256")
+        or entry.get("verified") is True
+        or str(entry.get("status", "")).lower() == "verified"
+    ):
+        return True
+    lineage = entry.get("lineage")
+    if isinstance(lineage, list):
+        for node in lineage:
+            if isinstance(node, dict) and (
+                node.get("verified") is True
+                or bool(node.get("sha256"))
+                or (node.get("sha256_hash") not in (None, "", "N/A"))
+            ):
+                return True
+    return False
+
+
 def _summarize_isnad(raw_isnad: Any) -> dict[str, Any]:
-    """Normalize dict or list isnad claims into summary verification fields."""
+    """Normalize dict, nested claims dict, or list isnad claims into verification summary fields."""
+    top_verified = False
     if isinstance(raw_isnad, dict) and raw_isnad:
-        claims = [raw_isnad]
+        top_verified = _claim_is_verified({k: v for k, v in raw_isnad.items() if k != "claims"})
+        nested_claims = raw_isnad.get("claims")
+        if isinstance(nested_claims, list):
+            claims = [entry for entry in nested_claims if isinstance(entry, dict)]
+        else:
+            claims = [raw_isnad]
     elif isinstance(raw_isnad, list):
         claims = [entry for entry in raw_isnad if isinstance(entry, dict)]
     else:
         claims = []
 
-    verified_count = sum(
-        1
-        for claim in claims
-        if bool(
-            claim.get("verified_at")
-            or claim.get("sha256")
-            or claim.get("verified") is True
-            or str(claim.get("status", "")).lower() == "verified"
-        )
-    )
+    verified_count = sum(1 for claim in claims if _claim_is_verified(claim))
+    if verified_count == 0 and top_verified:
+        verified_count = max(1, len(claims))
+    total_count = len(claims) if claims else (1 if top_verified else 0)
+
     conf_vals: list[float] = []
     for claim in claims:
         raw_conf = claim.get("confidence")
@@ -71,7 +118,7 @@ def _summarize_isnad(raw_isnad: Any) -> dict[str, Any]:
                 pass
     min_conf = min(conf_vals) if conf_vals else (1.0 if verified_count > 0 else 0.0)
     return {
-        "isnad_count": len(claims),
+        "isnad_count": total_count,
         "verified_isnad_count": verified_count,
         "isnad_verified": verified_count > 0,
         "min_isnad_confidence": round(min_conf, 4),
@@ -82,10 +129,13 @@ def _extract_item_and_edges(
     data: dict[str, Any],
     fallback_id: str,
     min_confidence: float,
+    *,
+    resolved_id: str | None = None,
+    raw_to_safe: dict[str, str] | None = None,
 ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     """Extract normalized item dictionary and edge records from one KI JSON payload."""
     raw_id = str(data.get("id") or fallback_id)
-    item_id = _sanitize_identifier(raw_id)
+    item_id = resolved_id or _sanitize_identifier(raw_id)
     raw_meta = data.get("metadata")
     meta = dict(raw_meta) if isinstance(raw_meta, dict) else dict(data)
     meta.update(_summarize_isnad(data.get("isnad")))
@@ -100,6 +150,11 @@ def _extract_item_and_edges(
 
     item_type = _sanitize_identifier(data.get("type") or data.get("category") or "concept")
     item_record = {"id": item_id, "type": item_type, "metadata": meta}
+
+    def _target_id(raw_dst: str) -> str:
+        if raw_to_safe and raw_dst in raw_to_safe:
+            return raw_to_safe[raw_dst]
+        return _sanitize_identifier(raw_dst)
 
     extracted_edges: list[dict[str, Any]] = []
     for raw_edge in data.get("edges") or []:
@@ -119,7 +174,7 @@ def _extract_item_and_edges(
             {
                 "from": item_id,
                 "rel": rel,
-                "to": _sanitize_identifier(raw_dst),
+                "to": _target_id(raw_dst),
                 "target_kind": str(raw_edge.get("target_kind") or ""),
                 "valid_from": raw_edge.get("valid_from"),
                 "valid_until": raw_edge.get("valid_until"),
@@ -141,7 +196,7 @@ def _extract_item_and_edges(
                 {
                     "from": item_id,
                     "rel": "depends_on",
-                    "to": _sanitize_identifier(dep_target),
+                    "to": _target_id(str(dep_target)),
                     "metadata": {"confidence": 1.0, "raw_target": str(dep_target)},
                 }
             )
@@ -184,9 +239,8 @@ class HarnessVaultModelSource(ModelSource):
         return cast(dict[str, Any], json.loads(str(self.source)))
 
     def _scan_vault_directory(self, dir_path: Path) -> dict[str, Any]:
-        """Scan dual-file KI subdirectories or standalone JSON files with noise pruning."""
-        items: list[dict[str, Any]] = []
-        edges: list[dict[str, Any]] = []
+        """Scan dual-file KI subdirectories or standalone JSON files with collision-safe IDs."""
+        loaded_entries: list[tuple[dict[str, Any], str]] = []
 
         for child in sorted(dir_path.iterdir(), key=lambda entry: entry.name):
             if child.name in _NOISE_DIRS or child.name.startswith("."):
@@ -212,7 +266,31 @@ class HarnessVaultModelSource(ModelSource):
                 continue
             if "items" in data:
                 return data
-            item_rec, item_edges = _extract_item_and_edges(data, fallback_id, self.min_confidence)
+            loaded_entries.append((data, fallback_id))
+
+        raw_to_safe: dict[str, str] = {}
+        safe_to_raw: dict[str, str] = {}
+        # Reserve exact clean identifiers before disambiguating colliding raw names
+        for data, fallback_id in loaded_entries:
+            raw_id = str(data.get("id") or fallback_id)
+            if _sanitize_identifier(raw_id) == raw_id:
+                _alloc_unique_identifier(raw_id, raw_to_safe, safe_to_raw)
+        for data, fallback_id in loaded_entries:
+            raw_id = str(data.get("id") or fallback_id)
+            _alloc_unique_identifier(raw_id, raw_to_safe, safe_to_raw)
+
+        items: list[dict[str, Any]] = []
+        edges: list[dict[str, Any]] = []
+        for data, fallback_id in loaded_entries:
+            raw_id = str(data.get("id") or fallback_id)
+            resolved_id = raw_to_safe[raw_id]
+            item_rec, item_edges = _extract_item_and_edges(
+                data,
+                fallback_id,
+                self.min_confidence,
+                resolved_id=resolved_id,
+                raw_to_safe=raw_to_safe,
+            )
             items.append(item_rec)
             edges.extend(item_edges)
 

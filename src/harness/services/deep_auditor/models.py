@@ -139,7 +139,7 @@ class VisualBriefPaths:
 
 @dataclass(slots=True, frozen=True)
 class DeepAuditReport:
-    """Complete 4-axis audit report with compute and topology assessments."""
+    """Complete 4-axis audit report with compute, topology, and optional ontology analysis."""
 
     repo_root: str
     resolved_root: str
@@ -147,6 +147,7 @@ class DeepAuditReport:
     compute: ComputeDimensionVector
     topology: TopologyNodeSummary
     axes: tuple[AxisFinding, ...]
+    ontology_analysis: dict[str, Any] | None = None
 
     def __post_init__(self) -> None:
         if len(self.axes) != 4:
@@ -160,6 +161,7 @@ class DeepAuditReport:
             "compute": self.compute.to_dict(),
             "topology": self.topology.to_dict(),
             "axes": [axis.to_dict() for axis in self.axes],
+            "ontology_analysis": self.ontology_analysis,
         }
 
 

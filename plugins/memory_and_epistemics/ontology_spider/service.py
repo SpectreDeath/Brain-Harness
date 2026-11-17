@@ -12,6 +12,7 @@ from harness.services.ontology_spider import (
     CompetencyScorecardReport,
     EpistemicVaultAuditReport,
     OntologySpiderKernelService,
+    RepoOntologyAnalysisReport,
 )
 
 __all__ = ["HAS_ONTOLOGY_SPIDER", "OntologySpiderService"]
@@ -103,3 +104,19 @@ class OntologySpiderService:
     ) -> EpistemicVaultAuditReport:
         """Run combined structural, isnad verification, entropy, and Gruber coherence audit."""
         return self._kernel.audit_vault_epistemics(vault_source, as_of=as_of, min_confidence=min_confidence)
+
+    def analyze_repository(
+        self,
+        repo_path: Union[str, Path],
+        *,
+        vault_dir: Union[str, Path] | None = None,
+        max_depth: int = 4,
+        max_files_per_unit: int | None = 120,
+    ) -> RepoOntologyAnalysisReport:
+        """Extract a formal repository ontology and surface cycles, hubs, entropy, and unlearned targets."""
+        return self._kernel.analyze_repository(
+            repo_path,
+            vault_dir=vault_dir,
+            max_depth=max_depth,
+            max_files_per_unit=max_files_per_unit,
+        )

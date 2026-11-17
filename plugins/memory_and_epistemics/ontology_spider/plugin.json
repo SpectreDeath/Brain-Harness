@@ -135,6 +135,24 @@
           "required": false
         }
       ]
+    },
+    {
+      "name": "analyze_repo_ontology",
+      "description": "Extract a formal OntologyModel from a code/research repository and report dependency cycles, hubs, attribute entropy, and unlearned tested projects",
+      "parameters": [
+        {
+          "name": "repo_path",
+          "type": "string",
+          "description": "Path to repository directory",
+          "required": true
+        },
+        {
+          "name": "vault_path",
+          "type": "string",
+          "description": "Optional Knowledge Vault path for gap matching",
+          "required": false
+        }
+      ]
     }
   ]
 }
