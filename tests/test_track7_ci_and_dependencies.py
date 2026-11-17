@@ -7,7 +7,7 @@ import pytest
 
 
 def test_ci_workflow_structure() -> None:
-    """Verifies that CI workflow defines frontend job, Python 3.10 matrix, and resilient distillation."""
+    """Verifies that CI workflow defines frontend job, Python >=3.11 matrix, and resilient distillation."""
     ci_path = Path(".github/workflows/ci.yml")
     assert ci_path.exists(), "ci.yml must exist"
 
@@ -29,9 +29,12 @@ def test_ci_workflow_structure() -> None:
     test_job = jobs["test"]
     matrix = test_job.get("strategy", {}).get("matrix", {})
     includes = matrix.get("include", [])
-    python_versions = {inc.get("python-version") for inc in includes}
-    assert "3.10" in python_versions, "CI matrix must include Python 3.10"
+    python_versions = set(matrix.get("python-version", [])) | {
+        inc.get("python-version") for inc in includes
+    }
+    assert "3.11" in python_versions, "CI matrix must include Python 3.11"
     assert "3.12" in python_versions, "CI matrix must include Python 3.12"
+    assert "3.10" not in python_versions, "CI matrix should not target EOL Python 3.10"
 
     # Distillation continue-on-error verification
     test_steps = test_job.get("steps", [])
