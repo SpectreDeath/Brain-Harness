@@ -1,0 +1,71 @@
+{
+  "id": "ki_google_research_gfsa_automaton_layer",
+  "title": "Google Research GFSA: Learning Graph Structure With Finite-State Automaton Absorption & Richardson Linear Solvers",
+  "category": "data_engineering",
+  "schema_version": "1.0.0",
+  "source_target": "https://github.com/google-research/google-research",
+  "detected_format": "git_repository",
+  "created_at": "2026-11-17T15:13:00Z",
+  "author": "repo-triad-forge",
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "tags": [
+    "gfsa",
+    "google_research",
+    "graph_neural_networks",
+    "finite_state_automaton",
+    "ast_graphs",
+    "jax",
+    "arxiv_2007_04929"
+  ],
+  "anchors": {
+    "repo": "https://github.com/google-research/google-research",
+    "subproject": "gfsa",
+    "arxiv": "https://arxiv.org/abs/2007.04929"
+  },
+  "edges": [
+    {
+      "type": "distilled_from",
+      "target": "https://github.com/google-research/google-research",
+      "target_kind": "external_repo",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Subproject gfsa in snapshot google-research-master (archive snapshot, non-git); NeurIPS 2020 / arXiv:2007.04929"
+    },
+    {
+      "type": "related_to",
+      "target": "ki_20261110_google_research_gnn_and_scientific_ml",
+      "target_kind": "knowledge_item",
+      "derived": false,
+      "confidence": 0.92,
+      "description": "Complements GNN / AST static-analysis graph representations in https://github.com/google-research/google-research"
+    }
+  ],
+  "isnad": {
+    "status": "VERIFIED",
+    "source_repo": "https://github.com/google-research/google-research",
+    "snapshot": "google-research-master (archive snapshot, non-git)",
+    "subproject": "gfsa",
+    "verified_at": "2026-11-17T15:13:00Z",
+    "claims": [
+      {
+        "assertion": "automaton_builder.py defines SpecialActions (FINISH, BACKTRACK, FAIL) and immutable hashed route keys InRouteType(node_type, in_edge) / InOutRouteType(node_type, in_edge, out_edge) with sentinel SOURCE_INITIAL to parameterize graph MDP policies over AST schemas.",
+        "file": "gfsa/automaton_builder.py",
+        "lines": "L42-L95",
+        "sha256_hash": "a69088505448a104d8b5d5a5b51d4a6f91f31c9433addff4f14a54228fd6e7e7",
+        "verified": true
+      },
+      {
+        "assertion": "linear_solvers.py solves absorbing Markov chain visit counts (I - P)^{-1} b via fixed-step Richardson iteration inside jax.lax.fori_loop wrapped in jax.lax.custom_linear_solve for implicit reverse-mode differentiation without unrolling forward steps.",
+        "file": "gfsa/linear_solvers.py",
+        "lines": "L27-L78",
+        "sha256_hash": "1f4caa57351c4e48065185c6ab5476504653689eed527867899635d3e488808d",
+        "verified": true
+      }
+    ]
+  },
+  "distilled_learning": "Encode AST and codebase traversal policies using typed (node_type, in_edge, out_edge) finite-state automaton routes and compute stationary/absorbing transition equilibrium via implicit differentiation (custom_linear_solve) over Richardson iterations."
+}

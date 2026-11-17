@@ -1,0 +1,68 @@
+{
+  "id": "ki_google_research_model_pruning_schedules",
+  "title": "Google Research Model Pruning: Polynomial Sparsity Schedules, Block Sparsity & Graph Compression Coupling",
+  "category": "software_engineering",
+  "schema_version": "1.0.0",
+  "source_target": "https://github.com/google-research/google-research",
+  "detected_format": "git_repository",
+  "created_at": "2026-11-17T15:13:00Z",
+  "author": "repo-triad-forge",
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "tags": [
+    "model_pruning",
+    "google_research",
+    "sparsity",
+    "block_pruning",
+    "graph_compression",
+    "dependency_cycle"
+  ],
+  "anchors": {
+    "repo": "https://github.com/google-research/google-research",
+    "subproject": "model_pruning"
+  },
+  "edges": [
+    {
+      "type": "distilled_from",
+      "target": "https://github.com/google-research/google-research",
+      "target_kind": "external_repo",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Subproject model_pruning in snapshot google-research-master (archive snapshot, non-git)"
+    },
+    {
+      "type": "depends_on_project",
+      "target": "graph_compression",
+      "target_kind": "external_subproject",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Observed AST cross-project import from graph_compression.compression_lib import compression_op_utils in model_pruning/python/pruning.py#L93 (forms mutual cycle graph_compression <-> model_pruning)"
+    }
+  ],
+  "isnad": {
+    "status": "VERIFIED",
+    "source_repo": "https://github.com/google-research/google-research",
+    "snapshot": "google-research-master (archive snapshot, non-git)",
+    "subproject": "model_pruning",
+    "verified_at": "2026-11-17T15:13:00Z",
+    "claims": [
+      {
+        "assertion": "model_pruning schedules gradual cubic weight and block sparsity s_t = s_f + (s_i - s_f)(1 - (t - t_0)/(n*dt))^exponent (default exponent=3.0) with configurable block_height x block_width pooling (AVG or MAX) and gradient-based pruning options.",
+        "file": "model_pruning/README.md",
+        "lines": "L38-L75",
+        "verified": true
+      },
+      {
+        "assertion": "model_pruning/python/pruning.py imports graph_compression.compression_lib.compression_op_utils (L93), organizing mask/threshold/masked_weight/old_weight collections for magnitude and group pruning.",
+        "file": "model_pruning/python/pruning.py",
+        "lines": "L90-L109",
+        "sha256_hash": "91c528c2951e903a3100473e758a524a192155faa5e12d174a752db3c8d80f9a",
+        "verified": true
+      }
+    ]
+  },
+  "distilled_learning": "Schedule progressive pruning smoothly with cubic decay curves over fixed update intervals and isolate shared compression utilities into an acyclic base package to avoid bidirectional package import cycles."
+}

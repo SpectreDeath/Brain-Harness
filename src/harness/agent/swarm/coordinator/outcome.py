@@ -28,6 +28,7 @@ async def finalize_swarm_outcome(
     all_success: bool,
     session_mgr: AgentSessionManager | None,
     graph_svc: AgentExecutionGraphService | None,
+    uncertainty_service: Any | None = None,
 ) -> SwarmTaskResult:
     """Synthesize final output, calculate execution critical path, and finalize session."""
     swarm_end_time = time.time()
@@ -41,19 +42,27 @@ async def finalize_swarm_outcome(
         last_node = list(accumulated_results.keys())[-1]
         final_synthesis = str(accumulated_results[last_node])
 
-    # Check if any critic/debater node results contain consensus votes
+    # Check if any critic/debater node results contain binary or CISC choice votes
     consensus_data: dict[str, Any] | None = None
     votes_collected: list[dict[str, Any]] = []
+    choice_votes: list[dict[str, Any]] = []
     for _nid, res in accumulated_results.items():
-        if isinstance(res, dict) and "vote" in res:
-            votes_collected.append(res)
-        elif isinstance(res, list):
-            for item in res:
-                if isinstance(item, dict) and "vote" in item:
-                    votes_collected.append(item)
+        items = res if isinstance(res, list) else [res]
+        for item in items:
+            if not isinstance(item, dict):
+                continue
+            if "vote" in item:
+                votes_collected.append(item)
+            elif "choice" in item:
+                choice_votes.append(item)
 
     if votes_collected:
         consensus_data = ConsensusEngine.tally(votes_collected)
+    elif choice_votes:
+        consensus_data = ConsensusEngine.evaluate_cisc_consensus(
+            choice_votes,
+            uncertainty_service=uncertainty_service,
+        )
 
     task_status = "completed" if all_success else "partial"
 

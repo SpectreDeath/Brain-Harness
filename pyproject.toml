@@ -7,7 +7,7 @@ name = "harness"
 version = "0.1.0"
 description = "Modular agent harness — everything is a plugin"
 authors = [{name = "Harness Authors"}]
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 license = {text = "MIT"}
 dependencies = [
     "pydantic>=2.5.0,<3.0.0",

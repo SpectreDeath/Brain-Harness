@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import collections
+import math
 from typing import Any, Protocol, runtime_checkable
 
 
@@ -134,14 +135,18 @@ class BordaConsensusStrategy:
 
 
 class WeightedMajorityStrategy:
-    """Confidence-weighted majority choice voting strategy."""
+    """Confidence-weighted majority choice voting strategy (with optional CISC normalization)."""
 
     def evaluate(
         self,
         votes: list[dict[str, Any]],
+        normalization: str | None = None,
+        temperature: float = 1.0,
+        only_tie_break: bool = False,
+        uncertainty_service: Any | None = None,
         **kwargs: Any,
     ) -> dict[str, Any]:
-        """Sum confidence-weighted votes for each candidate and select the highest weight."""
+        """Sum confidence-weighted votes, or apply CISC normalization / UncertaintyGuard delegation."""
         if not votes:
             return {
                 "status": "error",
@@ -149,6 +154,15 @@ class WeightedMajorityStrategy:
                 "consensus_reached": False,
                 "decision": "NO_VOTES",
             }
+
+        if uncertainty_service is not None or normalization is not None:
+            return self._evaluate_cisc(
+                votes,
+                normalization=normalization or "softmax",
+                temperature=temperature,
+                only_tie_break=only_tie_break,
+                uncertainty_service=uncertainty_service,
+            )
 
         scores: dict[str, float] = collections.defaultdict(float)
         for v in votes:
@@ -169,7 +183,6 @@ class WeightedMajorityStrategy:
         sorted_choices = sorted(scores.items(), key=lambda x: x[1], reverse=True)
         top_choice, top_weight = sorted_choices[0]
 
-        # Check for tie
         if len(sorted_choices) > 1 and sorted_choices[1][1] == top_weight:
             return {
                 "status": "ok",
@@ -190,6 +203,101 @@ class WeightedMajorityStrategy:
             "consensus_reached": True,
             "decision": top_choice,
             "is_tie": False,
+        }
+
+    def _evaluate_cisc(
+        self,
+        votes: list[dict[str, Any]],
+        *,
+        normalization: str,
+        temperature: float,
+        only_tie_break: bool,
+        uncertainty_service: Any | None,
+    ) -> dict[str, Any]:
+        answers: list[str] = []
+        confs: list[float] = []
+        for v in votes:
+            choice = str(v.get("choice") or v.get("vote") or "").strip()
+            if not choice:
+                continue
+            try:
+                c_val = float(v.get("weight", 1.0)) * float(v.get("confidence", 1.0))
+            except (TypeError, ValueError):
+                continue
+            if not math.isfinite(c_val):
+                continue
+            answers.append(choice)
+            confs.append(c_val)
+
+        if not answers:
+            return {
+                "status": "error",
+                "error": "No valid choices extracted from votes",
+                "consensus_reached": False,
+                "decision": "NO_VOTES",
+            }
+
+        if uncertainty_service is not None and hasattr(
+            uncertainty_service, "aggregate_confidence_votes"
+        ):
+            report = uncertainty_service.aggregate_confidence_votes(
+                answers,
+                confs,
+                normalization=normalization,
+                temperature=temperature,
+                only_tie_break=only_tie_break,
+            )
+            winner = report.chosen_answer
+            return {
+                "status": "ok",
+                "total_votes": len(votes),
+                "valid_trace_count": report.valid_trace_count,
+                "weights": dict(report.answer_weights),
+                "winner": winner,
+                "confidence": report.confidence,
+                "normalization": report.normalization,
+                "consensus_reached": winner is not None,
+                "decision": winner or "NO_CONSENSUS",
+                "is_tie": False,
+                "source": "service.uncertainty_guard",
+            }
+
+        if normalization == "softmax":
+            max_c = max(confs)
+            exps = [math.exp((c - max_c) * temperature) for c in confs]
+            denom = sum(exps) or 1.0
+            norm_weights = [w / denom for w in exps]
+        elif normalization == "linear":
+            min_c = min(confs)
+            norm_weights = [temperature * (c - min_c) + 1.0 for c in confs]
+        else:
+            norm_weights = [max(c, 0.0) for c in confs]
+
+        totals: dict[str, float] = {}
+        counts: collections.Counter[str] = collections.Counter()
+        for ans, w in zip(answers, norm_weights):
+            counts[ans] += 1
+            totals[ans] = totals.get(ans, 0.0) + w
+        total_w = sum(totals.values())
+        if only_tie_break:
+            max_cnt = max(counts.values())
+            tied = [a for a, cnt in counts.items() if cnt == max_cnt]
+            winner = max(tied, key=lambda a: totals[a])
+        else:
+            winner = max(totals, key=lambda a: totals[a])
+        conf_ratio = round(totals[winner] / total_w, 6) if total_w > 0.0 else 0.0
+        return {
+            "status": "ok",
+            "total_votes": len(votes),
+            "valid_trace_count": len(answers),
+            "weights": {k: round(v, 6) for k, v in totals.items()},
+            "winner": winner,
+            "confidence": conf_ratio,
+            "normalization": normalization,
+            "consensus_reached": True,
+            "decision": winner,
+            "is_tie": False,
+            "source": "builtin_cisc",
         }
 
 
@@ -215,9 +323,42 @@ class ConsensusEngine:
         return cls._borda_strategy.evaluate(votes)
 
     @classmethod
-    def evaluate_weighted_majority(cls, votes: list[dict[str, Any]]) -> dict[str, Any]:
+    def evaluate_weighted_majority(
+        cls,
+        votes: list[dict[str, Any]],
+        *,
+        normalization: str | None = None,
+        temperature: float = 1.0,
+        only_tie_break: bool = False,
+        uncertainty_service: Any | None = None,
+    ) -> dict[str, Any]:
         """Evaluate votes using confidence-weighted choice aggregation."""
-        return cls._weighted_strategy.evaluate(votes)
+        return cls._weighted_strategy.evaluate(
+            votes,
+            normalization=normalization,
+            temperature=temperature,
+            only_tie_break=only_tie_break,
+            uncertainty_service=uncertainty_service,
+        )
+
+    @classmethod
+    def evaluate_cisc_consensus(
+        cls,
+        votes: list[dict[str, Any]],
+        *,
+        normalization: str = "softmax",
+        temperature: float = 2.5,
+        only_tie_break: bool = False,
+        uncertainty_service: Any | None = None,
+    ) -> dict[str, Any]:
+        """Evaluate multi-trace choices using CISC normalized confidence voting."""
+        return cls._weighted_strategy.evaluate(
+            votes,
+            normalization=normalization,
+            temperature=temperature,
+            only_tie_break=only_tie_break,
+            uncertainty_service=uncertainty_service,
+        )
 
 
 DefaultConsensusEngine = ConsensusEngine

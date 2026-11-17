@@ -20,6 +20,7 @@ from harness.agent.swarm.models import (
 from harness.events.bus import EventBus
 from harness.events.types import EventType, HarnessEvent
 from harness.kernel.context import ServiceContext, ServiceKey
+from harness.services.uncertainty_guard import UNCERTAINTY_GUARD_SERVICE_KEY
 
 from .decomposition import decompose_objective, decompose_objective_with_skills
 from .history import (
@@ -151,6 +152,7 @@ class SwarmCoordinator:
             result = await finalize_swarm_outcome(
                 actual_id, objective, governor, accumulated, node_execs,
                 wave_metrics, t0, all_ok, session_mgr, graph_svc,
+                uncertainty_service=self.context.optional(UNCERTAINTY_GUARD_SERVICE_KEY),
             )
             evt = EventType.AGENT_TASK_COMPLETED if all_ok else EventType.AGENT_TASK_FAILED
             self._emit(evt, result.to_dict())
