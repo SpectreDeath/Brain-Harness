@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { CommandPalette } from './components/CommandPalette';
 import { Header } from './components/Header';
 import { Sidebar, type ViewType } from './components/Sidebar';
@@ -57,7 +57,7 @@ export function App() {
   };
 
   // Data Loading
-  const loadAll = async () => {
+  const loadAll = useCallback(async () => {
     try {
       const [st, mt, tl, sb, gr] = await Promise.all([
         api.getStatus().catch(() => null),
@@ -75,41 +75,46 @@ export function App() {
     } catch (err) {
       console.error('Error loading data', err);
     }
-  };
+  }, []);
 
-  const loadSessions = async () => {
+  const loadSessions = useCallback(async () => {
     try {
       const res = await api.getSessions();
       setSessions(res.sessions || []);
-    } catch (err) {}
-  };
+    } catch {}
+  }, []);
 
-  const loadSwarmRuns = async () => {
+  const loadSwarmRuns = useCallback(async () => {
     try {
       const res = await api.getSwarmRuns();
       setSwarmRuns(res.runs || []);
-    } catch (err) {}
-  };
+    } catch {}
+  }, []);
 
-  const loadTimeline = async () => {
+  const loadTimeline = useCallback(async () => {
     try {
       const res = await api.getTimeline();
       setEvents(res.events || []);
-    } catch (err) {}
-  };
+    } catch {}
+  }, []);
 
-  // WebSocket Live Broadcast
+  // WebSocket Live Broadcast & Initial Load
   useEffect(() => {
     const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
     const wsUrl = `${protocol}//${window.location.host}/ws/events`;
-    let ws: WebSocket;
+    let ws: WebSocket | undefined;
+    let reconnectTimer: ReturnType<typeof setTimeout> | undefined;
+    let disposed = false;
 
     const connect = () => {
+      if (disposed) return;
       ws = new WebSocket(wsUrl);
       ws.onopen = () => setWsConnected(true);
       ws.onclose = () => {
         setWsConnected(false);
-        setTimeout(connect, 3000);
+        if (!disposed) {
+          reconnectTimer = setTimeout(connect, 3000);
+        }
       };
       ws.onmessage = (e) => {
         try {
@@ -117,25 +122,28 @@ export function App() {
           if (msg.type === 'event' && msg.data) {
             setEvents((prev) => [...prev, msg.data]);
           }
-        } catch (err) {}
+        } catch {}
       };
     };
 
     connect();
-    loadAll();
-    loadSessions();
-    loadSwarmRuns();
-    loadTimeline();
-
-    const interval = setInterval(() => {
-      if (activeView === 'overview') loadAll();
-    }, 8000);
+    void Promise.all([loadAll(), loadSessions(), loadSwarmRuns(), loadTimeline()]);
 
     return () => {
-      clearInterval(interval);
+      disposed = true;
+      if (reconnectTimer) clearTimeout(reconnectTimer);
       if (ws) ws.close();
     };
-  }, []);
+  }, [loadAll, loadSessions, loadSwarmRuns, loadTimeline]);
+
+  // Overview Polling (avoids stale activeView closure without resetting WebSocket)
+  useEffect(() => {
+    if (activeView !== 'overview') return;
+    const interval = setInterval(() => {
+      void loadAll();
+    }, 8000);
+    return () => clearInterval(interval);
+  }, [activeView, loadAll]);
 
   // Keyboard Navigation
   useEffect(() => {
