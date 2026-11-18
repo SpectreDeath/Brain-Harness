@@ -66,7 +66,7 @@
 - [x] **Phase 7** — Design-choice arbitration memos (#5)
 - [x] **Phase 8** — Plugin vs KI-only vs Skip classifier (#6)
 - [x] **Phase 9** — Brain Harness refactor ordering (#10)
-- [ ] **Phase 10** — Spider-assisted skill routing vs `route_intent` (#11)
+- [x] **Phase 10** — Spider-assisted skill routing vs `route_intent` (#11)
 - [ ] **Phase 11** — Evidence-grounded swarm voting (#12)
 - [ ] **Phase 12** — Final report & recommendations
 
@@ -489,15 +489,15 @@ Generic **unit names** also pollute "unlearned target" lists: `python`, `tests`,
 **Depends on:** Phase 6 (reuses retrieval ideas). **Model tier:** low; human checkpoint for the task set.
 
 ### Steps
-- [ ] **10.1** Inspect `src/harness/services/skill_graph/routing.py`, `service/`, and `adapter.py` to find how to
+- [x] **10.1** Inspect `src/harness/services/skill_graph/routing.py`, `service/`, and `adapter.py` to find how to
   construct the registry/service that exposes `route_intent(intent: str, top_k: int = 3) -> dict` (returns
   `matches` and `recommended_chain`). Note the construction recipe in `write_md(10, "router_recipe", ...)`.
   If you cannot construct it without the kernel, ⚠️ ESCALATE.
-- [ ] **10.2** Draft 20 task intents with an expected skill name from `.agents/skills/` (e.g.
+- [x] **10.2** Draft 20 task intents with an expected skill name from `.agents/skills/` (e.g.
   "audit this repository's architecture" → `deep-repo-auditor`; "find the next research project to learn" →
   `ontology-spider`; "reverse engineer this .pyc" → `rea-reverse-engineering`). Write `write_md(10, "task_set_sheet", ...)`.
-- [ ] **10.3** 🧑 **HUMAN CHECKPOINT** — User approves/edits the 20 tasks and expected skills. Save `write_json(10, "task_set", ...)`.
-- [ ] **10.4** Create `p10_routing_eval.py`:
+- [x] **10.3** 🧑 **HUMAN CHECKPOINT** — User approves/edits the 20 tasks and expected skills. Save `write_json(10, "task_set", ...)`.
+- [x] **10.4** Create `p10_routing_eval.py`:
   - **Baseline:** `route_intent(task, top_k=3)`; hit@1 and hit@3 vs expected skill (match on
     `match.get("skill_name") or match.get("name")` per `AGENTS.md` Rule 35).
   - **Spider-assisted:** tokenize the task (lowercase words ≥ 4 chars, drop stopwords); find vault KIs whose tags
@@ -505,7 +505,7 @@ Generic **unit names** also pollute "unlearned target" lists: `python`, `tests`,
     by name overlap with `.agents/skills/*` directory names. Rank skills by number of supporting KIs.
   - **Hybrid:** baseline top-3 re-ranked by adding +1 per supporting KI from the spider-assisted path.
   Write `write_json(10, "results", ...)`, `write_md(10, "summary", ...)` with hit@1/hit@3 for all three.
-- [ ] **10.5** Append log entry; local commit.
+- [x] **10.5** Append log entry; local commit.
 
 ### Acceptance
 - All 20 tasks scored under all 3 methods. No threshold — record which tasks each method uniquely gets right.

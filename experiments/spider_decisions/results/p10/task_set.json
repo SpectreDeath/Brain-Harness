@@ -1,0 +1,142 @@
+[
+  {
+    "id": 1,
+    "task_intent": "audit this repository's architecture and synthesize KIs",
+    "expected_skill": "deep-repo-auditor",
+    "domain_note": "4-axis repo audit & KI synthesis",
+    "approved_skill": "deep-repo-auditor"
+  },
+  {
+    "id": 2,
+    "task_intent": "find the next research project to learn using ontology queries",
+    "expected_skill": "ontology-spider",
+    "domain_note": "vault/repo ontology queries & learning target discovery",
+    "approved_skill": "ontology-spider"
+  },
+  {
+    "id": 3,
+    "task_intent": "reverse engineer this compiled .pyc bytecode and extract semantic signatures",
+    "expected_skill": "rea-reverse-engineering",
+    "domain_note": "REA toolkit binary/bytecode signature extraction",
+    "approved_skill": "rea-reverse-engineering"
+  },
+  {
+    "id": 4,
+    "task_intent": "verify unbroken chain-of-custody isnad provenance before committing to memory",
+    "expected_skill": "epistemic-isnad-audit",
+    "domain_note": "epistemic provenance chain validation",
+    "approved_skill": "epistemic-isnad-audit"
+  },
+  {
+    "id": 5,
+    "task_intent": "run automated GenAI red-teaming and jailbreak vulnerability scorecards with PyRIT",
+    "expected_skill": "ai-red-teaming-architect",
+    "domain_note": "PyRIT GenAI red-teaming & scorecards",
+    "approved_skill": "ai-red-teaming-architect"
+  },
+  {
+    "id": 6,
+    "task_intent": "execute Google Mantis security review and taint analysis across commit history",
+    "expected_skill": "mantis-security-review",
+    "domain_note": "VCS commit history security & AST taint review",
+    "approved_skill": "mantis-security-review"
+  },
+  {
+    "id": 7,
+    "task_intent": "decompose a monolithic Python module into slotted subpackages under 200 lines",
+    "expected_skill": "monolith-decomposition-engine",
+    "domain_note": "slotted domain decomposition <= 200 lines",
+    "approved_skill": "monolith-decomposition-engine"
+  },
+  {
+    "id": 8,
+    "task_intent": "compress LLM prompt context, deduplicate tool observations, and prevent cache drift",
+    "expected_skill": "headroom-context-optimizer",
+    "domain_note": "Headroom observation compression & cache alignment",
+    "approved_skill": "headroom-context-optimizer"
+  },
+  {
+    "id": 9,
+    "task_intent": "apply compiler-style 3-pass deterministic prompt pruning and expired tool elimination",
+    "expected_skill": "prompt-pruning-architect",
+    "domain_note": "3-pass deterministic prompt pruning",
+    "approved_skill": "prompt-pruning-architect"
+  },
+  {
+    "id": 10,
+    "task_intent": "deliberate strategic actions across a multi-persona swarm using Borda and consensus voting",
+    "expected_skill": "game-theoretic-swarm-deliberator",
+    "domain_note": "multi-persona payoff matrix & Borda/consensus voting",
+    "approved_skill": "game-theoretic-swarm-deliberator"
+  },
+  {
+    "id": 11,
+    "task_intent": "govern working memory retention with Ebbinghaus forgetting curves and decay multipliers",
+    "expected_skill": "ebbinghaus-memory-governor",
+    "domain_note": "Ebbinghaus decay curves & stability reinforcement",
+    "approved_skill": "ebbinghaus-memory-governor"
+  },
+  {
+    "id": 12,
+    "task_intent": "architect an uncertainty-aware RAG guard with semantic gating and logit entropy abstention",
+    "expected_skill": "uncertainty-aware-ai-architect",
+    "domain_note": "3-layer uncertainty & logit entropy abstention",
+    "approved_skill": "uncertainty-aware-ai-architect"
+  },
+  {
+    "id": 13,
+    "task_intent": "optimize high-throughput TopK selection and sparse attention workloads on GPU",
+    "expected_skill": "deepselect-topk-optimizer",
+    "domain_note": "DeepSeek Sparse Attention / TopK CUDA optimization",
+    "approved_skill": "deepselect-topk-optimizer"
+  },
+  {
+    "id": 14,
+    "task_intent": "extract spoken dialogue and timed captions from a YouTube video URL",
+    "expected_skill": "youtube-transcript-fetcher",
+    "domain_note": "YouTube transcript & timed caption extraction",
+    "approved_skill": "youtube-transcript-fetcher"
+  },
+  {
+    "id": 15,
+    "task_intent": "detect metric anomalies and ARIMA_PLUS causal attribution inside BigQuery",
+    "expected_skill": "bigquery-augmented-analytics",
+    "domain_note": "BigQuery TVF anomaly & counterfactual attribution",
+    "approved_skill": "bigquery-augmented-analytics"
+  },
+  {
+    "id": 16,
+    "task_intent": "simulate a natural disaster on 3D geospatial map tiles with WebGL building collapse",
+    "expected_skill": "geospatial-disaster-simulation",
+    "domain_note": "Mercator DEM tiles & Three.js WebGL collapse physics",
+    "approved_skill": "geospatial-disaster-simulation"
+  },
+  {
+    "id": 17,
+    "task_intent": "build a reactive Gradio web interface with isolated session state and queued streaming",
+    "expected_skill": "gradio-app-architect",
+    "domain_note": "Gradio Blocks reactive UI & gr.State isolation",
+    "approved_skill": "gradio-app-architect"
+  },
+  {
+    "id": 18,
+    "task_intent": "shift security left with git pre-commit hooks, DevSkim SAST, and Gitleaks secret scanning",
+    "expected_skill": "pre-commit-security-guard",
+    "domain_note": "pre-commit SAST + Gitleaks secret scanning",
+    "approved_skill": "pre-commit-security-guard"
+  },
+  {
+    "id": 19,
+    "task_intent": "mine operational skills and plan evolutions from IDE brain artifact stores and transcripts",
+    "expected_skill": "brain-artifact-miner",
+    "domain_note": "brain artifact & trajectory skill distillation",
+    "approved_skill": "brain-artifact-miner"
+  },
+  {
+    "id": 20,
+    "task_intent": "refine an agent harness using contrastive Propose-Probe-Compose task-level recursion",
+    "expected_skill": "recursive-harness-refiner",
+    "domain_note": "contrastive task-level harness recursion",
+    "approved_skill": "recursive-harness-refiner"
+  }
+]

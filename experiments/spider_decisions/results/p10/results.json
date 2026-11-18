@@ -1,0 +1,816 @@
+{
+  "task_count": 20,
+  "indexed_skills_count": 114,
+  "vault_kis_scanned": 377,
+  "summary_metrics": {
+    "baseline_route_intent": {
+      "hit_at_1_count": 19,
+      "hit_at_1": 0.95,
+      "hit_at_3_count": 19,
+      "hit_at_3": 0.95
+    },
+    "spider_assisted": {
+      "hit_at_1_count": 2,
+      "hit_at_1": 0.1,
+      "hit_at_3_count": 4,
+      "hit_at_3": 0.2
+    },
+    "hybrid_rerank_top3": {
+      "hit_at_1_count": 13,
+      "hit_at_1": 0.65,
+      "hit_at_3_count": 19,
+      "hit_at_3": 0.95
+    },
+    "hybrid_union_top3": {
+      "hit_at_1_count": 8,
+      "hit_at_1": 0.4,
+      "hit_at_3_count": 11,
+      "hit_at_3": 0.55
+    }
+  },
+  "unique_wins": {
+    "baseline_only_at_1": [
+      1,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      17,
+      19,
+      20
+    ],
+    "spider_only_at_1": [],
+    "union_gains_over_baseline_at_3": []
+  },
+  "per_task": [
+    {
+      "id": 1,
+      "task_intent": "audit this repository's architecture and synthesize KIs",
+      "expected_skill": "deep-repo-auditor",
+      "baseline_top3": [
+        "deep-repo-auditor",
+        "developer-docs-architect",
+        "repo-doc-synchronizer"
+      ],
+      "spider_top3": [
+        "architecture-deepening-workflow",
+        "deepen-architecture",
+        "ai-agent-engineer"
+      ],
+      "hybrid_top3": [
+        "deep-repo-auditor",
+        "developer-docs-architect",
+        "repo-doc-synchronizer"
+      ],
+      "hybrid_union_top3": [
+        "architecture-deepening-workflow",
+        "deepen-architecture",
+        "ai-agent-engineer"
+      ],
+      "expected_supporting_kis": 31,
+      "hits_at_1": {
+        "baseline": true,
+        "spider": false,
+        "hybrid": true,
+        "hybrid_union": false
+      },
+      "hits_at_3": {
+        "baseline": true,
+        "spider": false,
+        "hybrid": true,
+        "hybrid_union": false
+      }
+    },
+    {
+      "id": 2,
+      "task_intent": "find the next research project to learn using ontology queries",
+      "expected_skill": "ontology-spider",
+      "baseline_top3": [
+        "research",
+        "discovery-index-scout",
+        "to-spec"
+      ],
+      "spider_top3": [
+        "ai-agent-engineer",
+        "ontological-engineering-coach",
+        "ai-native-harness-engineer"
+      ],
+      "hybrid_top3": [
+        "research",
+        "discovery-index-scout",
+        "to-spec"
+      ],
+      "hybrid_union_top3": [
+        "ai-agent-engineer",
+        "ontological-engineering-coach",
+        "ai-native-harness-engineer"
+      ],
+      "expected_supporting_kis": 4,
+      "hits_at_1": {
+        "baseline": false,
+        "spider": false,
+        "hybrid": false,
+        "hybrid_union": false
+      },
+      "hits_at_3": {
+        "baseline": false,
+        "spider": false,
+        "hybrid": false,
+        "hybrid_union": false
+      }
+    },
+    {
+      "id": 3,
+      "task_intent": "reverse engineer this compiled .pyc bytecode and extract semantic signatures",
+      "expected_skill": "rea-reverse-engineering",
+      "baseline_top3": [
+        "rea-reverse-engineering",
+        "diagnosing-bugs",
+        "hf-datasets-engineer"
+      ],
+      "spider_top3": [
+        "ai-agent-engineer",
+        "context-engineering-architect",
+        "ai-native-harness-engineer"
+      ],
+      "hybrid_top3": [
+        "rea-reverse-engineering",
+        "hf-datasets-engineer",
+        "diagnosing-bugs"
+      ],
+      "hybrid_union_top3": [
+        "rea-reverse-engineering",
+        "ai-agent-engineer",
+        "context-engineering-architect"
+      ],
+      "expected_supporting_kis": 37,
+      "hits_at_1": {
+        "baseline": true,
+        "spider": false,
+        "hybrid": true,
+        "hybrid_union": true
+      },
+      "hits_at_3": {
+        "baseline": true,
+        "spider": false,
+        "hybrid": true,
+        "hybrid_union": true
+      }
+    },
+    {
+      "id": 4,
+      "task_intent": "verify unbroken chain-of-custody isnad provenance before committing to memory",
+      "expected_skill": "epistemic-isnad-audit",
+      "baseline_top3": [
+        "epistemic-isnad-audit",
+        "epistemic-memory-lifecycle",
+        "ebbinghaus-memory-governor"
+      ],
+      "spider_top3": [
+        "graphiti-zep-memory-governor",
+        "okf-memory-governor",
+        "epistemic-memory-lifecycle"
+      ],
+      "hybrid_top3": [
+        "epistemic-memory-lifecycle",
+        "ebbinghaus-memory-governor",
+        "epistemic-isnad-audit"
+      ],
+      "hybrid_union_top3": [
+        "epistemic-memory-lifecycle",
+        "ebbinghaus-memory-governor",
+        "graphiti-zep-memory-governor"
+      ],
+      "expected_supporting_kis": 20,
+      "hits_at_1": {
+        "baseline": true,
+        "spider": false,
+        "hybrid": false,
+        "hybrid_union": false
+      },
+      "hits_at_3": {
+        "baseline": true,
+        "spider": false,
+        "hybrid": true,
+        "hybrid_union": false
+      }
+    },
+    {
+      "id": 5,
+      "task_intent": "run automated GenAI red-teaming and jailbreak vulnerability scorecards with PyRIT",
+      "expected_skill": "ai-red-teaming-architect",
+      "baseline_top3": [
+        "ai-red-teaming-architect",
+        "context-anti-rot-sync",
+        "tdd"
+      ],
+      "spider_top3": [
+        "plugin-seam-and-mirror-auditor",
+        "agent-harness-architect",
+        "agentic-reliability-harness"
+      ],
+      "hybrid_top3": [
+        "ai-red-teaming-architect",
+        "context-anti-rot-sync",
+        "tdd"
+      ],
+      "hybrid_union_top3": [
+        "ai-red-teaming-architect",
+        "plugin-seam-and-mirror-auditor",
+        "agent-harness-architect"
+      ],
+      "expected_supporting_kis": 2,
+      "hits_at_1": {
+        "baseline": true,
+        "spider": false,
+        "hybrid": true,
+        "hybrid_union": true
+      },
+      "hits_at_3": {
+        "baseline": true,
+        "spider": false,
+        "hybrid": true,
+        "hybrid_union": true
+      }
+    },
+    {
+      "id": 6,
+      "task_intent": "execute Google Mantis security review and taint analysis across commit history",
+      "expected_skill": "mantis-security-review",
+      "baseline_top3": [
+        "mantis-security-review",
+        "pre-commit-security-guard",
+        "code-review"
+      ],
+      "spider_top3": [
+        "ai-agent-engineer",
+        "plugin-seam-and-mirror-auditor",
+        "ai-file-analysis-agent"
+      ],
+      "hybrid_top3": [
+        "mantis-security-review",
+        "pre-commit-security-guard",
+        "code-review"
+      ],
+      "hybrid_union_top3": [
+        "ai-agent-engineer",
+        "mantis-security-review",
+        "pre-commit-security-guard"
+      ],
+      "expected_supporting_kis": 35,
+      "hits_at_1": {
+        "baseline": true,
+        "spider": false,
+        "hybrid": true,
+        "hybrid_union": false
+      },
+      "hits_at_3": {
+        "baseline": true,
+        "spider": false,
+        "hybrid": true,
+        "hybrid_union": true
+      }
+    },
+    {
+      "id": 7,
+      "task_intent": "decompose a monolithic Python module into slotted subpackages under 200 lines",
+      "expected_skill": "monolith-decomposition-engine",
+      "baseline_top3": [
+        "monolith-decomposition-engine",
+        "python-dataclass-architect",
+        "book-to-skill-forge"
+      ],
+      "spider_top3": [
+        "graphiti-zep-memory-governor",
+        "epistemic-memory-lifecycle",
+        "harness-reflector"
+      ],
+      "hybrid_top3": [
+        "python-dataclass-architect",
+        "monolith-decomposition-engine",
+        "book-to-skill-forge"
+      ],
+      "hybrid_union_top3": [
+        "epistemic-memory-lifecycle",
+        "graphiti-zep-memory-governor",
+        "harness-reflector"
+      ],
+      "expected_supporting_kis": 5,
+      "hits_at_1": {
+        "baseline": true,
+        "spider": false,
+        "hybrid": false,
+        "hybrid_union": false
+      },
+      "hits_at_3": {
+        "baseline": true,
+        "spider": false,
+        "hybrid": true,
+        "hybrid_union": false
+      }
+    },
+    {
+      "id": 8,
+      "task_intent": "compress LLM prompt context, deduplicate tool observations, and prevent cache drift",
+      "expected_skill": "headroom-context-optimizer",
+      "baseline_top3": [
+        "headroom-context-optimizer",
+        "context-type-system",
+        "prompt-pruning-architect"
+      ],
+      "spider_top3": [
+        "ai-agent-engineer",
+        "agent-skills-architect",
+        "ts-agent-harness-constructor"
+      ],
+      "hybrid_top3": [
+        "headroom-context-optimizer",
+        "context-type-system",
+        "prompt-pruning-architect"
+      ],
+      "hybrid_union_top3": [
+        "ai-agent-engineer",
+        "headroom-context-optimizer",
+        "agent-skills-architect"
+      ],
+      "expected_supporting_kis": 26,
+      "hits_at_1": {
+        "baseline": true,
+        "spider": false,
+        "hybrid": true,
+        "hybrid_union": false
+      },
+      "hits_at_3": {
+        "baseline": true,
+        "spider": false,
+        "hybrid": true,
+        "hybrid_union": true
+      }
+    },
+    {
+      "id": 9,
+      "task_intent": "apply compiler-style 3-pass deterministic prompt pruning and expired tool elimination",
+      "expected_skill": "prompt-pruning-architect",
+      "baseline_top3": [
+        "prompt-pruning-architect",
+        "token-economizer",
+        "deterministic-validation-loop"
+      ],
+      "spider_top3": [
+        "ai-agent-engineer",
+        "agent-harness-architect",
+        "ts-agent-harness-constructor"
+      ],
+      "hybrid_top3": [
+        "prompt-pruning-architect",
+        "deterministic-validation-loop",
+        "token-economizer"
+      ],
+      "hybrid_union_top3": [
+        "ai-agent-engineer",
+        "prompt-pruning-architect",
+        "agent-harness-architect"
+      ],
+      "expected_supporting_kis": 11,
+      "hits_at_1": {
+        "baseline": true,
+        "spider": false,
+        "hybrid": true,
+        "hybrid_union": false
+      },
+      "hits_at_3": {
+        "baseline": true,
+        "spider": false,
+        "hybrid": true,
+        "hybrid_union": true
+      }
+    },
+    {
+      "id": 10,
+      "task_intent": "deliberate strategic actions across a multi-persona swarm using Borda and consensus voting",
+      "expected_skill": "game-theoretic-swarm-deliberator",
+      "baseline_top3": [
+        "game-theoretic-swarm-deliberator",
+        "orca-orchestrator",
+        "open-source-gis-architect"
+      ],
+      "spider_top3": [
+        "ai-agent-engineer",
+        "multi-bot-desk-orchestrator",
+        "agent-skills-architect"
+      ],
+      "hybrid_top3": [
+        "orca-orchestrator",
+        "game-theoretic-swarm-deliberator",
+        "open-source-gis-architect"
+      ],
+      "hybrid_union_top3": [
+        "ai-agent-engineer",
+        "multi-bot-desk-orchestrator",
+        "agent-skills-architect"
+      ],
+      "expected_supporting_kis": 10,
+      "hits_at_1": {
+        "baseline": true,
+        "spider": false,
+        "hybrid": false,
+        "hybrid_union": false
+      },
+      "hits_at_3": {
+        "baseline": true,
+        "spider": false,
+        "hybrid": true,
+        "hybrid_union": false
+      }
+    },
+    {
+      "id": 11,
+      "task_intent": "govern working memory retention with Ebbinghaus forgetting curves and decay multipliers",
+      "expected_skill": "ebbinghaus-memory-governor",
+      "baseline_top3": [
+        "ebbinghaus-memory-governor",
+        "okf-memory-governor",
+        "survival-analysis"
+      ],
+      "spider_top3": [
+        "epistemic-memory-lifecycle",
+        "graphiti-zep-memory-governor",
+        "ebbinghaus-memory-governor"
+      ],
+      "hybrid_top3": [
+        "ebbinghaus-memory-governor",
+        "okf-memory-governor",
+        "survival-analysis"
+      ],
+      "hybrid_union_top3": [
+        "ebbinghaus-memory-governor",
+        "okf-memory-governor",
+        "epistemic-memory-lifecycle"
+      ],
+      "expected_supporting_kis": 109,
+      "hits_at_1": {
+        "baseline": true,
+        "spider": false,
+        "hybrid": true,
+        "hybrid_union": true
+      },
+      "hits_at_3": {
+        "baseline": true,
+        "spider": true,
+        "hybrid": true,
+        "hybrid_union": true
+      }
+    },
+    {
+      "id": 12,
+      "task_intent": "architect an uncertainty-aware RAG guard with semantic gating and logit entropy abstention",
+      "expected_skill": "uncertainty-aware-ai-architect",
+      "baseline_top3": [
+        "uncertainty-aware-ai-architect",
+        "agent-harness-architect",
+        "self-evaluating-ai-pipeline"
+      ],
+      "spider_top3": [
+        "architecture-deepening-workflow",
+        "ai-agent-engineer",
+        "deepen-architecture"
+      ],
+      "hybrid_top3": [
+        "agent-harness-architect",
+        "self-evaluating-ai-pipeline",
+        "uncertainty-aware-ai-architect"
+      ],
+      "hybrid_union_top3": [
+        "architecture-deepening-workflow",
+        "ai-agent-engineer",
+        "deepen-architecture"
+      ],
+      "expected_supporting_kis": 3,
+      "hits_at_1": {
+        "baseline": true,
+        "spider": false,
+        "hybrid": false,
+        "hybrid_union": false
+      },
+      "hits_at_3": {
+        "baseline": true,
+        "spider": false,
+        "hybrid": true,
+        "hybrid_union": false
+      }
+    },
+    {
+      "id": 13,
+      "task_intent": "optimize high-throughput TopK selection and sparse attention workloads on GPU",
+      "expected_skill": "deepselect-topk-optimizer",
+      "baseline_top3": [
+        "deepselect-topk-optimizer",
+        "hf-datasets-engineer",
+        "open-source-gis-architect"
+      ],
+      "spider_top3": [
+        "headroom-context-optimizer",
+        "swarm-reflection-optimizer",
+        "deepselect-topk-optimizer"
+      ],
+      "hybrid_top3": [
+        "deepselect-topk-optimizer",
+        "hf-datasets-engineer",
+        "open-source-gis-architect"
+      ],
+      "hybrid_union_top3": [
+        "deepselect-topk-optimizer",
+        "headroom-context-optimizer",
+        "swarm-reflection-optimizer"
+      ],
+      "expected_supporting_kis": 17,
+      "hits_at_1": {
+        "baseline": true,
+        "spider": false,
+        "hybrid": true,
+        "hybrid_union": true
+      },
+      "hits_at_3": {
+        "baseline": true,
+        "spider": true,
+        "hybrid": true,
+        "hybrid_union": true
+      }
+    },
+    {
+      "id": 14,
+      "task_intent": "extract spoken dialogue and timed captions from a YouTube video URL",
+      "expected_skill": "youtube-transcript-fetcher",
+      "baseline_top3": [
+        "youtube-transcript-fetcher",
+        "book-to-skill-forge",
+        "media-mind-forge"
+      ],
+      "spider_top3": [
+        "epistemic-memory-lifecycle",
+        "self-evaluating-ai-pipeline",
+        "ebbinghaus-memory-governor"
+      ],
+      "hybrid_top3": [
+        "youtube-transcript-fetcher",
+        "book-to-skill-forge",
+        "media-mind-forge"
+      ],
+      "hybrid_union_top3": [
+        "youtube-transcript-fetcher",
+        "book-to-skill-forge",
+        "media-mind-forge"
+      ],
+      "expected_supporting_kis": 1,
+      "hits_at_1": {
+        "baseline": true,
+        "spider": false,
+        "hybrid": true,
+        "hybrid_union": true
+      },
+      "hits_at_3": {
+        "baseline": true,
+        "spider": false,
+        "hybrid": true,
+        "hybrid_union": true
+      }
+    },
+    {
+      "id": 15,
+      "task_intent": "detect metric anomalies and ARIMA_PLUS causal attribution inside BigQuery",
+      "expected_skill": "bigquery-augmented-analytics",
+      "baseline_top3": [
+        "bigquery-augmented-analytics",
+        "cloud-infrastructure-architect",
+        "sql-recursive-graph-traversal"
+      ],
+      "spider_top3": [
+        "ai-native-harness-engineer",
+        "plugin-seam-and-mirror-auditor",
+        "ai-agent-engineer"
+      ],
+      "hybrid_top3": [
+        "bigquery-augmented-analytics",
+        "cloud-infrastructure-architect",
+        "sql-recursive-graph-traversal"
+      ],
+      "hybrid_union_top3": [
+        "bigquery-augmented-analytics",
+        "ai-native-harness-engineer",
+        "ai-agent-engineer"
+      ],
+      "expected_supporting_kis": 1,
+      "hits_at_1": {
+        "baseline": true,
+        "spider": false,
+        "hybrid": true,
+        "hybrid_union": true
+      },
+      "hits_at_3": {
+        "baseline": true,
+        "spider": false,
+        "hybrid": true,
+        "hybrid_union": true
+      }
+    },
+    {
+      "id": 16,
+      "task_intent": "simulate a natural disaster on 3D geospatial map tiles with WebGL building collapse",
+      "expected_skill": "geospatial-disaster-simulation",
+      "baseline_top3": [
+        "geospatial-disaster-simulation",
+        "wayfinder",
+        "data-topology-mapper"
+      ],
+      "spider_top3": [
+        "geospatial-disaster-simulation",
+        "ai-agent-engineer",
+        "epistemic-memory-lifecycle"
+      ],
+      "hybrid_top3": [
+        "geospatial-disaster-simulation",
+        "data-topology-mapper",
+        "wayfinder"
+      ],
+      "hybrid_union_top3": [
+        "geospatial-disaster-simulation",
+        "ai-agent-engineer",
+        "epistemic-memory-lifecycle"
+      ],
+      "expected_supporting_kis": 8,
+      "hits_at_1": {
+        "baseline": true,
+        "spider": true,
+        "hybrid": true,
+        "hybrid_union": true
+      },
+      "hits_at_3": {
+        "baseline": true,
+        "spider": true,
+        "hybrid": true,
+        "hybrid_union": true
+      }
+    },
+    {
+      "id": 17,
+      "task_intent": "build a reactive Gradio web interface with isolated session state and queued streaming",
+      "expected_skill": "gradio-app-architect",
+      "baseline_top3": [
+        "gradio-app-architect",
+        "gemini-vercel-streaming-chatbot",
+        "pi-coding-harness"
+      ],
+      "spider_top3": [
+        "ai-agent-engineer",
+        "ts-agent-harness-constructor",
+        "agent-harness-architect"
+      ],
+      "hybrid_top3": [
+        "gemini-vercel-streaming-chatbot",
+        "gradio-app-architect",
+        "pi-coding-harness"
+      ],
+      "hybrid_union_top3": [
+        "ai-agent-engineer",
+        "ts-agent-harness-constructor",
+        "agent-harness-architect"
+      ],
+      "expected_supporting_kis": 6,
+      "hits_at_1": {
+        "baseline": true,
+        "spider": false,
+        "hybrid": false,
+        "hybrid_union": false
+      },
+      "hits_at_3": {
+        "baseline": true,
+        "spider": false,
+        "hybrid": true,
+        "hybrid_union": false
+      }
+    },
+    {
+      "id": 18,
+      "task_intent": "shift security left with git pre-commit hooks, DevSkim SAST, and Gitleaks secret scanning",
+      "expected_skill": "pre-commit-security-guard",
+      "baseline_top3": [
+        "pre-commit-security-guard",
+        "setup-pre-commit",
+        "reconstruction-obligation-ledger"
+      ],
+      "spider_top3": [
+        "pre-commit-security-guard",
+        "mantis-security-review",
+        "plugin-seam-and-mirror-auditor"
+      ],
+      "hybrid_top3": [
+        "pre-commit-security-guard",
+        "setup-pre-commit",
+        "reconstruction-obligation-ledger"
+      ],
+      "hybrid_union_top3": [
+        "pre-commit-security-guard",
+        "mantis-security-review",
+        "plugin-seam-and-mirror-auditor"
+      ],
+      "expected_supporting_kis": 26,
+      "hits_at_1": {
+        "baseline": true,
+        "spider": true,
+        "hybrid": true,
+        "hybrid_union": true
+      },
+      "hits_at_3": {
+        "baseline": true,
+        "spider": true,
+        "hybrid": true,
+        "hybrid_union": true
+      }
+    },
+    {
+      "id": 19,
+      "task_intent": "mine operational skills and plan evolutions from IDE brain artifact stores and transcripts",
+      "expected_skill": "brain-artifact-miner",
+      "baseline_top3": [
+        "brain-artifact-miner",
+        "mind-reader",
+        "media-mind-forge"
+      ],
+      "spider_top3": [
+        "agent-skills-architect",
+        "agent-skill-sdlc",
+        "graphiti-zep-memory-governor"
+      ],
+      "hybrid_top3": [
+        "brain-artifact-miner",
+        "mind-reader",
+        "media-mind-forge"
+      ],
+      "hybrid_union_top3": [
+        "agent-skill-sdlc",
+        "agent-skills-architect",
+        "graphiti-zep-memory-governor"
+      ],
+      "expected_supporting_kis": 9,
+      "hits_at_1": {
+        "baseline": true,
+        "spider": false,
+        "hybrid": true,
+        "hybrid_union": false
+      },
+      "hits_at_3": {
+        "baseline": true,
+        "spider": false,
+        "hybrid": true,
+        "hybrid_union": false
+      }
+    },
+    {
+      "id": 20,
+      "task_intent": "refine an agent harness using contrastive Propose-Probe-Compose task-level recursion",
+      "expected_skill": "recursive-harness-refiner",
+      "baseline_top3": [
+        "recursive-harness-refiner",
+        "agent-harness-architect",
+        "ai-agent-engineer"
+      ],
+      "spider_top3": [
+        "ai-agent-engineer",
+        "ts-agent-harness-constructor",
+        "agent-harness-architect"
+      ],
+      "hybrid_top3": [
+        "ai-agent-engineer",
+        "agent-harness-architect",
+        "recursive-harness-refiner"
+      ],
+      "hybrid_union_top3": [
+        "ai-agent-engineer",
+        "agent-harness-architect",
+        "ts-agent-harness-constructor"
+      ],
+      "expected_supporting_kis": 18,
+      "hits_at_1": {
+        "baseline": true,
+        "spider": false,
+        "hybrid": false,
+        "hybrid_union": false
+      },
+      "hits_at_3": {
+        "baseline": true,
+        "spider": false,
+        "hybrid": true,
+        "hybrid_union": false
+      }
+    }
+  ]
+}

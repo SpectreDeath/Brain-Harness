@@ -69,3 +69,9 @@ Template for per-phase entries:
 - Key metric(s): Ordered all 11 src/harness units: commands, ui, mcp, agent, creator, bridges, services, plugins, ingestion, kernel, events; 1 spider cycle (ui -> commands -> ui); 11-unit Tarjan SCC (all blast_radius=10); 6/10 hotspot KI overlap (commands, mcp, agent, creator, services, plugins).
 - Finding(s): ui <-> commands cycle originates in ui/server/routes/skills.py; 11-unit Tarjan SCC is caused by kernel/runtime/* composition-root imports (defaults.py, factory.py, services.py, tools.py, plugins.py); full AST scan also found 2 upward leaks in services/ (skill_graph/joint_query.py -> commands, storage/vault_retrieval.py -> creator) missed by the 60-file snapshot cap. Verdict: sensible (8.5/10).
 - Follow-ups: Run Phase 10 Steps 10.1-10.2 skill routing recipe and 20-task draft sheet for Checkpoint 10.3.
+
+## Phase 10 — Spider-Assisted Skill Routing vs route_intent (2026-11-18T18:08:25+00:00)
+- Outcome: PASS
+- Key metric(s): Baseline route_intent Hit@1=19/20 (95.0%), Hit@3=19/20 (95.0%); Spider-assisted Hit@1=2/20 (10.0%), Hit@3=4/20 (20.0%); Hybrid rerank top-3 Hit@1=13/20 (65.0%), Hit@3=19/20 (95.0%); Hybrid union Hit@1=8/20 (40.0%), Hit@3=11/20 (55.0%).
+- Finding(s): Unweighted +1 per supporting KI acts as a hub attractor toward broad tags (ai-agent-engineer, epistemic-memory-lifecycle, architecture-deepening-workflow) and hurts calibrated route_intent@1 (95%->65%); Baseline only missed task #2 (ontology-spider -> research).
+- Follow-ups: Run Phase 11 evidence-grounded swarm voting.
