@@ -237,3 +237,25 @@ def test_kernel_layer_has_zero_static_plugin_imports() -> None:
                     parts.pop()
 
     assert leaks == [], f"Rule 1 kernel -> plugins static AST leaks detected: {leaks}"
+
+
+@skip_if_no_engine
+def test_service_compute_blast_radius_reverse_transitive() -> None:
+    """compute_blast_radius returns cycle-safe reverse transitive dependents per node."""
+    from ontology_spider.model import OntologyModel, Provenance, Relation
+
+    model = OntologyModel(uri="urn:test:blast")
+    prov = Provenance(source="test", turn_id="t1")
+    for s, o in (("a", "b"), ("b", "c"), ("d", "c"), ("x", "y"), ("y", "x")):
+        model.add_assertion(Relation(s, "depends_on_project", o), prov)
+
+    svc = OntologySpiderKernelService()
+    assert isinstance(svc, OntologySpiderProtocol)
+    blast = svc.compute_blast_radius(model, predicate="depends_on_project")
+    assert blast["c"] == ("a", "b", "d")
+    assert blast["b"] == ("a",)
+    assert blast["a"] == ()
+    assert blast["d"] == ()
+    assert blast["x"] == ("y",)
+    assert blast["y"] == ("x",)
+

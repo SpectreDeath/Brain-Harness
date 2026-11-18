@@ -49,7 +49,7 @@ def load_repo_model(
     *,
     refresh: bool = False,
     max_depth: int = 4,
-    max_files_per_unit: int = 60,
+    max_files_per_unit: int | None = 60,
 ) -> Any:
     """Load cached JSON snapshot or build live repository ontology model and cache it."""
     bootstrap()

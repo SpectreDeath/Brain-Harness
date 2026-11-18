@@ -8,6 +8,7 @@ using bounded traversal (Rule 52) and collision-safe identifier allocation.
 from __future__ import annotations
 
 import ast
+from collections.abc import Mapping
 import json
 import logging
 import os
@@ -144,6 +145,107 @@ _GENERIC_UNIT_NAMES = frozenset(
         "training",
         "runtime",
     }
+)
+
+_GENERIC_SLUG_STOPWORDS = frozenset(
+    {
+        "governance",
+        "scope",
+        "expert",
+        "architecture",
+        "protocol",
+        "engine",
+        "service",
+        "services",
+        "runtime",
+        "system",
+        "systems",
+        "module",
+        "plugin",
+        "skill",
+        "agent",
+        "memory",
+        "graph",
+        "layer",
+        "layered",
+        "bounded",
+        "session",
+        "loader",
+        "runner",
+        "guard",
+        "audit",
+        "auditor",
+        "bridge",
+        "pipeline",
+        "workflow",
+        "framework",
+        "config",
+        "model",
+        "core",
+        "utils",
+        "report",
+        "metrics",
+        "benchmark",
+        "validation",
+        "security",
+        "safety",
+        "privacy",
+        "control",
+        "policy",
+        "schema",
+        "design",
+        "pattern",
+        "strategy",
+        "worker",
+        "swarm",
+        "voting",
+        "scoring",
+        "ranking",
+        "parser",
+        "scanner",
+        "adapter",
+        "gateway",
+        "proxy",
+        "sandbox",
+        "isolation",
+        "streaming",
+        "prefetch",
+        "eviction",
+        "compression",
+        "optimization",
+        "inference",
+        "reflection",
+        "lifecycle",
+        "context",
+        "prompt",
+        "pruning",
+        "retrieval",
+        "knowledge",
+        "vault",
+        "ontology",
+        "decision",
+        "analysis",
+        "telemetry",
+        "monitoring",
+        "dashboard",
+        "visual",
+        "brief",
+        "guide",
+        "tool",
+    }
+)
+
+_GITHUB_REPO_RE = re.compile(r"github\.com/[^/\s]+/([^/\s?#]+)", re.IGNORECASE)
+_REPO_ROOT_MARKERS = (
+    ".git",
+    "go.mod",
+    "pyproject.toml",
+    "setup.py",
+    "package.json",
+    "Cargo.toml",
+    "README.md",
+    "WORKSPACE",
+    "MODULE.bazel",
 )
 
 _FW_PATTERNS: dict[str, re.Pattern[str]] = {
@@ -494,10 +596,24 @@ def _discover_vault_learned_projects(vault_dir: Path | None) -> dict[str, tuple[
                 _register_learned_token(slug, ki_id, learned, strength="structured")
                 for seg in re.split(r"[-_]+", slug):
                     norm_seg = seg.replace("-", "_")
-                    if norm_seg in _GENERIC_UNIT_NAMES:
+                    if norm_seg in _GENERIC_UNIT_NAMES or norm_seg in _GENERIC_SLUG_STOPWORDS:
                         continue
                     if len(seg) >= 4 or (len(seg) >= 3 and norm_seg in tag_norms):
                         _register_learned_token(seg, ki_id, learned, strength="structured")
+
+        anchors_data = data.get("anchors")
+        if isinstance(anchors_data, dict):
+            subproj = anchors_data.get("subproject")
+            if isinstance(subproj, str) and subproj.strip():
+                subproj_clean = subproj.strip()
+                subproj_norm = subproj_clean.lower().replace("-", "_")
+                ki_norm = ki_id.lower().replace("-", "_")
+                anchor_strength = (
+                    "structured"
+                    if (subproj_norm in tag_norms or subproj_norm in ki_norm)
+                    else "tag"
+                )
+                _register_learned_token(subproj_clean, ki_id, learned, strength=anchor_strength)
 
         for plug in data.get("plugins_scaffolded") or []:
             if isinstance(plug, str):
@@ -505,18 +621,78 @@ def _discover_vault_learned_projects(vault_dir: Path | None) -> dict[str, tuple[
     return learned
 
 
+def _normalize_repo_stem(raw_name: str) -> str:
+    """Normalize a repository or directory name for parent-repo scope comparison."""
+    cleaned = raw_name.strip().lower()
+    if cleaned.endswith(".git"):
+        cleaned = cleaned[:-4]
+    for suffix in ("-main", "_main", "-master", "_master"):
+        if cleaned.endswith(suffix):
+            cleaned = cleaned[: -len(suffix)]
+            break
+    return cleaned.replace("-", "_")
+
+
+def _discover_vault_ki_repo_scopes(vault_dir: Path | None) -> dict[str, frozenset[str]]:
+    """Extract normalized GitHub repository stems per KI for sub-unit collision filtering."""
+    if vault_dir is None or not vault_dir.is_dir():
+        return {}
+    scopes: dict[str, frozenset[str]] = {}
+    for child in sorted(vault_dir.iterdir(), key=lambda p: p.name):
+        if not child.is_dir() or child.name.startswith("."):
+            continue
+        meta_file = child / "metadata.json"
+        if not meta_file.is_file():
+            continue
+        try:
+            data = json.loads(meta_file.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError, ValueError):
+            continue
+        if not isinstance(data, dict):
+            continue
+        ki_id = str(data.get("id") or data.get("ki_id") or child.name)
+        urls: list[str] = []
+        for key in ("source_target", "source_uri", "source_repo"):
+            val = data.get(key)
+            if isinstance(val, str):
+                urls.append(val)
+        isnad_data = data.get("isnad")
+        if isinstance(isnad_data, dict) and isinstance(isnad_data.get("source_repo"), str):
+            urls.append(isnad_data["source_repo"])
+        anchors_data = data.get("anchors")
+        if isinstance(anchors_data, dict) and isinstance(anchors_data.get("repo"), str):
+            urls.append(anchors_data["repo"])
+        for src_entry in data.get("sources") or []:
+            if isinstance(src_entry, dict) and isinstance(src_entry.get("repo"), str):
+                urls.append(src_entry["repo"])
+
+        stems = {
+            _normalize_repo_stem(m.group(1))
+            for raw_url in urls
+            for m in _GITHUB_REPO_RE.finditer(raw_url)
+            if m.group(1)
+        }
+        if stems:
+            scopes[ki_id] = frozenset(stems)
+    return scopes
+
+
 def _lookup_learned_ki(
     raw_name: str,
     uid: str,
     learned_map: dict[str, tuple[str, str] | str],
+    *,
+    repo_context: str | None = None,
+    ki_repo_scopes: Mapping[str, frozenset[str]] | None = None,
 ) -> tuple[str, str] | None:
-    """Resolve matching (ki_id, strength) while rejecting weak tag matches on generic/short units."""
+    """Resolve matching (ki_id, strength) while rejecting weak tag matches and cross-repo sub-unit collisions."""
     norm_unit = raw_name.strip().lower().replace("-", "_")
     candidates = [raw_name.lower(), uid.lower(), norm_unit]
     for suffix in ("-main", "_main", "-master", "_master"):
         if raw_name.lower().endswith(suffix):
             stem = raw_name.lower()[: -len(suffix)]
             candidates.extend((stem, stem.replace("-", "_")))
+    norm_ctx = _normalize_repo_stem(repo_context) if repo_context else ""
     for cand in candidates:
         if cand in learned_map:
             entry = learned_map[cand]
@@ -524,8 +700,16 @@ def _lookup_learned_ki(
                 ki_id, strength = entry, "structured"
             else:
                 ki_id, strength = entry
-            if strength == "tag" and (norm_unit in _GENERIC_UNIT_NAMES or len(norm_unit) <= 4):
+            if strength == "tag" and (
+                norm_unit in _GENERIC_UNIT_NAMES
+                or norm_unit in _GENERIC_SLUG_STOPWORDS
+                or len(norm_unit) <= 4
+            ):
                 return None
+            if norm_ctx:
+                scopes = (ki_repo_scopes or {}).get(ki_id)
+                if scopes and norm_ctx not in scopes:
+                    continue
             return ki_id, strength
     return None
 
@@ -806,6 +990,9 @@ class RepoOntologyModelSource(ModelSource):
         candidate_py_tokens = raw_names | {n.replace("-", "_") for n in raw_names} | {"google_research", root_pkg_alias}
         go_module = _detect_go_module(self.resolved_root)
         learned_map = _discover_vault_learned_projects(self.vault_dir)
+        ki_repo_scopes = _discover_vault_ki_repo_scopes(self.vault_dir)
+        has_root_markers = any((self.resolved_root / m).exists() for m in _REPO_ROOT_MARKERS)
+        sub_unit_repo_context = self.resolved_root.name if has_root_markers else None
 
         raw_to_safe: dict[str, str] = {}
         safe_to_raw: dict[str, str] = {}
@@ -959,7 +1146,13 @@ class RepoOntologyModelSource(ModelSource):
                 if code_files >= 1
                 else "non_python"
             )
-            learned_match = _lookup_learned_ki(raw_name, uid, learned_map)
+            learned_match = _lookup_learned_ki(
+                raw_name,
+                uid,
+                learned_map,
+                repo_context=sub_unit_repo_context if unit_dir != self.resolved_root else None,
+                ki_repo_scopes=ki_repo_scopes,
+            )
             learned_ki = learned_match[0] if learned_match is not None else None
             learned_match_strength = learned_match[1] if learned_match is not None else "none"
             is_generic_unit = raw_name.strip().lower().replace("-", "_") in _GENERIC_UNIT_NAMES

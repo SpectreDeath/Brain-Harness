@@ -429,3 +429,177 @@ def test_generic_units_excluded_from_unlearned(tmp_path: Path) -> None:
     assert "real_planner" in report.unlearned_tested_projects
     assert "tests" not in report.unlearned_tested_projects
     assert "scripts" not in report.unlearned_tested_projects
+
+
+@skip_if_no_engine
+def test_generic_slug_trailing_words_do_not_bridge(tmp_path: Path) -> None:
+    """Generic slug segments like 'governance' must not bridge unrelated sub-units."""
+    from plugins.memory_and_epistemics.ontology_spider.repo_adapter import RepoOntologyModelSource
+
+    repo = tmp_path / "gvisor"
+    repo.mkdir()
+    (repo / "go.mod").write_text("module gvisor.dev/gvisor\n", encoding="utf-8")
+    (repo / "README.md").write_text("# gVisor\nSandbox kernel.\n", encoding="utf-8")
+    for sub in ("governance", "runsc"):
+        d = repo / sub
+        d.mkdir()
+        (d / "main.go").write_text(f"package {sub}\n", encoding="utf-8")
+
+    vault = tmp_path / "vault"
+    ki = vault / "ki-vercel-ui-sdk-expert-scope-governance"
+    ki.mkdir(parents=True)
+    (ki / "metadata.json").write_text(
+        json.dumps(
+            {
+                "id": "ki-vercel-ui-sdk-expert-scope-governance",
+                "title": "Vercel UI SDK Governance",
+                "source_target": "https://github.com/vercel-labs/ui",
+                "tags": ["ui-sdk", "monorepo-governance"],
+            }
+        ),
+        encoding="utf-8",
+    )
+    ki_tag = vault / "ki_generic_tag_governance"
+    ki_tag.mkdir(parents=True)
+    (ki_tag / "metadata.json").write_text(
+        json.dumps(
+            {
+                "id": "ki_generic_tag_governance",
+                "title": "Responsible AI Prototyping Governance",
+                "source_target": "ai-builder-web-governance",
+                "tags": ["governance", "web-app"],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    model = RepoOntologyModelSource(repo, vault_dir=vault).load()
+    gov_attrs = model.entities["governance"].attributes
+    assert gov_attrs["harness_learned"] is False
+    assert gov_attrs["learned_match_strength"] == "none"
+
+    # Primary-anchor KI (matching subproject in tags/id) beats alphabetically earlier secondary KI
+    air_repo = tmp_path / "airllm"
+    air_sub = air_repo / "air_llm"
+    air_sub.mkdir(parents=True)
+    (air_sub / "runner.py").write_text("import torch\n", encoding="utf-8")
+
+    air_vault = tmp_path / "air_vault"
+    sec_ki = air_vault / "ki_airllm_alpha_helper"
+    sec_ki.mkdir(parents=True)
+    (sec_ki / "metadata.json").write_text(
+        json.dumps(
+            {
+                "id": "ki_airllm_alpha_helper",
+                "title": "Secondary Helper",
+                "source_target": "https://github.com/example/airllm",
+                "anchors": {"subproject": "air_llm"},
+                "tags": ["airllm", "helper"],
+            }
+        ),
+        encoding="utf-8",
+    )
+    pri_ki = air_vault / "ki_airllm_zeta_core"
+    pri_ki.mkdir(parents=True)
+    (pri_ki / "metadata.json").write_text(
+        json.dumps(
+            {
+                "id": "ki_airllm_zeta_core",
+                "title": "Primary Core",
+                "source_target": "https://github.com/example/airllm",
+                "anchors": {"subproject": "air_llm"},
+                "tags": ["airllm", "air_llm"],
+            }
+        ),
+        encoding="utf-8",
+    )
+    air_model = RepoOntologyModelSource(air_repo, vault_dir=air_vault).load()
+    assert air_model.entities["air_llm"].attributes["learned_ki_id"] == "ki_airllm_zeta_core"
+    assert air_model.entities["air_llm"].attributes["learned_match_strength"] == "structured"
+
+
+@skip_if_no_engine
+def test_external_repo_leaf_does_not_bridge_unrelated_subproject(tmp_path: Path) -> None:
+    """External repo source_target (Balanov/shim) must not bridge gvisor/shim, while portfolio shim still matches."""
+    from plugins.memory_and_epistemics.ontology_spider.repo_adapter import RepoOntologyModelSource
+
+    vault = tmp_path / "vault"
+    k_shim = vault / "ki-shim-bounded-session-and-layered-skill-loader"
+    k_shim.mkdir(parents=True)
+    (k_shim / "metadata.json").write_text(
+        json.dumps(
+            {
+                "id": "ki-shim-bounded-session-and-layered-skill-loader",
+                "title": "Shim Session Loader",
+                "source_target": "https://github.com/Balanov/shim",
+                "tags": ["shim", "session-store"],
+            }
+        ),
+        encoding="utf-8",
+    )
+    k_gvisor = vault / "ki_google_gvisor_sentry_gofer_sandbox"
+    k_gvisor.mkdir(parents=True)
+    (k_gvisor / "metadata.json").write_text(
+        json.dumps(
+            {
+                "id": "ki_google_gvisor_sentry_gofer_sandbox",
+                "title": "gVisor Sandbox",
+                "source_target": "https://github.com/google/gvisor",
+                "tags": ["gvisor", "runsc"],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    # Single repository gvisor with sub-units shim/ and runsc/
+    repo = tmp_path / "gvisor"
+    repo.mkdir()
+    (repo / "go.mod").write_text("module gvisor.dev/gvisor\n", encoding="utf-8")
+    (repo / "README.md").write_text("# gVisor\n", encoding="utf-8")
+    for sub in ("shim", "runsc"):
+        d = repo / sub
+        d.mkdir()
+        (d / "mod.go").write_text(f"package {sub}\n", encoding="utf-8")
+
+    model = RepoOntologyModelSource(repo, vault_dir=vault).load()
+    assert model.entities["shim"].attributes["harness_learned"] is False
+    assert model.entities["runsc"].attributes["harness_learned"] is True
+    assert model.entities["runsc"].attributes["learned_ki_id"] == "ki_google_gvisor_sentry_gofer_sandbox"
+
+    # Portfolio root (no root repo markers) containing standalone shim/ and other/
+    portfolio = tmp_path / "portfolio"
+    portfolio.mkdir()
+    for child in ("shim", "other"):
+        cd = portfolio / child
+        cd.mkdir()
+        (cd / "README.md").write_text(f"# {child}\n", encoding="utf-8")
+        (cd / "app.py").write_text("print('ok')\n", encoding="utf-8")
+
+    port_model = RepoOntologyModelSource(portfolio, vault_dir=vault).load()
+    assert port_model.entities["shim"].attributes["harness_learned"] is True
+    assert (
+        port_model.entities["shim"].attributes["learned_ki_id"]
+        == "ki-shim-bounded-session-and-layered-skill-loader"
+    )
+
+
+@skip_if_no_engine
+def test_max_files_per_unit_none_scans_all_non_pruned_files(tmp_path: Path) -> None:
+    """max_files_per_unit=None scans all non-pruned files while still skipping _PRUNE_DIRS (.git)."""
+    from plugins.memory_and_epistemics.ontology_spider.repo_adapter import RepoOntologyModelSource
+
+    repo = tmp_path / "uncapped_repo"
+    repo.mkdir()
+    (repo / "README.md").write_text("# Uncapped Repo\n", encoding="utf-8")
+    for idx in range(5):
+        (repo / f"mod_{idx}.py").write_text(f"X = {idx}\n", encoding="utf-8")
+    git_dir = repo / ".git"
+    git_dir.mkdir()
+    (git_dir / "ignored.py").write_text("IGNORED = True\n", encoding="utf-8")
+
+    capped = RepoOntologyModelSource(repo, max_files_per_unit=2).load()
+    assert capped.entities["uncapped_repo"].attributes["py_file_count"] <= 2
+
+    uncapped = RepoOntologyModelSource(repo, max_files_per_unit=None).load()
+    assert uncapped.entities["uncapped_repo"].attributes["py_file_count"] == 5
+

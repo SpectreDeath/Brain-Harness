@@ -1,9 +1,9 @@
 {
-  "total_bridges": 34,
+  "total_bridges": 32,
   "true_positives": 32,
-  "false_positives": 2,
-  "unknown_new_bridges": 1,
-  "fp_rate": 0.0588,
+  "false_positives": 0,
+  "unknown_new_bridges": 0,
+  "fp_rate": 0.0,
   "true_bridge_recall": 0.9697,
   "known_false_bridges_gone": {
     "airllm_plus/runtime": true,
@@ -11,6 +11,8 @@
   },
   "removed_false_positives": [
     "grm/rpc -> ki_20260831_openclaw_02",
+    "gvisor/governance -> ki_responsible_ai_prototyping",
+    "gvisor/shim -> ki_shim_bounded_session_and_layered_skill_loader",
     "gvisor/tools -> ki_20260830_grok_01",
     "airllm/data -> ki_solla_dikw_data_asset_continuum",
     "airllm/eval -> ki_rea_sig_anthea_eval_1f061854",
@@ -19,10 +21,7 @@
   "removed_true_positives": [
     "grm/aloe -> ki_20261110_google_research_gnn_and_scientific_ml"
   ],
-  "remaining_false_positives": [
-    "gvisor/shim -> ki_shim_bounded_session_and_layered_skill_loader",
-    "gvisor/governance -> ki_vercel_ui_sdk_expert_scope_governance (swapped KI)"
-  ],
+  "remaining_false_positives": [],
   "regression_all_passed": true,
   "regression_results": [
     {
@@ -37,14 +36,14 @@
       "unit": "latent_programmer",
       "passed": true,
       "learned_ki_id": "ki_google_research_latent_programmer_vqvae",
-      "strength": "tag"
+      "strength": "structured"
     },
     {
       "snapshot": "grm",
       "unit": "active_selective_prediction",
       "passed": true,
       "learned_ki_id": "ki_google_research_aspest_active_selective_prediction",
-      "strength": "tag"
+      "strength": "structured"
     },
     {
       "snapshot": "grm",
@@ -86,14 +85,14 @@
       "unit": "uq_benchmark_2019",
       "passed": true,
       "learned_ki_id": "ki_google_research_uq_benchmark_2019_calibration_shift",
-      "strength": "tag"
+      "strength": "structured"
     },
     {
       "snapshot": "airllm",
       "unit": "air_llm",
       "passed": true,
       "learned_ki_id": "ki_airllm_layerwise_streaming_and_moe_expert_offload",
-      "strength": "tag"
+      "strength": "structured"
     }
   ]
 }

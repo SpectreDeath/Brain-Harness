@@ -60,7 +60,7 @@ A 🧑 **HUMAN CHECKPOINT** must never present the user with a single list longe
 - [x] **Phase 4** — P1 (Arch): Decouple `kernel/runtime/` composition root & verify SCC reduction
 - [x] **Phase 5** — P2: Vault hygiene — verify top-8 central unverified KIs & triage 12 duplicate pairs
 - [ ] **Phase 6** — P2: Ingest Next-5 research targets (`dp_sgd_clipping`, `smart_eval`, `perturbations`, `norml`, `psycholab`)
-- [ ] **Phase 7** — P3: Polish `ontology_spider` — zero residual false bridges, reverse blast radius & uncapped self-scan
+- [x] **Phase 7** — P3: Polish `ontology_spider` — zero residual false bridges, reverse blast radius & uncapped self-scan
 - [ ] **Phase 8** — P4: Dual-capped LRU eviction & bounded prefetch for lazily-staged plugin artifacts
 - [ ] **Phase 9** — Final re-benchmark, quality gates & `ACTION_SUMMARY.md`
 
@@ -316,14 +316,14 @@ Updated metadata in `.harness/knowledge/*/metadata.json`, refreshed `results/p02
 **Depends on:** Phase 0. **Model tier:** low/medium.
 
 ### Steps
-- [ ] **7.1** Write failing tests in `tests/test_repo_ontology_seam.py` and `tests/test_ontology_spider_service.py`:
+- [x] **7.1** Write failing tests in `tests/test_repo_ontology_seam.py` and `tests/test_ontology_spider_service.py`:
   - `test_generic_slug_trailing_words_do_not_bridge` — multi-word KI slugs containing generic governance/architecture nouns (`governance`, `scope`, `adapter`, `protocol`, `engine`, `workflow`) do not register standalone `"structured"` tokens matching unrelated sub-units like `gvisor/governance`.
   - `test_external_repo_leaf_does_not_bridge_unrelated_subproject` — when scanning a monorepo (`gvisor`), a KI whose `source_target` points to a different standalone repo (`Balanov/shim`) does not false-bridge a sub-unit (`gvisor/shim`) unless the parent repo or KI anchors match `gvisor`.
   - `test_max_files_per_unit_none_scans_all_non_pruned_files` — `RepoOntologyModelSource(..., max_files_per_unit=None)` scans beyond 60/120 files while still honoring `max_depth` and `_PRUNE_DIRS` (Rule 52).
   - `test_service_compute_blast_radius_reverse_transitive` — `OntologySpiderKernelService.compute_blast_radius(model, predicate="depends_on_project")` returns reverse transitive dependent counts matching reverse BFS.
-- [ ] **7.2** Implement the fixes in `plugins/memory_and_epistemics/ontology_spider/repo_adapter.py` and add `compute_blast_radius()` to `OntologySpiderKernelService` / `OntologySpiderProtocol` in `src/harness/services/ontology_spider.py`.
-- [ ] **7.3** Re-run `experiments/spider_decisions/p01_bridge_after.py` (with `refresh=True`); verify FP rate drops from `0.0588` (`2/34`) → `0.0000`, true-bridge recall stays `>= 0.95`, and `10/10` regression units remain `harness_learned=True`.
-- [ ] **7.4** Run quality gates (`ruff check .`, `pytest tests/test_repo_ontology_seam.py tests/test_ontology_spider_service.py tests/test_ontology_spider_adapter_fixes.py -q`), append `ACTION_LOG.md`, local commit `feat(spider-followup): phase 7 polish spider bridges, blast radius, and uncapped self-scan`.
+- [x] **7.2** Implement the fixes in `plugins/memory_and_epistemics/ontology_spider/repo_adapter.py` and add `compute_blast_radius()` to `OntologySpiderKernelService` / `OntologySpiderProtocol` in `src/harness/services/ontology_spider.py`.
+- [x] **7.3** Re-run `experiments/spider_decisions/p01_bridge_after.py` (with `refresh=True`); verify FP rate drops from `0.0588` (`2/34`) → `0.0000`, true-bridge recall stays `>= 0.95`, and `10/10` regression units remain `harness_learned=True`.
+- [x] **7.4** Run quality gates (`ruff check .`, `pytest tests/test_repo_ontology_seam.py tests/test_ontology_spider_service.py tests/test_ontology_spider_adapter_fixes.py -q`), append `ACTION_LOG.md`, local commit `feat(spider-followup): phase 7 polish spider bridges, blast radius, and uncapped self-scan`.
 
 ### Outputs
 Updated `plugins/memory_and_epistemics/ontology_spider/repo_adapter.py`, `src/harness/services/ontology_spider.py`, tests, refreshed `results/p01/metrics_after.json` & `summary.md`.

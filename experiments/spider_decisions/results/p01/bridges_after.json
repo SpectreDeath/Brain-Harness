@@ -92,7 +92,7 @@
     "subject": "active_selective_prediction",
     "raw_name": "active_selective_prediction",
     "object": "ki_google_research_aspest_active_selective_prediction",
-    "match_strength": "tag",
+    "match_strength": "structured",
     "ground_truth": true
   },
   {
@@ -116,7 +116,7 @@
     "subject": "distracting_control",
     "raw_name": "distracting_control",
     "object": "ki_google_research_distracting_control_suite",
-    "match_strength": "tag",
+    "match_strength": "structured",
     "ground_truth": true
   },
   {
@@ -180,7 +180,7 @@
     "subject": "latent_programmer",
     "raw_name": "latent_programmer",
     "object": "ki_google_research_latent_programmer_vqvae",
-    "match_strength": "tag",
+    "match_strength": "structured",
     "ground_truth": true
   },
   {
@@ -188,7 +188,7 @@
     "subject": "model_pruning",
     "raw_name": "model_pruning",
     "object": "ki_google_research_model_pruning_schedules",
-    "match_strength": "tag",
+    "match_strength": "structured",
     "ground_truth": true
   },
   {
@@ -212,7 +212,7 @@
     "subject": "scaling_transformer_inference_efficiency",
     "raw_name": "scaling_transformer_inference_efficiency",
     "object": "ki_google_research_scaling_transformer_inference",
-    "match_strength": "tag",
+    "match_strength": "structured",
     "ground_truth": true
   },
   {
@@ -236,16 +236,8 @@
     "subject": "uq_benchmark_2019",
     "raw_name": "uq_benchmark_2019",
     "object": "ki_google_research_uq_benchmark_2019_calibration_shift",
-    "match_strength": "tag",
-    "ground_truth": true
-  },
-  {
-    "snapshot": "gvisor",
-    "subject": "governance",
-    "raw_name": "governance",
-    "object": "ki_vercel_ui_sdk_expert_scope_governance",
     "match_strength": "structured",
-    "ground_truth": null
+    "ground_truth": true
   },
   {
     "snapshot": "gvisor",
@@ -256,19 +248,11 @@
     "ground_truth": true
   },
   {
-    "snapshot": "gvisor",
-    "subject": "shim",
-    "raw_name": "shim",
-    "object": "ki_shim_bounded_session_and_layered_skill_loader",
-    "match_strength": "structured",
-    "ground_truth": false
-  },
-  {
     "snapshot": "airllm",
     "subject": "air_llm",
     "raw_name": "air_llm",
     "object": "ki_airllm_layerwise_streaming_and_moe_expert_offload",
-    "match_strength": "tag",
+    "match_strength": "structured",
     "ground_truth": true
   }
 ]

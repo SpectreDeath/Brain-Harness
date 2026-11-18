@@ -282,6 +282,12 @@ class OntologySpiderProtocol(Protocol):
         max_depth: int = 3,
         max_files_per_unit: int | None = 60,
     ) -> PortfolioOntologyAnalysisReport: ...
+    def compute_blast_radius(
+        self,
+        model: Any,
+        *,
+        predicate: str = "depends_on_project",
+    ) -> dict[str, tuple[str, ...]]: ...
 
 
 ONTOLOGY_SPIDER_SERVICE_KEY: ServiceKey[OntologySpiderProtocol] = ServiceKey("memory.ontology_spider_service")
@@ -643,3 +649,38 @@ class OntologySpiderKernelService(OntologySpiderProtocol):
             top_unlearned_targets=tuple(unlearned_pool[:30]),
             repo_summaries=tuple(summaries),
         )
+
+    def compute_blast_radius(
+        self,
+        model: Any,
+        *,
+        predicate: str = "depends_on_project",
+    ) -> dict[str, tuple[str, ...]]:
+        """Return cycle-safe reverse transitive dependents per node for a directed predicate."""
+        from collections import deque
+
+        rev_adj: dict[str, set[str]] = {}
+        nodes: set[str] = set()
+        for asrt in model.assertions.values():
+            if asrt.relation.predicate != predicate:
+                continue
+            subj = str(asrt.relation.subject)
+            obj = str(asrt.relation.object)
+            nodes.add(subj)
+            nodes.add(obj)
+            rev_adj.setdefault(obj, set()).add(subj)
+
+        out: dict[str, tuple[str, ...]] = {}
+        for node in sorted(nodes):
+            visited: set[str] = set()
+            queue = deque(sorted(rev_adj.get(node, ())))
+            while queue:
+                cur = queue.popleft()
+                if cur == node or cur in visited:
+                    continue
+                visited.add(cur)
+                for parent in rev_adj.get(cur, ()):
+                    if parent != node and parent not in visited:
+                        queue.append(parent)
+            out[node] = tuple(sorted(visited))
+        return out
