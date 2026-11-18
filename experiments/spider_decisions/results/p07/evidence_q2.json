@@ -1,0 +1,122 @@
+{
+  "question": "How should uncertainty_guard decide to abstain or escalate to a human?",
+  "kis": [
+    {
+      "ki_id": "ki_google_research_aspest_active_selective_prediction",
+      "title": "Google Research ASPEST: Bridging Active Sample Acquisition & Selective Prediction via Checkpoint Ensembles",
+      "category": "agent_orchestration",
+      "tags": [
+        "active_selective_prediction",
+        "aspest",
+        "google_research",
+        "selective_prediction",
+        "active_learning",
+        "abstention",
+        "uncertainty",
+        "arxiv_2304_03870"
+      ],
+      "discovery_source": "expected+retrieve_hop0:references_code",
+      "isnad_verified": true,
+      "claim_count": 2,
+      "verified_claim_count": 2,
+      "claims": [
+        {
+          "assertion": "active_selective_prediction evaluates active adaptation and selective abstention across six domain-shift benchmarks (mnist->svhn, cifar10->cinic10, fmow, amazon_review, domainnet, otto).",
+          "file": "active_selective_prediction/README.md",
+          "lines": "L1-L40",
+          "verified": true
+        },
+        {
+          "assertion": "ASPEST maintains a checkpoint ensemble (update_ensemble_state), queries bounded label budgets via AverageMarginSampling over test shifts, self-trains with KL-divergence only on samples within a gated confidence band [lower_threshold, upper_threshold), and scores abstention from max ensemble probability.",
+          "file": "active_selective_prediction/methods/aspest.py",
+          "lines": "L28-L521",
+          "verified": true
+        }
+      ],
+      "distilled_learning": "Combine low-budget human oracle labeling (average-margin sampling) with dual-thresholded KL self-training over running checkpoint ensembles so selective prediction abstention thresholds stay calibrated under target distribution shift.",
+      "summary_excerpt": "# ASPEST: Bridging Active Sample Acquisition & Selective Prediction\n\n## Provenance\n- **Upstream Repository**: `https://github.com/google-research/google-research` (`active_selective_prediction/`)\n- **Paper**: `https://arxiv.org/abs/2304.03870`\n- **Surfaced By**: Ontology-Spider `.dialog` query + uncertainty shift cross-linking\n\n## Key Mechanisms (`active_selective_prediction/methods/aspest.py`)\n1. **Checkpoint Ensemble Aggregation (`update_ensemble_state`)**: Accumulates softmax outputs across intermediate training checkpoints rather than relying on a single overconfident final checkpoint.\n2. "
+    },
+    {
+      "ki_id": "ki_google_research_cisc_confidence_voting",
+      "title": "Google Research CISC: Confidence-Informed Self-Consistency & Within-Question Discrimination (WQD)",
+      "category": "agent_orchestration",
+      "tags": [
+        "cisc",
+        "google_research",
+        "google-research",
+        "self_consistency",
+        "confidence_scoring",
+        "llm_reasoning",
+        "wqd",
+        "weighted_voting",
+        "arxiv_2502_06233"
+      ],
+      "discovery_source": "expected",
+      "isnad_verified": true,
+      "claim_count": 3,
+      "verified_claim_count": 3,
+      "claims": [
+        {
+          "assertion": "CISC extracts per-trace confidence via ConfidenceExtractionConfig (temperature=0.0, num_tokens=10, verbal_eos_pattern=')') and ConfidenceExtractionType variants (NONE, BINARY, BINARY_FT, BINARY_FT01, BINARY_MP, HUNDRED), bundled in AggregatedConfidenceExtractionConfig across verbal_confidence, confidence_likelihoods, and run_sequence_probability.",
+          "file": "cisc/src/confidence_extraction.py",
+          "lines": "L24-L106",
+          "verified": true
+        },
+        {
+          "assertion": "majority_with_conf() implements confidence-weighted self-consistency voting supporting NormalizationType (NONE, LINEAR, SOFTMAX), frozen AggregatorConfig validation across four confidence column families, zero-confidence retention while filtering NaN/empty entries, tie-break-only mode, and normalized chosen-answer confidence output.",
+          "file": "cisc/src/post_processing/aggregators.py",
+          "lines": "L32-L188",
+          "verified": true
+        },
+        {
+          "assertion": "calculate_metrics_at_position() produces frozen ResultMetrics quantifying comparable_baseline_traces_needed vs standard SC (>40% path reduction across 9 models and 4 datasets per cisc/README.md), paired with calibration_util.py (compute_ece, compute_brier, TemperatureScaling) and WQD discrimination analysis over ECE.",
+          "file": "cisc/src/post_processing/metrics_calculators.py",
+          "lines": "L26-L83",
+          "verified": true
+        }
+      ],
+      "distilled_learning": "Replace unweighted self-consistency majority voting with temperature-normalized confidence-weighted voting (CISC majority_with_conf + SOFTMAX/LINEAR normalization) and evaluate selection quality via Within-Question Discrimination (WQD) rather than global calibration (ECE) alone.",
+      "summary_excerpt": "# Google Research `cisc`: Confidence-Informed Self-Consistency & Within-Question Discrimination\n\n## 1. Context & Provenance\n\n- **Upstream Repository**: `https://github.com/google-research/google-research` (`cisc/` subproject, 38 files)\n- **Snapshot Reference**: `google-research-master` (archive snapshot, non-git)\n- **Publication**: *Confidence Improves Self-Consistency in LLMs* (ACL Findings 2025, `https://arxiv.org/abs/2502.06233`)\n- **Authors**: Amir Taubenfeld\\*, Tom Sheffer\\*, Eran Ofek, Amir Feder, Ariel Goldstein, Zorik Gekhman, Gal Yona\n- **Primary Verified Sources**:\n  - `cisc/README.m"
+    },
+    {
+      "ki_id": "ki_google_research_uq_benchmark_2019_calibration_shift",
+      "title": "Google Research UQ Benchmark 2019: Predictive Uncertainty Under Dataset Shift, Brier Decomposition & Confidence-Threshold Coverage",
+      "category": "agent_orchestration",
+      "tags": [
+        "uq_benchmark_2019",
+        "google_research",
+        "uncertainty_quantification",
+        "dataset_shift",
+        "brier_decomposition",
+        "calibration",
+        "arxiv_1906_02530"
+      ],
+      "discovery_source": "expected+retrieve_hop1:related_to",
+      "isnad_verified": true,
+      "claim_count": 3,
+      "verified_claim_count": 3,
+      "claims": [
+        {
+          "assertion": "uq_benchmark_2019 benchmarks Vanilla, Temperature Scaling, Deep Ensemble, MC Dropout, SVI, and Last-Layer variants under dataset shift (MNIST-rot, CIFAR-10-C, ImageNet-C, Criteo-corrupt, 20 Newsgroups/LM1B), showing post-hoc temperature scaling falls short under shift relative to model marginalization/ensembles.",
+          "file": "uq_benchmark_2019/README.md",
+          "lines": "L5-L33",
+          "verified": true
+        },
+        {
+          "assertion": "metrics_lib.py implements expected_calibration_error(), expected_calibration_error_multiclass(), compute_accuracies_at_confidences() threshold-coverage sweeps, brier_decomposition() into uncertainty/resolution/reliability, and quantile binning with 0->1e-8 guard for np.digitize.",
+          "file": "uq_benchmark_2019/metrics_lib.py",
+          "lines": "L30-L391",
+          "verified": true
+        },
+        {
+          "assertion": "calibration_lib.py fits maximum-likelihood temperature via scipy.optimize.bisect over TF Categorical/Bernoulli NLL gradients in find_scaling_temperature() and applies it via apply_temperature_scaling().",
+          "file": "uq_benchmark_2019/calibration_lib.py",
+          "lines": "L30-L78",
+          "verified": true
+        }
+      ],
+      "distilled_learning": "Evaluate predictive uncertainty under distribution shift using confidence-threshold selectivity sweeps (compute_accuracies_at_confidences) and Brier uncertainty/resolution/reliability decomposition rather than trusting in-distribution temperature scaling alone.",
+      "summary_excerpt": "# Google Research `uq_benchmark_2019`: Predictive Uncertainty Under Dataset Shift\n\n## 1. Context & Provenance\n\n- **Upstream Repository**: `https://github.com/google-research/google-research` (`uq_benchmark_2019/`)\n- **Snapshot Reference**: `google-research-master` (archive snapshot, non-git)\n- **Publication**: *Can You Trust Your Model's Uncertainty? Evaluating Predictive Uncertainty Under Dataset Shift* (`https://arxiv.org/abs/1906.02530`)\n- **Primary Verified Sources**:\n  - `uq_benchmark_2019/README.md` (`L5-L33`)\n  - `uq_benchmark_2019/metrics_lib.py` (`L30-L391`, sha256 `d8a27d5c62eb04f0d6"
+    }
+  ]
+}

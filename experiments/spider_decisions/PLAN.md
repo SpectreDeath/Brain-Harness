@@ -63,7 +63,7 @@
 - [x] **Phase 4** — Next-5 learning targets (#1)
 - [x] **Phase 5** — Entropy-driven question selection (#3)
 - [x] **Phase 6** — KI retrieval for a code change (#4)
-- [ ] **Phase 7** — Design-choice arbitration memos (#5)
+- [x] **Phase 7** — Design-choice arbitration memos (#5)
 - [ ] **Phase 8** — Plugin vs KI-only vs Skip classifier (#6)
 - [ ] **Phase 9** — Brain Harness refactor ordering (#10)
 - [ ] **Phase 10** — Spider-assisted skill routing vs `route_intent` (#11)
@@ -410,18 +410,18 @@ Generic **unit names** also pollute "unlearned target" lists: `python`, `tests`,
    `ki_google_research_uq_benchmark_2019_calibration_shift`, `ki_google_research_cisc_confidence_voting`).
 
 ### Steps
-- [ ] **7.1** Create `p07_gather_evidence.py`: for each question, collect evidence KIs = the expected KIs above ∪
+- [x] **7.1** Create `p07_gather_evidence.py`: for each question, collect evidence KIs = the expected KIs above ∪
   `retrieve_kis(...)` results for the closest target module (Q1 → `harness.services.ontology_spider` is **not**
   relevant; use tag search for `prefetch`, `cache`, `lru`, `streaming`; Q2 → `harness.services.uncertainty_guard`).
   For each KI, extract every `isnad.claims[]` entry with `assertion`, `file`/`source_file`, `lines`, `verified`, and the KI's `isnad_verified`.
   Write `write_json(7, "evidence_q1", ...)`, `write_json(7, "evidence_q2", ...)`.
-- [ ] **7.2** ⚠️ **ESCALATE** — Hand the two evidence files to a high-reasoning model to write
+- [x] **7.2** ⚠️ **ESCALATE** — Hand the two evidence files to a high-reasoning model to write
   `results/p07/memo_q1.md` and `memo_q2.md`. Each memo must: state a recommendation, cite every supporting claim by
   `ki_id` + claim text, mark which claims are verified, and list conflicts or gaps.
-- [ ] **7.3** Create `p07_score_memos.py`: compute `% cited claims verified`, `# distinct KIs cited`,
+- [x] **7.3** Create `p07_score_memos.py`: compute `% cited claims verified`, `# distinct KIs cited`,
   `# conflicts flagged` per memo by parsing the memo for `ki_` ids and cross-checking evidence JSON.
-- [ ] **7.4** 🧑 **HUMAN CHECKPOINT** — Ask the user to rate each memo 1–5 for usefulness. Record in `write_json(7, "human_ratings", ...)`.
-- [ ] **7.5** Append log entry; local commit.
+- [x] **7.4** 🧑 **HUMAN CHECKPOINT** — Ask the user to rate each memo 1–5 for usefulness. Record in `write_json(7, "human_ratings", ...)`.
+- [x] **7.5** Append log entry; local commit.
 
 ### Acceptance
 - Both memos exist, every `ki_` id cited exists in the vault, scores and ratings recorded.

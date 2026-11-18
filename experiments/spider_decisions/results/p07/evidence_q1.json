@@ -1,0 +1,459 @@
+{
+  "question": "What eviction/prefetch policy should Brain Harness use for lazily-staged plugin artifacts?",
+  "kis": [
+    {
+      "ki_id": "ki-agora-workbench-datalake-policy-object-transfer",
+      "title": "Agora Workbench: Data Lake Authorization Scope Enforcement & Bounded v2 Streaming Object Transfer",
+      "category": "agent_orchestration",
+      "tags": [
+        "agora-workbench",
+        "data-lake-policy",
+        "cursor-scope-guard",
+        "object-transfer",
+        "streaming-base64"
+      ],
+      "discovery_source": "tag_search",
+      "isnad_verified": true,
+      "claim_count": 0,
+      "verified_claim_count": 0,
+      "claims": [],
+      "distilled_learning": "Data-plane isolation combines pre-pagination cursor-scope validation and non-enumerable denial masking with bounded 256 MB, duplicate-key-rejected streaming transfer envelopes.",
+      "summary_excerpt": "# Agora Workbench: Data Lake Policy Enforcement & Streaming Object Transfer\n\n## Overview\n- **Source Repository**: `https://github.com/microsoft/agora-workbench` (`a8ae030b`)\n- **Primary Files**:\n  - `src/agora_workbench/data_lake/policy.py#L50-L280`\n  - `src/agora_workbench/code_execution/object_transfer.py#L45-L245`\n\n## Core Architecture & Invariants\n1. **Strict Policy Mode Parity (`PolicyEnforcedCatalogProvider.__init__`)**: `CatalogPolicyMode.PER_ARTIFACT` mandates a non-None `per_artifact_enforcer`, whereas `HOMOGENEOUS_SOURCE` forbids attaching one, preventing silent security mode confusi"
+    },
+    {
+      "ki_id": "ki-bot-hq-upsert-transcript",
+      "title": "Bot HQ: Append-Mostly (seq, updatedSeq) Upsert Transcript Model",
+      "category": "agent_orchestration",
+      "tags": [
+        "bot-hq",
+        "transcript",
+        "sse",
+        "streaming",
+        "sqlite"
+      ],
+      "discovery_source": "tag_search",
+      "isnad_verified": true,
+      "claim_count": 0,
+      "verified_claim_count": 0,
+      "claims": [],
+      "distilled_learning": "Conversation rows carry (seq, updatedSeq) so streaming assistant replies and live tool-call state transitions upsert idempotently over SSE without duplicate rows, while a per-bot generation counter cleanly resets sessions.",
+      "summary_excerpt": "# Bot HQ: Append-Mostly `(seq, updatedSeq)` Upsert Transcript Model\n\n## Design\n- **Idempotent Streaming Upserts**: A streaming reply or evolving tool-call row keeps its `seq` and increments `updatedSeq`, allowing browser clients to upsert cleanly from SSE (`GET /api/events`).\n- **Session Generation Reset**: Incrementing a bot's `generation` starts a fresh conversation and fresh underlying Hermes session without mutating historical rows.\n"
+    },
+    {
+      "ki_id": "ki-hf-datasets-arrow-streaming",
+      "title": "PyArrow Memory-Mapped Zero-Copy Execution, Lazy Generator Streaming & xxhash Deterministic Caching in Hugging Face Datasets",
+      "category": "data_engineering",
+      "tags": [
+        "pyarrow",
+        "datasets",
+        "streaming",
+        "caching",
+        "zero_copy"
+      ],
+      "discovery_source": "tag_search",
+      "isnad_verified": false,
+      "claim_count": 4,
+      "verified_claim_count": 0,
+      "claims": [
+        {
+          "assertion": "",
+          "file": "",
+          "lines": "",
+          "verified": false
+        },
+        {
+          "assertion": "",
+          "file": "",
+          "lines": "",
+          "verified": false
+        },
+        {
+          "assertion": "",
+          "file": "",
+          "lines": "",
+          "verified": false
+        },
+        {
+          "assertion": "",
+          "file": "",
+          "lines": "",
+          "verified": false
+        }
+      ],
+      "distilled_learning": "Epistemic architectural distillation of Hugging Face datasets (v5.0.2.dev0). Details the dual-backed Arrow Dataset and IterableDataset engines, C++ PyArrow zero-copy memory mapping, lazy sharded streaming pipelines with generator evaluation, xxhash+dill deterministic transformation cache fingerprinting, 30+ lakehouse and scientific biostructure (mmCIF/PDB/FASTQ/GenBank) packaged modules, and decla",
+      "summary_excerpt": "Epistemic architectural distillation of Hugging Face datasets (v5.0.2.dev0). Details the dual-backed Arrow Dataset and IterableDataset engines, C++ PyArrow zero-copy memory mapping, lazy sharded streaming pipelines with generator evaluation, xxhash+dill deterministic transformation cache fingerprinting, 30+ lakehouse and scientific biostructure (mmCIF/PDB/FASTQ/GenBank) packaged modules, and declarative Features schema system."
+    },
+    {
+      "ki_id": "ki_20260830_grok_05",
+      "title": "Preemptive Interjection Buffer & Prompt Queue",
+      "category": "agent_orchestration",
+      "tags": [
+        "agent_loop",
+        "interjections",
+        "prompt_queue",
+        "preemption",
+        "streaming"
+      ],
+      "discovery_source": "tag_search",
+      "isnad_verified": true,
+      "claim_count": 1,
+      "verified_claim_count": 0,
+      "claims": [
+        {
+          "assertion": "Buffering asynchronous user interrupts and out-of-band runtime events in an interjection core allows clean preemption of active LLM token streaming without dropping inflight context or corrupting session event journals",
+          "file": "",
+          "lines": "",
+          "verified": false
+        }
+      ],
+      "distilled_learning": "# Preemptive Interjection Buffer & Prompt Queue",
+      "summary_excerpt": "# Preemptive Interjection Buffer & Prompt Queue\n\n## Context\nDuring long-running agent reasoning, large token generations, or multi-step execution loops, users may submit steering prompts or background diagnostic hooks may detect critical errors. Forcing the user to wait for generation completion wastes tokens and time, while naive process cancellation drops in-flight execution context.\n\n## Distilled Learning\nImplement an asynchronous interjection core and prompt queue:\n- **Streaming Preemption Barrier**: An atomic interjection buffer monitors inbound channels while the LLM is actively streamin"
+    },
+    {
+      "ki_id": "ki_20260830_kimi_02",
+      "title": "4-Layer Isomorphic Transcript Data Engine with Granularity Subscriptions",
+      "category": "developer_experience",
+      "tags": [
+        "kimi_code",
+        "transcript",
+        "event_streaming",
+        "granularity",
+        "isomorphic_ui",
+        "telemetry"
+      ],
+      "discovery_source": "tag_search",
+      "isnad_verified": true,
+      "claim_count": 1,
+      "verified_claim_count": 0,
+      "claims": [
+        {
+          "assertion": "Transcript streaming systems should separate normalized storage (L1), idempotent state operations (L2), granularity-gated event filtering (L3), and framework-free view projection (L4) to deliver zero-overhead telemetry across diverse UI consumers",
+          "file": "",
+          "lines": "",
+          "verified": false
+        }
+      ],
+      "distilled_learning": "# 4-Layer Isomorphic Transcript Data Engine with Granularity Subscriptions",
+      "summary_excerpt": "# 4-Layer Isomorphic Transcript Data Engine with Granularity Subscriptions\n\n## Architectural Summary\n`@moonshot-ai/transcript` isolates event persistence from presentation using an isomorphic 4-layer model with dynamic granularity gating.\n\n## Operational Guidelines\n1. **4 Layers:**\n   - **L1 Store:** Normalized, agent-indexed storage of execution frames.\n   - **L2 Operations:** Idempotent operations (`appendDelta`, `closeBlock`, `commitTurn`) with cursor-based pagination.\n   - **L3 Granularity Gate:** Filter streams based on client demand (`off`, `turn`, `block`, `delta`).\n   - **L4 View Regis"
+    },
+    {
+      "ki_id": "ki_20260918_gemini_vercel_streaming",
+      "title": "Plain-Text Chunk Streaming Architecture for Gemini on Vercel Serverless",
+      "category": "infrastructure_and_runtime/integration",
+      "tags": [
+        "gemini",
+        "vercel_serverless",
+        "streaming",
+        "react_stream_reader",
+        "cors_preflight",
+        "plain_text_chunks"
+      ],
+      "discovery_source": "tag_search",
+      "isnad_verified": true,
+      "claim_count": 3,
+      "verified_claim_count": 3,
+      "claims": [
+        {
+          "assertion": "Streaming Plain-Text HTTP chunks via Node.js res.write() and generateContentStream bypasses token completion wait times and provides immediate perceived responsiveness in serverless runtimes.",
+          "file": "",
+          "lines": "",
+          "verified": true
+        },
+        {
+          "assertion": "Cross-domain embedded chat widgets require serverless handlers to explicitly intercept OPTIONS preflight requests and return 200 OK before the browser allows streaming POST requests.",
+          "file": "",
+          "lines": "",
+          "verified": true
+        },
+        {
+          "assertion": "Consuming streamed HTTP chunks in web frontends requires ReadableStreamDefaultReader with TextDecoder running an incremental state accumulation loop rather than awaiting res.text() or res.json().",
+          "file": "",
+          "lines": "",
+          "verified": true
+        }
+      ],
+      "distilled_learning": "# Plain-Text Chunk Streaming Architecture for Gemini on Vercel Serverless",
+      "summary_excerpt": "# Plain-Text Chunk Streaming Architecture for Gemini on Vercel Serverless\n\n## Executive Summary\nThis Knowledge Item captures the core architectural patterns and invariant rules for deploying real-time streaming AI chatbots using Google Gemini (`@google/genai`) and Vercel Serverless Functions, derived from Johnson Samuel's literature (*How to Build an AI Chatbot with Gemini and Vercel Serverless Functions \ud83d\ude80*, freeCodeCamp, 2026).\n\n## Architectural Mechanics\n\n### 1. Plain-Text Chunk Streaming Backend\n- Rather than waiting for full completion generation before returning a response (`res.json()`),"
+    },
+    {
+      "ki_id": "ki_20261028_headroom_context_optimization",
+      "title": "Headroom Context Optimization Layer: Content Routing, SmartCrusher, Cross-Context Retrieval (CCR), and Detector-Only Cache Alignment",
+      "category": "memory_and_epistemics",
+      "tags": [
+        "context_optimization",
+        "token_budgeting",
+        "content_router",
+        "smart_crusher",
+        "cross_context_retrieval",
+        "ccr_markers",
+        "cache_alignment",
+        "prompt_cache_hotzone",
+        "thinking_compactor",
+        "lossless_vs_lossy_compaction",
+        "structural_parsers"
+      ],
+      "discovery_source": "tag_search",
+      "isnad_verified": true,
+      "claim_count": 4,
+      "verified_claim_count": 4,
+      "claims": [
+        {
+          "assertion": "Format-aware syntactic content routing (ContentRouter) achieves 50-90% token reduction without semantic degradation, whereas blind uniform summarization destroys tabular structure and syntax boundaries.",
+          "file": "",
+          "lines": "",
+          "verified": true
+        },
+        {
+          "assertion": "Cross-Context Retrieval (CCR) deduplication replaces multi-turn repeated tool observations with deterministic SHA-256 digest markers ([CCR tool digest: <hash>]), stopping redundant observation bloat across multi-turn reasoning loops.",
+          "file": "",
+          "lines": "",
+          "verified": true
+        },
+        {
+          "assertion": "The prompt cache hot zone (system prompt) must NEVER be mutated in place; dynamic UUIDs/timestamps must be surfaced via detector-only checks rather than dynamic in-place rewriting to prevent prompt cache prefix busts (PR-A2 invariant).",
+          "file": "",
+          "lines": "",
+          "verified": true
+        },
+        {
+          "assertion": "On Claude 4.6+ models, prior-turn extended thinking reasoning blocks are billed as input tokens; converting them deterministically into compressed text markers stops compounding billing costs without affecting active reasoning.",
+          "file": "",
+          "lines": "",
+          "verified": true
+        }
+      ],
+      "distilled_learning": "# Headroom Context Optimization Architecture",
+      "summary_excerpt": "# Headroom Context Optimization Architecture\n\n## Executive Summary\n\nHeadroom (v0.41.0) defines a production-grade context optimization architecture for high-token LLM workloads. Rather than applying lossy, generic natural language summarization across context windows, Headroom treats context as a multi-modal stream of structured data types (JSON arrays, code ASTs, git diffs, build/test logs, search outputs, and prompt cache hot zones) and applies specialized, deterministic compression algorithms to each format.\n\n---\n\n## Core Theorems & Invariants\n\n### 1. Syntactic Content Routing (ContentRoute"
+    },
+    {
+      "ki_id": "ki_20261110_google_research_multitarget_edge_ml",
+      "title": "Multi-Target Edge ML Serialization & Streaming Delay-Line Architecture",
+      "category": "machine_learning",
+      "tags": [
+        "machine_learning",
+        "google_research",
+        "edge_ml",
+        "tflite",
+        "tfjs",
+        "kws_streaming",
+        "sign_language_detection"
+      ],
+      "discovery_source": "tag_search",
+      "isnad_verified": true,
+      "claim_count": 3,
+      "verified_claim_count": 3,
+      "claims": [
+        {
+          "assertion": "Streaming keyword spotting and audio frontends (kws_streaming, non_semantic_speech_benchmark) decouple acoustic frontend feature extraction from neural backbones via dual TFLite FlatBuffer graph exports (model1_wfrontend.tflite at 83 KB vs model1_woutfrontend.tflite at 271 KB) and explicit stateful ring-buffer delay lines.",
+          "file": "",
+          "lines": "",
+          "verified": true
+        },
+        {
+          "assertion": "Cross-platform sequence-tagging models (sign_language_detection) pair Python Keras HDF5 checkpoints (models/py/model.h5, 109,264 B) with browser-executable TensorFlow.js Layers manifests (models/js/model.json + group1-shard1of1.bin, 92,680 B, 23,170 float32 parameters across lstm/lstm_cell and dense heads).",
+          "file": "",
+          "lines": "",
+          "verified": true
+        },
+        {
+          "assertion": "Research monorepo packages decouple hyperparameter injection from core model definitions using declarative Gin configuration graphs (321 .gin files across google-research-master) alongside absl.flags CLI entrypoints.",
+          "file": "",
+          "lines": "",
+          "verified": true
+        }
+      ],
+      "distilled_learning": "# Multi-Target Edge ML Serialization & Streaming Delay-Line Architecture",
+      "summary_excerpt": "# Multi-Target Edge ML Serialization & Streaming Delay-Line Architecture\n\n## Context & Provenance\nDistilled from deep inspection of the **Google Research** monorepo (`google-research-master`, 760 projects, 19,618 sampled files) using `StandardReaToolkitService`, `ReaManagedRuntimeService`, and `MemGraphRAGService`.\n\n## Core Architectural Invariants\n1. **Frontend-Decoupled TFLite Graph Partitioning**:\n   Audio and speech benchmarks (`non_semantic_speech_benchmark`, `kws_streaming`) export paired FlatBuffer (`TFL3`) artifacts: `model1_wfrontend.tflite` (83,144 B, embedding spectrogram/mel-filter"
+    },
+    {
+      "ki_id": "ki_airllm_layerwise_streaming_and_moe_expert_offload",
+      "title": "AirLLM Layer-Wise Disk Offloading, Per-Expert MoE Streaming & On-GPU Packed Decompression",
+      "category": "machine_learning",
+      "tags": [
+        "airllm",
+        "air_llm",
+        "layerwise_offloading",
+        "moe_streaming",
+        "mxfp4",
+        "pinned_memory",
+        "meta_device"
+      ],
+      "discovery_source": "expected+tag_search",
+      "isnad_verified": true,
+      "claim_count": 2,
+      "verified_claim_count": 2,
+      "claims": [
+        {
+          "assertion": "AirLLMBaseModel instantiates Hugging Face models on the meta device (init_empty_weights), strips compressed-tensors model-wide ct_decompress_hook before forward, and decompresses packed MXFP4 weight_packed/weight_scale tensors on-GPU per layer after PCIe transfer (4x less PCIe traffic), while capping host pin_memory() at max_pinned_layer_bytes = 2 GiB to prevent 2-in-flight MoE layers from locking ~34 GiB RAM.",
+          "file": "air_llm/airllm/airllm_base.py",
+          "lines": "L55-L535",
+          "verified": true
+        },
+        {
+          "assertion": "AirLLMKimiK3 overrides layer_names_dict with expert_prefix (block_sparse_moe.experts) and small resident submodules so only routed sparse MoE experts (~16 of 896 per token, ~1 GB vs ~55 GB full layer) are streamed on demand.",
+          "file": "air_llm/airllm/airllm_kimi_k3.py",
+          "lines": "L1-L33",
+          "verified": true
+        }
+      ],
+      "distilled_learning": "When streaming giant transformer/MoE checkpoints within tight VRAM budgets, keep packed weights compressed across PCIe and decompress on-device per layer, stream individual active MoE experts instead of full layers, and bound pinned host memory per in-flight layer (<= 2 GiB) with pageable fallback.",
+      "summary_excerpt": "# AirLLM Layer-Wise Disk Offloading, Per-Expert MoE Streaming & On-GPU Packed Decompression\n\n## Provenance\n- **Upstream Repository**: `https://github.com/lyogavin/airllm` (`af3c212c52ebecad95f0d25eb2595e82988d0cdd`)\n- **Surfaced By**: Ontology-Spider (`air_llm` unlearned tested `nlp_and_llm_project`) + REA `plugin.rea_managed_runtime` (`cpython_pyc` signature extraction `ev:653cd6965569ee6db6a850c0d0fdc9b3ffe73d8c2c4cc14c6a660e48fa07aaee`)\n\n## Key Mechanisms\n1. **Meta-Device Instantiation & Runtime Mixin (`air_llm/airllm/airllm_base.py`)**:\n   - Instantiates `*ForCausalLM` on `meta` via `accel"
+    },
+    {
+      "ki_id": "ki_airllm_plus_superblock_prefetch_runtime",
+      "title": "AirLLM++ Super-Block Sequential Packing, Offset-Indexed Plans & Depth-Pipelined Prefetch Runtime",
+      "category": "infrastructure_and_runtime",
+      "tags": [
+        "airllm-plus",
+        "superblock_residency",
+        "prefetch_pipeline",
+        "lru_cache",
+        "sequential_io",
+        "byte_offset_index"
+      ],
+      "discovery_source": "expected+tag_search",
+      "isnad_verified": true,
+      "claim_count": 3,
+      "verified_claim_count": 3,
+      "claims": [
+        {
+          "assertion": "pack_blocks.py groups per-layer tensor shards (.safetensors/.bin/.pt/.onnx) into contiguous multi-layer super-blocks (default layers_per_block=4) recorded with TensorMeta byte offsets/sizes in index.json so runtime/store.py performs sequential reads or O(1) f.seek(offset)/f.read(size) range reads.",
+          "file": "pack/pack_blocks.py",
+          "lines": "L1-L110",
+          "verified": true
+        },
+        {
+          "assertion": "runtime/executor.py coordinates Plan (create_plan), BufferedBlockStore, depth-bounded producer-consumer Prefetcher (queue.Queue(maxsize=depth) daemon worker), and thread-safe OrderedDict BlockCache enforcing both max_blocks and max_size_bytes eviction.",
+          "file": "runtime/executor.py",
+          "lines": "L1-L120",
+          "verified": true
+        },
+        {
+          "assertion": "runtime/cache.py implements thread-safe OrderedDict LRU block eviction bounded simultaneously by entry count and total byte size, skipping oversized entries cleanly.",
+          "file": "runtime/cache.py",
+          "lines": "L1-L95",
+          "verified": true
+        }
+      ],
+      "distilled_learning": "Replace fragmented per-layer disk reads with contiguous super-block packing indexed by (file, offset, bytes), and overlap I/O with execution using a depth-bounded producer-consumer prefetcher plus count-and-byte-capped LRU cache.",
+      "summary_excerpt": "# AirLLM++ Super-Block Sequential Packing, Offset-Indexed Plans & Prefetch Runtime\n\n## Provenance\n- **Upstream Repository**: `https://github.com/howardleegeek/airllm-plus` (`2a9f04035d80abf43fe7579673d08947c49080f1`)\n- **Surfaced By**: Ontology-Spider (`runtime` hub, `bench -> runtime` dependency) + REA `plugin.rea_managed_runtime` on `executor.pyc`, `prefetch.pyc`, `pack_blocks.pyc`\n\n## Architectural Pattern\n1. **Super-Block Packing (`pack/pack_blocks.py`, `runtime/plan.py`, `runtime/store.py`)**:\n   - Consolidates fragmented `layer_*` / `model.*` shards into contiguous super-blocks (`layers_"
+    },
+    {
+      "ki_id": "ki_google_research_scaling_transformer_inference",
+      "title": "Google Research Scaling Transformer Inference Efficiency: 2D/3D Mesh Sharding Rules, Prefix-Shared KV Slices & Decode Layout",
+      "category": "agent_orchestration",
+      "tags": [
+        "scaling_transformer_inference_efficiency",
+        "google_research",
+        "transformer_inference",
+        "kv_cache",
+        "sharding",
+        "jax",
+        "arxiv_2211_05102"
+      ],
+      "discovery_source": "tag_search",
+      "isnad_verified": true,
+      "claim_count": 2,
+      "verified_claim_count": 2,
+      "claims": [
+        {
+          "assertion": "partitioning.py separates logical tensor dimensions from physical 3D TPU mesh axes (x, y, z) using make_rules_two_d, make_rules_one_d, make_rules_weight_gathered, AttnAllToAll collective modes, and thread-local PartitioningRules context scoping.",
+          "file": "scaling_transformer_inference_efficiency/partitioning.py",
+          "lines": "L42-L173",
+          "verified": true
+        },
+        {
+          "assertion": "inference.py infer() shares prefix KV caches across multi-sample decode batches (batch % prefix_batch == 0), pre-slices RoPE sin/cos tables once per prefix via lax.dynamic_slice_in_dim + vmap, and performs in-place static KV buffer updates with lax.dynamic_update_index_in_dim.",
+          "file": "scaling_transformer_inference_efficiency/inference.py",
+          "lines": "L60-L109",
+          "verified": true
+        }
+      ],
+      "distilled_learning": "Decouple logical tensor partitioning rules from physical device meshes and share prompt-prefix KV caches (batch % prefix_batch == 0) when generating multiple continuation samples.",
+      "summary_excerpt": "# Google Research `scaling_transformer_inference_efficiency`: Partitioned Low-Latency Decoding\n\n## 1. Context & Provenance\n\n- **Upstream Repository**: `https://github.com/google-research/google-research` (`scaling_transformer_inference_efficiency/`)\n- **Snapshot Reference**: `google-research-master` (archive snapshot, non-git)\n- **Publication**: *Efficiently Scaling Transformer Inference* (`http://arxiv.org/abs/2211.05102`)\n- **Primary Verified Sources**:\n  - `scaling_transformer_inference_efficiency/README.md` (`L1-L37`)\n  - `scaling_transformer_inference_efficiency/partitioning.py` (`L42-L17"
+    },
+    {
+      "ki_id": "ki_self_20260917_04",
+      "title": "Gradio Production Architecture: Decoupled Logic, Session State Isolation, Multimodal Pipelines, and Hugging Face Deployment",
+      "category": "developer_experience/ui",
+      "tags": [
+        "gradio",
+        "web_interfaces",
+        "ai_applications",
+        "state_management",
+        "blocks_layout",
+        "chatinterface",
+        "multimodal_pipelines",
+        "streaming_inference",
+        "production_deployment",
+        "huggingface_spaces"
+      ],
+      "discovery_source": "tag_search",
+      "isnad_verified": true,
+      "claim_count": 4,
+      "verified_claim_count": 4,
+      "claims": [
+        {
+          "assertion": "Gradio applications require strict architectural decoupling between the Python logic layer (stateless, pure functions testable via headless pytest) and the interface layer (Gradio components and event triggers).",
+          "file": "",
+          "lines": "",
+          "verified": true
+        },
+        {
+          "assertion": "Managing user state in Gradio via module-level Python global variables causes catastrophic multi-user session pollution and concurrency race conditions; per-session state must be managed via gr.State passed explicitly into event handlers.",
+          "file": "",
+          "lines": "",
+          "verified": true
+        },
+        {
+          "assertion": "Production AI interfaces must warm-load models and pipeline resources at module initialization rather than inside callback handlers to eliminate multi-second latency spikes and GPU VRAM exhaustion.",
+          "file": "",
+          "lines": "",
+          "verified": true
+        },
+        {
+          "assertion": "High-throughput and streaming Gradio workflows must enable demo.queue() to protect worker concurrency, provide progress telemetry via gr.Progress, and shed excess request load gracefully.",
+          "file": "",
+          "lines": "",
+          "verified": true
+        }
+      ],
+      "distilled_learning": "# Gradio Production Architecture: Mental Models, State Isolation, and Deployment",
+      "summary_excerpt": "# Gradio Production Architecture: Mental Models, State Isolation, and Deployment\n\n## Executive Overview\n\nAI and machine learning applications frequently stall at the demonstration seam: a Python script or model functions flawlessly in a local environment, but packaging it into an interactive, accessible tool for external stakeholders devolves into dependency troubleshooting or complex frontend engineering.\n\nSynthesized from Eva J Patel's comprehensive literature (*How to Use Gradio with Python: A Complete Beginner-to-Advanced Book*, freeCodeCamp, 2026), this Knowledge Item documents the founda"
+    },
+    {
+      "ki_id": "ki_self_20260922_02",
+      "title": "IoC Dispose Stack Inverse Accumulator Synchronization & Lifecycle Epoch Caching",
+      "category": "infrastructure_and_runtime/kernel",
+      "tags": [
+        "kernel_and_ioc",
+        "service_context",
+        "dispose_stack",
+        "lifecycle",
+        "epoch_cache",
+        "endogenous_memory",
+        "self_reflection"
+      ],
+      "discovery_source": "tag_search",
+      "isnad_verified": true,
+      "claim_count": 2,
+      "verified_claim_count": 0,
+      "claims": [
+        {
+          "assertion": "Untracked inverse effect closures accumulate in _dispose_stack across service overrides and revocations, triggering dead effect invocations upon container disposal.",
+          "file": "",
+          "lines": "",
+          "verified": false
+        },
+        {
+          "assertion": "Kahn's topological sort dependency graphs are invariant within lifecycle epochs and can be memoized to accelerate multi-plugin cascading operations.",
+          "file": "",
+          "lines": "",
+          "verified": false
+        }
+      ],
+      "distilled_learning": "# IoC Dispose Stack Inverse Accumulator Synchronization & Lifecycle Epoch Caching",
+      "summary_excerpt": "# IoC Dispose Stack Inverse Accumulator Synchronization & Lifecycle Epoch Caching\n\n## Problem\nIn micro-kernel architectures supporting hot-reloading and dynamic plugin lifecycle transitions, service registrations in the IoC container (`ServiceContext.provide()`) record inverse teardown effects onto a LIFO `_dispose_stack`. When services are subsequently unregistered or overridden via `revoke()` or `revoke_all_from()`, entries were purged from the service registry (`_entries`), but their corresponding inverse closures remained trapped in `_dispose_stack`. During final context disposal (`dispose"
+    }
+  ]
+}

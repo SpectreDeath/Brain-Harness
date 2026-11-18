@@ -1,0 +1,127 @@
+{
+  "q1": {
+    "memo_file": "d:\\GitHub\\projects\\Brain Harness\\experiments\\spider_decisions\\results\\p07\\memo_q1.md",
+    "cited_ki_ids": [
+      "ki-bot-hq-upsert-transcript",
+      "ki-hf-datasets-arrow-streaming",
+      "ki_20260830_grok_05",
+      "ki_20260830_kimi_02",
+      "ki_20260918_gemini_vercel_streaming",
+      "ki_20261028_headroom_context_optimization",
+      "ki_airllm_layerwise_streaming_and_moe_expert_offload",
+      "ki_airllm_plus_superblock_prefetch_runtime",
+      "ki_google_research_scaling_transformer_inference",
+      "ki_self_20260917_04",
+      "ki_self_20260922_02"
+    ],
+    "distinct_kis_cited": 11,
+    "invalid_vault_ki_ids": [],
+    "all_cited_kis_in_vault": true,
+    "cited_claims_total": 8,
+    "cited_claims_verified": 7,
+    "pct_cited_claims_verified": 87.5,
+    "conflicts_flagged": 2,
+    "gaps_flagged": 2,
+    "cited_claims": [
+      {
+        "ki_id": "ki_airllm_plus_superblock_prefetch_runtime",
+        "claim_excerpt": "pack_blocks.py groups per-layer tensor shards (.safetensors/.bin/.pt/.onnx) into contiguou",
+        "verified_in_evidence": true
+      },
+      {
+        "ki_id": "ki_airllm_plus_superblock_prefetch_runtime",
+        "claim_excerpt": "runtime/executor.py coordinates Plan (create_plan), BufferedBlockStore, depth-bounded prod",
+        "verified_in_evidence": true
+      },
+      {
+        "ki_id": "ki_airllm_plus_superblock_prefetch_runtime",
+        "claim_excerpt": "runtime/cache.py implements thread-safe OrderedDict LRU block eviction bounded simultaneou",
+        "verified_in_evidence": true
+      },
+      {
+        "ki_id": "ki_airllm_layerwise_streaming_and_moe_expert_offload",
+        "claim_excerpt": "AirLLMBaseModel instantiates Hugging Face models on the meta device (init_empty_weights), ",
+        "verified_in_evidence": true
+      },
+      {
+        "ki_id": "ki_airllm_layerwise_streaming_and_moe_expert_offload",
+        "claim_excerpt": "AirLLMKimiK3 overrides layer_names_dict with expert_prefix (block_sparse_moe.experts) and ",
+        "verified_in_evidence": true
+      },
+      {
+        "ki_id": "ki_self_20260917_04",
+        "claim_excerpt": "Production AI interfaces must warm-load models and pipeline resources at module initializa",
+        "verified_in_evidence": true
+      },
+      {
+        "ki_id": "ki_20261028_headroom_context_optimization",
+        "claim_excerpt": "The prompt cache hot zone (system prompt) must NEVER be mutated in place; dynamic UUIDs/ti",
+        "verified_in_evidence": true
+      },
+      {
+        "ki_id": "ki_self_20260922_02",
+        "claim_excerpt": "Kahn's topological sort dependency graphs are invariant within lifecycle epochs and can be",
+        "verified_in_evidence": false
+      }
+    ]
+  },
+  "q2": {
+    "memo_file": "d:\\GitHub\\projects\\Brain Harness\\experiments\\spider_decisions\\results\\p07\\memo_q2.md",
+    "cited_ki_ids": [
+      "ki_google_research_aspest_active_selective_prediction",
+      "ki_google_research_cisc_confidence_voting",
+      "ki_google_research_uq_benchmark_2019_calibration_shift",
+      "ki_njoku_uncertainty_aware_systems"
+    ],
+    "distinct_kis_cited": 4,
+    "invalid_vault_ki_ids": [],
+    "all_cited_kis_in_vault": true,
+    "cited_claims_total": 8,
+    "cited_claims_verified": 8,
+    "pct_cited_claims_verified": 100.0,
+    "conflicts_flagged": 2,
+    "gaps_flagged": 1,
+    "cited_claims": [
+      {
+        "ki_id": "ki_google_research_aspest_active_selective_prediction",
+        "claim_excerpt": "ASPEST maintains a checkpoint ensemble (update_ensemble_state), queries bounded label budg",
+        "verified_in_evidence": true
+      },
+      {
+        "ki_id": "ki_google_research_aspest_active_selective_prediction",
+        "claim_excerpt": "active_selective_prediction evaluates active adaptation and selective abstention across si",
+        "verified_in_evidence": true
+      },
+      {
+        "ki_id": "ki_google_research_cisc_confidence_voting",
+        "claim_excerpt": "CISC extracts per-trace confidence via ConfidenceExtractionConfig (temperature=0.0, num_to",
+        "verified_in_evidence": true
+      },
+      {
+        "ki_id": "ki_google_research_cisc_confidence_voting",
+        "claim_excerpt": "majority_with_conf() implements confidence-weighted self-consistency voting supporting Nor",
+        "verified_in_evidence": true
+      },
+      {
+        "ki_id": "ki_google_research_cisc_confidence_voting",
+        "claim_excerpt": "calculate_metrics_at_position() produces frozen ResultMetrics quantifying comparable_basel",
+        "verified_in_evidence": true
+      },
+      {
+        "ki_id": "ki_google_research_uq_benchmark_2019_calibration_shift",
+        "claim_excerpt": "uq_benchmark_2019 benchmarks Vanilla, Temperature Scaling, Deep Ensemble, MC Dropout, SVI,",
+        "verified_in_evidence": true
+      },
+      {
+        "ki_id": "ki_google_research_uq_benchmark_2019_calibration_shift",
+        "claim_excerpt": "metrics_lib.py implements expected_calibration_error(), expected_calibration_error_multicl",
+        "verified_in_evidence": true
+      },
+      {
+        "ki_id": "ki_google_research_uq_benchmark_2019_calibration_shift",
+        "claim_excerpt": "calibration_lib.py fits maximum-likelihood temperature via scipy.optimize.bisect over TF C",
+        "verified_in_evidence": true
+      }
+    ]
+  }
+}

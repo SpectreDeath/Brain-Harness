@@ -51,3 +51,9 @@ Template for per-phase entries:
 - Key metric(s): Macro P/R/F1 across 5 modules -> hop0: 0.4000/0.2500/0.2800; hop1: 0.4000/0.3000/0.3333; grep_baseline: 0.8476/0.9500/0.8769.
 - Finding(s): 6/13 unique gold KIs have zero references_code edges, and others target file/engine identifiers (src_*_py, ontology_spider_engine) or use applicable_to rather than canonical dotted module ids; proposed 12 backfill edges without mutating vault.
 - Follow-ups: Run Phase 7 evidence gathering and design-choice arbitration memos.
+
+## Phase 7 — Design-Choice Arbitration Memos (2026-11-18T16:17:14+00:00)
+- Outcome: PASS
+- Key metric(s): memo_q1 cited 11 valid KIs, 87.5% (7/8) cited claims verified, 2 conflicts/2 gaps; memo_q2 cited 4 valid KIs, 100.0% (8/8) cited claims verified, 2 conflicts/1 gap; human_ratings recorded (unrated/proceed).
+- Finding(s): Unverified claims (ki_self_20260922_02, ki-hf-datasets-arrow-streaming) and warm-load vs lazy-staging conflicts were surfaced cleanly; Q2 missed ki_njoku_uncertainty_aware_systems via graph retrieval because references_code is absent.
+- Follow-ups: Generate Phase 8 Plugin vs KI-only vs Skip ground-truth sheet (8.1-8.2 checkpoint).
