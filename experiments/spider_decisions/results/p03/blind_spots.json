@@ -1,0 +1,233 @@
+{
+  "snapshots": [
+    "grm",
+    "google_portfolio_root",
+    "gvisor",
+    "airllm",
+    "airllm_plus"
+  ],
+  "unmapped_vault_kis": 180,
+  "spider_python_parity_verified": true,
+  "domains": [
+    {
+      "domain_class": "vision_and_3d_project",
+      "repo_units": 158,
+      "learned_units": 5,
+      "unlearned_units": 153,
+      "vault_kis": 0,
+      "gap_score": 158.0,
+      "learned_pct": 3.16,
+      "per_snapshot": {
+        "grm": {
+          "repo_units": 155,
+          "learned_units": 2
+        },
+        "google_portfolio_root": {
+          "repo_units": 3,
+          "learned_units": 3
+        }
+      },
+      "rank": 1
+    },
+    {
+      "domain_class": "nlp_and_llm_project",
+      "repo_units": 154,
+      "learned_units": 6,
+      "unlearned_units": 148,
+      "vault_kis": 1,
+      "gap_score": 77.0,
+      "learned_pct": 3.9,
+      "per_snapshot": {
+        "grm": {
+          "repo_units": 151,
+          "learned_units": 5
+        },
+        "airllm": {
+          "repo_units": 3,
+          "learned_units": 1
+        }
+      },
+      "rank": 2
+    },
+    {
+      "domain_class": "rl_and_control_project",
+      "repo_units": 58,
+      "learned_units": 3,
+      "unlearned_units": 55,
+      "vault_kis": 0,
+      "gap_score": 58.0,
+      "learned_pct": 5.17,
+      "per_snapshot": {
+        "grm": {
+          "repo_units": 57,
+          "learned_units": 2
+        },
+        "google_portfolio_root": {
+          "repo_units": 1,
+          "learned_units": 1
+        }
+      },
+      "rank": 3
+    },
+    {
+      "domain_class": "general_ml_project",
+      "repo_units": 265,
+      "learned_units": 3,
+      "unlearned_units": 262,
+      "vault_kis": 7,
+      "gap_score": 33.125,
+      "learned_pct": 1.13,
+      "per_snapshot": {
+        "grm": {
+          "repo_units": 257,
+          "learned_units": 0
+        },
+        "google_portfolio_root": {
+          "repo_units": 2,
+          "learned_units": 1
+        },
+        "gvisor": {
+          "repo_units": 5,
+          "learned_units": 2
+        },
+        "airllm_plus": {
+          "repo_units": 1,
+          "learned_units": 0
+        }
+      },
+      "rank": 4
+    },
+    {
+      "domain_class": "optimization_and_compression_project",
+      "repo_units": 48,
+      "learned_units": 4,
+      "unlearned_units": 44,
+      "vault_kis": 1,
+      "gap_score": 24.0,
+      "learned_pct": 8.33,
+      "per_snapshot": {
+        "grm": {
+          "repo_units": 48,
+          "learned_units": 4
+        }
+      },
+      "rank": 5
+    },
+    {
+      "domain_class": "science_and_bio_project",
+      "repo_units": 24,
+      "learned_units": 1,
+      "unlearned_units": 23,
+      "vault_kis": 0,
+      "gap_score": 24.0,
+      "learned_pct": 4.17,
+      "per_snapshot": {
+        "grm": {
+          "repo_units": 24,
+          "learned_units": 1
+        }
+      },
+      "rank": 6
+    },
+    {
+      "domain_class": "speech_and_audio_project",
+      "repo_units": 13,
+      "learned_units": 2,
+      "unlearned_units": 11,
+      "vault_kis": 0,
+      "gap_score": 13.0,
+      "learned_pct": 15.38,
+      "per_snapshot": {
+        "grm": {
+          "repo_units": 13,
+          "learned_units": 2
+        }
+      },
+      "rank": 7
+    },
+    {
+      "domain_class": "graph_and_program_project",
+      "repo_units": 7,
+      "learned_units": 1,
+      "unlearned_units": 6,
+      "vault_kis": 0,
+      "gap_score": 7.0,
+      "learned_pct": 14.29,
+      "per_snapshot": {
+        "grm": {
+          "repo_units": 7,
+          "learned_units": 1
+        }
+      },
+      "rank": 8
+    },
+    {
+      "domain_class": "privacy_fairness_safety_project",
+      "repo_units": 42,
+      "learned_units": 3,
+      "unlearned_units": 39,
+      "vault_kis": 41,
+      "gap_score": 1.0,
+      "learned_pct": 7.14,
+      "per_snapshot": {
+        "grm": {
+          "repo_units": 40,
+          "learned_units": 2
+        },
+        "google_portfolio_root": {
+          "repo_units": 1,
+          "learned_units": 1
+        },
+        "gvisor": {
+          "repo_units": 1,
+          "learned_units": 0
+        }
+      },
+      "rank": 9
+    },
+    {
+      "domain_class": "systems_and_runtime_project",
+      "repo_units": 6,
+      "learned_units": 3,
+      "unlearned_units": 3,
+      "vault_kis": 25,
+      "gap_score": 0.2308,
+      "learned_pct": 50.0,
+      "per_snapshot": {
+        "grm": {
+          "repo_units": 2,
+          "learned_units": 0
+        },
+        "google_portfolio_root": {
+          "repo_units": 2,
+          "learned_units": 2
+        },
+        "gvisor": {
+          "repo_units": 2,
+          "learned_units": 1
+        }
+      },
+      "rank": 10
+    },
+    {
+      "domain_class": "agent_orchestration_project",
+      "repo_units": 6,
+      "learned_units": 3,
+      "unlearned_units": 3,
+      "vault_kis": 122,
+      "gap_score": 0.0488,
+      "learned_pct": 50.0,
+      "per_snapshot": {
+        "grm": {
+          "repo_units": 3,
+          "learned_units": 0
+        },
+        "google_portfolio_root": {
+          "repo_units": 3,
+          "learned_units": 3
+        }
+      },
+      "rank": 11
+    }
+  ]
+}

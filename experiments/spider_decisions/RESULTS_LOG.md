@@ -27,3 +27,9 @@ Template for per-phase entries:
 - Key metric(s): 7/7 post-fix snapshots round-trip verified; 78 unverified KIs ranked; 12 candidate duplicate pairs across 377 KIs (0 intentional siblings); user confirmed 0 merges (verbatim: proceed).
 - Finding(s): Top-5 unverified priority KIs: ki_solla_dmbok_governance_decision_rights, ki_njoku_uncertainty_aware_systems, ki_agent_skills_progressive_disclosure, ki_self_20260907_02, ki_self_20260907_03. All 12 duplicate candidates are ki_self_* reflection KIs sharing source_target + tags.
 - Follow-ups: Proceed to Phase 3 Domain Blind-Spot Analysis.
+
+## Phase 3 — Domain Blind-Spot Analysis (2026-11-18T15:25:59+00:00)
+- Outcome: PASS
+- Key metric(s): Top-3 blind spots: vision_and_3d_project (158.0, 158 units/0 KIs), nlp_and_llm_project (77.0, 154 units/1 KI), rl_and_control_project (58.0, 58 units/0 KIs). 11/11 domain_classes covered; spider count vs Python parity 100% PASS.
+- Finding(s): Agent orchestration (gap=0.05) and systems/runtime (gap=0.23) are well-covered, while vision/3D, NLP/LLM, and RL/control are severely underrepresented in vault categories.
+- Follow-ups: Generate blind Phase 4.1 candidate table for human selection.

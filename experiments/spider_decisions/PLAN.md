@@ -59,7 +59,7 @@
 - [x] **Phase 0** — Scaffolding, shared helpers & frozen snapshots
 - [x] **Phase 1** — False-bridge audit & fix (use case #8)
 - [x] **Phase 2** — Re-snapshot after fix + vault hygiene: duplicates (#9) & unverified-KI priority (#7)
-- [ ] **Phase 3** — Domain blind-spot analysis (#2)
+- [x] **Phase 3** — Domain blind-spot analysis (#2)
 - [ ] **Phase 4** — Next-5 learning targets (#1)
 - [ ] **Phase 5** — Entropy-driven question selection (#3)
 - [ ] **Phase 6** — KI retrieval for a code change (#4)
@@ -282,23 +282,23 @@ Generic **unit names** also pollute "unlearned target" lists: `python`, `tests`,
 **Depends on:** Phase 2. **Model tier:** low, plus one human checkpoint.
 
 ### Steps
-- [ ] **3.1** Create `p03_domain_map_draft.py`: list every distinct `category` value in the vault (with counts) and
+- [x] **3.1** Create `p03_domain_map_draft.py`: list every distinct `category` value in the vault (with counts) and
   every distinct `domain_class` across snapshots `grm`, `google_portfolio_root`, `gvisor`, `airllm`, `airllm_plus`
   (with counts). Draft a mapping `vault category → domain_class` using simple keyword rules
   (e.g. category containing `security` → `privacy_fairness_safety_project`; `machine_learning` → `general_ml_project`;
   `nlp`/`llm` → `nlp_and_llm_project`; `infrastructure`/`runtime` → `systems_and_runtime_project`;
   `agent` → `agent_orchestration_project`; `data_engineering` → `optimization_and_compression_project` only if tags
   mention `vector`/`search`/`quantization`, else `unmapped`). Write `write_json(3, "domain_map_draft", ...)`.
-- [ ] **3.2** 🧑 **HUMAN CHECKPOINT** — Show the draft mapping as a table (`write_md(3, "domain_map_review", ...)`) and ask
+- [x] **3.2** 🧑 **HUMAN CHECKPOINT** — Show the draft mapping as a table (`write_md(3, "domain_map_review", ...)`) and ask
   the user to correct it. Save the approved mapping to `write_json(3, "domain_map_final", ...)`.
-- [ ] **3.3** Create `p03_blind_spots.py`: for each `domain_class`, compute
+- [x] **3.3** Create `p03_blind_spots.py`: for each `domain_class`, compute
   `repo_units` (count of non-generic project entities), `learned_units` (count with `harness_learned=true`),
   `vault_kis` (count of KIs mapped to it), and
   `gap_score = repo_units / (1 + vault_kis)`. Rank descending.
   Use the spider for counts, e.g. `query count recommend speech_and_audio_project [is_generic_unit=false]` and
   `query count recommend speech_and_audio_project [harness_learned=true]` on the `grm` snapshot.
   Write `write_json(3, "blind_spots", ...)` and `write_md(3, "blind_spots", ...)`.
-- [ ] **3.4** Append log entry (top-3 gaps + scores); local commit.
+- [x] **3.4** Append log entry (top-3 gaps + scores); local commit.
 
 ### Acceptance
 - Every `domain_class` present in the snapshots has a row. Spider `count` results match a plain Python count over

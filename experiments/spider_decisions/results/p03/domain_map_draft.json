@@ -1,0 +1,374 @@
+{
+  "vault_categories": {
+    "agent_orchestration": 117,
+    "memory_and_epistemics": 36,
+    "security_and_forensics": 35,
+    "developer_experience": 31,
+    "software_engineering": 23,
+    "data_engineering": 21,
+    "developer_experience/architecture": 19,
+    "infrastructure_and_runtime": 17,
+    "machine_learning": 6,
+    "developer_experience/testing": 5,
+    "integration_and_io": 5,
+    "scientific_computing/geospatial": 5,
+    "context_engineering": 4,
+    "developer_tooling": 4,
+    "scientific_computing": 4,
+    "agent_orchestration/skills": 3,
+    "developer_experience/software_engineering": 3,
+    "security_and_forensics/sandboxing": 3,
+    "context_engineering/architecture": 2,
+    "data_engineering/modeling": 2,
+    "developer_experience/documentation": 2,
+    "developer_experience/tooling": 2,
+    "infrastructure_and_runtime/integration": 2,
+    "infrastructure_and_runtime/kernel": 2,
+    "infrastructure_and_runtime/sandbox": 2,
+    "memory_and_epistemics/reflection": 2,
+    "security_and_forensics/reverse_engineering": 2,
+    "agent_orchestration/recursive_refinement": 1,
+    "agent_orchestration/tooling": 1,
+    "architecture": 1,
+    "context_engineering/templates": 1,
+    "data_structures": 1,
+    "developer_experience/skills": 1,
+    "developer_experience/ui": 1,
+    "developer_experience/velocity": 1,
+    "developer_experience/visualization": 1,
+    "governance": 1,
+    "infrastructure_and_runtime/cloud": 1,
+    "infrastructure_and_runtime/platform": 1,
+    "memory_and_epistemics/integration": 1,
+    "nlp_and_llm": 1,
+    "performance": 1,
+    "scientific_computing/machine_learning": 1,
+    "security_and_forensics/auditing": 1,
+    "testing": 1
+  },
+  "repo_domain_classes": {
+    "general_ml_project": 274,
+    "vision_and_3d_project": 160,
+    "nlp_and_llm_project": 155,
+    "rl_and_control_project": 58,
+    "optimization_and_compression_project": 48,
+    "privacy_fairness_safety_project": 42,
+    "science_and_bio_project": 24,
+    "speech_and_audio_project": 13,
+    "graph_and_program_project": 7,
+    "systems_and_runtime_project": 7,
+    "agent_orchestration_project": 6
+  },
+  "per_snapshot_domains": {
+    "grm": {
+      "agent_orchestration_project": 3,
+      "general_ml_project": 257,
+      "graph_and_program_project": 7,
+      "nlp_and_llm_project": 151,
+      "optimization_and_compression_project": 48,
+      "privacy_fairness_safety_project": 40,
+      "rl_and_control_project": 57,
+      "science_and_bio_project": 24,
+      "speech_and_audio_project": 13,
+      "systems_and_runtime_project": 2,
+      "vision_and_3d_project": 155
+    },
+    "google_portfolio_root": {
+      "agent_orchestration_project": 3,
+      "general_ml_project": 2,
+      "privacy_fairness_safety_project": 1,
+      "rl_and_control_project": 1,
+      "systems_and_runtime_project": 2,
+      "vision_and_3d_project": 3
+    },
+    "gvisor": {
+      "general_ml_project": 8,
+      "privacy_fairness_safety_project": 1,
+      "systems_and_runtime_project": 3,
+      "vision_and_3d_project": 2
+    },
+    "airllm": {
+      "general_ml_project": 4,
+      "nlp_and_llm_project": 4
+    },
+    "airllm_plus": {
+      "general_ml_project": 3
+    }
+  },
+  "data_engineering_tag_split": {
+    "unmapped": 22,
+    "optimization_and_compression_project": 1
+  },
+  "draft_mapping": [
+    {
+      "vault_category": "agent_orchestration",
+      "vault_count": 117,
+      "draft_domain_class": "agent_orchestration_project",
+      "notes": ""
+    },
+    {
+      "vault_category": "memory_and_epistemics",
+      "vault_count": 36,
+      "draft_domain_class": "unmapped",
+      "notes": ""
+    },
+    {
+      "vault_category": "security_and_forensics",
+      "vault_count": 35,
+      "draft_domain_class": "privacy_fairness_safety_project",
+      "notes": ""
+    },
+    {
+      "vault_category": "developer_experience",
+      "vault_count": 31,
+      "draft_domain_class": "unmapped",
+      "notes": ""
+    },
+    {
+      "vault_category": "software_engineering",
+      "vault_count": 23,
+      "draft_domain_class": "unmapped",
+      "notes": ""
+    },
+    {
+      "vault_category": "data_engineering",
+      "vault_count": 21,
+      "draft_domain_class": "conditional:optimization_and_compression_project",
+      "notes": "tag-split opt=1, unmapped=22"
+    },
+    {
+      "vault_category": "developer_experience/architecture",
+      "vault_count": 19,
+      "draft_domain_class": "unmapped",
+      "notes": ""
+    },
+    {
+      "vault_category": "infrastructure_and_runtime",
+      "vault_count": 17,
+      "draft_domain_class": "systems_and_runtime_project",
+      "notes": ""
+    },
+    {
+      "vault_category": "machine_learning",
+      "vault_count": 6,
+      "draft_domain_class": "general_ml_project",
+      "notes": ""
+    },
+    {
+      "vault_category": "developer_experience/testing",
+      "vault_count": 5,
+      "draft_domain_class": "unmapped",
+      "notes": ""
+    },
+    {
+      "vault_category": "integration_and_io",
+      "vault_count": 5,
+      "draft_domain_class": "unmapped",
+      "notes": ""
+    },
+    {
+      "vault_category": "scientific_computing/geospatial",
+      "vault_count": 5,
+      "draft_domain_class": "unmapped",
+      "notes": ""
+    },
+    {
+      "vault_category": "context_engineering",
+      "vault_count": 4,
+      "draft_domain_class": "unmapped",
+      "notes": ""
+    },
+    {
+      "vault_category": "developer_tooling",
+      "vault_count": 4,
+      "draft_domain_class": "unmapped",
+      "notes": ""
+    },
+    {
+      "vault_category": "scientific_computing",
+      "vault_count": 4,
+      "draft_domain_class": "unmapped",
+      "notes": ""
+    },
+    {
+      "vault_category": "agent_orchestration/skills",
+      "vault_count": 3,
+      "draft_domain_class": "agent_orchestration_project",
+      "notes": ""
+    },
+    {
+      "vault_category": "developer_experience/software_engineering",
+      "vault_count": 3,
+      "draft_domain_class": "unmapped",
+      "notes": ""
+    },
+    {
+      "vault_category": "security_and_forensics/sandboxing",
+      "vault_count": 3,
+      "draft_domain_class": "privacy_fairness_safety_project",
+      "notes": ""
+    },
+    {
+      "vault_category": "context_engineering/architecture",
+      "vault_count": 2,
+      "draft_domain_class": "unmapped",
+      "notes": ""
+    },
+    {
+      "vault_category": "data_engineering/modeling",
+      "vault_count": 2,
+      "draft_domain_class": "conditional:optimization_and_compression_project",
+      "notes": "tag-split opt=1, unmapped=22"
+    },
+    {
+      "vault_category": "developer_experience/documentation",
+      "vault_count": 2,
+      "draft_domain_class": "unmapped",
+      "notes": ""
+    },
+    {
+      "vault_category": "developer_experience/tooling",
+      "vault_count": 2,
+      "draft_domain_class": "unmapped",
+      "notes": ""
+    },
+    {
+      "vault_category": "infrastructure_and_runtime/integration",
+      "vault_count": 2,
+      "draft_domain_class": "systems_and_runtime_project",
+      "notes": ""
+    },
+    {
+      "vault_category": "infrastructure_and_runtime/kernel",
+      "vault_count": 2,
+      "draft_domain_class": "systems_and_runtime_project",
+      "notes": ""
+    },
+    {
+      "vault_category": "infrastructure_and_runtime/sandbox",
+      "vault_count": 2,
+      "draft_domain_class": "systems_and_runtime_project",
+      "notes": ""
+    },
+    {
+      "vault_category": "memory_and_epistemics/reflection",
+      "vault_count": 2,
+      "draft_domain_class": "unmapped",
+      "notes": ""
+    },
+    {
+      "vault_category": "security_and_forensics/reverse_engineering",
+      "vault_count": 2,
+      "draft_domain_class": "privacy_fairness_safety_project",
+      "notes": ""
+    },
+    {
+      "vault_category": "agent_orchestration/recursive_refinement",
+      "vault_count": 1,
+      "draft_domain_class": "agent_orchestration_project",
+      "notes": ""
+    },
+    {
+      "vault_category": "agent_orchestration/tooling",
+      "vault_count": 1,
+      "draft_domain_class": "agent_orchestration_project",
+      "notes": ""
+    },
+    {
+      "vault_category": "architecture",
+      "vault_count": 1,
+      "draft_domain_class": "unmapped",
+      "notes": ""
+    },
+    {
+      "vault_category": "context_engineering/templates",
+      "vault_count": 1,
+      "draft_domain_class": "unmapped",
+      "notes": ""
+    },
+    {
+      "vault_category": "data_structures",
+      "vault_count": 1,
+      "draft_domain_class": "unmapped",
+      "notes": ""
+    },
+    {
+      "vault_category": "developer_experience/skills",
+      "vault_count": 1,
+      "draft_domain_class": "unmapped",
+      "notes": ""
+    },
+    {
+      "vault_category": "developer_experience/ui",
+      "vault_count": 1,
+      "draft_domain_class": "unmapped",
+      "notes": ""
+    },
+    {
+      "vault_category": "developer_experience/velocity",
+      "vault_count": 1,
+      "draft_domain_class": "unmapped",
+      "notes": ""
+    },
+    {
+      "vault_category": "developer_experience/visualization",
+      "vault_count": 1,
+      "draft_domain_class": "unmapped",
+      "notes": ""
+    },
+    {
+      "vault_category": "governance",
+      "vault_count": 1,
+      "draft_domain_class": "unmapped",
+      "notes": ""
+    },
+    {
+      "vault_category": "infrastructure_and_runtime/cloud",
+      "vault_count": 1,
+      "draft_domain_class": "systems_and_runtime_project",
+      "notes": ""
+    },
+    {
+      "vault_category": "infrastructure_and_runtime/platform",
+      "vault_count": 1,
+      "draft_domain_class": "systems_and_runtime_project",
+      "notes": ""
+    },
+    {
+      "vault_category": "memory_and_epistemics/integration",
+      "vault_count": 1,
+      "draft_domain_class": "unmapped",
+      "notes": ""
+    },
+    {
+      "vault_category": "nlp_and_llm",
+      "vault_count": 1,
+      "draft_domain_class": "nlp_and_llm_project",
+      "notes": ""
+    },
+    {
+      "vault_category": "performance",
+      "vault_count": 1,
+      "draft_domain_class": "unmapped",
+      "notes": ""
+    },
+    {
+      "vault_category": "scientific_computing/machine_learning",
+      "vault_count": 1,
+      "draft_domain_class": "general_ml_project",
+      "notes": ""
+    },
+    {
+      "vault_category": "security_and_forensics/auditing",
+      "vault_count": 1,
+      "draft_domain_class": "privacy_fairness_safety_project",
+      "notes": ""
+    },
+    {
+      "vault_category": "testing",
+      "vault_count": 1,
+      "draft_domain_class": "unmapped",
+      "notes": ""
+    }
+  ]
+}
