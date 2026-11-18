@@ -57,7 +57,7 @@
 ## 1. Progress Tracker
 
 - [x] **Phase 0** — Scaffolding, shared helpers & frozen snapshots
-- [ ] **Phase 1** — False-bridge audit & fix (use case #8)
+- [x] **Phase 1** — False-bridge audit & fix (use case #8)
 - [ ] **Phase 2** — Re-snapshot after fix + vault hygiene: duplicates (#9) & unverified-KI priority (#7)
 - [ ] **Phase 3** — Domain blind-spot analysis (#2)
 - [ ] **Phase 4** — Next-5 learning targets (#1)
@@ -184,22 +184,22 @@ Generic **unit names** also pollute "unlearned target" lists: `python`, `tests`,
 `pkg`, `tools`, `docs`, `examples`, `bench`, `images`, `website`, `protos`, `data`, `eval`, `training`.
 
 ### Steps
-- [ ] **1.1** Create `p01_bridge_audit.py`. Using the Phase 0 snapshots `google_portfolio_root`, `grm`, `gvisor`,
+- [x] **1.1** Create `p01_bridge_audit.py`. Using the Phase 0 snapshots `google_portfolio_root`, `grm`, `gvisor`,
   `airllm`, `airllm_plus`, collect **every** assertion with predicate `bridges_to_harness`. For each, record:
   snapshot, subject (unit id), object (KI id), unit `raw_name`, and the KI's `title`, `tags`, `source_target`
   (read from `VAULT/<ki_id>/metadata.json`; if the directory name differs from the id, search by `id` field).
   Write `write_json(1, "bridges_before", rows)`.
-- [ ] **1.2** Auto-label each row with a **heuristic draft label** `likely_true` / `likely_false` / `unsure`:
+- [x] **1.2** Auto-label each row with a **heuristic draft label** `likely_true` / `likely_false` / `unsure`:
   - `likely_true` if the unit `raw_name` (lowercased, `-`→`_`) appears in the KI's `source_target`, `source_uri`,
     `sources[].repo`, `sources[].path`, or as a full segment of the KI `id`.
   - `likely_false` if the only match is a tag **and** the unit name is in the generic list above or is ≤ 4 chars.
   - otherwise `unsure`.
   Write `write_md(1, "bridges_label_sheet", ...)` as a Markdown table with columns
   `# | snapshot | unit | ki_id | ki_title | draft_label | FINAL (fill: T/F)`.
-- [ ] **1.3** 🧑 **HUMAN CHECKPOINT** — Ask the user to fill the `FINAL` column (T/F) in
+- [x] **1.3** 🧑 **HUMAN CHECKPOINT** — Ask the user to fill the `FINAL` column (T/F) in
   `results/p01/bridges_label_sheet.md`. Stop until it is filled. Then parse it into `write_json(1, "bridges_ground_truth", ...)`.
   Compute **before-fix metrics**: total bridges, false-positive count, FP rate. Write `write_json(1, "metrics_before", ...)`.
-- [ ] **1.4** **Implement the fix** in `repo_adapter.py` (inspect the current code first; touch only what is listed):
+- [x] **1.4** **Implement the fix** in `repo_adapter.py` (inspect the current code first; touch only what is listed):
   1. Make `_discover_vault_learned_projects` record **match strength** per token: return
      `dict[str, tuple[str, str]]` mapping token → `(ki_id, strength)` where `strength` is `"structured"` for tokens
      from `source_target`, `source_uri`, `source_repo`, `isnad.source_repo`, `sources[].repo`, `sources[].path`,
@@ -214,23 +214,23 @@ Generic **unit names** also pollute "unlearned target" lists: `python`, `tests`,
      `query recommend research_project [has_tests=true, harness_learned=false, is_generic_unit=false]`.
   6. Update every caller of the changed helper signatures (search the repo for `_discover_vault_learned_projects`
      and `_lookup_learned_ki`, including `tests/`).
-- [ ] **1.5** Add tests to `tests/test_repo_ontology_seam.py`:
+- [x] **1.5** Add tests to `tests/test_repo_ontology_seam.py`:
   - `test_generic_unit_tag_match_rejected` — a unit named `runtime` + a KI with tag `runtime` but unrelated
     `source_target` ⇒ `harness_learned is False`, `learned_match_strength == "none"`.
   - `test_structured_match_kept_for_generic_name` — a unit named `runtime` + a KI whose `source_target` ends in `/runtime`
     ⇒ `harness_learned is True`, strength `"structured"`.
   - `test_generic_units_excluded_from_unlearned` — `tests`/`scripts` units with tests do **not** appear in
     `unlearned_tested_projects`.
-- [ ] **1.6** Run quality gates. All pre-existing tests must still pass.
-- [ ] **1.7** Create `p01_bridge_after.py`: rebuild the five snapshots **live with `refresh=True`**, re-collect bridges,
+- [x] **1.6** Run quality gates. All pre-existing tests must still pass.
+- [x] **1.7** Create `p01_bridge_after.py`: rebuild the five snapshots **live with `refresh=True`**, re-collect bridges,
   join against `bridges_ground_truth.json`, compute **after-fix metrics** (FP count, FP rate, and **true-bridge
   recall** = true bridges still present / true bridges before). Write `write_json(1, "metrics_after", ...)` and a
   before/after table `write_md(1, "summary", ...)`.
-- [ ] **1.8** **Regression set** — confirm these units are still `harness_learned=True` after the fix (from Phase 0
+- [x] **1.8** **Regression set** — confirm these units are still `harness_learned=True` after the fix (from Phase 0
   snapshots and earlier sessions): `gvisor` (portfolio root), `latent_programmer`, `active_selective_prediction`,
   `scann`, `cisc`, `gfsa`, `etcmodel`, `imp`, `uq_benchmark_2019` (grm), `air_llm` (airllm). Record pass/fail per unit
   in `summary.md`.
-- [ ] **1.9** Append log entry; local commit.
+- [x] **1.9** Append log entry; local commit.
 
 ### Acceptance
 - Both known false bridges are gone.

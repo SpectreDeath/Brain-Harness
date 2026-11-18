@@ -167,6 +167,8 @@
         "has_tflite_or_pb": false,
         "harness_learned": true,
         "learned_ki_id": "ki_airllm_layerwise_streaming_and_moe_expert_offload",
+        "learned_match_strength": "tag",
+        "is_generic_unit": false,
         "py_file_count": 45,
         "test_file_count": 13,
         "gin_file_count": 0
@@ -214,6 +216,8 @@
         "has_tflite_or_pb": false,
         "harness_learned": false,
         "learned_ki_id": "",
+        "learned_match_strength": "none",
+        "is_generic_unit": false,
         "py_file_count": 2,
         "test_file_count": 0,
         "gin_file_count": 0
@@ -238,18 +242,13 @@
         "has_arxiv": false,
         "has_bazel_build": false,
         "has_tflite_or_pb": false,
-        "harness_learned": true,
-        "learned_ki_id": "ki_solla_dikw_data_asset_continuum",
+        "harness_learned": false,
+        "learned_ki_id": "",
+        "learned_match_strength": "none",
+        "is_generic_unit": true,
         "py_file_count": 0,
         "test_file_count": 0,
         "gin_file_count": 0
-      }
-    },
-    {
-      "id": "ki_solla_dikw_data_asset_continuum",
-      "name": "ki_solla_dikw_data_asset_continuum",
-      "attributes": {
-        "kind": "harness_artifact"
       }
     },
     {
@@ -271,18 +270,13 @@
         "has_arxiv": false,
         "has_bazel_build": false,
         "has_tflite_or_pb": false,
-        "harness_learned": true,
-        "learned_ki_id": "ki-rea-sig-anthea_eval-1f061854",
+        "harness_learned": false,
+        "learned_ki_id": "",
+        "learned_match_strength": "none",
+        "is_generic_unit": true,
         "py_file_count": 0,
         "test_file_count": 0,
         "gin_file_count": 0
-      }
-    },
-    {
-      "id": "ki_rea_sig_anthea_eval_1f061854",
-      "name": "ki-rea-sig-anthea_eval-1f061854",
-      "attributes": {
-        "kind": "harness_artifact"
       }
     },
     {
@@ -306,6 +300,8 @@
         "has_tflite_or_pb": false,
         "harness_learned": false,
         "learned_ki_id": "",
+        "learned_match_strength": "none",
+        "is_generic_unit": true,
         "py_file_count": 0,
         "test_file_count": 0,
         "gin_file_count": 0
@@ -332,6 +328,8 @@
         "has_tflite_or_pb": false,
         "harness_learned": false,
         "learned_ki_id": "",
+        "learned_match_strength": "none",
+        "is_generic_unit": false,
         "py_file_count": 1,
         "test_file_count": 0,
         "gin_file_count": 0
@@ -365,6 +363,8 @@
         "has_tflite_or_pb": false,
         "harness_learned": false,
         "learned_ki_id": "",
+        "learned_match_strength": "none",
+        "is_generic_unit": true,
         "py_file_count": 2,
         "test_file_count": 1,
         "gin_file_count": 0
@@ -391,6 +391,8 @@
         "has_tflite_or_pb": false,
         "harness_learned": false,
         "learned_ki_id": "",
+        "learned_match_strength": "none",
+        "is_generic_unit": true,
         "py_file_count": 1,
         "test_file_count": 0,
         "gin_file_count": 0
@@ -414,7 +416,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -429,7 +431,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -444,7 +446,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -459,7 +461,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -474,7 +476,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -489,7 +491,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -504,7 +506,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -519,7 +521,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -534,7 +536,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -549,7 +551,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -564,7 +566,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -579,7 +581,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -594,7 +596,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -609,7 +611,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -624,7 +626,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -639,7 +641,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -654,7 +656,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -669,7 +671,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -684,7 +686,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -699,7 +701,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -714,7 +716,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -729,7 +731,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -744,7 +746,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -759,7 +761,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -774,7 +776,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -789,7 +791,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -804,7 +806,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -819,7 +821,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -834,7 +836,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -849,7 +851,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -864,7 +866,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -879,7 +881,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -894,7 +896,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -909,7 +911,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -924,7 +926,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -939,7 +941,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -954,7 +956,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -969,7 +971,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -984,7 +986,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -999,7 +1001,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1014,7 +1016,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1029,7 +1031,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1044,37 +1046,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
-        "turn_id": "repo_scan",
-        "parent_turn_ids": []
-      },
-      "attributes": {}
-    },
-    {
-      "assertion_id": "asrt_70f3fba636ac",
-      "relation": {
-        "subject": "ki_solla_dikw_data_asset_continuum",
-        "predicate": "instance_of",
-        "object": "harness_artifact"
-      },
-      "provenance": {
-        "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
-        "turn_id": "repo_scan",
-        "parent_turn_ids": []
-      },
-      "attributes": {}
-    },
-    {
-      "assertion_id": "asrt_db47040216f3",
-      "relation": {
-        "subject": "data",
-        "predicate": "bridges_to_harness",
-        "object": "ki_solla_dikw_data_asset_continuum"
-      },
-      "provenance": {
-        "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1089,37 +1061,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
-        "turn_id": "repo_scan",
-        "parent_turn_ids": []
-      },
-      "attributes": {}
-    },
-    {
-      "assertion_id": "asrt_caccf76cd5e3",
-      "relation": {
-        "subject": "ki_rea_sig_anthea_eval_1f061854",
-        "predicate": "instance_of",
-        "object": "harness_artifact"
-      },
-      "provenance": {
-        "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
-        "turn_id": "repo_scan",
-        "parent_turn_ids": []
-      },
-      "attributes": {}
-    },
-    {
-      "assertion_id": "asrt_5a2c578134bb",
-      "relation": {
-        "subject": "eval",
-        "predicate": "bridges_to_harness",
-        "object": "ki_rea_sig_anthea_eval_1f061854"
-      },
-      "provenance": {
-        "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1134,7 +1076,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1149,7 +1091,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1164,7 +1106,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1179,7 +1121,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1194,7 +1136,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1209,7 +1151,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1224,7 +1166,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1239,7 +1181,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1254,7 +1196,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1269,7 +1211,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1284,7 +1226,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1299,7 +1241,7 @@
       },
       "provenance": {
         "source": "repo:airllm",
-        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "timestamp": "2026-11-18T15:04:48.313667+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },

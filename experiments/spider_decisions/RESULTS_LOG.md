@@ -15,3 +15,9 @@ Template for per-phase entries:
 - Key metric(s): 7/7 snapshots cached & round-trip verified (vault=630/959, google_portfolio_root=57/81, grm=1275/4499, gvisor=47/83, airllm=44/60, airllm_plus=33/38, brain_harness_src=49/129); ruff check/format clean; 15/15 baseline pytest passed.
 - Finding(s): Live-vs-cached entity, assertion, and triple sets matched 100% across all 7 models.
 - Follow-ups: Proceed to Phase 1 false-bridge audit (1.1-1.3 checkpoint).
+
+## Phase 1 — False-Bridge Audit & Fix (2026-11-18T15:05:25+00:00)
+- Outcome: PASS
+- Key metric(s): Before=40 bridges (33 TP, 7 FP, FP rate 0.1750); After=34 bridges (32 TP, 2 FP, FP rate 0.0588, recall 0.9697); 10/10 regression units PASS; 18/18 pytest passed; ruff check/format clean.
+- Finding(s): Eliminated rpc, runtime, tools, data, and eval false bridges; 1 short tag-only TP (grm/aloe, 4 chars) dropped; remaining edge cases are gvisor/shim (matched external Balanov/shim repo) and gvisor/governance (slug segment of unrelated KI).
+- Follow-ups: Re-snapshot all 7 models and generate Phase 2 vault hygiene sheets.

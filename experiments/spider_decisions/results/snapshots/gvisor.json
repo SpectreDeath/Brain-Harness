@@ -167,6 +167,8 @@
         "has_tflite_or_pb": false,
         "harness_learned": false,
         "learned_ki_id": "",
+        "learned_match_strength": "none",
+        "is_generic_unit": false,
         "py_file_count": 0,
         "test_file_count": 0,
         "gin_file_count": 0
@@ -193,6 +195,8 @@
         "has_tflite_or_pb": false,
         "harness_learned": false,
         "learned_ki_id": "",
+        "learned_match_strength": "none",
+        "is_generic_unit": true,
         "py_file_count": 1,
         "test_file_count": 0,
         "gin_file_count": 0
@@ -219,6 +223,8 @@
         "has_tflite_or_pb": false,
         "harness_learned": false,
         "learned_ki_id": "",
+        "learned_match_strength": "none",
+        "is_generic_unit": false,
         "py_file_count": 0,
         "test_file_count": 0,
         "gin_file_count": 0
@@ -244,15 +250,17 @@
         "has_bazel_build": true,
         "has_tflite_or_pb": false,
         "harness_learned": true,
-        "learned_ki_id": "ki-responsible-ai-prototyping",
+        "learned_ki_id": "ki-vercel-ui-sdk-expert-scope-governance",
+        "learned_match_strength": "structured",
+        "is_generic_unit": false,
         "py_file_count": 0,
         "test_file_count": 0,
         "gin_file_count": 0
       }
     },
     {
-      "id": "ki_responsible_ai_prototyping",
-      "name": "ki-responsible-ai-prototyping",
+      "id": "ki_vercel_ui_sdk_expert_scope_governance",
+      "name": "ki-vercel-ui-sdk-expert-scope-governance",
       "attributes": {
         "kind": "harness_artifact"
       }
@@ -278,6 +286,8 @@
         "has_tflite_or_pb": false,
         "harness_learned": false,
         "learned_ki_id": "",
+        "learned_match_strength": "none",
+        "is_generic_unit": true,
         "py_file_count": 1,
         "test_file_count": 0,
         "gin_file_count": 0
@@ -304,6 +314,8 @@
         "has_tflite_or_pb": false,
         "harness_learned": false,
         "learned_ki_id": "",
+        "learned_match_strength": "none",
+        "is_generic_unit": true,
         "py_file_count": 0,
         "test_file_count": 1,
         "gin_file_count": 0
@@ -330,6 +342,8 @@
         "has_tflite_or_pb": false,
         "harness_learned": true,
         "learned_ki_id": "ki_google_gvisor_sentry_gofer_sandbox",
+        "learned_match_strength": "tag",
+        "is_generic_unit": false,
         "py_file_count": 0,
         "test_file_count": 11,
         "gin_file_count": 0
@@ -363,6 +377,8 @@
         "has_tflite_or_pb": false,
         "harness_learned": false,
         "learned_ki_id": "",
+        "learned_match_strength": "none",
+        "is_generic_unit": false,
         "py_file_count": 3,
         "test_file_count": 4,
         "gin_file_count": 0
@@ -389,6 +405,8 @@
         "has_tflite_or_pb": false,
         "harness_learned": true,
         "learned_ki_id": "ki-shim-bounded-session-and-layered-skill-loader",
+        "learned_match_strength": "structured",
+        "is_generic_unit": false,
         "py_file_count": 0,
         "test_file_count": 3,
         "gin_file_count": 0
@@ -422,6 +440,8 @@
         "has_tflite_or_pb": false,
         "harness_learned": false,
         "learned_ki_id": "",
+        "learned_match_strength": "none",
+        "is_generic_unit": true,
         "py_file_count": 1,
         "test_file_count": 19,
         "gin_file_count": 0
@@ -446,18 +466,13 @@
         "has_arxiv": false,
         "has_bazel_build": true,
         "has_tflite_or_pb": false,
-        "harness_learned": true,
-        "learned_ki_id": "ki_20260830_grok_01",
+        "harness_learned": false,
+        "learned_ki_id": "",
+        "learned_match_strength": "none",
+        "is_generic_unit": true,
         "py_file_count": 1,
         "test_file_count": 0,
         "gin_file_count": 0
-      }
-    },
-    {
-      "id": "ki_20260830_grok_01",
-      "name": "ki_20260830_grok_01",
-      "attributes": {
-        "kind": "harness_artifact"
       }
     },
     {
@@ -481,6 +496,8 @@
         "has_tflite_or_pb": false,
         "harness_learned": false,
         "learned_ki_id": "",
+        "learned_match_strength": "none",
+        "is_generic_unit": false,
         "py_file_count": 1,
         "test_file_count": 0,
         "gin_file_count": 0
@@ -507,6 +524,8 @@
         "has_tflite_or_pb": false,
         "harness_learned": false,
         "learned_ki_id": "",
+        "learned_match_strength": "none",
+        "is_generic_unit": false,
         "py_file_count": 0,
         "test_file_count": 0,
         "gin_file_count": 0
@@ -533,6 +552,8 @@
         "has_tflite_or_pb": false,
         "harness_learned": false,
         "learned_ki_id": "",
+        "learned_match_strength": "none",
+        "is_generic_unit": true,
         "py_file_count": 0,
         "test_file_count": 0,
         "gin_file_count": 0
@@ -549,7 +570,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -564,7 +585,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -579,7 +600,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -594,7 +615,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -609,7 +630,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -624,7 +645,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -639,7 +660,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -654,7 +675,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -669,7 +690,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -684,7 +705,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -699,7 +720,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -714,7 +735,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -729,7 +750,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -744,7 +765,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -759,7 +780,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -774,7 +795,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -789,7 +810,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -804,7 +825,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -819,7 +840,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -834,7 +855,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -849,7 +870,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -864,7 +885,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -879,7 +900,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -894,7 +915,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -909,7 +930,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -924,7 +945,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -939,7 +960,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -954,7 +975,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -969,7 +990,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -984,7 +1005,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -999,7 +1020,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1014,7 +1035,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1029,7 +1050,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1044,7 +1065,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1059,7 +1080,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1074,37 +1095,37 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
       "attributes": {}
     },
     {
-      "assertion_id": "asrt_13e0a1079373",
+      "assertion_id": "asrt_47dfbd40fde9",
       "relation": {
-        "subject": "ki_responsible_ai_prototyping",
+        "subject": "ki_vercel_ui_sdk_expert_scope_governance",
         "predicate": "instance_of",
         "object": "harness_artifact"
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
       "attributes": {}
     },
     {
-      "assertion_id": "asrt_6f9ffcd42cba",
+      "assertion_id": "asrt_45eea2638e5e",
       "relation": {
         "subject": "governance",
         "predicate": "bridges_to_harness",
-        "object": "ki_responsible_ai_prototyping"
+        "object": "ki_vercel_ui_sdk_expert_scope_governance"
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1119,7 +1140,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1134,7 +1155,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1149,7 +1170,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1164,7 +1185,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1179,7 +1200,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1194,7 +1215,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1209,7 +1230,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1224,7 +1245,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1239,7 +1260,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1254,7 +1275,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1269,37 +1290,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
-        "turn_id": "repo_scan",
-        "parent_turn_ids": []
-      },
-      "attributes": {}
-    },
-    {
-      "assertion_id": "asrt_8d91685fbb13",
-      "relation": {
-        "subject": "ki_20260830_grok_01",
-        "predicate": "instance_of",
-        "object": "harness_artifact"
-      },
-      "provenance": {
-        "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
-        "turn_id": "repo_scan",
-        "parent_turn_ids": []
-      },
-      "attributes": {}
-    },
-    {
-      "assertion_id": "asrt_a9ddb396a92d",
-      "relation": {
-        "subject": "tools",
-        "predicate": "bridges_to_harness",
-        "object": "ki_20260830_grok_01"
-      },
-      "provenance": {
-        "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1314,7 +1305,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1329,7 +1320,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1344,7 +1335,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1359,7 +1350,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1374,7 +1365,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1389,7 +1380,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1404,7 +1395,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1419,7 +1410,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1434,7 +1425,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1449,7 +1440,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1464,7 +1455,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1479,7 +1470,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1494,7 +1485,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1509,7 +1500,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1524,7 +1515,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1539,7 +1530,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1554,7 +1545,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1569,7 +1560,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1584,7 +1575,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1599,7 +1590,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1614,7 +1605,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1629,7 +1620,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1644,7 +1635,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1659,7 +1650,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1674,7 +1665,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1689,7 +1680,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1704,7 +1695,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1719,7 +1710,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1734,7 +1725,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1749,7 +1740,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1764,7 +1755,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1779,7 +1770,7 @@
       },
       "provenance": {
         "source": "repo:gvisor",
-        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "timestamp": "2026-11-18T15:04:48.023449+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },

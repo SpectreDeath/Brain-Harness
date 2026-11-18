@@ -487,7 +487,9 @@ class OntologySpiderKernelService(OntologySpiderProtocol):
         ranked = _to_entropy_ranks(rank_discriminating_attributes(model, project_ids)[:8])
 
         sess = Session(model=model, reasoner=PythonReasoner())
-        unlearned_res = sess.execute("query recommend research_project [has_tests=true, harness_learned=false]")[-1]
+        unlearned_res = sess.execute(
+            "query recommend research_project [has_tests=true, harness_learned=false, is_generic_unit=false]"
+        )[-1]
         unlearned_tested = tuple(sorted(str(a["value"]) for a in unlearned_res.answers))
 
         scorecard = evaluate_competency_questions(

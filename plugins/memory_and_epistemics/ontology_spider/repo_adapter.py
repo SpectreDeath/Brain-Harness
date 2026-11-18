@@ -123,6 +123,29 @@ _LEARNED_NOISE_TOKENS = frozenset(
     }
 )
 
+_GENERIC_UNIT_NAMES = frozenset(
+    {
+        "python",
+        "tests",
+        "scripts",
+        "test",
+        "go",
+        "js",
+        "pkg",
+        "tools",
+        "docs",
+        "examples",
+        "bench",
+        "images",
+        "website",
+        "protos",
+        "data",
+        "eval",
+        "training",
+        "runtime",
+    }
+)
+
 _FW_PATTERNS: dict[str, re.Pattern[str]] = {
     "tensorflow": re.compile(r"\b(?:import\s+tensorflow|from\s+tensorflow\b)"),
     "jax": re.compile(r"\b(?:import\s+jax|from\s+jax\b)"),
@@ -374,36 +397,58 @@ def _primary_framework(fws: set[str]) -> str:
     return "none"
 
 
-def _register_learned_token(token: Any, ki_id: str, learned: dict[str, str]) -> None:
-    """Register exact and underscore-normalized repository identifier tokens cleanly."""
+def _register_learned_token(
+    token: Any,
+    ki_id: str,
+    learned: dict[str, tuple[str, str]],
+    *,
+    strength: str = "tag",
+) -> None:
+    """Register exact and underscore-normalized repository identifier tokens with match strength."""
     cleaned = str(token or "").strip().lower()
     if len(cleaned) < 3 or cleaned in _LEARNED_NOISE_TOKENS:
         return
-    learned.setdefault(cleaned, ki_id)
-    underscored = cleaned.replace("-", "_")
-    if underscored not in _LEARNED_NOISE_TOKENS:
-        learned.setdefault(underscored, ki_id)
+    for variant in (cleaned, cleaned.replace("-", "_")):
+        if variant in _LEARNED_NOISE_TOKENS:
+            continue
+        existing = learned.get(variant)
+        if existing is None or (strength == "structured" and existing[1] != "structured"):
+            learned[variant] = (ki_id, strength)
 
 
-def _register_path_tokens(raw_path: Any, ki_id: str, learned: dict[str, str]) -> None:
-    """Extract path/URL segments preserving hyphenated and underscored package names."""
-    if not isinstance(raw_path, str) or not raw_path.strip():
+def _register_path_tokens(
+    raw_path: Any,
+    ki_id: str,
+    learned: dict[str, tuple[str, str]],
+) -> None:
+    """Extract structured path/URL segments while skipping prose and intermediate generic directories."""
+    if not isinstance(raw_path, str):
         return
-    parts = [p for p in re.split(r"[\\/]+", raw_path.strip()) if p]
-    for seg in parts:
+    stripped = raw_path.strip()
+    if not stripped or " " in stripped:
+        return
+    parts = [p for p in re.split(r"[\\/]+", stripped) if p]
+    if not parts:
+        return
+    last_idx = len(parts) - 1
+    for idx, seg in enumerate(parts):
         seg_low = seg.lower()
         if seg_low.endswith(".git"):
             seg_low = seg_low[:-4]
-        if ":" in seg_low or "." in seg_low and seg_low.endswith((".com", ".org", ".io", ".dev")):
+        if ":" in seg_low or ("." in seg_low and seg_low.endswith((".com", ".org", ".io", ".dev"))):
             continue
-        _register_learned_token(seg_low, ki_id, learned)
+        # Only allow generic names (e.g. "runtime") as structured when they are the leaf path target
+        norm_seg = seg_low.replace("-", "_")
+        if norm_seg in _GENERIC_UNIT_NAMES and idx != last_idx:
+            continue
+        _register_learned_token(seg_low, ki_id, learned, strength="structured")
 
 
-def _discover_vault_learned_projects(vault_dir: Path | None) -> dict[str, str]:
-    """Scan existing .harness/knowledge directory to map structured project tokens -> KI IDs."""
+def _discover_vault_learned_projects(vault_dir: Path | None) -> dict[str, tuple[str, str]]:
+    """Scan existing .harness/knowledge directory to map project tokens -> (ki_id, match_strength)."""
     if vault_dir is None or not vault_dir.is_dir():
         return {}
-    learned: dict[str, str] = {}
+    learned: dict[str, tuple[str, str]] = {}
     for child in sorted(vault_dir.iterdir(), key=lambda p: p.name):
         if not child.is_dir() or child.name.startswith("."):
             continue
@@ -419,9 +464,12 @@ def _discover_vault_learned_projects(vault_dir: Path | None) -> dict[str, str]:
             continue
         ki_id = str(data.get("id") or data.get("ki_id") or child.name)
 
-        # 1. Explicit structured tags
-        for tag in data.get("tags") or []:
-            _register_learned_token(tag, ki_id, learned)
+        raw_tags = [str(tag).strip() for tag in (data.get("tags") or []) if str(tag).strip()]
+        tag_norms = {t.lower().replace("-", "_") for t in raw_tags}
+
+        # 1. Explicit tags (weaker signal; filtered later for generic or <=4-char unit names)
+        for tag in raw_tags:
+            _register_learned_token(tag, ki_id, learned, strength="tag")
 
         # 2. Upstream repository URLs / local mirror paths / multi-repo sources
         for key in ("source_target", "source_uri", "source_repo"):
@@ -434,37 +482,51 @@ def _discover_vault_learned_projects(vault_dir: Path | None) -> dict[str, str]:
                 _register_path_tokens(src_entry.get("repo"), ki_id, learned)
                 _register_path_tokens(src_entry.get("path"), ki_id, learned)
 
-        # 3. KI identifier itself and canonical slug forms (avoid free-text title noise)
+        # 3. KI identifier itself and canonical slug forms (avoid generic prose words)
         for id_key in ("id", "ki_id"):
             id_val = str(data.get(id_key) or "").strip()
             if not id_val:
                 continue
-            _register_learned_token(id_val, ki_id, learned)
-            # Match canonical naming pattern ki_<YYYYMMDD>_<repo>_<NN> or ki-<repo>-...
+            _register_learned_token(id_val, ki_id, learned, strength="structured")
             m = re.match(r"^ki[_-](?:\d{8}[_-])?([a-z0-9_-]+?)(?:[_-]\d{2})?$", id_val.lower())
             if m:
                 slug = m.group(1)
-                _register_learned_token(slug, ki_id, learned)
+                _register_learned_token(slug, ki_id, learned, strength="structured")
                 for seg in re.split(r"[-_]+", slug):
-                    if len(seg) >= 4:
-                        _register_learned_token(seg, ki_id, learned)
+                    norm_seg = seg.replace("-", "_")
+                    if norm_seg in _GENERIC_UNIT_NAMES:
+                        continue
+                    if len(seg) >= 4 or (len(seg) >= 3 and norm_seg in tag_norms):
+                        _register_learned_token(seg, ki_id, learned, strength="structured")
 
         for plug in data.get("plugins_scaffolded") or []:
             if isinstance(plug, str):
-                _register_learned_token(plug.removeprefix("plugin."), ki_id, learned)
+                _register_learned_token(plug.removeprefix("plugin."), ki_id, learned, strength="structured")
     return learned
 
 
-def _lookup_learned_ki(raw_name: str, uid: str, learned_map: dict[str, str]) -> str | None:
-    """Resolve matching KI ID for a repository unit preserving hyphen/suffix variants."""
-    candidates = [raw_name.lower(), uid.lower(), raw_name.lower().replace("-", "_")]
+def _lookup_learned_ki(
+    raw_name: str,
+    uid: str,
+    learned_map: dict[str, tuple[str, str] | str],
+) -> tuple[str, str] | None:
+    """Resolve matching (ki_id, strength) while rejecting weak tag matches on generic/short units."""
+    norm_unit = raw_name.strip().lower().replace("-", "_")
+    candidates = [raw_name.lower(), uid.lower(), norm_unit]
     for suffix in ("-main", "_main", "-master", "_master"):
         if raw_name.lower().endswith(suffix):
             stem = raw_name.lower()[: -len(suffix)]
             candidates.extend((stem, stem.replace("-", "_")))
     for cand in candidates:
         if cand in learned_map:
-            return learned_map[cand]
+            entry = learned_map[cand]
+            if isinstance(entry, str):
+                ki_id, strength = entry, "structured"
+            else:
+                ki_id, strength = entry
+            if strength == "tag" and (norm_unit in _GENERIC_UNIT_NAMES or len(norm_unit) <= 4):
+                return None
+            return ki_id, strength
     return None
 
 
@@ -897,7 +959,10 @@ class RepoOntologyModelSource(ModelSource):
                 if code_files >= 1
                 else "non_python"
             )
-            learned_ki = _lookup_learned_ki(raw_name, uid, learned_map)
+            learned_match = _lookup_learned_ki(raw_name, uid, learned_map)
+            learned_ki = learned_match[0] if learned_match is not None else None
+            learned_match_strength = learned_match[1] if learned_match is not None else "none"
+            is_generic_unit = raw_name.strip().lower().replace("-", "_") in _GENERIC_UNIT_NAMES
             harness_learned = learned_ki is not None
 
             attrs: dict[str, Any] = {
@@ -918,6 +983,8 @@ class RepoOntologyModelSource(ModelSource):
                 "has_tflite_or_pb": has_tflite or has_saved_model,
                 "harness_learned": harness_learned,
                 "learned_ki_id": learned_ki or "",
+                "learned_match_strength": learned_match_strength,
+                "is_generic_unit": is_generic_unit,
                 "py_file_count": py_count,
                 "test_file_count": test_count,
                 "gin_file_count": gin_count,

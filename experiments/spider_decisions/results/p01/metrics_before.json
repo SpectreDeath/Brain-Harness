@@ -1,0 +1,15 @@
+{
+  "total_bridges": 40,
+  "true_positives": 33,
+  "false_positives": 7,
+  "fp_rate": 0.175,
+  "false_positive_examples": [
+    "grm/rpc -> ki_20260831_openclaw_02",
+    "gvisor/governance -> ki_responsible_ai_prototyping",
+    "gvisor/shim -> ki_shim_bounded_session_and_layered_skill_loader",
+    "gvisor/tools -> ki_20260830_grok_01",
+    "airllm/data -> ki_solla_dikw_data_asset_continuum",
+    "airllm/eval -> ki_rea_sig_anthea_eval_1f061854",
+    "airllm_plus/runtime -> ki_agent_reach_layered_backend_fallback"
+  ]
+}

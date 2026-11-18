@@ -1,0 +1,746 @@
+[
+  {
+    "snapshot": "google_portfolio_root",
+    "subject": "adk_docs",
+    "object": "ki_google_repos_bridge",
+    "raw_name": "adk-docs",
+    "relative_path": null,
+    "ki_title": "Google Multi-Repository Architectural Bridge & Plugin Suite",
+    "tags": [
+      "google_repos",
+      "bridge",
+      "plugin_suite",
+      "architecture"
+    ],
+    "source_target": "",
+    "draft_label": "likely_true"
+  },
+  {
+    "snapshot": "google_portfolio_root",
+    "subject": "adk_python",
+    "object": "ki_google_repos_bridge",
+    "raw_name": "adk-python",
+    "relative_path": null,
+    "ki_title": "Google Multi-Repository Architectural Bridge & Plugin Suite",
+    "tags": [
+      "google_repos",
+      "bridge",
+      "plugin_suite",
+      "architecture"
+    ],
+    "source_target": "",
+    "draft_label": "likely_true"
+  },
+  {
+    "snapshot": "google_portfolio_root",
+    "subject": "adk_web",
+    "object": "ki_google_repos_bridge",
+    "raw_name": "adk-web",
+    "relative_path": null,
+    "ki_title": "Google Multi-Repository Architectural Bridge & Plugin Suite",
+    "tags": [
+      "google_repos",
+      "bridge",
+      "plugin_suite",
+      "architecture"
+    ],
+    "source_target": "",
+    "draft_label": "likely_true"
+  },
+  {
+    "snapshot": "google_portfolio_root",
+    "subject": "earthengine_api",
+    "object": "ki_20260908_earthengine_01",
+    "raw_name": "earthengine-api",
+    "relative_path": null,
+    "ki_title": "Google Earth Engine Planetary Geospatial Processing & Domain Partitioning Architecture",
+    "tags": [
+      "earth_engine",
+      "geospatial",
+      "remote_sensing",
+      "sentinel2",
+      "landsat",
+      "ndvi",
+      "spectral_index",
+      "zonal_statistics",
+      "terrain_analysis",
+      "dem",
+      "repo_bridge",
+      "subprocess_isolation"
+    ],
+    "source_target": "external/Google/earthengine-api",
+    "draft_label": "likely_true"
+  },
+  {
+    "snapshot": "google_portfolio_root",
+    "subject": "gvisor",
+    "object": "ki_google_gvisor_sentry_gofer_sandbox",
+    "raw_name": "gvisor",
+    "relative_path": null,
+    "ki_title": "gVisor User-Space Kernel Isolation: Sentry Syscall Interception, Gofer FD Proxies & Immutable Sandbox Specs",
+    "tags": [
+      "gvisor",
+      "sandbox",
+      "sentry",
+      "gofer",
+      "seccomp",
+      "syscall_isolation",
+      "runsc",
+      "go"
+    ],
+    "source_target": "https://github.com/google/gvisor",
+    "draft_label": "likely_true"
+  },
+  {
+    "snapshot": "google_portfolio_root",
+    "subject": "harness2",
+    "object": "ki_harness2_recursive_harnessing",
+    "raw_name": "harness2",
+    "relative_path": null,
+    "ki_title": "Recursive Agent Harnessing & Propose-Probe-Compose Architecture",
+    "tags": [
+      "recursive_harnessing",
+      "propose_probe_compose",
+      "harness_optimization",
+      "evidence_isolation",
+      "experience_library"
+    ],
+    "source_target": "external/google-harness2",
+    "draft_label": "likely_true"
+  },
+  {
+    "snapshot": "google_portfolio_root",
+    "subject": "magika",
+    "object": "ki_20260908_magika_01",
+    "raw_name": "magika",
+    "relative_path": null,
+    "ki_title": "Google Magika Deep Learning Content Type & MIME Detection Architecture",
+    "tags": [
+      "deep_learning",
+      "file_identification",
+      "mime_detection",
+      "format_forensics",
+      "polyglot_detection",
+      "extension_spoofing",
+      "onnx_runtime",
+      "google_magika",
+      "repo_bridge"
+    ],
+    "source_target": "external/Google/magika",
+    "draft_label": "likely_true"
+  },
+  {
+    "snapshot": "google_portfolio_root",
+    "subject": "mantis",
+    "object": "ki_20260908_mantis_01",
+    "raw_name": "mantis",
+    "relative_path": null,
+    "ki_title": "Google Mantis Decoupled Security Review Pipeline & Sandboxed Crash Verification",
+    "tags": [
+      "security_audit",
+      "vulnerability_research",
+      "crash_reproduction",
+      "exploit_chaining",
+      "sandbox_isolation",
+      "okf",
+      "ast_indexing",
+      "google_mantis",
+      "repo_bridge"
+    ],
+    "source_target": "external/Google/mantis",
+    "draft_label": "likely_true"
+  },
+  {
+    "snapshot": "google_portfolio_root",
+    "subject": "perfetto",
+    "object": "ki_google_repos_bridge",
+    "raw_name": "perfetto",
+    "relative_path": null,
+    "ki_title": "Google Multi-Repository Architectural Bridge & Plugin Suite",
+    "tags": [
+      "google_repos",
+      "bridge",
+      "plugin_suite",
+      "architecture"
+    ],
+    "source_target": "",
+    "draft_label": "likely_true"
+  },
+  {
+    "snapshot": "google_portfolio_root",
+    "subject": "styleguide",
+    "object": "ki_google_repos_bridge",
+    "raw_name": "styleguide",
+    "relative_path": null,
+    "ki_title": "Google Multi-Repository Architectural Bridge & Plugin Suite",
+    "tags": [
+      "google_repos",
+      "bridge",
+      "plugin_suite",
+      "architecture"
+    ],
+    "source_target": "",
+    "draft_label": "likely_true"
+  },
+  {
+    "snapshot": "google_portfolio_root",
+    "subject": "tunix_main",
+    "object": "ki_google_repos_bridge",
+    "raw_name": "tunix-main",
+    "relative_path": null,
+    "ki_title": "Google Multi-Repository Architectural Bridge & Plugin Suite",
+    "tags": [
+      "google_repos",
+      "bridge",
+      "plugin_suite",
+      "architecture"
+    ],
+    "source_target": "",
+    "draft_label": "likely_true"
+  },
+  {
+    "snapshot": "grm",
+    "subject": "active_selective_prediction",
+    "object": "ki_google_research_aspest_active_selective_prediction",
+    "raw_name": "active_selective_prediction",
+    "relative_path": null,
+    "ki_title": "Google Research ASPEST: Bridging Active Sample Acquisition & Selective Prediction via Checkpoint Ensembles",
+    "tags": [
+      "active_selective_prediction",
+      "aspest",
+      "google_research",
+      "selective_prediction",
+      "active_learning",
+      "abstention",
+      "uncertainty",
+      "arxiv_2304_03870"
+    ],
+    "source_target": "https://github.com/google-research/google-research",
+    "draft_label": "likely_true"
+  },
+  {
+    "snapshot": "grm",
+    "subject": "aloe",
+    "object": "ki_20261110_google_research_gnn_and_scientific_ml",
+    "raw_name": "aloe",
+    "relative_path": null,
+    "ki_title": "Graph-Native Program Representations & Differentiable Scientific ML",
+    "tags": [
+      "machine_learning",
+      "google_research",
+      "graph_neural_networks",
+      "scientific_ml",
+      "jax_dft",
+      "protenn",
+      "aloe",
+      "ipagnn"
+    ],
+    "source_target": "external/google-research-master",
+    "draft_label": "likely_false"
+  },
+  {
+    "snapshot": "grm",
+    "subject": "anthea",
+    "object": "ki_rea_sig_anthea_eval_1f061854",
+    "raw_name": "anthea",
+    "relative_path": null,
+    "ki_title": "Semantic Signatures: anthea-eval.js (javascript_bundle)",
+    "tags": [
+      "anthea",
+      "google_research",
+      "javascript_bundle",
+      "rea-learned",
+      "rea_forensics",
+      "reverse-engineering"
+    ],
+    "source_target": null,
+    "draft_label": "likely_true"
+  },
+  {
+    "snapshot": "grm",
+    "subject": "cisc",
+    "object": "ki_google_research_cisc_confidence_voting",
+    "raw_name": "cisc",
+    "relative_path": null,
+    "ki_title": "Google Research CISC: Confidence-Informed Self-Consistency & Within-Question Discrimination (WQD)",
+    "tags": [
+      "cisc",
+      "google_research",
+      "google-research",
+      "self_consistency",
+      "confidence_scoring",
+      "llm_reasoning",
+      "wqd",
+      "weighted_voting",
+      "arxiv_2502_06233"
+    ],
+    "source_target": "https://github.com/google-research/google-research",
+    "draft_label": "likely_true"
+  },
+  {
+    "snapshot": "grm",
+    "subject": "distracting_control",
+    "object": "ki_google_research_distracting_control_suite",
+    "raw_name": "distracting_control",
+    "relative_path": null,
+    "ki_title": "Google Research Distracting Control Suite: Composable Background, Camera & Color Shift Wrappers for Robustness Evaluation",
+    "tags": [
+      "distracting_control",
+      "google_research",
+      "robustness_benchmark",
+      "reinforcement_learning",
+      "distribution_shift",
+      "arxiv_2101_02722"
+    ],
+    "source_target": "https://github.com/google-research/google-research",
+    "draft_label": "likely_true"
+  },
+  {
+    "snapshot": "grm",
+    "subject": "etcmodel",
+    "object": "ki_google_research_etcmodel_long_structured_attention",
+    "raw_name": "etcmodel",
+    "relative_path": null,
+    "ki_title": "Google Research ETCModel: Fused Global-Local Attention & Clipped Relative Position Encoding for Structured Long Contexts",
+    "tags": [
+      "etcmodel",
+      "google_research",
+      "long_context",
+      "global_local_attention",
+      "relative_attention",
+      "structured_inputs",
+      "arxiv_2004_08483"
+    ],
+    "source_target": "https://github.com/google-research/google-research",
+    "draft_label": "likely_true"
+  },
+  {
+    "snapshot": "grm",
+    "subject": "gfsa",
+    "object": "ki_google_research_gfsa_automaton_layer",
+    "raw_name": "gfsa",
+    "relative_path": null,
+    "ki_title": "Google Research GFSA: Learning Graph Structure With Finite-State Automaton Absorption & Richardson Linear Solvers",
+    "tags": [
+      "gfsa",
+      "google_research",
+      "graph_neural_networks",
+      "finite_state_automaton",
+      "ast_graphs",
+      "jax",
+      "arxiv_2007_04929"
+    ],
+    "source_target": "https://github.com/google-research/google-research",
+    "draft_label": "likely_true"
+  },
+  {
+    "snapshot": "grm",
+    "subject": "graph_compression",
+    "object": "ki_google_research_model_pruning_schedules",
+    "raw_name": "graph_compression",
+    "relative_path": null,
+    "ki_title": "Google Research Model Pruning: Polynomial Sparsity Schedules, Block Sparsity & Graph Compression Coupling",
+    "tags": [
+      "model_pruning",
+      "google_research",
+      "sparsity",
+      "block_pruning",
+      "graph_compression",
+      "dependency_cycle"
+    ],
+    "source_target": "https://github.com/google-research/google-research",
+    "draft_label": "unsure"
+  },
+  {
+    "snapshot": "grm",
+    "subject": "imp",
+    "object": "ki_google_research_imp_multimodal_config_registry",
+    "raw_name": "imp",
+    "relative_path": null,
+    "ki_title": "Google Research IMP/MAX: Locked Dataclass Config Governance, Registry Binding & Hierarchical Overrides",
+    "tags": [
+      "imp",
+      "google_research",
+      "config_validation",
+      "registry_pattern",
+      "dataclass",
+      "multimodal",
+      "arxiv_2305_06324"
+    ],
+    "source_target": "https://github.com/google-research/google-research",
+    "draft_label": "likely_true"
+  },
+  {
+    "snapshot": "grm",
+    "subject": "ipagnn",
+    "object": "ki_20261110_google_research_gnn_and_scientific_ml",
+    "raw_name": "ipagnn",
+    "relative_path": null,
+    "ki_title": "Graph-Native Program Representations & Differentiable Scientific ML",
+    "tags": [
+      "machine_learning",
+      "google_research",
+      "graph_neural_networks",
+      "scientific_ml",
+      "jax_dft",
+      "protenn",
+      "aloe",
+      "ipagnn"
+    ],
+    "source_target": "external/google-research-master",
+    "draft_label": "unsure"
+  },
+  {
+    "snapshot": "grm",
+    "subject": "jax_dft",
+    "object": "ki_20261110_google_research_gnn_and_scientific_ml",
+    "raw_name": "jax_dft",
+    "relative_path": null,
+    "ki_title": "Graph-Native Program Representations & Differentiable Scientific ML",
+    "tags": [
+      "machine_learning",
+      "google_research",
+      "graph_neural_networks",
+      "scientific_ml",
+      "jax_dft",
+      "protenn",
+      "aloe",
+      "ipagnn"
+    ],
+    "source_target": "external/google-research-master",
+    "draft_label": "unsure"
+  },
+  {
+    "snapshot": "grm",
+    "subject": "kws_streaming",
+    "object": "ki_20261110_google_research_multitarget_edge_ml",
+    "raw_name": "kws_streaming",
+    "relative_path": null,
+    "ki_title": "Multi-Target Edge ML Serialization & Streaming Delay-Line Architecture",
+    "tags": [
+      "machine_learning",
+      "google_research",
+      "edge_ml",
+      "tflite",
+      "tfjs",
+      "kws_streaming",
+      "sign_language_detection"
+    ],
+    "source_target": "external/google-research-master",
+    "draft_label": "unsure"
+  },
+  {
+    "snapshot": "grm",
+    "subject": "latent_programmer",
+    "object": "ki_google_research_latent_programmer_vqvae",
+    "raw_name": "latent_programmer",
+    "relative_path": null,
+    "ki_title": "Google Research Latent Programmer: Discrete VQ-VAE Latent Program Plans & Bypass-Preventing Pretraining",
+    "tags": [
+      "latent_programmer",
+      "google_research",
+      "program_synthesis",
+      "vqvae",
+      "jax",
+      "flax",
+      "arxiv_2012_00377"
+    ],
+    "source_target": "https://github.com/google-research/google-research",
+    "draft_label": "likely_true"
+  },
+  {
+    "snapshot": "grm",
+    "subject": "model_pruning",
+    "object": "ki_google_research_model_pruning_schedules",
+    "raw_name": "model_pruning",
+    "relative_path": null,
+    "ki_title": "Google Research Model Pruning: Polynomial Sparsity Schedules, Block Sparsity & Graph Compression Coupling",
+    "tags": [
+      "model_pruning",
+      "google_research",
+      "sparsity",
+      "block_pruning",
+      "graph_compression",
+      "dependency_cycle"
+    ],
+    "source_target": "https://github.com/google-research/google-research",
+    "draft_label": "likely_true"
+  },
+  {
+    "snapshot": "grm",
+    "subject": "non_semantic_speech_benchmark",
+    "object": "ki_rea_sig_model1_wfrontend_9a4d5b7c",
+    "raw_name": "non_semantic_speech_benchmark",
+    "relative_path": null,
+    "ki_title": "Semantic Signatures: model1_wfrontend.tflite (ai_model)",
+    "tags": [
+      "ai_model",
+      "google_research",
+      "non_semantic_speech_benchmark",
+      "rea-learned",
+      "rea_forensics",
+      "reverse-engineering",
+      "tflite"
+    ],
+    "source_target": null,
+    "draft_label": "unsure"
+  },
+  {
+    "snapshot": "grm",
+    "subject": "protenn",
+    "object": "ki_20261110_google_research_gnn_and_scientific_ml",
+    "raw_name": "protenn",
+    "relative_path": null,
+    "ki_title": "Graph-Native Program Representations & Differentiable Scientific ML",
+    "tags": [
+      "machine_learning",
+      "google_research",
+      "graph_neural_networks",
+      "scientific_ml",
+      "jax_dft",
+      "protenn",
+      "aloe",
+      "ipagnn"
+    ],
+    "source_target": "external/google-research-master",
+    "draft_label": "unsure"
+  },
+  {
+    "snapshot": "grm",
+    "subject": "rpc",
+    "object": "ki_20260831_openclaw_02",
+    "raw_name": "rpc",
+    "relative_path": null,
+    "ki_title": "Trusted Gateway Control Plane & Deterministic Sandboxed Execution",
+    "tags": [
+      "gateway",
+      "security",
+      "websocket",
+      "rpc",
+      "approval_gates",
+      "openclaw",
+      "repo_introspection"
+    ],
+    "source_target": "external/openclaw",
+    "draft_label": "likely_false"
+  },
+  {
+    "snapshot": "grm",
+    "subject": "scaling_transformer_inference_efficiency",
+    "object": "ki_google_research_scaling_transformer_inference",
+    "raw_name": "scaling_transformer_inference_efficiency",
+    "relative_path": null,
+    "ki_title": "Google Research Scaling Transformer Inference Efficiency: 2D/3D Mesh Sharding Rules, Prefix-Shared KV Slices & Decode Layout",
+    "tags": [
+      "scaling_transformer_inference_efficiency",
+      "google_research",
+      "transformer_inference",
+      "kv_cache",
+      "sharding",
+      "jax",
+      "arxiv_2211_05102"
+    ],
+    "source_target": "https://github.com/google-research/google-research",
+    "draft_label": "unsure"
+  },
+  {
+    "snapshot": "grm",
+    "subject": "scann",
+    "object": "ki_google_research_scann_anisotropic_vq",
+    "raw_name": "scann",
+    "relative_path": null,
+    "ki_title": "Google Research ScaNN: Three-Phase Vector Search, Anisotropic Quantization & SOAR Overretrieval",
+    "tags": [
+      "scann",
+      "google_research",
+      "vector_search",
+      "anisotropic_quantization",
+      "asymmetric_hashing",
+      "mips",
+      "arxiv_1908_10396",
+      "arxiv_2404_00774"
+    ],
+    "source_target": "https://github.com/google-research/google-research",
+    "draft_label": "likely_true"
+  },
+  {
+    "snapshot": "grm",
+    "subject": "sign_language_detection",
+    "object": "ki_rea_sig_group1_shard1of1_e7a02dfe",
+    "raw_name": "sign_language_detection",
+    "relative_path": null,
+    "ki_title": "Semantic Signatures: group1-shard1of1.bin (ai_model)",
+    "tags": [
+      "ai_model",
+      "google_research",
+      "rea-learned",
+      "rea_forensics",
+      "reverse-engineering",
+      "sign_language_detection",
+      "tfjs"
+    ],
+    "source_target": null,
+    "draft_label": "unsure"
+  },
+  {
+    "snapshot": "grm",
+    "subject": "uq_benchmark_2019",
+    "object": "ki_google_research_uq_benchmark_2019_calibration_shift",
+    "raw_name": "uq_benchmark_2019",
+    "relative_path": null,
+    "ki_title": "Google Research UQ Benchmark 2019: Predictive Uncertainty Under Dataset Shift, Brier Decomposition & Confidence-Threshold Coverage",
+    "tags": [
+      "uq_benchmark_2019",
+      "google_research",
+      "uncertainty_quantification",
+      "dataset_shift",
+      "brier_decomposition",
+      "calibration",
+      "arxiv_1906_02530"
+    ],
+    "source_target": "https://github.com/google-research/google-research",
+    "draft_label": "likely_true"
+  },
+  {
+    "snapshot": "gvisor",
+    "subject": "governance",
+    "object": "ki_responsible_ai_prototyping",
+    "raw_name": "governance",
+    "relative_path": null,
+    "ki_title": "Responsible AI Prototyping & Web App Governance (Eva J Patel / Lovable)",
+    "tags": [
+      "responsible_ai",
+      "lovable",
+      "prototyping",
+      "governance"
+    ],
+    "source_target": "",
+    "draft_label": "unsure"
+  },
+  {
+    "snapshot": "gvisor",
+    "subject": "runsc",
+    "object": "ki_google_gvisor_sentry_gofer_sandbox",
+    "raw_name": "runsc",
+    "relative_path": null,
+    "ki_title": "gVisor User-Space Kernel Isolation: Sentry Syscall Interception, Gofer FD Proxies & Immutable Sandbox Specs",
+    "tags": [
+      "gvisor",
+      "sandbox",
+      "sentry",
+      "gofer",
+      "seccomp",
+      "syscall_isolation",
+      "runsc",
+      "go"
+    ],
+    "source_target": "https://github.com/google/gvisor",
+    "draft_label": "unsure"
+  },
+  {
+    "snapshot": "gvisor",
+    "subject": "shim",
+    "object": "ki_shim_bounded_session_and_layered_skill_loader",
+    "raw_name": "shim",
+    "relative_path": null,
+    "ki_title": "Shim: Cryptographic JSONL Session Store, Bounded Agent Loop & 4-Layer Precedence Skill Loader",
+    "tags": [
+      "shim",
+      "session-store",
+      "layered-skills",
+      "bounded-loop",
+      "jsonl"
+    ],
+    "source_target": "https://github.com/Balanov/shim",
+    "draft_label": "likely_true"
+  },
+  {
+    "snapshot": "gvisor",
+    "subject": "tools",
+    "object": "ki_20260830_grok_01",
+    "raw_name": "tools",
+    "relative_path": null,
+    "ki_title": "Hashline Anchoring with Bounded Shift Recovery",
+    "tags": [
+      "tools",
+      "file_editing",
+      "hashline_anchors",
+      "shift_recovery",
+      "robustness"
+    ],
+    "source_target": "external/grok-build-main/grok-build-main",
+    "draft_label": "likely_false"
+  },
+  {
+    "snapshot": "airllm",
+    "subject": "air_llm",
+    "object": "ki_airllm_layerwise_streaming_and_moe_expert_offload",
+    "raw_name": "air_llm",
+    "relative_path": null,
+    "ki_title": "AirLLM Layer-Wise Disk Offloading, Per-Expert MoE Streaming & On-GPU Packed Decompression",
+    "tags": [
+      "airllm",
+      "air_llm",
+      "layerwise_offloading",
+      "moe_streaming",
+      "mxfp4",
+      "pinned_memory",
+      "meta_device"
+    ],
+    "source_target": "https://github.com/lyogavin/airllm",
+    "draft_label": "unsure"
+  },
+  {
+    "snapshot": "airllm",
+    "subject": "data",
+    "object": "ki_solla_dikw_data_asset_continuum",
+    "raw_name": "data",
+    "relative_path": null,
+    "ki_title": "The DIKW Pyramid & Data Lifecycle Asset Progression",
+    "tags": [
+      "data_management",
+      "dikw_pyramid",
+      "data_asset",
+      "data_lifecycle",
+      "solla",
+      "dmbok"
+    ],
+    "source_target": "From Data to Value: Understanding Data Management Through a Real World Use Case (Daniel Garc\u00eda Solla, freeCodeCamp)",
+    "draft_label": "likely_true"
+  },
+  {
+    "snapshot": "airllm",
+    "subject": "eval",
+    "object": "ki_rea_sig_anthea_eval_1f061854",
+    "raw_name": "eval",
+    "relative_path": null,
+    "ki_title": "Semantic Signatures: anthea-eval.js (javascript_bundle)",
+    "tags": [
+      "anthea",
+      "google_research",
+      "javascript_bundle",
+      "rea-learned",
+      "rea_forensics",
+      "reverse-engineering"
+    ],
+    "source_target": null,
+    "draft_label": "likely_true"
+  },
+  {
+    "snapshot": "airllm_plus",
+    "subject": "runtime",
+    "object": "ki_agent_reach_layered_backend_fallback",
+    "raw_name": "runtime",
+    "relative_path": null,
+    "ki_title": "Deterministic Multi-Tier Backend Fallback Cascades",
+    "tags": [
+      "backend_fallback",
+      "channel_routing",
+      "resilience",
+      "cascading_retries",
+      "browser_binding"
+    ],
+    "source_target": "external/Agent-Reach/agent_reach/runtime/dispatch.py",
+    "draft_label": "likely_true"
+  }
+]

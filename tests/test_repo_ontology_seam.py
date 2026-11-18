@@ -344,3 +344,88 @@ def test_auditor_and_triad_consume_ontology_summary(tmp_path: Path) -> None:
 
     triad_kis = triad_plugin.extract_kis(str(outer))
     assert any(isinstance(k, KiCandidateData) and ("proj_b" in k.id or "ontology" in k.id) for k in triad_kis)
+
+
+@skip_if_no_engine
+def test_generic_unit_tag_match_rejected(tmp_path: Path) -> None:
+    """Generic unit names (e.g. runtime) must reject tag-only matches from unrelated KIs."""
+    from plugins.memory_and_epistemics.ontology_spider.repo_adapter import RepoOntologyModelSource
+
+    repo = tmp_path / "repo"
+    rt = repo / "runtime"
+    rt.mkdir(parents=True)
+    (rt / "dispatch.py").write_text("def run(): pass\n", encoding="utf-8")
+
+    vault = tmp_path / "vault"
+    ki = vault / "ki_unrelated_tool"
+    ki.mkdir(parents=True)
+    (ki / "metadata.json").write_text(
+        json.dumps(
+            {
+                "id": "ki_unrelated_tool",
+                "title": "Unrelated Framework",
+                "source_target": "external/other_project/other_project",
+                "tags": ["runtime", "dispatch"],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    model = RepoOntologyModelSource(repo, vault_dir=vault).load()
+    attrs = model.entities["runtime"].attributes
+    assert attrs["harness_learned"] is False
+    assert attrs["learned_match_strength"] == "none"
+    assert attrs["is_generic_unit"] is True
+
+
+@skip_if_no_engine
+def test_structured_match_kept_for_generic_name(tmp_path: Path) -> None:
+    """Generic unit names keep a structured match when source_target explicitly targets /<unit>."""
+    from plugins.memory_and_epistemics.ontology_spider.repo_adapter import RepoOntologyModelSource
+
+    repo = tmp_path / "repo"
+    rt = repo / "runtime"
+    rt.mkdir(parents=True)
+    (rt / "engine.py").write_text("def run(): pass\n", encoding="utf-8")
+
+    vault = tmp_path / "vault"
+    ki = vault / "ki_runtime_core"
+    ki.mkdir(parents=True)
+    (ki / "metadata.json").write_text(
+        json.dumps(
+            {
+                "id": "ki_runtime_core",
+                "title": "Dedicated Runtime Architecture",
+                "source_target": "https://github.com/example/runtime",
+                "tags": ["runtime"],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    model = RepoOntologyModelSource(repo, vault_dir=vault).load()
+    attrs = model.entities["runtime"].attributes
+    assert attrs["harness_learned"] is True
+    assert attrs["learned_match_strength"] == "structured"
+    assert attrs["learned_ki_id"] == "ki_runtime_core"
+
+
+@skip_if_no_engine
+def test_generic_units_excluded_from_unlearned(tmp_path: Path) -> None:
+    """Generic helper folders (tests, scripts) with tests are excluded from unlearned_tested_projects."""
+    repo = tmp_path / "repo"
+    for name in ("tests", "scripts", "real_solver", "real_planner"):
+        d = repo / name
+        d.mkdir(parents=True)
+        (d / "README.md").write_text(f"# {name}\n", encoding="utf-8")
+        (d / "mod.py").write_text("import json\n", encoding="utf-8")
+        (d / "mod_test.py").write_text("def test_ok(): assert True\n", encoding="utf-8")
+
+    vault = tmp_path / "vault"
+    vault.mkdir()
+
+    report = OntologySpiderKernelService().analyze_repository(repo, vault_dir=vault)
+    assert "real_solver" in report.unlearned_tested_projects
+    assert "real_planner" in report.unlearned_tested_projects
+    assert "tests" not in report.unlearned_tested_projects
+    assert "scripts" not in report.unlearned_tested_projects

@@ -1,0 +1,274 @@
+[
+  {
+    "snapshot": "google_portfolio_root",
+    "subject": "adk_docs",
+    "raw_name": "adk-docs",
+    "object": "ki_google_repos_bridge",
+    "match_strength": "structured",
+    "ground_truth": true
+  },
+  {
+    "snapshot": "google_portfolio_root",
+    "subject": "adk_python",
+    "raw_name": "adk-python",
+    "object": "ki_google_repos_bridge",
+    "match_strength": "structured",
+    "ground_truth": true
+  },
+  {
+    "snapshot": "google_portfolio_root",
+    "subject": "adk_web",
+    "raw_name": "adk-web",
+    "object": "ki_google_repos_bridge",
+    "match_strength": "structured",
+    "ground_truth": true
+  },
+  {
+    "snapshot": "google_portfolio_root",
+    "subject": "earthengine_api",
+    "raw_name": "earthengine-api",
+    "object": "ki_20260908_earthengine_01",
+    "match_strength": "structured",
+    "ground_truth": true
+  },
+  {
+    "snapshot": "google_portfolio_root",
+    "subject": "gvisor",
+    "raw_name": "gvisor",
+    "object": "ki_google_gvisor_sentry_gofer_sandbox",
+    "match_strength": "structured",
+    "ground_truth": true
+  },
+  {
+    "snapshot": "google_portfolio_root",
+    "subject": "harness2",
+    "raw_name": "harness2",
+    "object": "ki_harness2_recursive_harnessing",
+    "match_strength": "structured",
+    "ground_truth": true
+  },
+  {
+    "snapshot": "google_portfolio_root",
+    "subject": "magika",
+    "raw_name": "magika",
+    "object": "ki_20260908_magika_01",
+    "match_strength": "structured",
+    "ground_truth": true
+  },
+  {
+    "snapshot": "google_portfolio_root",
+    "subject": "mantis",
+    "raw_name": "mantis",
+    "object": "ki_20260908_mantis_01",
+    "match_strength": "structured",
+    "ground_truth": true
+  },
+  {
+    "snapshot": "google_portfolio_root",
+    "subject": "perfetto",
+    "raw_name": "perfetto",
+    "object": "ki_google_repos_bridge",
+    "match_strength": "structured",
+    "ground_truth": true
+  },
+  {
+    "snapshot": "google_portfolio_root",
+    "subject": "styleguide",
+    "raw_name": "styleguide",
+    "object": "ki_google_repos_bridge",
+    "match_strength": "structured",
+    "ground_truth": true
+  },
+  {
+    "snapshot": "google_portfolio_root",
+    "subject": "tunix_main",
+    "raw_name": "tunix-main",
+    "object": "ki_google_repos_bridge",
+    "match_strength": "structured",
+    "ground_truth": true
+  },
+  {
+    "snapshot": "grm",
+    "subject": "active_selective_prediction",
+    "raw_name": "active_selective_prediction",
+    "object": "ki_google_research_aspest_active_selective_prediction",
+    "match_strength": "tag",
+    "ground_truth": true
+  },
+  {
+    "snapshot": "grm",
+    "subject": "anthea",
+    "raw_name": "anthea",
+    "object": "ki_rea_sig_anthea_eval_1f061854",
+    "match_strength": "structured",
+    "ground_truth": true
+  },
+  {
+    "snapshot": "grm",
+    "subject": "cisc",
+    "raw_name": "cisc",
+    "object": "ki_google_research_cisc_confidence_voting",
+    "match_strength": "structured",
+    "ground_truth": true
+  },
+  {
+    "snapshot": "grm",
+    "subject": "distracting_control",
+    "raw_name": "distracting_control",
+    "object": "ki_google_research_distracting_control_suite",
+    "match_strength": "tag",
+    "ground_truth": true
+  },
+  {
+    "snapshot": "grm",
+    "subject": "etcmodel",
+    "raw_name": "etcmodel",
+    "object": "ki_google_research_etcmodel_long_structured_attention",
+    "match_strength": "structured",
+    "ground_truth": true
+  },
+  {
+    "snapshot": "grm",
+    "subject": "gfsa",
+    "raw_name": "gfsa",
+    "object": "ki_google_research_gfsa_automaton_layer",
+    "match_strength": "structured",
+    "ground_truth": true
+  },
+  {
+    "snapshot": "grm",
+    "subject": "graph_compression",
+    "raw_name": "graph_compression",
+    "object": "ki_google_research_model_pruning_schedules",
+    "match_strength": "tag",
+    "ground_truth": true
+  },
+  {
+    "snapshot": "grm",
+    "subject": "imp",
+    "raw_name": "imp",
+    "object": "ki_google_research_imp_multimodal_config_registry",
+    "match_strength": "structured",
+    "ground_truth": true
+  },
+  {
+    "snapshot": "grm",
+    "subject": "ipagnn",
+    "raw_name": "ipagnn",
+    "object": "ki_20261110_google_research_gnn_and_scientific_ml",
+    "match_strength": "tag",
+    "ground_truth": true
+  },
+  {
+    "snapshot": "grm",
+    "subject": "jax_dft",
+    "raw_name": "jax_dft",
+    "object": "ki_20261110_google_research_gnn_and_scientific_ml",
+    "match_strength": "tag",
+    "ground_truth": true
+  },
+  {
+    "snapshot": "grm",
+    "subject": "kws_streaming",
+    "raw_name": "kws_streaming",
+    "object": "ki_20261110_google_research_multitarget_edge_ml",
+    "match_strength": "tag",
+    "ground_truth": true
+  },
+  {
+    "snapshot": "grm",
+    "subject": "latent_programmer",
+    "raw_name": "latent_programmer",
+    "object": "ki_google_research_latent_programmer_vqvae",
+    "match_strength": "tag",
+    "ground_truth": true
+  },
+  {
+    "snapshot": "grm",
+    "subject": "model_pruning",
+    "raw_name": "model_pruning",
+    "object": "ki_google_research_model_pruning_schedules",
+    "match_strength": "tag",
+    "ground_truth": true
+  },
+  {
+    "snapshot": "grm",
+    "subject": "non_semantic_speech_benchmark",
+    "raw_name": "non_semantic_speech_benchmark",
+    "object": "ki_rea_sig_model1_wfrontend_9a4d5b7c",
+    "match_strength": "tag",
+    "ground_truth": true
+  },
+  {
+    "snapshot": "grm",
+    "subject": "protenn",
+    "raw_name": "protenn",
+    "object": "ki_20261110_google_research_gnn_and_scientific_ml",
+    "match_strength": "tag",
+    "ground_truth": true
+  },
+  {
+    "snapshot": "grm",
+    "subject": "scaling_transformer_inference_efficiency",
+    "raw_name": "scaling_transformer_inference_efficiency",
+    "object": "ki_google_research_scaling_transformer_inference",
+    "match_strength": "tag",
+    "ground_truth": true
+  },
+  {
+    "snapshot": "grm",
+    "subject": "scann",
+    "raw_name": "scann",
+    "object": "ki_google_research_scann_anisotropic_vq",
+    "match_strength": "structured",
+    "ground_truth": true
+  },
+  {
+    "snapshot": "grm",
+    "subject": "sign_language_detection",
+    "raw_name": "sign_language_detection",
+    "object": "ki_rea_sig_group1_shard1of1_e7a02dfe",
+    "match_strength": "tag",
+    "ground_truth": true
+  },
+  {
+    "snapshot": "grm",
+    "subject": "uq_benchmark_2019",
+    "raw_name": "uq_benchmark_2019",
+    "object": "ki_google_research_uq_benchmark_2019_calibration_shift",
+    "match_strength": "tag",
+    "ground_truth": true
+  },
+  {
+    "snapshot": "gvisor",
+    "subject": "governance",
+    "raw_name": "governance",
+    "object": "ki_vercel_ui_sdk_expert_scope_governance",
+    "match_strength": "structured",
+    "ground_truth": null
+  },
+  {
+    "snapshot": "gvisor",
+    "subject": "runsc",
+    "raw_name": "runsc",
+    "object": "ki_google_gvisor_sentry_gofer_sandbox",
+    "match_strength": "tag",
+    "ground_truth": true
+  },
+  {
+    "snapshot": "gvisor",
+    "subject": "shim",
+    "raw_name": "shim",
+    "object": "ki_shim_bounded_session_and_layered_skill_loader",
+    "match_strength": "structured",
+    "ground_truth": false
+  },
+  {
+    "snapshot": "airllm",
+    "subject": "air_llm",
+    "raw_name": "air_llm",
+    "object": "ki_airllm_layerwise_streaming_and_moe_expert_offload",
+    "match_strength": "tag",
+    "ground_truth": true
+  }
+]
