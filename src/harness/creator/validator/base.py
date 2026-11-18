@@ -2,11 +2,10 @@
 
 from __future__ import annotations
 
-import asyncio
 from abc import ABC, abstractmethod
-from typing import Any
 
 from harness.creator.validator.models import ValidationContext
+from harness.services.storage.async_bridge import _run_coro_sync
 
 
 class ValidationRule(ABC):
@@ -27,22 +26,4 @@ class ValidationRule(ABC):
         """Execute validation rule. Returns True if pipeline can continue, False if fatal."""
 
 
-def _run_coro_sync(coro: Any) -> Any:
-    """Safely run a coroutine synchronously even within existing event loops."""
-    async def _wrapped() -> Any:
-        try:
-            return await coro
-        finally:
-            await asyncio.sleep(0.01)
-
-    try:
-        loop = asyncio.get_running_loop()
-    except RuntimeError:
-        loop = None
-
-    if loop and loop.is_running():
-        import concurrent.futures
-
-        with concurrent.futures.ThreadPoolExecutor() as pool:
-            return pool.submit(asyncio.run, _wrapped()).result()
-    return asyncio.run(_wrapped())
+__all__ = ["ValidationRule", "_run_coro_sync"]

@@ -18,7 +18,7 @@ from pathlib import Path
 from typing import Any
 
 from harness.kernel.context import ServiceContext
-from harness.commands.skills.routing import route_skills_cmd
+from harness.services.skill_graph.operations import route_skills_catalog
 
 
 def query_knowledge_and_skills(
@@ -101,7 +101,7 @@ def query_knowledge_and_skills(
         k.pop("_score", None)
 
     # Query Skill Graph intent routing
-    skill_routing = route_skills_cmd(intent=topic, top_k=limit, root_path=root_path, context=ctx)
+    skill_routing = route_skills_catalog(intent=topic, top_k=limit, root_path=root_path, context=ctx)
     matches = skill_routing.get("matches", [])
 
     # Map matched KIs

@@ -56,7 +56,7 @@ A 🧑 **HUMAN CHECKPOINT** must never present the user with a single list longe
 - [x] **Phase 0** — Baseline verification & `ACTION_LOG.md` scaffolding
 - [x] **Phase 1** — P0: Vault `references_code` backfill & module-ID edge normalization (`0.33 -> >= 0.85` F1)
 - [x] **Phase 2** — P1: Evidence-grounded CISC swarm voting & ASPEST confidence-band escalation
-- [ ] **Phase 3** — P1: Break `ui <-> commands` cycle & `services/` upward leaks (zero kernel edits)
+- [x] **Phase 3** — P1: Break `ui <-> commands` cycle & `services/` upward leaks (zero kernel edits)
 - [ ] **Phase 4** — P1 (Arch): Decouple `kernel/runtime/` composition root & verify SCC reduction
 - [ ] **Phase 5** — P2: Vault hygiene — verify top-8 central unverified KIs & triage 12 duplicate pairs
 - [ ] **Phase 6** — P2: Ingest Next-5 research targets (`dp_sgd_clipping`, `smart_eval`, `perturbations`, `norml`, `psycholab`)
@@ -197,17 +197,17 @@ Updated `src/harness/agent/swarm/consensus.py`, `src/harness/services/uncertaint
 **Depends on:** Phase 0. **Model tier:** low/medium.
 
 ### Steps
-- [ ] **3.1** Write a failing AST import-boundary test `tests/test_layer_import_boundaries.py` asserting:
+- [x] **3.1** Write a failing AST import-boundary test `tests/test_layer_import_boundaries.py` asserting:
   - No file under `src/harness/ui/` imports `harness.commands` (AST `Import` / `ImportFrom` check).
   - No file under `src/harness/services/` imports `harness.commands` or `harness.creator`.
-- [ ] **3.2** Inspect `src/harness/commands/skills/{discovery,routing,topology,seams}.py` and `src/harness/services/skill_graph/`:
+- [x] **3.2** Inspect `src/harness/commands/skills/{discovery,routing,topology,seams}.py` and `src/harness/services/skill_graph/`:
   - Move or expose pure service-layer helpers for skill indexing, routing, chain finding, and topology inspection under `src/harness/services/skill_graph/`.
   - Keep existing `index_skills_cmd`, `route_skills_cmd`, `find_skill_chain_cmd`, `get_skill_topology_cmd` in `src/harness/commands/skills/` as thin wrappers delegating to `harness.services.skill_graph` so CLI and existing command tests remain unchanged.
   - Repoint `src/harness/ui/server/routes/skills.py` and `src/harness/services/skill_graph/joint_query.py` to `harness.services.skill_graph`.
-- [ ] **3.3** Inspect `_run_coro_sync` in `src/harness/creator/validator/base.py`:
+- [x] **3.3** Inspect `_run_coro_sync` in `src/harness/creator/validator/base.py`:
   - Move `_run_coro_sync` into a clean async-bridge helper under `src/harness/services/` (e.g. `src/harness/services/storage/` or `src/harness/services/_async_utils.py`), re-export `_run_coro_sync` in `src/harness/creator/validator/base.py` for backwards compatibility, and repoint `src/harness/services/storage/vault_retrieval.py`.
-- [ ] **3.4** Rebuild `experiments/spider_decisions/results/snapshots/brain_harness_src.json` (`refresh=True`) and re-run `experiments/spider_decisions/p09_refactor_order.py`. Confirm `spider_cycle_violations` is empty (`ui <-> commands` gone).
-- [ ] **3.5** Run quality gates (`ruff check .`, `pytest tests/test_layer_import_boundaries.py tests/test_ui_server.py tests/test_ui_skill_clustering_seam.py tests/test_commands_skills_decomposition.py tests/test_deepened_skills_commands.py tests/test_service_storage_vault_integrity.py -q`), append `ACTION_LOG.md`, local commit `feat(spider-followup): phase 3 break ui-commands cycle and service upward leaks`.
+- [x] **3.4** Rebuild `experiments/spider_decisions/results/snapshots/brain_harness_src.json` (`refresh=True`) and re-run `experiments/spider_decisions/p09_refactor_order.py`. Confirm `spider_cycle_violations` is empty (`ui <-> commands` gone).
+- [x] **3.5** Run quality gates (`ruff check .`, `pytest tests/test_layer_import_boundaries.py tests/test_ui_server.py tests/test_ui_skill_clustering_seam.py tests/test_commands_skills_decomposition.py tests/test_deepened_skills_commands.py tests/test_service_storage_vault_integrity.py -q`), append `ACTION_LOG.md`, local commit `feat(spider-followup): phase 3 break ui-commands cycle and service upward leaks`.
 
 ### Outputs
 `tests/test_layer_import_boundaries.py`, decoupled `ui/server/routes/skills.py`, `services/skill_graph/joint_query.py`, `services/storage/vault_retrieval.py`, refreshed `results/p09/refactor_order.json` & `summary.md`.

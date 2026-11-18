@@ -9,12 +9,14 @@ Provides authoritative runtime inspection capabilities for running Harness syste
 
 from __future__ import annotations
 
+from pathlib import Path
 from typing import Any
 
 import structlog
 
 from harness.kernel.context import ServiceContext
 from harness.kernel.lifecycle import PluginLifecycle
+from harness.plugins.loader import PluginLoader
 from harness.services.tools import ToolRegistry
 
 logger = structlog.get_logger()
@@ -156,12 +158,8 @@ class RuntimeIntrospector:
 
     def get_catalog_report(self, loader: Any | None = None) -> list[dict[str, Any]]:
         """Return enriched plugin catalog correlated with active lifecycle states."""
-        if loader is None:
-            from harness.commands.plugins import list_plugins
-
-            catalog = list_plugins()
-        else:
-            catalog = loader.list_catalog()
+        active_loader = loader or PluginLoader(plugin_dirs=[Path("plugins")])
+        catalog = active_loader.list_catalog()
 
         active_summary = self.lifecycle.summary()
         enriched = []
@@ -176,13 +174,8 @@ class RuntimeIntrospector:
 
     def get_plugin_guide_report(self, name: str, loader: Any | None = None) -> dict[str, Any]:
         """Return structured guide and card documentation for a plugin."""
-        guide_res = None
-        if loader is not None:
-            guide_res = loader.get_guide(name)
-        else:
-            from harness.commands.plugins import get_plugin_guide
-
-            guide_res = get_plugin_guide(name)
+        active_loader = loader or PluginLoader(plugin_dirs=[Path("plugins")])
+        guide_res = active_loader.get_guide(name)
 
         if guide_res:
             manifest, guide = guide_res

@@ -14,30 +14,30 @@ router = APIRouter()
 
 @router.get("/api/skills")
 async def get_skills_catalog_endpoint(path: str = ".") -> dict[str, Any]:
-    from harness.commands.skills import index_skills_cmd
+    from harness.services.skill_graph.operations import index_skills_catalog
 
-    return index_skills_cmd(path)
+    return index_skills_catalog(path)
 
 
 @router.get("/api/skills/route")
 async def route_skills_endpoint(intent: str, top_k: int = 4) -> dict[str, Any]:
-    from harness.commands.skills import route_skills_cmd
+    from harness.services.skill_graph.operations import route_skills_catalog
 
-    return route_skills_cmd(intent, top_k=top_k)
+    return route_skills_catalog(intent, top_k=top_k)
 
 
 @router.get("/api/skills/chain")
 async def get_skill_chain_endpoint(start: str, target: str) -> dict[str, Any]:
-    from harness.commands.skills import find_skill_chain_cmd
+    from harness.services.skill_graph.operations import find_skill_chain
 
-    return find_skill_chain_cmd(start, target)
+    return find_skill_chain(start, target)
 
 
 @router.get("/api/skills/{skill_name}/topology")
 async def get_skill_topology_endpoint(skill_name: str) -> dict[str, Any]:
-    from harness.commands.skills import get_skill_topology_cmd
+    from harness.services.skill_graph.operations import get_skill_topology_payload
 
-    return get_skill_topology_cmd(skill_name)
+    return get_skill_topology_payload(skill_name)
 
 
 @router.get("/api/skills/clusters")

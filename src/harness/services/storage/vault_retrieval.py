@@ -107,7 +107,7 @@ class KnowledgeRetrievalMixin:
     def retrieve_relevant_knowledge_sync(
         self, task: str, max_items: int = 3, min_score: float = 0.15, vault_dir: Path | str = ".harness/knowledge",
     ) -> list[KnowledgeItemRecord]:
-        from harness.creator.validator.base import _run_coro_sync
+        from harness.services.storage.async_bridge import _run_coro_sync
 
         return cast(
             list[KnowledgeItemRecord],

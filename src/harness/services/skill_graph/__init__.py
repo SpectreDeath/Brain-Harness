@@ -84,6 +84,13 @@ from harness.services.skill_graph.service import (
     get_default_skill_registry,
     resolve_skill_intelligence,
 )
+from harness.services.skill_graph.operations import (
+    find_skill_chain,
+    get_skill_topology_payload,
+    index_skills_catalog,
+    resolve_skill_registry,
+    route_skills_catalog,
+)
 
 # 8. Skill Clustering re-exports
 from harness.services.skill_clustering import (
@@ -134,6 +141,12 @@ __all__ = [
     "get_default_skill_graph",
     "get_default_skill_registry",
     "resolve_skill_intelligence",
+    # High-level service operations
+    "find_skill_chain",
+    "get_skill_topology_payload",
+    "index_skills_catalog",
+    "resolve_skill_registry",
+    "route_skills_catalog",
     # Clustering
     "CrossClusterBridge",
     "EmergentCapability",
