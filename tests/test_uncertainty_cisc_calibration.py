@@ -169,3 +169,59 @@ async def test_ioc_plugin_and_cli_adapter_expose_cisc_and_uq_seams() -> None:
         assert math.isclose(cal.brier_score, 0.05, abs_tol=1e-6)
 
     await guard_plugin.on_unload(ctx)
+
+
+@pytest.mark.unit
+@pytest.mark.asyncio
+async def test_uncertainty_guard_confidence_band_routing() -> None:
+    """ASPEST 3-zone band routes confidence into ABSTAIN, ESCALATE_HUMAN, and ACCEPT cleanly."""
+    from harness.services.uncertainty_guard import ConfidenceBandDecisionData
+    from uncertainty_guard_engine import ConfidenceBandDecision, UncertaintyGuardEngine
+
+    engine = UncertaintyGuardEngine()
+
+    low = engine.evaluate_confidence_band(0.35, lower_threshold=0.50, upper_threshold=0.80)
+    assert isinstance(low, ConfidenceBandDecision)
+    assert low.action == "ABSTAIN"
+    assert math.isclose(low.margin_to_accept, 0.45, abs_tol=1e-6)
+
+    for mid_conf in (0.50, 0.65):
+        mid = engine.evaluate_confidence_band(mid_conf, lower_threshold=0.50, upper_threshold=0.80)
+        assert mid.action == "ESCALATE_HUMAN"
+        assert math.isclose(mid.margin_to_accept, 0.80 - mid_conf, abs_tol=1e-6)
+
+    for high_conf in (0.80, 0.95):
+        high = engine.evaluate_confidence_band(high_conf, lower_threshold=0.50, upper_threshold=0.80)
+        assert high.action == "ACCEPT"
+        assert high.margin_to_accept == 0.0
+
+    # Frozen dataclass immutability check (Rule 43)
+    with pytest.raises((AttributeError, TypeError)):
+        low.action = "ACCEPT"  # type: ignore[misc]
+
+    for bad_call in (
+        lambda: engine.evaluate_confidence_band(0.5, lower_threshold=0.9, upper_threshold=0.7),
+        lambda: engine.evaluate_confidence_band(-0.01),
+        lambda: engine.evaluate_confidence_band(1.01),
+        lambda: engine.evaluate_confidence_band(float("nan")),
+    ):
+        with pytest.raises(ValueError):
+            bad_call()
+
+    # Both IoC plugin and CLI fallback adapter conform to UncertaintyGuardService protocol
+    ctx = ServiceContext()
+    await guard_plugin.on_load(ctx)
+    try:
+        svc = ctx.require(UNCERTAINTY_GUARD_SERVICE_KEY)
+        fallback = get_uncertainty_service(None)
+        for provider in (svc, fallback):
+            assert isinstance(provider, UncertaintyGuardService)
+            decision = provider.evaluate_confidence_band(
+                0.65, lower_threshold=0.50, upper_threshold=0.80
+            )
+            assert isinstance(decision, ConfidenceBandDecisionData)
+            assert decision.action == "ESCALATE_HUMAN"
+            assert math.isclose(decision.margin_to_accept, 0.15, abs_tol=1e-6)
+    finally:
+        await guard_plugin.on_unload(ctx)
+

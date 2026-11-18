@@ -3,8 +3,46 @@
 from __future__ import annotations
 
 import collections
+from collections.abc import Mapping
 import math
 from typing import Any, Protocol, runtime_checkable
+
+
+def _validate_provenance_multipliers(
+    multipliers: tuple[float, float, float],
+) -> tuple[float, float, float]:
+    """Validate (verified, unverified, none) provenance multipliers."""
+    if len(multipliers) != 3:
+        raise ValueError("provenance_multipliers must contain exactly 3 elements")
+    verified_m, unverified_m, none_m = (float(x) for x in multipliers)
+    for val in (verified_m, unverified_m, none_m):
+        if not math.isfinite(val) or val < 0.0:
+            raise ValueError("provenance_multipliers must be finite and non-negative")
+    return (verified_m, unverified_m, none_m)
+
+
+def _resolve_ki_multiplier(
+    vote: Mapping[str, Any],
+    ki_verification_map: Mapping[str, bool | None],
+    multipliers: tuple[float, float, float],
+) -> float:
+    """Resolve confidence multiplier for a vote based on its linked KI verification status."""
+    verified_mult, unverified_mult, none_mult = multipliers
+    raw_ki = vote.get("ki_id")
+    if not raw_ki:
+        return none_mult
+    ki_key = str(raw_ki).strip()
+    if not ki_key:
+        return none_mult
+    if ki_key in ki_verification_map:
+        status = ki_verification_map[ki_key]
+    else:
+        status = ki_verification_map.get(ki_key.replace("-", "_"))
+    if status is True:
+        return verified_mult
+    if status is False:
+        return unverified_mult
+    return none_mult
 
 
 @runtime_checkable
@@ -144,6 +182,8 @@ class WeightedMajorityStrategy:
         temperature: float = 1.0,
         only_tie_break: bool = False,
         uncertainty_service: Any | None = None,
+        ki_verification_map: Mapping[str, bool | None] | None = None,
+        provenance_multipliers: tuple[float, float, float] = (1.0, 0.6, 0.4),
         **kwargs: Any,
     ) -> dict[str, Any]:
         """Sum confidence-weighted votes, or apply CISC normalization / UncertaintyGuard delegation."""
@@ -162,14 +202,23 @@ class WeightedMajorityStrategy:
                 temperature=temperature,
                 only_tie_break=only_tie_break,
                 uncertainty_service=uncertainty_service,
+                ki_verification_map=ki_verification_map,
+                provenance_multipliers=provenance_multipliers,
             )
 
+        validated_mults = (
+            _validate_provenance_multipliers(provenance_multipliers)
+            if ki_verification_map is not None
+            else None
+        )
         scores: dict[str, float] = collections.defaultdict(float)
         for v in votes:
             choice = str(v.get("choice") or v.get("vote") or "").strip()
             if not choice:
                 continue
             weight = float(v.get("weight", 1.0)) * float(v.get("confidence", 1.0))
+            if validated_mults is not None and ki_verification_map is not None:
+                weight *= _resolve_ki_multiplier(v, ki_verification_map, validated_mults)
             scores[choice] += weight
 
         if not scores:
@@ -213,7 +262,14 @@ class WeightedMajorityStrategy:
         temperature: float,
         only_tie_break: bool,
         uncertainty_service: Any | None,
+        ki_verification_map: Mapping[str, bool | None] | None = None,
+        provenance_multipliers: tuple[float, float, float] = (1.0, 0.6, 0.4),
     ) -> dict[str, Any]:
+        validated_mults = (
+            _validate_provenance_multipliers(provenance_multipliers)
+            if ki_verification_map is not None
+            else None
+        )
         answers: list[str] = []
         confs: list[float] = []
         for v in votes:
@@ -226,6 +282,8 @@ class WeightedMajorityStrategy:
                 continue
             if not math.isfinite(c_val):
                 continue
+            if validated_mults is not None and ki_verification_map is not None:
+                c_val *= _resolve_ki_multiplier(v, ki_verification_map, validated_mults)
             answers.append(choice)
             confs.append(c_val)
 
@@ -260,6 +318,7 @@ class WeightedMajorityStrategy:
                 "decision": winner or "NO_CONSENSUS",
                 "is_tie": False,
                 "source": "service.uncertainty_guard",
+                "provenance_grounded": ki_verification_map is not None,
             }
 
         if normalization == "softmax":
@@ -298,6 +357,7 @@ class WeightedMajorityStrategy:
             "decision": winner,
             "is_tie": False,
             "source": "builtin_cisc",
+            "provenance_grounded": ki_verification_map is not None,
         }
 
 
@@ -331,6 +391,8 @@ class ConsensusEngine:
         temperature: float = 1.0,
         only_tie_break: bool = False,
         uncertainty_service: Any | None = None,
+        ki_verification_map: Mapping[str, bool | None] | None = None,
+        provenance_multipliers: tuple[float, float, float] = (1.0, 0.6, 0.4),
     ) -> dict[str, Any]:
         """Evaluate votes using confidence-weighted choice aggregation."""
         return cls._weighted_strategy.evaluate(
@@ -339,6 +401,8 @@ class ConsensusEngine:
             temperature=temperature,
             only_tie_break=only_tie_break,
             uncertainty_service=uncertainty_service,
+            ki_verification_map=ki_verification_map,
+            provenance_multipliers=provenance_multipliers,
         )
 
     @classmethod
@@ -350,6 +414,8 @@ class ConsensusEngine:
         temperature: float = 2.5,
         only_tie_break: bool = False,
         uncertainty_service: Any | None = None,
+        ki_verification_map: Mapping[str, bool | None] | None = None,
+        provenance_multipliers: tuple[float, float, float] = (1.0, 0.6, 0.4),
     ) -> dict[str, Any]:
         """Evaluate multi-trace choices using CISC normalized confidence voting."""
         return cls._weighted_strategy.evaluate(
@@ -358,6 +424,8 @@ class ConsensusEngine:
             temperature=temperature,
             only_tie_break=only_tie_break,
             uncertainty_service=uncertainty_service,
+            ki_verification_map=ki_verification_map,
+            provenance_multipliers=provenance_multipliers,
         )
 
 

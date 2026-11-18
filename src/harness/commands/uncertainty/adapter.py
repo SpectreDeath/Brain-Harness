@@ -8,6 +8,7 @@ from typing import Any
 
 from harness.services.uncertainty_guard import (
     BoundaryReportData,
+    ConfidenceBandDecisionData,
     ConfidenceVotingReportData,
     DocDebtClusterData,
     LogprobReportData,
@@ -154,3 +155,17 @@ class UncertaintyEngineAdapter(UncertaintyGuardService):
             thresholds=thresholds,
         )
         return UncertaintyCalibrationReportData.from_engine(res)
+
+    def evaluate_confidence_band(
+        self,
+        confidence: float,
+        *,
+        lower_threshold: float = 0.50,
+        upper_threshold: float = 0.80,
+    ) -> ConfidenceBandDecisionData:
+        res = self._eng.evaluate_confidence_band(
+            confidence,
+            lower_threshold=lower_threshold,
+            upper_threshold=upper_threshold,
+        )
+        return ConfidenceBandDecisionData.from_engine(res)

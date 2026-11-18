@@ -254,19 +254,28 @@ def main() -> int:
 
     for d in DISPUTES:
         choice_meta: dict[str, dict[str, Any]] = {}
+        ki_ver_map: dict[str, bool | None] = {}
         for ch, kid in d.choice_kis.items():
             mult, status = _ki_multiplier(vault, kid)
             choice_meta[ch] = {"ki_id": kid, "status": status, "multiplier": mult}
+            if kid is not None:
+                ki_ver_map[kid] = status == "verified"
 
         raw_res = ConsensusEngine.evaluate_cisc_consensus(d.votes, normalization="softmax", temperature=2.5)
         grounded_votes = [
             {
                 "choice": v["choice"],
-                "confidence": round(float(v["confidence"]) * choice_meta[v["choice"]]["multiplier"], 6),
+                "confidence": float(v["confidence"]),
+                "ki_id": d.choice_kis[v["choice"]],
             }
             for v in d.votes
         ]
-        grounded_res = ConsensusEngine.evaluate_cisc_consensus(grounded_votes, normalization="softmax", temperature=2.5)
+        grounded_res = ConsensusEngine.evaluate_cisc_consensus(
+            grounded_votes,
+            normalization="softmax",
+            temperature=2.5,
+            ki_verification_map=ki_ver_map,
+        )
 
         raw_win = str(raw_res["winner"])
         grd_win = str(grounded_res["winner"])

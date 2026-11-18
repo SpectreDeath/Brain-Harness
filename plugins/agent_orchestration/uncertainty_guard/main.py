@@ -40,6 +40,7 @@ from harness.plugins.base import HarnessPlugin
 from harness.services.uncertainty_guard import (
     UNCERTAINTY_GUARD_SERVICE_KEY,
     BoundaryReportData,
+    ConfidenceBandDecisionData,
     ConfidenceVotingReportData,
     DocDebtClusterData,
     EscalationTicketData,
@@ -329,6 +330,21 @@ class UncertaintyGuardPlugin(HarnessPlugin, UncertaintyGuardService):
             thresholds=thresholds,
         )
         return UncertaintyCalibrationReportData.from_engine(res)
+
+    def evaluate_confidence_band(
+        self,
+        confidence: float,
+        *,
+        lower_threshold: float = 0.50,
+        upper_threshold: float = 0.80,
+    ) -> ConfidenceBandDecisionData:
+        """Route confidence via ASPEST 3-zone band: ABSTAIN | ESCALATE_HUMAN | ACCEPT."""
+        res = self._engine.evaluate_confidence_band(
+            confidence,
+            lower_threshold=lower_threshold,
+            upper_threshold=upper_threshold,
+        )
+        return ConfidenceBandDecisionData.from_engine(res)
 
 
 # Module-level singleton provider required by Rule 45

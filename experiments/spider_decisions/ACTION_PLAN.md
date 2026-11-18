@@ -55,7 +55,7 @@ A 🧑 **HUMAN CHECKPOINT** must never present the user with a single list longe
 
 - [x] **Phase 0** — Baseline verification & `ACTION_LOG.md` scaffolding
 - [x] **Phase 1** — P0: Vault `references_code` backfill & module-ID edge normalization (`0.33 -> >= 0.85` F1)
-- [ ] **Phase 2** — P1: Evidence-grounded CISC swarm voting & ASPEST confidence-band escalation
+- [x] **Phase 2** — P1: Evidence-grounded CISC swarm voting & ASPEST confidence-band escalation
 - [ ] **Phase 3** — P1: Break `ui <-> commands` cycle & `services/` upward leaks (zero kernel edits)
 - [ ] **Phase 4** — P1 (Arch): Decouple `kernel/runtime/` composition root & verify SCC reduction
 - [ ] **Phase 5** — P2: Vault hygiene — verify top-8 central unverified KIs & triage 12 duplicate pairs
@@ -162,19 +162,19 @@ Updated `plugins/memory_and_epistemics/ontology_spider/adapter.py`, new tests in
 **Depends on:** Phase 0. **Model tier:** medium (⚠️ escalate if numeric default thresholds lack empirical calibration).
 
 ### Steps
-- [ ] **2.1** Inspect:
+- [x] **2.1** Inspect:
   - `WeightedMajorityStrategy._evaluate_cisc()` and `ConsensusEngine.evaluate_cisc_consensus()` in `src/harness/agent/swarm/consensus.py`;
   - `UncertaintyGuardService` in `src/harness/services/uncertainty_guard.py`;
   - `UncertaintyGuardPlugin` in `plugins/agent_orchestration/uncertainty_guard/main.py` and `plugins/agent_orchestration/uncertainty_guard/config.default.yaml`;
   - `.agents/skills/uncertainty-aware-ai-architect/scripts/uncertainty_guard_engine.py`.
-- [ ] **2.2** Write failing contract tests in `tests/test_swarm_cisc_integration.py` and `tests/test_uncertainty_cisc_calibration.py`:
+- [x] **2.2** Write failing contract tests in `tests/test_swarm_cisc_integration.py` and `tests/test_uncertainty_cisc_calibration.py`:
   - `test_evaluate_cisc_consensus_ki_provenance_weighting` — passing `ki_verification_map={"ki_a": True, "ki_b": False}` and `provenance_multipliers=(1.0, 0.6, 0.4)` scales vote confidences by verified / unverified / ungrounded status while remaining identical to legacy behavior when `ki_verification_map is None`.
   - `test_uncertainty_guard_confidence_band_routing` — `@dataclass(slots=True, frozen=True)` `ConfidenceBandDecision` / `ConfidenceBandDecisionData` returns `ABSTAIN` below `lower_threshold`, `ESCALATE_HUMAN` inside `[lower_threshold, upper_threshold)`, and `ACCEPT` at/above `upper_threshold` (raising `ValueError` if `lower_threshold > upper_threshold` or outside `[0, 1]`).
-- [ ] **2.3** Implement both seams:
+- [x] **2.3** Implement both seams:
   - In `src/harness/agent/swarm/consensus.py`, add optional `ki_verification_map: Mapping[str, bool | None] | None = None` and `provenance_multipliers: tuple[float, float, float] = (1.0, 0.6, 0.4)` to `WeightedMajorityStrategy.evaluate()`, `_evaluate_cisc()`, and `ConsensusEngine.evaluate_cisc_consensus()` (reading each vote's optional `"ki_id"`). Keep existing callers unchanged.
   - Add `ConfidenceBandDecision` (slotted frozen dataclass) and `evaluate_confidence_band(confidence, *, lower_threshold=..., upper_threshold=...)` across `uncertainty_guard_engine.py`, `src/harness/services/uncertainty_guard.py` (`ConfidenceBandDecisionData` + `UncertaintyGuardService`), and `plugins/agent_orchestration/uncertainty_guard/main.py` (`config.default.yaml` configurable defaults).
-- [ ] **2.4** Verify `experiments/spider_decisions/p11_grounded_voting.py` matches or calls the production `ki_verification_map` parameter cleanly and still achieves `11/12` (`91.7%`) grounded accuracy with `0` regressions.
-- [ ] **2.5** Run quality gates (`ruff check .`, `pytest tests/test_swarm_cisc_integration.py tests/test_uncertainty_cisc_calibration.py tests/test_uncertainty_aware_deepened.py tests/test_uncertainty_aware_ai_architect.py -q`), append `ACTION_LOG.md`, local commit `feat(spider-followup): phase 2 grounded cisc voting and aspest escalation band`.
+- [x] **2.4** Verify `experiments/spider_decisions/p11_grounded_voting.py` matches or calls the production `ki_verification_map` parameter cleanly and still achieves `11/12` (`91.7%`) grounded accuracy with `0` regressions.
+- [x] **2.5** Run quality gates (`ruff check .`, `pytest tests/test_swarm_cisc_integration.py tests/test_uncertainty_cisc_calibration.py tests/test_uncertainty_aware_deepened.py tests/test_uncertainty_aware_ai_architect.py -q`), append `ACTION_LOG.md`, local commit `feat(spider-followup): phase 2 grounded cisc voting and aspest escalation band`.
 
 ### Outputs
 Updated `src/harness/agent/swarm/consensus.py`, `src/harness/services/uncertainty_guard.py`, `plugins/agent_orchestration/uncertainty_guard/{main.py,config.default.yaml}`, `.agents/skills/uncertainty-aware-ai-architect/scripts/uncertainty_guard_engine.py`, tests.

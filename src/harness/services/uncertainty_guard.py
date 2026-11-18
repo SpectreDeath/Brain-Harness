@@ -210,6 +210,28 @@ class UncertaintyCalibrationReportData(BaseModel):
         )
 
 
+class ConfidenceBandDecisionData(BaseModel):
+    """Payload representing ASPEST 3-zone confidence-band abstention/escalation decision."""
+
+    confidence: float
+    lower_threshold: float
+    upper_threshold: float
+    action: str = Field(
+        ..., description="Routing action: ABSTAIN | ESCALATE_HUMAN | ACCEPT"
+    )
+    margin_to_accept: float
+
+    @classmethod
+    def from_engine(cls, res: Any) -> ConfidenceBandDecisionData:
+        return cls(
+            confidence=res.confidence,
+            lower_threshold=res.lower_threshold,
+            upper_threshold=res.upper_threshold,
+            action=res.action,
+            margin_to_accept=res.margin_to_accept,
+        )
+
+
 @runtime_checkable
 class UncertaintyGuardService(Protocol):
     """Protocol for 3-layer deterministic uncertainty interception and overconfidence mitigation."""
@@ -287,6 +309,16 @@ class UncertaintyGuardService(Protocol):
         thresholds: tuple[float, ...] = (0.5, 0.6, 0.75, 0.9),
     ) -> UncertaintyCalibrationReportData:
         """Compute ECE, Brier decomposition, and confidence-threshold selectivity curve."""
+        ...
+
+    def evaluate_confidence_band(
+        self,
+        confidence: float,
+        *,
+        lower_threshold: float = 0.50,
+        upper_threshold: float = 0.80,
+    ) -> ConfidenceBandDecisionData:
+        """Route normalized confidence into ABSTAIN, ESCALATE_HUMAN, or ACCEPT zones."""
         ...
 
 

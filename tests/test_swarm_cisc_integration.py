@@ -65,3 +65,76 @@ async def test_swarm_coordinator_resolves_cisc_via_uncertainty_guard_ioc() -> No
     assert result.consensus["source"] == "service.uncertainty_guard"
 
     await guard_plugin.on_unload(ctx)
+
+
+@pytest.mark.unit
+@pytest.mark.asyncio
+async def test_evaluate_cisc_consensus_ki_provenance_weighting() -> None:
+    """ki_verification_map scales CISC votes by verified/unverified/none provenance multipliers."""
+    dispute_votes = [
+        {"choice": "ungrounded", "confidence": 0.85, "ki_id": None},
+        {"choice": "ungrounded", "confidence": 0.85, "ki_id": None},
+        {"choice": "ungrounded", "confidence": 0.85},
+        {"choice": "verified", "confidence": 0.85, "ki_id": "ki_verified"},
+        {"choice": "verified", "confidence": 0.85, "ki_id": "ki_verified"},
+    ]
+    raw = ConsensusEngine.evaluate_cisc_consensus(
+        dispute_votes, normalization="softmax", temperature=2.5
+    )
+    assert raw["winner"] == "ungrounded"
+    assert raw.get("provenance_grounded", False) is False
+
+    ver_map = {"ki_verified": True, "ki_unverified": False}
+    grounded = ConsensusEngine.evaluate_cisc_consensus(
+        dispute_votes,
+        normalization="softmax",
+        temperature=2.5,
+        ki_verification_map=ver_map,
+        provenance_multipliers=(1.0, 0.6, 0.4),
+    )
+    assert grounded["winner"] == "verified"
+    assert grounded["provenance_grounded"] is True
+
+    # Unverified KI (0.6x) beats ungrounded (0.4x) at equal confidence & vote count
+    tie_votes = [
+        {"choice": "unverified", "confidence": 0.90, "ki_id": "ki_unverified"},
+        {"choice": "none", "confidence": 0.90, "ki_id": None},
+    ]
+    tie_res = ConsensusEngine.evaluate_cisc_consensus(
+        tie_votes,
+        normalization="softmax",
+        temperature=2.5,
+        ki_verification_map=ver_map,
+    )
+    assert tie_res["winner"] == "unverified"
+
+    with pytest.raises(ValueError):
+        ConsensusEngine.evaluate_cisc_consensus(
+            dispute_votes,
+            ki_verification_map=ver_map,
+            provenance_multipliers=(1.0, -0.1, 0.4),
+        )
+    with pytest.raises(ValueError):
+        ConsensusEngine.evaluate_cisc_consensus(
+            dispute_votes,
+            ki_verification_map=ver_map,
+            provenance_multipliers=(1.0, 0.6),  # type: ignore[arg-type]
+        )
+
+    # Also applies provenance scaling when delegating through UncertaintyGuardService
+    ctx = ServiceContext()
+    await guard_plugin.on_load(ctx)
+    try:
+        svc_res = ConsensusEngine.evaluate_cisc_consensus(
+            dispute_votes,
+            normalization="softmax",
+            temperature=2.5,
+            uncertainty_service=guard_plugin,
+            ki_verification_map=ver_map,
+        )
+        assert svc_res["source"] == "service.uncertainty_guard"
+        assert svc_res["winner"] == "verified"
+        assert svc_res["provenance_grounded"] is True
+    finally:
+        await guard_plugin.on_unload(ctx)
+

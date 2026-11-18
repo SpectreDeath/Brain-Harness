@@ -240,6 +240,33 @@ class UncertaintyCalibrationReport:
         assert self.brier_reliability >= 0.0
 
 
+@dataclass(slots=True, frozen=True)
+class ConfidenceBandDecision:
+    """Outcome of ASPEST 3-zone confidence-band abstention vs human escalation gating."""
+
+    confidence: float
+    lower_threshold: float
+    upper_threshold: float
+    action: str
+    margin_to_accept: float
+
+    def __post_init__(self) -> None:
+        if not (math.isfinite(self.confidence) and 0.0 <= self.confidence <= 1.0):
+            raise ValueError(f"confidence must be finite in [0, 1], got {self.confidence}")
+        if not (
+            math.isfinite(self.lower_threshold)
+            and math.isfinite(self.upper_threshold)
+            and 0.0 <= self.lower_threshold <= self.upper_threshold <= 1.0
+        ):
+            raise ValueError(
+                "thresholds must be finite in [0, 1] with lower_threshold <= upper_threshold"
+            )
+        if self.action not in ("ABSTAIN", "ESCALATE_HUMAN", "ACCEPT"):
+            raise ValueError(f"Invalid confidence band action: {self.action}")
+        if not (math.isfinite(self.margin_to_accept) and self.margin_to_accept >= 0.0):
+            raise ValueError("margin_to_accept must be finite and non-negative")
+
+
 # ---------------------------------------------------------------------------
 # Zero-Dependency Semantic Matcher (Sub-Millisecond Execution)
 # ---------------------------------------------------------------------------
@@ -1227,4 +1254,36 @@ graph LR
             brier_resolution=round(b_resolution, 6),
             brier_reliability=round(b_reliability, 6),
             selectivity_curve=tuple(curve),
+        )
+
+    def evaluate_confidence_band(
+        self,
+        confidence: float,
+        *,
+        lower_threshold: float = 0.50,
+        upper_threshold: float = 0.80,
+    ) -> ConfidenceBandDecision:
+        """Route confidence via ASPEST 3-zone band: ABSTAIN | ESCALATE_HUMAN | ACCEPT."""
+        conf = float(confidence)
+        low = float(lower_threshold)
+        high = float(upper_threshold)
+        if not (math.isfinite(conf) and 0.0 <= conf <= 1.0):
+            raise ValueError(f"confidence must be finite in [0, 1], got {confidence}")
+        if not (math.isfinite(low) and math.isfinite(high) and 0.0 <= low <= high <= 1.0):
+            raise ValueError(
+                "lower_threshold and upper_threshold must lie in [0, 1] with lower <= upper"
+            )
+        if conf < low:
+            action = "ABSTAIN"
+        elif conf < high:
+            action = "ESCALATE_HUMAN"
+        else:
+            action = "ACCEPT"
+        margin = round(max(0.0, high - conf), 6)
+        return ConfidenceBandDecision(
+            confidence=round(conf, 6),
+            lower_threshold=round(low, 6),
+            upper_threshold=round(high, 6),
+            action=action,
+            margin_to_accept=margin,
         )

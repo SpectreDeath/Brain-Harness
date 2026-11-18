@@ -25,3 +25,7 @@ logprob:
 telemetry:
   escalation_queue_max_size: 1000
   cluster_min_size_for_debt: 2
+
+confidence_band:
+  lower_threshold: 0.50
+  upper_threshold: 0.80
