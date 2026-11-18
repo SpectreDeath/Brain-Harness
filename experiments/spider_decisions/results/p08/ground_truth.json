@@ -1,0 +1,72 @@
+[
+  {
+    "portfolio": "Google",
+    "repo": "adk-docs",
+    "label": "plugin"
+  },
+  {
+    "portfolio": "Google",
+    "repo": "adk-python",
+    "label": "plugin"
+  },
+  {
+    "portfolio": "Google",
+    "repo": "adk-web",
+    "label": "plugin"
+  },
+  {
+    "portfolio": "Google",
+    "repo": "earthengine-api",
+    "label": "plugin"
+  },
+  {
+    "portfolio": "Google",
+    "repo": "google-research-master",
+    "label": "ki_only"
+  },
+  {
+    "portfolio": "Google",
+    "repo": "gvisor",
+    "label": "ki_only"
+  },
+  {
+    "portfolio": "Google",
+    "repo": "harness2",
+    "label": "plugin"
+  },
+  {
+    "portfolio": "Google",
+    "repo": "magika",
+    "label": "plugin"
+  },
+  {
+    "portfolio": "Google",
+    "repo": "mantis",
+    "label": "plugin"
+  },
+  {
+    "portfolio": "Google",
+    "repo": "perfetto",
+    "label": "plugin"
+  },
+  {
+    "portfolio": "Google",
+    "repo": "styleguide",
+    "label": "plugin"
+  },
+  {
+    "portfolio": "Google",
+    "repo": "tunix-main",
+    "label": "plugin"
+  },
+  {
+    "portfolio": "AIRLLM_SUITE",
+    "repo": "airllm",
+    "label": "ki_only"
+  },
+  {
+    "portfolio": "AIRLLM_SUITE",
+    "repo": "airllm-plus",
+    "label": "ki_only"
+  }
+]

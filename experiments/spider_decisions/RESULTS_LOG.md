@@ -57,3 +57,9 @@ Template for per-phase entries:
 - Key metric(s): memo_q1 cited 11 valid KIs, 87.5% (7/8) cited claims verified, 2 conflicts/2 gaps; memo_q2 cited 4 valid KIs, 100.0% (8/8) cited claims verified, 2 conflicts/1 gap; human_ratings recorded (unrated/proceed).
 - Finding(s): Unverified claims (ki_self_20260922_02, ki-hf-datasets-arrow-streaming) and warm-load vs lazy-staging conflicts were surfaced cleanly; Q2 missed ki_njoku_uncertainty_aware_systems via graph retrieval because references_code is absent.
 - Follow-ups: Generate Phase 8 Plugin vs KI-only vs Skip ground-truth sheet (8.1-8.2 checkpoint).
+
+## Phase 8 — Plugin vs KI-Only vs Skip Classifier (2026-11-18T16:59:38+00:00)
+- Outcome: PASS (exploratory finding)
+- Key metric(s): 2/14 accuracy (0.1429); Confusion matrix: plugin->{plugin:2, ki_only:7, skip:1}, ki_only->{plugin:2, ki_only:0, skip:2}.
+- Finding(s): Most informative misclassifications: (1) Non-Python/TS/Go repos (adk-web, magika, earthengine-api, styleguide) were built as plugins despite primary_language != python; (2) harness2 & tunix-main missed has_tests under 60-file portfolio cap; (3) airllm & grm/imp look Python+tested+packaged yet were kept ki_only based on architectural domain rather than syntax.
+- Follow-ups: Run Phase 9 Brain Harness refactor ordering (9.1-9.4).

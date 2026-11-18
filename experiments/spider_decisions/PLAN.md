@@ -64,7 +64,7 @@
 - [x] **Phase 5** — Entropy-driven question selection (#3)
 - [x] **Phase 6** — KI retrieval for a code change (#4)
 - [x] **Phase 7** — Design-choice arbitration memos (#5)
-- [ ] **Phase 8** — Plugin vs KI-only vs Skip classifier (#6)
+- [x] **Phase 8** — Plugin vs KI-only vs Skip classifier (#6)
 - [ ] **Phase 9** — Brain Harness refactor ordering (#10)
 - [ ] **Phase 10** — Spider-assisted skill routing vs `route_intent` (#11)
 - [ ] **Phase 11** — Evidence-grounded swarm voting (#12)
@@ -435,21 +435,21 @@ Generic **unit names** also pollute "unlearned target" lists: `python`, `tests`,
 **Depends on:** Phase 2. **Model tier:** low, plus one human checkpoint.
 
 ### Steps
-- [ ] **8.1** Create `p08_ground_truth_draft.py`: for each top-level repo in `google_portfolio_root` and `AIRLLM_ROOT`
+- [x] **8.1** Create `p08_ground_truth_draft.py`: for each top-level repo in `google_portfolio_root` and `AIRLLM_ROOT`
   children, draft the actual outcome:
   - `plugin` if a directory under `plugins/**` contains the repo token (e.g. `magika`, `mantis`, `perfetto`,
     `google_adk`, `google_tunix`, `google_styleguide`) **or** a vault KI has a `became_plugin` edge naming it;
   - `ki_only` if a KI bridges to it but no plugin exists;
   - `skip` otherwise.
   Write `write_md(8, "ground_truth_sheet", ...)` with a `FINAL` column.
-- [ ] **8.2** 🧑 **HUMAN CHECKPOINT** — User confirms/corrects `FINAL`. Save `write_json(8, "ground_truth", ...)`.
-- [ ] **8.3** Create `p08_classify.py` implementing this rule classifier on each repo's dominant unit attributes
+- [x] **8.2** 🧑 **HUMAN CHECKPOINT** — User confirms/corrects `FINAL`. Save `write_json(8, "ground_truth", ...)`.
+- [x] **8.3** Create `p08_classify.py` implementing this rule classifier on each repo's dominant unit attributes
   (use the unit with the largest code-file count in that repo's snapshot or in `google_portfolio_root`):
   - `plugin` if `primary_language == "python"` **and** `has_tests` **and** `packaging in {"pyproject", "setup_py", "requirements"}`;
   - `ki_only` if `has_readme` and (`has_arxiv` or `primary_language != "python"`);
   - else `skip`.
   Compute accuracy and a 3×3 confusion matrix vs ground truth. Write `write_json(8, "results", ...)`, `write_md(8, "summary", ...)`.
-- [ ] **8.4** Append log entry (accuracy + the most informative misclassification); local commit.
+- [x] **8.4** Append log entry (accuracy + the most informative misclassification); local commit.
 
 ### Acceptance
 - Every repo classified; confusion matrix present. No accuracy threshold — this is exploratory.

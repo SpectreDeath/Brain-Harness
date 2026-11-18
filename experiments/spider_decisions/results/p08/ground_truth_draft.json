@@ -1,0 +1,199 @@
+[
+  {
+    "portfolio": "Google",
+    "repo": "adk-docs",
+    "draft_outcome": "plugin",
+    "plugins_found": [
+      "developer_tooling/google_adk_docs_navigator"
+    ],
+    "became_plugin_edges": [
+      "ki_google_repos_bridge->plugin_google_adk_docs_navigator",
+      "ki_google_repos_bridge->plugin_google_adk_optimizer",
+      "ki_google_repos_bridge->plugin_google_adk_runtime",
+      "ki_google_repos_bridge->plugin_google_adk_web_bridge",
+      "ki_google_repos_bridge->plugin_google_styleguide_auditor",
+      "ki_google_repos_bridge->plugin_google_tunix_posttraining",
+      "ki_google_repos_bridge->plugin_perfetto_trace_processor"
+    ],
+    "ki_count": 1,
+    "evidence_summary": "developer_tooling/google_adk_docs_navigator"
+  },
+  {
+    "portfolio": "Google",
+    "repo": "adk-python",
+    "draft_outcome": "plugin",
+    "plugins_found": [],
+    "became_plugin_edges": [
+      "ki_google_repos_bridge->plugin_google_adk_docs_navigator",
+      "ki_google_repos_bridge->plugin_google_adk_optimizer",
+      "ki_google_repos_bridge->plugin_google_adk_runtime",
+      "ki_google_repos_bridge->plugin_google_adk_web_bridge",
+      "ki_google_repos_bridge->plugin_google_styleguide_auditor",
+      "ki_google_repos_bridge->plugin_google_tunix_posttraining",
+      "ki_google_repos_bridge->plugin_perfetto_trace_processor"
+    ],
+    "ki_count": 1,
+    "evidence_summary": "ki_google_repos_bridge->plugin_google_adk_docs_navigator, ki_google_repos_bridge->plugin_google_adk_optimizer, ki_google_repos_bridge->plugin_google_adk_runtime"
+  },
+  {
+    "portfolio": "Google",
+    "repo": "adk-web",
+    "draft_outcome": "plugin",
+    "plugins_found": [
+      "developer_tooling/google_adk_web_bridge"
+    ],
+    "became_plugin_edges": [
+      "ki_google_repos_bridge->plugin_google_adk_docs_navigator",
+      "ki_google_repos_bridge->plugin_google_adk_optimizer",
+      "ki_google_repos_bridge->plugin_google_adk_runtime",
+      "ki_google_repos_bridge->plugin_google_adk_web_bridge",
+      "ki_google_repos_bridge->plugin_google_styleguide_auditor",
+      "ki_google_repos_bridge->plugin_google_tunix_posttraining",
+      "ki_google_repos_bridge->plugin_perfetto_trace_processor"
+    ],
+    "ki_count": 1,
+    "evidence_summary": "developer_tooling/google_adk_web_bridge"
+  },
+  {
+    "portfolio": "Google",
+    "repo": "earthengine-api",
+    "draft_outcome": "plugin",
+    "plugins_found": [
+      "geospatial_and_osint/earth_engine_imagery",
+      "geospatial_and_osint/earth_engine_spatial_analytics"
+    ],
+    "became_plugin_edges": [],
+    "ki_count": 1,
+    "evidence_summary": "geospatial_and_osint/earth_engine_imagery, geospatial_and_osint/earth_engine_spatial_analytics"
+  },
+  {
+    "portfolio": "Google",
+    "repo": "google-research-master",
+    "draft_outcome": "ki_only",
+    "plugins_found": [],
+    "became_plugin_edges": [],
+    "ki_count": 17,
+    "evidence_summary": "ki-harness2-recursive-harnessing, ki_20261110_google_research_gnn_and_scientific_ml, ki_20261110_google_research_multitarget_edge_ml (+14)"
+  },
+  {
+    "portfolio": "Google",
+    "repo": "gvisor",
+    "draft_outcome": "ki_only",
+    "plugins_found": [],
+    "became_plugin_edges": [],
+    "ki_count": 3,
+    "evidence_summary": "ki_google_gvisor_sentry_gofer_sandbox, ki_shim_bounded_session_and_layered_skill_loader, ki_vercel_ui_sdk_expert_scope_governance"
+  },
+  {
+    "portfolio": "Google",
+    "repo": "harness2",
+    "draft_outcome": "plugin",
+    "plugins_found": [
+      "agent_orchestration/recursive_harness_refiner",
+      "security_and_forensics/evidence_isolation_guard"
+    ],
+    "became_plugin_edges": [],
+    "ki_count": 1,
+    "evidence_summary": "agent_orchestration/recursive_harness_refiner, security_and_forensics/evidence_isolation_guard"
+  },
+  {
+    "portfolio": "Google",
+    "repo": "magika",
+    "draft_outcome": "plugin",
+    "plugins_found": [
+      "security_and_forensics/magika_content_detector",
+      "security_and_forensics/magika_format_forensics"
+    ],
+    "became_plugin_edges": [],
+    "ki_count": 1,
+    "evidence_summary": "security_and_forensics/magika_content_detector, security_and_forensics/magika_format_forensics"
+  },
+  {
+    "portfolio": "Google",
+    "repo": "mantis",
+    "draft_outcome": "plugin",
+    "plugins_found": [
+      "security_and_forensics/mantis_sandbox_verifier",
+      "security_and_forensics/mantis_security_review",
+      "software_engineering/mantis_structural_index"
+    ],
+    "became_plugin_edges": [],
+    "ki_count": 1,
+    "evidence_summary": "security_and_forensics/mantis_sandbox_verifier, security_and_forensics/mantis_security_review, software_engineering/mantis_structural_index"
+  },
+  {
+    "portfolio": "Google",
+    "repo": "perfetto",
+    "draft_outcome": "plugin",
+    "plugins_found": [
+      "software_engineering/perfetto_trace_processor"
+    ],
+    "became_plugin_edges": [
+      "ki_google_repos_bridge->plugin_google_adk_docs_navigator",
+      "ki_google_repos_bridge->plugin_google_adk_optimizer",
+      "ki_google_repos_bridge->plugin_google_adk_runtime",
+      "ki_google_repos_bridge->plugin_google_adk_web_bridge",
+      "ki_google_repos_bridge->plugin_google_styleguide_auditor",
+      "ki_google_repos_bridge->plugin_google_tunix_posttraining",
+      "ki_google_repos_bridge->plugin_perfetto_trace_processor"
+    ],
+    "ki_count": 1,
+    "evidence_summary": "software_engineering/perfetto_trace_processor"
+  },
+  {
+    "portfolio": "Google",
+    "repo": "styleguide",
+    "draft_outcome": "plugin",
+    "plugins_found": [
+      "software_engineering/google_styleguide_auditor"
+    ],
+    "became_plugin_edges": [
+      "ki_google_repos_bridge->plugin_google_adk_docs_navigator",
+      "ki_google_repos_bridge->plugin_google_adk_optimizer",
+      "ki_google_repos_bridge->plugin_google_adk_runtime",
+      "ki_google_repos_bridge->plugin_google_adk_web_bridge",
+      "ki_google_repos_bridge->plugin_google_styleguide_auditor",
+      "ki_google_repos_bridge->plugin_google_tunix_posttraining",
+      "ki_google_repos_bridge->plugin_perfetto_trace_processor"
+    ],
+    "ki_count": 1,
+    "evidence_summary": "software_engineering/google_styleguide_auditor"
+  },
+  {
+    "portfolio": "Google",
+    "repo": "tunix-main",
+    "draft_outcome": "plugin",
+    "plugins_found": [
+      "machine_learning/google_tunix_posttraining"
+    ],
+    "became_plugin_edges": [
+      "ki_google_repos_bridge->plugin_google_adk_docs_navigator",
+      "ki_google_repos_bridge->plugin_google_adk_optimizer",
+      "ki_google_repos_bridge->plugin_google_adk_runtime",
+      "ki_google_repos_bridge->plugin_google_adk_web_bridge",
+      "ki_google_repos_bridge->plugin_google_styleguide_auditor",
+      "ki_google_repos_bridge->plugin_google_tunix_posttraining",
+      "ki_google_repos_bridge->plugin_perfetto_trace_processor"
+    ],
+    "ki_count": 1,
+    "evidence_summary": "machine_learning/google_tunix_posttraining"
+  },
+  {
+    "portfolio": "AIRLLM_SUITE",
+    "repo": "airllm",
+    "draft_outcome": "ki_only",
+    "plugins_found": [],
+    "became_plugin_edges": [],
+    "ki_count": 3,
+    "evidence_summary": "ki_airllm_chunked_vocab_cross_entropy, ki_airllm_layerwise_streaming_and_moe_expert_offload, ki_airllm_plus_superblock_prefetch_runtime"
+  },
+  {
+    "portfolio": "AIRLLM_SUITE",
+    "repo": "airllm-plus",
+    "draft_outcome": "ki_only",
+    "plugins_found": [],
+    "became_plugin_edges": [],
+    "ki_count": 1,
+    "evidence_summary": "ki_airllm_plus_superblock_prefetch_runtime"
+  }
+]
