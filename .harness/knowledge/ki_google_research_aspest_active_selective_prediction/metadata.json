@@ -1,0 +1,79 @@
+{
+  "id": "ki_google_research_aspest_active_selective_prediction",
+  "title": "Google Research ASPEST: Bridging Active Sample Acquisition & Selective Prediction via Checkpoint Ensembles",
+  "category": "agent_orchestration",
+  "schema_version": "1.0.0",
+  "source_target": "https://github.com/google-research/google-research",
+  "detected_format": "git_repository",
+  "created_at": "2026-11-17T23:44:00Z",
+  "author": "ontology-spider-learning-wave",
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "tags": [
+    "active_selective_prediction",
+    "aspest",
+    "google_research",
+    "selective_prediction",
+    "active_learning",
+    "abstention",
+    "uncertainty",
+    "arxiv_2304_03870"
+  ],
+  "anchors": {
+    "repo": "https://github.com/google-research/google-research",
+    "subproject": "active_selective_prediction",
+    "arxiv": "https://arxiv.org/abs/2304.03870"
+  },
+  "edges": [
+    {
+      "type": "distilled_from",
+      "target": "https://github.com/google-research/google-research",
+      "target_kind": "external_repo",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Subproject active_selective_prediction (ASPEST, arXiv:2304.03870) surfaced by Ontology-Spider .dialog query"
+    },
+    {
+      "type": "references_code",
+      "target": "harness.services.uncertainty_guard",
+      "target_kind": "source",
+      "derived": false,
+      "confidence": 0.92,
+      "description": "Informs selective abstention and ensemble disagreement thresholding in uncertainty_guard"
+    },
+    {
+      "type": "related_to",
+      "target": "ki_google_research_uq_benchmark_2019_calibration_shift",
+      "target_kind": "knowledge_item",
+      "derived": false,
+      "confidence": 0.9,
+      "description": "Extends UQ shift benchmarks with active oracle labeling and checkpoint-ensemble self-training"
+    }
+  ],
+  "isnad": {
+    "status": "VERIFIED",
+    "source_repo": "https://github.com/google-research/google-research",
+    "subproject": "active_selective_prediction",
+    "verified_at": "2026-11-17T23:44:00Z",
+    "claims": [
+      {
+        "assertion": "active_selective_prediction evaluates active adaptation and selective abstention across six domain-shift benchmarks (mnist->svhn, cifar10->cinic10, fmow, amazon_review, domainnet, otto).",
+        "file": "active_selective_prediction/README.md",
+        "lines": "L1-L40",
+        "sha256_hash": "a547c8b305bacb015c38179932c67669ac5eed42602246052739ea241acfb3373",
+        "verified": true
+      },
+      {
+        "assertion": "ASPEST maintains a checkpoint ensemble (update_ensemble_state), queries bounded label budgets via AverageMarginSampling over test shifts, self-trains with KL-divergence only on samples within a gated confidence band [lower_threshold, upper_threshold), and scores abstention from max ensemble probability.",
+        "file": "active_selective_prediction/methods/aspest.py",
+        "lines": "L28-L521",
+        "sha256_hash": "c599789b16b1fddbd3215b0856268029eee2cb2564b76e9cbf7b08d61f53a07a",
+        "verified": true
+      }
+    ]
+  },
+  "distilled_learning": "Combine low-budget human oracle labeling (average-margin sampling) with dual-thresholded KL self-training over running checkpoint ensembles so selective prediction abstention thresholds stay calibrated under target distribution shift."
+}

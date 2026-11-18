@@ -86,18 +86,44 @@ class DefaultDeepRepoAuditorService(DeepRepoAuditorService):
         return generate_audit_visual_briefs(report, output_dir=output_dir)
 
     def extract_ki_candidates(self, report: DeepAuditReport) -> list[dict[str, Any]]:
-        """Derive portable Knowledge Item candidates anchored to audited axes."""
+        """Derive portable Knowledge Item candidates anchored to audited axes and ontology analysis."""
+        onto = report.ontology_analysis or {}
+        unlearned = list(onto.get("unlearned_tested_projects") or [])
+        hubs = [f"{h[0]} (in_degree={h[1]})" for h in (onto.get("dependency_hubs") or [])[:4]]
+        cycles = [
+            str(c.get("details", {}).get("cycle_path") or c.get("message", ""))
+            for c in (onto.get("cycle_violations") or [])[:3]
+        ]
+
         candidates: list[dict[str, Any]] = []
         for idx, axis in enumerate(report.axes, 1):
+            evidence = list(axis.evidence)
+            recs = list(axis.recommendations)
+            summary = axis.summary
+            ontology_targets: list[str] = []
+
+            if idx == 1 and hubs:
+                evidence.extend(hubs)
+                summary = f"{summary} Dependency hubs: {', '.join(hubs[:3])}."
+            elif idx == 3 and cycles:
+                evidence.extend(cycles)
+                recs.append(f"Resolve acyclic violation(s): {cycles[0]}")
+            elif idx == 4 and unlearned:
+                ontology_targets = list(unlearned[:8])
+                evidence.extend(ontology_targets)
+                summary = f"{summary} Ontology unlearned tested targets: {', '.join(ontology_targets[:5])}."
+                recs.append(f"Distill Knowledge Items for unlearned tested units: {', '.join(ontology_targets[:5])}.")
+
             candidates.append(
                 {
                     "id": f"ki_audit_candidate_{idx:02d}",
                     "title": f"{axis.axis}: {axis.title}",
                     "domain": "architecture_audit",
                     "status": axis.status,
-                    "summary": axis.summary,
-                    "evidence": list(axis.evidence),
-                    "recommendations": list(axis.recommendations),
+                    "summary": summary,
+                    "evidence": evidence,
+                    "recommendations": recs,
+                    "ontology_targets": ontology_targets,
                 }
             )
         return candidates

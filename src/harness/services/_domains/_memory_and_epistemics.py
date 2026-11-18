@@ -264,5 +264,7 @@ from harness.services.ontology_spider import (
     EpistemicVaultAuditReport,
     OntologySpiderKernelService,
     OntologySpiderProtocol,
+    PortfolioOntologyAnalysisReport,
+    PortfolioRepoSummary,
     RepoOntologyAnalysisReport,
 )

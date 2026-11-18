@@ -1,0 +1,77 @@
+{
+  "id": "ki_google_gvisor_sentry_gofer_sandbox",
+  "title": "gVisor User-Space Kernel Isolation: Sentry Syscall Interception, Gofer FD Proxies & Immutable Sandbox Specs",
+  "category": "security_and_forensics",
+  "schema_version": "1.0.0",
+  "source_target": "https://github.com/google/gvisor",
+  "detected_format": "git_repository",
+  "created_at": "2026-11-17T23:44:00Z",
+  "author": "ontology-spider-learning-wave",
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "tags": [
+    "gvisor",
+    "sandbox",
+    "sentry",
+    "gofer",
+    "seccomp",
+    "syscall_isolation",
+    "runsc",
+    "go"
+  ],
+  "anchors": {
+    "repo": "https://github.com/google/gvisor",
+    "commit": "b6c312b83f13d6150a3386bd1f7c170ba2342cc4"
+  },
+  "edges": [
+    {
+      "type": "distilled_from",
+      "target": "https://github.com/google/gvisor",
+      "target_kind": "external_repo",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Repository google/gvisor at commit b6c312b83f13d6150a3386bd1f7c170ba2342cc4; surfaced by Ontology-Spider as unlearned top-level repository"
+    },
+    {
+      "type": "references_code",
+      "target": "plugins.security_and_forensics.mantis_sandbox_verifier",
+      "target_kind": "source",
+      "derived": false,
+      "confidence": 0.9,
+      "description": "Informs Brain Harness subprocess and container isolation architecture"
+    }
+  ],
+  "isnad": {
+    "status": "VERIFIED",
+    "source_repo": "https://github.com/google/gvisor",
+    "commit": "b6c312b83f13d6150a3386bd1f7c170ba2342cc4",
+    "verified_at": "2026-11-17T23:44:00Z",
+    "claims": [
+      {
+        "assertion": "gVisor intercepts guest System APIs inside a pure-Go user-space kernel (Sentry) without CGo, prohibiting direct host syscall passthrough, isolating unsafe into *unsafe.go files, and delegating host filesystem access to separate Gofer processes over connected sockets.",
+        "file": "g3doc/architecture_guide/security.md",
+        "lines": "L100-L220",
+        "sha256_hash": "9e02dc690619738256f52cb4647e400b4678369c984dde1d266f6aa311a2b2c0",
+        "verified": true
+      },
+      {
+        "assertion": "runsc manages lifecycle state via an immutable Sandbox struct that separates filesystem Gofer endpoints (IOFiles, DevIOFile, GoferMountConfs) from execution via explicit FD donation (DonateAndClose) and uRPC socket control.",
+        "file": "runsc/sandbox/sandbox.go",
+        "lines": "L148-L295",
+        "sha256_hash": "03cdca5581f365f6410bfa1f02e583497d03f3f6a29507e75c5ca822dd3d4855",
+        "verified": true
+      },
+      {
+        "assertion": "The pkg/sentry/platform/platform.go Platform interface decouples guest context and address-space interception from underlying host seccomp/ptrace/KVM virtualization substrates.",
+        "file": "pkg/sentry/platform/platform.go",
+        "lines": "L35-L70",
+        "sha256_hash": "9a35bcfaba40decc06238ebfcd782ac92ad8053830489db7e3243282bb59e8",
+        "verified": true
+      }
+    ]
+  },
+  "distilled_learning": "Isolate untrusted agent execution via defense-in-depth user-space mediation: separate filesystem broker processes (Gofer) from kernel/syscall mediation (Sentry), pass pre-opened file descriptors rather than raw filesystem paths, and isolate unsafe/CGo-free boundaries."
+}

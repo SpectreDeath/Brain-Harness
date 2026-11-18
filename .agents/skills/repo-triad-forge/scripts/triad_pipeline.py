@@ -77,7 +77,10 @@ class RepoTriadPipelineEngine:
     def _resolve_nested_root(target: Path) -> Path:
         current = target
         for _ in range(3):
-            if any((current / m).is_file() for m in ("pyproject.toml", "setup.py", "package.json", "Cargo.toml", "go.mod", "README.md")):
+            if any(
+                (current / m).is_file()
+                for m in ("pyproject.toml", "setup.py", "package.json", "Cargo.toml", "go.mod", "README.md")
+            ):
                 return current
             subdirs = [
                 d
@@ -113,13 +116,30 @@ class RepoTriadPipelineEngine:
             cur_depth = len(Path(root).parts) - root_depth
             # Skip noise, vendored, and state directories
             dirs[:] = [
-                d for d in sorted(dirs)
+                d
+                for d in sorted(dirs)
                 if cur_depth < 4
-                and d not in (
-                    ".git", "node_modules", ".venv", "venv", "__pycache__",
-                    ".mypy_cache", ".ruff_cache", ".pytest_cache", ".gemini",
-                    "dist", "build", ".harness", ".system_generated", "test_ingested_plugins",
-                    "external", "3rdparty", "third_party", "cutlass", "vendor"
+                and d
+                not in (
+                    ".git",
+                    "node_modules",
+                    ".venv",
+                    "venv",
+                    "__pycache__",
+                    ".mypy_cache",
+                    ".ruff_cache",
+                    ".pytest_cache",
+                    ".gemini",
+                    "dist",
+                    "build",
+                    ".harness",
+                    ".system_generated",
+                    "test_ingested_plugins",
+                    "external",
+                    "3rdparty",
+                    "third_party",
+                    "cutlass",
+                    "vendor",
                 )
             ]
             total_files += len(files)
@@ -144,9 +164,33 @@ class RepoTriadPipelineEngine:
             for f in files:
                 lower_f = f.lower()
                 # Dynamically identify blast-radius architectural roots
-                if any(lower_f.startswith(p) or lower_f.endswith(s) for p in ("main", "core", "context", "service", "engine", "schema", "pipeline", "interface", "topk", "select") for s in (".py", ".ts", ".js", ".go", ".rs", ".cu", ".cuh", ".cpp")):
+                if any(
+                    lower_f.startswith(p) or lower_f.endswith(s)
+                    for p in (
+                        "main",
+                        "core",
+                        "context",
+                        "service",
+                        "engine",
+                        "schema",
+                        "pipeline",
+                        "interface",
+                        "topk",
+                        "select",
+                    )
+                    for s in (".py", ".ts", ".js", ".go", ".rs", ".cu", ".cuh", ".cpp")
+                ):
                     blast_roots.append(str(rel_root / f))
-                elif lower_f in ("types.ts", "types.py", "models.py", "graph.ts", "graph.py", "plugin.json", "structs.h", "config.h"):
+                elif lower_f in (
+                    "types.ts",
+                    "types.py",
+                    "models.py",
+                    "graph.ts",
+                    "graph.py",
+                    "plugin.json",
+                    "structs.h",
+                    "config.h",
+                ):
                     blast_roots.append(str(rel_root / f))
 
         # Check for concurrency patterns across discovered roots
@@ -156,7 +200,21 @@ class RepoTriadPipelineEngine:
                 candidate_path = resolved_target / br
                 if candidate_path.is_file() and candidate_path.stat().st_size < 100_000:
                     text_sample = candidate_path.read_text(encoding="utf-8", errors="ignore")
-                    if any(marker in text_sample for marker in ("async def ", "Promise<", "async ", "go func", "tokio::", "__global__", "__device__", "cudaStream", "threadIdx", "cluster")):
+                    if any(
+                        marker in text_sample
+                        for marker in (
+                            "async def ",
+                            "Promise<",
+                            "async ",
+                            "go func",
+                            "tokio::",
+                            "__global__",
+                            "__device__",
+                            "cudaStream",
+                            "threadIdx",
+                            "cluster",
+                        )
+                    ):
                         has_async = True
                         break
             except Exception:
@@ -165,7 +223,9 @@ class RepoTriadPipelineEngine:
         # Evaluate 5D complexity (Span, Depth, Concurrency, Rigor, Heterogeneity)
         span = min(total_files / 200.0, 1.0)
         depth = min(max(len(packages) * 0.25, 0.5), 1.0)
-        concurrency = 0.8 if has_async else (0.6 if ("TypeScript/JavaScript" in languages or "Python" in languages) else 0.4)
+        concurrency = (
+            0.8 if has_async else (0.6 if ("TypeScript/JavaScript" in languages or "Python" in languages) else 0.4)
+        )
         rigor = 0.9  # High quality audit requirement
         heterogeneity = min(len(languages) * 0.35, 1.0)
 
@@ -183,12 +243,16 @@ class RepoTriadPipelineEngine:
 
             if HAS_ONTOLOGY_SPIDER:
                 vault_dir = repo_root_dir / ".harness" / "knowledge"
-                ontology_summary = OntologySpiderKernelService().analyze_repository(
-                    resolved_target,
-                    vault_dir=vault_dir if vault_dir.is_dir() else None,
-                    max_depth=3,
-                    max_files_per_unit=60,
-                ).to_dict()
+                ontology_summary = (
+                    OntologySpiderKernelService()
+                    .analyze_repository(
+                        resolved_target,
+                        vault_dir=vault_dir if vault_dir.is_dir() else None,
+                        max_depth=3,
+                        max_files_per_unit=60,
+                    )
+                    .to_dict()
+                )
         except Exception:
             ontology_summary = {}
 
@@ -228,10 +292,10 @@ class RepoTriadPipelineEngine:
     Depth["Depth: {len(inspection.packages)} packages"] --> Score
     Concurrency["Concurrency: Async/Proactor"] --> Score
     Rigor["Rigor: Formal Invariants"] --> Score
-    Hetero["Heterogeneity: {', '.join(inspection.languages) or 'Single'}"] --> Score
+    Hetero["Heterogeneity: {", ".join(inspection.languages) or "Single"}"] --> Score
     Score --> Tier["Calibrated Tier: {inspection.compute_tier}"]
     style Score fill:#1f6feb,stroke:#58a6ff,color:#ffffff
-    style Tier fill:#238636,stroke:#3fb950,color:#ffffff"""
+    style Tier fill:#238636,stroke:#3fb950,color:#ffffff""",
             ),
             (
                 "data-topology-review",
@@ -243,7 +307,7 @@ class RepoTriadPipelineEngine:
     Graph --> Vault["Unlearned Tested Targets ({onto_unlearned})"]
     style Ingest fill:#21262d,stroke:#30363d,color:#c9d1d9
     style Graph fill:#1f6feb,stroke:#58a6ff,color:#ffffff
-    style Models fill:#238636,stroke:#3fb950,color:#ffffff"""
+    style Models fill:#238636,stroke:#3fb950,color:#ffffff""",
             ),
             (
                 "repo-reader",
@@ -251,9 +315,9 @@ class RepoTriadPipelineEngine:
                 f"""graph TD
     Root["Root: {inspection.repo_name}"] --> Pkgs["Monorepo Packages ({len(inspection.packages)})"]
     Root --> Roots["Blast Radius Roots ({len(inspection.blast_radius_roots)})"]
-    Root --> Langs["Languages: {', '.join(inspection.languages)}"]
+    Root --> Langs["Languages: {", ".join(inspection.languages)}"]
     style Root fill:#1f6feb,stroke:#58a6ff,color:#ffffff
-    style Roots fill:#da3633,stroke:#f85149,color:#ffffff"""
+    style Roots fill:#da3633,stroke:#f85149,color:#ffffff""",
             ),
             (
                 "deep-skill-forge",
@@ -265,7 +329,7 @@ class RepoTriadPipelineEngine:
     Ri --> Commit["Stage 5: Learn & Commit"]
     style Shu fill:#21262d,stroke:#30363d,color:#c9d1d9
     style Checkpoint fill:#d29922,stroke:#e3b341,color:#ffffff
-    style Ri fill:#238636,stroke:#3fb950,color:#ffffff"""
+    style Ri fill:#238636,stroke:#3fb950,color:#ffffff""",
             ),
             (
                 "repo-to-plugin-forge",
@@ -277,7 +341,7 @@ class RepoTriadPipelineEngine:
     Sandbox --> Transport["Pipe Drainage Invariant (Rule 14)"]
     style IoC fill:#1f6feb,stroke:#58a6ff,color:#ffffff
     style Provider fill:#238636,stroke:#3fb950,color:#ffffff
-    style Sandbox fill:#d29922,stroke:#e3b341,color:#ffffff"""
+    style Sandbox fill:#d29922,stroke:#e3b341,color:#ffffff""",
             ),
         ]
 
@@ -396,6 +460,45 @@ class RepoTriadPipelineEngine:
                 confidence=0.88,
             ),
         ]
+
+        onto = inspection.ontology_summary or {}
+        resolved_base = Path(inspection.resolved_root or inspection.repo_path)
+        for target in (onto.get("unlearned_tested_projects") or [])[:3]:
+            unit_dir = resolved_base / str(target)
+            cite = f"{target}/README.md#L1-L40"
+            if unit_dir.is_dir():
+                for probe in ("README.md", "pyproject.toml", "go.mod"):
+                    if (unit_dir / probe).is_file():
+                        cite = f"{target}/{probe}#L1-L40"
+                        break
+                else:
+                    for src_file in sorted(unit_dir.iterdir()):
+                        if src_file.is_file() and src_file.suffix.lower() in (".py", ".go", ".ts", ".rs"):
+                            cite = f"{target}/{src_file.name}#L1-L40"
+                            break
+            candidates.append(
+                KiCandidate(
+                    id=f"ki_{inspection.repo_name}_ontology_{target}",
+                    title=f"Ontology-Selected Unlearned Module: {target}",
+                    domain="research_distillation",
+                    claims_count=2,
+                    citations=(cite,),
+                    confidence=0.92,
+                )
+            )
+        cycles = onto.get("cycle_violations") or []
+        if cycles:
+            cycle_path = str(cycles[0].get("details", {}).get("cycle_path") or "cycle_detected")
+            candidates.append(
+                KiCandidate(
+                    id=f"ki_{inspection.repo_name}_ontology_cycle",
+                    title=f"Cross-Module Cyclic Dependency Remediation ({cycle_path})",
+                    domain="software_engineering",
+                    claims_count=2,
+                    citations=(schema_citations[0],),
+                    confidence=0.90,
+                )
+            )
         return tuple(candidates)
 
     @staticmethod
@@ -409,7 +512,7 @@ class RepoTriadPipelineEngine:
 
 ## 1. Context & Complexity
 - Target: `{inspection.repo_path}`
-- Languages: {', '.join(inspection.languages)}
+- Languages: {", ".join(inspection.languages)}
 - Compute Tier: {inspection.compute_tier} ({inspection.composite_complexity}/1.0)
 
 ## 2. Planned Deliverables
@@ -490,13 +593,13 @@ class RepoTriadPipelineEngine:
             meta_file.write_text(json.dumps(meta_payload, indent=2), encoding="utf-8")
 
             summary_file = ki_dir / "summary.md"
-            summary_content = f"""# {ki.get('title', ki_id)}
+            summary_content = f"""# {ki.get("title", ki_id)}
 
 ## Context
-Extracted during automated repository triad ingestion from {ki.get('source_target', 'target repository')}.
+Extracted during automated repository triad ingestion from {ki.get("source_target", "target repository")}.
 
 ## Distilled Learning
-{ki.get('summary', ki.get('assertion', 'Domain learning extracted from architectural analysis.'))}
+{ki.get("summary", ki.get("assertion", "Domain learning extracted from architectural analysis."))}
 
 ## Triggers & Seam Choices
 - **Trigger**: Domain execution loops and autonomous agent tool dispatch.
@@ -647,9 +750,7 @@ def main() -> None:
 
     elif args.command == "plan":
         res = RepoTriadPipelineEngine.inspect_repository(args.repo)
-        plan_dict = RepoTriadPipelineEngine.synthesize_plan_data(
-            res, args.skill_name, args.plugin_name
-        )
+        plan_dict = RepoTriadPipelineEngine.synthesize_plan_data(res, args.skill_name, args.plugin_name)
         if args.output:
             Path(args.output).write_text(json.dumps(plan_dict, indent=2), encoding="utf-8")
             print(f"Plan written to: {args.output}")

@@ -155,6 +155,76 @@ class RepoOntologyAnalysisReport:
         }
 
 
+@dataclass(slots=True, frozen=True)
+class PortfolioRepoSummary:
+    """Compact summary for a single repository or nested monorepo within a portfolio."""
+
+    repo_name: str
+    repo_root: str
+    resolved_root: str
+    projects_count: int
+    entities_count: int
+    assertions_count: int
+    cycle_count: int
+    unlearned_tested_count: int
+    gruber_overall_score: float
+    top_hubs: tuple[tuple[str, int], ...] = ()
+    unlearned_tested_sample: tuple[str, ...] = ()
+
+    def __post_init__(self) -> None:
+        if not self.repo_name.strip() or not self.resolved_root.strip():
+            raise ValueError("PortfolioRepoSummary requires non-empty repo_name and resolved_root")
+        if self.projects_count < 0 or self.entities_count < 0 or self.assertions_count < 0:
+            raise ValueError("PortfolioRepoSummary counts must be non-negative")
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "repo_name": self.repo_name,
+            "repo_root": self.repo_root,
+            "resolved_root": self.resolved_root,
+            "projects_count": self.projects_count,
+            "entities_count": self.entities_count,
+            "assertions_count": self.assertions_count,
+            "cycle_count": self.cycle_count,
+            "unlearned_tested_count": self.unlearned_tested_count,
+            "gruber_overall_score": self.gruber_overall_score,
+            "top_hubs": [[h, c] for h, c in self.top_hubs],
+            "unlearned_tested_sample": list(self.unlearned_tested_sample),
+        }
+
+
+@dataclass(slots=True, frozen=True)
+class PortfolioOntologyAnalysisReport:
+    """Slotted immutable aggregated ontology report across a multi-repo portfolio root."""
+
+    portfolio_root: str
+    repos_count: int
+    total_projects_count: int
+    total_entities_count: int
+    total_assertions_count: int
+    total_cycle_violations: int
+    top_unlearned_targets: tuple[str, ...]
+    repo_summaries: tuple[PortfolioRepoSummary, ...]
+
+    def __post_init__(self) -> None:
+        if not self.portfolio_root.strip():
+            raise ValueError("PortfolioOntologyAnalysisReport requires non-empty portfolio_root")
+        if self.repos_count < 0 or self.total_projects_count < 0:
+            raise ValueError("PortfolioOntologyAnalysisReport counts must be non-negative")
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "portfolio_root": self.portfolio_root,
+            "repos_count": self.repos_count,
+            "total_projects_count": self.total_projects_count,
+            "total_entities_count": self.total_entities_count,
+            "total_assertions_count": self.total_assertions_count,
+            "total_cycle_violations": self.total_cycle_violations,
+            "top_unlearned_targets": list(self.top_unlearned_targets),
+            "repo_summaries": [r.to_dict() for r in self.repo_summaries],
+        }
+
+
 @runtime_checkable
 class OntologySpiderProtocol(Protocol):
     """Typed micro-kernel contract for ontological vault loading, querying, and auditing."""
@@ -204,6 +274,14 @@ class OntologySpiderProtocol(Protocol):
         max_depth: int = 4,
         max_files_per_unit: int | None = 120,
     ) -> RepoOntologyAnalysisReport: ...
+    def analyze_portfolio(
+        self,
+        portfolio_path: Union[str, Path],
+        *,
+        vault_dir: Union[str, Path] | None = None,
+        max_depth: int = 3,
+        max_files_per_unit: int | None = 60,
+    ) -> PortfolioOntologyAnalysisReport: ...
 
 
 ONTOLOGY_SPIDER_SERVICE_KEY: ServiceKey[OntologySpiderProtocol] = ServiceKey("memory.ontology_spider_service")
@@ -266,7 +344,17 @@ class OntologySpiderKernelService(OntologySpiderProtocol):
             prolog = PrologReasoner(max_results=max_results)
             reasoner = prolog if prolog.is_available else PythonReasoner()
             results = Session(model=model, reasoner=reasoner).execute(query_str)
-            raw = results[-1].to_dict() if results else {"query": query_str, "statement_type": "query", "summary": "No results.", "answers": [], "explanation": None}
+            raw = (
+                results[-1].to_dict()
+                if results
+                else {
+                    "query": query_str,
+                    "statement_type": "query",
+                    "summary": "No results.",
+                    "answers": [],
+                    "explanation": None,
+                }
+            )
         else:
             raw = run_query(model, query_str).to_dict()
         if not rank_by_distance:
@@ -331,9 +419,7 @@ class OntologySpiderKernelService(OntologySpiderProtocol):
     ) -> EpistemicVaultAuditReport:
         model = self.load_vault(vault_source, as_of=as_of, min_confidence=min_confidence)
         violations = tuple(validate_model(model))
-        verified_ids = [
-            eid for eid, ent in model.entities.items() if ent.attributes.get("isnad_verified") is True
-        ]
+        verified_ids = [eid for eid, ent in model.entities.items() if ent.attributes.get("isnad_verified") is True]
         unverified = tuple(
             sorted(eid for eid, ent in model.entities.items() if ent.attributes.get("isnad_verified") is False)
         )
@@ -397,18 +483,12 @@ class OntologySpiderKernelService(OntologySpiderProtocol):
             hub_counts[target] = hub_counts.get(target, 0) + 1
         hubs = tuple(sorted(hub_counts.items(), key=lambda kv: (-kv[1], kv[0]))[:20])
 
-        project_ids = [
-            eid for eid, ent in model.entities.items() if "raw_name" in ent.attributes
-        ]
+        project_ids = [eid for eid, ent in model.entities.items() if "raw_name" in ent.attributes]
         ranked = _to_entropy_ranks(rank_discriminating_attributes(model, project_ids)[:8])
 
         sess = Session(model=model, reasoner=PythonReasoner())
-        unlearned_res = sess.execute(
-            "query recommend research_project [has_tests=true, harness_learned=false]"
-        )[-1]
-        unlearned_tested = tuple(
-            sorted(str(a["value"]) for a in unlearned_res.answers)
-        )
+        unlearned_res = sess.execute("query recommend research_project [has_tests=true, harness_learned=false]")[-1]
+        unlearned_tested = tuple(sorted(str(a["value"]) for a in unlearned_res.answers))
 
         scorecard = evaluate_competency_questions(
             model,
@@ -430,4 +510,134 @@ class OntologySpiderKernelService(OntologySpiderProtocol):
             top_discriminating_attributes=ranked,
             unlearned_tested_projects=unlearned_tested,
             gruber_scorecard=compact_scorecard,
+        )
+
+    def load_repository_model(
+        self,
+        repo_path: Union[str, Path],
+        *,
+        vault_dir: Union[str, Path] | None = None,
+        max_depth: int = 4,
+        max_files_per_unit: int | None = 120,
+    ) -> Any:
+        """Load a repository or nested monorepo into an OntologyModel via RepoOntologyModelSource."""
+        _require_engine()
+        RepoOntologyModelSource = importlib.import_module(
+            "plugins.memory_and_epistemics.ontology_spider.repo_adapter"
+        ).RepoOntologyModelSource
+        return RepoOntologyModelSource(
+            repo_path,
+            vault_dir=vault_dir,
+            max_depth=max_depth,
+            max_files_per_unit=max_files_per_unit,
+        ).load()
+
+    def query_model(
+        self,
+        model: Any,
+        query_str: str,
+        *,
+        rank_by_distance: bool = False,
+        max_results: int | None = 5000,
+    ) -> dict[str, Any]:
+        """Execute a .dialog query directly on a pre-loaded OntologyModel."""
+        _require_engine()
+        if max_results is not None and "max_results" in inspect.signature(run_query).parameters:
+            raw = run_query(model, query_str, max_results=max_results).to_dict()
+        elif max_results is not None:
+            from ontology_spider.engine import Session
+            from ontology_spider.prolog.reasoner import PrologReasoner
+            from ontology_spider.reasoning.python_backend import PythonReasoner
+
+            prolog = PrologReasoner(max_results=max_results)
+            reasoner = prolog if prolog.is_available else PythonReasoner()
+            results = Session(model=model, reasoner=reasoner).execute(query_str)
+            raw = (
+                results[-1].to_dict()
+                if results
+                else {
+                    "query": query_str,
+                    "statement_type": "query",
+                    "summary": "No results.",
+                    "answers": [],
+                    "explanation": None,
+                }
+            )
+        else:
+            raw = run_query(model, query_str).to_dict()
+        if not rank_by_distance:
+            return raw
+        reranked: list[dict[str, Any]] = []
+        for ans in raw.get("answers") or []:
+            item = dict(ans)
+            hop = max(0, len(item.get("path") or []) - 1)
+            item["hop_distance"] = hop
+            item["distance_score"] = round(1.0 / (1.0 + hop), 4)
+            reranked.append(item)
+        reranked.sort(key=lambda entry: (int(entry["hop_distance"]), str(entry.get("value", ""))))
+        raw["answers"] = reranked
+        return raw
+
+    def analyze_portfolio(
+        self,
+        portfolio_path: Union[str, Path],
+        *,
+        vault_dir: Union[str, Path] | None = None,
+        max_depth: int = 3,
+        max_files_per_unit: int | None = 60,
+    ) -> PortfolioOntologyAnalysisReport:
+        """Analyze each repository inside a multi-repo directory and aggregate unlearned gaps."""
+        _require_engine()
+        repo_adapter = importlib.import_module("plugins.memory_and_epistemics.ontology_spider.repo_adapter")
+        root = Path(portfolio_path).resolve()
+        if not root.is_dir():
+            raise FileNotFoundError(f"Portfolio path does not exist or is not a directory: {root}")
+        child_repos = repo_adapter.discover_portfolio_repos(root) or [root]
+        summaries: list[PortfolioRepoSummary] = []
+        total_projects = 0
+        total_entities = 0
+        total_assertions = 0
+        total_cycles = 0
+        unlearned_pool: list[str] = []
+
+        for repo_dir in child_repos:
+            rep = self.analyze_repository(
+                repo_dir,
+                vault_dir=vault_dir,
+                max_depth=max_depth,
+                max_files_per_unit=max_files_per_unit,
+            )
+            total_projects += rep.projects_count
+            total_entities += rep.entities_count
+            total_assertions += rep.assertions_count
+            total_cycles += len(rep.cycle_violations)
+            for target in rep.unlearned_tested_projects[:10]:
+                label = f"{repo_dir.name}/{target}" if target != repo_dir.name else repo_dir.name
+                if label not in unlearned_pool:
+                    unlearned_pool.append(label)
+            summaries.append(
+                PortfolioRepoSummary(
+                    repo_name=repo_dir.name,
+                    repo_root=rep.repo_root,
+                    resolved_root=rep.resolved_root,
+                    projects_count=rep.projects_count,
+                    entities_count=rep.entities_count,
+                    assertions_count=rep.assertions_count,
+                    cycle_count=len(rep.cycle_violations),
+                    unlearned_tested_count=len(rep.unlearned_tested_projects),
+                    gruber_overall_score=float(rep.gruber_scorecard.get("overall_score", 0.0)),
+                    top_hubs=rep.dependency_hubs[:5],
+                    unlearned_tested_sample=rep.unlearned_tested_projects[:10],
+                )
+            )
+
+        return PortfolioOntologyAnalysisReport(
+            portfolio_root=str(root),
+            repos_count=len(summaries),
+            total_projects_count=total_projects,
+            total_entities_count=total_entities,
+            total_assertions_count=total_assertions,
+            total_cycle_violations=total_cycles,
+            top_unlearned_targets=tuple(unlearned_pool[:30]),
+            repo_summaries=tuple(summaries),
         )

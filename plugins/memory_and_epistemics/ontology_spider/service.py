@@ -12,6 +12,7 @@ from harness.services.ontology_spider import (
     CompetencyScorecardReport,
     EpistemicVaultAuditReport,
     OntologySpiderKernelService,
+    PortfolioOntologyAnalysisReport,
     RepoOntologyAnalysisReport,
 )
 
@@ -116,6 +117,22 @@ class OntologySpiderService:
         """Extract a formal repository ontology and surface cycles, hubs, entropy, and unlearned targets."""
         return self._kernel.analyze_repository(
             repo_path,
+            vault_dir=vault_dir,
+            max_depth=max_depth,
+            max_files_per_unit=max_files_per_unit,
+        )
+
+    def analyze_portfolio(
+        self,
+        portfolio_path: Union[str, Path],
+        *,
+        vault_dir: Union[str, Path] | None = None,
+        max_depth: int = 3,
+        max_files_per_unit: int | None = 60,
+    ) -> PortfolioOntologyAnalysisReport:
+        """Analyze each repository under a multi-repo portfolio root and aggregate gaps."""
+        return self._kernel.analyze_portfolio(
+            portfolio_path,
             vault_dir=vault_dir,
             max_depth=max_depth,
             max_files_per_unit=max_files_per_unit,

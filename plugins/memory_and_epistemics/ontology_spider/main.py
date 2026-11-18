@@ -158,12 +158,37 @@ def analyze_repo_ontology(
 ) -> dict[str, Any]:
     """Extract repository ontology and report cycles, dependency hubs, entropy, and unlearned targets."""
     v_dir = Path(vault_path) if vault_path and Path(vault_path).exists() else None
-    return OntologySpiderService().analyze_repository(
-        repo_path,
-        vault_dir=v_dir,
-        max_depth=max_depth,
-        max_files_per_unit=max_files_per_unit,
-    ).to_dict()
+    return (
+        OntologySpiderService()
+        .analyze_repository(
+            repo_path,
+            vault_dir=v_dir,
+            max_depth=max_depth,
+            max_files_per_unit=max_files_per_unit,
+        )
+        .to_dict()
+    )
+
+
+def analyze_repo_portfolio(
+    portfolio_path: Union[str, Path],
+    *,
+    vault_path: Union[str, Path] | None = ".harness/knowledge",
+    max_depth: int = 3,
+    max_files_per_unit: int | None = 60,
+) -> dict[str, Any]:
+    """Analyze a multi-repo directory and aggregate ontology summaries and unlearned gaps."""
+    v_dir = Path(vault_path) if vault_path and Path(vault_path).exists() else None
+    return (
+        OntologySpiderService()
+        .analyze_portfolio(
+            portfolio_path,
+            vault_dir=v_dir,
+            max_depth=max_depth,
+            max_files_per_unit=max_files_per_unit,
+        )
+        .to_dict()
+    )
 
 
 plugin = OntologySpiderPlugin()

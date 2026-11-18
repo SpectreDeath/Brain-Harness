@@ -719,6 +719,9 @@ __all__ = [
     "EpistemicVaultAuditReport",
     "OntologySpiderKernelService",
     "OntologySpiderProtocol",
+    "PortfolioOntologyAnalysisReport",
+    "PortfolioRepoSummary",
+    "RepoOntologyAnalysisReport",
     # Graphiti / Zep Temporal Memory Governor Service
     "CENTER_NODE_SELF_DISTANCE",
     "DEFAULT_MMR_LAMBDA",

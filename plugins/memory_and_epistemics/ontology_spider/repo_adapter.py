@@ -14,6 +14,7 @@ import os
 from pathlib import Path
 import re
 from typing import Any
+import warnings
 
 from plugins.memory_and_epistemics.ontology_spider.adapter import (
     _NOISE_DIRS,
@@ -79,6 +80,48 @@ _MANIFEST_FILES = frozenset(
 )
 _README_NAMES = frozenset({"readme.md", "readme.rst", "readme.txt", "readme"})
 _ARXIV_RE = re.compile(r"arxiv\.org/(?:abs|pdf)/(\d{4}\.\d{4,5})", re.IGNORECASE)
+_PY_IMPORT_LINE_RE = re.compile(r"^\s*(?:import|from)\s+([^\n#]+)", re.MULTILINE)
+_GO_QUOTED_IMPORT_RE = re.compile(r'"([^"\s]+)"')
+_BAZEL_DEP_RE = re.compile(r'"//([a-zA-Z0-9_-]+)(?:[/:][^"]*)?"')
+_TS_REL_IMPORT_RE = re.compile(r"""(?:from|import)\s+['"]\.\./([a-zA-Z0-9_-]+)(?:/[^'"]*)?['"]""")
+_RUST_USE_RE = re.compile(r"\buse\s+([a-zA-Z0-9_]+)::")
+_CPP_INCLUDE_RE = re.compile(r'^\s*#include\s+"([a-zA-Z0-9_-]+)/', re.MULTILINE)
+
+_LEARNED_NOISE_TOKENS = frozenset(
+    {
+        "external",
+        "google",
+        "google_research",
+        "google-research",
+        "google-research-master",
+        "google_research_master",
+        "github",
+        "github.com",
+        "https",
+        "http",
+        "www",
+        "com",
+        "org",
+        "src",
+        "main",
+        "master",
+        "docs",
+        "doc",
+        "test",
+        "tests",
+        "scripts",
+        "examples",
+        "python",
+        "plugins",
+        "plugin",
+        "bridge",
+        "architecture",
+        "tree",
+        "blob",
+        "internal",
+        "reference",
+    }
+)
 
 _FW_PATTERNS: dict[str, re.Pattern[str]] = {
     "tensorflow": re.compile(r"\b(?:import\s+tensorflow|from\s+tensorflow\b)"),
@@ -99,6 +142,10 @@ _FW_PATTERNS: dict[str, re.Pattern[str]] = {
     "pytest": re.compile(r"\b(?:import\s+pytest|from\s+pytest\b)"),
 }
 
+_FW_UNION_RE = re.compile(
+    r"\b(tensorflow|jax|flax|haiku|optax|torch|keras|numpy|scipy|absl|gin|apache_beam|sklearn|pydantic|structlog|pytest)\b"
+)
+
 _DOMAIN_RULES: tuple[tuple[str, tuple[re.Pattern[str], ...]], ...] = tuple(
     (
         dom,
@@ -107,7 +154,18 @@ _DOMAIN_RULES: tuple[tuple[str, tuple[re.Pattern[str], ...]], ...] = tuple(
     for dom, kws in (
         (
             "rl_and_control_project",
-            ("reinforcement learning", "rl", "mdp", "q-learning", "actor-critic", "policy gradient", "mujoco", "atari", "bandit", "offline rl"),
+            (
+                "reinforcement learning",
+                "rl",
+                "mdp",
+                "q-learning",
+                "actor-critic",
+                "policy gradient",
+                "mujoco",
+                "atari",
+                "bandit",
+                "offline rl",
+            ),
         ),
         (
             "nlp_and_llm_project",
@@ -119,6 +177,8 @@ _DOMAIN_RULES: tuple[tuple[str, tuple[re.Pattern[str], ...]], ...] = tuple(
                 "bert",
                 "t5",
                 "question answering",
+                "question-answering",
+                "closed-book",
                 "summarization",
                 "translation",
                 "retrieval",
@@ -129,19 +189,51 @@ _DOMAIN_RULES: tuple[tuple[str, tuple[re.Pattern[str], ...]], ...] = tuple(
                 "chain-of-thought",
                 "chain of thought",
                 "prompting",
+                "program synthesis",
+                "latent programmer",
+                "code generation",
             ),
         ),
         (
             "vision_and_3d_project",
-            ("vision", "image", "video", "nerf", "3d", "segmentation", "object detection", "optical flow", "pose", "diffusion", "gan"),
+            (
+                "vision",
+                "image",
+                "video",
+                "nerf",
+                "3d",
+                "segmentation",
+                "object detection",
+                "optical flow",
+                "pose",
+                "diffusion",
+                "gan",
+            ),
         ),
         (
             "graph_and_program_project",
-            ("graph neural", "gnn", "program synthesis", "ast", "control flow", "knowledge graph", "ontology", "sat", "combinatorial"),
+            ("graph neural", "gnn", "ast", "control flow", "knowledge graph", "ontology", "sat", "combinatorial"),
         ),
         (
             "science_and_bio_project",
-            ("quantum", "dft", "molecule", "protein", "genomic", "dna", "rna", "climate", "weather", "physics", "pde", "fluid", "chemistry", "fep", "biology", "medical"),
+            (
+                "quantum",
+                "dft",
+                "molecule",
+                "protein",
+                "genomic",
+                "dna",
+                "rna",
+                "climate",
+                "weather",
+                "physics",
+                "pde",
+                "fluid",
+                "chemistry",
+                "fep",
+                "biology",
+                "medical",
+            ),
         ),
         (
             "speech_and_audio_project",
@@ -149,11 +241,80 @@ _DOMAIN_RULES: tuple[tuple[str, tuple[re.Pattern[str], ...]], ...] = tuple(
         ),
         (
             "privacy_fairness_safety_project",
-            ("differential privacy", "privacy", "fairness", "adversarial", "robustness", "interpretability", "explainability", "calibration", "uncertainty", "watermark"),
+            (
+                "differential privacy",
+                "privacy",
+                "fairness",
+                "adversarial",
+                "robustness",
+                "interpretability",
+                "explainability",
+                "calibration",
+                "uncertainty",
+                "watermark",
+                "selective prediction",
+                "abstention",
+                "conformal prediction",
+                "active learning",
+                "out-of-distribution",
+                "security review",
+                "vulnerability",
+                "crash reproduction",
+                "exploit",
+            ),
         ),
         (
             "optimization_and_compression_project",
-            ("pruning", "quantization", "distillation", "nas", "neural architecture search", "hyperparameter", "optimizer", "compression", "sparsity"),
+            (
+                "pruning",
+                "quantization",
+                "distillation",
+                "nas",
+                "neural architecture search",
+                "hyperparameter",
+                "optimizer",
+                "compression",
+                "sparsity",
+                "nearest neighbor",
+                "vector quantization",
+                "mips",
+                "learned optimizer",
+            ),
+        ),
+        (
+            "systems_and_runtime_project",
+            (
+                "application kernel",
+                "syscall",
+                "seccomp",
+                "seccomp-bpf",
+                "sandbox",
+                "gofer",
+                "sentry",
+                "tracing",
+                "perfetto",
+                "ebpf",
+                "container",
+                "oci",
+                "virtualization",
+                "userspace",
+                "hypervisor",
+                "sandboxed",
+            ),
+        ),
+        (
+            "agent_orchestration_project",
+            (
+                "agent development kit",
+                "adk",
+                "multi-agent",
+                "agentic",
+                "harness",
+                "recursive harnessing",
+                "mcp",
+                "tool use",
+                "subagent",
+            ),
         ),
     )
 )
@@ -163,7 +324,10 @@ def resolve_repo_root(repo_path: Path) -> Path:
     """Resolve nested archive wrapper roots (e.g. repo-master/repo-master) up to depth 3."""
     current = repo_path.resolve()
     for _ in range(3):
-        if any((current / m).is_file() for m in ("pyproject.toml", "setup.py", "package.json", "Cargo.toml", "go.mod", "README.md")):
+        if any(
+            (current / m).is_file()
+            for m in ("pyproject.toml", "setup.py", "package.json", "Cargo.toml", "go.mod", "README.md")
+        ):
             return current
         subdirs = [
             d
@@ -189,7 +353,20 @@ def _classify_domain(raw_name: str, readme_text: str) -> str:
 
 
 def _primary_framework(fws: set[str]) -> str:
-    for fw in ("jax", "flax", "haiku", "optax", "tensorflow", "keras", "torch", "apache_beam", "sklearn", "scipy", "numpy", "pydantic"):
+    for fw in (
+        "jax",
+        "flax",
+        "haiku",
+        "optax",
+        "tensorflow",
+        "keras",
+        "torch",
+        "apache_beam",
+        "sklearn",
+        "scipy",
+        "numpy",
+        "pydantic",
+    ):
         if fw in fws:
             if fw in ("flax", "haiku", "optax") and "jax" in fws:
                 return "jax"
@@ -197,8 +374,33 @@ def _primary_framework(fws: set[str]) -> str:
     return "none"
 
 
+def _register_learned_token(token: Any, ki_id: str, learned: dict[str, str]) -> None:
+    """Register exact and underscore-normalized repository identifier tokens cleanly."""
+    cleaned = str(token or "").strip().lower()
+    if len(cleaned) < 3 or cleaned in _LEARNED_NOISE_TOKENS:
+        return
+    learned.setdefault(cleaned, ki_id)
+    underscored = cleaned.replace("-", "_")
+    if underscored not in _LEARNED_NOISE_TOKENS:
+        learned.setdefault(underscored, ki_id)
+
+
+def _register_path_tokens(raw_path: Any, ki_id: str, learned: dict[str, str]) -> None:
+    """Extract path/URL segments preserving hyphenated and underscored package names."""
+    if not isinstance(raw_path, str) or not raw_path.strip():
+        return
+    parts = [p for p in re.split(r"[\\/]+", raw_path.strip()) if p]
+    for seg in parts:
+        seg_low = seg.lower()
+        if seg_low.endswith(".git"):
+            seg_low = seg_low[:-4]
+        if ":" in seg_low or "." in seg_low and seg_low.endswith((".com", ".org", ".io", ".dev")):
+            continue
+        _register_learned_token(seg_low, ki_id, learned)
+
+
 def _discover_vault_learned_projects(vault_dir: Path | None) -> dict[str, str]:
-    """Scan existing .harness/knowledge directory to map project tokens -> KI IDs."""
+    """Scan existing .harness/knowledge directory to map structured project tokens -> KI IDs."""
     if vault_dir is None or not vault_dir.is_dir():
         return {}
     learned: dict[str, str] = {}
@@ -210,21 +412,228 @@ def _discover_vault_learned_projects(vault_dir: Path | None) -> dict[str, str]:
             continue
         try:
             data = json.loads(meta_file.read_text(encoding="utf-8"))
-        except (OSError, json.JSONDecodeError, ValueError):
+        except (OSError, json.JSONDecodeError, ValueError) as exc:
+            logger.debug("Skipping unreadable vault metadata %s: %s", meta_file, exc)
             continue
         if not isinstance(data, dict):
             continue
         ki_id = str(data.get("id") or data.get("ki_id") or child.name)
+
+        # 1. Explicit structured tags
         for tag in data.get("tags") or []:
-            tag_s = str(tag).strip()
-            if tag_s:
-                learned.setdefault(tag_s.lower(), ki_id)
-        for key in ("id", "ki_id", "source_target", "title"):
-            val = data.get(key)
-            if isinstance(val, str) and val.strip():
-                for token in re.findall(r"[a-zA-Z0-9_]{3,}", val):
-                    learned.setdefault(token.lower(), ki_id)
+            _register_learned_token(tag, ki_id, learned)
+
+        # 2. Upstream repository URLs / local mirror paths / multi-repo sources
+        for key in ("source_target", "source_uri", "source_repo"):
+            _register_path_tokens(data.get(key), ki_id, learned)
+        isnad_data = data.get("isnad")
+        if isinstance(isnad_data, dict):
+            _register_path_tokens(isnad_data.get("source_repo"), ki_id, learned)
+        for src_entry in data.get("sources") or []:
+            if isinstance(src_entry, dict):
+                _register_path_tokens(src_entry.get("repo"), ki_id, learned)
+                _register_path_tokens(src_entry.get("path"), ki_id, learned)
+
+        # 3. KI identifier itself and canonical slug forms (avoid free-text title noise)
+        for id_key in ("id", "ki_id"):
+            id_val = str(data.get(id_key) or "").strip()
+            if not id_val:
+                continue
+            _register_learned_token(id_val, ki_id, learned)
+            # Match canonical naming pattern ki_<YYYYMMDD>_<repo>_<NN> or ki-<repo>-...
+            m = re.match(r"^ki[_-](?:\d{8}[_-])?([a-z0-9_-]+?)(?:[_-]\d{2})?$", id_val.lower())
+            if m:
+                slug = m.group(1)
+                _register_learned_token(slug, ki_id, learned)
+                for seg in re.split(r"[-_]+", slug):
+                    if len(seg) >= 4:
+                        _register_learned_token(seg, ki_id, learned)
+
+        for plug in data.get("plugins_scaffolded") or []:
+            if isinstance(plug, str):
+                _register_learned_token(plug.removeprefix("plugin."), ki_id, learned)
     return learned
+
+
+def _lookup_learned_ki(raw_name: str, uid: str, learned_map: dict[str, str]) -> str | None:
+    """Resolve matching KI ID for a repository unit preserving hyphen/suffix variants."""
+    candidates = [raw_name.lower(), uid.lower(), raw_name.lower().replace("-", "_")]
+    for suffix in ("-main", "_main", "-master", "_master"):
+        if raw_name.lower().endswith(suffix):
+            stem = raw_name.lower()[: -len(suffix)]
+            candidates.extend((stem, stem.replace("-", "_")))
+    for cand in candidates:
+        if cand in learned_map:
+            return learned_map[cand]
+    return None
+
+
+def _detect_go_module(repo_root: Path) -> str:
+    """Read Go module path from root go.mod when present."""
+    go_mod = repo_root / "go.mod"
+    if not go_mod.is_file():
+        return ""
+    try:
+        for line in go_mod.read_text(encoding="utf-8", errors="ignore").splitlines()[:40]:
+            stripped = line.strip()
+            if stripped.startswith("module "):
+                return stripped.split()[1].strip()
+    except OSError:
+        return ""
+    return ""
+
+
+def _extract_python_signals(
+    src: str,
+    raw_name: str,
+    uid: str,
+    candidate_tokens: set[str],
+    raw_names: set[str],
+    raw_to_safe: dict[str, str],
+    root_pkg_alias: str,
+    fws: set[str],
+    cross_edges: set[tuple[str, str]],
+) -> None:
+    """Detect Python frameworks and AST-verified cross-unit imports without leaking SyntaxWarnings."""
+    matched_tokens = set(_FW_UNION_RE.findall(src))
+    for fw_tok in matched_tokens:
+        pat = _FW_PATTERNS.get(fw_tok)
+        if pat is not None and pat.search(src):
+            fws.add(fw_tok)
+
+    import_lines = _PY_IMPORT_LINE_RE.findall(src)
+    if not import_lines:
+        return
+    imported_identifiers: set[str] = set()
+    for line in import_lines:
+        for tok in re.findall(r"[a-zA-Z0-9_]+", line):
+            if tok not in ("import", "from", "as"):
+                imported_identifiers.add(tok)
+    if candidate_tokens.isdisjoint(imported_identifiers):
+        return
+
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore", SyntaxWarning)
+        try:
+            tree = ast.parse(src)
+        except SyntaxError:
+            return
+
+    for node in ast.walk(tree):
+        mod_names: list[str] = []
+        if isinstance(node, ast.Import):
+            mod_names = [a.name for a in node.names]
+        elif isinstance(node, ast.ImportFrom) and node.module:
+            mod_names = [node.module]
+            if node.module in ("google_research", root_pkg_alias):
+                for alias in node.names:
+                    if alias.name in raw_names and alias.name != raw_name:
+                        cross_edges.add((uid, raw_to_safe[alias.name]))
+        for mod_name in mod_names:
+            parts = mod_name.split(".")
+            if parts[0] in raw_names and parts[0] != raw_name:
+                cross_edges.add((uid, raw_to_safe[parts[0]]))
+            elif (
+                parts[0] in ("google_research", root_pkg_alias)
+                and len(parts) > 1
+                and parts[1] in raw_names
+                and parts[1] != raw_name
+            ):
+                cross_edges.add((uid, raw_to_safe[parts[1]]))
+
+
+def _extract_non_python_signals(
+    fpath: Path,
+    fl: str,
+    ext: str,
+    cur: Path,
+    raw_name: str,
+    uid: str,
+    raw_names: set[str],
+    raw_to_safe: dict[str, str],
+    go_module: str,
+    cross_edges: set[tuple[str, str]],
+    lang_counts: dict[str, int],
+) -> int:
+    """Extract language counts, non-Python test presence, and Go/Bazel/TS/Rust/C++ dependency edges."""
+    test_delta = 0
+    is_test_dir = any(p.lower() in ("test", "tests", "__tests__") for p in cur.parts[-2:])
+
+    if ext == ".go":
+        lang_counts["go"] += 1
+        if fl.endswith("_test.go") or is_test_dir:
+            test_delta = 1
+        if go_module:
+            try:
+                head = fpath.read_text(encoding="utf-8", errors="ignore")[:8192]
+                prefix = go_module + "/"
+                for imp in _GO_QUOTED_IMPORT_RE.findall(head):
+                    if imp.startswith(prefix):
+                        target_unit = imp[len(prefix) :].split("/", 1)[0]
+                        if target_unit in raw_names and target_unit != raw_name:
+                            cross_edges.add((uid, raw_to_safe[target_unit]))
+            except OSError:
+                pass
+    elif fl in ("build", "build.bazel"):
+        try:
+            text = fpath.read_text(encoding="utf-8", errors="ignore")[:32768]
+            for dep_unit in _BAZEL_DEP_RE.findall(text):
+                if dep_unit in raw_names and dep_unit != raw_name:
+                    cross_edges.add((uid, raw_to_safe[dep_unit]))
+        except OSError:
+            pass
+    elif ext in (".ts", ".tsx", ".js", ".jsx", ".mjs"):
+        lang_counts["typescript"] += 1
+        if ".test." in fl or ".spec." in fl or is_test_dir:
+            test_delta = 1
+        try:
+            head = fpath.read_text(encoding="utf-8", errors="ignore")[:8192]
+            for rel_unit in _TS_REL_IMPORT_RE.findall(head):
+                if rel_unit in raw_names and rel_unit != raw_name:
+                    cross_edges.add((uid, raw_to_safe[rel_unit]))
+        except OSError:
+            pass
+    elif ext == ".rs":
+        lang_counts["rust"] += 1
+        if fl.endswith("_test.rs") or is_test_dir:
+            test_delta = 1
+        try:
+            head = fpath.read_text(encoding="utf-8", errors="ignore")[:8192]
+            for crate_tok in _RUST_USE_RE.findall(head):
+                if crate_tok in raw_names and crate_tok != raw_name:
+                    cross_edges.add((uid, raw_to_safe[crate_tok]))
+        except OSError:
+            pass
+    elif ext in (".cc", ".cpp", ".cu", ".cuh", ".h", ".hpp"):
+        lang_counts["cpp"] += 1
+        if "test" in fl or is_test_dir:
+            test_delta = 1
+        try:
+            head = fpath.read_text(encoding="utf-8", errors="ignore")[:8192]
+            for inc_unit in _CPP_INCLUDE_RE.findall(head):
+                if inc_unit in raw_names and inc_unit != raw_name:
+                    cross_edges.add((uid, raw_to_safe[inc_unit]))
+        except OSError:
+            pass
+    return test_delta
+
+
+def discover_portfolio_repos(portfolio_path: str | Path) -> list[Path]:
+    """Discover child repositories/monorepos under a multi-repo parent folder."""
+    root = Path(portfolio_path).resolve()
+    if not root.is_dir():
+        return []
+    repos: list[Path] = []
+    for child in sorted(root.iterdir(), key=lambda p: p.name):
+        if not child.is_dir() or child.name.startswith(".") or child.name in _PRUNE_DIRS:
+            continue
+        if (child / ".git").exists() or _unit_looks_like_project(child):
+            repos.append(child)
+        else:
+            sub_resolved = resolve_repo_root(child)
+            if sub_resolved != child or _unit_looks_like_project(child):
+                repos.append(child)
+    return repos
 
 
 def _unit_looks_like_project(dir_path: Path) -> bool:
@@ -276,10 +685,7 @@ class RepoOntologyModelSource(ModelSource):
         candidates = [
             d
             for d in sorted(self.resolved_root.iterdir(), key=lambda p: p.name)
-            if d.is_dir()
-            and not d.name.startswith(".")
-            and d.name not in _PRUNE_DIRS
-            and _unit_looks_like_project(d)
+            if d.is_dir() and not d.name.startswith(".") and d.name not in _PRUNE_DIRS and _unit_looks_like_project(d)
         ]
         if len(candidates) >= 2:
             # Check for conventional monorepo wrappers (packages/*, plugins/*)
@@ -305,6 +711,8 @@ class RepoOntologyModelSource(ModelSource):
             ("speech_and_audio_project", SUBCLASS_OF, "research_project"),
             ("privacy_fairness_safety_project", SUBCLASS_OF, "research_project"),
             ("optimization_and_compression_project", SUBCLASS_OF, "research_project"),
+            ("systems_and_runtime_project", SUBCLASS_OF, "research_project"),
+            ("agent_orchestration_project", SUBCLASS_OF, "research_project"),
             ("general_ml_project", SUBCLASS_OF, "research_project"),
             ("ml_framework", SUBCLASS_OF, "technical_dependency"),
             ("runtime_artifact", SUBCLASS_OF, "build_artifact"),
@@ -333,6 +741,8 @@ class RepoOntologyModelSource(ModelSource):
         units = self._discover_units()
         raw_names = {u.name for u in units}
         root_pkg_alias = _sanitize_identifier(self.resolved_root.name).replace("-", "_")
+        candidate_py_tokens = raw_names | {n.replace("-", "_") for n in raw_names} | {"google_research", root_pkg_alias}
+        go_module = _detect_go_module(self.resolved_root)
         learned_map = _discover_vault_learned_projects(self.vault_dir)
 
         raw_to_safe: dict[str, str] = {}
@@ -354,10 +764,13 @@ class RepoOntologyModelSource(ModelSource):
             test_count = 0
             gin_count = 0
             ipynb_count = 0
-            cpp_count = 0
+            lang_counts = {"go": 0, "typescript": 0, "rust": 0, "cpp": 0}
             has_req = False
             has_setup = False
             has_pyproject = False
+            has_go_mod = False
+            has_pkg_json = False
+            has_cargo = False
             has_run_sh = False
             has_build = False
             has_tflite = False
@@ -396,9 +809,15 @@ class RepoOntologyModelSource(ModelSource):
                         has_setup = True
                     elif fl == "pyproject.toml":
                         has_pyproject = True
+                    elif fl == "go.mod":
+                        has_go_mod = True
+                    elif fl == "package.json":
+                        has_pkg_json = True
+                    elif fl == "cargo.toml":
+                        has_cargo = True
                     elif fl == "run.sh":
                         has_run_sh = True
-                    elif fl == "build":
+                    elif fl in ("build", "build.bazel"):
                         has_build = True
 
                     if ext == ".py":
@@ -408,44 +827,49 @@ class RepoOntologyModelSource(ModelSource):
                         try:
                             if fpath.stat().st_size <= 400_000:
                                 src = fpath.read_text(encoding="utf-8", errors="ignore")
-                                for fw_name, pat in _FW_PATTERNS.items():
-                                    if pat.search(src):
-                                        fws.add(fw_name)
-                                try:
-                                    tree = ast.parse(src)
-                                    for node in ast.walk(tree):
-                                        mod_names: list[str] = []
-                                        if isinstance(node, ast.Import):
-                                            mod_names = [a.name for a in node.names]
-                                        elif isinstance(node, ast.ImportFrom) and node.module:
-                                            mod_names = [node.module]
-                                        for mod_name in mod_names:
-                                            parts = mod_name.split(".")
-                                            if parts[0] in raw_names and parts[0] != raw_name:
-                                                cross_edges.add((uid, raw_to_safe[parts[0]]))
-                                            elif (
-                                                parts[0] in ("google_research", root_pkg_alias)
-                                                and len(parts) > 1
-                                                and parts[1] in raw_names
-                                                and parts[1] != raw_name
-                                            ):
-                                                cross_edges.add((uid, raw_to_safe[parts[1]]))
-                                except SyntaxError:
-                                    pass
+                                _extract_python_signals(
+                                    src,
+                                    raw_name,
+                                    uid,
+                                    candidate_py_tokens,
+                                    raw_names,
+                                    raw_to_safe,
+                                    root_pkg_alias,
+                                    fws,
+                                    cross_edges,
+                                )
                         except OSError:
                             pass
                     elif ext == ".gin":
                         gin_count += 1
                     elif ext == ".ipynb":
                         ipynb_count += 1
-                    elif ext in (".cc", ".cpp", ".cu", ".cuh", ".h", ".hpp"):
-                        cpp_count += 1
                     elif ext == ".tflite":
                         has_tflite = True
                     elif fl == "saved_model.pb":
                         has_saved_model = True
+                    else:
+                        test_count += _extract_non_python_signals(
+                            fpath,
+                            fl,
+                            ext,
+                            cur,
+                            raw_name,
+                            uid,
+                            raw_names,
+                            raw_to_safe,
+                            go_module,
+                            cross_edges,
+                            lang_counts,
+                        )
                 if self.max_files_per_unit is not None and files_seen >= self.max_files_per_unit:
                     break
+
+            cpp_count = lang_counts["cpp"]
+            all_lang_counts = {"python": py_count, **lang_counts}
+            dom_lang, dom_count = max(all_lang_counts.items(), key=lambda kv: kv[1])
+            primary_language = dom_lang if dom_count > 0 else "docs_or_config"
+            code_files = sum(all_lang_counts.values())
 
             domain_cls = _classify_domain(raw_name, readme_text)
             prim_fw = _primary_framework(fws)
@@ -456,24 +880,31 @@ class RepoOntologyModelSource(ModelSource):
                 if has_setup
                 else "requirements"
                 if has_req
+                else "go_mod"
+                if has_go_mod
+                else "npm"
+                if has_pkg_json
+                else "cargo"
+                if has_cargo
                 else "none"
             )
             size_tier = (
                 "large"
-                if py_count >= 25
+                if code_files >= 25
                 else "medium"
-                if py_count >= 8
+                if code_files >= 8
                 else "small"
-                if py_count >= 1
+                if code_files >= 1
                 else "non_python"
             )
-            learned_ki = learned_map.get(raw_name.lower()) or learned_map.get(uid.lower())
+            learned_ki = _lookup_learned_ki(raw_name, uid, learned_map)
             harness_learned = learned_ki is not None
 
             attrs: dict[str, Any] = {
                 "raw_name": raw_name,
                 "domain_class": domain_cls,
                 "primary_framework": prim_fw,
+                "primary_language": primary_language,
                 "packaging": packaging,
                 "size_tier": size_tier,
                 "has_readme": bool(readme_text),
@@ -486,6 +917,7 @@ class RepoOntologyModelSource(ModelSource):
                 "has_bazel_build": has_build,
                 "has_tflite_or_pb": has_tflite or has_saved_model,
                 "harness_learned": harness_learned,
+                "learned_ki_id": learned_ki or "",
                 "py_file_count": py_count,
                 "test_file_count": test_count,
                 "gin_file_count": gin_count,
@@ -507,18 +939,24 @@ class RepoOntologyModelSource(ModelSource):
                 model.add_assertion(Relation(uid, "uses_config_system", "cfg_gin"), prov)
             if "absl" in fws:
                 if "cfg_absl_flags" not in model.entities:
-                    model.add_entity(Entity(id="cfg_absl_flags", name="absl.flags", attributes={"kind": "config_system"}))
+                    model.add_entity(
+                        Entity(id="cfg_absl_flags", name="absl.flags", attributes={"kind": "config_system"})
+                    )
                     model.add_assertion(Relation("cfg_absl_flags", INSTANCE_OF, "config_system"), prov)
                 model.add_assertion(Relation(uid, "uses_config_system", "cfg_absl_flags"), prov)
 
             if has_tflite:
                 if "art_tflite" not in model.entities:
-                    model.add_entity(Entity(id="art_tflite", name="TFLite FlatBuffer", attributes={"kind": "runtime_artifact"}))
+                    model.add_entity(
+                        Entity(id="art_tflite", name="TFLite FlatBuffer", attributes={"kind": "runtime_artifact"})
+                    )
                     model.add_assertion(Relation("art_tflite", INSTANCE_OF, "runtime_artifact"), prov)
                 model.add_assertion(Relation(uid, "exports_artifact", "art_tflite"), prov)
             if has_saved_model:
                 if "art_saved_model" not in model.entities:
-                    model.add_entity(Entity(id="art_saved_model", name="TF SavedModel", attributes={"kind": "runtime_artifact"}))
+                    model.add_entity(
+                        Entity(id="art_saved_model", name="TF SavedModel", attributes={"kind": "runtime_artifact"})
+                    )
                     model.add_assertion(Relation("art_saved_model", INSTANCE_OF, "runtime_artifact"), prov)
                 model.add_assertion(Relation(uid, "exports_artifact", "art_saved_model"), prov)
 
@@ -542,4 +980,4 @@ class RepoOntologyModelSource(ModelSource):
         return model
 
 
-__all__ = ["RepoOntologyModelSource", "resolve_repo_root"]
+__all__ = ["RepoOntologyModelSource", "discover_portfolio_repos", "resolve_repo_root"]

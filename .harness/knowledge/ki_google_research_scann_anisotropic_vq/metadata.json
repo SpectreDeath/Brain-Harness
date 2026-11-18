@@ -1,0 +1,71 @@
+{
+  "id": "ki_google_research_scann_anisotropic_vq",
+  "title": "Google Research ScaNN: Three-Phase Vector Search, Anisotropic Quantization & SOAR Overretrieval",
+  "category": "data_engineering",
+  "schema_version": "1.0.0",
+  "source_target": "https://github.com/google-research/google-research",
+  "detected_format": "git_repository",
+  "created_at": "2026-11-17T23:44:00Z",
+  "author": "ontology-spider-learning-wave",
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "tags": [
+    "scann",
+    "google_research",
+    "vector_search",
+    "anisotropic_quantization",
+    "asymmetric_hashing",
+    "mips",
+    "arxiv_1908_10396",
+    "arxiv_2404_00774"
+  ],
+  "anchors": {
+    "repo": "https://github.com/google-research/google-research",
+    "subproject": "scann",
+    "arxiv": "https://arxiv.org/abs/1908.10396"
+  },
+  "edges": [
+    {
+      "type": "distilled_from",
+      "target": "https://github.com/google-research/google-research",
+      "target_kind": "external_repo",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Dependency hub scann imported by eli5_retrieval_large_lm in Ontology-Spider cross-project DAG (arXiv:1908.10396, arXiv:2404.00774)"
+    },
+    {
+      "type": "references_code",
+      "target": "harness.services.vector_index",
+      "target_kind": "source",
+      "derived": false,
+      "confidence": 0.9,
+      "description": "Informs Brain Harness dense retrieval indexing, quantization, and rescoring thresholds"
+    }
+  ],
+  "isnad": {
+    "status": "VERIFIED",
+    "source_repo": "https://github.com/google-research/google-research",
+    "subproject": "scann",
+    "verified_at": "2026-11-17T23:44:00Z",
+    "claims": [
+      {
+        "assertion": "ScaNN organizes scalable nearest-neighbor retrieval into three stages—tree partitioning (num_leaves ~ sqrt(n)), asymmetric hashing or quantized brute-force scoring (dimensions_per_block=2 with anisotropic quantization threshold), and exact top-k' rescoring.",
+        "file": "scann/docs/algorithms.md",
+        "lines": "L1-L72",
+        "sha256_hash": "c45561ab4440ac514b83e361242234f1c0acf4c1b94a34b7e21e6fcb61d01f39",
+        "verified": true
+      },
+      {
+        "assertion": "ScannBuilder enforces valid dot-product constraints for AVQ/SOAR, supports MRL vector truncation, configures lut16/lut256 global top-N with residual quantization, and maps anisotropic_quantization_threshold to noise_shaping_threshold in C++ searcher configs.",
+        "file": "scann/scann/scann_ops/py/scann_builder.py",
+        "lines": "L46-L320",
+        "sha256_hash": "ff5c69cc4517e41b8c8f3bd2332fcebf96f41fa75adbec495741c559a4d37e5d",
+        "verified": true
+      }
+    ]
+  },
+  "distilled_learning": "Structure scalable dense retrieval around Partition (sqrt(n) leaves + SOAR spillover) -> Anisotropic Asymmetric Hashing (LUT16 residual blocks prioritizing parallel inner-product error) -> Exact Rescoring (top k' > k) instead of unpruned flat brute force."
+}

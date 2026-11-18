@@ -36,8 +36,14 @@ def _parse_competency_args(raw_items: list[str] | None) -> list[str]:
 
 def build_parser() -> argparse.ArgumentParser:
     """Construct CLI parser for standalone ontology-spider skill execution."""
-    parser = argparse.ArgumentParser(description="Headless Ontology-Spider Knowledge Vault runner")
+    parser = argparse.ArgumentParser(description="Headless Ontology-Spider Knowledge Vault & Repository runner")
     parser.add_argument("--vault", default=".harness/knowledge", help="Vault directory or JSON path")
+    parser.add_argument("--repo", default=None, help="Optional target code/research repository directory")
+    parser.add_argument(
+        "--portfolio", action="store_true", help="Analyze --repo as a multi-repository portfolio folder"
+    )
+    parser.add_argument("--max-depth", type=int, default=4, help="Maximum scan depth per unit in --repo mode")
+    parser.add_argument("--max-files-per-unit", type=int, default=120, help="File cap per unit in --repo mode")
     parser.add_argument("--as-of", default=None, help="Optional ISO timestamp for bi-temporal edge slicing")
     parser.add_argument("--min-confidence", type=float, default=0.0, help="Minimum edge confidence threshold")
     parser.add_argument("--max-results", type=int, default=5000, help="Maximum query answer cap")
@@ -57,6 +63,58 @@ def main(argv: list[str] | None = None) -> int:
     service = OntologySpiderKernelService()
     vault = Path(args.vault)
     payload: dict[str, Any] = {}
+    competency_questions = _parse_competency_args(args.competency)
+
+    if args.repo:
+        repo_path = Path(args.repo)
+        v_dir = vault if vault.exists() else None
+        if args.portfolio:
+            payload["portfolio"] = service.analyze_portfolio(
+                repo_path,
+                vault_dir=v_dir,
+                max_depth=args.max_depth,
+                max_files_per_unit=args.max_files_per_unit,
+            ).to_dict()
+        else:
+            payload["repository"] = service.analyze_repository(
+                repo_path,
+                vault_dir=v_dir,
+                max_depth=args.max_depth,
+                max_files_per_unit=args.max_files_per_unit,
+            ).to_dict()
+            if args.query or args.validate or args.export or args.rank_entropy or competency_questions:
+                model = service.load_repository_model(
+                    repo_path,
+                    vault_dir=v_dir,
+                    max_depth=args.max_depth,
+                    max_files_per_unit=args.max_files_per_unit,
+                )
+                if args.query:
+                    payload["query"] = service.query_model(
+                        model,
+                        args.query,
+                        rank_by_distance=args.rank_by_distance,
+                        max_results=args.max_results,
+                    )
+                if args.validate:
+                    from ontology_spider.api import validate_model
+
+                    payload["violations"] = validate_model(model)
+                if args.export:
+                    from ontology_spider.api import export_model
+
+                    payload["export"] = {"format": args.export, "content": export_model(model, format=args.export)}
+                if competency_questions:
+                    from ontology_spider.api import evaluate_competency_questions
+
+                    payload["competency"] = evaluate_competency_questions(model, competency_questions)
+                if args.rank_entropy:
+                    from ontology_spider.api import rank_discriminating_attributes
+
+                    project_ids = [eid for eid, ent in model.entities.items() if "raw_name" in ent.attributes]
+                    payload["entropy_ranks"] = rank_discriminating_attributes(model, project_ids or None)
+        print(json.dumps(payload, indent=2, default=str))
+        return 0
 
     if args.query:
         payload["query"] = service.query(
@@ -74,7 +132,6 @@ def main(argv: list[str] | None = None) -> int:
             "format": args.export,
             "content": service.export(vault, format=args.export, as_of=args.as_of, min_confidence=args.min_confidence),
         }
-    competency_questions = _parse_competency_args(args.competency)
     if competency_questions:
         payload["competency"] = asdict(service.evaluate_competency(vault, competency_questions, as_of=args.as_of))
     if args.rank_entropy:

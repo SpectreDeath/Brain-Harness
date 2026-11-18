@@ -39,7 +39,9 @@ def _create_research_monorepo(tmp_path: Path) -> tuple[Path, Path]:
     # 2. proj_b: depends on proj_a, unlearned, tested, has arXiv + gin
     pb = repo / "proj_b"
     pb.mkdir()
-    (pb / "README.md").write_text("# Proj B\nLanguage model reasoning https://arxiv.org/abs/2401.12345\n", encoding="utf-8")
+    (pb / "README.md").write_text(
+        "# Proj B\nLanguage model reasoning https://arxiv.org/abs/2401.12345\n", encoding="utf-8"
+    )
     (pb / "setup.py").write_text("from setuptools import setup\n", encoding="utf-8")
     (pb / "config.gin").write_text("train.lr = 1e-4\n", encoding="utf-8")
     (pb / "runner.py").write_text("import jax\nfrom proj_a import core\n", encoding="utf-8")
@@ -113,11 +115,7 @@ def test_repo_ontology_model_source_and_kernel_analyze(tmp_path: Path) -> None:
     outer, vault = _create_research_monorepo(tmp_path)
     model = RepoOntologyModelSource(outer, vault_dir=vault).load()
 
-    raw_names = {
-        ent.attributes.get("raw_name")
-        for ent in model.entities.values()
-        if "raw_name" in ent.attributes
-    }
+    raw_names = {ent.attributes.get("raw_name") for ent in model.entities.values() if "raw_name" in ent.attributes}
     assert {"proj_a", "proj_b", "proj_c", "proj_d", "widget-caption", "widget_caption"}.issubset(raw_names)
     assert model.entities["proj_a"].attributes["harness_learned"] is True
     assert model.entities["proj_b"].attributes["harness_learned"] is False
@@ -167,3 +165,182 @@ def test_domain_classifier_handles_llm_reasoning_keywords() -> None:
         "Self-consistency decoding enhances LLMs performance via confidence prompting.\n"
     )
     assert _classify_domain("cisc", readme) == "nlp_and_llm_project"
+
+
+@skip_if_no_engine
+def test_domain_classifier_routes_selective_prediction_and_systems() -> None:
+    """Selective prediction maps to privacy/safety and user-space kernels map to systems."""
+    from plugins.memory_and_epistemics.ontology_spider.repo_adapter import _classify_domain
+
+    asp_readme = (
+        "# Active Selective Prediction\nASPEST: Bridging Active Learning and Selective Prediction with abstention.\n"
+    )
+    gvisor_readme = "# gVisor\nAn application kernel written in Go using seccomp-bpf and syscall interception.\n"
+    assert _classify_domain("active_selective_prediction", asp_readme) == "privacy_fairness_safety_project"
+    assert _classify_domain("gvisor", gvisor_readme) == "systems_and_runtime_project"
+
+
+@skip_if_no_engine
+def test_vault_matching_avoids_title_false_positives_and_reads_sources_and_hyphens(tmp_path: Path) -> None:
+    """_discover_vault_learned_projects reads structured sources/paths without matching generic title words."""
+    from plugins.memory_and_epistemics.ontology_spider.repo_adapter import RepoOntologyModelSource
+
+    repo = tmp_path / "repo"
+    for name in ("adk-python", "earthengine-api", "rpc"):
+        d = repo / name
+        d.mkdir(parents=True)
+        (d / "README.md").write_text(f"# {name}\n", encoding="utf-8")
+        (d / "main.py").write_text("import json\n", encoding="utf-8")
+        (d / "main_test.py").write_text("def test_ok(): assert True\n", encoding="utf-8")
+
+    vault = tmp_path / "vault"
+    # Unrelated Codex RPC KI must NOT mark repo unit "rpc" as learned via free-text title token
+    k_rpc = vault / "ki_20260823_repo_05"
+    k_rpc.mkdir(parents=True)
+    (k_rpc / "metadata.json").write_text(
+        json.dumps(
+            {
+                "id": "ki_20260823_repo_05",
+                "title": "App-Server Daemon RPC Gate",
+                "source_target": "external/codex-main/codex-main",
+                "tags": ["json_rpc", "ipc"],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    # Multi-source bridge KI must mark "adk-python" via sources[].repo / path
+    k_bridge = vault / "ki_google_repos_bridge"
+    k_bridge.mkdir(parents=True)
+    (k_bridge / "metadata.json").write_text(
+        json.dumps(
+            {
+                "id": "ki_google_repos_bridge",
+                "title": "Google Multi-Repo Bridge",
+                "sources": [{"repo": "google/adk-python", "path": "external/Google/adk-python"}],
+                "tags": ["google_repos", "bridge"],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    # Hyphenated source_target must preserve "earthengine-api" / "earthengine_api"
+    k_ee = vault / "ki_20260908_ee_01"
+    k_ee.mkdir(parents=True)
+    (k_ee / "metadata.json").write_text(
+        json.dumps(
+            {
+                "id": "ki_20260908_ee_01",
+                "title": "Earth Engine Spatial Analytics",
+                "source_target": "external/Google/earthengine-api",
+                "tags": ["earth_engine"],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    model = RepoOntologyModelSource(repo, vault_dir=vault).load()
+    assert model.entities["adk_python"].attributes["harness_learned"] is True
+    assert model.entities["adk_python"].attributes["learned_ki_id"] == "ki_google_repos_bridge"
+    assert model.entities["earthengine_api"].attributes["harness_learned"] is True
+    assert model.entities["rpc"].attributes["harness_learned"] is False
+    assert model.entities["rpc"].attributes["learned_ki_id"] == ""
+
+
+@skip_if_no_engine
+def test_multilanguage_go_bazel_and_tests_discovery(tmp_path: Path) -> None:
+    """Go imports, Bazel BUILD deps, and non-Python tests surface cross-unit dependencies and test flags."""
+    from plugins.memory_and_epistemics.ontology_spider.repo_adapter import RepoOntologyModelSource
+
+    repo = tmp_path / "go_repo"
+    repo.mkdir()
+    (repo / "go.mod").write_text("module example.com/sandbox\n\ngo 1.22\n", encoding="utf-8")
+    (repo / "README.md").write_text("# Sandbox\nApplication kernel syscall isolation.\n", encoding="utf-8")
+
+    pkg = repo / "pkg"
+    pkg.mkdir()
+    (pkg / "sentry.go").write_text("package pkg\n", encoding="utf-8")
+    (pkg / "sentry_test.go").write_text("package pkg\n", encoding="utf-8")
+
+    runsc = repo / "runsc"
+    runsc.mkdir()
+    (runsc / "boot.go").write_text(
+        'package runsc\n\nimport (\n\t"fmt"\n\t"example.com/sandbox/pkg"\n)\n',
+        encoding="utf-8",
+    )
+
+    model = RepoOntologyModelSource(repo).load()
+    assert model.entities["pkg"].attributes["has_tests"] is True
+    assert model.entities["pkg"].attributes["primary_language"] == "go"
+    assert model.entities["runsc"].attributes["primary_language"] == "go"
+    edges = {(a.relation.subject, a.relation.object) for a in model.query(predicate="depends_on_project")}
+    assert ("runsc", "pkg") in edges
+
+
+@skip_if_no_engine
+def test_portfolio_analysis_and_runner_repo_mode(tmp_path: Path) -> None:
+    """Portfolio analysis expands nested monorepos and CLI runner supports --repo + --query."""
+    import subprocess
+    import sys
+
+    portfolio = tmp_path / "Portfolio"
+    outer, vault = _create_research_monorepo(tmp_path / "sub")
+    r1 = portfolio / "alpha-kernel"
+    (r1 / ".git").mkdir(parents=True)
+    (r1 / "go.mod").write_text("module example.com/alpha\n", encoding="utf-8")
+    (r1 / "core.go").write_text("package main\n", encoding="utf-8")
+    (r1 / "core_test.go").write_text("package main\n", encoding="utf-8")
+
+    # Nested monorepo inside portfolio
+    mono = portfolio / "research-mono" / "research-mono"
+    for p in ("proj_x", "proj_y"):
+        pd = mono / p
+        pd.mkdir(parents=True)
+        (pd / "README.md").write_text(f"# {p}\nhttps://arxiv.org/abs/2402.00001\n", encoding="utf-8")
+        (pd / "mod.py").write_text("import jax\n", encoding="utf-8")
+        (pd / "mod_test.py").write_text("def test_x(): pass\n", encoding="utf-8")
+
+    svc = OntologySpiderKernelService()
+    port_report = svc.analyze_portfolio(portfolio, vault_dir=vault, max_depth=3, max_files_per_unit=30)
+    assert port_report.repos_count == 2
+    assert port_report.total_projects_count >= 3
+    assert any("proj_x" in u or "alpha_kernel" in u or "alpha-kernel" in u for u in port_report.top_unlearned_targets)
+
+    runner_path = Path(".agents/skills/ontology-spider/scripts/ontology_spider_runner.py")
+    proc = subprocess.run(
+        [
+            sys.executable,
+            str(runner_path),
+            "--repo",
+            str(outer),
+            "--vault",
+            str(vault),
+            "--query",
+            "query count recommend research_project [has_tests=true, harness_learned=false]",
+        ],
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        check=True,
+    )
+    payload = json.loads(proc.stdout)
+    assert payload["repository"]["projects_count"] == 6
+    assert payload["query"]["answers"][0]["value"] >= 1
+
+
+@skip_if_no_engine
+def test_auditor_and_triad_consume_ontology_summary(tmp_path: Path) -> None:
+    """DefaultDeepRepoAuditorService and RepoTriadPipelineEngine ground KI candidates in ontology findings."""
+    from harness.services.repo_triad_forge import KiCandidateData
+    from plugins.software_engineering.repo_triad_forge.main import plugin as triad_plugin
+
+    outer, _vault = _create_research_monorepo(tmp_path)
+    auditor = DefaultDeepRepoAuditorService()
+    report = auditor.audit_repo(outer)
+    cands = auditor.extract_ki_candidates(report)
+    assert len(cands) == 4
+    joined_evidence = " ".join(" ".join(c.get("evidence", [])) for c in cands)
+    assert "proj_b" in joined_evidence or "proj_a" in joined_evidence
+
+    triad_kis = triad_plugin.extract_kis(str(outer))
+    assert any(isinstance(k, KiCandidateData) and ("proj_b" in k.id or "ontology" in k.id) for k in triad_kis)

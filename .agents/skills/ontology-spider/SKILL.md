@@ -64,6 +64,8 @@ print(audit.status, len(audit.unverified_entity_ids), audit.top_discriminating_a
 ```bash
 python .agents/skills/ontology-spider/scripts/ontology_spider_runner.py --vault .harness/knowledge --audit-epistemics
 python .agents/skills/ontology-spider/scripts/ontology_spider_runner.py --vault .harness/knowledge --query "query count ancestors of ki_5d_complexity_baseline" --rank-entropy
+python .agents/skills/ontology-spider/scripts/ontology_spider_runner.py --repo <repo_path> --vault .harness/knowledge --query "query recommend research_project [has_tests=true, harness_learned=false]"
+python .agents/skills/ontology-spider/scripts/ontology_spider_runner.py --repo <portfolio_root> --portfolio --vault .harness/knowledge
 ```
 
 ---
