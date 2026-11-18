@@ -61,6 +61,7 @@
   },
   "phase_4": {
     "candidates_count": 127,
+    "human_selection_mode": "human_shortlists",
     "top_5_targets": [
       "poem",
       "tunas",
@@ -85,14 +86,14 @@
         "sum_domain_gap": 281.38
       },
       "random_5": {
-        "overlap_at_5": 0,
+        "overlap_at_5": 1,
         "distinct_domains": 3,
         "sum_domain_gap": 288.12
       },
       "human_picks": {
         "overlap_at_5": 5,
-        "distinct_domains": 4,
-        "sum_domain_gap": 191.25
+        "distinct_domains": 5,
+        "sum_domain_gap": 350.12
       }
     }
   },

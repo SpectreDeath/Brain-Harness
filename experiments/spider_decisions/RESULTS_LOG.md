@@ -93,3 +93,9 @@ Template for per-phase entries:
 - Key metric(s): Ranked 127 grm candidates; selection_mode=human_shortlists (5 domain shortlists of 8, seed=2026111841); human_picks=[dp_sgd_clipping, smart_eval, perturbations, norml, psycholab] (5 distinct domains, sum_domain_gap=350.12); overlap@5: spider_composite=0, largest_5=0, most_tests_5=0, random_5=1 (dp_sgd_clipping); spider_composite top-5=[poem, tunas, t5_closed_book_qa, saccader, tf3d] (2 distinct domains, sum_domain_gap=709.00); ruff check/format clean; 18/18 pytest passed.
 - Finding(s): Stratified 5-domain shortlists raised human sum_domain_gap from Run 1's random proxy (191.25, 4 domains) to 350.12 (5 domains), outperforming all naive single-axis baselines (largest_5=297.12, random_5=288.12, most_tests_5=281.38). However, spider_composite still covers >2.0x more gap (709.00 vs 350.12) by concentrating 4/5 picks in vision_and_3d_project, and even with poem/saccader on Shortlist 5, human curiosity selected smaller projects (psycholab, smart_eval, dp_sgd_clipping).
 - Follow-ups: Refresh Phase 12 headline_metrics.json and REPORT.md.
+
+## Phase 12 — Final Report & Recommendations (Run 2 — Report Refresh) (2026-11-18T21:46:25+00:00)
+- Outcome: PASS
+- Key metric(s): All 13 phases (81/81 checkboxes) complete; headline_metrics.json refreshed (phase_4 human_selection_mode=human_shortlists, sum_domain_gap=350.12 across 5 domains); ruff check . passed; 26 experiment files formatted; 18/18 pytest passed in 17.55s.
+- Finding(s): Updated experiments/spider_decisions/REPORT.md and results/p12/headline_metrics.json to replace Run 1's Phase 4 random proxy with real human shortlist selections while keeping all other phase metrics intact.
+- Follow-ups: Local commits only on main; awaiting user confirmation before pushing.

@@ -82,6 +82,7 @@ def main() -> int:
         },
         "phase_4": {
             "candidates_count": p04_rt["candidate_count"],
+            "human_selection_mode": p04_rt.get("human_selection_mode", "unknown"),
             "top_5_targets": [r["unit_id"] for r in p04_rt["top_5"]],
             "methods": {
                 k: {
