@@ -1,0 +1,63 @@
+{
+  "id": "ki_airllm_chunked_vocab_cross_entropy",
+  "title": "AirLLM Fused Chunked Linear Cross-Entropy Without [N, vocab] Logit Materialization",
+  "category": "machine_learning",
+  "schema_version": "1.0.0",
+  "source_target": "https://github.com/lyogavin/airllm",
+  "detected_format": "git_repository",
+  "created_at": "2026-11-18T14:28:00Z",
+  "author": "ontology-spider-and-rea-learning-wave",
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "tags": [
+    "airllm",
+    "chunked_ce",
+    "cross_entropy",
+    "vram_optimization",
+    "autograd",
+    "large_vocab"
+  ],
+  "anchors": {
+    "repo": "https://github.com/lyogavin/airllm",
+    "commit": "af3c212c52ebecad95f0d25eb2595e82988d0cdd",
+    "subproject": "air_llm",
+    "rea_evidence_id": "ev:1f13936c4d83cd5b499418b7333c803a215101191766090739eafd09adf9787b"
+  },
+  "edges": [
+    {
+      "type": "distilled_from",
+      "target": "https://github.com/lyogavin/airllm",
+      "target_kind": "external_repo",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "lyogavin/airllm chunked_ce.py at af3c212c52ebecad95f0d25eb2595e82988d0cdd; verified by REA pyc_function extraction (_compute_device, _ChunkedCE, chunked_linear_cross_entropy)"
+    },
+    {
+      "type": "related_to",
+      "target": "ki_airllm_layerwise_streaming_and_moe_expert_offload",
+      "target_kind": "knowledge_item",
+      "derived": false,
+      "confidence": 0.95,
+      "description": "Enables under-6GB fine-tuning alongside layer-wise frozen weight streaming"
+    }
+  ],
+  "isnad": {
+    "status": "VERIFIED",
+    "source_repo": "https://github.com/lyogavin/airllm",
+    "commit": "af3c212c52ebecad95f0d25eb2595e82988d0cdd",
+    "verified_at": "2026-11-18T14:28:00Z",
+    "claims": [
+      {
+        "assertion": "_ChunkedCE sweeps lm_head weight slices [start:end] in chunks of chunk_size=4096 (even from CPU host weight tensors) accumulating float32 log-sum-exp partition constants via torch.logaddexp and target logits without allocating the full [N, vocab] logits matrix, then recomputes chunks in backward().",
+        "file": "air_llm/airllm/chunked_ce.py",
+        "lines": "L1-L90",
+        "sha256_hash": "0e45c9484af4a6840fe0195a14693122f682278c59cd381a5df1a5fa03190960",
+        "verified": true
+      }
+    ]
+  },
+  "distilled_learning": "Avoid OOM spikes from multi-hundred-thousand-token vocabularies by streaming lm_head projections in bounded chunks (4096 rows) with running float32 logaddexp normalization constants and chunked gradient recomputation."
+}

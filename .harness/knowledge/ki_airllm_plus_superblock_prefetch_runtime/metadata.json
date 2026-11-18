@@ -1,0 +1,76 @@
+{
+  "id": "ki_airllm_plus_superblock_prefetch_runtime",
+  "title": "AirLLM++ Super-Block Sequential Packing, Offset-Indexed Plans & Depth-Pipelined Prefetch Runtime",
+  "category": "infrastructure_and_runtime",
+  "schema_version": "1.0.0",
+  "source_target": "https://github.com/howardleegeek/airllm-plus",
+  "detected_format": "git_repository",
+  "created_at": "2026-11-18T14:28:00Z",
+  "author": "ontology-spider-and-rea-learning-wave",
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "tags": [
+    "airllm-plus",
+    "superblock_residency",
+    "prefetch_pipeline",
+    "lru_cache",
+    "sequential_io",
+    "byte_offset_index"
+  ],
+  "anchors": {
+    "repo": "https://github.com/howardleegeek/airllm-plus",
+    "commit": "2a9f04035d80abf43fe7579673d08947c49080f1",
+    "rea_evidence_id": "ev:8921b8bbf5f38907e3292fc3fceab2e7e20b9fc95b1af9bf0abd5b6f180a1e77"
+  },
+  "edges": [
+    {
+      "type": "distilled_from",
+      "target": "https://github.com/howardleegeek/airllm-plus",
+      "target_kind": "external_repo",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "howardleegeek/airllm-plus at commit 2a9f04035d80abf43fe7579673d08947c49080f1; surfaced via Ontology-Spider dependency edge bench->runtime and REA .pyc inspection"
+    },
+    {
+      "type": "related_to",
+      "target": "ki_airllm_layerwise_streaming_and_moe_expert_offload",
+      "target_kind": "knowledge_item",
+      "derived": false,
+      "confidence": 0.94,
+      "description": "Batches single-layer reads from AirLLM into multi-layer contiguous blocks with producer-consumer prefetch queues"
+    }
+  ],
+  "isnad": {
+    "status": "VERIFIED",
+    "source_repo": "https://github.com/howardleegeek/airllm-plus",
+    "commit": "2a9f04035d80abf43fe7579673d08947c49080f1",
+    "verified_at": "2026-11-18T14:28:00Z",
+    "claims": [
+      {
+        "assertion": "pack_blocks.py groups per-layer tensor shards (.safetensors/.bin/.pt/.onnx) into contiguous multi-layer super-blocks (default layers_per_block=4) recorded with TensorMeta byte offsets/sizes in index.json so runtime/store.py performs sequential reads or O(1) f.seek(offset)/f.read(size) range reads.",
+        "file": "pack/pack_blocks.py",
+        "lines": "L1-L110",
+        "sha256_hash": "003bf91c39ef2f41c02a208c55fde3511324e962d0a8ee9e0fa6b998e5a5df6e",
+        "verified": true
+      },
+      {
+        "assertion": "runtime/executor.py coordinates Plan (create_plan), BufferedBlockStore, depth-bounded producer-consumer Prefetcher (queue.Queue(maxsize=depth) daemon worker), and thread-safe OrderedDict BlockCache enforcing both max_blocks and max_size_bytes eviction.",
+        "file": "runtime/executor.py",
+        "lines": "L1-L120",
+        "sha256_hash": "f75ee6ce61c4bebef82731ea4e7e27eb4c44c32e63bcb72e1797e136aafe5d95",
+        "verified": true
+      },
+      {
+        "assertion": "runtime/cache.py implements thread-safe OrderedDict LRU block eviction bounded simultaneously by entry count and total byte size, skipping oversized entries cleanly.",
+        "file": "runtime/cache.py",
+        "lines": "L1-L95",
+        "sha256_hash": "ce45c0752b65d59068a92d99a3d6bb6d4bff2f0c72c5595bf8a4d51d8076dc16",
+        "verified": true
+      }
+    ]
+  },
+  "distilled_learning": "Replace fragmented per-layer disk reads with contiguous super-block packing indexed by (file, offset, bytes), and overlap I/O with execution using a depth-bounded producer-consumer prefetcher plus count-and-byte-capped LRU cache."
+}

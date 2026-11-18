@@ -1,0 +1,71 @@
+{
+  "id": "ki_airllm_layerwise_streaming_and_moe_expert_offload",
+  "title": "AirLLM Layer-Wise Disk Offloading, Per-Expert MoE Streaming & On-GPU Packed Decompression",
+  "category": "machine_learning",
+  "schema_version": "1.0.0",
+  "source_target": "https://github.com/lyogavin/airllm",
+  "detected_format": "git_repository",
+  "created_at": "2026-11-18T14:28:00Z",
+  "author": "ontology-spider-and-rea-learning-wave",
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "tags": [
+    "airllm",
+    "air_llm",
+    "layerwise_offloading",
+    "moe_streaming",
+    "mxfp4",
+    "pinned_memory",
+    "meta_device"
+  ],
+  "anchors": {
+    "repo": "https://github.com/lyogavin/airllm",
+    "commit": "af3c212c52ebecad95f0d25eb2595e82988d0cdd",
+    "subproject": "air_llm",
+    "rea_evidence_id": "ev:653cd6965569ee6db6a850c0d0fdc9b3ffe73d8c2c4cc14c6a660e48fa07aaee"
+  },
+  "edges": [
+    {
+      "type": "distilled_from",
+      "target": "https://github.com/lyogavin/airllm",
+      "target_kind": "external_repo",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "lyogavin/airllm at commit af3c212c52ebecad95f0d25eb2595e82988d0cdd; surfaced by Ontology-Spider and inspected via REA pyc_code facet"
+    },
+    {
+      "type": "related_to",
+      "target": "ki_google_research_scaling_transformer_inference",
+      "target_kind": "knowledge_item",
+      "derived": false,
+      "confidence": 0.9,
+      "description": "Complements TPU/XLA weight-gathered transformer inference partitioning with single-GPU disk-streaming bounds"
+    }
+  ],
+  "isnad": {
+    "status": "VERIFIED",
+    "source_repo": "https://github.com/lyogavin/airllm",
+    "commit": "af3c212c52ebecad95f0d25eb2595e82988d0cdd",
+    "verified_at": "2026-11-18T14:28:00Z",
+    "claims": [
+      {
+        "assertion": "AirLLMBaseModel instantiates Hugging Face models on the meta device (init_empty_weights), strips compressed-tensors model-wide ct_decompress_hook before forward, and decompresses packed MXFP4 weight_packed/weight_scale tensors on-GPU per layer after PCIe transfer (4x less PCIe traffic), while capping host pin_memory() at max_pinned_layer_bytes = 2 GiB to prevent 2-in-flight MoE layers from locking ~34 GiB RAM.",
+        "file": "air_llm/airllm/airllm_base.py",
+        "lines": "L55-L535",
+        "sha256_hash": "aab819f954876b946f3be73bc7600bfc2c138aefb775510d909321e64798858b",
+        "verified": true
+      },
+      {
+        "assertion": "AirLLMKimiK3 overrides layer_names_dict with expert_prefix (block_sparse_moe.experts) and small resident submodules so only routed sparse MoE experts (~16 of 896 per token, ~1 GB vs ~55 GB full layer) are streamed on demand.",
+        "file": "air_llm/airllm/airllm_kimi_k3.py",
+        "lines": "L1-L33",
+        "sha256_hash": "dd69016f41e1aad8884d8e744d67aa3d7f9d8dc8553f624eedf5b452478e4e09",
+        "verified": true
+      }
+    ]
+  },
+  "distilled_learning": "When streaming giant transformer/MoE checkpoints within tight VRAM budgets, keep packed weights compressed across PCIe and decompress on-device per layer, stream individual active MoE experts instead of full layers, and bound pinned host memory per in-flight layer (<= 2 GiB) with pageable fallback."
+}
