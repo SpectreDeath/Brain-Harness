@@ -1,241 +1,5 @@
 [
   {
-    "id": "ki_solla_dmbok_governance_decision_rights",
-    "raw_id": "ki_solla_dmbok_governance_decision_rights",
-    "title": "Data Governance, Stewardship Roles, and RACI Decision Rights",
-    "category": "data_engineering",
-    "in_degree": 2,
-    "tag_count": 8,
-    "tags": [
-      "data_governance",
-      "data_stewardship",
-      "data_ownership",
-      "decision_rights",
-      "raci_matrix",
-      "data_classification",
-      "solla",
-      "dmbok"
-    ],
-    "pointing_kis": [
-      "ki_solla_contract_first_medallion_lakehouse",
-      "ki_solla_dikw_data_asset_continuum"
-    ],
-    "incoming_edges": [
-      {
-        "subject": "ki_solla_contract_first_medallion_lakehouse",
-        "predicate": "same_domain"
-      },
-      {
-        "subject": "ki_solla_dikw_data_asset_continuum",
-        "predicate": "same_domain"
-      }
-    ],
-    "isnad_count": 0,
-    "verified_isnad_count": 0,
-    "rank": 1
-  },
-  {
-    "id": "ki_njoku_uncertainty_aware_systems",
-    "raw_id": "ki_njoku_uncertainty_aware_systems",
-    "title": "Deterministic 3-Layer Uncertainty Interception & Overconfidence Mitigation",
-    "category": "agent_orchestration",
-    "in_degree": 2,
-    "tag_count": 7,
-    "tags": [
-      "uncertainty",
-      "rag",
-      "logit_analysis",
-      "boundary_detection",
-      "hallucination_prevention",
-      "hitl",
-      "njoku"
-    ],
-    "pointing_kis": [
-      "ki_google_research_cisc_confidence_voting",
-      "ki_google_research_uq_benchmark_2019_calibration_shift"
-    ],
-    "incoming_edges": [
-      {
-        "subject": "ki_google_research_cisc_confidence_voting",
-        "predicate": "same_domain"
-      },
-      {
-        "subject": "ki_google_research_uq_benchmark_2019_calibration_shift",
-        "predicate": "same_domain"
-      }
-    ],
-    "isnad_count": 0,
-    "verified_isnad_count": 0,
-    "rank": 2
-  },
-  {
-    "id": "ki_agent_skills_progressive_disclosure",
-    "raw_id": "ki_agent_skills_progressive_disclosure",
-    "title": "Agent Skills Progressive Disclosure & Loose Constraint Architecture",
-    "category": "agent_orchestration",
-    "in_degree": 1,
-    "tag_count": 7,
-    "tags": [
-      "agent_skills",
-      "progressive_disclosure",
-      "loose_constraints",
-      "portable_plans",
-      "react_vs_graphs",
-      "warfield",
-      "menshykh"
-    ],
-    "pointing_kis": [
-      "ki_20260913_pr_lens_eli5_pedagogy"
-    ],
-    "incoming_edges": [
-      {
-        "subject": "ki_20260913_pr_lens_eli5_pedagogy",
-        "predicate": "same_domain"
-      }
-    ],
-    "isnad_count": 0,
-    "verified_isnad_count": 0,
-    "rank": 3
-  },
-  {
-    "id": "ki_self_20260907_02",
-    "raw_id": "ki_self_20260907_02",
-    "title": "Windows PowerShell Scratch Script Execution & JSON Null-Field Salvage",
-    "category": "infrastructure_and_runtime/platform",
-    "in_degree": 1,
-    "tag_count": 7,
-    "tags": [
-      "endogenous_memory",
-      "self_reflection",
-      "windows",
-      "powershell",
-      "json",
-      "salvage",
-      "book-to-skill-forge"
-    ],
-    "pointing_kis": [
-      "ki_20260823_03"
-    ],
-    "incoming_edges": [
-      {
-        "subject": "ki_20260823_03",
-        "predicate": "same_domain"
-      }
-    ],
-    "isnad_count": 1,
-    "verified_isnad_count": 0,
-    "rank": 4
-  },
-  {
-    "id": "ki_self_20260907_03",
-    "raw_id": "ki_self_20260907_03",
-    "title": "Click CLI Group Single-Source Co-Registration Invariant",
-    "category": "developer_experience/architecture",
-    "in_degree": 1,
-    "tag_count": 7,
-    "tags": [
-      "endogenous_memory",
-      "self_reflection",
-      "click",
-      "cli",
-      "ioc",
-      "commands",
-      "registration"
-    ],
-    "pointing_kis": [
-      "ki_cli_decomposition_pattern"
-    ],
-    "incoming_edges": [
-      {
-        "subject": "ki_cli_decomposition_pattern",
-        "predicate": "same_domain"
-      }
-    ],
-    "isnad_count": 1,
-    "verified_isnad_count": 0,
-    "rank": 5
-  },
-  {
-    "id": "ki_solla_dikw_data_asset_continuum",
-    "raw_id": "ki_solla_dikw_data_asset_continuum",
-    "title": "The DIKW Pyramid & Data Lifecycle Asset Progression",
-    "category": "data_engineering",
-    "in_degree": 1,
-    "tag_count": 6,
-    "tags": [
-      "data_management",
-      "dikw_pyramid",
-      "data_asset",
-      "data_lifecycle",
-      "solla",
-      "dmbok"
-    ],
-    "pointing_kis": [
-      "ki_solla_contract_first_medallion_lakehouse"
-    ],
-    "incoming_edges": [
-      {
-        "subject": "ki_solla_contract_first_medallion_lakehouse",
-        "predicate": "same_domain"
-      }
-    ],
-    "isnad_count": 0,
-    "verified_isnad_count": 0,
-    "rank": 6
-  },
-  {
-    "id": "ki_20261014_70_cycle_deepening_corpus",
-    "raw_id": "ki_20261014_70_cycle_deepening_corpus",
-    "title": "Empirical 70-Cycle Architecture Deepening and Monolith Decomposition Corpus",
-    "category": "developer_experience/architecture",
-    "in_degree": 1,
-    "tag_count": 4,
-    "tags": [
-      "architecture_deepening",
-      "decomposition",
-      "monolith",
-      "slotted_models"
-    ],
-    "pointing_kis": [
-      "ki_deepening_cycle_history"
-    ],
-    "incoming_edges": [
-      {
-        "subject": "ki_deepening_cycle_history",
-        "predicate": "same_domain"
-      }
-    ],
-    "isnad_count": 3,
-    "verified_isnad_count": 0,
-    "rank": 7
-  },
-  {
-    "id": "ki_google_repos_bridge",
-    "raw_id": "ki_google_repos_bridge",
-    "title": "Google Multi-Repository Architectural Bridge & Plugin Suite",
-    "category": "developer_experience",
-    "in_degree": 1,
-    "tag_count": 4,
-    "tags": [
-      "google_repos",
-      "bridge",
-      "plugin_suite",
-      "architecture"
-    ],
-    "pointing_kis": [
-      "ki_google_research_imp_multimodal_config_registry"
-    ],
-    "incoming_edges": [
-      {
-        "subject": "ki_google_research_imp_multimodal_config_registry",
-        "predicate": "related_to"
-      }
-    ],
-    "isnad_count": 0,
-    "verified_isnad_count": 0,
-    "rank": 8
-  },
-  {
     "id": "ki_google_agent_skills_enterprise_evals",
     "raw_id": "ki_google_agent_skills_enterprise_evals",
     "title": "Google Enterprise Agent Skills: Continuous Evals & Product Governance",
@@ -256,7 +20,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 9
+    "rank": 1
   },
   {
     "id": "ki_self_20260905_08",
@@ -279,7 +43,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 10
+    "rank": 2
   },
   {
     "id": "ki_solla_contract_first_medallion_lakehouse",
@@ -302,7 +66,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 11
+    "rank": 3
   },
   {
     "id": "ki_agent_skills_runtime_security_middleware",
@@ -324,7 +88,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 12
+    "rank": 4
   },
   {
     "id": "ki_hf_autoresearch_multi_worker_lab",
@@ -346,7 +110,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 13
+    "rank": 5
   },
   {
     "id": "ki_hf_fastmcp_dynamic_tool_protocol",
@@ -368,7 +132,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 14
+    "rank": 6
   },
   {
     "id": "ki_self_20260904_scratch_01",
@@ -390,7 +154,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 15
+    "rank": 7
   },
   {
     "id": "ki_self_20260907_01",
@@ -412,7 +176,7 @@
     "incoming_edges": [],
     "isnad_count": 1,
     "verified_isnad_count": 0,
-    "rank": 16
+    "rank": 8
   },
   {
     "id": "ki_self_20260907_04",
@@ -434,7 +198,7 @@
     "incoming_edges": [],
     "isnad_count": 1,
     "verified_isnad_count": 0,
-    "rank": 17
+    "rank": 9
   },
   {
     "id": "ki_aslanyan_four_level_ladder",
@@ -455,7 +219,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 18
+    "rank": 10
   },
   {
     "id": "ki_epistemic_graph_traversal_evidence_boundary",
@@ -476,7 +240,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 19
+    "rank": 11
   },
   {
     "id": "ki_hf_lifecycle_hooks_guardrails_dashboard",
@@ -497,7 +261,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 20
+    "rank": 12
   },
   {
     "id": "ki_hf_nano_harness_react_sandboxing",
@@ -518,7 +282,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 21
+    "rank": 13
   },
   {
     "id": "ki_hf_subagent_topology_patterns",
@@ -539,7 +303,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 22
+    "rank": 14
   },
   {
     "id": "ki_njoku_dynamic_model_routing",
@@ -560,7 +324,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 23
+    "rank": 15
   },
   {
     "id": "ki_self_20260902_01",
@@ -581,7 +345,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 24
+    "rank": 16
   },
   {
     "id": "ki_self_20260902_02",
@@ -602,7 +366,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 25
+    "rank": 17
   },
   {
     "id": "ki_self_20260902_04",
@@ -623,7 +387,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 26
+    "rank": 18
   },
   {
     "id": "ki_self_20260904_scratch_02",
@@ -644,7 +408,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 27
+    "rank": 19
   },
   {
     "id": "ki_self_20260904_scratch_03",
@@ -665,7 +429,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 28
+    "rank": 20
   },
   {
     "id": "ki_self_20260905_01",
@@ -686,7 +450,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 29
+    "rank": 21
   },
   {
     "id": "ki_self_20260905_02",
@@ -707,7 +471,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 30
+    "rank": 22
   },
   {
     "id": "ki_self_20260905_03",
@@ -728,7 +492,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 31
+    "rank": 23
   },
   {
     "id": "ki_self_20260905_04",
@@ -749,7 +513,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 32
+    "rank": 24
   },
   {
     "id": "ki_self_20260905_05",
@@ -770,7 +534,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 33
+    "rank": 25
   },
   {
     "id": "ki_self_20260905_06",
@@ -791,7 +555,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 34
+    "rank": 26
   },
   {
     "id": "ki_self_20260905_07",
@@ -812,7 +576,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 35
+    "rank": 27
   },
   {
     "id": "ki_solla_six_dimension_quality_observability",
@@ -833,7 +597,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 36
+    "rank": 28
   },
   {
     "id": "ki_20261023_rea_01",
@@ -853,7 +617,7 @@
     "incoming_edges": [],
     "isnad_count": 1,
     "verified_isnad_count": 0,
-    "rank": 37
+    "rank": 29
   },
   {
     "id": "ki_20261023_rea_02",
@@ -873,7 +637,7 @@
     "incoming_edges": [],
     "isnad_count": 1,
     "verified_isnad_count": 0,
-    "rank": 38
+    "rank": 30
   },
   {
     "id": "ki_20261023_rea_04",
@@ -893,7 +657,7 @@
     "incoming_edges": [],
     "isnad_count": 1,
     "verified_isnad_count": 0,
-    "rank": 39
+    "rank": 31
   },
   {
     "id": "ki_antigravity_001",
@@ -913,7 +677,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 40
+    "rank": 32
   },
   {
     "id": "ki_antigravity_002",
@@ -933,7 +697,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 41
+    "rank": 33
   },
   {
     "id": "ki_antigravity_003",
@@ -953,7 +717,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 42
+    "rank": 34
   },
   {
     "id": "ki_antigravity_004",
@@ -973,7 +737,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 43
+    "rank": 35
   },
   {
     "id": "ki_aslanyan_canonical_failures_antidotes",
@@ -993,7 +757,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 44
+    "rank": 36
   },
   {
     "id": "ki_aslanyan_sixty_agent_patterns",
@@ -1013,7 +777,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 45
+    "rank": 37
   },
   {
     "id": "ki_harness2_recursive_harnessing",
@@ -1033,7 +797,7 @@
     "incoming_edges": [],
     "isnad_count": 6,
     "verified_isnad_count": 0,
-    "rank": 46
+    "rank": 38
   },
   {
     "id": "ki_hermes_002",
@@ -1053,7 +817,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 47
+    "rank": 39
   },
   {
     "id": "ki_hermes_004",
@@ -1073,7 +837,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 48
+    "rank": 40
   },
   {
     "id": "ki_hf_context_engineering_six_layer_stack",
@@ -1093,7 +857,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 49
+    "rank": 41
   },
   {
     "id": "ki_hf_datasets_arrow_streaming",
@@ -1113,7 +877,7 @@
     "incoming_edges": [],
     "isnad_count": 4,
     "verified_isnad_count": 0,
-    "rank": 50
+    "rank": 42
   },
   {
     "id": "ki_ontological_engineering_gruber_criteria",
@@ -1133,7 +897,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 51
+    "rank": 43
   },
   {
     "id": "ki_paperless_ai_rag_sqlite_vec",
@@ -1153,7 +917,7 @@
     "incoming_edges": [],
     "isnad_count": 3,
     "verified_isnad_count": 0,
-    "rank": 52
+    "rank": 44
   },
   {
     "id": "ki_self_20260902_03",
@@ -1173,7 +937,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 53
+    "rank": 45
   },
   {
     "id": "ki_self_20260902_05",
@@ -1193,7 +957,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 54
+    "rank": 46
   },
   {
     "id": "ki_self_20260903_01",
@@ -1213,7 +977,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 55
+    "rank": 47
   },
   {
     "id": "ki_self_20260903_02",
@@ -1233,7 +997,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 56
+    "rank": 48
   },
   {
     "id": "ki_self_20260903_03",
@@ -1253,7 +1017,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 57
+    "rank": 49
   },
   {
     "id": "ki_20260922_tau_pi_agent_architecture",
@@ -1272,7 +1036,7 @@
     "incoming_edges": [],
     "isnad_count": 4,
     "verified_isnad_count": 0,
-    "rank": 58
+    "rank": 50
   },
   {
     "id": "ki_20261023_rea_03",
@@ -1291,7 +1055,7 @@
     "incoming_edges": [],
     "isnad_count": 1,
     "verified_isnad_count": 0,
-    "rank": 59
+    "rank": 51
   },
   {
     "id": "ki_5d_complexity_baseline",
@@ -1310,7 +1074,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 60
+    "rank": 52
   },
   {
     "id": "ki_agentwikis_governance",
@@ -1329,7 +1093,7 @@
     "incoming_edges": [],
     "isnad_count": 4,
     "verified_isnad_count": 0,
-    "rank": 61
+    "rank": 53
   },
   {
     "id": "ki_chatbotx_dynamic_mcp_orpc",
@@ -1348,7 +1112,7 @@
     "incoming_edges": [],
     "isnad_count": 3,
     "verified_isnad_count": 0,
-    "rank": 62
+    "rank": 54
   },
   {
     "id": "ki_chatbotx_isolated_vm_execution",
@@ -1367,7 +1131,7 @@
     "incoming_edges": [],
     "isnad_count": 2,
     "verified_isnad_count": 0,
-    "rank": 63
+    "rank": 55
   },
   {
     "id": "ki_chatbotx_omnichannel_messaging_bus",
@@ -1386,7 +1150,7 @@
     "incoming_edges": [],
     "isnad_count": 2,
     "verified_isnad_count": 0,
-    "rank": 64
+    "rank": 56
   },
   {
     "id": "ki_cli_decomposition_pattern",
@@ -1405,7 +1169,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 65
+    "rank": 57
   },
   {
     "id": "ki_deepening_cycle_history",
@@ -1424,7 +1188,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 66
+    "rank": 58
   },
   {
     "id": "ki_file_size_hotspots",
@@ -1443,7 +1207,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 67
+    "rank": 59
   },
   {
     "id": "ki_garf_reporting_engine",
@@ -1462,7 +1226,7 @@
     "incoming_edges": [],
     "isnad_count": 4,
     "verified_isnad_count": 0,
-    "rank": 68
+    "rank": 60
   },
   {
     "id": "ki_gradio_app_architect",
@@ -1481,7 +1245,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 69
+    "rank": 61
   },
   {
     "id": "ki_guarino_precision_coverage_tradeoff",
@@ -1500,7 +1264,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 70
+    "rank": 62
   },
   {
     "id": "ki_hermes_001",
@@ -1519,7 +1283,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 71
+    "rank": 63
   },
   {
     "id": "ki_hermes_003",
@@ -1538,7 +1302,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 72
+    "rank": 64
   },
   {
     "id": "ki_omarchy_quattro_bridge",
@@ -1557,7 +1321,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 73
+    "rank": 65
   },
   {
     "id": "ki_paperless_ngx_architecture",
@@ -1576,7 +1340,7 @@
     "incoming_edges": [],
     "isnad_count": 3,
     "verified_isnad_count": 0,
-    "rank": 74
+    "rank": 66
   },
   {
     "id": "ki_responsible_ai_prototyping",
@@ -1595,7 +1359,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 75
+    "rank": 67
   },
   {
     "id": "ki_topology_map",
@@ -1614,7 +1378,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 76
+    "rank": 68
   },
   {
     "id": "ki_rea_facet_availability_semantics",
@@ -1632,7 +1396,7 @@
     "incoming_edges": [],
     "isnad_count": 3,
     "verified_isnad_count": 0,
-    "rank": 77
+    "rank": 69
   },
   {
     "id": "ki_rea_reconstruction_obligations",
@@ -1650,6 +1414,6 @@
     "incoming_edges": [],
     "isnad_count": 3,
     "verified_isnad_count": 0,
-    "rank": 78
+    "rank": 70
   }
 ]

@@ -212,7 +212,24 @@
   "schema_version": "1.0.0",
   "category": "agent_orchestration",
   "anchors": {},
-  "edges": [],
+  "edges": [
+    {
+      "type": "related_to",
+      "target": "ki_self_20260827_01",
+      "target_kind": "knowledge_item",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Intentional distinct reflection sibling (spider follow-up Phase 5 triage)"
+    },
+    {
+      "type": "related_to",
+      "target": "ki_self_20260828_02",
+      "target_kind": "knowledge_item",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Intentional distinct reflection sibling (spider follow-up Phase 5 triage)"
+    }
+  ],
   "retrieval_count": 0,
   "success_count": 0,
   "last_retrieved_at": null,

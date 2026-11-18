@@ -58,7 +58,7 @@ A 🧑 **HUMAN CHECKPOINT** must never present the user with a single list longe
 - [x] **Phase 2** — P1: Evidence-grounded CISC swarm voting & ASPEST confidence-band escalation
 - [x] **Phase 3** — P1: Break `ui <-> commands` cycle & `services/` upward leaks (zero kernel edits)
 - [x] **Phase 4** — P1 (Arch): Decouple `kernel/runtime/` composition root & verify SCC reduction
-- [ ] **Phase 5** — P2: Vault hygiene — verify top-8 central unverified KIs & triage 12 duplicate pairs
+- [x] **Phase 5** — P2: Vault hygiene — verify top-8 central unverified KIs & triage 12 duplicate pairs
 - [ ] **Phase 6** — P2: Ingest Next-5 research targets (`dp_sgd_clipping`, `smart_eval`, `perturbations`, `norml`, `psycholab`)
 - [ ] **Phase 7** — P3: Polish `ontology_spider` — zero residual false bridges, reverse blast radius & uncapped self-scan
 - [ ] **Phase 8** — P4: Dual-capped LRU eviction & bounded prefetch for lazily-staged plugin artifacts
@@ -251,7 +251,7 @@ Decoupled composition root outside `src/harness/kernel/`, updated import-boundar
 **Depends on:** Phase 1. **Model tier:** medium; **requires human checkpoints before any `.harness/knowledge/**` edit**.
 
 ### Steps
-- [ ] **5.1** Inspect `.harness/knowledge/<ki_id>/{metadata.json,summary.md}` and cite primary sources/artifacts (`epistemic-isnad-audit` discipline) to draft verifiable `isnad` claim patches for the **top 8 unverified KIs** in `results/p02/unverified_priority.md`:
+- [x] **5.1** Inspect `.harness/knowledge/<ki_id>/{metadata.json,summary.md}` and cite primary sources/artifacts (`epistemic-isnad-audit` discipline) to draft verifiable `isnad` claim patches for the **top 8 unverified KIs** in `results/p02/unverified_priority.md`:
   1. `ki_solla_dmbok_governance_decision_rights`
   2. `ki_njoku_uncertainty_aware_systems`
   3. `ki_agent_skills_progressive_disclosure`
@@ -261,11 +261,11 @@ Decoupled composition root outside `src/harness/kernel/`, updated import-boundar
   7. `ki_20261014_70_cycle_deepening_corpus`
   8. `ki_google_repos_bridge`
   *(Flag any claim whose primary file/source cannot be verified locally rather than fabricating hashes.)*
-- [ ] **5.2** 🧑 **HUMAN CHECKPOINT (1 batch of 8 `<= 8`)** — Present the 8 verification proposals (showing verified vs unverifiable claims per KI). Apply **only** user-approved updates to `.harness/knowledge/<ki_id>/metadata.json`.
-- [ ] **5.3** Inspect `metadata.json` + `summary.md` for all **12 duplicate candidate pairs** in `results/p02/duplicate_review_sheet.md` and draft a recommended action per pair: `supersede` (`status="SUPERSEDED"`, `superseded_by="..."`), `link_sibling` (add `related_to` / `same_domain` edge), or `keep`.
-- [ ] **5.4** 🧑 **HUMAN CHECKPOINT (2 batches of 6 pairs `<= 8`)** — Present Batch A (pairs 1–6) and Batch B (pairs 7–12). Apply **only** user-approved metadata updates (never delete files; preserve Rule 40).
-- [ ] **5.5** Refresh `results/snapshots/vault.json` and re-run `experiments/spider_decisions/p02_unverified_priority.py` and `experiments/spider_decisions/p02_duplicates.py`. Verify unverified count drops (`78 -> <= 70` if all 8 pass) and untriaged duplicate candidate count drops (`12 -> 0`).
-- [ ] **5.6** Run `pytest tests/test_service_storage_vault_integrity.py tests/test_track4_track5_vault_integrity.py -q`, append `ACTION_LOG.md`, local commit `feat(spider-followup): phase 5 vault verification and duplicate triage`.
+- [x] **5.2** 🧑 **HUMAN CHECKPOINT (1 batch of 8 `<= 8`)** — Present the 8 verification proposals (showing verified vs unverifiable claims per KI). Apply **only** user-approved updates to `.harness/knowledge/<ki_id>/metadata.json`.
+- [x] **5.3** Inspect `metadata.json` + `summary.md` for all **12 duplicate candidate pairs** in `results/p02/duplicate_review_sheet.md` and draft a recommended action per pair: `supersede` (`status="SUPERSEDED"`, `superseded_by="..."`), `link_sibling` (add `related_to` / `same_domain` edge), or `keep`.
+- [x] **5.4** 🧑 **HUMAN CHECKPOINT (2 batches of 6 pairs `<= 8`)** — Present Batch A (pairs 1–6) and Batch B (pairs 7–12). Apply **only** user-approved metadata updates (never delete files; preserve Rule 40).
+- [x] **5.5** Refresh `results/snapshots/vault.json` and re-run `experiments/spider_decisions/p02_unverified_priority.py` and `experiments/spider_decisions/p02_duplicates.py`. Verify unverified count drops (`78 -> <= 70` if all 8 pass) and untriaged duplicate candidate count drops (`12 -> 0`).
+- [x] **5.6** Run `pytest tests/test_service_storage_vault_integrity.py tests/test_track4_track5_vault_integrity.py -q`, append `ACTION_LOG.md`, local commit `feat(spider-followup): phase 5 vault verification and duplicate triage`.
 
 ### Outputs
 Updated metadata in `.harness/knowledge/*/metadata.json`, refreshed `results/p02/unverified_priority.{json,md}` and `duplicate_candidates.json`.

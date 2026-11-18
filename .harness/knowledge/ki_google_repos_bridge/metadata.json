@@ -126,7 +126,68 @@
       "description": null
     }
   ],
-  "isnad": {},
+  "isnad": {
+    "status": "VERIFIED",
+    "verified_at": "2026-11-18T23:26:59Z",
+    "claims": [
+      {
+        "assertion": "Scaffolded Google ecosystem plugin manifest verified on disk: plugins/agent_orchestration/google_adk_runtime/plugin.json.",
+        "file": "plugins/agent_orchestration/google_adk_runtime/plugin.json",
+        "lines": "L1-L106",
+        "sha256_hash": "3c9bb5b4381813e6e2335f76a19c67f42b7a516522ddeaddd317624fc1f49200",
+        "verified": true,
+        "verified_at": "2026-11-18T23:26:59Z"
+      },
+      {
+        "assertion": "Scaffolded Google ecosystem plugin manifest verified on disk: plugins/agent_orchestration/google_adk_optimizer/plugin.json.",
+        "file": "plugins/agent_orchestration/google_adk_optimizer/plugin.json",
+        "lines": "L1-L102",
+        "sha256_hash": "33df15cad1aed60b48a106652e2edb7ee8bb6fc53d7d3879278bcd3513d7e900",
+        "verified": true,
+        "verified_at": "2026-11-18T23:26:59Z"
+      },
+      {
+        "assertion": "Scaffolded Google ecosystem plugin manifest verified on disk: plugins/developer_tooling/google_adk_docs_navigator/plugin.json.",
+        "file": "plugins/developer_tooling/google_adk_docs_navigator/plugin.json",
+        "lines": "L1-L83",
+        "sha256_hash": "9157cdda1b80d7625706a9078064820071d608c1f751a554ac456cc031e1c5ed",
+        "verified": true,
+        "verified_at": "2026-11-18T23:26:59Z"
+      },
+      {
+        "assertion": "Scaffolded Google ecosystem plugin manifest verified on disk: plugins/developer_tooling/google_adk_web_bridge/plugin.json.",
+        "file": "plugins/developer_tooling/google_adk_web_bridge/plugin.json",
+        "lines": "L1-L77",
+        "sha256_hash": "d519fc711f7cd40a0032e0d53bf35e8185891e00548e328da040c6b161d94afe",
+        "verified": true,
+        "verified_at": "2026-11-18T23:26:59Z"
+      },
+      {
+        "assertion": "Scaffolded Google ecosystem plugin manifest verified on disk: plugins/software_engineering/google_styleguide_auditor/plugin.json.",
+        "file": "plugins/software_engineering/google_styleguide_auditor/plugin.json",
+        "lines": "L1-L75",
+        "sha256_hash": "ff701d0fbc36d76d3f7088bd77bb120ad21fec3154a3c47101961f846a2cab78",
+        "verified": true,
+        "verified_at": "2026-11-18T23:26:59Z"
+      },
+      {
+        "assertion": "Scaffolded Google ecosystem plugin manifest verified on disk: plugins/machine_learning/google_tunix_posttraining/plugin.json.",
+        "file": "plugins/machine_learning/google_tunix_posttraining/plugin.json",
+        "lines": "L1-L129",
+        "sha256_hash": "c0c7c2ea3a7fac20b0c7326cfca7ab296284dd5ab16d094e0f3839777c53aedf",
+        "verified": true,
+        "verified_at": "2026-11-18T23:26:59Z"
+      },
+      {
+        "assertion": "Scaffolded Google ecosystem plugin manifest verified on disk: plugins/software_engineering/perfetto_trace_processor/plugin.json.",
+        "file": "plugins/software_engineering/perfetto_trace_processor/plugin.json",
+        "lines": "L1-L97",
+        "sha256_hash": "ffeda50eaf272acf5002e34bec926a98f066f22af47aa516dcc3ab384527d5c7",
+        "verified": true,
+        "verified_at": "2026-11-18T23:26:59Z"
+      }
+    ]
+  },
   "retrieval_count": 0,
   "success_count": 0,
   "last_retrieved_at": null,

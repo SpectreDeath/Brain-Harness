@@ -31,7 +31,29 @@
       "description": null
     }
   ],
-  "isnad": {},
+  "isnad": {
+    "status": "VERIFIED",
+    "verified_at": "2026-11-18T23:26:59Z",
+    "source_origin": "Daniel Garcia Solla (freeCodeCamp) \u2014 locally implemented in Brain Harness",
+    "claims": [
+      {
+        "assertion": "Data-management-architect codifies progression across the DIKW pyramid into governed data products.",
+        "file": ".agents/skills/data-management-architect/SKILL.md",
+        "lines": "L1-L272",
+        "sha256_hash": "907eb60c071e4ff7330cb2b0bf952c7311b871bc8267aa34465d637b9d592d53",
+        "verified": true,
+        "verified_at": "2026-11-18T23:26:59Z"
+      },
+      {
+        "assertion": "DAMA-DMBOK quickref grounds raw data asset progression into curated information and knowledge layers.",
+        "file": ".agents/skills/data-management-architect/references/dama_dmbok_quickref.md",
+        "lines": "L1-L101",
+        "sha256_hash": "5471678aa50025c5409a90043d010603bb55e35c9741b7d5f9adc4616088cf3d",
+        "verified": true,
+        "verified_at": "2026-11-18T23:26:59Z"
+      }
+    ]
+  },
   "retrieval_count": 0,
   "success_count": 0,
   "last_retrieved_at": null,

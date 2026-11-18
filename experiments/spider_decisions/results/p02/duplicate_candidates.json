@@ -1,8 +1,9 @@
 {
   "total_kis_scanned": 377,
-  "candidate_count": 12,
-  "intentional_siblings_count": 0,
-  "candidates": [
+  "candidate_count": 0,
+  "intentional_siblings_count": 12,
+  "candidates": [],
+  "intentional_siblings": [
     {
       "ki_a": "ki_self_20260826_01",
       "ki_b": "ki_self_20260826_02",
@@ -18,7 +19,7 @@
         "self_reflection"
       ],
       "matched_rule": "both",
-      "sibling_edge": null
+      "sibling_edge": "related_to"
     },
     {
       "ki_a": "ki_self_20260826_01",
@@ -35,7 +36,7 @@
         "self_reflection"
       ],
       "matched_rule": "both",
-      "sibling_edge": null
+      "sibling_edge": "related_to"
     },
     {
       "ki_a": "ki_self_20260826_02",
@@ -52,7 +53,7 @@
         "self_reflection"
       ],
       "matched_rule": "both",
-      "sibling_edge": null
+      "sibling_edge": "related_to"
     },
     {
       "ki_a": "ki_self_20260826_04",
@@ -69,7 +70,7 @@
         "self_reflection"
       ],
       "matched_rule": "source+tags>=0.5",
-      "sibling_edge": null
+      "sibling_edge": "related_to"
     },
     {
       "ki_a": "ki_self_20260908_01",
@@ -87,7 +88,7 @@
         "skill-system"
       ],
       "matched_rule": "source+tags>=0.5",
-      "sibling_edge": null
+      "sibling_edge": "related_to"
     },
     {
       "ki_a": "ki_self_20260826_01",
@@ -103,7 +104,7 @@
         "self_reflection"
       ],
       "matched_rule": "source+tags>=0.5",
-      "sibling_edge": null
+      "sibling_edge": "related_to"
     },
     {
       "ki_a": "ki_self_20260826_01",
@@ -120,7 +121,7 @@
         "self_reflection"
       ],
       "matched_rule": "source+tags>=0.5",
-      "sibling_edge": null
+      "sibling_edge": "related_to"
     },
     {
       "ki_a": "ki_self_20260826_02",
@@ -136,7 +137,7 @@
         "self_reflection"
       ],
       "matched_rule": "source+tags>=0.5",
-      "sibling_edge": null
+      "sibling_edge": "related_to"
     },
     {
       "ki_a": "ki_self_20260826_02",
@@ -153,7 +154,7 @@
         "self_reflection"
       ],
       "matched_rule": "source+tags>=0.5",
-      "sibling_edge": null
+      "sibling_edge": "related_to"
     },
     {
       "ki_a": "ki_self_20260826_03",
@@ -169,7 +170,7 @@
         "self_reflection"
       ],
       "matched_rule": "source+tags>=0.5",
-      "sibling_edge": null
+      "sibling_edge": "related_to"
     },
     {
       "ki_a": "ki_self_20260826_03",
@@ -186,7 +187,7 @@
         "self_reflection"
       ],
       "matched_rule": "source+tags>=0.5",
-      "sibling_edge": null
+      "sibling_edge": "related_to"
     },
     {
       "ki_a": "ki_self_20260826_04",
@@ -203,8 +204,7 @@
         "self_reflection"
       ],
       "matched_rule": "source+tags>=0.5",
-      "sibling_edge": null
+      "sibling_edge": "related_to"
     }
-  ],
-  "intentional_siblings": []
+  ]
 }

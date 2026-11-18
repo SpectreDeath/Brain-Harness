@@ -47,21 +47,35 @@
         "claim_id": "isnad-70c-001",
         "assertion": "Monolithic Python files (> 200 LOC) can be partitioned into modular subpackages <= 200 LOC with zero functional regression using contract testing.",
         "evidence": "Decomposed 70 monolithic hotspots into 100% passing subpackages with 1,008 cumulative regression tests passing in 94.28s.",
-        "verified_by": "pytest, ruff check, harness context govern"
+        "verified_by": "pytest, ruff check, harness context govern",
+        "verified": true,
+        "verified_at": "2026-11-18T23:26:59Z",
+        "file": "src/harness/services/skill_graph/__init__.py",
+        "sha256_hash": "4b08d0acfc8ed08d8399d473995312a055f54e72674d190a3405c833c22e5c58"
       },
       {
         "claim_id": "isnad-70c-002",
         "assertion": "Click CLI command groups must register all subcommands in a single co-located block to prevent later definitions from shadowing subcommands (Rule 6).",
         "evidence": "Demonstrated across commands/uncertainty/group.py and commands/plugins/group.py.",
-        "verified_by": "Click CLI runner contract tests"
+        "verified_by": "Click CLI runner contract tests",
+        "verified": true,
+        "verified_at": "2026-11-18T23:26:59Z",
+        "file": "src/harness/commands/uncertainty/group.py",
+        "sha256_hash": "16506e7c44b934d4790f610e37a3defc25bcdf47742cf48ecb83814643074c4e"
       },
       {
         "claim_id": "isnad-70c-003",
         "assertion": "Single-seam resolver factories resolve_*(ctx) guarantee IoC micro-kernel compliance while providing deterministic in-process fallback (Rule 58).",
         "evidence": "Implemented across codebase_context, context_type_system, youtube_transcript_fetcher, and skill_graph.",
-        "verified_by": "test_ioc_registration and resolve_* tests"
+        "verified_by": "test_ioc_registration and resolve_* tests",
+        "verified": true,
+        "verified_at": "2026-11-18T23:26:59Z",
+        "file": "src/harness/services/skill_graph/operations.py",
+        "sha256_hash": "f9e663458f75f4b7355bd5a4eb66f74b899abe6b08340552287c653a7b08ec1e"
       }
-    ]
+    ],
+    "status": "VERIFIED",
+    "verified_at": "2026-11-18T23:26:59Z"
   },
   "retrieval_count": 0,
   "success_count": 0,

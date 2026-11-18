@@ -31,7 +31,29 @@
       "description": "Backfilled canonical module edge (spider follow-up Phase 1 / P0)"
     }
   ],
-  "isnad": {},
+  "isnad": {
+    "status": "VERIFIED",
+    "verified_at": "2026-11-18T23:26:59Z",
+    "source_origin": "Chidiebere Njoku (freeCodeCamp) \u2014 locally implemented in Brain Harness",
+    "claims": [
+      {
+        "assertion": "3-layer deterministic uncertainty interception (Boundary -> Retrieval -> Logprob + HITL escalation) is implemented in slotted frozen domain models.",
+        "file": ".agents/skills/uncertainty-aware-ai-architect/scripts/uncertainty_guard_engine.py",
+        "lines": "L1-L1289",
+        "sha256_hash": "f3e54e98e9b398316550f5512fd6a6f9efe57bd59eb2af1cb4bec67e4bbb0788",
+        "verified": true,
+        "verified_at": "2026-11-18T23:26:59Z"
+      },
+      {
+        "assertion": "UncertaintyGuardPlugin exposes UNCERTAINTY_GUARD_SERVICE_KEY in-memory via micro-kernel IoC registration.",
+        "file": "plugins/agent_orchestration/uncertainty_guard/main.py",
+        "lines": "L1-L351",
+        "sha256_hash": "4968fd60a35fc1001b2d7bbc3e254eeb6d7989b09318e5208a141442debaf868",
+        "verified": true,
+        "verified_at": "2026-11-18T23:26:59Z"
+      }
+    ]
+  },
   "retrieval_count": 0,
   "success_count": 0,
   "last_retrieved_at": null,

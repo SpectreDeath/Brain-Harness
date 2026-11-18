@@ -27,7 +27,27 @@
       "Session 692e0093: Formalization of dual co-registration requirement"
     ],
     "confidence": 0.95,
-    "verification_status": "empirically_verified"
+    "verification_status": "empirically_verified",
+    "status": "VERIFIED",
+    "verified_at": "2026-11-18T23:26:59Z",
+    "claims": [
+      {
+        "assertion": "Rule 6 mandates single-source co-located Click CLI group declarations to prevent shadowing subcommands.",
+        "file": "AGENTS.md",
+        "lines": "L1-L109",
+        "sha256_hash": "5291936695f8d5695476af5d78faca1d124dcad7df13725969d9beac3409f132",
+        "verified": true,
+        "verified_at": "2026-11-18T23:26:59Z"
+      },
+      {
+        "assertion": "commands/uncertainty/group.py registers uncertainty subcommands inside one co-located Click group.",
+        "file": "src/harness/commands/uncertainty/group.py",
+        "lines": "L1-L36",
+        "sha256_hash": "16506e7c44b934d4790f610e37a3defc25bcdf47742cf48ecb83814643074c4e",
+        "verified": true,
+        "verified_at": "2026-11-18T23:26:59Z"
+      }
+    ]
   },
   "created_at": "2026-09-07T10:20:00Z",
   "distilled_learning": "# Click CLI Group Single-Source Co-Registration Invariant",

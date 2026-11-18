@@ -24,7 +24,29 @@
   "detected_format": "raw_docs",
   "anchors": {},
   "edges": [],
-  "isnad": {},
+  "isnad": {
+    "status": "VERIFIED",
+    "verified_at": "2026-11-18T23:26:59Z",
+    "source_origin": "Daniel Garcia Solla (freeCodeCamp) \u2014 locally implemented in Brain Harness",
+    "claims": [
+      {
+        "assertion": "DAMA-DMBOK governance roles (Owner, Steward, Custodian) and RACI decision rights are codified in Brain Harness data-management-architect.",
+        "file": ".agents/skills/data-management-architect/references/dama_dmbok_quickref.md",
+        "lines": "L1-L101",
+        "sha256_hash": "5471678aa50025c5409a90043d010603bb55e35c9741b7d5f9adc4616088cf3d",
+        "verified": true,
+        "verified_at": "2026-11-18T23:26:59Z"
+      },
+      {
+        "assertion": "Data governance maturity assessment enforces verifiable ownership, stewardship, and RACI accountability checks.",
+        "file": ".agents/skills/data-management-architect/scripts/maturity_assessor.py",
+        "lines": "L1-L279",
+        "sha256_hash": "449c60ac88725d1aef662b63d1cb5aa48b0f59efe650c88e56aa340b20f1d772",
+        "verified": true,
+        "verified_at": "2026-11-18T23:26:59Z"
+      }
+    ]
+  },
   "retrieval_count": 0,
   "success_count": 0,
   "last_retrieved_at": null,

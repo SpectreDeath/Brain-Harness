@@ -51,6 +51,14 @@
       "derived": false,
       "confidence": 1.0,
       "description": null
+    },
+    {
+      "type": "related_to",
+      "target": "ki_self_20260908_03",
+      "target_kind": "knowledge_item",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Intentional distinct reflection sibling (spider follow-up Phase 5 triage)"
     }
   ],
   "retrieval_count": 0,
