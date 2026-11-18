@@ -39,3 +39,9 @@ Template for per-phase entries:
 - Key metric(s): Ranked 127 grm candidates; spider_composite top-5=[poem, tunas, t5_closed_book_qa, saccader, tf3d] (2 distinct domains, sum_domain_gap=709.00, overlap@5=0 vs random human_picks proxy=[cfq_pt_vs_sa, factoring_sqif, learnreg, mpi_extrapolation, storm_optimizer]).
 - Finding(s): Composite ranking achieved >2.3x higher covered domain_gap (709.00) than largest_5 (297.12), random_5 (288.12), and most_tests_5 (281.38). Only t5_closed_book_qa had non-zero fan_in=1 among top-5.
 - Follow-ups: Run Phase 5 entropy-driven question selection over top 20 candidates.
+
+## Phase 5 — Entropy-Driven Question Selection (2026-11-18T16:11:29+00:00)
+- Outcome: PASS
+- Key metric(s): On top-20 grm candidates: entropy policy mean=1.80 questions (max=2, 100.0% unique); random policy mean=3.65 questions (max=7, 100.0% unique).
+- Finding(s): Shannon/Laya classification_score halved average narrowing questions (1.80 vs 3.65) and cut worst-case depth from 7 to 2 with 20/20 unique identification.
+- Follow-ups: Run Phase 6.1 draft answer key for Brain Harness module KI retrieval.

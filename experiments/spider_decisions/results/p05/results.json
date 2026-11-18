@@ -1,0 +1,1389 @@
+{
+  "candidate_pool": [
+    "poem",
+    "tunas",
+    "t5_closed_book_qa",
+    "saccader",
+    "tf3d",
+    "uflow",
+    "study_recommend",
+    "smerf",
+    "factors_of_influence",
+    "autoregressive_diffusion",
+    "robust_loss",
+    "clip_as_rnn",
+    "correct_batch_effects_wdn",
+    "stable_transfer",
+    "video_structure",
+    "robust_loss_jax",
+    "flare_removal",
+    "factorize_a_city",
+    "smug_saliency",
+    "task_set"
+  ],
+  "entropy_summary": {
+    "targets": 20,
+    "mean_questions": 1.8,
+    "max_questions": 2,
+    "min_questions": 1,
+    "uniquely_identified_count": 20,
+    "pct_uniquely_identified": 100.0
+  },
+  "random_summary": {
+    "targets": 20,
+    "mean_questions": 3.65,
+    "max_questions": 7,
+    "min_questions": 1,
+    "uniquely_identified_count": 20,
+    "pct_uniquely_identified": 100.0
+  },
+  "per_target": [
+    {
+      "unit_id": "poem",
+      "entropy_questions": 2,
+      "entropy_unique": true,
+      "random_questions": 4,
+      "random_unique": true
+    },
+    {
+      "unit_id": "tunas",
+      "entropy_questions": 2,
+      "entropy_unique": true,
+      "random_questions": 4,
+      "random_unique": true
+    },
+    {
+      "unit_id": "t5_closed_book_qa",
+      "entropy_questions": 2,
+      "entropy_unique": true,
+      "random_questions": 4,
+      "random_unique": true
+    },
+    {
+      "unit_id": "saccader",
+      "entropy_questions": 1,
+      "entropy_unique": true,
+      "random_questions": 5,
+      "random_unique": true
+    },
+    {
+      "unit_id": "tf3d",
+      "entropy_questions": 1,
+      "entropy_unique": true,
+      "random_questions": 2,
+      "random_unique": true
+    },
+    {
+      "unit_id": "uflow",
+      "entropy_questions": 2,
+      "entropy_unique": true,
+      "random_questions": 4,
+      "random_unique": true
+    },
+    {
+      "unit_id": "study_recommend",
+      "entropy_questions": 1,
+      "entropy_unique": true,
+      "random_questions": 1,
+      "random_unique": true
+    },
+    {
+      "unit_id": "smerf",
+      "entropy_questions": 2,
+      "entropy_unique": true,
+      "random_questions": 2,
+      "random_unique": true
+    },
+    {
+      "unit_id": "factors_of_influence",
+      "entropy_questions": 2,
+      "entropy_unique": true,
+      "random_questions": 4,
+      "random_unique": true
+    },
+    {
+      "unit_id": "autoregressive_diffusion",
+      "entropy_questions": 2,
+      "entropy_unique": true,
+      "random_questions": 2,
+      "random_unique": true
+    },
+    {
+      "unit_id": "robust_loss",
+      "entropy_questions": 2,
+      "entropy_unique": true,
+      "random_questions": 4,
+      "random_unique": true
+    },
+    {
+      "unit_id": "clip_as_rnn",
+      "entropy_questions": 2,
+      "entropy_unique": true,
+      "random_questions": 2,
+      "random_unique": true
+    },
+    {
+      "unit_id": "correct_batch_effects_wdn",
+      "entropy_questions": 2,
+      "entropy_unique": true,
+      "random_questions": 2,
+      "random_unique": true
+    },
+    {
+      "unit_id": "stable_transfer",
+      "entropy_questions": 2,
+      "entropy_unique": true,
+      "random_questions": 6,
+      "random_unique": true
+    },
+    {
+      "unit_id": "video_structure",
+      "entropy_questions": 2,
+      "entropy_unique": true,
+      "random_questions": 4,
+      "random_unique": true
+    },
+    {
+      "unit_id": "robust_loss_jax",
+      "entropy_questions": 2,
+      "entropy_unique": true,
+      "random_questions": 2,
+      "random_unique": true
+    },
+    {
+      "unit_id": "flare_removal",
+      "entropy_questions": 2,
+      "entropy_unique": true,
+      "random_questions": 5,
+      "random_unique": true
+    },
+    {
+      "unit_id": "factorize_a_city",
+      "entropy_questions": 2,
+      "entropy_unique": true,
+      "random_questions": 6,
+      "random_unique": true
+    },
+    {
+      "unit_id": "smug_saliency",
+      "entropy_questions": 2,
+      "entropy_unique": true,
+      "random_questions": 7,
+      "random_unique": true
+    },
+    {
+      "unit_id": "task_set",
+      "entropy_questions": 1,
+      "entropy_unique": true,
+      "random_questions": 3,
+      "random_unique": true
+    }
+  ],
+  "entropy_runs": [
+    {
+      "target_id": "poem",
+      "questions_asked": 2,
+      "uniquely_identified": true,
+      "final_remaining_count": 1,
+      "final_remaining_ids": [
+        "poem"
+      ],
+      "trace": [
+        {
+          "step": 1,
+          "attribute": "test_file_count",
+          "value": 16,
+          "classification_score": 1.5735,
+          "remaining_count": 2
+        },
+        {
+          "step": 2,
+          "attribute": "py_file_count",
+          "value": 50,
+          "classification_score": 1.0,
+          "remaining_count": 1
+        }
+      ]
+    },
+    {
+      "target_id": "tunas",
+      "questions_asked": 2,
+      "uniquely_identified": true,
+      "final_remaining_count": 1,
+      "final_remaining_ids": [
+        "tunas"
+      ],
+      "trace": [
+        {
+          "step": 1,
+          "attribute": "test_file_count",
+          "value": 16,
+          "classification_score": 1.5735,
+          "remaining_count": 2
+        },
+        {
+          "step": 2,
+          "attribute": "py_file_count",
+          "value": 40,
+          "classification_score": 1.0,
+          "remaining_count": 1
+        }
+      ]
+    },
+    {
+      "target_id": "t5_closed_book_qa",
+      "questions_asked": 2,
+      "uniquely_identified": true,
+      "final_remaining_count": 1,
+      "final_remaining_ids": [
+        "t5_closed_book_qa"
+      ],
+      "trace": [
+        {
+          "step": 1,
+          "attribute": "test_file_count",
+          "value": 4,
+          "classification_score": 1.5735,
+          "remaining_count": 2
+        },
+        {
+          "step": 2,
+          "attribute": "size_tier",
+          "value": "medium",
+          "classification_score": 1.0,
+          "remaining_count": 1
+        }
+      ]
+    },
+    {
+      "target_id": "saccader",
+      "questions_asked": 1,
+      "uniquely_identified": true,
+      "final_remaining_count": 1,
+      "final_remaining_ids": [
+        "saccader"
+      ],
+      "trace": [
+        {
+          "step": 1,
+          "attribute": "test_file_count",
+          "value": 11,
+          "classification_score": 1.5735,
+          "remaining_count": 1
+        }
+      ]
+    },
+    {
+      "target_id": "tf3d",
+      "questions_asked": 1,
+      "uniquely_identified": true,
+      "final_remaining_count": 1,
+      "final_remaining_ids": [
+        "tf3d"
+      ],
+      "trace": [
+        {
+          "step": 1,
+          "attribute": "test_file_count",
+          "value": 9,
+          "classification_score": 1.5735,
+          "remaining_count": 1
+        }
+      ]
+    },
+    {
+      "target_id": "uflow",
+      "questions_asked": 2,
+      "uniquely_identified": true,
+      "final_remaining_count": 1,
+      "final_remaining_ids": [
+        "uflow"
+      ],
+      "trace": [
+        {
+          "step": 1,
+          "attribute": "test_file_count",
+          "value": 7,
+          "classification_score": 1.5735,
+          "remaining_count": 2
+        },
+        {
+          "step": 2,
+          "attribute": "size_tier",
+          "value": "large",
+          "classification_score": 1.0,
+          "remaining_count": 1
+        }
+      ]
+    },
+    {
+      "target_id": "study_recommend",
+      "questions_asked": 1,
+      "uniquely_identified": true,
+      "final_remaining_count": 1,
+      "final_remaining_ids": [
+        "study_recommend"
+      ],
+      "trace": [
+        {
+          "step": 1,
+          "attribute": "test_file_count",
+          "value": 8,
+          "classification_score": 1.5735,
+          "remaining_count": 1
+        }
+      ]
+    },
+    {
+      "target_id": "smerf",
+      "questions_asked": 2,
+      "uniquely_identified": true,
+      "final_remaining_count": 1,
+      "final_remaining_ids": [
+        "smerf"
+      ],
+      "trace": [
+        {
+          "step": 1,
+          "attribute": "test_file_count",
+          "value": 4,
+          "classification_score": 1.5735,
+          "remaining_count": 2
+        },
+        {
+          "step": 2,
+          "attribute": "size_tier",
+          "value": "large",
+          "classification_score": 1.0,
+          "remaining_count": 1
+        }
+      ]
+    },
+    {
+      "target_id": "factors_of_influence",
+      "questions_asked": 2,
+      "uniquely_identified": true,
+      "final_remaining_count": 1,
+      "final_remaining_ids": [
+        "factors_of_influence"
+      ],
+      "trace": [
+        {
+          "step": 1,
+          "attribute": "test_file_count",
+          "value": 3,
+          "classification_score": 1.5735,
+          "remaining_count": 4
+        },
+        {
+          "step": 2,
+          "attribute": "py_file_count",
+          "value": 35,
+          "classification_score": 2.0,
+          "remaining_count": 1
+        }
+      ]
+    },
+    {
+      "target_id": "autoregressive_diffusion",
+      "questions_asked": 2,
+      "uniquely_identified": true,
+      "final_remaining_count": 1,
+      "final_remaining_ids": [
+        "autoregressive_diffusion"
+      ],
+      "trace": [
+        {
+          "step": 1,
+          "attribute": "test_file_count",
+          "value": 1,
+          "classification_score": 1.5735,
+          "remaining_count": 2
+        },
+        {
+          "step": 2,
+          "attribute": "py_file_count",
+          "value": 40,
+          "classification_score": 1.0,
+          "remaining_count": 1
+        }
+      ]
+    },
+    {
+      "target_id": "robust_loss",
+      "questions_asked": 2,
+      "uniquely_identified": true,
+      "final_remaining_count": 1,
+      "final_remaining_ids": [
+        "robust_loss"
+      ],
+      "trace": [
+        {
+          "step": 1,
+          "attribute": "test_file_count",
+          "value": 7,
+          "classification_score": 1.5735,
+          "remaining_count": 2
+        },
+        {
+          "step": 2,
+          "attribute": "size_tier",
+          "value": "medium",
+          "classification_score": 1.0,
+          "remaining_count": 1
+        }
+      ]
+    },
+    {
+      "target_id": "clip_as_rnn",
+      "questions_asked": 2,
+      "uniquely_identified": true,
+      "final_remaining_count": 1,
+      "final_remaining_ids": [
+        "clip_as_rnn"
+      ],
+      "trace": [
+        {
+          "step": 1,
+          "attribute": "test_file_count",
+          "value": 1,
+          "classification_score": 1.5735,
+          "remaining_count": 2
+        },
+        {
+          "step": 2,
+          "attribute": "py_file_count",
+          "value": 33,
+          "classification_score": 1.0,
+          "remaining_count": 1
+        }
+      ]
+    },
+    {
+      "target_id": "correct_batch_effects_wdn",
+      "questions_asked": 2,
+      "uniquely_identified": true,
+      "final_remaining_count": 1,
+      "final_remaining_ids": [
+        "correct_batch_effects_wdn"
+      ],
+      "trace": [
+        {
+          "step": 1,
+          "attribute": "test_file_count",
+          "value": 5,
+          "classification_score": 1.5735,
+          "remaining_count": 2
+        },
+        {
+          "step": 2,
+          "attribute": "py_file_count",
+          "value": 14,
+          "classification_score": 1.0,
+          "remaining_count": 1
+        }
+      ]
+    },
+    {
+      "target_id": "stable_transfer",
+      "questions_asked": 2,
+      "uniquely_identified": true,
+      "final_remaining_count": 1,
+      "final_remaining_ids": [
+        "stable_transfer"
+      ],
+      "trace": [
+        {
+          "step": 1,
+          "attribute": "test_file_count",
+          "value": 2,
+          "classification_score": 1.5735,
+          "remaining_count": 2
+        },
+        {
+          "step": 2,
+          "attribute": "py_file_count",
+          "value": 24,
+          "classification_score": 1.0,
+          "remaining_count": 1
+        }
+      ]
+    },
+    {
+      "target_id": "video_structure",
+      "questions_asked": 2,
+      "uniquely_identified": true,
+      "final_remaining_count": 1,
+      "final_remaining_ids": [
+        "video_structure"
+      ],
+      "trace": [
+        {
+          "step": 1,
+          "attribute": "test_file_count",
+          "value": 5,
+          "classification_score": 1.5735,
+          "remaining_count": 2
+        },
+        {
+          "step": 2,
+          "attribute": "py_file_count",
+          "value": 13,
+          "classification_score": 1.0,
+          "remaining_count": 1
+        }
+      ]
+    },
+    {
+      "target_id": "robust_loss_jax",
+      "questions_asked": 2,
+      "uniquely_identified": true,
+      "final_remaining_count": 1,
+      "final_remaining_ids": [
+        "robust_loss_jax"
+      ],
+      "trace": [
+        {
+          "step": 1,
+          "attribute": "test_file_count",
+          "value": 3,
+          "classification_score": 1.5735,
+          "remaining_count": 4
+        },
+        {
+          "step": 2,
+          "attribute": "py_file_count",
+          "value": 6,
+          "classification_score": 2.0,
+          "remaining_count": 1
+        }
+      ]
+    },
+    {
+      "target_id": "flare_removal",
+      "questions_asked": 2,
+      "uniquely_identified": true,
+      "final_remaining_count": 1,
+      "final_remaining_ids": [
+        "flare_removal"
+      ],
+      "trace": [
+        {
+          "step": 1,
+          "attribute": "test_file_count",
+          "value": 3,
+          "classification_score": 1.5735,
+          "remaining_count": 4
+        },
+        {
+          "step": 2,
+          "attribute": "py_file_count",
+          "value": 13,
+          "classification_score": 2.0,
+          "remaining_count": 1
+        }
+      ]
+    },
+    {
+      "target_id": "factorize_a_city",
+      "questions_asked": 2,
+      "uniquely_identified": true,
+      "final_remaining_count": 1,
+      "final_remaining_ids": [
+        "factorize_a_city"
+      ],
+      "trace": [
+        {
+          "step": 1,
+          "attribute": "test_file_count",
+          "value": 2,
+          "classification_score": 1.5735,
+          "remaining_count": 2
+        },
+        {
+          "step": 2,
+          "attribute": "py_file_count",
+          "value": 14,
+          "classification_score": 1.0,
+          "remaining_count": 1
+        }
+      ]
+    },
+    {
+      "target_id": "smug_saliency",
+      "questions_asked": 2,
+      "uniquely_identified": true,
+      "final_remaining_count": 1,
+      "final_remaining_ids": [
+        "smug_saliency"
+      ],
+      "trace": [
+        {
+          "step": 1,
+          "attribute": "test_file_count",
+          "value": 3,
+          "classification_score": 1.5735,
+          "remaining_count": 4
+        },
+        {
+          "step": 2,
+          "attribute": "py_file_count",
+          "value": 8,
+          "classification_score": 2.0,
+          "remaining_count": 1
+        }
+      ]
+    },
+    {
+      "target_id": "task_set",
+      "questions_asked": 1,
+      "uniquely_identified": true,
+      "final_remaining_count": 1,
+      "final_remaining_ids": [
+        "task_set"
+      ],
+      "trace": [
+        {
+          "step": 1,
+          "attribute": "test_file_count",
+          "value": 22,
+          "classification_score": 1.5735,
+          "remaining_count": 1
+        }
+      ]
+    }
+  ],
+  "random_runs": [
+    {
+      "target_id": "poem",
+      "questions_asked": 4,
+      "uniquely_identified": true,
+      "final_remaining_count": 1,
+      "final_remaining_ids": [
+        "poem"
+      ],
+      "trace": [
+        {
+          "step": 1,
+          "attribute": "primary_framework",
+          "value": "tensorflow",
+          "classification_score": 0.8874,
+          "remaining_count": 15
+        },
+        {
+          "step": 2,
+          "attribute": "has_ipynb",
+          "value": false,
+          "classification_score": 0.7768,
+          "remaining_count": 11
+        },
+        {
+          "step": 3,
+          "attribute": "size_tier",
+          "value": "large",
+          "classification_score": 0.8946,
+          "remaining_count": 6
+        },
+        {
+          "step": 4,
+          "attribute": "py_file_count",
+          "value": 50,
+          "classification_score": 2.585,
+          "remaining_count": 1
+        }
+      ]
+    },
+    {
+      "target_id": "tunas",
+      "questions_asked": 4,
+      "uniquely_identified": true,
+      "final_remaining_count": 1,
+      "final_remaining_ids": [
+        "tunas"
+      ],
+      "trace": [
+        {
+          "step": 1,
+          "attribute": "gin_file_count",
+          "value": 0,
+          "classification_score": 0.5091,
+          "remaining_count": 18
+        },
+        {
+          "step": 2,
+          "attribute": "primary_framework",
+          "value": "tensorflow",
+          "classification_score": 0.8334,
+          "remaining_count": 14
+        },
+        {
+          "step": 3,
+          "attribute": "test_file_count",
+          "value": 16,
+          "classification_score": 1.3368,
+          "remaining_count": 2
+        },
+        {
+          "step": 4,
+          "attribute": "py_file_count",
+          "value": 40,
+          "classification_score": 1.0,
+          "remaining_count": 1
+        }
+      ]
+    },
+    {
+      "target_id": "t5_closed_book_qa",
+      "questions_asked": 4,
+      "uniquely_identified": true,
+      "final_remaining_count": 1,
+      "final_remaining_ids": [
+        "t5_closed_book_qa"
+      ],
+      "trace": [
+        {
+          "step": 1,
+          "attribute": "gin_file_count",
+          "value": 0,
+          "classification_score": 0.5091,
+          "remaining_count": 18
+        },
+        {
+          "step": 2,
+          "attribute": "has_ipynb",
+          "value": false,
+          "classification_score": 0.7192,
+          "remaining_count": 14
+        },
+        {
+          "step": 3,
+          "attribute": "primary_framework",
+          "value": "tensorflow",
+          "classification_score": 0.9265,
+          "remaining_count": 10
+        },
+        {
+          "step": 4,
+          "attribute": "domain_class",
+          "value": "nlp_and_llm_project",
+          "classification_score": 0.717,
+          "remaining_count": 1
+        }
+      ]
+    },
+    {
+      "target_id": "saccader",
+      "questions_asked": 5,
+      "uniquely_identified": true,
+      "final_remaining_count": 1,
+      "final_remaining_ids": [
+        "saccader"
+      ],
+      "trace": [
+        {
+          "step": 1,
+          "attribute": "packaging",
+          "value": "requirements",
+          "classification_score": 0.5091,
+          "remaining_count": 18
+        },
+        {
+          "step": 2,
+          "attribute": "has_run_sh",
+          "value": false,
+          "classification_score": 0.8023,
+          "remaining_count": 5
+        },
+        {
+          "step": 3,
+          "attribute": "domain_class",
+          "value": "vision_and_3d_project",
+          "classification_score": 0.7219,
+          "remaining_count": 4
+        },
+        {
+          "step": 4,
+          "attribute": "has_ipynb",
+          "value": false,
+          "classification_score": 0.8113,
+          "remaining_count": 3
+        },
+        {
+          "step": 5,
+          "attribute": "py_file_count",
+          "value": 27,
+          "classification_score": 1.585,
+          "remaining_count": 1
+        }
+      ]
+    },
+    {
+      "target_id": "tf3d",
+      "questions_asked": 2,
+      "uniquely_identified": true,
+      "final_remaining_count": 1,
+      "final_remaining_ids": [
+        "tf3d"
+      ],
+      "trace": [
+        {
+          "step": 1,
+          "attribute": "has_gin",
+          "value": true,
+          "classification_score": 0.4443,
+          "remaining_count": 2
+        },
+        {
+          "step": 2,
+          "attribute": "primary_framework",
+          "value": "tensorflow",
+          "classification_score": 1.0,
+          "remaining_count": 1
+        }
+      ]
+    },
+    {
+      "target_id": "uflow",
+      "questions_asked": 4,
+      "uniquely_identified": true,
+      "final_remaining_count": 1,
+      "final_remaining_ids": [
+        "uflow"
+      ],
+      "trace": [
+        {
+          "step": 1,
+          "attribute": "has_gin",
+          "value": false,
+          "classification_score": 0.4443,
+          "remaining_count": 18
+        },
+        {
+          "step": 2,
+          "attribute": "packaging",
+          "value": "requirements",
+          "classification_score": 0.2913,
+          "remaining_count": 17
+        },
+        {
+          "step": 3,
+          "attribute": "size_tier",
+          "value": "large",
+          "classification_score": 1.0966,
+          "remaining_count": 7
+        },
+        {
+          "step": 4,
+          "attribute": "test_file_count",
+          "value": 7,
+          "classification_score": 2.5216,
+          "remaining_count": 1
+        }
+      ]
+    },
+    {
+      "target_id": "study_recommend",
+      "questions_asked": 1,
+      "uniquely_identified": true,
+      "final_remaining_count": 1,
+      "final_remaining_ids": [
+        "study_recommend"
+      ],
+      "trace": [
+        {
+          "step": 1,
+          "attribute": "py_file_count",
+          "value": 21,
+          "classification_score": 1.0058,
+          "remaining_count": 1
+        }
+      ]
+    },
+    {
+      "target_id": "smerf",
+      "questions_asked": 2,
+      "uniquely_identified": true,
+      "final_remaining_count": 1,
+      "final_remaining_ids": [
+        "smerf"
+      ],
+      "trace": [
+        {
+          "step": 1,
+          "attribute": "test_file_count",
+          "value": 4,
+          "classification_score": 1.5735,
+          "remaining_count": 2
+        },
+        {
+          "step": 2,
+          "attribute": "packaging",
+          "value": "pyproject",
+          "classification_score": 1.0,
+          "remaining_count": 1
+        }
+      ]
+    },
+    {
+      "target_id": "factors_of_influence",
+      "questions_asked": 4,
+      "uniquely_identified": true,
+      "final_remaining_count": 1,
+      "final_remaining_ids": [
+        "factors_of_influence"
+      ],
+      "trace": [
+        {
+          "step": 1,
+          "attribute": "gin_file_count",
+          "value": 0,
+          "classification_score": 0.5091,
+          "remaining_count": 18
+        },
+        {
+          "step": 2,
+          "attribute": "packaging",
+          "value": "requirements",
+          "classification_score": 0.2913,
+          "remaining_count": 17
+        },
+        {
+          "step": 3,
+          "attribute": "test_file_count",
+          "value": 3,
+          "classification_score": 1.3765,
+          "remaining_count": 4
+        },
+        {
+          "step": 4,
+          "attribute": "has_run_sh",
+          "value": false,
+          "classification_score": 0.8113,
+          "remaining_count": 1
+        }
+      ]
+    },
+    {
+      "target_id": "autoregressive_diffusion",
+      "questions_asked": 2,
+      "uniquely_identified": true,
+      "final_remaining_count": 1,
+      "final_remaining_ids": [
+        "autoregressive_diffusion"
+      ],
+      "trace": [
+        {
+          "step": 1,
+          "attribute": "test_file_count",
+          "value": 1,
+          "classification_score": 1.5735,
+          "remaining_count": 2
+        },
+        {
+          "step": 2,
+          "attribute": "primary_framework",
+          "value": "jax",
+          "classification_score": 1.0,
+          "remaining_count": 1
+        }
+      ]
+    },
+    {
+      "target_id": "robust_loss",
+      "questions_asked": 4,
+      "uniquely_identified": true,
+      "final_remaining_count": 1,
+      "final_remaining_ids": [
+        "robust_loss"
+      ],
+      "trace": [
+        {
+          "step": 1,
+          "attribute": "gin_file_count",
+          "value": 0,
+          "classification_score": 0.5091,
+          "remaining_count": 18
+        },
+        {
+          "step": 2,
+          "attribute": "size_tier",
+          "value": "medium",
+          "classification_score": 1.1044,
+          "remaining_count": 9
+        },
+        {
+          "step": 3,
+          "attribute": "primary_framework",
+          "value": "tensorflow",
+          "classification_score": 0.5033,
+          "remaining_count": 8
+        },
+        {
+          "step": 4,
+          "attribute": "py_file_count",
+          "value": 15,
+          "classification_score": 2.25,
+          "remaining_count": 1
+        }
+      ]
+    },
+    {
+      "target_id": "clip_as_rnn",
+      "questions_asked": 2,
+      "uniquely_identified": true,
+      "final_remaining_count": 1,
+      "final_remaining_ids": [
+        "clip_as_rnn"
+      ],
+      "trace": [
+        {
+          "step": 1,
+          "attribute": "test_file_count",
+          "value": 1,
+          "classification_score": 1.5735,
+          "remaining_count": 2
+        },
+        {
+          "step": 2,
+          "attribute": "py_file_count",
+          "value": 33,
+          "classification_score": 1.0,
+          "remaining_count": 1
+        }
+      ]
+    },
+    {
+      "target_id": "correct_batch_effects_wdn",
+      "questions_asked": 2,
+      "uniquely_identified": true,
+      "final_remaining_count": 1,
+      "final_remaining_ids": [
+        "correct_batch_effects_wdn"
+      ],
+      "trace": [
+        {
+          "step": 1,
+          "attribute": "py_file_count",
+          "value": 14,
+          "classification_score": 1.0058,
+          "remaining_count": 2
+        },
+        {
+          "step": 2,
+          "attribute": "has_run_sh",
+          "value": false,
+          "classification_score": 1.0,
+          "remaining_count": 1
+        }
+      ]
+    },
+    {
+      "target_id": "stable_transfer",
+      "questions_asked": 6,
+      "uniquely_identified": true,
+      "final_remaining_count": 1,
+      "final_remaining_ids": [
+        "stable_transfer"
+      ],
+      "trace": [
+        {
+          "step": 1,
+          "attribute": "domain_class",
+          "value": "vision_and_3d_project",
+          "classification_score": 0.7138,
+          "remaining_count": 17
+        },
+        {
+          "step": 2,
+          "attribute": "packaging",
+          "value": "requirements",
+          "classification_score": 0.5602,
+          "remaining_count": 15
+        },
+        {
+          "step": 3,
+          "attribute": "size_tier",
+          "value": "medium",
+          "classification_score": 0.9256,
+          "remaining_count": 8
+        },
+        {
+          "step": 4,
+          "attribute": "primary_framework",
+          "value": "tensorflow",
+          "classification_score": 0.5436,
+          "remaining_count": 7
+        },
+        {
+          "step": 5,
+          "attribute": "test_file_count",
+          "value": 2,
+          "classification_score": 1.9502,
+          "remaining_count": 2
+        },
+        {
+          "step": 6,
+          "attribute": "has_ipynb",
+          "value": true,
+          "classification_score": 1.0,
+          "remaining_count": 1
+        }
+      ]
+    },
+    {
+      "target_id": "video_structure",
+      "questions_asked": 4,
+      "uniquely_identified": true,
+      "final_remaining_count": 1,
+      "final_remaining_ids": [
+        "video_structure"
+      ],
+      "trace": [
+        {
+          "step": 1,
+          "attribute": "has_ipynb",
+          "value": false,
+          "classification_score": 0.7686,
+          "remaining_count": 15
+        },
+        {
+          "step": 2,
+          "attribute": "size_tier",
+          "value": "medium",
+          "classification_score": 1.0911,
+          "remaining_count": 6
+        },
+        {
+          "step": 3,
+          "attribute": "py_file_count",
+          "value": 13,
+          "classification_score": 1.9183,
+          "remaining_count": 2
+        },
+        {
+          "step": 4,
+          "attribute": "test_file_count",
+          "value": 5,
+          "classification_score": 1.0,
+          "remaining_count": 1
+        }
+      ]
+    },
+    {
+      "target_id": "robust_loss_jax",
+      "questions_asked": 2,
+      "uniquely_identified": true,
+      "final_remaining_count": 1,
+      "final_remaining_ids": [
+        "robust_loss_jax"
+      ],
+      "trace": [
+        {
+          "step": 1,
+          "attribute": "has_run_sh",
+          "value": true,
+          "classification_score": 0.8349,
+          "remaining_count": 14
+        },
+        {
+          "step": 2,
+          "attribute": "size_tier",
+          "value": "small",
+          "classification_score": 1.0694,
+          "remaining_count": 1
+        }
+      ]
+    },
+    {
+      "target_id": "flare_removal",
+      "questions_asked": 5,
+      "uniquely_identified": true,
+      "final_remaining_count": 1,
+      "final_remaining_ids": [
+        "flare_removal"
+      ],
+      "trace": [
+        {
+          "step": 1,
+          "attribute": "has_gin",
+          "value": false,
+          "classification_score": 0.4443,
+          "remaining_count": 18
+        },
+        {
+          "step": 2,
+          "attribute": "has_run_sh",
+          "value": true,
+          "classification_score": 0.8023,
+          "remaining_count": 13
+        },
+        {
+          "step": 3,
+          "attribute": "size_tier",
+          "value": "medium",
+          "classification_score": 1.0324,
+          "remaining_count": 8
+        },
+        {
+          "step": 4,
+          "attribute": "test_file_count",
+          "value": 3,
+          "classification_score": 2.5,
+          "remaining_count": 2
+        },
+        {
+          "step": 5,
+          "attribute": "has_ipynb",
+          "value": false,
+          "classification_score": 1.0,
+          "remaining_count": 1
+        }
+      ]
+    },
+    {
+      "target_id": "factorize_a_city",
+      "questions_asked": 6,
+      "uniquely_identified": true,
+      "final_remaining_count": 1,
+      "final_remaining_ids": [
+        "factorize_a_city"
+      ],
+      "trace": [
+        {
+          "step": 1,
+          "attribute": "domain_class",
+          "value": "vision_and_3d_project",
+          "classification_score": 0.7138,
+          "remaining_count": 17
+        },
+        {
+          "step": 2,
+          "attribute": "primary_framework",
+          "value": "tensorflow",
+          "classification_score": 0.8558,
+          "remaining_count": 13
+        },
+        {
+          "step": 3,
+          "attribute": "has_gin",
+          "value": false,
+          "classification_score": 0.3586,
+          "remaining_count": 12
+        },
+        {
+          "step": 4,
+          "attribute": "has_run_sh",
+          "value": true,
+          "classification_score": 0.7375,
+          "remaining_count": 9
+        },
+        {
+          "step": 5,
+          "attribute": "test_file_count",
+          "value": 2,
+          "classification_score": 2.281,
+          "remaining_count": 2
+        },
+        {
+          "step": 6,
+          "attribute": "py_file_count",
+          "value": 14,
+          "classification_score": 1.0,
+          "remaining_count": 1
+        }
+      ]
+    },
+    {
+      "target_id": "smug_saliency",
+      "questions_asked": 7,
+      "uniquely_identified": true,
+      "final_remaining_count": 1,
+      "final_remaining_ids": [
+        "smug_saliency"
+      ],
+      "trace": [
+        {
+          "step": 1,
+          "attribute": "packaging",
+          "value": "requirements",
+          "classification_score": 0.5091,
+          "remaining_count": 18
+        },
+        {
+          "step": 2,
+          "attribute": "domain_class",
+          "value": "vision_and_3d_project",
+          "classification_score": 0.7529,
+          "remaining_count": 15
+        },
+        {
+          "step": 3,
+          "attribute": "has_gin",
+          "value": false,
+          "classification_score": 0.3282,
+          "remaining_count": 14
+        },
+        {
+          "step": 4,
+          "attribute": "primary_framework",
+          "value": "tensorflow",
+          "classification_score": 0.6215,
+          "remaining_count": 12
+        },
+        {
+          "step": 5,
+          "attribute": "test_file_count",
+          "value": 3,
+          "classification_score": 1.3757,
+          "remaining_count": 3
+        },
+        {
+          "step": 6,
+          "attribute": "size_tier",
+          "value": "medium",
+          "classification_score": 0.9183,
+          "remaining_count": 2
+        },
+        {
+          "step": 7,
+          "attribute": "py_file_count",
+          "value": 8,
+          "classification_score": 1.0,
+          "remaining_count": 1
+        }
+      ]
+    },
+    {
+      "target_id": "task_set",
+      "questions_asked": 3,
+      "uniquely_identified": true,
+      "final_remaining_count": 1,
+      "final_remaining_ids": [
+        "task_set"
+      ],
+      "trace": [
+        {
+          "step": 1,
+          "attribute": "size_tier",
+          "value": "large",
+          "classification_score": 1.1046,
+          "remaining_count": 10
+        },
+        {
+          "step": 2,
+          "attribute": "primary_framework",
+          "value": "tensorflow",
+          "classification_score": 0.8997,
+          "remaining_count": 7
+        },
+        {
+          "step": 3,
+          "attribute": "domain_class",
+          "value": "optimization_and_compression_project",
+          "classification_score": 0.5917,
+          "remaining_count": 1
+        }
+      ]
+    }
+  ]
+}

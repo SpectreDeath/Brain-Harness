@@ -61,7 +61,7 @@
 - [x] **Phase 2** — Re-snapshot after fix + vault hygiene: duplicates (#9) & unverified-KI priority (#7)
 - [x] **Phase 3** — Domain blind-spot analysis (#2)
 - [x] **Phase 4** — Next-5 learning targets (#1)
-- [ ] **Phase 5** — Entropy-driven question selection (#3)
+- [x] **Phase 5** — Entropy-driven question selection (#3)
 - [ ] **Phase 6** — KI retrieval for a code change (#4)
 - [ ] **Phase 7** — Design-choice arbitration memos (#5)
 - [ ] **Phase 8** — Plugin vs KI-only vs Skip classifier (#6)
@@ -343,8 +343,8 @@ Generic **unit names** also pollute "unlearned target" lists: `python`, `tests`,
 **Depends on:** Phase 4. **Model tier:** low.
 
 ### Steps
-- [ ] **5.1** Create `p05_entropy_questions.py`. Candidate set = top 20 from `ranked_targets.json`.
-- [ ] **5.2** For each candidate as the hidden target, simulate:
+- [x] **5.1** Create `p05_entropy_questions.py`. Candidate set = top 20 from `ranked_targets.json`.
+- [x] **5.2** For each candidate as the hidden target, simulate:
   - **Entropy policy:** repeatedly call `spider().rank_attributes(<grm snapshot path or model>, candidate_ids=<remaining>)`,
     take the highest-`classification_score` attribute with `is_identifier_like == False` and not in
     `{"raw_name", "learned_ki_id"}`, "ask" it (look up the target's value), filter remaining candidates to that value.
@@ -352,8 +352,8 @@ Generic **unit names** also pollute "unlearned target" lists: `python`, `tests`,
     *If `rank_attributes` only accepts a vault source, call `ontology_spider.api.rank_discriminating_attributes(model, candidate_ids)` directly.*
   - **Random policy:** same loop, but pick a random eligible attribute (seed `20261118 + index`).
   - Record questions asked and whether the target was uniquely identified.
-- [ ] **5.3** Metrics: mean and max questions per policy; % uniquely identified. Write `write_json(5, "results", ...)`, `write_md(5, "summary", ...)`.
-- [ ] **5.4** Append log entry; local commit.
+- [x] **5.3** Metrics: mean and max questions per policy; % uniquely identified. Write `write_json(5, "results", ...)`, `write_md(5, "summary", ...)`.
+- [x] **5.4** Append log entry; local commit.
 
 ### Acceptance
 - Both policies run on all 20 targets. **Expected:** entropy mean ≤ random mean. If entropy is worse, ⚠️ ESCALATE before logging.
