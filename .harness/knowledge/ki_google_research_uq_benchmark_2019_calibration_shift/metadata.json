@@ -58,6 +58,14 @@
       "derived": true,
       "confidence": 0.88,
       "description": "Provides accuracy-vs-threshold selectivity evaluation and Brier resolution/reliability diagnostics"
+    },
+    {
+      "type": "references_code",
+      "target": "harness.services.uncertainty_guard",
+      "target_kind": "module",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Backfilled canonical module edge (spider follow-up Phase 1 / P0)"
     }
   ],
   "isnad": {

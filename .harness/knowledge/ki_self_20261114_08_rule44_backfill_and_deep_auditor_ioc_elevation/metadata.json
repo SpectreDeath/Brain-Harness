@@ -37,6 +37,14 @@
       "derived": false,
       "confidence": 1.0,
       "description": "Thin CLI skill script delegating directly to DefaultDeepRepoAuditorService"
+    },
+    {
+      "type": "references_code",
+      "target": "harness.services.deep_auditor",
+      "target_kind": "module",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Backfilled canonical module edge (spider follow-up Phase 1 / P0)"
     }
   ],
   "isnad": {

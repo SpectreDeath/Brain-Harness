@@ -22,6 +22,14 @@
       "derived": false,
       "confidence": 1.0,
       "description": "Parameter pass-through fix in PrologReasoner.query"
+    },
+    {
+      "type": "references_code",
+      "target": "harness.services.ontology_spider",
+      "target_kind": "module",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Backfilled canonical module edge (spider follow-up Phase 1 / P0)"
     }
   ],
   "isnad": {

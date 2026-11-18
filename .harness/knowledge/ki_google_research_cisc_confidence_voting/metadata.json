@@ -68,6 +68,22 @@
       "derived": true,
       "confidence": 0.85,
       "description": "Candidate confidence-weighted aggregation pattern for multi-trace verification and consensus"
+    },
+    {
+      "type": "references_code",
+      "target": "harness.services.uncertainty_guard",
+      "target_kind": "module",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Backfilled canonical module edge (spider follow-up Phase 1 / P0)"
+    },
+    {
+      "type": "references_code",
+      "target": "harness.agent.swarm.consensus",
+      "target_kind": "module",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Backfilled canonical module edge (spider follow-up Phase 1 / P0)"
     }
   ],
   "isnad": {

@@ -54,7 +54,7 @@ A 🧑 **HUMAN CHECKPOINT** must never present the user with a single list longe
 ## 1. Progress Tracker
 
 - [x] **Phase 0** — Baseline verification & `ACTION_LOG.md` scaffolding
-- [ ] **Phase 1** — P0: Vault `references_code` backfill & module-ID edge normalization (`0.33 -> >= 0.85` F1)
+- [x] **Phase 1** — P0: Vault `references_code` backfill & module-ID edge normalization (`0.33 -> >= 0.85` F1)
 - [ ] **Phase 2** — P1: Evidence-grounded CISC swarm voting & ASPEST confidence-band escalation
 - [ ] **Phase 3** — P1: Break `ui <-> commands` cycle & `services/` upward leaks (zero kernel edits)
 - [ ] **Phase 4** — P1 (Arch): Decouple `kernel/runtime/` composition root & verify SCC reduction
@@ -132,17 +132,17 @@ flowchart LR
 **Depends on:** Phase 0. **Model tier:** low for adapter/tests; human checkpoint for vault writes.
 
 ### Steps
-- [ ] **1.1** Inspect `_extract_item_and_edges()` and `_sanitize_identifier()` in `plugins/memory_and_epistemics/ontology_spider/adapter.py`, plus `experiments/spider_decisions/retrieval.py` and `experiments/spider_decisions/p06_eval_retrieval.py`.
-- [ ] **1.2** Add failing tests in `tests/test_ontology_spider_adapter_fixes.py`:
+- [x] **1.1** Inspect `_extract_item_and_edges()` and `_sanitize_identifier()` in `plugins/memory_and_epistemics/ontology_spider/adapter.py`, plus `experiments/spider_decisions/retrieval.py` and `experiments/spider_decisions/p06_eval_retrieval.py`.
+- [x] **1.2** Add failing tests in `tests/test_ontology_spider_adapter_fixes.py`:
   - `test_code_edge_normalizes_src_module_paths` — a KI edge (`references_code` or `applicable_to`) targeting `src/harness/services/uncertainty_guard.py` or `src/harness/services/deep_auditor/__init__.py` emits a canonical `references_code` relation to `harness_services_uncertainty_guard` / `harness_services_deep_auditor` while preserving the original assertion.
   - `test_code_edge_strips_src_prefix_and_py_suffix` — pre-sanitized targets like `src_harness_services_uncertainty_guard_py` also emit canonical `harness_services_uncertainty_guard`.
-- [ ] **1.3** Implement canonical module-ID normalization in `plugins/memory_and_epistemics/ontology_spider/adapter.py` (narrow helper converting `src/<pkg>/<mod>.py` or `src_<pkg>_<mod>_py` and package `__init__.py` paths on `references_code`/`applicable_to` edges into canonical `<pkg>_<mod>` module targets without breaking existing relations).
-- [ ] **1.4** 🧑 **HUMAN CHECKPOINT (2 batches of 6 `<= 8`)** — Present the 12 proposed edges from `experiments/spider_decisions/results/p06/edge_backfill_proposal.md` in two batches of 6:
+- [x] **1.3** Implement canonical module-ID normalization in `plugins/memory_and_epistemics/ontology_spider/adapter.py` (narrow helper converting `src/<pkg>/<mod>.py` or `src_<pkg>_<mod>_py` and package `__init__.py` paths on `references_code`/`applicable_to` edges into canonical `<pkg>_<mod>` module targets without breaking existing relations).
+- [x] **1.4** 🧑 **HUMAN CHECKPOINT (2 batches of 6 `<= 8`)** — Present the 12 proposed edges from `experiments/spider_decisions/results/p06/edge_backfill_proposal.md` in two batches of 6:
   - **Batch A (rows 1–6):** `ki_google_research_cisc_confidence_voting`, `ki_google_research_uq_benchmark_2019_calibration_shift`, `ki_njoku_uncertainty_aware_systems` → `harness_services_uncertainty_guard`; `ki_20260831_strategify_04`, `ki_audit_20260908_03`, `ki_google_research_cisc_confidence_voting` → `harness_agent_swarm_consensus`.
   - **Batch B (rows 7–12):** `ki_self_20260831_01` → `harness_agent_swarm_consensus`; `ki_self_20261109_01_*`, `ki_self_20261109_02_*`, `ki_self_20261109_04_*` → `harness_services_ontology_spider`; `ki_self_20260907_01`, `ki_self_20261114_08_*` → `harness_services_deep_auditor`.
   Apply **only** user-approved `references_code` edges to each `.harness/knowledge/<ki_id>/metadata.json`.
-- [ ] **1.5** Refresh `experiments/spider_decisions/results/snapshots/vault.json` and re-run `experiments/spider_decisions/p06_eval_retrieval.py`. Record updated macro P/R/F1 vs `0.40/0.30/0.3333`.
-- [ ] **1.6** Run quality gates (`ruff check .`, `pytest tests/test_ontology_spider_adapter_fixes.py tests/test_ontology_spider_service.py tests/test_service_storage_vault_integrity.py -q`), append `ACTION_LOG.md`, local commit `feat(spider-followup): phase 1 backfill references_code and normalize module edges`.
+- [x] **1.5** Refresh `experiments/spider_decisions/results/snapshots/vault.json` and re-run `experiments/spider_decisions/p06_eval_retrieval.py`. Record updated macro P/R/F1 vs `0.40/0.30/0.3333`.
+- [x] **1.6** Run quality gates (`ruff check .`, `pytest tests/test_ontology_spider_adapter_fixes.py tests/test_ontology_spider_service.py tests/test_service_storage_vault_integrity.py -q`), append `ACTION_LOG.md`, local commit `feat(spider-followup): phase 1 backfill references_code and normalize module edges`.
 
 ### Outputs
 Updated `plugins/memory_and_epistemics/ontology_spider/adapter.py`, new tests in `tests/test_ontology_spider_adapter_fixes.py`, approved `references_code` edges in `.harness/knowledge/*/metadata.json`, refreshed `results/p06/metrics.json` & `summary.md`.

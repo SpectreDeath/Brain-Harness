@@ -68,6 +68,14 @@
       "derived": true,
       "confidence": 0.95,
       "description": null
+    },
+    {
+      "type": "references_code",
+      "target": "harness.agent.swarm.consensus",
+      "target_kind": "module",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Backfilled canonical module edge (spider follow-up Phase 1 / P0)"
     }
   ],
   "retrieval_count": 0,

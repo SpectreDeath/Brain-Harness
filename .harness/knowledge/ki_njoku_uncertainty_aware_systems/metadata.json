@@ -21,7 +21,16 @@
   "source_target": "How to Build AI Systems That Know When They Don't Know: A Practical Guide (Chidiebere Njoku, freeCodeCamp)",
   "detected_format": "raw_docs",
   "anchors": {},
-  "edges": [],
+  "edges": [
+    {
+      "type": "references_code",
+      "target": "harness.services.uncertainty_guard",
+      "target_kind": "module",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Backfilled canonical module edge (spider follow-up Phase 1 / P0)"
+    }
+  ],
   "isnad": {},
   "retrieval_count": 0,
   "success_count": 0,

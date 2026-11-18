@@ -101,3 +101,84 @@ def test_vault_adapter_unwraps_nested_isnad_claims_and_disambiguates_collisions(
     assert audit.unverified_entities_count == 1
     assert audit.verified_entities_count == 3
     assert 0.0 < audit.isnad_verification_rate < 1.0
+
+
+@skip_if_no_engine
+def test_code_edge_normalizes_src_module_paths(tmp_path: Path) -> None:
+    """Path-style src/ module targets on applicable_to/references_code also emit canonical references_code."""
+    ki_dir = tmp_path / "ki_path_edges"
+    ki_dir.mkdir()
+    (ki_dir / "metadata.json").write_text(
+        json.dumps(
+            {
+                "id": "ki_path_edges",
+                "title": "Path Edge Normalization Test",
+                "category": "agent_orchestration",
+                "isnad": {"status": "VERIFIED"},
+                "edges": [
+                    {
+                        "type": "applicable_to",
+                        "target": "src/harness/services/uncertainty_guard.py",
+                        "target_kind": "module",
+                        "confidence": 0.85,
+                    },
+                    {
+                        "type": "references_code",
+                        "target": "src/harness/services/deep_auditor/__init__.py",
+                        "target_kind": "module",
+                        "confidence": 1.0,
+                    },
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    model = HarnessVaultModelSource(tmp_path).load()
+    triples = {(a.relation.subject, a.relation.predicate, a.relation.object) for a in model.assertions.values()}
+
+    assert ("ki_path_edges", "references_code", "harness_services_uncertainty_guard") in triples
+    assert ("ki_path_edges", "references_code", "harness_services_deep_auditor") in triples
+    # Original raw edges are preserved
+    assert ("ki_path_edges", "applicable_to", "src_harness_services_uncertainty_guard_py") in triples
+    assert ("ki_path_edges", "references_code", "src_harness_services_deep_auditor___init___py") in triples
+
+
+@skip_if_no_engine
+def test_code_edge_strips_pre_sanitized_src_and_py_suffix(tmp_path: Path) -> None:
+    """Pre-sanitized src_*_py targets and dotted applicable_to module targets normalize cleanly without dupes."""
+    ki_dir = tmp_path / "ki_sanitized_edges"
+    ki_dir.mkdir()
+    (ki_dir / "metadata.json").write_text(
+        json.dumps(
+            {
+                "id": "ki_sanitized_edges",
+                "title": "Pre-Sanitized Edge Normalization Test",
+                "category": "agent_orchestration",
+                "isnad": {"status": "VERIFIED"},
+                "edges": [
+                    {"type": "references_code", "target": "src_harness_services_uncertainty_guard_py"},
+                    {"type": "references_code", "target": "src/harness/services/uncertainty_guard.py"},
+                    {"type": "references_code", "target": "src_harness_services_deep_auditor___init___py"},
+                    {
+                        "type": "applicable_to",
+                        "target": "harness.services.vector_index",
+                        "target_kind": "module",
+                    },
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    model = HarnessVaultModelSource(tmp_path).load()
+    triples = [(a.relation.subject, a.relation.predicate, a.relation.object) for a in model.assertions.values()]
+    triple_set = set(triples)
+
+    assert ("ki_sanitized_edges", "references_code", "harness_services_uncertainty_guard") in triple_set
+    assert ("ki_sanitized_edges", "references_code", "harness_services_deep_auditor") in triple_set
+    assert ("ki_sanitized_edges", "references_code", "harness_services_vector_index") in triple_set
+    assert (
+        triples.count(("ki_sanitized_edges", "references_code", "harness_services_uncertainty_guard")) == 1
+    )
+

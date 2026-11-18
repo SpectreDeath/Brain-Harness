@@ -125,6 +125,44 @@ def _summarize_isnad(raw_isnad: Any) -> dict[str, Any]:
     }
 
 
+def _canonical_code_module_id(raw_dst: str, *, rel: str, target_kind: str) -> str | None:
+    """Derive a canonical underscored module ID from src/*.py, src_*_py, or module applicable_to targets."""
+    if rel not in ("references_code", "applicable_to"):
+        return None
+    raw = raw_dst.strip().replace("\\", "/")
+    if raw.startswith("./"):
+        raw = raw[2:]
+    if not raw:
+        return None
+
+    if raw.startswith("src/") and raw.endswith(".py"):
+        trimmed = raw[4:]
+        if trimmed.endswith("/__init__.py"):
+            trimmed = trimmed[: -len("/__init__.py")]
+        else:
+            trimmed = trimmed[: -len(".py")]
+        return _sanitize_identifier(trimmed) if trimmed else None
+
+    if "/" not in raw and "." not in raw and raw.startswith("src_") and raw.endswith("_py"):
+        trimmed = raw[4:]
+        if trimmed.endswith("___init___py"):
+            trimmed = trimmed[: -len("___init___py")]
+        elif trimmed.endswith("__init___py"):
+            trimmed = trimmed[: -len("__init___py")]
+        else:
+            trimmed = trimmed[: -len("_py")]
+        return _sanitize_identifier(trimmed) if trimmed else None
+
+    if (
+        rel == "applicable_to"
+        and "/" not in raw
+        and (target_kind == "module" or raw.startswith(("harness.", "plugins.")))
+    ):
+        return _sanitize_identifier(raw)
+
+    return None
+
+
 def _extract_item_and_edges(
     data: dict[str, Any],
     fallback_id: str,
@@ -157,6 +195,7 @@ def _extract_item_and_edges(
         return _sanitize_identifier(raw_dst)
 
     extracted_edges: list[dict[str, Any]] = []
+    seen_edge_keys: set[tuple[str, str]] = set()
     for raw_edge in data.get("edges") or []:
         if not isinstance(raw_edge, dict):
             continue
@@ -170,24 +209,51 @@ def _extract_item_and_edges(
         raw_dst = str(raw_edge.get("target") or raw_edge.get("to") or raw_edge.get("object") or "")
         if not raw_dst:
             continue
-        extracted_edges.append(
-            {
-                "from": item_id,
-                "rel": rel,
-                "to": _target_id(raw_dst),
-                "target_kind": str(raw_edge.get("target_kind") or ""),
-                "valid_from": raw_edge.get("valid_from"),
-                "valid_until": raw_edge.get("valid_until"),
-                "metadata": {
-                    "confidence": conf,
-                    "description": raw_edge.get("description") or "",
-                    "raw_target": raw_dst,
-                    "target_kind": raw_edge.get("target_kind") or "",
+        primary_dst = _target_id(raw_dst)
+        target_kind = str(raw_edge.get("target_kind") or "")
+        if (rel, primary_dst) not in seen_edge_keys:
+            seen_edge_keys.add((rel, primary_dst))
+            extracted_edges.append(
+                {
+                    "from": item_id,
+                    "rel": rel,
+                    "to": primary_dst,
+                    "target_kind": target_kind,
                     "valid_from": raw_edge.get("valid_from"),
                     "valid_until": raw_edge.get("valid_until"),
-                },
-            }
-        )
+                    "metadata": {
+                        "confidence": conf,
+                        "description": raw_edge.get("description") or "",
+                        "raw_target": raw_dst,
+                        "target_kind": target_kind,
+                        "valid_from": raw_edge.get("valid_from"),
+                        "valid_until": raw_edge.get("valid_until"),
+                    },
+                }
+            )
+        canonical_dst = _canonical_code_module_id(raw_dst, rel=rel, target_kind=target_kind)
+        if canonical_dst and ("references_code", canonical_dst) not in seen_edge_keys:
+            seen_edge_keys.add(("references_code", canonical_dst))
+            canon_kind = target_kind or "module"
+            extracted_edges.append(
+                {
+                    "from": item_id,
+                    "rel": "references_code",
+                    "to": canonical_dst,
+                    "target_kind": canon_kind,
+                    "valid_from": raw_edge.get("valid_from"),
+                    "valid_until": raw_edge.get("valid_until"),
+                    "metadata": {
+                        "confidence": conf,
+                        "description": raw_edge.get("description") or "",
+                        "raw_target": raw_dst,
+                        "target_kind": canon_kind,
+                        "normalized_from_rel": rel,
+                        "valid_from": raw_edge.get("valid_from"),
+                        "valid_until": raw_edge.get("valid_until"),
+                    },
+                }
+            )
 
     for dep in data.get("dependencies") or []:
         dep_target = dep if isinstance(dep, str) else (dep.get("id") if isinstance(dep, dict) else "")
