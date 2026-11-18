@@ -39,7 +39,7 @@ dev = [
     "youtube-transcript-api>=0.6.0",
     "jsonschema>=4.20.0",
     "numpy>=1.26.0",
-    "scipy>=1.10.0",
+    "scipy>=1.17.1",
     "magika>=0.5.0",
     "ontology-spider @ git+https://github.com/SpectreDeath/Ontology-Spider.git",
 ]
