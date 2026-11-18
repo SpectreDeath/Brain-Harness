@@ -1,0 +1,232 @@
+{
+  "per_module": [
+    {
+      "module": "harness.services.vector_index",
+      "gold_kis": [
+        "ki_google_research_scann_anisotropic_vq"
+      ],
+      "hop0_hits": [
+        [
+          "ki_google_research_scann_anisotropic_vq",
+          0,
+          "references_code"
+        ]
+      ],
+      "hop1_hits": [
+        [
+          "ki_google_research_scann_anisotropic_vq",
+          0,
+          "references_code"
+        ]
+      ],
+      "hop0": {
+        "tp": 1,
+        "retrieved_count": 1,
+        "gold_count": 1,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "hop1": {
+        "tp": 1,
+        "retrieved_count": 1,
+        "gold_count": 1,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "grep_baseline": {
+        "tp": 1,
+        "retrieved_count": 1,
+        "gold_count": 1,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    },
+    {
+      "module": "harness.services.uncertainty_guard",
+      "gold_kis": [
+        "ki_google_research_aspest_active_selective_prediction",
+        "ki_google_research_cisc_confidence_voting",
+        "ki_google_research_uq_benchmark_2019_calibration_shift",
+        "ki_njoku_uncertainty_aware_systems"
+      ],
+      "hop0_hits": [
+        [
+          "ki_google_research_aspest_active_selective_prediction",
+          0,
+          "references_code"
+        ]
+      ],
+      "hop1_hits": [
+        [
+          "ki_google_research_aspest_active_selective_prediction",
+          0,
+          "references_code"
+        ],
+        [
+          "ki_google_research_uq_benchmark_2019_calibration_shift",
+          1,
+          "related_to"
+        ]
+      ],
+      "hop0": {
+        "tp": 1,
+        "retrieved_count": 1,
+        "gold_count": 4,
+        "precision": 1.0,
+        "recall": 0.25,
+        "f1": 0.4
+      },
+      "hop1": {
+        "tp": 2,
+        "retrieved_count": 2,
+        "gold_count": 4,
+        "precision": 1.0,
+        "recall": 0.5,
+        "f1": 0.6667
+      },
+      "grep_baseline": {
+        "tp": 3,
+        "retrieved_count": 3,
+        "gold_count": 4,
+        "precision": 1.0,
+        "recall": 0.75,
+        "f1": 0.8571
+      }
+    },
+    {
+      "module": "harness.agent.swarm.consensus",
+      "gold_kis": [
+        "ki_20260831_strategify_04",
+        "ki_audit_20260908_03",
+        "ki_google_research_cisc_confidence_voting",
+        "ki_self_20260831_01"
+      ],
+      "hop0_hits": [],
+      "hop1_hits": [],
+      "hop0": {
+        "tp": 0,
+        "retrieved_count": 0,
+        "gold_count": 4,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "hop1": {
+        "tp": 0,
+        "retrieved_count": 0,
+        "gold_count": 4,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "grep_baseline": {
+        "tp": 4,
+        "retrieved_count": 7,
+        "gold_count": 4,
+        "precision": 0.5714,
+        "recall": 1.0,
+        "f1": 0.7273
+      }
+    },
+    {
+      "module": "harness.services.ontology_spider",
+      "gold_kis": [
+        "ki_self_20261109_01_bounded_bfs_explanation_provenance",
+        "ki_self_20261109_02_reasoner_parameter_propagation_invariant",
+        "ki_self_20261109_04_noisy_neighbor_benchmark_budget_calibration"
+      ],
+      "hop0_hits": [],
+      "hop1_hits": [],
+      "hop0": {
+        "tp": 0,
+        "retrieved_count": 0,
+        "gold_count": 3,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "hop1": {
+        "tp": 0,
+        "retrieved_count": 0,
+        "gold_count": 3,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "grep_baseline": {
+        "tp": 3,
+        "retrieved_count": 3,
+        "gold_count": 3,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      }
+    },
+    {
+      "module": "harness.services.deep_auditor",
+      "gold_kis": [
+        "ki_self_20260907_01",
+        "ki_self_20261114_08_rule44_backfill_and_deep_auditor_ioc_elevation"
+      ],
+      "hop0_hits": [],
+      "hop1_hits": [],
+      "hop0": {
+        "tp": 0,
+        "retrieved_count": 0,
+        "gold_count": 2,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "hop1": {
+        "tp": 0,
+        "retrieved_count": 0,
+        "gold_count": 2,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "grep_baseline": {
+        "tp": 2,
+        "retrieved_count": 3,
+        "gold_count": 2,
+        "precision": 0.6667,
+        "recall": 1.0,
+        "f1": 0.8
+      }
+    }
+  ],
+  "macro_average": {
+    "hop0": {
+      "precision": 0.4,
+      "recall": 0.25,
+      "f1": 0.28
+    },
+    "hop1": {
+      "precision": 0.4,
+      "recall": 0.3,
+      "f1": 0.3333
+    },
+    "grep_baseline": {
+      "precision": 0.8476,
+      "recall": 0.95,
+      "f1": 0.8769
+    }
+  },
+  "sparsity": {
+    "unique_gold_kis": 13,
+    "gold_kis_with_zero_references_code": 6,
+    "gold_kis_without_any_ref_list": [
+      "ki_20260831_strategify_04",
+      "ki_google_research_cisc_confidence_voting",
+      "ki_google_research_uq_benchmark_2019_calibration_shift",
+      "ki_njoku_uncertainty_aware_systems",
+      "ki_self_20260831_01",
+      "ki_self_20260907_01"
+    ],
+    "missing_module_edges_count": 12
+  }
+}

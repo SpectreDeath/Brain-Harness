@@ -45,3 +45,9 @@ Template for per-phase entries:
 - Key metric(s): On top-20 grm candidates: entropy policy mean=1.80 questions (max=2, 100.0% unique); random policy mean=3.65 questions (max=7, 100.0% unique).
 - Finding(s): Shannon/Laya classification_score halved average narrowing questions (1.80 vs 3.65) and cut worst-case depth from 7 to 2 with 20/20 unique identification.
 - Follow-ups: Run Phase 6.1 draft answer key for Brain Harness module KI retrieval.
+
+## Phase 6 — KI Retrieval for a Code Change (2026-11-18T16:13:54+00:00)
+- Outcome: PASS
+- Key metric(s): Macro P/R/F1 across 5 modules -> hop0: 0.4000/0.2500/0.2800; hop1: 0.4000/0.3000/0.3333; grep_baseline: 0.8476/0.9500/0.8769.
+- Finding(s): 6/13 unique gold KIs have zero references_code edges, and others target file/engine identifiers (src_*_py, ontology_spider_engine) or use applicable_to rather than canonical dotted module ids; proposed 12 backfill edges without mutating vault.
+- Follow-ups: Run Phase 7 evidence gathering and design-choice arbitration memos.

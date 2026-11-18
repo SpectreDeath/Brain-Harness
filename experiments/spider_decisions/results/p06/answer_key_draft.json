@@ -1,0 +1,113 @@
+{
+  "counts": {
+    "harness.services.vector_index": 1,
+    "harness.services.uncertainty_guard": 3,
+    "harness.agent.swarm.consensus": 7,
+    "harness.services.ontology_spider": 3,
+    "harness.services.deep_auditor": 3
+  },
+  "rows": [
+    {
+      "module": "harness.services.vector_index",
+      "ki_id": "ki_google_research_scann_anisotropic_vq",
+      "ki_title": "Google Research ScaNN: Three-Phase Vector Search, Anisotropic Quantization & SOAR Overretrieval",
+      "where_mentioned": "metadata.json+summary.md"
+    },
+    {
+      "module": "harness.services.uncertainty_guard",
+      "ki_id": "ki_google_research_aspest_active_selective_prediction",
+      "ki_title": "Google Research ASPEST: Bridging Active Sample Acquisition & Selective Prediction via Checkpoint Ensembles",
+      "where_mentioned": "metadata.json+summary.md"
+    },
+    {
+      "module": "harness.services.uncertainty_guard",
+      "ki_id": "ki_google_research_cisc_confidence_voting",
+      "ki_title": "Google Research CISC: Confidence-Informed Self-Consistency & Within-Question Discrimination (WQD)",
+      "where_mentioned": "metadata.json+summary.md"
+    },
+    {
+      "module": "harness.services.uncertainty_guard",
+      "ki_id": "ki_google_research_uq_benchmark_2019_calibration_shift",
+      "ki_title": "Google Research UQ Benchmark 2019: Predictive Uncertainty Under Dataset Shift, Brier Decomposition & Confidence-Threshold Coverage",
+      "where_mentioned": "metadata.json"
+    },
+    {
+      "module": "harness.agent.swarm.consensus",
+      "ki_id": "ki-rea-reconstruction-obligations",
+      "ki_title": "Reconstruction Obligation Ledgers & Canonical Evidence Records",
+      "where_mentioned": "summary.md"
+    },
+    {
+      "module": "harness.agent.swarm.consensus",
+      "ki_id": "ki_20260831_strategify_04",
+      "ki_title": "Multi-Persona LLM Swarm Orchestration with Game-Theoretic Voting",
+      "where_mentioned": "metadata.json+summary.md"
+    },
+    {
+      "module": "harness.agent.swarm.consensus",
+      "ki_id": "ki_aslanyan_sixty_agent_patterns",
+      "ki_title": "The Eight Capabilities & Sixty Architectural Agent Patterns",
+      "where_mentioned": "summary.md"
+    },
+    {
+      "module": "harness.agent.swarm.consensus",
+      "ki_id": "ki_audit_20260908_03",
+      "ki_title": "Blast Radius Registry \u2014 Critical Seam Nodes",
+      "where_mentioned": "summary.md"
+    },
+    {
+      "module": "harness.agent.swarm.consensus",
+      "ki_id": "ki_google_research_cisc_confidence_voting",
+      "ki_title": "Google Research CISC: Confidence-Informed Self-Consistency & Within-Question Discrimination (WQD)",
+      "where_mentioned": "metadata.json+summary.md"
+    },
+    {
+      "module": "harness.agent.swarm.consensus",
+      "ki_id": "ki_self_20260831_01",
+      "ki_title": "Formal Social Choice Aggregation for Multi-Persona Agent Swarms",
+      "where_mentioned": "metadata.json+summary.md"
+    },
+    {
+      "module": "harness.agent.swarm.consensus",
+      "ki_id": "ki_self_20260917_02",
+      "ki_title": "Three-Layer LLM Evaluation Architecture, Golden Regression Suites, and Paired T-Test Significance Gating",
+      "where_mentioned": "metadata.json+summary.md"
+    },
+    {
+      "module": "harness.services.ontology_spider",
+      "ki_id": "ki_self_20261109_01_bounded_bfs_explanation_provenance",
+      "ki_title": "Bounded BFS Explanation Provenance",
+      "where_mentioned": "metadata.json"
+    },
+    {
+      "module": "harness.services.ontology_spider",
+      "ki_id": "ki_self_20261109_02_reasoner_parameter_propagation_invariant",
+      "ki_title": "QuerySpec Parameter Pass-Through Invariant",
+      "where_mentioned": "metadata.json"
+    },
+    {
+      "module": "harness.services.ontology_spider",
+      "ki_id": "ki_self_20261109_04_noisy_neighbor_benchmark_budget_calibration",
+      "ki_title": "Noisy Neighbor Benchmark Budget Calibration",
+      "where_mentioned": "metadata.json"
+    },
+    {
+      "module": "harness.services.deep_auditor",
+      "ki_id": "ki_self_20260907_01",
+      "ki_title": "Deep-Module 3-Layer Architecture Graduation Pattern",
+      "where_mentioned": "metadata.json"
+    },
+    {
+      "module": "harness.services.deep_auditor",
+      "ki_id": "ki_self_20261114_07_ci_scoped_format_and_epistemic_gates",
+      "ki_title": "Scoped Ruff Formatting & Architectural/Epistemic Hygiene Gates in GitHub Actions CI",
+      "where_mentioned": "summary.md"
+    },
+    {
+      "module": "harness.services.deep_auditor",
+      "ki_id": "ki_self_20261114_08_rule44_backfill_and_deep_auditor_ioc_elevation",
+      "ki_title": "Rule 44 Zero-Fork Configuration Backfill and Deep Repo Auditor IoC Kernel Elevation",
+      "where_mentioned": "metadata.json+summary.md"
+    }
+  ]
+}

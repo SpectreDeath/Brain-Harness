@@ -62,7 +62,7 @@
 - [x] **Phase 3** — Domain blind-spot analysis (#2)
 - [x] **Phase 4** — Next-5 learning targets (#1)
 - [x] **Phase 5** — Entropy-driven question selection (#3)
-- [ ] **Phase 6** — KI retrieval for a code change (#4)
+- [x] **Phase 6** — KI retrieval for a code change (#4)
 - [ ] **Phase 7** — Design-choice arbitration memos (#5)
 - [ ] **Phase 8** — Plugin vs KI-only vs Skip classifier (#6)
 - [ ] **Phase 9** — Brain Harness refactor ordering (#10)
@@ -371,25 +371,25 @@ Generic **unit names** also pollute "unlearned target" lists: `python`, `tests`,
 `harness.services.ontology_spider`, `harness.services.deep_auditor`.
 
 ### Steps
-- [ ] **6.1** Create `p06_answer_key_draft.py`: for each module, list KIs that mention it anywhere (case-insensitive
+- [x] **6.1** Create `p06_answer_key_draft.py`: for each module, list KIs that mention it anywhere (case-insensitive
   substring of the dotted path **or** its last segment, e.g. `vector_index`) in `metadata.json` or `summary.md`.
   Write `write_md(6, "answer_key_sheet", ...)` with columns `module | ki_id | ki_title | where_mentioned | RELEVANT (Y/N)`.
-- [ ] **6.2** 🧑 **HUMAN CHECKPOINT** — Ask the user to fill `RELEVANT`, and to add any KI they know is relevant but
+- [x] **6.2** 🧑 **HUMAN CHECKPOINT** — Ask the user to fill `RELEVANT`, and to add any KI they know is relevant but
   missing. Save to `write_json(6, "answer_key", ...)`.
-- [ ] **6.3** Create `experiments/spider_decisions/retrieval.py` with
+- [x] **6.3** Create `experiments/spider_decisions/retrieval.py` with
   `retrieve_kis(vault_model, module_dotted: str, *, hops: int = 1) -> list[tuple[str, int, str]]` returning
   `(ki_id, hop_distance, via_predicate)`:
   - Hop 0: KIs with a `references_code` assertion whose object equals the sanitized module id
     (dots → underscores; also try with a `plugins_` prefix variant if present in the model).
   - Hop 1: KIs connected to a hop-0 KI by `related_to` or `same_domain` (either direction).
   - Deduplicate, keeping the minimum hop.
-- [ ] **6.4** Create `p06_eval_retrieval.py`: for each module compute precision, recall, and F1 of `retrieve_kis`
+- [x] **6.4** Create `p06_eval_retrieval.py`: for each module compute precision, recall, and F1 of `retrieve_kis`
   at hops 0 and 1 vs the answer key. Baseline: the substring-grep list from 6.1 (before human filtering).
   Write `write_json(6, "metrics", ...)`, `write_md(6, "summary", ...)`.
-- [ ] **6.5** Edge-coverage finding: report how many answer-key KIs have **no** `references_code` edge at all
+- [x] **6.5** Edge-coverage finding: report how many answer-key KIs have **no** `references_code` edge at all
   (expected: many — this is the known sparsity). Propose (do **not** apply) a list of `references_code` edges to
   backfill in `write_md(6, "edge_backfill_proposal", ...)`.
-- [ ] **6.6** Append log entry; local commit.
+- [x] **6.6** Append log entry; local commit.
 
 ### Acceptance
 - Metrics computed for all 5 modules at both hop levels. Low recall is an acceptable **finding**, not a failure.
