@@ -58,7 +58,7 @@
 
 - [x] **Phase 0** — Scaffolding, shared helpers & frozen snapshots
 - [x] **Phase 1** — False-bridge audit & fix (use case #8)
-- [ ] **Phase 2** — Re-snapshot after fix + vault hygiene: duplicates (#9) & unverified-KI priority (#7)
+- [x] **Phase 2** — Re-snapshot after fix + vault hygiene: duplicates (#9) & unverified-KI priority (#7)
 - [ ] **Phase 3** — Domain blind-spot analysis (#2)
 - [ ] **Phase 4** — Next-5 learning targets (#1)
 - [ ] **Phase 5** — Entropy-driven question selection (#3)
@@ -246,15 +246,15 @@ Generic **unit names** also pollute "unlearned target" lists: `python`, `tests`,
 **Depends on:** Phase 1. **Model tier:** low.
 
 ### Steps
-- [ ] **2.1** Re-run `p00_snapshot.py` (refresh all) and `p00_roundtrip_check.py`. Copy the new manifest to
+- [x] **2.1** Re-run `p00_snapshot.py` (refresh all) and `p00_roundtrip_check.py`. Copy the new manifest to
   `write_json(2, "snapshot_manifest_post_fix", ...)`. From here on, every phase loads snapshots with `refresh=False`.
-- [ ] **2.2** Create `p02_unverified_priority.py` (**#7**):
+- [x] **2.2** Create `p02_unverified_priority.py` (**#7**):
   - From `load_vault_model()`, list entities with `isnad_verified is False`.
   - For each, compute **in-degree** = number of assertions whose `object` is that entity id (use
     `model.get_incoming(eid)`), and list which KIs point to it.
   - Score = in-degree; tie-break by number of tags, then id. Rank descending.
   - Write `write_json(2, "unverified_priority", ranked)` and a top-20 table `write_md(2, "unverified_priority", ...)`.
-- [ ] **2.3** Create `p02_duplicates.py` (**#9**):
+- [x] **2.3** Create `p02_duplicates.py` (**#9**):
   - Load every `VAULT/*/metadata.json`. Candidate duplicate pairs are KI pairs that:
     (a) share the same non-empty normalized `source_target` **and** have tag Jaccard ≥ 0.5, **or**
     (b) have tag Jaccard ≥ 0.7 with ≥ 3 tags each.
@@ -263,9 +263,9 @@ Generic **unit names** also pollute "unlearned target" lists: `python`, `tests`,
     them separately as `intentional_siblings`.
   - Write `write_json(2, "duplicate_candidates", ...)` and `write_md(2, "duplicate_review_sheet", ...)` with a
     `DECISION (merge / keep / supersede)` column.
-- [ ] **2.4** 🧑 **HUMAN CHECKPOINT** — Ask the user to review both sheets. **Do not edit any KI.** Record the user's
+- [x] **2.4** 🧑 **HUMAN CHECKPOINT** — Ask the user to review both sheets. **Do not edit any KI.** Record the user's
   decisions (if any) verbatim in `write_md(2, "human_decisions", ...)`. Executing merges is **out of scope** for this plan.
-- [ ] **2.5** Append log entry with: number of unverified KIs, top-5 priority ids, number of duplicate candidates,
+- [x] **2.5** Append log entry with: number of unverified KIs, top-5 priority ids, number of duplicate candidates,
   number the user confirmed. Local commit.
 
 ### Acceptance

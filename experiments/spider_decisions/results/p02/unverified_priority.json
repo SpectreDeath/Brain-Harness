@@ -1,0 +1,1655 @@
+[
+  {
+    "id": "ki_solla_dmbok_governance_decision_rights",
+    "raw_id": "ki_solla_dmbok_governance_decision_rights",
+    "title": "Data Governance, Stewardship Roles, and RACI Decision Rights",
+    "category": "data_engineering",
+    "in_degree": 2,
+    "tag_count": 8,
+    "tags": [
+      "data_governance",
+      "data_stewardship",
+      "data_ownership",
+      "decision_rights",
+      "raci_matrix",
+      "data_classification",
+      "solla",
+      "dmbok"
+    ],
+    "pointing_kis": [
+      "ki_solla_contract_first_medallion_lakehouse",
+      "ki_solla_dikw_data_asset_continuum"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_solla_contract_first_medallion_lakehouse",
+        "predicate": "same_domain"
+      },
+      {
+        "subject": "ki_solla_dikw_data_asset_continuum",
+        "predicate": "same_domain"
+      }
+    ],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 1
+  },
+  {
+    "id": "ki_njoku_uncertainty_aware_systems",
+    "raw_id": "ki_njoku_uncertainty_aware_systems",
+    "title": "Deterministic 3-Layer Uncertainty Interception & Overconfidence Mitigation",
+    "category": "agent_orchestration",
+    "in_degree": 2,
+    "tag_count": 7,
+    "tags": [
+      "uncertainty",
+      "rag",
+      "logit_analysis",
+      "boundary_detection",
+      "hallucination_prevention",
+      "hitl",
+      "njoku"
+    ],
+    "pointing_kis": [
+      "ki_google_research_cisc_confidence_voting",
+      "ki_google_research_uq_benchmark_2019_calibration_shift"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_google_research_cisc_confidence_voting",
+        "predicate": "same_domain"
+      },
+      {
+        "subject": "ki_google_research_uq_benchmark_2019_calibration_shift",
+        "predicate": "same_domain"
+      }
+    ],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 2
+  },
+  {
+    "id": "ki_agent_skills_progressive_disclosure",
+    "raw_id": "ki_agent_skills_progressive_disclosure",
+    "title": "Agent Skills Progressive Disclosure & Loose Constraint Architecture",
+    "category": "agent_orchestration",
+    "in_degree": 1,
+    "tag_count": 7,
+    "tags": [
+      "agent_skills",
+      "progressive_disclosure",
+      "loose_constraints",
+      "portable_plans",
+      "react_vs_graphs",
+      "warfield",
+      "menshykh"
+    ],
+    "pointing_kis": [
+      "ki_20260913_pr_lens_eli5_pedagogy"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_20260913_pr_lens_eli5_pedagogy",
+        "predicate": "same_domain"
+      }
+    ],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 3
+  },
+  {
+    "id": "ki_self_20260907_02",
+    "raw_id": "ki_self_20260907_02",
+    "title": "Windows PowerShell Scratch Script Execution & JSON Null-Field Salvage",
+    "category": "infrastructure_and_runtime/platform",
+    "in_degree": 1,
+    "tag_count": 7,
+    "tags": [
+      "endogenous_memory",
+      "self_reflection",
+      "windows",
+      "powershell",
+      "json",
+      "salvage",
+      "book-to-skill-forge"
+    ],
+    "pointing_kis": [
+      "ki_20260823_03"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_20260823_03",
+        "predicate": "same_domain"
+      }
+    ],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 4
+  },
+  {
+    "id": "ki_self_20260907_03",
+    "raw_id": "ki_self_20260907_03",
+    "title": "Click CLI Group Single-Source Co-Registration Invariant",
+    "category": "developer_experience/architecture",
+    "in_degree": 1,
+    "tag_count": 7,
+    "tags": [
+      "endogenous_memory",
+      "self_reflection",
+      "click",
+      "cli",
+      "ioc",
+      "commands",
+      "registration"
+    ],
+    "pointing_kis": [
+      "ki_cli_decomposition_pattern"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_cli_decomposition_pattern",
+        "predicate": "same_domain"
+      }
+    ],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 5
+  },
+  {
+    "id": "ki_solla_dikw_data_asset_continuum",
+    "raw_id": "ki_solla_dikw_data_asset_continuum",
+    "title": "The DIKW Pyramid & Data Lifecycle Asset Progression",
+    "category": "data_engineering",
+    "in_degree": 1,
+    "tag_count": 6,
+    "tags": [
+      "data_management",
+      "dikw_pyramid",
+      "data_asset",
+      "data_lifecycle",
+      "solla",
+      "dmbok"
+    ],
+    "pointing_kis": [
+      "ki_solla_contract_first_medallion_lakehouse"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_solla_contract_first_medallion_lakehouse",
+        "predicate": "same_domain"
+      }
+    ],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 6
+  },
+  {
+    "id": "ki_20261014_70_cycle_deepening_corpus",
+    "raw_id": "ki_20261014_70_cycle_deepening_corpus",
+    "title": "Empirical 70-Cycle Architecture Deepening and Monolith Decomposition Corpus",
+    "category": "developer_experience/architecture",
+    "in_degree": 1,
+    "tag_count": 4,
+    "tags": [
+      "architecture_deepening",
+      "decomposition",
+      "monolith",
+      "slotted_models"
+    ],
+    "pointing_kis": [
+      "ki_deepening_cycle_history"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_deepening_cycle_history",
+        "predicate": "same_domain"
+      }
+    ],
+    "isnad_count": 3,
+    "verified_isnad_count": 0,
+    "rank": 7
+  },
+  {
+    "id": "ki_google_repos_bridge",
+    "raw_id": "ki_google_repos_bridge",
+    "title": "Google Multi-Repository Architectural Bridge & Plugin Suite",
+    "category": "developer_experience",
+    "in_degree": 1,
+    "tag_count": 4,
+    "tags": [
+      "google_repos",
+      "bridge",
+      "plugin_suite",
+      "architecture"
+    ],
+    "pointing_kis": [
+      "ki_google_research_imp_multimodal_config_registry"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_google_research_imp_multimodal_config_registry",
+        "predicate": "related_to"
+      }
+    ],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 8
+  },
+  {
+    "id": "ki_google_agent_skills_enterprise_evals",
+    "raw_id": "ki_google_agent_skills_enterprise_evals",
+    "title": "Google Enterprise Agent Skills: Continuous Evals & Product Governance",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 8,
+    "tags": [
+      "google_agent_skills",
+      "continuous_evals",
+      "eval_matrix",
+      "accuracy_uplift",
+      "efficiency_uplift",
+      "product_governance",
+      "ci_cd_gates",
+      "samborski"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 9
+  },
+  {
+    "id": "ki_self_20260905_08",
+    "raw_id": "ki_self_20260905_08",
+    "title": "AI-Assisted Codebase Archaeology & Characterization Testing Before Refactoring",
+    "category": "developer_experience/architecture",
+    "in_degree": 0,
+    "tag_count": 8,
+    "tags": [
+      "legacy_modernization",
+      "characterization_testing",
+      "codebase_archaeology",
+      "seam_introduction",
+      "refactoring_safety_nets",
+      "dual_lens_distillation",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 10
+  },
+  {
+    "id": "ki_solla_contract_first_medallion_lakehouse",
+    "raw_id": "ki_solla_contract_first_medallion_lakehouse",
+    "title": "Open Data Contracts and Contract-First Medallion Lakehouse Engineering",
+    "category": "data_engineering",
+    "in_degree": 0,
+    "tag_count": 8,
+    "tags": [
+      "data_contracts",
+      "medallion_architecture",
+      "lakehouse",
+      "data_pipelines",
+      "idempotency",
+      "odcs",
+      "solla",
+      "dmbok"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 11
+  },
+  {
+    "id": "ki_agent_skills_runtime_security_middleware",
+    "raw_id": "ki_agent_skills_runtime_security_middleware",
+    "title": "Agent Skills Runtime Security, Approval Middleware & Dynamic DI",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 7,
+    "tags": [
+      "runtime_security",
+      "tool_approval_middleware",
+      "read_only_tools",
+      "script_sandboxing",
+      "dependency_injection",
+      "microsoft_agent_framework",
+      "menshykh"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 12
+  },
+  {
+    "id": "ki_hf_autoresearch_multi_worker_lab",
+    "raw_id": "ki_hf_autoresearch_multi_worker_lab",
+    "title": "Multi-Agent Autoresearch AI Lab Architecture & Heterogeneous Model Workers",
+    "category": "scientific_computing/machine_learning",
+    "in_degree": 0,
+    "tag_count": 7,
+    "tags": [
+      "autoresearch",
+      "multi_worker",
+      "karpathy",
+      "hermes",
+      "codex",
+      "claude",
+      "huggingface"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 13
+  },
+  {
+    "id": "ki_hf_fastmcp_dynamic_tool_protocol",
+    "raw_id": "ki_hf_fastmcp_dynamic_tool_protocol",
+    "title": "FastMCP Universal Adapter Pattern & JSON-RPC Client-Server Transport Seams",
+    "category": "infrastructure_and_runtime/integration",
+    "in_degree": 0,
+    "tag_count": 7,
+    "tags": [
+      "mcp",
+      "fastmcp",
+      "json_rpc",
+      "transports",
+      "sse",
+      "stdio",
+      "gradio_mcp"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 14
+  },
+  {
+    "id": "ki_self_20260904_scratch_01",
+    "raw_id": "ki_self_20260904_scratch_01",
+    "title": "Headless Git Authentication, Credential Helper Exclamation Invariant & In-Memory Redaction",
+    "category": "security_and_forensics",
+    "in_degree": 0,
+    "tag_count": 7,
+    "tags": [
+      "git",
+      "authentication",
+      "credentials",
+      "headless",
+      "runner-isolation",
+      "redaction",
+      "endogenous_memory"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 15
+  },
+  {
+    "id": "ki_self_20260907_01",
+    "raw_id": "ki_self_20260907_01",
+    "title": "Deep-Module 3-Layer Architecture Graduation Pattern",
+    "category": "developer_experience/architecture",
+    "in_degree": 0,
+    "tag_count": 7,
+    "tags": [
+      "endogenous_memory",
+      "self_reflection",
+      "deep_module",
+      "ioc",
+      "architecture",
+      "harness-reflector",
+      "refactor-execution"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 16
+  },
+  {
+    "id": "ki_self_20260907_04",
+    "raw_id": "ki_self_20260907_04",
+    "title": "Architecture Deepening Loop Convergence & Verification Metrics",
+    "category": "developer_experience/velocity",
+    "in_degree": 0,
+    "tag_count": 7,
+    "tags": [
+      "endogenous_memory",
+      "self_reflection",
+      "performance",
+      "testing",
+      "deep_module",
+      "verification",
+      "deepen-architecture"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 17
+  },
+  {
+    "id": "ki_aslanyan_four_level_ladder",
+    "raw_id": "ki_aslanyan_four_level_ladder",
+    "title": "The Four-Level Ladder & Pre-Flight Agent Scoping Heuristics",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "agent_engineering",
+      "scoping",
+      "four_level_ladder",
+      "pre_flight_questions",
+      "architecture_heuristics",
+      "aslanyan"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 18
+  },
+  {
+    "id": "ki_epistemic_graph_traversal_evidence_boundary",
+    "raw_id": "ki_epistemic_graph_traversal_evidence_boundary",
+    "title": "Epistemic Graph Traversal and the Relation-vs-Inference Boundary",
+    "category": "data_engineering",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "knowledge_graphs",
+      "epistemic_traversal",
+      "evidence_boundary",
+      "neo4j",
+      "browsing_agents",
+      "temporal_graphs"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 19
+  },
+  {
+    "id": "ki_hf_lifecycle_hooks_guardrails_dashboard",
+    "raw_id": "ki_hf_lifecycle_hooks_guardrails_dashboard",
+    "title": "Bidirectional Agent Lifecycle Hook Events & Live Gradio Observability Telemetry",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "hooks",
+      "guardrails",
+      "security",
+      "telemetry",
+      "gradio",
+      "huggingface"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 20
+  },
+  {
+    "id": "ki_hf_nano_harness_react_sandboxing",
+    "raw_id": "ki_hf_nano_harness_react_sandboxing",
+    "title": "Minimal ReAct Autonomous Loops, Safe-Path Sandboxing & Bounded Error Self-Repair",
+    "category": "developer_experience/software_engineering",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "nano_harness",
+      "react_loop",
+      "sandboxing",
+      "safe_path",
+      "self_repair",
+      "huggingface"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 21
+  },
+  {
+    "id": "ki_hf_subagent_topology_patterns",
+    "raw_id": "ki_hf_subagent_topology_patterns",
+    "title": "Multi-Agent Subagent Coordination Topologies & The 10+ Files Context Boundary",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "subagents",
+      "swarms",
+      "fan_out_fan_in",
+      "supervisor",
+      "context_preservation",
+      "huggingface"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 22
+  },
+  {
+    "id": "ki_njoku_dynamic_model_routing",
+    "raw_id": "ki_njoku_dynamic_model_routing",
+    "title": "Three-Tier Dynamic Model Switching & Resilient Fallbacks",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "model_routing",
+      "fallbacks",
+      "resilience",
+      "cost_optimization",
+      "circuit_breaker",
+      "njoku"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 23
+  },
+  {
+    "id": "ki_self_20260902_01",
+    "raw_id": "ki_self_20260902_01",
+    "title": "PowerShell Multi-Line Python String Escaping & Scratch File Execution",
+    "category": "infrastructure_and_runtime",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "powershell",
+      "python",
+      "quoting",
+      "scratch-files",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 24
+  },
+  {
+    "id": "ki_self_20260902_02",
+    "raw_id": "ki_self_20260902_02",
+    "title": "PowerShell Argument Glob Non-Expansion & Keyword Filtering",
+    "category": "developer_experience/testing",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "powershell",
+      "globbing",
+      "pytest",
+      "testing",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 25
+  },
+  {
+    "id": "ki_self_20260902_04",
+    "raw_id": "ki_self_20260902_04",
+    "title": "F-String Brace Collision Avoidance in HTML Brief Generators",
+    "category": "developer_experience/visualization",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "python",
+      "f-strings",
+      "html-generation",
+      "templating",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 26
+  },
+  {
+    "id": "ki_self_20260904_scratch_02",
+    "raw_id": "ki_self_20260904_scratch_02",
+    "title": "Swarm Execution Composite Thread Keying & Session Manager Interface Contracts",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "swarm",
+      "session-manager",
+      "agent-graph",
+      "thread-dag",
+      "contract-invariants",
+      "endogenous_memory"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 27
+  },
+  {
+    "id": "ki_self_20260904_scratch_03",
+    "raw_id": "ki_self_20260904_scratch_03",
+    "title": "Typed ServiceContext Container Guarantee over Duck-Typed Introspection",
+    "category": "developer_experience/architecture",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "ioc",
+      "service-context",
+      "type-safety",
+      "seams",
+      "architecture-deepening",
+      "endogenous_memory"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 28
+  },
+  {
+    "id": "ki_self_20260905_01",
+    "raw_id": "ki_self_20260905_01",
+    "title": "Third-Party Engine Dual-API & Mock Spec Invariant",
+    "category": "developer_experience/testing",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "third-party-api",
+      "mocking",
+      "spec",
+      "youtube-transcript-api",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 29
+  },
+  {
+    "id": "ki_self_20260905_02",
+    "raw_id": "ki_self_20260905_02",
+    "title": "PluginValidator Coroutine & Dual-Mode Invocation Invariant",
+    "category": "developer_experience/architecture",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "asyncio",
+      "plugin-validator",
+      "dual-mode",
+      "coroutine",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 30
+  },
+  {
+    "id": "ki_self_20260905_03",
+    "raw_id": "ki_self_20260905_03",
+    "title": "Skill Knowledge Graph Parser & ASCII Single-Pipe Card Formatting",
+    "category": "developer_experience/skills",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "skill-card",
+      "parser",
+      "ascii-box",
+      "anti-patterns",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 31
+  },
+  {
+    "id": "ki_self_20260905_04",
+    "raw_id": "ki_self_20260905_04",
+    "title": "Dual-Lens Cognitive Partitioning & Multimedia Transcript Distillation",
+    "category": "developer_experience/architecture",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "multimodal",
+      "mind-reader",
+      "book-to-skill-forge",
+      "dual-lens",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 32
+  },
+  {
+    "id": "ki_self_20260905_05",
+    "raw_id": "ki_self_20260905_05",
+    "title": "Skill Card ASCII Header Tagging & Zero-Warning Platform Compliance",
+    "category": "developer_experience/architecture",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "craft_standards",
+      "card_formatting",
+      "ascii_tagging",
+      "validator",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 33
+  },
+  {
+    "id": "ki_self_20260905_06",
+    "raw_id": "ki_self_20260905_06",
+    "title": "Multi-Pass Cognitive String Salvage & AST Script Hygiene Inspection",
+    "category": "agent_orchestration/tooling",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "salvage_engine",
+      "json_repair",
+      "ast_hygiene",
+      "error_recovery",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 34
+  },
+  {
+    "id": "ki_self_20260905_07",
+    "raw_id": "ki_self_20260905_07",
+    "title": "Layered Zero-Fork Skill Configuration & AST Security Scoring Engine",
+    "category": "developer_experience/architecture",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "configuration",
+      "skillspector",
+      "ast_security",
+      "zero_fork",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 35
+  },
+  {
+    "id": "ki_solla_six_dimension_quality_observability",
+    "raw_id": "ki_solla_six_dimension_quality_observability",
+    "title": "The 6 DAMA Quality Dimensions and 5-Pillar Data Observability",
+    "category": "data_engineering",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "data_quality",
+      "quality_dimensions",
+      "data_observability",
+      "dama_dmbok",
+      "sli_slo",
+      "solla"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 36
+  },
+  {
+    "id": "ki_20261023_rea_01",
+    "raw_id": "ki_20261023_rea_01",
+    "title": "Zero-Allocation Binary Offset Seeking for High-Scale Model Artifact Inspection",
+    "category": "security_and_forensics",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "reverse-engineering",
+      "model-artifacts",
+      "gguf",
+      "safetensors",
+      "byte-offset-seek"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 37
+  },
+  {
+    "id": "ki_20261023_rea_02",
+    "raw_id": "ki_20261023_rea_02",
+    "title": "Multi-Version Magic Header Parsing & Section Map Validation for Unity IL2CPP",
+    "category": "security_and_forensics",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "reverse-engineering",
+      "unity",
+      "il2cpp",
+      "binary-headers",
+      "metadata"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 38
+  },
+  {
+    "id": "ki_20261023_rea_04",
+    "raw_id": "ki_20261023_rea_04",
+    "title": "Static Native Boundary Mapping for Managed CLI/PE Runtimes",
+    "category": "security_and_forensics",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "reverse-engineering",
+      "dotnet",
+      "pinvoke",
+      "pe-cli",
+      "native-boundaries"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 39
+  },
+  {
+    "id": "ki_antigravity_001",
+    "raw_id": "ki_antigravity_001",
+    "title": "Protobuf Struct Serialization & Wire Normalization",
+    "category": "data_engineering",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "antigravity",
+      "protobuf",
+      "serialization",
+      "wire-protocol",
+      "google-sdk"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 40
+  },
+  {
+    "id": "ki_antigravity_002",
+    "raw_id": "ki_antigravity_002",
+    "title": "4-Stage Hook Lifecycle & Tri-State Policy Evaluation",
+    "category": "security_and_forensics",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "antigravity",
+      "policy",
+      "security",
+      "hooks",
+      "lifecycle"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 41
+  },
+  {
+    "id": "ki_antigravity_003",
+    "raw_id": "ki_antigravity_003",
+    "title": "Hierarchical StateStore Shadowing with Scope Isolation",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "antigravity",
+      "state",
+      "shadowing",
+      "hierarchical-scope",
+      "subagents"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 42
+  },
+  {
+    "id": "ki_antigravity_004",
+    "raw_id": "ki_antigravity_004",
+    "title": "Reactive Wakeup Triggers & Non-Polling Background Events",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "antigravity",
+      "triggers",
+      "reactive",
+      "file-watcher",
+      "asyncio"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 43
+  },
+  {
+    "id": "ki_aslanyan_canonical_failures_antidotes",
+    "raw_id": "ki_aslanyan_canonical_failures_antidotes",
+    "title": "The Five Canonical Agent Failure Modes & Architectural Antidotes",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "failure_modes",
+      "debugging",
+      "architectural_antidotes",
+      "reliability",
+      "aslanyan"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 44
+  },
+  {
+    "id": "ki_aslanyan_sixty_agent_patterns",
+    "raw_id": "ki_aslanyan_sixty_agent_patterns",
+    "title": "The Eight Capabilities & Sixty Architectural Agent Patterns",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "agent_patterns",
+      "eight_capabilities",
+      "system_architecture",
+      "composition",
+      "aslanyan"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 45
+  },
+  {
+    "id": "ki_harness2_recursive_harnessing",
+    "raw_id": "ki-harness2-recursive-harnessing",
+    "title": "Recursive Agent Harnessing & Propose-Probe-Compose Architecture",
+    "category": "agent_orchestration/recursive_refinement",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "recursive_harnessing",
+      "propose_probe_compose",
+      "harness_optimization",
+      "evidence_isolation",
+      "experience_library"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 6,
+    "verified_isnad_count": 0,
+    "rank": 46
+  },
+  {
+    "id": "ki_hermes_002",
+    "raw_id": "ki_hermes_002",
+    "title": "FTS5 SQLite WAL Session Persistence & Compression Forking",
+    "category": "memory_and_epistemics",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "sqlite",
+      "fts5",
+      "wal",
+      "session-dag",
+      "compression"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 47
+  },
+  {
+    "id": "ki_hermes_004",
+    "raw_id": "ki_hermes_004",
+    "title": "Unattended Background Cron Scheduler & Incident Classification",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "cron",
+      "scheduler",
+      "unattended",
+      "incidents",
+      "blueprints"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 48
+  },
+  {
+    "id": "ki_hf_context_engineering_six_layer_stack",
+    "raw_id": "ki_hf_context_engineering_six_layer_stack",
+    "title": "The Six-Layer Context Engineering Stack for Autonomous Code Agents",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "context_engineering",
+      "agent_stack",
+      "progressive_disclosure",
+      "huggingface",
+      "burtenshaw"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 49
+  },
+  {
+    "id": "ki_hf_datasets_arrow_streaming",
+    "raw_id": "ki-hf-datasets-arrow-streaming",
+    "title": "PyArrow Memory-Mapped Zero-Copy Execution, Lazy Generator Streaming & xxhash Deterministic Caching in Hugging Face Datasets",
+    "category": "data_engineering",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "pyarrow",
+      "datasets",
+      "streaming",
+      "caching",
+      "zero_copy"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 4,
+    "verified_isnad_count": 0,
+    "rank": 50
+  },
+  {
+    "id": "ki_ontological_engineering_gruber_criteria",
+    "raw_id": "ki_ontological_engineering_gruber_criteria",
+    "title": "Gruber's 5 Criteria for Robust Knowledge Modeling",
+    "category": "data_engineering/modeling",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "ontology",
+      "knowledge_graphs",
+      "data_modeling",
+      "gruber_criteria",
+      "heuristics"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 51
+  },
+  {
+    "id": "ki_paperless_ai_rag_sqlite_vec",
+    "raw_id": "ki-paperless-ai-rag-sqlite-vec",
+    "title": "In-Database Vector RAG with SQLite-Vec, LlamaIndex, and Hybrid Tantivy BM25 Dispatch",
+    "category": "data_engineering",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "sqlite_vec",
+      "rag",
+      "llamaindex",
+      "bm25",
+      "tantivy"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 3,
+    "verified_isnad_count": 0,
+    "rank": 52
+  },
+  {
+    "id": "ki_self_20260902_03",
+    "raw_id": "ki_self_20260902_03",
+    "title": "Artifact Boundary Isolation & Workspace Tool Scaffolding",
+    "category": "developer_experience/tooling",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "artifact-metadata",
+      "ide-boundary",
+      "scaffolding",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 53
+  },
+  {
+    "id": "ki_self_20260902_05",
+    "raw_id": "ki_self_20260902_05",
+    "title": "Deterministic Inward Manifest Probing for Nested Project Roots",
+    "category": "security_and_forensics/auditing",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "repo-audit",
+      "nested-roots",
+      "boundary-detection",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 54
+  },
+  {
+    "id": "ki_self_20260903_01",
+    "raw_id": "ki_self_20260903_01",
+    "title": "ValidationReport Interface Contract & Check Collection Invariant",
+    "category": "developer_experience/testing",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "validation",
+      "dataclass-contract",
+      "skill-validator",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 55
+  },
+  {
+    "id": "ki_self_20260903_02",
+    "raw_id": "ki_self_20260903_02",
+    "title": "Skill Knowledge Graph Catalog Summary & Match Key Standardization",
+    "category": "agent_orchestration/skills",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "skill-graph",
+      "router",
+      "schema-contract",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 56
+  },
+  {
+    "id": "ki_self_20260903_03",
+    "raw_id": "ki_self_20260903_03",
+    "title": "Epistemic Memory Promotion Pipeline & Held-Out Judge Invariant",
+    "category": "memory_and_epistemics",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "memory-lifecycle",
+      "epistemics",
+      "held-out-judge",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 57
+  },
+  {
+    "id": "ki_20260922_tau_pi_agent_architecture",
+    "raw_id": "ki_20260922_tau_pi_agent_architecture",
+    "title": "Pi-Style Minimalist Coding Agent Harness Architecture (Tau v0.4.4 / twotimespi)",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 4,
+    "tags": [
+      "pi_agent",
+      "minimalist_harness",
+      "coding_agent",
+      "terminal"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 4,
+    "verified_isnad_count": 0,
+    "rank": 58
+  },
+  {
+    "id": "ki_20261023_rea_03",
+    "raw_id": "ki_20261023_rea_03",
+    "title": "Bounded Worker Control Framing and NUL-Delimited IPC Streams",
+    "category": "infrastructure_and_runtime",
+    "in_degree": 0,
+    "tag_count": 4,
+    "tags": [
+      "process-supervision",
+      "ipc",
+      "pipe-deadlock-prevention",
+      "nul-framing"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 59
+  },
+  {
+    "id": "ki_5d_complexity_baseline",
+    "raw_id": "ki-5d-complexity-baseline",
+    "title": "5D Complexity Scoring Baseline (2026-09-01)",
+    "category": "developer_experience",
+    "in_degree": 0,
+    "tag_count": 4,
+    "tags": [
+      "complexity_scoring",
+      "eval_metrics",
+      "cognitive_budget",
+      "architecture"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 60
+  },
+  {
+    "id": "ki_agentwikis_governance",
+    "raw_id": "ki_agentwikis_governance",
+    "title": "AgentWikis Corpus Architecture, Trust Semantics & Data Governance",
+    "category": "memory_and_epistemics/integration",
+    "in_degree": 0,
+    "tag_count": 4,
+    "tags": [
+      "agentwikis",
+      "documentation",
+      "trust_semantics",
+      "data_governance"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 4,
+    "verified_isnad_count": 0,
+    "rank": 61
+  },
+  {
+    "id": "ki_chatbotx_dynamic_mcp_orpc",
+    "raw_id": "ki_chatbotx_dynamic_mcp_orpc",
+    "title": "Dynamic oRPC-to-OpenAPI Schema Pipeline with First-Class MCP Tool Annotations",
+    "category": "infrastructure_and_runtime",
+    "in_degree": 0,
+    "tag_count": 4,
+    "tags": [
+      "orpc",
+      "openapi",
+      "mcp_tool",
+      "schema_generation"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 3,
+    "verified_isnad_count": 0,
+    "rank": 62
+  },
+  {
+    "id": "ki_chatbotx_isolated_vm_execution",
+    "raw_id": "ki_chatbotx_isolated_vm_execution",
+    "title": "Multi-Tenant Microservice Sandbox Execution via isolated-vm",
+    "category": "security_and_forensics",
+    "in_degree": 0,
+    "tag_count": 4,
+    "tags": [
+      "isolated_vm",
+      "sandboxing",
+      "multitenancy",
+      "microservices"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 2,
+    "verified_isnad_count": 0,
+    "rank": 63
+  },
+  {
+    "id": "ki_chatbotx_omnichannel_messaging_bus",
+    "raw_id": "ki_chatbotx_omnichannel_messaging_bus",
+    "title": "Omnichannel Unified Messaging & Graph Flow Execution Pipeline",
+    "category": "memory_and_epistemics",
+    "in_degree": 0,
+    "tag_count": 4,
+    "tags": [
+      "messaging_bus",
+      "omnichannel",
+      "graph_flow",
+      "chatbots"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 2,
+    "verified_isnad_count": 0,
+    "rank": 64
+  },
+  {
+    "id": "ki_cli_decomposition_pattern",
+    "raw_id": "ki-cli-decomposition-pattern",
+    "title": "CLI Monolith Decomposition Pattern",
+    "category": "developer_experience",
+    "in_degree": 0,
+    "tag_count": 4,
+    "tags": [
+      "cli",
+      "monolith_decomposition",
+      "click",
+      "refactoring"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 65
+  },
+  {
+    "id": "ki_deepening_cycle_history",
+    "raw_id": "ki-deepening-cycle-history",
+    "title": "Architecture Deepening Cycle History \u2014 Cycle 2026-09-01",
+    "category": "developer_experience",
+    "in_degree": 0,
+    "tag_count": 4,
+    "tags": [
+      "architecture_deepening",
+      "seam_isolation",
+      "refactoring",
+      "decomposition"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 66
+  },
+  {
+    "id": "ki_file_size_hotspots",
+    "raw_id": "ki-file-size-hotspots",
+    "title": "File Size Hotspot Registry (2026-09-01)",
+    "category": "developer_experience",
+    "in_degree": 0,
+    "tag_count": 4,
+    "tags": [
+      "code_hotspots",
+      "rule_11",
+      "refactoring",
+      "file_size"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 67
+  },
+  {
+    "id": "ki_garf_reporting_engine",
+    "raw_id": "ki_garf_reporting_engine",
+    "title": "Google Garf Declarative SQL Reporting & Multi-Destination Data Pipeline Architecture",
+    "category": "data_engineering",
+    "in_degree": 0,
+    "tag_count": 4,
+    "tags": [
+      "garf",
+      "sql_reporting",
+      "data_pipeline",
+      "google"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 4,
+    "verified_isnad_count": 0,
+    "rank": 68
+  },
+  {
+    "id": "ki_gradio_app_architect",
+    "raw_id": "ki-gradio-app-architect",
+    "title": "Gradio Production AI Interface Engineering (Eva J Patel / freeCodeCamp 2026)",
+    "category": "developer_experience",
+    "in_degree": 0,
+    "tag_count": 4,
+    "tags": [
+      "gradio",
+      "ui",
+      "ai_interface",
+      "blocks"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 69
+  },
+  {
+    "id": "ki_guarino_precision_coverage_tradeoff",
+    "raw_id": "ki_guarino_precision_coverage_tradeoff",
+    "title": "Guarino's Precision vs. Coverage Tradeoff in Knowledge Representation",
+    "category": "data_engineering/modeling",
+    "in_degree": 0,
+    "tag_count": 4,
+    "tags": [
+      "knowledge_representation",
+      "precision_coverage",
+      "guarino",
+      "tradeoffs"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 70
+  },
+  {
+    "id": "ki_hermes_001",
+    "raw_id": "ki_hermes_001",
+    "title": "Closed Learning Loop & Autonomous Skill Formation",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 4,
+    "tags": [
+      "learning-loop",
+      "skill-formation",
+      "openskills",
+      "trajectory"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 71
+  },
+  {
+    "id": "ki_hermes_003",
+    "raw_id": "ki_hermes_003",
+    "title": "Pre-Commit Verification Evidence Tracking & Stop Interceptors",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 4,
+    "tags": [
+      "verification",
+      "tdd",
+      "quality-gates",
+      "stop-hook"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 72
+  },
+  {
+    "id": "ki_omarchy_quattro_bridge",
+    "raw_id": "ki-omarchy-quattro-bridge",
+    "title": "Omarchy Quattro Operating System Bridge & Domain-Partitioned Plugin Synthesis",
+    "category": "developer_experience",
+    "in_degree": 0,
+    "tag_count": 4,
+    "tags": [
+      "operating_system",
+      "omarchy",
+      "bridge",
+      "plugin_synthesis"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 73
+  },
+  {
+    "id": "ki_paperless_ngx_architecture",
+    "raw_id": "ki-paperless-ngx-architecture",
+    "title": "Paperless-NGX Document Lifecycle Architecture & Dual-Store Ingestion Engine",
+    "category": "developer_experience",
+    "in_degree": 0,
+    "tag_count": 4,
+    "tags": [
+      "paperless",
+      "document_lifecycle",
+      "ingestion",
+      "celery"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 3,
+    "verified_isnad_count": 0,
+    "rank": 74
+  },
+  {
+    "id": "ki_responsible_ai_prototyping",
+    "raw_id": "ki-responsible-ai-prototyping",
+    "title": "Responsible AI Prototyping & Web App Governance (Eva J Patel / Lovable)",
+    "category": "developer_experience",
+    "in_degree": 0,
+    "tag_count": 4,
+    "tags": [
+      "responsible_ai",
+      "lovable",
+      "prototyping",
+      "governance"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 75
+  },
+  {
+    "id": "ki_topology_map",
+    "raw_id": "ki-topology-map",
+    "title": "Harness Hybrid Topology Map",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 4,
+    "tags": [
+      "topology",
+      "graph_of_trees",
+      "ioc_container",
+      "plugin_architecture"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 0,
+    "verified_isnad_count": 0,
+    "rank": 76
+  },
+  {
+    "id": "ki_rea_facet_availability_semantics",
+    "raw_id": "ki-rea-facet-availability-semantics",
+    "title": "Differential Facet Availability Semantics & Multi-Provider Comparison",
+    "category": "security_and_forensics/reverse_engineering",
+    "in_degree": 0,
+    "tag_count": 3,
+    "tags": [
+      "reverse_engineering",
+      "facet_availability",
+      "differential_analysis"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 3,
+    "verified_isnad_count": 0,
+    "rank": 77
+  },
+  {
+    "id": "ki_rea_reconstruction_obligations",
+    "raw_id": "ki-rea-reconstruction-obligations",
+    "title": "Reconstruction Obligation Ledgers & Canonical Evidence Records",
+    "category": "security_and_forensics/reverse_engineering",
+    "in_degree": 0,
+    "tag_count": 3,
+    "tags": [
+      "reverse_engineering",
+      "reconstruction_obligation",
+      "evidence_ledger"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 3,
+    "verified_isnad_count": 0,
+    "rank": 78
+  }
+]

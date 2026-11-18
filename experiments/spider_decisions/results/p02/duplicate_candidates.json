@@ -1,0 +1,210 @@
+{
+  "total_kis_scanned": 377,
+  "candidate_count": 12,
+  "intentional_siblings_count": 0,
+  "candidates": [
+    {
+      "ki_a": "ki_self_20260826_01",
+      "ki_b": "ki_self_20260826_02",
+      "title_a": "Click CLI Group Single-Source Consolidation",
+      "title_b": "Lazy Subprocess Staging for Sandboxed External Plugins",
+      "norm_source_a": "internal://harness/history",
+      "norm_source_b": "internal://harness/history",
+      "same_source": true,
+      "tag_jaccard": 1.0,
+      "shared_tags": [
+        "architecture",
+        "endogenous_memory",
+        "self_reflection"
+      ],
+      "matched_rule": "both",
+      "sibling_edge": null
+    },
+    {
+      "ki_a": "ki_self_20260826_01",
+      "ki_b": "ki_self_20260826_03",
+      "title_a": "Click CLI Group Single-Source Consolidation",
+      "title_b": "ReAct Agent Step Transactional Isolation",
+      "norm_source_a": "internal://harness/history",
+      "norm_source_b": "internal://harness/history",
+      "same_source": true,
+      "tag_jaccard": 1.0,
+      "shared_tags": [
+        "architecture",
+        "endogenous_memory",
+        "self_reflection"
+      ],
+      "matched_rule": "both",
+      "sibling_edge": null
+    },
+    {
+      "ki_a": "ki_self_20260826_02",
+      "ki_b": "ki_self_20260826_03",
+      "title_a": "Lazy Subprocess Staging for Sandboxed External Plugins",
+      "title_b": "ReAct Agent Step Transactional Isolation",
+      "norm_source_a": "internal://harness/history",
+      "norm_source_b": "internal://harness/history",
+      "same_source": true,
+      "tag_jaccard": 1.0,
+      "shared_tags": [
+        "architecture",
+        "endogenous_memory",
+        "self_reflection"
+      ],
+      "matched_rule": "both",
+      "sibling_edge": null
+    },
+    {
+      "ki_a": "ki_self_20260826_04",
+      "ki_b": "ki_self_20260827_01",
+      "title_a": "Multi-Dimensional Compute Assessment Calibration",
+      "title_b": "Deterministic Pre-LLM Context Optimization",
+      "norm_source_a": "internal://harness/history",
+      "norm_source_b": "internal://harness/history",
+      "same_source": true,
+      "tag_jaccard": 0.6,
+      "shared_tags": [
+        "endogenous_memory",
+        "performance",
+        "self_reflection"
+      ],
+      "matched_rule": "source+tags>=0.5",
+      "sibling_edge": null
+    },
+    {
+      "ki_a": "ki_self_20260908_01",
+      "ki_b": "ki_self_20260908_03",
+      "title_a": "SkillPipelineEngine Unification Invariant",
+      "title_b": "Deep-Module Monolithic CLI Extraction Pattern",
+      "norm_source_a": "harness-reflector",
+      "norm_source_b": "harness-reflector",
+      "same_source": true,
+      "tag_jaccard": 0.5714,
+      "shared_tags": [
+        "deep-module",
+        "endogenous_memory",
+        "self_reflection",
+        "skill-system"
+      ],
+      "matched_rule": "source+tags>=0.5",
+      "sibling_edge": null
+    },
+    {
+      "ki_a": "ki_self_20260826_01",
+      "ki_b": "ki_self_20260826_04",
+      "title_a": "Click CLI Group Single-Source Consolidation",
+      "title_b": "Multi-Dimensional Compute Assessment Calibration",
+      "norm_source_a": "internal://harness/history",
+      "norm_source_b": "internal://harness/history",
+      "same_source": true,
+      "tag_jaccard": 0.5,
+      "shared_tags": [
+        "endogenous_memory",
+        "self_reflection"
+      ],
+      "matched_rule": "source+tags>=0.5",
+      "sibling_edge": null
+    },
+    {
+      "ki_a": "ki_self_20260826_01",
+      "ki_b": "ki_self_20260827_03",
+      "title_a": "Click CLI Group Single-Source Consolidation",
+      "title_b": "Headless CLI Session DAG Inspection & Export",
+      "norm_source_a": "internal://harness/history",
+      "norm_source_b": "internal://harness/history",
+      "same_source": true,
+      "tag_jaccard": 0.5,
+      "shared_tags": [
+        "architecture",
+        "endogenous_memory",
+        "self_reflection"
+      ],
+      "matched_rule": "source+tags>=0.5",
+      "sibling_edge": null
+    },
+    {
+      "ki_a": "ki_self_20260826_02",
+      "ki_b": "ki_self_20260826_04",
+      "title_a": "Lazy Subprocess Staging for Sandboxed External Plugins",
+      "title_b": "Multi-Dimensional Compute Assessment Calibration",
+      "norm_source_a": "internal://harness/history",
+      "norm_source_b": "internal://harness/history",
+      "same_source": true,
+      "tag_jaccard": 0.5,
+      "shared_tags": [
+        "endogenous_memory",
+        "self_reflection"
+      ],
+      "matched_rule": "source+tags>=0.5",
+      "sibling_edge": null
+    },
+    {
+      "ki_a": "ki_self_20260826_02",
+      "ki_b": "ki_self_20260827_03",
+      "title_a": "Lazy Subprocess Staging for Sandboxed External Plugins",
+      "title_b": "Headless CLI Session DAG Inspection & Export",
+      "norm_source_a": "internal://harness/history",
+      "norm_source_b": "internal://harness/history",
+      "same_source": true,
+      "tag_jaccard": 0.5,
+      "shared_tags": [
+        "architecture",
+        "endogenous_memory",
+        "self_reflection"
+      ],
+      "matched_rule": "source+tags>=0.5",
+      "sibling_edge": null
+    },
+    {
+      "ki_a": "ki_self_20260826_03",
+      "ki_b": "ki_self_20260826_04",
+      "title_a": "ReAct Agent Step Transactional Isolation",
+      "title_b": "Multi-Dimensional Compute Assessment Calibration",
+      "norm_source_a": "internal://harness/history",
+      "norm_source_b": "internal://harness/history",
+      "same_source": true,
+      "tag_jaccard": 0.5,
+      "shared_tags": [
+        "endogenous_memory",
+        "self_reflection"
+      ],
+      "matched_rule": "source+tags>=0.5",
+      "sibling_edge": null
+    },
+    {
+      "ki_a": "ki_self_20260826_03",
+      "ki_b": "ki_self_20260827_03",
+      "title_a": "ReAct Agent Step Transactional Isolation",
+      "title_b": "Headless CLI Session DAG Inspection & Export",
+      "norm_source_a": "internal://harness/history",
+      "norm_source_b": "internal://harness/history",
+      "same_source": true,
+      "tag_jaccard": 0.5,
+      "shared_tags": [
+        "architecture",
+        "endogenous_memory",
+        "self_reflection"
+      ],
+      "matched_rule": "source+tags>=0.5",
+      "sibling_edge": null
+    },
+    {
+      "ki_a": "ki_self_20260826_04",
+      "ki_b": "ki_self_20260828_02",
+      "title_a": "Multi-Dimensional Compute Assessment Calibration",
+      "title_b": "Slotted Dataclass Memory & Invariant Architecture",
+      "norm_source_a": "internal://harness/history",
+      "norm_source_b": "internal://harness/history",
+      "same_source": true,
+      "tag_jaccard": 0.5,
+      "shared_tags": [
+        "endogenous_memory",
+        "performance",
+        "self_reflection"
+      ],
+      "matched_rule": "source+tags>=0.5",
+      "sibling_edge": null
+    }
+  ],
+  "intentional_siblings": []
+}

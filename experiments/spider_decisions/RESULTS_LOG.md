@@ -21,3 +21,9 @@ Template for per-phase entries:
 - Key metric(s): Before=40 bridges (33 TP, 7 FP, FP rate 0.1750); After=34 bridges (32 TP, 2 FP, FP rate 0.0588, recall 0.9697); 10/10 regression units PASS; 18/18 pytest passed; ruff check/format clean.
 - Finding(s): Eliminated rpc, runtime, tools, data, and eval false bridges; 1 short tag-only TP (grm/aloe, 4 chars) dropped; remaining edge cases are gvisor/shim (matched external Balanov/shim repo) and gvisor/governance (slug segment of unrelated KI).
 - Follow-ups: Re-snapshot all 7 models and generate Phase 2 vault hygiene sheets.
+
+## Phase 2 — Post-Fix Re-Snapshot & Vault Hygiene (2026-11-18T15:08:19+00:00)
+- Outcome: PASS
+- Key metric(s): 7/7 post-fix snapshots round-trip verified; 78 unverified KIs ranked; 12 candidate duplicate pairs across 377 KIs (0 intentional siblings); user confirmed 0 merges (verbatim: proceed).
+- Finding(s): Top-5 unverified priority KIs: ki_solla_dmbok_governance_decision_rights, ki_njoku_uncertainty_aware_systems, ki_agent_skills_progressive_disclosure, ki_self_20260907_02, ki_self_20260907_03. All 12 duplicate candidates are ki_self_* reflection KIs sharing source_target + tags.
+- Follow-ups: Proceed to Phase 3 Domain Blind-Spot Analysis.
