@@ -1,0 +1,373 @@
+{
+  "seed": 2026111841,
+  "shortlist_size": 8,
+  "total_candidates": 127,
+  "domain_counts": {
+    "general_ml_project": 32,
+    "graph_and_program_project": 1,
+    "nlp_and_llm_project": 31,
+    "optimization_and_compression_project": 14,
+    "privacy_fairness_safety_project": 6,
+    "rl_and_control_project": 9,
+    "science_and_bio_project": 4,
+    "speech_and_audio_project": 1,
+    "vision_and_3d_project": 29
+  },
+  "shortlists": [
+    {
+      "domain": "general_ml_project",
+      "pool_size": 32,
+      "forced_pick": false,
+      "candidates": [
+        {
+          "unit_id": "arithmetic_sampling",
+          "domain": "general_ml_project",
+          "framework": "jax",
+          "test_count": 1,
+          "py_file_count": 2,
+          "has_arxiv": true
+        },
+        {
+          "unit_id": "automatic_structured_vi",
+          "domain": "general_ml_project",
+          "framework": "tensorflow",
+          "test_count": 1,
+          "py_file_count": 4,
+          "has_arxiv": true
+        },
+        {
+          "unit_id": "dp_sgd_clipping",
+          "domain": "general_ml_project",
+          "framework": "numpy",
+          "test_count": 1,
+          "py_file_count": 2,
+          "has_arxiv": true
+        },
+        {
+          "unit_id": "gumbel_max_causal_gadgets",
+          "domain": "general_ml_project",
+          "framework": "jax",
+          "test_count": 1,
+          "py_file_count": 5,
+          "has_arxiv": true
+        },
+        {
+          "unit_id": "hmc_swindles",
+          "domain": "general_ml_project",
+          "framework": "tensorflow",
+          "test_count": 4,
+          "py_file_count": 23,
+          "has_arxiv": true
+        },
+        {
+          "unit_id": "low_rank_local_connectivity",
+          "domain": "general_ml_project",
+          "framework": "tensorflow",
+          "test_count": 3,
+          "py_file_count": 9,
+          "has_arxiv": true
+        },
+        {
+          "unit_id": "supcon",
+          "domain": "general_ml_project",
+          "framework": "tensorflow",
+          "test_count": 11,
+          "py_file_count": 25,
+          "has_arxiv": true
+        },
+        {
+          "unit_id": "tabnet",
+          "domain": "general_ml_project",
+          "framework": "tensorflow",
+          "test_count": 1,
+          "py_file_count": 5,
+          "has_arxiv": true
+        }
+      ]
+    },
+    {
+      "domain": "nlp_and_llm_project",
+      "pool_size": 31,
+      "forced_pick": false,
+      "candidates": [
+        {
+          "unit_id": "data_selection",
+          "domain": "nlp_and_llm_project",
+          "framework": "jax",
+          "test_count": 1,
+          "py_file_count": 18,
+          "has_arxiv": true
+        },
+        {
+          "unit_id": "realformer",
+          "domain": "nlp_and_llm_project",
+          "framework": "tensorflow",
+          "test_count": 1,
+          "py_file_count": 3,
+          "has_arxiv": true
+        },
+        {
+          "unit_id": "rouge",
+          "domain": "nlp_and_llm_project",
+          "framework": "numpy",
+          "test_count": 6,
+          "py_file_count": 15,
+          "has_arxiv": true
+        },
+        {
+          "unit_id": "schema_guided_dst",
+          "domain": "nlp_and_llm_project",
+          "framework": "tensorflow",
+          "test_count": 2,
+          "py_file_count": 18,
+          "has_arxiv": true
+        },
+        {
+          "unit_id": "sm3",
+          "domain": "nlp_and_llm_project",
+          "framework": "tensorflow",
+          "test_count": 1,
+          "py_file_count": 2,
+          "has_arxiv": true
+        },
+        {
+          "unit_id": "smart_eval",
+          "domain": "nlp_and_llm_project",
+          "framework": "scipy",
+          "test_count": 2,
+          "py_file_count": 8,
+          "has_arxiv": true
+        },
+        {
+          "unit_id": "summae",
+          "domain": "nlp_and_llm_project",
+          "framework": "tensorflow",
+          "test_count": 7,
+          "py_file_count": 21,
+          "has_arxiv": true
+        },
+        {
+          "unit_id": "video_timeline_modeling",
+          "domain": "nlp_and_llm_project",
+          "framework": "tensorflow",
+          "test_count": 1,
+          "py_file_count": 10,
+          "has_arxiv": true
+        }
+      ]
+    },
+    {
+      "domain": "optimization_and_compression_project",
+      "pool_size": 14,
+      "forced_pick": false,
+      "candidates": [
+        {
+          "unit_id": "abstract_nas",
+          "domain": "optimization_and_compression_project",
+          "framework": "jax",
+          "test_count": 15,
+          "py_file_count": 57,
+          "has_arxiv": true
+        },
+        {
+          "unit_id": "aux_tasks",
+          "domain": "optimization_and_compression_project",
+          "framework": "jax",
+          "test_count": 1,
+          "py_file_count": 8,
+          "has_arxiv": true
+        },
+        {
+          "unit_id": "es_enas",
+          "domain": "optimization_and_compression_project",
+          "framework": "tensorflow",
+          "test_count": 2,
+          "py_file_count": 14,
+          "has_arxiv": true
+        },
+        {
+          "unit_id": "igt_optimizer",
+          "domain": "optimization_and_compression_project",
+          "framework": "tensorflow",
+          "test_count": 2,
+          "py_file_count": 17,
+          "has_arxiv": true
+        },
+        {
+          "unit_id": "perturbations",
+          "domain": "optimization_and_compression_project",
+          "framework": "tensorflow",
+          "test_count": 3,
+          "py_file_count": 12,
+          "has_arxiv": true
+        },
+        {
+          "unit_id": "scalable_shampoo",
+          "domain": "optimization_and_compression_project",
+          "framework": "jax",
+          "test_count": 4,
+          "py_file_count": 14,
+          "has_arxiv": true
+        },
+        {
+          "unit_id": "sparse_soft_topk",
+          "domain": "optimization_and_compression_project",
+          "framework": "jax",
+          "test_count": 3,
+          "py_file_count": 8,
+          "has_arxiv": true
+        },
+        {
+          "unit_id": "storm_optimizer",
+          "domain": "optimization_and_compression_project",
+          "framework": "tensorflow",
+          "test_count": 1,
+          "py_file_count": 3,
+          "has_arxiv": true
+        }
+      ]
+    },
+    {
+      "domain": "rl_and_control_project",
+      "pool_size": 9,
+      "forced_pick": false,
+      "candidates": [
+        {
+          "unit_id": "behavior_regularized_offline_rl",
+          "domain": "rl_and_control_project",
+          "framework": "tensorflow",
+          "test_count": 3,
+          "py_file_count": 30,
+          "has_arxiv": true
+        },
+        {
+          "unit_id": "dql_grasping",
+          "domain": "rl_and_control_project",
+          "framework": "tensorflow",
+          "test_count": 4,
+          "py_file_count": 24,
+          "has_arxiv": true
+        },
+        {
+          "unit_id": "dvrl",
+          "domain": "rl_and_control_project",
+          "framework": "tensorflow",
+          "test_count": 1,
+          "py_file_count": 9,
+          "has_arxiv": true
+        },
+        {
+          "unit_id": "mol_dqn",
+          "domain": "rl_and_control_project",
+          "framework": "tensorflow",
+          "test_count": 8,
+          "py_file_count": 38,
+          "has_arxiv": true
+        },
+        {
+          "unit_id": "muzero",
+          "domain": "rl_and_control_project",
+          "framework": "tensorflow",
+          "test_count": 1,
+          "py_file_count": 14,
+          "has_arxiv": true
+        },
+        {
+          "unit_id": "norml",
+          "domain": "rl_and_control_project",
+          "framework": "tensorflow",
+          "test_count": 4,
+          "py_file_count": 20,
+          "has_arxiv": true
+        },
+        {
+          "unit_id": "ravens",
+          "domain": "rl_and_control_project",
+          "framework": "tensorflow",
+          "test_count": 1,
+          "py_file_count": 44,
+          "has_arxiv": true
+        },
+        {
+          "unit_id": "rl_repr",
+          "domain": "rl_and_control_project",
+          "framework": "tensorflow",
+          "test_count": 2,
+          "py_file_count": 23,
+          "has_arxiv": true
+        }
+      ]
+    },
+    {
+      "domain": "vision_and_3d_project",
+      "pool_size": 29,
+      "forced_pick": false,
+      "candidates": [
+        {
+          "unit_id": "autoregressive_diffusion",
+          "domain": "vision_and_3d_project",
+          "framework": "jax",
+          "test_count": 1,
+          "py_file_count": 40,
+          "has_arxiv": true
+        },
+        {
+          "unit_id": "clip_as_rnn",
+          "domain": "vision_and_3d_project",
+          "framework": "torch",
+          "test_count": 1,
+          "py_file_count": 33,
+          "has_arxiv": true
+        },
+        {
+          "unit_id": "correct_batch_effects_wdn",
+          "domain": "vision_and_3d_project",
+          "framework": "tensorflow",
+          "test_count": 5,
+          "py_file_count": 14,
+          "has_arxiv": true
+        },
+        {
+          "unit_id": "poem",
+          "domain": "vision_and_3d_project",
+          "framework": "tensorflow",
+          "test_count": 16,
+          "py_file_count": 50,
+          "has_arxiv": true
+        },
+        {
+          "unit_id": "psycholab",
+          "domain": "vision_and_3d_project",
+          "framework": "numpy",
+          "test_count": 1,
+          "py_file_count": 8,
+          "has_arxiv": true
+        },
+        {
+          "unit_id": "saccader",
+          "domain": "vision_and_3d_project",
+          "framework": "tensorflow",
+          "test_count": 11,
+          "py_file_count": 27,
+          "has_arxiv": true
+        },
+        {
+          "unit_id": "universal_embedding_challenge",
+          "domain": "vision_and_3d_project",
+          "framework": "tensorflow",
+          "test_count": 2,
+          "py_file_count": 8,
+          "has_arxiv": true
+        },
+        {
+          "unit_id": "video_structure",
+          "domain": "vision_and_3d_project",
+          "framework": "tensorflow",
+          "test_count": 5,
+          "py_file_count": 13,
+          "has_arxiv": true
+        }
+      ]
+    }
+  ]
+}

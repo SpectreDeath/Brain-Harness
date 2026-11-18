@@ -1,5 +1,6 @@
 {
   "candidate_count": 127,
+  "human_selection_mode": "human_shortlists",
   "top_5": [
     {
       "unit_id": "poem",
@@ -2050,7 +2051,7 @@
         "dp_sgd_clipping",
         "grow_bert"
       ],
-      "overlap_at_5_with_human": 0,
+      "overlap_at_5_with_human": 1,
       "distinct_domains": 3,
       "domains": [
         "optimization_and_compression_project",
@@ -2063,22 +2064,22 @@
     },
     "human_picks": {
       "picks": [
-        "cfq_pt_vs_sa",
-        "factoring_sqif",
-        "learnreg",
-        "mpi_extrapolation",
-        "storm_optimizer"
+        "dp_sgd_clipping",
+        "smart_eval",
+        "perturbations",
+        "norml",
+        "psycholab"
       ],
       "overlap_at_5_with_human": 5,
-      "distinct_domains": 4,
+      "distinct_domains": 5,
       "domains": [
+        "general_ml_project",
         "nlp_and_llm_project",
-        "science_and_bio_project",
-        "general_ml_project",
-        "general_ml_project",
-        "optimization_and_compression_project"
+        "optimization_and_compression_project",
+        "rl_and_control_project",
+        "vision_and_3d_project"
       ],
-      "sum_domain_gap": 191.25
+      "sum_domain_gap": 350.12
     }
   }
 }

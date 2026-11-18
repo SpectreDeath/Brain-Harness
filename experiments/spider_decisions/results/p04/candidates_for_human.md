@@ -1,135 +1,71 @@
-# Phase 4 — Candidate Research Projects for Human Pick-5 (Blind List)
+# Phase 4 — Blind Domain Shortlists for Human Pick-5
 
-Source: `grm` snapshot (`127` unlearned subprojects matching `has_tests=true, has_arxiv=true, harness_learned=false, is_generic_unit=false`), sorted **alphabetically** (no ranking scores computed or shown).
+Source: `grm` snapshot (`127` unlearned subprojects matching `has_tests=true, has_arxiv=true, harness_learned=false, is_generic_unit=false`).
+Partitioned into **5** domain shortlists (up to `8` candidates per domain, seed `2026111841`), domains and rows sorted **alphabetically** (no scores computed or shown).
 
-Pick **5** `unit_id` values you would learn next.
+Pick **1** `unit_id` from each shortlist (**5 picks total**).
 
-| # | unit_id | domain | framework | test_count | py_file_count | arXiv |
-|---:|---|---|---|---:|---:|---|
-| 1 | `abstract_nas` | `optimization_and_compression_project` | jax | 15 | 57 | yes |
-| 2 | `ara_optimization` | `privacy_fairness_safety_project` | scipy | 5 | 12 | yes |
-| 3 | `arithmetic_sampling` | `general_ml_project` | jax | 1 | 2 | yes |
-| 4 | `attribution` | `general_ml_project` | tensorflow | 1 | 3 | yes |
-| 5 | `automatic_structured_vi` | `general_ml_project` | tensorflow | 1 | 4 | yes |
-| 6 | `automl_zero` | `general_ml_project` | sklearn | 16 | 1 | yes |
-| 7 | `autoregressive_diffusion` | `vision_and_3d_project` | jax | 1 | 40 | yes |
-| 8 | `aux_tasks` | `optimization_and_compression_project` | jax | 1 | 8 | yes |
-| 9 | `axial` | `general_ml_project` | tensorflow | 1 | 12 | yes |
-| 10 | `behavior_regularized_offline_rl` | `rl_and_control_project` | tensorflow | 3 | 30 | yes |
-| 11 | `bigg` | `graph_and_program_project` | torch | 1 | 29 | yes |
-| 12 | `cache_replacement` | `general_ml_project` | tensorflow | 1 | 24 | yes |
-| 13 | `cfq_pt_vs_sa` | `nlp_and_llm_project` | tensorflow | 1 | 3 | yes |
-| 14 | `clip_as_rnn` | `vision_and_3d_project` | torch | 1 | 33 | yes |
-| 15 | `cognate_inpaint_neighbors` | `nlp_and_llm_project` | tensorflow | 2 | 23 | yes |
-| 16 | `cold_posterior_bnn` | `privacy_fairness_safety_project` | tensorflow | 9 | 23 | yes |
-| 17 | `cold_posterior_flax` | `general_ml_project` | jax | 2 | 21 | yes |
-| 18 | `correct_batch_effects_wdn` | `vision_and_3d_project` | tensorflow | 5 | 14 | yes |
-| 19 | `data_free_distillation` | `optimization_and_compression_project` | tensorflow | 1 | 4 | yes |
-| 20 | `data_selection` | `nlp_and_llm_project` | jax | 1 | 18 | yes |
-| 21 | `deep_homography` | `vision_and_3d_project` | tensorflow | 1 | 5 | yes |
-| 22 | `dense_representations_for_entity_retrieval` | `nlp_and_llm_project` | none | 5 | 13 | yes |
-| 23 | `deplot` | `nlp_and_llm_project` | tensorflow | 1 | 5 | yes |
-| 24 | `design_bipartite_experiments` | `general_ml_project` | none | 2 | 0 | yes |
-| 25 | `dp_alternating_minimization` | `privacy_fairness_safety_project` | tensorflow | 2 | 5 | yes |
-| 26 | `dp_posets` | `general_ml_project` | scipy | 3 | 7 | yes |
-| 27 | `dp_sgd_clipping` | `general_ml_project` | numpy | 1 | 2 | yes |
-| 28 | `dpok` | `vision_and_3d_project` | torch | 1 | 6 | yes |
-| 29 | `dql_grasping` | `rl_and_control_project` | tensorflow | 4 | 24 | yes |
-| 30 | `dual_pixels` | `vision_and_3d_project` | tensorflow | 1 | 3 | yes |
-| 31 | `dvrl` | `rl_and_control_project` | tensorflow | 1 | 9 | yes |
-| 32 | `eli5_retrieval_large_lm` | `nlp_and_llm_project` | tensorflow | 1 | 17 | yes |
-| 33 | `es_enas` | `optimization_and_compression_project` | tensorflow | 2 | 14 | yes |
-| 34 | `ev3` | `optimization_and_compression_project` | jax | 2 | 33 | yes |
-| 35 | `f_net` | `nlp_and_llm_project` | jax | 5 | 17 | yes |
-| 36 | `factoring_sqif` | `science_and_bio_project` | numpy | 2 | 10 | yes |
-| 37 | `factorize_a_city` | `vision_and_3d_project` | tensorflow | 2 | 14 | yes |
-| 38 | `factors_of_influence` | `vision_and_3d_project` | tensorflow | 3 | 35 | yes |
-| 39 | `flare_removal` | `vision_and_3d_project` | tensorflow | 3 | 13 | yes |
-| 40 | `frechet_audio_distance` | `speech_and_audio_project` | tensorflow | 1 | 7 | yes |
-| 41 | `frequency_analysis` | `vision_and_3d_project` | tensorflow | 1 | 2 | yes |
-| 42 | `frmt` | `nlp_and_llm_project` | none | 2 | 6 | yes |
-| 43 | `fwl` | `nlp_and_llm_project` | jax | 2 | 4 | yes |
-| 44 | `grow_bert` | `nlp_and_llm_project` | tensorflow | 2 | 14 | yes |
-| 45 | `gumbel_max_causal_gadgets` | `general_ml_project` | jax | 1 | 5 | yes |
-| 46 | `hmc_swindles` | `general_ml_project` | tensorflow | 4 | 23 | yes |
-| 47 | `hst_clustering` | `general_ml_project` | apache_beam | 1 | 10 | yes |
-| 48 | `hypertransformer` | `nlp_and_llm_project` | tensorflow | 5 | 21 | yes |
-| 49 | `igt_optimizer` | `optimization_and_compression_project` | tensorflow | 2 | 17 | yes |
-| 50 | `infinite_nature_zero` | `vision_and_3d_project` | torch | 2 | 8 | yes |
-| 51 | `instruction_following_eval` | `general_ml_project` | none | 2 | 7 | yes |
-| 52 | `interpretability_benchmark` | `vision_and_3d_project` | tensorflow | 1 | 9 | yes |
-| 53 | `kl_guided_sampling` | `general_ml_project` | jax | 2 | 7 | yes |
-| 54 | `large_margin` | `privacy_fairness_safety_project` | tensorflow | 3 | 10 | yes |
-| 55 | `learnreg` | `general_ml_project` | scipy | 1 | 5 | yes |
-| 56 | `loss_functions_transfer` | `general_ml_project` | tensorflow | 1 | 6 | yes |
-| 57 | `low_rank_local_connectivity` | `general_ml_project` | tensorflow | 3 | 9 | yes |
-| 58 | `m_layer` | `privacy_fairness_safety_project` | tensorflow | 1 | 3 | yes |
-| 59 | `m_theory` | `science_and_bio_project` | tensorflow | 3 | 28 | yes |
-| 60 | `mechanic` | `optimization_and_compression_project` | jax | 1 | 2 | yes |
-| 61 | `ml_debiaser` | `general_ml_project` | sklearn | 1 | 3 | yes |
-| 62 | `mobilebert` | `nlp_and_llm_project` | tensorflow | 2 | 11 | yes |
-| 63 | `mol_dqn` | `rl_and_control_project` | tensorflow | 8 | 38 | yes |
-| 64 | `mpi_extrapolation` | `general_ml_project` | tensorflow | 1 | 7 | yes |
-| 65 | `muzero` | `rl_and_control_project` | tensorflow | 1 | 14 | yes |
-| 66 | `neural_additive_models` | `privacy_fairness_safety_project` | tensorflow | 4 | 11 | yes |
-| 67 | `neural_guided_symbolic_regression` | `general_ml_project` | tensorflow | 18 | 43 | yes |
-| 68 | `nigt_optimizer` | `optimization_and_compression_project` | tensorflow | 1 | 3 | yes |
-| 69 | `norml` | `rl_and_control_project` | tensorflow | 4 | 20 | yes |
-| 70 | `perturbations` | `optimization_and_compression_project` | tensorflow | 3 | 12 | yes |
-| 71 | `poem` | `vision_and_3d_project` | tensorflow | 16 | 50 | yes |
-| 72 | `polysketchformer` | `nlp_and_llm_project` | jax | 4 | 12 | yes |
-| 73 | `private_sampling` | `general_ml_project` | scipy | 1 | 4 | yes |
-| 74 | `pse` | `general_ml_project` | tensorflow | 1 | 25 | yes |
-| 75 | `psyborgs` | `nlp_and_llm_project` | numpy | 2 | 5 | yes |
-| 76 | `psycholab` | `vision_and_3d_project` | numpy | 1 | 8 | yes |
-| 77 | `qsp_quantum_metrology` | `science_and_bio_project` | scipy | 1 | 5 | yes |
-| 78 | `ravens` | `rl_and_control_project` | tensorflow | 1 | 44 | yes |
-| 79 | `realformer` | `nlp_and_llm_project` | tensorflow | 1 | 3 | yes |
-| 80 | `rl_repr` | `rl_and_control_project` | tensorflow | 2 | 23 | yes |
-| 81 | `rllim` | `rl_and_control_project` | tensorflow | 1 | 6 | yes |
-| 82 | `robust_loss` | `vision_and_3d_project` | tensorflow | 7 | 15 | yes |
-| 83 | `robust_loss_jax` | `general_ml_project` | jax | 3 | 6 | yes |
-| 84 | `robust_retrieval` | `nlp_and_llm_project` | tensorflow | 1 | 6 | yes |
-| 85 | `rouge` | `nlp_and_llm_project` | numpy | 6 | 15 | yes |
-| 86 | `routing_transformer` | `nlp_and_llm_project` | tensorflow | 1 | 14 | yes |
-| 87 | `saccader` | `vision_and_3d_project` | tensorflow | 11 | 27 | yes |
-| 88 | `scalable_shampoo` | `optimization_and_compression_project` | jax | 4 | 14 | yes |
-| 89 | `schema_guided_dst` | `nlp_and_llm_project` | tensorflow | 2 | 18 | yes |
-| 90 | `seeds` | `vision_and_3d_project` | scipy | 1 | 3 | yes |
-| 91 | `sgk` | `nlp_and_llm_project` | tensorflow | 3 | 16 | yes |
-| 92 | `slot_attention` | `vision_and_3d_project` | tensorflow | 1 | 11 | yes |
-| 93 | `sm3` | `nlp_and_llm_project` | tensorflow | 1 | 2 | yes |
-| 94 | `smart_eval` | `nlp_and_llm_project` | scipy | 2 | 8 | yes |
-| 95 | `smerf` | `vision_and_3d_project` | jax | 4 | 32 | yes |
-| 96 | `smith` | `nlp_and_llm_project` | tensorflow | 7 | 20 | yes |
-| 97 | `smug_saliency` | `vision_and_3d_project` | tensorflow | 3 | 8 | yes |
-| 98 | `snlds` | `general_ml_project` | tensorflow | 3 | 13 | yes |
-| 99 | `soft_sort` | `general_ml_project` | jax | 11 | 28 | yes |
-| 100 | `spaceopt` | `general_ml_project` | jax | 3 | 12 | yes |
-| 101 | `sparse_mixers` | `nlp_and_llm_project` | jax | 7 | 20 | yes |
-| 102 | `sparse_soft_topk` | `optimization_and_compression_project` | jax | 3 | 8 | yes |
-| 103 | `special_orthogonalization` | `vision_and_3d_project` | tensorflow | 1 | 3 | yes |
-| 104 | `stable_transfer` | `vision_and_3d_project` | tensorflow | 2 | 24 | yes |
-| 105 | `state_of_sparsity` | `optimization_and_compression_project` | tensorflow | 9 | 32 | yes |
-| 106 | `storm_optimizer` | `optimization_and_compression_project` | tensorflow | 1 | 3 | yes |
-| 107 | `structformer` | `nlp_and_llm_project` | torch | 1 | 9 | yes |
-| 108 | `study_recommend` | `vision_and_3d_project` | jax | 8 | 21 | yes |
-| 109 | `sufficient_input_subsets` | `science_and_bio_project` | numpy | 1 | 3 | yes |
-| 110 | `summae` | `nlp_and_llm_project` | tensorflow | 7 | 21 | yes |
-| 111 | `supcon` | `general_ml_project` | tensorflow | 11 | 25 | yes |
-| 112 | `supervised_pixel_contrastive_loss` | `vision_and_3d_project` | tensorflow | 1 | 2 | yes |
-| 113 | `symbolic_functionals` | `general_ml_project` | jax | 17 | 46 | yes |
-| 114 | `t5_closed_book_qa` | `nlp_and_llm_project` | tensorflow | 4 | 8 | yes |
-| 115 | `tabnet` | `general_ml_project` | tensorflow | 1 | 5 | yes |
-| 116 | `task_set` | `optimization_and_compression_project` | tensorflow | 22 | 52 | yes |
-| 117 | `tf3d` | `vision_and_3d_project` | tensorflow | 9 | 32 | yes |
-| 118 | `tf_trees` | `general_ml_project` | tensorflow | 1 | 4 | yes |
-| 119 | `transformer_modifications` | `nlp_and_llm_project` | tensorflow | 1 | 4 | yes |
-| 120 | `trimap` | `general_ml_project` | jax | 1 | 2 | yes |
-| 121 | `tunas` | `vision_and_3d_project` | tensorflow | 16 | 40 | yes |
-| 122 | `uflow` | `vision_and_3d_project` | tensorflow | 7 | 30 | yes |
-| 123 | `universal_embedding_challenge` | `vision_and_3d_project` | tensorflow | 2 | 8 | yes |
-| 124 | `vct` | `nlp_and_llm_project` | tensorflow | 9 | 22 | yes |
-| 125 | `video_structure` | `vision_and_3d_project` | tensorflow | 5 | 13 | yes |
-| 126 | `video_timeline_modeling` | `nlp_and_llm_project` | tensorflow | 1 | 10 | yes |
-| 127 | `wt5` | `nlp_and_llm_project` | tensorflow | 4 | 9 | yes |
+## Shortlist 1 — `general_ml_project`
+
+| # | unit_id | framework | test_count | py_file_count | arXiv |
+|---:|---|---|---:|---:|---|
+| 1 | `arithmetic_sampling` | jax | 1 | 2 | yes |
+| 2 | `automatic_structured_vi` | tensorflow | 1 | 4 | yes |
+| 3 | `dp_sgd_clipping` | numpy | 1 | 2 | yes |
+| 4 | `gumbel_max_causal_gadgets` | jax | 1 | 5 | yes |
+| 5 | `hmc_swindles` | tensorflow | 4 | 23 | yes |
+| 6 | `low_rank_local_connectivity` | tensorflow | 3 | 9 | yes |
+| 7 | `supcon` | tensorflow | 11 | 25 | yes |
+| 8 | `tabnet` | tensorflow | 1 | 5 | yes |
+
+## Shortlist 2 — `nlp_and_llm_project`
+
+| # | unit_id | framework | test_count | py_file_count | arXiv |
+|---:|---|---|---:|---:|---|
+| 1 | `data_selection` | jax | 1 | 18 | yes |
+| 2 | `realformer` | tensorflow | 1 | 3 | yes |
+| 3 | `rouge` | numpy | 6 | 15 | yes |
+| 4 | `schema_guided_dst` | tensorflow | 2 | 18 | yes |
+| 5 | `sm3` | tensorflow | 1 | 2 | yes |
+| 6 | `smart_eval` | scipy | 2 | 8 | yes |
+| 7 | `summae` | tensorflow | 7 | 21 | yes |
+| 8 | `video_timeline_modeling` | tensorflow | 1 | 10 | yes |
+
+## Shortlist 3 — `optimization_and_compression_project`
+
+| # | unit_id | framework | test_count | py_file_count | arXiv |
+|---:|---|---|---:|---:|---|
+| 1 | `abstract_nas` | jax | 15 | 57 | yes |
+| 2 | `aux_tasks` | jax | 1 | 8 | yes |
+| 3 | `es_enas` | tensorflow | 2 | 14 | yes |
+| 4 | `igt_optimizer` | tensorflow | 2 | 17 | yes |
+| 5 | `perturbations` | tensorflow | 3 | 12 | yes |
+| 6 | `scalable_shampoo` | jax | 4 | 14 | yes |
+| 7 | `sparse_soft_topk` | jax | 3 | 8 | yes |
+| 8 | `storm_optimizer` | tensorflow | 1 | 3 | yes |
+
+## Shortlist 4 — `rl_and_control_project`
+
+| # | unit_id | framework | test_count | py_file_count | arXiv |
+|---:|---|---|---:|---:|---|
+| 1 | `behavior_regularized_offline_rl` | tensorflow | 3 | 30 | yes |
+| 2 | `dql_grasping` | tensorflow | 4 | 24 | yes |
+| 3 | `dvrl` | tensorflow | 1 | 9 | yes |
+| 4 | `mol_dqn` | tensorflow | 8 | 38 | yes |
+| 5 | `muzero` | tensorflow | 1 | 14 | yes |
+| 6 | `norml` | tensorflow | 4 | 20 | yes |
+| 7 | `ravens` | tensorflow | 1 | 44 | yes |
+| 8 | `rl_repr` | tensorflow | 2 | 23 | yes |
+
+## Shortlist 5 — `vision_and_3d_project`
+
+| # | unit_id | framework | test_count | py_file_count | arXiv |
+|---:|---|---|---:|---:|---|
+| 1 | `autoregressive_diffusion` | jax | 1 | 40 | yes |
+| 2 | `clip_as_rnn` | torch | 1 | 33 | yes |
+| 3 | `correct_batch_effects_wdn` | tensorflow | 5 | 14 | yes |
+| 4 | `poem` | tensorflow | 16 | 50 | yes |
+| 5 | `psycholab` | numpy | 1 | 8 | yes |
+| 6 | `saccader` | tensorflow | 11 | 27 | yes |
+| 7 | `universal_embedding_challenge` | tensorflow | 2 | 8 | yes |
+| 8 | `video_structure` | tensorflow | 5 | 13 | yes |

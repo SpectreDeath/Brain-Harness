@@ -52,6 +52,7 @@ def main() -> int:
     blind_spots = json.loads((RESULTS / "p03" / "blind_spots.json").read_text(encoding="utf-8"))
     gap_by_domain = {d["domain_class"]: float(d["gap_score"]) for d in blind_spots["domains"]}
     human_payload = json.loads((RESULTS / "p04" / "human_picks.json").read_text(encoding="utf-8"))
+    human_selection_mode = str(human_payload.get("selection_mode") or "unknown")
     human_picks = list(human_payload["picks"])
     human_set = set(human_picks)
 
@@ -118,16 +119,24 @@ def main() -> int:
 
     ranked_payload = {
         "candidate_count": len(raw_rows),
+        "human_selection_mode": human_selection_mode,
         "top_5": raw_rows[:5],
         "all_candidates": raw_rows,
         "baselines_and_metrics": methods,
     }
     json_path = write_json(4, "ranked_targets", ranked_payload)
 
+    shortlist_size = human_payload.get("shortlist_size")
+    mode_detail = (
+        f"`{human_selection_mode}` (5 domain shortlists of {shortlist_size})"
+        if human_selection_mode == "human_shortlists" and shortlist_size
+        else f"`{human_selection_mode}`"
+    )
     md_lines = [
         "# Phase 4 — Next-5 Learning Targets Comparison",
         "",
         f"Evaluated **{len(raw_rows)}** `grm` candidates (`has_tests=true, has_arxiv=true, harness_learned=false, is_generic_unit=false`).",
+        f"Human selection mode: {mode_detail}.",
         "",
         "## Spider Composite Top 5",
         "",

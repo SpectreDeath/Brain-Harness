@@ -1,6 +1,7 @@
 # Phase 4 — Next-5 Learning Targets Comparison
 
 Evaluated **127** `grm` candidates (`has_tests=true, has_arxiv=true, harness_learned=false, is_generic_unit=false`).
+Human selection mode: `human_shortlists` (5 domain shortlists of 8).
 
 ## Spider Composite Top 5
 
@@ -19,5 +20,5 @@ Evaluated **127** `grm` candidates (`has_tests=true, has_arxiv=true, harness_lea
 | `spider_composite` | 0 | 2 | 709.00 | `poem`, `tunas`, `t5_closed_book_qa`, `saccader`, `tf3d` |
 | `largest_5` | 0 | 4 | 297.12 | `abstract_nas`, `task_set`, `poem`, `symbolic_functionals`, `ravens` |
 | `most_tests_5` | 0 | 3 | 281.38 | `task_set`, `neural_guided_symbolic_regression`, `symbolic_functionals`, `automl_zero`, `poem` |
-| `random_5` | 0 | 3 | 288.12 | `task_set`, `robust_retrieval`, `structformer`, `dp_sgd_clipping`, `grow_bert` |
-| `human_picks` | 5 | 4 | 191.25 | `cfq_pt_vs_sa`, `factoring_sqif`, `learnreg`, `mpi_extrapolation`, `storm_optimizer` |
+| `random_5` | 1 | 3 | 288.12 | `task_set`, `robust_retrieval`, `structformer`, `dp_sgd_clipping`, `grow_bert` |
+| `human_picks` | 5 | 5 | 350.12 | `dp_sgd_clipping`, `smart_eval`, `perturbations`, `norml`, `psycholab` |

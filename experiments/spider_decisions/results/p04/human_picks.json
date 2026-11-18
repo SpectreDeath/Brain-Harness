@@ -1,11 +1,19 @@
 {
-  "selection_mode": "random_proxy_per_user",
-  "seed": 401,
+  "selection_mode": "human_shortlists",
+  "shortlist_seed": 2026111841,
+  "shortlist_size": 8,
+  "picks_by_domain": {
+    "general_ml_project": "dp_sgd_clipping",
+    "nlp_and_llm_project": "smart_eval",
+    "optimization_and_compression_project": "perturbations",
+    "rl_and_control_project": "norml",
+    "vision_and_3d_project": "psycholab"
+  },
   "picks": [
-    "cfq_pt_vs_sa",
-    "factoring_sqif",
-    "learnreg",
-    "mpi_extrapolation",
-    "storm_optimizer"
+    "dp_sgd_clipping",
+    "smart_eval",
+    "perturbations",
+    "norml",
+    "psycholab"
   ]
 }
