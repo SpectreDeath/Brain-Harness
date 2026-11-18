@@ -33,3 +33,9 @@ Template for per-phase entries:
 - Key metric(s): Top-3 blind spots: vision_and_3d_project (158.0, 158 units/0 KIs), nlp_and_llm_project (77.0, 154 units/1 KI), rl_and_control_project (58.0, 58 units/0 KIs). 11/11 domain_classes covered; spider count vs Python parity 100% PASS.
 - Finding(s): Agent orchestration (gap=0.05) and systems/runtime (gap=0.23) are well-covered, while vision/3D, NLP/LLM, and RL/control are severely underrepresented in vault categories.
 - Follow-ups: Generate blind Phase 4.1 candidate table for human selection.
+
+## Phase 4 — Next-5 Learning Targets (2026-11-18T16:10:39+00:00)
+- Outcome: PASS
+- Key metric(s): Ranked 127 grm candidates; spider_composite top-5=[poem, tunas, t5_closed_book_qa, saccader, tf3d] (2 distinct domains, sum_domain_gap=709.00, overlap@5=0 vs random human_picks proxy=[cfq_pt_vs_sa, factoring_sqif, learnreg, mpi_extrapolation, storm_optimizer]).
+- Finding(s): Composite ranking achieved >2.3x higher covered domain_gap (709.00) than largest_5 (297.12), random_5 (288.12), and most_tests_5 (281.38). Only t5_closed_book_qa had non-zero fan_in=1 among top-5.
+- Follow-ups: Run Phase 5 entropy-driven question selection over top 20 candidates.

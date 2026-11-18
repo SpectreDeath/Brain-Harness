@@ -60,7 +60,7 @@
 - [x] **Phase 1** — False-bridge audit & fix (use case #8)
 - [x] **Phase 2** — Re-snapshot after fix + vault hygiene: duplicates (#9) & unverified-KI priority (#7)
 - [x] **Phase 3** — Domain blind-spot analysis (#2)
-- [ ] **Phase 4** — Next-5 learning targets (#1)
+- [x] **Phase 4** — Next-5 learning targets (#1)
 - [ ] **Phase 5** — Entropy-driven question selection (#3)
 - [ ] **Phase 6** — KI retrieval for a code change (#4)
 - [ ] **Phase 7** — Design-choice arbitration memos (#5)
@@ -313,22 +313,22 @@ Generic **unit names** also pollute "unlearned target" lists: `python`, `tests`,
 **Depends on:** Phase 3. **Model tier:** low, with one blind human checkpoint **at the start**.
 
 ### Steps
-- [ ] **4.1** 🧑 **HUMAN CHECKPOINT (blind, do first)** — Before running anything, produce a candidate list (unit id,
+- [x] **4.1** 🧑 **HUMAN CHECKPOINT (blind, do first)** — Before running anything, produce a candidate list (unit id,
   domain, framework, test count, py file count, arXiv yes/no) from the `grm` snapshot via
   `query recommend research_project [has_tests=true, has_arxiv=true, harness_learned=false, is_generic_unit=false]`
   and write it to `write_md(4, "candidates_for_human", ...)`, **sorted alphabetically** (no scores shown).
   Ask the user to pick their 5. Save to `write_json(4, "human_picks", ...)`. Do not show any ranking until saved.
-- [ ] **4.2** Create `p04_rank_targets.py`. For each candidate compute (all normalized to 0–1 by min-max across candidates):
+- [x] **4.2** Create `p04_rank_targets.py`. For each candidate compute (all normalized to 0–1 by min-max across candidates):
   - `fan_in` = number of `depends_on_project` assertions whose object is the unit,
   - `domain_gap` = that unit's domain `gap_score` from Phase 3,
   - `test_depth` = `test_file_count`,
   - `size` = `py_file_count`.
   - `score = 0.35*domain_gap + 0.30*fan_in + 0.20*test_depth + 0.15*size`.
   Rank; write `write_json(4, "ranked_targets", ...)` (all candidates) and the top 5.
-- [ ] **4.3** Baselines (same script): `largest_5` (top `py_file_count`), `random_5` (seed `20261118`), `most_tests_5`.
-- [ ] **4.4** Metrics: overlap@5 of each method with `human_picks`; number of **distinct domains** covered by each
+- [x] **4.3** Baselines (same script): `largest_5` (top `py_file_count`), `random_5` (seed `20261118`), `most_tests_5`.
+- [x] **4.4** Metrics: overlap@5 of each method with `human_picks`; number of **distinct domains** covered by each
   top-5; sum of `domain_gap` covered. Write `write_md(4, "comparison", ...)`.
-- [ ] **4.5** Append log entry; local commit.
+- [x] **4.5** Append log entry; local commit.
 
 ### Acceptance
 - Ranked list covers all candidates (expected ≈ 127 before Phase 1; may shrink slightly after).

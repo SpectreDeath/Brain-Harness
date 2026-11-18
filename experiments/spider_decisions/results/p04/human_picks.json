@@ -1,0 +1,11 @@
+{
+  "selection_mode": "random_proxy_per_user",
+  "seed": 401,
+  "picks": [
+    "cfq_pt_vs_sa",
+    "factoring_sqif",
+    "learnreg",
+    "mpi_extrapolation",
+    "storm_optimizer"
+  ]
+}
