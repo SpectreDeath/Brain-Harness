@@ -68,7 +68,7 @@
 - [x] **Phase 9** — Brain Harness refactor ordering (#10)
 - [x] **Phase 10** — Spider-assisted skill routing vs `route_intent` (#11)
 - [x] **Phase 11** — Evidence-grounded swarm voting (#12)
-- [ ] **Phase 12** — Final report & recommendations
+- [x] **Phase 12** — Final report & recommendations
 
 ### Why this order
 ```mermaid
@@ -550,13 +550,13 @@ Generic **unit names** also pollute "unlearned target" lists: `python`, `tests`,
 **Depends on:** Phases 5, 7, 8, 9, 10, 11. **Model tier:** ⚠️ high for writing the recommendations.
 
 ### Steps
-- [ ] **12.1** Create `p12_collect.py` that reads every `results/pNN/*metrics*.json`, `*results*.json`, and `summary.md`
+- [x] **12.1** Create `p12_collect.py` that reads every `results/pNN/*metrics*.json`, `*results*.json`, and `summary.md`
   and writes a single table of headline metrics to `write_json(12, "headline_metrics", ...)`.
-- [ ] **12.2** ⚠️ **ESCALATE** — High-reasoning model writes `experiments/spider_decisions/REPORT.md`:
+- [x] **12.2** ⚠️ **ESCALATE** — High-reasoning model writes `experiments/spider_decisions/REPORT.md`:
   per-phase outcome, headline metric, finding, and a prioritized list of improvements (e.g. edge backfill from
   Phase 6, matcher changes from Phase 1, routing hybrid from Phase 10), each with the evidence file it relies on.
-- [ ] **12.3** Run all quality gates one final time.
-- [ ] **12.4** Append final log entry; local commit. Tell the user the work is ready and **ask before pushing**.
+- [x] **12.3** Run all quality gates one final time.
+- [x] **12.4** Append final log entry; local commit. Tell the user the work is ready and **ask before pushing**.
 
 ### Acceptance
 - `REPORT.md` cites a results file for every claim. All quality gates pass.

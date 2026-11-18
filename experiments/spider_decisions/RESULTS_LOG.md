@@ -81,3 +81,9 @@ Template for per-phase entries:
 - Key metric(s): Raw CISC accuracy=2/12 (0.1667); Evidence-grounded accuracy=11/12 (0.9167); total_flips=9 (flips_toward_correct=9, flips_toward_incorrect=0).
 - Finding(s): Multiplying CISC confidence by vault isnad_verified status (1.0/0.6/0.4) corrected 9 unverified-majority disputes with zero regressions while keeping 4-to-1 overwhelming plurality bounded (dispute #12).
 - Follow-ups: Collect all headline metrics and author final Phase 12 REPORT.md.
+
+## Phase 12 — Final Report & Recommendations (2026-11-18T18:11:10+00:00)
+- Outcome: PASS
+- Key metric(s): All 13 phases (81/81 task checkboxes, 0 unchecked) complete; headline_metrics.json aggregated across Phases 0-11; ruff check . passed; 26 experiment files formatted; 18/18 pytest passed in 10.00s.
+- Finding(s): Published full cited final synthesis and 8 prioritized architectural/epistemic recommendations in experiments/spider_decisions/REPORT.md.
+- Follow-ups: All commits are local on main; awaiting user approval before pushing.

@@ -1,0 +1,279 @@
+{
+  "phase_0": {
+    "snapshots_count": 7,
+    "roundtrip_all_passed": true,
+    "vault_entities": 630,
+    "vault_assertions": 959,
+    "grm_entities": 1274,
+    "grm_assertions": 4496
+  },
+  "phase_1": {
+    "bridges_before": 40,
+    "fp_before": 7,
+    "fp_rate_before": 0.175,
+    "bridges_after": 34,
+    "tp_after": 32,
+    "fp_after": 2,
+    "fp_rate_after": 0.0588,
+    "true_bridge_recall": 0.9697,
+    "known_false_bridges_gone": {
+      "airllm_plus/runtime": true,
+      "grm/rpc": true
+    },
+    "regression_all_passed": true
+  },
+  "phase_2": {
+    "unverified_kis_count": 78,
+    "top5_unverified_ids": [
+      "ki_solla_dmbok_governance_decision_rights",
+      "ki_njoku_uncertainty_aware_systems",
+      "ki_agent_skills_progressive_disclosure",
+      "ki_self_20260907_02",
+      "ki_self_20260907_03"
+    ],
+    "total_kis_scanned": 377,
+    "duplicate_candidates_count": 12,
+    "intentional_siblings_count": 0
+  },
+  "phase_3": {
+    "domain_classes_count": 11,
+    "spider_python_parity": true,
+    "top3_blind_spots": [
+      {
+        "domain": "vision_and_3d_project",
+        "gap_score": 158.0,
+        "repo_units": 158,
+        "vault_kis": 0
+      },
+      {
+        "domain": "nlp_and_llm_project",
+        "gap_score": 77.0,
+        "repo_units": 154,
+        "vault_kis": 1
+      },
+      {
+        "domain": "rl_and_control_project",
+        "gap_score": 58.0,
+        "repo_units": 58,
+        "vault_kis": 0
+      }
+    ]
+  },
+  "phase_4": {
+    "candidates_count": 127,
+    "top_5_targets": [
+      "poem",
+      "tunas",
+      "t5_closed_book_qa",
+      "saccader",
+      "tf3d"
+    ],
+    "methods": {
+      "spider_composite": {
+        "overlap_at_5": 0,
+        "distinct_domains": 2,
+        "sum_domain_gap": 709.0
+      },
+      "largest_5": {
+        "overlap_at_5": 0,
+        "distinct_domains": 4,
+        "sum_domain_gap": 297.12
+      },
+      "most_tests_5": {
+        "overlap_at_5": 0,
+        "distinct_domains": 3,
+        "sum_domain_gap": 281.38
+      },
+      "random_5": {
+        "overlap_at_5": 0,
+        "distinct_domains": 3,
+        "sum_domain_gap": 288.12
+      },
+      "human_picks": {
+        "overlap_at_5": 5,
+        "distinct_domains": 4,
+        "sum_domain_gap": 191.25
+      }
+    }
+  },
+  "phase_5": {
+    "entropy_summary": {
+      "targets": 20,
+      "mean_questions": 1.8,
+      "max_questions": 2,
+      "min_questions": 1,
+      "uniquely_identified_count": 20,
+      "pct_uniquely_identified": 100.0
+    },
+    "random_summary": {
+      "targets": 20,
+      "mean_questions": 3.65,
+      "max_questions": 7,
+      "min_questions": 1,
+      "uniquely_identified_count": 20,
+      "pct_uniquely_identified": 100.0
+    }
+  },
+  "phase_6": {
+    "macro_average": {
+      "hop0": {
+        "precision": 0.4,
+        "recall": 0.25,
+        "f1": 0.28
+      },
+      "hop1": {
+        "precision": 0.4,
+        "recall": 0.3,
+        "f1": 0.3333
+      },
+      "grep_baseline": {
+        "precision": 0.8476,
+        "recall": 0.95,
+        "f1": 0.8769
+      }
+    },
+    "sparsity": {
+      "unique_gold_kis": 13,
+      "gold_kis_with_zero_references_code": 6,
+      "missing_module_edges_count": 12
+    }
+  },
+  "phase_7": {
+    "q1": {
+      "distinct_kis_cited": 11,
+      "all_cited_kis_in_vault": true,
+      "cited_claims_verified": 7,
+      "cited_claims_total": 8,
+      "pct_cited_claims_verified": 87.5,
+      "conflicts_flagged": 2
+    },
+    "q2": {
+      "distinct_kis_cited": 4,
+      "all_cited_kis_in_vault": true,
+      "cited_claims_verified": 8,
+      "cited_claims_total": 8,
+      "pct_cited_claims_verified": 100.0,
+      "conflicts_flagged": 2
+    }
+  },
+  "phase_8": {
+    "total_repos": 14,
+    "correct": 2,
+    "accuracy": 0.1429,
+    "confusion_matrix": {
+      "plugin": {
+        "plugin": 2,
+        "ki_only": 7,
+        "skip": 1
+      },
+      "ki_only": {
+        "plugin": 2,
+        "ki_only": 0,
+        "skip": 2
+      },
+      "skip": {
+        "plugin": 0,
+        "ki_only": 0,
+        "skip": 0
+      }
+    }
+  },
+  "phase_9": {
+    "total_units": 11,
+    "total_depends_on_edges": 52,
+    "spider_cycles": [
+      "ui -> commands -> ui"
+    ],
+    "tarjan_scc_count": 1,
+    "tarjan_scc_sizes": [
+      11
+    ],
+    "ordered_units": [
+      "commands",
+      "ui",
+      "mcp",
+      "agent",
+      "creator",
+      "bridges",
+      "services",
+      "plugins",
+      "ingestion",
+      "kernel",
+      "events"
+    ],
+    "ki_cross_check_top10_count": 6
+  },
+  "phase_10": {
+    "task_count": 20,
+    "summary_metrics": {
+      "baseline_route_intent": {
+        "hit_at_1_count": 19,
+        "hit_at_1": 0.95,
+        "hit_at_3_count": 19,
+        "hit_at_3": 0.95
+      },
+      "spider_assisted": {
+        "hit_at_1_count": 2,
+        "hit_at_1": 0.1,
+        "hit_at_3_count": 4,
+        "hit_at_3": 0.2
+      },
+      "hybrid_rerank_top3": {
+        "hit_at_1_count": 13,
+        "hit_at_1": 0.65,
+        "hit_at_3_count": 19,
+        "hit_at_3": 0.95
+      },
+      "hybrid_union_top3": {
+        "hit_at_1_count": 8,
+        "hit_at_1": 0.4,
+        "hit_at_3_count": 11,
+        "hit_at_3": 0.55
+      }
+    },
+    "unique_wins": {
+      "baseline_only_at_1": [
+        1,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        17,
+        19,
+        20
+      ],
+      "spider_only_at_1": [],
+      "union_gains_over_baseline_at_3": []
+    }
+  },
+  "phase_11": {
+    "disputes_total": 12,
+    "raw_correct": 2,
+    "raw_accuracy": 0.1667,
+    "grounded_correct": 11,
+    "grounded_accuracy": 0.9167,
+    "accuracy_delta": 0.75,
+    "total_flips": 9,
+    "flips_toward_correct": 9,
+    "flips_toward_incorrect": 0
+  },
+  "summaries_present": {
+    "p01": true,
+    "p04": false,
+    "p05": true,
+    "p06": true,
+    "p08": true,
+    "p09": true,
+    "p10": true,
+    "p11": true
+  }
+}
