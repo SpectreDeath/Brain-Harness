@@ -53,7 +53,7 @@ A 🧑 **HUMAN CHECKPOINT** must never present the user with a single list longe
 
 ## 1. Progress Tracker
 
-- [ ] **Phase 0** — Baseline verification & `ACTION_LOG.md` scaffolding
+- [x] **Phase 0** — Baseline verification & `ACTION_LOG.md` scaffolding
 - [ ] **Phase 1** — P0: Vault `references_code` backfill & module-ID edge normalization (`0.33 -> >= 0.85` F1)
 - [ ] **Phase 2** — P1: Evidence-grounded CISC swarm voting & ASPEST confidence-band escalation
 - [ ] **Phase 3** — P1: Break `ui <-> commands` cycle & `services/` upward leaks (zero kernel edits)
@@ -96,7 +96,7 @@ flowchart LR
 **Depends on:** nothing. **Model tier:** low.
 
 ### Steps
-- [ ] **0.1** Create `experiments/spider_decisions/ACTION_LOG.md` with header `# Spider Follow-Up Action Log` and this per-phase template comment:
+- [x] **0.1** Create `experiments/spider_decisions/ACTION_LOG.md` with header `# Spider Follow-Up Action Log` and this per-phase template comment:
   ```markdown
   <!--
   ## Phase N — <title> (<ISO timestamp>)
@@ -106,14 +106,14 @@ flowchart LR
   - Verification: ...
   -->
   ```
-- [ ] **0.2** Verify required experiment inputs exist on disk:
+- [x] **0.2** Verify required experiment inputs exist on disk:
   `experiments/spider_decisions/REPORT.md`, `experiments/spider_decisions/results/p02/unverified_priority.md`, `experiments/spider_decisions/results/p02/duplicate_review_sheet.md`, `experiments/spider_decisions/results/p04/human_picks.json`, `experiments/spider_decisions/results/p06/edge_backfill_proposal.md`, `experiments/spider_decisions/results/p07/memo_q1.md`, `experiments/spider_decisions/results/p07/memo_q2.md`, `experiments/spider_decisions/results/p09/summary.md`, `experiments/spider_decisions/results/p11/summary.md`.
-- [ ] **0.3** Run baseline quality gates:
+- [x] **0.3** Run baseline quality gates:
   ```powershell
   .venv\Scripts\python.exe -m ruff check .
   .venv\Scripts\python.exe -m pytest tests/test_repo_ontology_seam.py tests/test_ontology_spider_service.py tests/test_ontology_spider_adapter_fixes.py tests/test_swarm_cisc_integration.py tests/test_uncertainty_cisc_calibration.py tests/test_ui_server.py tests/test_service_storage_vault_integrity.py -q
   ```
-- [ ] **0.4** Append Phase 0 entry to `experiments/spider_decisions/ACTION_LOG.md` and make a local commit `feat(spider-followup): phase 0 baseline and action log`.
+- [x] **0.4** Append Phase 0 entry to `experiments/spider_decisions/ACTION_LOG.md` and make a local commit `feat(spider-followup): phase 0 baseline and action log`.
 
 ### Outputs
 `experiments/spider_decisions/ACTION_LOG.md`.
