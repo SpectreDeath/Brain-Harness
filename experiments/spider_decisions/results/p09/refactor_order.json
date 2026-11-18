@@ -1,0 +1,311 @@
+{
+  "total_units": 11,
+  "total_depends_on_edges": 52,
+  "spider_cycle_violations": [
+    "ui -> commands -> ui"
+  ],
+  "tarjan_scc_cycles": [
+    [
+      "agent",
+      "bridges",
+      "commands",
+      "creator",
+      "events",
+      "ingestion",
+      "kernel",
+      "mcp",
+      "plugins",
+      "services",
+      "ui"
+    ]
+  ],
+  "blast_radius_method": "Python reverse BFS (spider transitive queries follow forward depends_on_project edges only)",
+  "dependency_hubs": [
+    {
+      "unit": "kernel",
+      "in_degree": 10,
+      "blast_radius": 10
+    },
+    {
+      "unit": "plugins",
+      "in_degree": 9,
+      "blast_radius": 10
+    },
+    {
+      "unit": "services",
+      "in_degree": 8,
+      "blast_radius": 10
+    },
+    {
+      "unit": "events",
+      "in_degree": 7,
+      "blast_radius": 10
+    },
+    {
+      "unit": "ingestion",
+      "in_degree": 5,
+      "blast_radius": 10
+    },
+    {
+      "unit": "creator",
+      "in_degree": 4,
+      "blast_radius": 10
+    },
+    {
+      "unit": "agent",
+      "in_degree": 3,
+      "blast_radius": 10
+    },
+    {
+      "unit": "bridges",
+      "in_degree": 2,
+      "blast_radius": 10
+    },
+    {
+      "unit": "commands",
+      "in_degree": 2,
+      "blast_radius": 10
+    },
+    {
+      "unit": "mcp",
+      "in_degree": 1,
+      "blast_radius": 10
+    },
+    {
+      "unit": "ui",
+      "in_degree": 1,
+      "blast_radius": 10
+    }
+  ],
+  "refactor_order": [
+    {
+      "order": 1,
+      "unit": "commands",
+      "py_file_count": 59,
+      "in_spider_cycle": true,
+      "spider_cycle_size": 2,
+      "hub_in_degree": 2,
+      "out_degree": 10,
+      "blast_radius_reverse_reachable": 10,
+      "forward_transitive_deps": 10,
+      "in_top10": true,
+      "in_ki_file_size_hotspots": true,
+      "in_ki_deepening_cycle_history": true,
+      "in_ki_70_cycle_corpus": false
+    },
+    {
+      "order": 2,
+      "unit": "ui",
+      "py_file_count": 15,
+      "in_spider_cycle": true,
+      "spider_cycle_size": 2,
+      "hub_in_degree": 1,
+      "out_degree": 8,
+      "blast_radius_reverse_reachable": 10,
+      "forward_transitive_deps": 10,
+      "in_top10": true,
+      "in_ki_file_size_hotspots": false,
+      "in_ki_deepening_cycle_history": false,
+      "in_ki_70_cycle_corpus": false
+    },
+    {
+      "order": 3,
+      "unit": "mcp",
+      "py_file_count": 11,
+      "in_spider_cycle": false,
+      "spider_cycle_size": 0,
+      "hub_in_degree": 1,
+      "out_degree": 4,
+      "blast_radius_reverse_reachable": 10,
+      "forward_transitive_deps": 10,
+      "in_top10": true,
+      "in_ki_file_size_hotspots": true,
+      "in_ki_deepening_cycle_history": false,
+      "in_ki_70_cycle_corpus": false
+    },
+    {
+      "order": 4,
+      "unit": "agent",
+      "py_file_count": 41,
+      "in_spider_cycle": false,
+      "spider_cycle_size": 0,
+      "hub_in_degree": 3,
+      "out_degree": 5,
+      "blast_radius_reverse_reachable": 10,
+      "forward_transitive_deps": 10,
+      "in_top10": true,
+      "in_ki_file_size_hotspots": true,
+      "in_ki_deepening_cycle_history": true,
+      "in_ki_70_cycle_corpus": false
+    },
+    {
+      "order": 5,
+      "unit": "creator",
+      "py_file_count": 39,
+      "in_spider_cycle": false,
+      "spider_cycle_size": 0,
+      "hub_in_degree": 4,
+      "out_degree": 5,
+      "blast_radius_reverse_reachable": 10,
+      "forward_transitive_deps": 10,
+      "in_top10": true,
+      "in_ki_file_size_hotspots": false,
+      "in_ki_deepening_cycle_history": true,
+      "in_ki_70_cycle_corpus": false
+    },
+    {
+      "order": 6,
+      "unit": "bridges",
+      "py_file_count": 6,
+      "in_spider_cycle": false,
+      "spider_cycle_size": 0,
+      "hub_in_degree": 2,
+      "out_degree": 3,
+      "blast_radius_reverse_reachable": 10,
+      "forward_transitive_deps": 10,
+      "in_top10": true,
+      "in_ki_file_size_hotspots": false,
+      "in_ki_deepening_cycle_history": false,
+      "in_ki_70_cycle_corpus": false
+    },
+    {
+      "order": 7,
+      "unit": "services",
+      "py_file_count": 59,
+      "in_spider_cycle": false,
+      "spider_cycle_size": 0,
+      "hub_in_degree": 8,
+      "out_degree": 2,
+      "blast_radius_reverse_reachable": 10,
+      "forward_transitive_deps": 10,
+      "in_top10": true,
+      "in_ki_file_size_hotspots": true,
+      "in_ki_deepening_cycle_history": true,
+      "in_ki_70_cycle_corpus": false
+    },
+    {
+      "order": 8,
+      "unit": "plugins",
+      "py_file_count": 18,
+      "in_spider_cycle": false,
+      "spider_cycle_size": 0,
+      "hub_in_degree": 9,
+      "out_degree": 4,
+      "blast_radius_reverse_reachable": 10,
+      "forward_transitive_deps": 10,
+      "in_top10": true,
+      "in_ki_file_size_hotspots": true,
+      "in_ki_deepening_cycle_history": false,
+      "in_ki_70_cycle_corpus": false
+    },
+    {
+      "order": 9,
+      "unit": "ingestion",
+      "py_file_count": 16,
+      "in_spider_cycle": false,
+      "spider_cycle_size": 0,
+      "hub_in_degree": 5,
+      "out_degree": 4,
+      "blast_radius_reverse_reachable": 10,
+      "forward_transitive_deps": 10,
+      "in_top10": true,
+      "in_ki_file_size_hotspots": false,
+      "in_ki_deepening_cycle_history": false,
+      "in_ki_70_cycle_corpus": false
+    },
+    {
+      "order": 10,
+      "unit": "kernel",
+      "py_file_count": 37,
+      "in_spider_cycle": false,
+      "spider_cycle_size": 0,
+      "hub_in_degree": 10,
+      "out_degree": 6,
+      "blast_radius_reverse_reachable": 10,
+      "forward_transitive_deps": 10,
+      "in_top10": true,
+      "in_ki_file_size_hotspots": false,
+      "in_ki_deepening_cycle_history": false,
+      "in_ki_70_cycle_corpus": true
+    },
+    {
+      "order": 11,
+      "unit": "events",
+      "py_file_count": 11,
+      "in_spider_cycle": false,
+      "spider_cycle_size": 0,
+      "hub_in_degree": 7,
+      "out_degree": 1,
+      "blast_radius_reverse_reachable": 10,
+      "forward_transitive_deps": 10,
+      "in_top10": false,
+      "in_ki_file_size_hotspots": false,
+      "in_ki_deepening_cycle_history": false,
+      "in_ki_70_cycle_corpus": false
+    }
+  ],
+  "ki_cross_check_top10": [
+    {
+      "unit": "commands",
+      "order": 1,
+      "in_ki_file_size_hotspots": true,
+      "in_ki_deepening_cycle_history": true,
+      "matched_signals": [
+        "cli.py",
+        "reflection.py",
+        "commands/"
+      ]
+    },
+    {
+      "unit": "mcp",
+      "order": 3,
+      "in_ki_file_size_hotspots": true,
+      "in_ki_deepening_cycle_history": false,
+      "matched_signals": [
+        "server.py"
+      ]
+    },
+    {
+      "unit": "agent",
+      "order": 4,
+      "in_ki_file_size_hotspots": true,
+      "in_ki_deepening_cycle_history": true,
+      "matched_signals": [
+        "archetypes.py",
+        "swarm.py",
+        "session.py",
+        "agent session"
+      ]
+    },
+    {
+      "unit": "creator",
+      "order": 5,
+      "in_ki_file_size_hotspots": false,
+      "in_ki_deepening_cycle_history": true,
+      "matched_signals": [
+        "creator package"
+      ]
+    },
+    {
+      "unit": "services",
+      "order": 7,
+      "in_ki_file_size_hotspots": true,
+      "in_ki_deepening_cycle_history": true,
+      "matched_signals": [
+        "compute_assessor.py",
+        "tools.py",
+        "validator.py",
+        "services/compute/"
+      ]
+    },
+    {
+      "unit": "plugins",
+      "order": 8,
+      "in_ki_file_size_hotspots": true,
+      "in_ki_deepening_cycle_history": false,
+      "matched_signals": [
+        "cellcog.py"
+      ]
+    }
+  ]
+}

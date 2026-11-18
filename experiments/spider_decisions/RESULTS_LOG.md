@@ -63,3 +63,9 @@ Template for per-phase entries:
 - Key metric(s): 2/14 accuracy (0.1429); Confusion matrix: plugin->{plugin:2, ki_only:7, skip:1}, ki_only->{plugin:2, ki_only:0, skip:2}.
 - Finding(s): Most informative misclassifications: (1) Non-Python/TS/Go repos (adk-web, magika, earthengine-api, styleguide) were built as plugins despite primary_language != python; (2) harness2 & tunix-main missed has_tests under 60-file portfolio cap; (3) airllm & grm/imp look Python+tested+packaged yet were kept ki_only based on architectural domain rather than syntax.
 - Follow-ups: Run Phase 9 Brain Harness refactor ordering (9.1-9.4).
+
+## Phase 9 — Brain Harness Refactor Ordering (2026-11-18T18:04:23+00:00)
+- Outcome: PASS
+- Key metric(s): Ordered all 11 src/harness units: commands, ui, mcp, agent, creator, bridges, services, plugins, ingestion, kernel, events; 1 spider cycle (ui -> commands -> ui); 11-unit Tarjan SCC (all blast_radius=10); 6/10 hotspot KI overlap (commands, mcp, agent, creator, services, plugins).
+- Finding(s): ui <-> commands cycle originates in ui/server/routes/skills.py; 11-unit Tarjan SCC is caused by kernel/runtime/* composition-root imports (defaults.py, factory.py, services.py, tools.py, plugins.py); full AST scan also found 2 upward leaks in services/ (skill_graph/joint_query.py -> commands, storage/vault_retrieval.py -> creator) missed by the 60-file snapshot cap. Verdict: sensible (8.5/10).
+- Follow-ups: Run Phase 10 Steps 10.1-10.2 skill routing recipe and 20-task draft sheet for Checkpoint 10.3.

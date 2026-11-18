@@ -65,7 +65,7 @@
 - [x] **Phase 6** — KI retrieval for a code change (#4)
 - [x] **Phase 7** — Design-choice arbitration memos (#5)
 - [x] **Phase 8** — Plugin vs KI-only vs Skip classifier (#6)
-- [ ] **Phase 9** — Brain Harness refactor ordering (#10)
+- [x] **Phase 9** — Brain Harness refactor ordering (#10)
 - [ ] **Phase 10** — Spider-assisted skill routing vs `route_intent` (#11)
 - [ ] **Phase 11** — Evidence-grounded swarm voting (#12)
 - [ ] **Phase 12** — Final report & recommendations
@@ -463,19 +463,19 @@ Generic **unit names** also pollute "unlearned target" lists: `python`, `tests`,
 **Depends on:** Phase 2. **Model tier:** low for analysis; human review at the end.
 
 ### Steps
-- [ ] **9.1** Create `p09_refactor_order.py` using snapshot `brain_harness_src` (units = subpackages of `src/harness`).
+- [x] **9.1** Create `p09_refactor_order.py` using snapshot `brain_harness_src` (units = subpackages of `src/harness`).
   Collect: dependency hubs (in-degree on `depends_on_project`), cycles (`ontology_spider.api.validate_model` →
   `cycle_violation`), and per-unit `py_file_count`.
-- [ ] **9.2** Produce an order: (1) units in cycles first, ordered by cycle size; (2) then remaining units in
+- [x] **9.2** Produce an order: (1) units in cycles first, ordered by cycle size; (2) then remaining units in
   **reverse topological order** (leaves first) using `depends_on_project`; tie-break by higher `py_file_count`.
   Also compute, per unit, **blast radius** = number of units that transitively depend on it, via
   `query count transitive depends_on_project from <unit>` on the **reversed** relation — if the spider only follows
   forward edges, compute reverse reachability in Python and note that in the summary.
-- [ ] **9.3** Cross-check against existing KIs `ki_file_size_hotspots` and `ki_deepening_cycle_history`
+- [x] **9.3** Cross-check against existing KIs `ki_file_size_hotspots` and `ki_deepening_cycle_history`
   (read their `summary.md`): list units that appear in both the spider's top-10 and those KIs.
-- [ ] **9.4** Write `write_json(9, "refactor_order", ...)`, `write_md(9, "summary", ...)`.
-- [ ] **9.5** 🧑 **HUMAN CHECKPOINT** — User marks the order as sensible / not sensible with comments.
-- [ ] **9.6** Append log entry; local commit.
+- [x] **9.4** Write `write_json(9, "refactor_order", ...)`, `write_md(9, "summary", ...)`.
+- [x] **9.5** 🧑 **HUMAN CHECKPOINT** — User marks the order as sensible / not sensible with comments.
+- [x] **9.6** Append log entry; local commit.
 
 ### Acceptance
 - Every unit appears exactly once in the order; cycles (if any) listed with their paths.
