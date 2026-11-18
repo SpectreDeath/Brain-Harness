@@ -189,7 +189,7 @@ class TestSandboxedPluginAdapter:
 
     async def test_domain_plugin_runtime_invocation(self) -> None:
         """Verify workspace domain plugins invoke successfully through HarnessRuntime."""
-        from harness.kernel.runtime import HarnessRuntime
+        from harness.runtime import HarnessRuntime
 
         async with HarnessRuntime.create(
             plugin_dirs=[Path("plugins/security_and_forensics/network_forensics")]

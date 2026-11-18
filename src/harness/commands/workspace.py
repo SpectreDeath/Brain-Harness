@@ -11,7 +11,7 @@ from typing import TYPE_CHECKING, Any
 import structlog
 
 if TYPE_CHECKING:
-    from harness.kernel.runtime import HarnessRuntime
+    from harness.runtime import HarnessRuntime
     from harness.plugins.watcher import PluginWatcher
 
 logger = structlog.get_logger()
@@ -98,7 +98,7 @@ async def watch_workspace_cmd(
     Returns:
         Running PluginWatcher instance.
     """
-    from harness.kernel.runtime import HarnessRuntime
+    from harness.runtime import HarnessRuntime
     from harness.plugins.watcher import PluginWatcher
 
     p_dirs = [Path(p) for p in (plugin_dirs or [Path("plugins")])]
@@ -141,7 +141,7 @@ def watch_cli() -> None:
     """Run the harness with live filesystem hot-reloading enabled."""
 
     async def _watch() -> None:
-        from harness.kernel.runtime import HarnessRuntime
+        from harness.runtime import HarnessRuntime
 
         runtime = HarnessRuntime.create(db_path=":memory:")
         await runtime.start()

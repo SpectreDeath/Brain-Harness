@@ -1,9 +1,9 @@
 """Plugin ingestion and batch lifecycle coordination for Harness Runtime.
 
 Architectural Role (Functional Operations vs Runtime Mixin):
-- This module (`harness.kernel.runtime.plugins`) provides the standalone, functional
+- This module (`harness.runtime.plugins`) provides the standalone, functional
   operations for plugin enabling, disabling, and source ingestion.
-- `harness.kernel.runtime.plugin_ops` (`RuntimePluginOpsMixin`) exposes these operations
+- `harness.runtime.plugin_ops` (`RuntimePluginOpsMixin`) exposes these operations
   as methods on `HarnessRuntime`, delegating directly to this module.
 """
 
@@ -17,7 +17,7 @@ import structlog
 from harness.kernel.lifecycle import PluginState
 
 if TYPE_CHECKING:
-    from harness.kernel.runtime.coordinator import HarnessRuntime
+    from harness.runtime.coordinator import HarnessRuntime
     from harness.plugins.base import HarnessPlugin
 
 # Windows UTF-8 Stream Codec Entrypoint Invariant (Rule 23)

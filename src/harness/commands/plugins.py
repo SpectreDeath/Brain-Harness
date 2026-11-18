@@ -159,7 +159,7 @@ async def enable_plugin_by_name(
             _update_persistent_config(enabled=matched, config_dir=config_dir)
         return matched
 
-    from harness.kernel.runtime import HarnessRuntime
+    from harness.runtime import HarnessRuntime
 
     matched = []
     async with HarnessRuntime.create(db_path=db_path) as rt:
@@ -192,7 +192,7 @@ async def disable_plugin_by_name(
             _update_persistent_config(disabled=matched, config_dir=config_dir)
         return matched
 
-    from harness.kernel.runtime import HarnessRuntime
+    from harness.runtime import HarnessRuntime
 
     matched = []
     async with HarnessRuntime.create(db_path=db_path) as rt:
@@ -225,7 +225,7 @@ async def enable_all_plugins(
         return cast(dict[str, bool], results)
 
 
-    from harness.kernel.runtime import HarnessRuntime
+    from harness.runtime import HarnessRuntime
 
     async with HarnessRuntime.create(db_path=db_path) as rt:
         results = await rt.enable_all_plugins(include_sandboxed=include_sandboxed)
@@ -250,7 +250,7 @@ async def disable_all_plugins(
             _update_persistent_config(disabled=disabled, config_dir=config_dir)
         return cast(list[str], disabled)
 
-    from harness.kernel.runtime import HarnessRuntime
+    from harness.runtime import HarnessRuntime
 
     async with HarnessRuntime.create(db_path=db_path) as rt:
         disabled = await rt.disable_all_plugins(keep_core=keep_core)

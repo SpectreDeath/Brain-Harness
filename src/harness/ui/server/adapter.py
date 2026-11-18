@@ -12,7 +12,7 @@ from harness.creator.introspection import RuntimeIntrospector
 from harness.events.bus import EventBus
 from harness.kernel.context import ServiceContext
 from harness.kernel.lifecycle import PluginLifecycle, PluginState
-from harness.kernel.runtime import HarnessRuntime
+from harness.runtime import HarnessRuntime
 from harness.plugins.base import HarnessPlugin
 from harness.ingestion.pipeline import PluginIngestionPipeline
 from harness.services.tools import TOOL_REGISTRY_KEY

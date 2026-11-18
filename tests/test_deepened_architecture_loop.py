@@ -16,7 +16,7 @@ from harness.bridges.base import EcosystemBridgeCatalog
 from harness.events.bus import EventBus
 from harness.events.types import EventType, HarnessEvent
 from harness.kernel.context import ServiceKey
-from harness.kernel.runtime import HarnessRuntime
+from harness.runtime import HarnessRuntime
 from harness.services.llm import LiteLLMService, LLMResponse
 
 

@@ -13,7 +13,7 @@ import structlog
 
 if TYPE_CHECKING:
     from harness.kernel.reconciler import HarnessConfigTree
-    from harness.kernel.runtime import HarnessRuntime
+    from harness.runtime import HarnessRuntime
 
 logger = structlog.get_logger()
 
@@ -93,7 +93,7 @@ async def run_harness_cmd(
     Returns:
         RuntimeRunResult with active runtime and status metrics.
     """
-    from harness.kernel.runtime import HarnessRuntime
+    from harness.runtime import HarnessRuntime
 
     log_p = Path(event_log_path).resolve() if event_log_path else None
     if log_p and not log_p.parent.exists():
@@ -135,7 +135,7 @@ async def start_harness(
     db_path: str = ":memory:",
 ) -> AsyncIterator[HarnessRuntime]:
     """Async context manager providing a started HarnessRuntime with auto-cleanup."""
-    from harness.kernel.runtime import HarnessRuntime
+    from harness.runtime import HarnessRuntime
 
     log_p = Path(event_log_path).resolve() if event_log_path else None
     runtime = HarnessRuntime.create(event_log_path=log_p, db_path=db_path)
@@ -184,7 +184,7 @@ def validate_config_cmd(config_path: Path | str) -> ConfigValidationResult:
 
 async def apply_config_cmd(config_path: Path | str) -> ConfigApplyResult:
     """Apply and reconcile a declarative configuration file against Harness."""
-    from harness.kernel.runtime import HarnessRuntime
+    from harness.runtime import HarnessRuntime
 
     p = Path(config_path).resolve()
     val_res = validate_config_cmd(p)
@@ -257,7 +257,7 @@ def ui_cli(host: str, port: int, db_path: str) -> None:
     import uvicorn
 
     from harness.commands.agent import FallbackLLM
-    from harness.kernel.runtime import HarnessRuntime
+    from harness.runtime import HarnessRuntime
     from harness.ui.server import create_app
 
     runtime = HarnessRuntime.create(db_path=db_path, fallback_llm=FallbackLLM())

@@ -57,7 +57,7 @@ A 🧑 **HUMAN CHECKPOINT** must never present the user with a single list longe
 - [x] **Phase 1** — P0: Vault `references_code` backfill & module-ID edge normalization (`0.33 -> >= 0.85` F1)
 - [x] **Phase 2** — P1: Evidence-grounded CISC swarm voting & ASPEST confidence-band escalation
 - [x] **Phase 3** — P1: Break `ui <-> commands` cycle & `services/` upward leaks (zero kernel edits)
-- [ ] **Phase 4** — P1 (Arch): Decouple `kernel/runtime/` composition root & verify SCC reduction
+- [x] **Phase 4** — P1 (Arch): Decouple `kernel/runtime/` composition root & verify SCC reduction
 - [ ] **Phase 5** — P2: Vault hygiene — verify top-8 central unverified KIs & triage 12 duplicate pairs
 - [ ] **Phase 6** — P2: Ingest Next-5 research targets (`dp_sgd_clipping`, `smart_eval`, `perturbations`, `norml`, `psycholab`)
 - [ ] **Phase 7** — P3: Polish `ontology_spider` — zero residual false bridges, reverse blast radius & uncapped self-scan
@@ -227,11 +227,11 @@ Updated `src/harness/agent/swarm/consensus.py`, `src/harness/services/uncertaint
 **Depends on:** Phase 3. **Model tier:** ⚠️ **high** (architectural extraction + human checkpoint).
 
 ### Steps
-- [ ] **4.1** ⚠️ **ESCALATE (Design Spec)** — Trace every cross-package import inside `src/harness/kernel/runtime/**` and every caller of `harness.kernel.runtime` across `src/`, `plugins/`, and `tests/`. Produce an extraction spec (moving wiring/factory modules into a dedicated composition layer e.g. `src/harness/runtime/` or `services/`, leaving pure `ServiceContext` / lifecycle primitives inside `src/harness/kernel/`).
-- [ ] **4.2** 🧑 **HUMAN CHECKPOINT (`<= 8` design decisions)** — Present the extraction plan (module move list, compatibility shim strategy, and any breaking-import risk) for explicit user approval before modifying `src/harness/kernel/**`.
-- [ ] **4.3** Write failing architectural boundary test asserting `src/harness/kernel/` only imports `events` and `plugins` interfaces (no `agent`, `bridges`, `commands`, `creator`, `ingestion`, `mcp`, `ui`), then implement the approved extraction with characterization tests preserving CLI/API behavior.
-- [ ] **4.4** Rebuild `brain_harness_src.json` and re-run `experiments/spider_decisions/p09_refactor_order.py`. Record new Tarjan SCC count/sizes and per-unit `blast_radius`.
-- [ ] **4.5** Run `ruff check .` and full `pytest` across kernel, runtime, UI, CLI, and ontology tests; append `ACTION_LOG.md`, local commit `feat(spider-followup): phase 4 decouple kernel runtime composition root`.
+- [x] **4.1** ⚠️ **ESCALATE (Design Spec)** — Trace every cross-package import inside `src/harness/kernel/runtime/**` and every caller of `harness.kernel.runtime` across `src/`, `plugins/`, and `tests/`. Produce an extraction spec (moving wiring/factory modules into a dedicated composition layer e.g. `src/harness/runtime/` or `services/`, leaving pure `ServiceContext` / lifecycle primitives inside `src/harness/kernel/`).
+- [x] **4.2** 🧑 **HUMAN CHECKPOINT (`<= 8` design decisions)** — Present the extraction plan (module move list, compatibility shim strategy, and any breaking-import risk) for explicit user approval before modifying `src/harness/kernel/**`.
+- [x] **4.3** Write failing architectural boundary test asserting `src/harness/kernel/` only imports `events` and `plugins` interfaces (no `agent`, `bridges`, `commands`, `creator`, `ingestion`, `mcp`, `ui`), then implement the approved extraction with characterization tests preserving CLI/API behavior.
+- [x] **4.4** Rebuild `brain_harness_src.json` and re-run `experiments/spider_decisions/p09_refactor_order.py`. Record new Tarjan SCC count/sizes and per-unit `blast_radius`.
+- [x] **4.5** Run `ruff check .` and full `pytest` across kernel, runtime, UI, CLI, and ontology tests; append `ACTION_LOG.md`, local commit `feat(spider-followup): phase 4 decouple kernel runtime composition root`.
 
 ### Outputs
 Decoupled composition root outside `src/harness/kernel/`, updated import-boundary test, refreshed `results/p09/refactor_order.json` & `summary.md`.

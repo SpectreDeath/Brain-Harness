@@ -11,7 +11,7 @@ async def list_services(db_path: str = ":memory:") -> dict[str, str | None]:
     Args:
         db_path: SQLite database path for the runtime (default in-memory).
     """
-    from harness.kernel.runtime import HarnessRuntime
+    from harness.runtime import HarnessRuntime
 
     async with HarnessRuntime.create(db_path=db_path, auto_load_user_plugins=False) as runtime:
         return runtime.context.list_services()
@@ -24,7 +24,7 @@ async def run_introspect(db_path: str = ":memory:") -> dict[str, Any]:
     Mermaid graph string — ready for display or JSON serialisation.
     """
     from harness.creator.introspection import RuntimeIntrospector
-    from harness.kernel.runtime import HarnessRuntime
+    from harness.runtime import HarnessRuntime
 
     async with HarnessRuntime.create(
         db_path=db_path,

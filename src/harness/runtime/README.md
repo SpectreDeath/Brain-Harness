@@ -1,6 +1,6 @@
 # Harness Kernel Runtime
 
-The `harness.kernel.runtime` package provides the top-level runtime orchestrator, lifecycle coordinator, plugin discovery pipeline, and execution state reconciler for the Harness micro-kernel.
+The `harness.runtime` package provides the top-level runtime orchestrator, lifecycle coordinator, plugin discovery pipeline, and execution state reconciler for the Harness micro-kernel.
 
 ---
 
@@ -34,7 +34,7 @@ The `harness.kernel.runtime` package provides the top-level runtime orchestrator
 
 ### Constructing and Starting a Runtime Instance
 ```python
-from harness.kernel.runtime import create_runtime
+from harness.runtime import create_runtime
 
 async def main():
     runtime = create_runtime(workspace_root=".")

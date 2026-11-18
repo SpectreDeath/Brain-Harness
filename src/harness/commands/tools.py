@@ -104,7 +104,7 @@ async def list_tools_summary(
     db_path: str = ":memory:",
 ) -> list[dict[str, Any]]:
     """Standalone async command to list tools across a runtime instance."""
-    from harness.kernel.runtime import HarnessRuntime
+    from harness.runtime import HarnessRuntime
 
     async with HarnessRuntime.create(db_path=db_path) as rt:
         if rt.tools is None:
@@ -120,7 +120,7 @@ async def toggle_tool_by_name(
     exact: bool = True,
 ) -> list[str]:
     """Standalone async command to toggle tool(s) matching exact name or declared alias."""
-    from harness.kernel.runtime import HarnessRuntime
+    from harness.runtime import HarnessRuntime
 
     matched: list[str] = []
     async with HarnessRuntime.create(db_path=db_path) as rt:

@@ -10,7 +10,7 @@ import pytest
 from harness.creator.dynamic import DynamicPluginBuilder
 from harness.ingestion.fetcher import RepoFetcher
 from harness.ingestion.pipeline import PluginIngestionPipeline
-from harness.kernel.runtime import HarnessRuntime
+from harness.runtime import HarnessRuntime
 from harness.plugins.sandboxed import SandboxedPlugin
 
 

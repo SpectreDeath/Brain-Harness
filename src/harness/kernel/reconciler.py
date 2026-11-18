@@ -10,7 +10,7 @@ Realizes Section 5.2 of the Spatiotemporal Composability framework:
 Architectural Contract (Engine vs Runtime Adapter):
 - `ConfigurationReconciler` (this module) is the authoritative, declarative reconciliation
   engine operating solely on structured `HarnessConfigTree` schemas and computing topological diffs.
-- `harness.kernel.runtime.reconcile` is the runtime adapter layer that ingests polymorphic
+- `harness.runtime.reconcile` is the runtime adapter layer that ingests polymorphic
   configuration inputs (YAML/JSON paths, raw dicts, lists) and delegates to this engine
   via `runtime._reconciler.reconcile(config_tree)`.
 """
@@ -18,15 +18,12 @@ Architectural Contract (Engine vs Runtime Adapter):
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import TYPE_CHECKING, Any
+from typing import Any
 
 import structlog
 from pydantic import BaseModel, Field
 
 from harness.kernel.lifecycle import PluginState
-
-if TYPE_CHECKING:
-    from harness.kernel.runtime import HarnessRuntime
 
 logger = structlog.get_logger()
 
@@ -100,12 +97,13 @@ class ConfigurationReconciler:
     transitions (Theorem 73 Confluence).
     """
 
-    def __init__(self, runtime: HarnessRuntime) -> None:
+    def __init__(self, runtime: Any) -> None:
+        # Duck-typed against any runtime exposing .lifecycle, .context, and .add_plugin_from_source.
         self._runtime = runtime
         self._last_config: dict[str, PluginConfigEntry] = {}
 
     @property
-    def runtime(self) -> HarnessRuntime:
+    def runtime(self) -> Any:
         return self._runtime
 
     def detect_drift(

@@ -15,7 +15,7 @@ from harness.events.bus import EventBus
 from harness.events.types import EventType, HarnessEvent
 from harness.kernel.context import ServiceContext, ServiceKey
 from harness.kernel.lifecycle import PluginLifecycle, PluginState
-from harness.kernel.runtime import HarnessRuntime
+from harness.runtime import HarnessRuntime
 from harness.plugins.base import HarnessPlugin
 from harness.services.tools import ToolRegistryPlugin
 from harness.ui.server import create_app

@@ -16,22 +16,22 @@ if sys.platform == "win32":
     if hasattr(sys.stderr, "reconfigure"):
         sys.stderr.reconfigure(encoding="utf-8")
 
-from harness.kernel.runtime.coordinator import HarnessRuntime
-from harness.kernel.runtime.defaults import get_default_plugins
-from harness.kernel.runtime.factory import (
+from harness.runtime.coordinator import HarnessRuntime
+from harness.runtime.defaults import get_default_plugins
+from harness.runtime.factory import (
     create_diagnostic_runtime,
     create_runtime,
     create_runtime_from_config,
 )
-from harness.kernel.runtime.lifecycle_runner import start_runtime, stop_runtime
-from harness.kernel.runtime.models import RUNTIME_SERVICE_KEY, RuntimeConfig
-from harness.kernel.runtime.plugins import (
+from harness.runtime.lifecycle_runner import start_runtime, stop_runtime
+from harness.runtime.models import RUNTIME_SERVICE_KEY, RuntimeConfig
+from harness.runtime.plugins import (
     disable_all_plugins,
     enable_all_plugins,
     ingest_plugin_from_source,
 )
-from harness.kernel.runtime.reconcile import parse_runtime_config, reconcile_runtime
-from harness.kernel.runtime.tools import (
+from harness.runtime.reconcile import parse_runtime_config, reconcile_runtime
+from harness.runtime.tools import (
     disable_tool,
     enable_tool,
     export_runtime_session,

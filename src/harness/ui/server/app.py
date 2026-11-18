@@ -10,7 +10,7 @@ from fastapi.responses import HTMLResponse
 from harness.events.bus import EventBus
 from harness.kernel.context import ServiceContext
 from harness.kernel.lifecycle import PluginLifecycle
-from harness.kernel.runtime import HarnessRuntime
+from harness.runtime import HarnessRuntime
 from harness.ui.server.adapter import RuntimeAdapter
 from harness.ui.server.routes.creator import router as creator_router
 from harness.ui.server.routes.knowledge import router as knowledge_router

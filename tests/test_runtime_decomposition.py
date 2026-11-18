@@ -1,10 +1,10 @@
-"""Contract verification test suite for Kernel Runtime Decomposition (Cycle 45).
+"""Contract verification test suite for Harness Runtime Decomposition (Cycle 45).
 
 Verifies:
 1. Subpackage structure and strict line count bounds (Rule 11: all submodules <= 200 lines).
 2. Slotted & frozen dataclass contracts on RuntimeConfig (Rule 12 & Rule 43).
 3. Typed service key RUNTIME_SERVICE_KEY (Rule 2).
-4. 100% backward-compatible facade re-exports across harness.kernel.runtime.
+4. 100% backward-compatible facade re-exports across harness.runtime.
 5. Runtime factories (create, create_diagnostic, from_config).
 6. Tool and plugin enablement delegators.
 7. Declarative configuration parsing and runtime reconciliation.
@@ -17,7 +17,7 @@ from pathlib import Path
 import pytest
 
 from harness.kernel.context import ServiceKey
-from harness.kernel.runtime import (
+from harness.runtime import (
     HarnessRuntime,
     RUNTIME_SERVICE_KEY,
     RuntimeConfig,
@@ -48,7 +48,7 @@ if sys.platform == "win32":
 
 
 class TestRuntimeDecompositionArchitecture:
-    """Architectural and structural invariants for kernel/runtime subpackage."""
+    """Architectural and structural invariants for runtime subpackage."""
 
     def test_submodule_structure_and_line_limits(self) -> None:
         """Rule 11: All decomposed submodules must strictly remain <= 200 lines."""
@@ -56,7 +56,6 @@ class TestRuntimeDecompositionArchitecture:
             Path(__file__).parent.parent
             / "src"
             / "harness"
-            / "kernel"
             / "runtime"
         )
         assert pkg_dir.is_dir(), f"Expected directory at {pkg_dir}"

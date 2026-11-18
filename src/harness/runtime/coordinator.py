@@ -9,15 +9,15 @@ from typing import TYPE_CHECKING, Any
 
 from harness.kernel.context import ServiceContext
 from harness.kernel.lifecycle import PluginLifecycle
-from harness.kernel.runtime.factory import (
+from harness.runtime.factory import (
     create_diagnostic_runtime,
     create_runtime,
     create_runtime_from_config,
 )
-from harness.kernel.runtime.lifecycle_runner import start_runtime, stop_runtime
-from harness.kernel.runtime.plugin_ops import RuntimePluginOpsMixin
-from harness.kernel.runtime.reconcile import reconcile_runtime
-from harness.kernel.runtime.services import RuntimeServicesMixin
+from harness.runtime.lifecycle_runner import start_runtime, stop_runtime
+from harness.runtime.plugin_ops import RuntimePluginOpsMixin
+from harness.runtime.reconcile import reconcile_runtime
+from harness.runtime.services import RuntimeServicesMixin
 
 if TYPE_CHECKING:
     from harness.events.bus import EventBus

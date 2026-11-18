@@ -8,7 +8,7 @@ import pytest
 
 from harness.events.types import HarnessEvent
 from harness.kernel.context import ServiceKey
-from harness.kernel.runtime import HarnessRuntime
+from harness.runtime import HarnessRuntime
 from harness.plugins.base import HarnessPlugin
 from harness.services.llm import LiteLLMService, LLMResponse
 from harness.services.tools import TOOL_REGISTRY_KEY

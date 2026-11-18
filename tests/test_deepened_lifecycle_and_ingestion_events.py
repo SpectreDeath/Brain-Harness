@@ -18,7 +18,7 @@ from harness.events.types import EventType, HarnessEvent
 from harness.ingestion.pipeline import PluginIngestionPipeline
 from harness.kernel.context import ServiceContext, ServiceKey
 from harness.kernel.lifecycle import PluginLifecycle
-from harness.kernel.runtime import HarnessRuntime
+from harness.runtime import HarnessRuntime
 from harness.mcp.server import HarnessMCPServer
 from harness.plugins.base import HarnessPlugin
 from harness.services.storage import StoragePlugin

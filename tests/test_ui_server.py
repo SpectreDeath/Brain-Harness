@@ -95,7 +95,7 @@ class TestUIServer:
         import io
         import json
         import zipfile
-        from harness.kernel.runtime import HarnessRuntime
+        from harness.runtime import HarnessRuntime
 
         # Create a mock zip in memory
         zip_buffer = io.BytesIO()

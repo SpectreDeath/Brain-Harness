@@ -39,7 +39,7 @@ async def run_agent(
     Returns:
         The ``TaskResult`` from ``HarnessRuntime.run_task()``.
     """
-    from harness.kernel.runtime import HarnessRuntime
+    from harness.runtime import HarnessRuntime
 
     llm = fallback_llm or FallbackLLM()
 

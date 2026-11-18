@@ -6,7 +6,7 @@ import sys
 from typing import TYPE_CHECKING, Any, TypeVar
 
 from harness.kernel.context import ServiceContext, ServiceKey
-from harness.kernel.runtime.tools import export_runtime_session
+from harness.runtime.tools import export_runtime_session
 
 if TYPE_CHECKING:
     from harness.agent.session import AgentSessionManager

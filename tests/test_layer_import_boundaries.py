@@ -63,3 +63,26 @@ def test_creator_never_imports_commands() -> None:
     """Creator modules must not depend upward on harness.commands."""
     violations = _collect_forbidden_imports("creator", ("harness.commands",))
     assert violations == [], f"Forbidden creator -> commands imports: {violations}"
+
+
+@pytest.mark.unit
+def test_kernel_only_imports_events_and_plugins() -> None:
+    """Kernel primitives must only import harness.kernel*, harness.events*, or harness.plugins*."""
+    allowed_prefixes = ("harness.kernel", "harness.events", "harness.plugins")
+    base = _SRC_ROOT / "kernel"
+    violations: list[str] = []
+    for py_file in sorted(base.rglob("*.py")):
+        rel = py_file.relative_to(base).as_posix()
+        tree = ast.parse(py_file.read_text(encoding="utf-8"), filename=str(py_file))
+        for node in ast.walk(tree):
+            targets: list[str] = []
+            if isinstance(node, ast.Import):
+                targets = [alias.name for alias in node.names]
+            elif isinstance(node, ast.ImportFrom) and node.module:
+                targets = [node.module]
+            for mod in targets:
+                if mod.startswith("harness.") and not any(
+                    mod == prefix or mod.startswith(f"{prefix}.") for prefix in allowed_prefixes
+                ):
+                    violations.append(f"kernel/{rel}:{node.lineno} -> {mod}")
+    assert violations == [], f"Forbidden kernel cross-layer imports: {violations}"

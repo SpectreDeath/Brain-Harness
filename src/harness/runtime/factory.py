@@ -8,12 +8,12 @@ from typing import TYPE_CHECKING, Any
 
 from harness.kernel.context import ServiceContext
 from harness.kernel.lifecycle import PluginLifecycle
-from harness.kernel.runtime.defaults import get_default_plugins
-from harness.kernel.runtime.reconcile import parse_runtime_config
+from harness.runtime.defaults import get_default_plugins
+from harness.runtime.reconcile import parse_runtime_config
 
 if TYPE_CHECKING:
     from harness.events.bus import EventBus
-    from harness.kernel.runtime.coordinator import HarnessRuntime
+    from harness.runtime.coordinator import HarnessRuntime
     from harness.plugins.base import HarnessPlugin
     from harness.plugins.loader import PluginLoader
 

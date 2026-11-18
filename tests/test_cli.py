@@ -141,7 +141,7 @@ class TestCLI:
 
     def test_agent_run_mock(self) -> None:
         runner = CliRunner()
-        with patch("harness.kernel.runtime.HarnessRuntime.run_task", new_callable=AsyncMock) as mock_task:
+        with patch("harness.runtime.HarnessRuntime.run_task", new_callable=AsyncMock) as mock_task:
             mock_task.return_value = AgentTaskResult(
                 task="test task",
                 status="success",

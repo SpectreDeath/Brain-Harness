@@ -9,7 +9,7 @@ import structlog
 from harness.events.types import EventType, HarnessEvent
 
 if TYPE_CHECKING:
-    from harness.kernel.runtime.coordinator import HarnessRuntime
+    from harness.runtime.coordinator import HarnessRuntime
 
 # Windows UTF-8 Stream Codec Entrypoint Invariant (Rule 23)
 if sys.platform == "win32":

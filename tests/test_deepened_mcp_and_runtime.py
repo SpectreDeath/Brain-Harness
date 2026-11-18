@@ -11,7 +11,7 @@ from httpx import ASGITransport, AsyncClient
 from harness.events.bus import EventBus
 from harness.kernel.context import ServiceContext, ServiceKey
 from harness.kernel.lifecycle import PluginLifecycle
-from harness.kernel.runtime import HarnessRuntime
+from harness.runtime import HarnessRuntime
 from harness.mcp.protocol import (
     JSONRPC_METHOD_NOT_FOUND,
     MCPProtocolCodec,

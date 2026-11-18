@@ -328,7 +328,7 @@ class TestMCPServerAndUIServerDeepenedSeams:
     async def test_ui_server_events_endpoint_with_runtime(self) -> None:
         from httpx import ASGITransport, AsyncClient
         from harness.events.types import EventType, HarnessEvent
-        from harness.kernel.runtime import HarnessRuntime
+        from harness.runtime import HarnessRuntime
         from harness.ui.server import create_app
 
         async with HarnessRuntime.create(db_path=":memory:") as rt:

@@ -1,7 +1,7 @@
 """Declarative configuration parsing and runtime state reconciliation.
 
 Architectural Contract (Runtime Adapter vs Engine):
-- This module (`harness.kernel.runtime.reconcile`) serves as the runtime adapter layer:
+- This module (`harness.runtime.reconcile`) serves as the runtime adapter layer:
   it parses polymorphic inputs (file paths, JSON strings, Python dicts or lists) into
   a canonical `HarnessConfigTree` (Definition 74).
 - It binds to the running `HarnessRuntime` instance and invokes the declarative engine
@@ -20,7 +20,7 @@ from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:
     from harness.kernel.reconciler import HarnessConfigTree, ReconciliationResult
-    from harness.kernel.runtime.coordinator import HarnessRuntime
+    from harness.runtime.coordinator import HarnessRuntime
 
 # Windows UTF-8 Stream Codec Entrypoint Invariant (Rule 23)
 if sys.platform == "win32":

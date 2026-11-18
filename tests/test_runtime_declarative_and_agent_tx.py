@@ -21,7 +21,7 @@ from harness.agent.react import StepExecutionEngine
 from harness.cli import main
 from harness.kernel.context import ServiceContext, ServiceKey
 from harness.kernel.lifecycle import PluginState
-from harness.kernel.runtime import HarnessRuntime
+from harness.runtime import HarnessRuntime
 from harness.plugins.base import HarnessPlugin
 from harness.services.llm import LLMMessage, LLMResponse, LLMService
 from harness.services.tools import ToolRegistry, ToolSpec

@@ -9,7 +9,7 @@ from typing import TYPE_CHECKING, Any
 import structlog
 
 if TYPE_CHECKING:
-    from harness.kernel.runtime import HarnessRuntime
+    from harness.runtime import HarnessRuntime
     from harness.mcp.server import HarnessMCPServer
 
 logger = structlog.get_logger()
@@ -47,7 +47,7 @@ async def serve_mcp_cmd(
     Returns:
         McpServeResult with active server instance.
     """
-    from harness.kernel.runtime import HarnessRuntime
+    from harness.runtime import HarnessRuntime
     from harness.mcp.server import HarnessMCPServer
 
     rt = runtime or HarnessRuntime.create(db_path=db_path)

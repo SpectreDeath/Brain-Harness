@@ -7,13 +7,13 @@ from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
 from harness.kernel.lifecycle import PluginLifecycle, PluginState
-from harness.kernel.runtime.defaults import get_default_plugins
-from harness.kernel.runtime.plugins import (
+from harness.runtime.defaults import get_default_plugins
+from harness.runtime.plugins import (
     disable_all_plugins,
     enable_all_plugins,
     ingest_plugin_from_source,
 )
-from harness.kernel.runtime.tools import (
+from harness.runtime.tools import (
     disable_tool,
     enable_tool,
     run_runtime_task,

@@ -20,7 +20,7 @@ from harness.kernel.reconciler import (
     HarnessConfigTree,
     PluginConfigEntry,
 )
-from harness.kernel.runtime import HarnessRuntime
+from harness.runtime import HarnessRuntime
 from harness.plugins.base import HarnessPlugin
 
 

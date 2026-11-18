@@ -22,7 +22,7 @@ from harness.creator.introspection import RuntimeIntrospector
 from harness.events.bus import EventBus
 from harness.kernel.context import ServiceContext
 from harness.kernel.lifecycle import PluginLifecycle
-from harness.kernel.runtime import HarnessRuntime
+from harness.runtime import HarnessRuntime
 from harness.mcp.protocol import MCPPrompt, MCPResource
 from harness.mcp.server import HarnessMCPServer, MCPRegistry
 from harness.plugins.base import HarnessPlugin

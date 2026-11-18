@@ -10,7 +10,7 @@ from harness.bridges.memtext import MemtextServicePlugin
 from harness.events.bus import EventBus
 from harness.events.types import EventType, HarnessEvent
 from harness.kernel.reconciler import ConfigurationReconciler, HarnessConfigTree, PluginConfigEntry
-from harness.kernel.runtime import HarnessRuntime
+from harness.runtime import HarnessRuntime
 from harness.ui.projection import UIProjectionEngine
 
 

@@ -19,7 +19,7 @@ from harness.creator.archetypes import ArchetypeRegistry, PluginArchetype
 from harness.creator.creator import PluginCreator
 from harness.creator.dynamic import DynamicPluginBuilder
 from harness.creator.schema import SchemaInferrer
-from harness.kernel.runtime import HarnessRuntime
+from harness.runtime import HarnessRuntime
 from harness.plugins.manifest import PluginManifest
 
 

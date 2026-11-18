@@ -13,8 +13,8 @@ import yaml
 
 from harness.cli import main
 from harness.kernel.context import ServiceContext
-from harness.kernel.runtime.factory import create_runtime
-from harness.kernel.runtime.lifecycle_runner import start_runtime
+from harness.runtime.factory import create_runtime
+from harness.runtime.lifecycle_runner import start_runtime
 from harness.services.dock import (
     DOCK_SERVICE_KEY,
     DefaultDockService,
@@ -215,7 +215,7 @@ def test_dock_cli_inspect_generic_fallback(tmp_path: Path) -> None:
 @pytest.mark.asyncio
 async def test_dock_service_ioc_registration(tmp_path: Path) -> None:
     """Test Hole 6: DOCK_SERVICE_KEY is provided in ServiceContext upon runtime startup."""
-    from harness.kernel.runtime import HarnessRuntime
+    from harness.runtime import HarnessRuntime
 
     runtime = create_runtime(
         HarnessRuntime,

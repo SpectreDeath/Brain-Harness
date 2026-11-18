@@ -17,13 +17,11 @@ from .lifecycle import (
     PluginLifecycle,
     PluginState,
 )
-from .runtime import HarnessRuntime
 
 __all__ = [
     "CyclicDependencyError",
     "DependencyError",
     "DuplicateServiceError",
-    "HarnessRuntime",
     "InvalidTransitionError",
     "PluginEntry",
     "PluginLifecycle",
