@@ -32,6 +32,14 @@
 - Do not modify `src/harness/kernel/**`.
 - Experiments are **read-only observers** of external repos under `D:\GitHub\cloned\**`. Never write there.
 
+### Human checkpoint size rule (added 2026-11-18, per user direction)
+A 🧑 HUMAN CHECKPOINT must never present the user with a single list longer than 8 items to choose from.
+When the candidate set is larger, partition it into shortlists of 5–8 items each (one per domain/cluster,
+alphabetical within each list, no scores shown) and ask the user to pick 1 from each shortlist. The total
+number of picks stays the same; only the choice is broken into human-sized sets. If a shortlist has a
+single candidate it is a forced pick — record that instead of asking. This rule applies to every
+🧑 HUMAN CHECKPOINT in this plan.
+
 ### Standard commands
 ```powershell
 # Python interpreter (always)
@@ -313,11 +321,16 @@ Generic **unit names** also pollute "unlearned target" lists: `python`, `tests`,
 **Depends on:** Phase 3. **Model tier:** low, with one blind human checkpoint **at the start**.
 
 ### Steps
-- [x] **4.1** 🧑 **HUMAN CHECKPOINT (blind, do first)** — Before running anything, produce a candidate list (unit id,
+- [x] **4.1** 🧑 **HUMAN CHECKPOINT (blind, do first)** — Before running anything, produce the candidate list (unit id,
   domain, framework, test count, py file count, arXiv yes/no) from the `grm` snapshot via
-  `query recommend research_project [has_tests=true, has_arxiv=true, harness_learned=false, is_generic_unit=false]`
-  and write it to `write_md(4, "candidates_for_human", ...)`, **sorted alphabetically** (no scores shown).
-  Ask the user to pick their 5. Save to `write_json(4, "human_picks", ...)`. Do not show any ranking until saved.
+  `query recommend research_project [has_tests=true, has_arxiv=true, harness_learned=false, is_generic_unit=false]`.
+  Do NOT present the full list to the user: partition it into **5 shortlists, one per domain** (5–8 candidates each,
+  **sorted alphabetically** within each list, no scores shown) and write them to
+  `write_md(4, "candidates_for_human", ...)`. Ask the user to pick **1 from each shortlist** (5 picks total).
+  Save to `write_json(4, "human_picks", ...)` with `selection_mode` recorded (e.g. `human_shortlists`).
+  Do not show any ranking until saved. (Amended 2026-11-18: the original step asked the user to pick 5 from the
+  full list of ~127 candidates; the user directed shortlists instead — a single list that long is not a
+  human-sized choice.)
 - [x] **4.2** Create `p04_rank_targets.py`. For each candidate compute (all normalized to 0–1 by min-max across candidates):
   - `fan_in` = number of `depends_on_project` assertions whose object is the unit,
   - `domain_gap` = that unit's domain `gap_score` from Phase 3,
