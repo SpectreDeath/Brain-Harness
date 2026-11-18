@@ -1,0 +1,89 @@
+{
+  "all_passed": true,
+  "snapshots": {
+    "vault": {
+      "passed": true,
+      "cached_entities": 630,
+      "live_entities": 630,
+      "cached_assertions": 959,
+      "live_assertions": 959,
+      "triples_match": true,
+      "missing_in_cached_count": 0,
+      "extra_in_cached_count": 0,
+      "sample_missing": [],
+      "sample_extra": []
+    },
+    "google_portfolio_root": {
+      "passed": true,
+      "cached_entities": 57,
+      "live_entities": 57,
+      "cached_assertions": 81,
+      "live_assertions": 81,
+      "triples_match": true,
+      "missing_in_cached_count": 0,
+      "extra_in_cached_count": 0,
+      "sample_missing": [],
+      "sample_extra": []
+    },
+    "grm": {
+      "passed": true,
+      "cached_entities": 1275,
+      "live_entities": 1275,
+      "cached_assertions": 4499,
+      "live_assertions": 4499,
+      "triples_match": true,
+      "missing_in_cached_count": 0,
+      "extra_in_cached_count": 0,
+      "sample_missing": [],
+      "sample_extra": []
+    },
+    "gvisor": {
+      "passed": true,
+      "cached_entities": 47,
+      "live_entities": 47,
+      "cached_assertions": 83,
+      "live_assertions": 83,
+      "triples_match": true,
+      "missing_in_cached_count": 0,
+      "extra_in_cached_count": 0,
+      "sample_missing": [],
+      "sample_extra": []
+    },
+    "airllm": {
+      "passed": true,
+      "cached_entities": 44,
+      "live_entities": 44,
+      "cached_assertions": 60,
+      "live_assertions": 60,
+      "triples_match": true,
+      "missing_in_cached_count": 0,
+      "extra_in_cached_count": 0,
+      "sample_missing": [],
+      "sample_extra": []
+    },
+    "airllm_plus": {
+      "passed": true,
+      "cached_entities": 33,
+      "live_entities": 33,
+      "cached_assertions": 38,
+      "live_assertions": 38,
+      "triples_match": true,
+      "missing_in_cached_count": 0,
+      "extra_in_cached_count": 0,
+      "sample_missing": [],
+      "sample_extra": []
+    },
+    "brain_harness_src": {
+      "passed": true,
+      "cached_entities": 49,
+      "live_entities": 49,
+      "cached_assertions": 129,
+      "live_assertions": 129,
+      "triples_match": true,
+      "missing_in_cached_count": 0,
+      "extra_in_cached_count": 0,
+      "sample_missing": [],
+      "sample_extra": []
+    }
+  }
+}

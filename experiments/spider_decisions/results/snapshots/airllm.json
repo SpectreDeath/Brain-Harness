@@ -1,0 +1,1309 @@
+{
+  "uri": "urn:repo:airllm",
+  "entities": [
+    {
+      "id": "research_project",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "repository_unit",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "rl_and_control_project",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "nlp_and_llm_project",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "vision_and_3d_project",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "graph_and_program_project",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "science_and_bio_project",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "speech_and_audio_project",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "privacy_fairness_safety_project",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "optimization_and_compression_project",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "systems_and_runtime_project",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "agent_orchestration_project",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "general_ml_project",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "ml_framework",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "technical_dependency",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "runtime_artifact",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "build_artifact",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "config_system",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "arxiv_paper",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "provenance_artifact",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "harness_artifact",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "brain_harness_node",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "depends_on_project",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "true",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "uses_framework",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "exports_artifact",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "uses_config_system",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "cites_paper",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "bridges_to_harness",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "air_llm",
+      "name": "air_llm",
+      "attributes": {
+        "raw_name": "air_llm",
+        "domain_class": "nlp_and_llm_project",
+        "primary_framework": "torch",
+        "primary_language": "python",
+        "packaging": "setup_py",
+        "size_tier": "large",
+        "has_readme": false,
+        "has_tests": true,
+        "has_gin": false,
+        "has_ipynb": true,
+        "has_cpp_cuda": false,
+        "has_run_sh": false,
+        "has_arxiv": false,
+        "has_bazel_build": false,
+        "has_tflite_or_pb": false,
+        "harness_learned": true,
+        "learned_ki_id": "ki_airllm_layerwise_streaming_and_moe_expert_offload",
+        "py_file_count": 45,
+        "test_file_count": 13,
+        "gin_file_count": 0
+      }
+    },
+    {
+      "id": "fw_numpy",
+      "name": "numpy",
+      "attributes": {
+        "kind": "ml_framework"
+      }
+    },
+    {
+      "id": "fw_torch",
+      "name": "torch",
+      "attributes": {
+        "kind": "ml_framework"
+      }
+    },
+    {
+      "id": "ki_airllm_layerwise_streaming_and_moe_expert_offload",
+      "name": "ki_airllm_layerwise_streaming_and_moe_expert_offload",
+      "attributes": {
+        "kind": "harness_artifact"
+      }
+    },
+    {
+      "id": "anima_100k",
+      "name": "anima_100k",
+      "attributes": {
+        "raw_name": "anima_100k",
+        "domain_class": "nlp_and_llm_project",
+        "primary_framework": "torch",
+        "primary_language": "python",
+        "packaging": "none",
+        "size_tier": "small",
+        "has_readme": true,
+        "has_tests": false,
+        "has_gin": false,
+        "has_ipynb": true,
+        "has_cpp_cuda": false,
+        "has_run_sh": false,
+        "has_arxiv": false,
+        "has_bazel_build": false,
+        "has_tflite_or_pb": false,
+        "harness_learned": false,
+        "learned_ki_id": "",
+        "py_file_count": 2,
+        "test_file_count": 0,
+        "gin_file_count": 0
+      }
+    },
+    {
+      "id": "data",
+      "name": "data",
+      "attributes": {
+        "raw_name": "data",
+        "domain_class": "general_ml_project",
+        "primary_framework": "none",
+        "primary_language": "docs_or_config",
+        "packaging": "none",
+        "size_tier": "non_python",
+        "has_readme": false,
+        "has_tests": false,
+        "has_gin": false,
+        "has_ipynb": true,
+        "has_cpp_cuda": false,
+        "has_run_sh": false,
+        "has_arxiv": false,
+        "has_bazel_build": false,
+        "has_tflite_or_pb": false,
+        "harness_learned": true,
+        "learned_ki_id": "ki_solla_dikw_data_asset_continuum",
+        "py_file_count": 0,
+        "test_file_count": 0,
+        "gin_file_count": 0
+      }
+    },
+    {
+      "id": "ki_solla_dikw_data_asset_continuum",
+      "name": "ki_solla_dikw_data_asset_continuum",
+      "attributes": {
+        "kind": "harness_artifact"
+      }
+    },
+    {
+      "id": "eval",
+      "name": "eval",
+      "attributes": {
+        "raw_name": "eval",
+        "domain_class": "general_ml_project",
+        "primary_framework": "none",
+        "primary_language": "docs_or_config",
+        "packaging": "none",
+        "size_tier": "non_python",
+        "has_readme": false,
+        "has_tests": false,
+        "has_gin": false,
+        "has_ipynb": true,
+        "has_cpp_cuda": false,
+        "has_run_sh": false,
+        "has_arxiv": false,
+        "has_bazel_build": false,
+        "has_tflite_or_pb": false,
+        "harness_learned": true,
+        "learned_ki_id": "ki-rea-sig-anthea_eval-1f061854",
+        "py_file_count": 0,
+        "test_file_count": 0,
+        "gin_file_count": 0
+      }
+    },
+    {
+      "id": "ki_rea_sig_anthea_eval_1f061854",
+      "name": "ki-rea-sig-anthea_eval-1f061854",
+      "attributes": {
+        "kind": "harness_artifact"
+      }
+    },
+    {
+      "id": "examples",
+      "name": "examples",
+      "attributes": {
+        "raw_name": "examples",
+        "domain_class": "general_ml_project",
+        "primary_framework": "none",
+        "primary_language": "docs_or_config",
+        "packaging": "none",
+        "size_tier": "non_python",
+        "has_readme": false,
+        "has_tests": false,
+        "has_gin": false,
+        "has_ipynb": true,
+        "has_cpp_cuda": false,
+        "has_run_sh": false,
+        "has_arxiv": false,
+        "has_bazel_build": false,
+        "has_tflite_or_pb": false,
+        "harness_learned": false,
+        "learned_ki_id": "",
+        "py_file_count": 0,
+        "test_file_count": 0,
+        "gin_file_count": 0
+      }
+    },
+    {
+      "id": "rlhf",
+      "name": "rlhf",
+      "attributes": {
+        "raw_name": "rlhf",
+        "domain_class": "nlp_and_llm_project",
+        "primary_framework": "torch",
+        "primary_language": "python",
+        "packaging": "none",
+        "size_tier": "small",
+        "has_readme": true,
+        "has_tests": false,
+        "has_gin": false,
+        "has_ipynb": false,
+        "has_cpp_cuda": false,
+        "has_run_sh": false,
+        "has_arxiv": true,
+        "has_bazel_build": false,
+        "has_tflite_or_pb": false,
+        "harness_learned": false,
+        "learned_ki_id": "",
+        "py_file_count": 1,
+        "test_file_count": 0,
+        "gin_file_count": 0
+      }
+    },
+    {
+      "id": "arxiv_2305_18290",
+      "name": "arXiv:2305.18290",
+      "attributes": {
+        "arxiv_id": "2305.18290"
+      }
+    },
+    {
+      "id": "scripts",
+      "name": "scripts",
+      "attributes": {
+        "raw_name": "scripts",
+        "domain_class": "general_ml_project",
+        "primary_framework": "none",
+        "primary_language": "python",
+        "packaging": "none",
+        "size_tier": "small",
+        "has_readme": false,
+        "has_tests": true,
+        "has_gin": false,
+        "has_ipynb": false,
+        "has_cpp_cuda": false,
+        "has_run_sh": false,
+        "has_arxiv": false,
+        "has_bazel_build": false,
+        "has_tflite_or_pb": false,
+        "harness_learned": false,
+        "learned_ki_id": "",
+        "py_file_count": 2,
+        "test_file_count": 1,
+        "gin_file_count": 0
+      }
+    },
+    {
+      "id": "training",
+      "name": "training",
+      "attributes": {
+        "raw_name": "training",
+        "domain_class": "nlp_and_llm_project",
+        "primary_framework": "torch",
+        "primary_language": "python",
+        "packaging": "none",
+        "size_tier": "small",
+        "has_readme": true,
+        "has_tests": false,
+        "has_gin": false,
+        "has_ipynb": false,
+        "has_cpp_cuda": false,
+        "has_run_sh": false,
+        "has_arxiv": true,
+        "has_bazel_build": false,
+        "has_tflite_or_pb": false,
+        "harness_learned": false,
+        "learned_ki_id": "",
+        "py_file_count": 1,
+        "test_file_count": 0,
+        "gin_file_count": 0
+      }
+    },
+    {
+      "id": "arxiv_2305_14314",
+      "name": "arXiv:2305.14314",
+      "attributes": {
+        "arxiv_id": "2305.14314"
+      }
+    }
+  ],
+  "assertions": [
+    {
+      "assertion_id": "asrt_c8eedee9f371",
+      "relation": {
+        "subject": "research_project",
+        "predicate": "subclass_of",
+        "object": "repository_unit"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_69c76eea2b3a",
+      "relation": {
+        "subject": "rl_and_control_project",
+        "predicate": "subclass_of",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_c4950eef0c6b",
+      "relation": {
+        "subject": "nlp_and_llm_project",
+        "predicate": "subclass_of",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_a62be0f82ae8",
+      "relation": {
+        "subject": "vision_and_3d_project",
+        "predicate": "subclass_of",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_4f0624ec0cb1",
+      "relation": {
+        "subject": "graph_and_program_project",
+        "predicate": "subclass_of",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_51be6690c6ec",
+      "relation": {
+        "subject": "science_and_bio_project",
+        "predicate": "subclass_of",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_0c76dfa10a8c",
+      "relation": {
+        "subject": "speech_and_audio_project",
+        "predicate": "subclass_of",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_db1d62842218",
+      "relation": {
+        "subject": "privacy_fairness_safety_project",
+        "predicate": "subclass_of",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_b03a5034dca1",
+      "relation": {
+        "subject": "optimization_and_compression_project",
+        "predicate": "subclass_of",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_69425ec34025",
+      "relation": {
+        "subject": "systems_and_runtime_project",
+        "predicate": "subclass_of",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_7d12ddf2735b",
+      "relation": {
+        "subject": "agent_orchestration_project",
+        "predicate": "subclass_of",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_f263c445b7a4",
+      "relation": {
+        "subject": "general_ml_project",
+        "predicate": "subclass_of",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_b2ffe5d5b4c0",
+      "relation": {
+        "subject": "ml_framework",
+        "predicate": "subclass_of",
+        "object": "technical_dependency"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_008fcf579eab",
+      "relation": {
+        "subject": "runtime_artifact",
+        "predicate": "subclass_of",
+        "object": "build_artifact"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_8f5687762e80",
+      "relation": {
+        "subject": "config_system",
+        "predicate": "subclass_of",
+        "object": "technical_dependency"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_3cbbf54c331c",
+      "relation": {
+        "subject": "arxiv_paper",
+        "predicate": "subclass_of",
+        "object": "provenance_artifact"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_a2e74c806157",
+      "relation": {
+        "subject": "harness_artifact",
+        "predicate": "subclass_of",
+        "object": "brain_harness_node"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_bcc7dfde22d6",
+      "relation": {
+        "subject": "research_project",
+        "predicate": "disjoint_with",
+        "object": "ml_framework"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_c45952fd4257",
+      "relation": {
+        "subject": "research_project",
+        "predicate": "disjoint_with",
+        "object": "arxiv_paper"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_9c7b96cf5ef6",
+      "relation": {
+        "subject": "depends_on_project",
+        "predicate": "domain",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_c45cf9b59046",
+      "relation": {
+        "subject": "depends_on_project",
+        "predicate": "range",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_5af2ce27595e",
+      "relation": {
+        "subject": "depends_on_project",
+        "predicate": "acyclic",
+        "object": "true"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_9e5236968898",
+      "relation": {
+        "subject": "uses_framework",
+        "predicate": "domain",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_0549fc5e428a",
+      "relation": {
+        "subject": "uses_framework",
+        "predicate": "range",
+        "object": "ml_framework"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_e6a63d293240",
+      "relation": {
+        "subject": "exports_artifact",
+        "predicate": "domain",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_108b64dc06e8",
+      "relation": {
+        "subject": "exports_artifact",
+        "predicate": "range",
+        "object": "runtime_artifact"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_ea1c1afefe62",
+      "relation": {
+        "subject": "uses_config_system",
+        "predicate": "domain",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_6a8128cce2ff",
+      "relation": {
+        "subject": "uses_config_system",
+        "predicate": "range",
+        "object": "config_system"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_343968933ceb",
+      "relation": {
+        "subject": "cites_paper",
+        "predicate": "domain",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_b24bc6505e83",
+      "relation": {
+        "subject": "cites_paper",
+        "predicate": "range",
+        "object": "arxiv_paper"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_6d4f867be671",
+      "relation": {
+        "subject": "bridges_to_harness",
+        "predicate": "domain",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_a30780cd4764",
+      "relation": {
+        "subject": "bridges_to_harness",
+        "predicate": "range",
+        "object": "harness_artifact"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_f266ce67af27",
+      "relation": {
+        "subject": "air_llm",
+        "predicate": "instance_of",
+        "object": "nlp_and_llm_project"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_827ca4f2a142",
+      "relation": {
+        "subject": "fw_numpy",
+        "predicate": "instance_of",
+        "object": "ml_framework"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_b207fedc5267",
+      "relation": {
+        "subject": "air_llm",
+        "predicate": "uses_framework",
+        "object": "fw_numpy"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_1852ccf88d51",
+      "relation": {
+        "subject": "fw_torch",
+        "predicate": "instance_of",
+        "object": "ml_framework"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_e0dd7c1fa206",
+      "relation": {
+        "subject": "air_llm",
+        "predicate": "uses_framework",
+        "object": "fw_torch"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_4a51705161ef",
+      "relation": {
+        "subject": "ki_airllm_layerwise_streaming_and_moe_expert_offload",
+        "predicate": "instance_of",
+        "object": "harness_artifact"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_c7b93d7f48d4",
+      "relation": {
+        "subject": "air_llm",
+        "predicate": "bridges_to_harness",
+        "object": "ki_airllm_layerwise_streaming_and_moe_expert_offload"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_2b676261f078",
+      "relation": {
+        "subject": "anima_100k",
+        "predicate": "instance_of",
+        "object": "nlp_and_llm_project"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_59701cdd63b9",
+      "relation": {
+        "subject": "anima_100k",
+        "predicate": "uses_framework",
+        "object": "fw_numpy"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_dda4c7c69d73",
+      "relation": {
+        "subject": "anima_100k",
+        "predicate": "uses_framework",
+        "object": "fw_torch"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_580a2561faf4",
+      "relation": {
+        "subject": "data",
+        "predicate": "instance_of",
+        "object": "general_ml_project"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_70f3fba636ac",
+      "relation": {
+        "subject": "ki_solla_dikw_data_asset_continuum",
+        "predicate": "instance_of",
+        "object": "harness_artifact"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_db47040216f3",
+      "relation": {
+        "subject": "data",
+        "predicate": "bridges_to_harness",
+        "object": "ki_solla_dikw_data_asset_continuum"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_5c3cc2d1545f",
+      "relation": {
+        "subject": "eval",
+        "predicate": "instance_of",
+        "object": "general_ml_project"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_caccf76cd5e3",
+      "relation": {
+        "subject": "ki_rea_sig_anthea_eval_1f061854",
+        "predicate": "instance_of",
+        "object": "harness_artifact"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_5a2c578134bb",
+      "relation": {
+        "subject": "eval",
+        "predicate": "bridges_to_harness",
+        "object": "ki_rea_sig_anthea_eval_1f061854"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_54936969cf63",
+      "relation": {
+        "subject": "examples",
+        "predicate": "instance_of",
+        "object": "general_ml_project"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_65db035c6987",
+      "relation": {
+        "subject": "rlhf",
+        "predicate": "instance_of",
+        "object": "nlp_and_llm_project"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_cd6af985a1cd",
+      "relation": {
+        "subject": "rlhf",
+        "predicate": "uses_framework",
+        "object": "fw_numpy"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_a21e5b9b77b0",
+      "relation": {
+        "subject": "rlhf",
+        "predicate": "uses_framework",
+        "object": "fw_torch"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_e8a9c85a3a20",
+      "relation": {
+        "subject": "arxiv_2305_18290",
+        "predicate": "instance_of",
+        "object": "arxiv_paper"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_735ab9962879",
+      "relation": {
+        "subject": "rlhf",
+        "predicate": "cites_paper",
+        "object": "arxiv_2305_18290"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_8ea92e155012",
+      "relation": {
+        "subject": "scripts",
+        "predicate": "instance_of",
+        "object": "general_ml_project"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_45527864ca81",
+      "relation": {
+        "subject": "training",
+        "predicate": "instance_of",
+        "object": "nlp_and_llm_project"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_84001aab56a2",
+      "relation": {
+        "subject": "training",
+        "predicate": "uses_framework",
+        "object": "fw_numpy"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_258945bf8932",
+      "relation": {
+        "subject": "training",
+        "predicate": "uses_framework",
+        "object": "fw_torch"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_94f140e5efee",
+      "relation": {
+        "subject": "arxiv_2305_14314",
+        "predicate": "instance_of",
+        "object": "arxiv_paper"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_5e594578f047",
+      "relation": {
+        "subject": "training",
+        "predicate": "cites_paper",
+        "object": "arxiv_2305_14314"
+      },
+      "provenance": {
+        "source": "repo:airllm",
+        "timestamp": "2026-11-18T14:55:27.799040+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    }
+  ]
+}

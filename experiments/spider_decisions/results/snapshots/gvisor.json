@@ -1,0 +1,1789 @@
+{
+  "uri": "urn:repo:gvisor",
+  "entities": [
+    {
+      "id": "research_project",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "repository_unit",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "rl_and_control_project",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "nlp_and_llm_project",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "vision_and_3d_project",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "graph_and_program_project",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "science_and_bio_project",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "speech_and_audio_project",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "privacy_fairness_safety_project",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "optimization_and_compression_project",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "systems_and_runtime_project",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "agent_orchestration_project",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "general_ml_project",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "ml_framework",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "technical_dependency",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "runtime_artifact",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "build_artifact",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "config_system",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "arxiv_paper",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "provenance_artifact",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "harness_artifact",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "brain_harness_node",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "depends_on_project",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "true",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "uses_framework",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "exports_artifact",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "uses_config_system",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "cites_paper",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "bridges_to_harness",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "debian",
+      "name": "debian",
+      "attributes": {
+        "raw_name": "debian",
+        "domain_class": "general_ml_project",
+        "primary_framework": "none",
+        "primary_language": "docs_or_config",
+        "packaging": "none",
+        "size_tier": "non_python",
+        "has_readme": false,
+        "has_tests": false,
+        "has_gin": false,
+        "has_ipynb": false,
+        "has_cpp_cuda": false,
+        "has_run_sh": false,
+        "has_arxiv": false,
+        "has_bazel_build": true,
+        "has_tflite_or_pb": false,
+        "harness_learned": false,
+        "learned_ki_id": "",
+        "py_file_count": 0,
+        "test_file_count": 0,
+        "gin_file_count": 0
+      }
+    },
+    {
+      "id": "examples",
+      "name": "examples",
+      "attributes": {
+        "raw_name": "examples",
+        "domain_class": "systems_and_runtime_project",
+        "primary_framework": "none",
+        "primary_language": "python",
+        "packaging": "none",
+        "size_tier": "small",
+        "has_readme": true,
+        "has_tests": false,
+        "has_gin": false,
+        "has_ipynb": false,
+        "has_cpp_cuda": true,
+        "has_run_sh": false,
+        "has_arxiv": false,
+        "has_bazel_build": true,
+        "has_tflite_or_pb": false,
+        "harness_learned": false,
+        "learned_ki_id": "",
+        "py_file_count": 1,
+        "test_file_count": 0,
+        "gin_file_count": 0
+      }
+    },
+    {
+      "id": "g3doc",
+      "name": "g3doc",
+      "attributes": {
+        "raw_name": "g3doc",
+        "domain_class": "systems_and_runtime_project",
+        "primary_framework": "none",
+        "primary_language": "docs_or_config",
+        "packaging": "none",
+        "size_tier": "non_python",
+        "has_readme": true,
+        "has_tests": false,
+        "has_gin": false,
+        "has_ipynb": false,
+        "has_cpp_cuda": false,
+        "has_run_sh": false,
+        "has_arxiv": false,
+        "has_bazel_build": true,
+        "has_tflite_or_pb": false,
+        "harness_learned": false,
+        "learned_ki_id": "",
+        "py_file_count": 0,
+        "test_file_count": 0,
+        "gin_file_count": 0
+      }
+    },
+    {
+      "id": "governance",
+      "name": "governance",
+      "attributes": {
+        "raw_name": "governance",
+        "domain_class": "general_ml_project",
+        "primary_framework": "none",
+        "primary_language": "go",
+        "packaging": "none",
+        "size_tier": "small",
+        "has_readme": false,
+        "has_tests": false,
+        "has_gin": false,
+        "has_ipynb": false,
+        "has_cpp_cuda": false,
+        "has_run_sh": false,
+        "has_arxiv": false,
+        "has_bazel_build": true,
+        "has_tflite_or_pb": false,
+        "harness_learned": true,
+        "learned_ki_id": "ki-responsible-ai-prototyping",
+        "py_file_count": 0,
+        "test_file_count": 0,
+        "gin_file_count": 0
+      }
+    },
+    {
+      "id": "ki_responsible_ai_prototyping",
+      "name": "ki-responsible-ai-prototyping",
+      "attributes": {
+        "kind": "harness_artifact"
+      }
+    },
+    {
+      "id": "images",
+      "name": "images",
+      "attributes": {
+        "raw_name": "images",
+        "domain_class": "vision_and_3d_project",
+        "primary_framework": "none",
+        "primary_language": "python",
+        "packaging": "cargo",
+        "size_tier": "small",
+        "has_readme": true,
+        "has_tests": false,
+        "has_gin": false,
+        "has_ipynb": false,
+        "has_cpp_cuda": false,
+        "has_run_sh": true,
+        "has_arxiv": false,
+        "has_bazel_build": true,
+        "has_tflite_or_pb": false,
+        "harness_learned": false,
+        "learned_ki_id": "",
+        "py_file_count": 1,
+        "test_file_count": 0,
+        "gin_file_count": 0
+      }
+    },
+    {
+      "id": "pkg",
+      "name": "pkg",
+      "attributes": {
+        "raw_name": "pkg",
+        "domain_class": "general_ml_project",
+        "primary_framework": "none",
+        "primary_language": "go",
+        "packaging": "none",
+        "size_tier": "large",
+        "has_readme": false,
+        "has_tests": true,
+        "has_gin": false,
+        "has_ipynb": false,
+        "has_cpp_cuda": false,
+        "has_run_sh": false,
+        "has_arxiv": false,
+        "has_bazel_build": true,
+        "has_tflite_or_pb": false,
+        "harness_learned": false,
+        "learned_ki_id": "",
+        "py_file_count": 0,
+        "test_file_count": 1,
+        "gin_file_count": 0
+      }
+    },
+    {
+      "id": "runsc",
+      "name": "runsc",
+      "attributes": {
+        "raw_name": "runsc",
+        "domain_class": "general_ml_project",
+        "primary_framework": "none",
+        "primary_language": "go",
+        "packaging": "none",
+        "size_tier": "large",
+        "has_readme": false,
+        "has_tests": true,
+        "has_gin": false,
+        "has_ipynb": false,
+        "has_cpp_cuda": false,
+        "has_run_sh": false,
+        "has_arxiv": false,
+        "has_bazel_build": true,
+        "has_tflite_or_pb": false,
+        "harness_learned": true,
+        "learned_ki_id": "ki_google_gvisor_sentry_gofer_sandbox",
+        "py_file_count": 0,
+        "test_file_count": 11,
+        "gin_file_count": 0
+      }
+    },
+    {
+      "id": "ki_google_gvisor_sentry_gofer_sandbox",
+      "name": "ki_google_gvisor_sentry_gofer_sandbox",
+      "attributes": {
+        "kind": "harness_artifact"
+      }
+    },
+    {
+      "id": "sandboxexec",
+      "name": "sandboxexec",
+      "attributes": {
+        "raw_name": "sandboxexec",
+        "domain_class": "privacy_fairness_safety_project",
+        "primary_framework": "none",
+        "primary_language": "go",
+        "packaging": "pyproject",
+        "size_tier": "medium",
+        "has_readme": true,
+        "has_tests": true,
+        "has_gin": false,
+        "has_ipynb": false,
+        "has_cpp_cuda": false,
+        "has_run_sh": false,
+        "has_arxiv": false,
+        "has_bazel_build": true,
+        "has_tflite_or_pb": false,
+        "harness_learned": false,
+        "learned_ki_id": "",
+        "py_file_count": 3,
+        "test_file_count": 4,
+        "gin_file_count": 0
+      }
+    },
+    {
+      "id": "shim",
+      "name": "shim",
+      "attributes": {
+        "raw_name": "shim",
+        "domain_class": "systems_and_runtime_project",
+        "primary_framework": "none",
+        "primary_language": "go",
+        "packaging": "none",
+        "size_tier": "small",
+        "has_readme": true,
+        "has_tests": true,
+        "has_gin": false,
+        "has_ipynb": false,
+        "has_cpp_cuda": false,
+        "has_run_sh": false,
+        "has_arxiv": false,
+        "has_bazel_build": true,
+        "has_tflite_or_pb": false,
+        "harness_learned": true,
+        "learned_ki_id": "ki-shim-bounded-session-and-layered-skill-loader",
+        "py_file_count": 0,
+        "test_file_count": 3,
+        "gin_file_count": 0
+      }
+    },
+    {
+      "id": "ki_shim_bounded_session_and_layered_skill_loader",
+      "name": "ki-shim-bounded-session-and-layered-skill-loader",
+      "attributes": {
+        "kind": "harness_artifact"
+      }
+    },
+    {
+      "id": "test",
+      "name": "test",
+      "attributes": {
+        "raw_name": "test",
+        "domain_class": "vision_and_3d_project",
+        "primary_framework": "none",
+        "primary_language": "go",
+        "packaging": "none",
+        "size_tier": "large",
+        "has_readme": true,
+        "has_tests": true,
+        "has_gin": false,
+        "has_ipynb": false,
+        "has_cpp_cuda": false,
+        "has_run_sh": false,
+        "has_arxiv": false,
+        "has_bazel_build": true,
+        "has_tflite_or_pb": false,
+        "harness_learned": false,
+        "learned_ki_id": "",
+        "py_file_count": 1,
+        "test_file_count": 19,
+        "gin_file_count": 0
+      }
+    },
+    {
+      "id": "tools",
+      "name": "tools",
+      "attributes": {
+        "raw_name": "tools",
+        "domain_class": "general_ml_project",
+        "primary_framework": "none",
+        "primary_language": "go",
+        "packaging": "none",
+        "size_tier": "medium",
+        "has_readme": true,
+        "has_tests": false,
+        "has_gin": false,
+        "has_ipynb": false,
+        "has_cpp_cuda": false,
+        "has_run_sh": false,
+        "has_arxiv": false,
+        "has_bazel_build": true,
+        "has_tflite_or_pb": false,
+        "harness_learned": true,
+        "learned_ki_id": "ki_20260830_grok_01",
+        "py_file_count": 1,
+        "test_file_count": 0,
+        "gin_file_count": 0
+      }
+    },
+    {
+      "id": "ki_20260830_grok_01",
+      "name": "ki_20260830_grok_01",
+      "attributes": {
+        "kind": "harness_artifact"
+      }
+    },
+    {
+      "id": "vdso",
+      "name": "vdso",
+      "attributes": {
+        "raw_name": "vdso",
+        "domain_class": "general_ml_project",
+        "primary_framework": "none",
+        "primary_language": "cpp",
+        "packaging": "none",
+        "size_tier": "medium",
+        "has_readme": false,
+        "has_tests": false,
+        "has_gin": false,
+        "has_ipynb": false,
+        "has_cpp_cuda": true,
+        "has_run_sh": false,
+        "has_arxiv": false,
+        "has_bazel_build": true,
+        "has_tflite_or_pb": false,
+        "harness_learned": false,
+        "learned_ki_id": "",
+        "py_file_count": 1,
+        "test_file_count": 0,
+        "gin_file_count": 0
+      }
+    },
+    {
+      "id": "webhook",
+      "name": "webhook",
+      "attributes": {
+        "raw_name": "webhook",
+        "domain_class": "general_ml_project",
+        "primary_framework": "none",
+        "primary_language": "go",
+        "packaging": "none",
+        "size_tier": "small",
+        "has_readme": false,
+        "has_tests": false,
+        "has_gin": false,
+        "has_ipynb": false,
+        "has_cpp_cuda": false,
+        "has_run_sh": false,
+        "has_arxiv": false,
+        "has_bazel_build": true,
+        "has_tflite_or_pb": false,
+        "harness_learned": false,
+        "learned_ki_id": "",
+        "py_file_count": 0,
+        "test_file_count": 0,
+        "gin_file_count": 0
+      }
+    },
+    {
+      "id": "website",
+      "name": "website",
+      "attributes": {
+        "raw_name": "website",
+        "domain_class": "general_ml_project",
+        "primary_framework": "none",
+        "primary_language": "docs_or_config",
+        "packaging": "none",
+        "size_tier": "non_python",
+        "has_readme": false,
+        "has_tests": false,
+        "has_gin": false,
+        "has_ipynb": false,
+        "has_cpp_cuda": false,
+        "has_run_sh": false,
+        "has_arxiv": false,
+        "has_bazel_build": true,
+        "has_tflite_or_pb": false,
+        "harness_learned": false,
+        "learned_ki_id": "",
+        "py_file_count": 0,
+        "test_file_count": 0,
+        "gin_file_count": 0
+      }
+    }
+  ],
+  "assertions": [
+    {
+      "assertion_id": "asrt_5b63cd94280e",
+      "relation": {
+        "subject": "research_project",
+        "predicate": "subclass_of",
+        "object": "repository_unit"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_67f1cdaf0965",
+      "relation": {
+        "subject": "rl_and_control_project",
+        "predicate": "subclass_of",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_43004f98db84",
+      "relation": {
+        "subject": "nlp_and_llm_project",
+        "predicate": "subclass_of",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_46189e0577f2",
+      "relation": {
+        "subject": "vision_and_3d_project",
+        "predicate": "subclass_of",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_04aae17dad46",
+      "relation": {
+        "subject": "graph_and_program_project",
+        "predicate": "subclass_of",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_4a7a66cb042e",
+      "relation": {
+        "subject": "science_and_bio_project",
+        "predicate": "subclass_of",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_5ce4594881a1",
+      "relation": {
+        "subject": "speech_and_audio_project",
+        "predicate": "subclass_of",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_4bdfae3d7809",
+      "relation": {
+        "subject": "privacy_fairness_safety_project",
+        "predicate": "subclass_of",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_30553c5f67cc",
+      "relation": {
+        "subject": "optimization_and_compression_project",
+        "predicate": "subclass_of",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_8e19e0f7582d",
+      "relation": {
+        "subject": "systems_and_runtime_project",
+        "predicate": "subclass_of",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_bd2f997efbcc",
+      "relation": {
+        "subject": "agent_orchestration_project",
+        "predicate": "subclass_of",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_3a281b3e22e7",
+      "relation": {
+        "subject": "general_ml_project",
+        "predicate": "subclass_of",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_98304b05ace3",
+      "relation": {
+        "subject": "ml_framework",
+        "predicate": "subclass_of",
+        "object": "technical_dependency"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_108576f06279",
+      "relation": {
+        "subject": "runtime_artifact",
+        "predicate": "subclass_of",
+        "object": "build_artifact"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_68b7c220ac3a",
+      "relation": {
+        "subject": "config_system",
+        "predicate": "subclass_of",
+        "object": "technical_dependency"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_91b280566f1c",
+      "relation": {
+        "subject": "arxiv_paper",
+        "predicate": "subclass_of",
+        "object": "provenance_artifact"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_5798e7dfc1dd",
+      "relation": {
+        "subject": "harness_artifact",
+        "predicate": "subclass_of",
+        "object": "brain_harness_node"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_9a7862ce8cb6",
+      "relation": {
+        "subject": "research_project",
+        "predicate": "disjoint_with",
+        "object": "ml_framework"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_cbfd0424282f",
+      "relation": {
+        "subject": "research_project",
+        "predicate": "disjoint_with",
+        "object": "arxiv_paper"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_a3a980feaeae",
+      "relation": {
+        "subject": "depends_on_project",
+        "predicate": "domain",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_d21ff1a43ba3",
+      "relation": {
+        "subject": "depends_on_project",
+        "predicate": "range",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_ba479f6a75d0",
+      "relation": {
+        "subject": "depends_on_project",
+        "predicate": "acyclic",
+        "object": "true"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_af5a3d180a12",
+      "relation": {
+        "subject": "uses_framework",
+        "predicate": "domain",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_b4df3cffb58d",
+      "relation": {
+        "subject": "uses_framework",
+        "predicate": "range",
+        "object": "ml_framework"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_98ddb568f43e",
+      "relation": {
+        "subject": "exports_artifact",
+        "predicate": "domain",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_2e02457580ab",
+      "relation": {
+        "subject": "exports_artifact",
+        "predicate": "range",
+        "object": "runtime_artifact"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_1743b9f719cb",
+      "relation": {
+        "subject": "uses_config_system",
+        "predicate": "domain",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_fdf0f700ea2b",
+      "relation": {
+        "subject": "uses_config_system",
+        "predicate": "range",
+        "object": "config_system"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_7768e2ba9c72",
+      "relation": {
+        "subject": "cites_paper",
+        "predicate": "domain",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_e6cfcfa2ed53",
+      "relation": {
+        "subject": "cites_paper",
+        "predicate": "range",
+        "object": "arxiv_paper"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_e8fd3f941895",
+      "relation": {
+        "subject": "bridges_to_harness",
+        "predicate": "domain",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_389116882864",
+      "relation": {
+        "subject": "bridges_to_harness",
+        "predicate": "range",
+        "object": "harness_artifact"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_b31c316080b1",
+      "relation": {
+        "subject": "debian",
+        "predicate": "instance_of",
+        "object": "general_ml_project"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_b52d4cfcf4f1",
+      "relation": {
+        "subject": "examples",
+        "predicate": "instance_of",
+        "object": "systems_and_runtime_project"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_5273cb67490c",
+      "relation": {
+        "subject": "g3doc",
+        "predicate": "instance_of",
+        "object": "systems_and_runtime_project"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_84117393abf9",
+      "relation": {
+        "subject": "governance",
+        "predicate": "instance_of",
+        "object": "general_ml_project"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_13e0a1079373",
+      "relation": {
+        "subject": "ki_responsible_ai_prototyping",
+        "predicate": "instance_of",
+        "object": "harness_artifact"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_6f9ffcd42cba",
+      "relation": {
+        "subject": "governance",
+        "predicate": "bridges_to_harness",
+        "object": "ki_responsible_ai_prototyping"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_e2a6229e9aa2",
+      "relation": {
+        "subject": "images",
+        "predicate": "instance_of",
+        "object": "vision_and_3d_project"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_33a09061c188",
+      "relation": {
+        "subject": "pkg",
+        "predicate": "instance_of",
+        "object": "general_ml_project"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_bca2bc9b1636",
+      "relation": {
+        "subject": "runsc",
+        "predicate": "instance_of",
+        "object": "general_ml_project"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_6663391a6061",
+      "relation": {
+        "subject": "ki_google_gvisor_sentry_gofer_sandbox",
+        "predicate": "instance_of",
+        "object": "harness_artifact"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_a2029129d710",
+      "relation": {
+        "subject": "runsc",
+        "predicate": "bridges_to_harness",
+        "object": "ki_google_gvisor_sentry_gofer_sandbox"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_ea04c3fc8f14",
+      "relation": {
+        "subject": "sandboxexec",
+        "predicate": "instance_of",
+        "object": "privacy_fairness_safety_project"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_a42e696157da",
+      "relation": {
+        "subject": "shim",
+        "predicate": "instance_of",
+        "object": "systems_and_runtime_project"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_43cac8494169",
+      "relation": {
+        "subject": "ki_shim_bounded_session_and_layered_skill_loader",
+        "predicate": "instance_of",
+        "object": "harness_artifact"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_12db1a1bdb00",
+      "relation": {
+        "subject": "shim",
+        "predicate": "bridges_to_harness",
+        "object": "ki_shim_bounded_session_and_layered_skill_loader"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_8865ce1bc49c",
+      "relation": {
+        "subject": "test",
+        "predicate": "instance_of",
+        "object": "vision_and_3d_project"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_be7f3aca153b",
+      "relation": {
+        "subject": "tools",
+        "predicate": "instance_of",
+        "object": "general_ml_project"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_8d91685fbb13",
+      "relation": {
+        "subject": "ki_20260830_grok_01",
+        "predicate": "instance_of",
+        "object": "harness_artifact"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_a9ddb396a92d",
+      "relation": {
+        "subject": "tools",
+        "predicate": "bridges_to_harness",
+        "object": "ki_20260830_grok_01"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_e420bb4d4bef",
+      "relation": {
+        "subject": "vdso",
+        "predicate": "instance_of",
+        "object": "general_ml_project"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_d0b2ac876bd5",
+      "relation": {
+        "subject": "webhook",
+        "predicate": "instance_of",
+        "object": "general_ml_project"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_045eb16d4692",
+      "relation": {
+        "subject": "website",
+        "predicate": "instance_of",
+        "object": "general_ml_project"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_c210ddd4733c",
+      "relation": {
+        "subject": "debian",
+        "predicate": "depends_on_project",
+        "object": "runsc"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_4778d3225409",
+      "relation": {
+        "subject": "debian",
+        "predicate": "depends_on_project",
+        "object": "shim"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_e958052bb6e6",
+      "relation": {
+        "subject": "debian",
+        "predicate": "depends_on_project",
+        "object": "tools"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_46cc753a14d5",
+      "relation": {
+        "subject": "examples",
+        "predicate": "depends_on_project",
+        "object": "pkg"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_a7971f082b72",
+      "relation": {
+        "subject": "examples",
+        "predicate": "depends_on_project",
+        "object": "tools"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_dc4e6edf2540",
+      "relation": {
+        "subject": "g3doc",
+        "predicate": "depends_on_project",
+        "object": "website"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_0c6385e13c44",
+      "relation": {
+        "subject": "governance",
+        "predicate": "depends_on_project",
+        "object": "tools"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_266c02375aff",
+      "relation": {
+        "subject": "pkg",
+        "predicate": "depends_on_project",
+        "object": "runsc"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_3de9b1f48cc2",
+      "relation": {
+        "subject": "pkg",
+        "predicate": "depends_on_project",
+        "object": "tools"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_09dc30953e60",
+      "relation": {
+        "subject": "runsc",
+        "predicate": "depends_on_project",
+        "object": "pkg"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_2849df0d48e2",
+      "relation": {
+        "subject": "runsc",
+        "predicate": "depends_on_project",
+        "object": "test"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_6273e69b471e",
+      "relation": {
+        "subject": "runsc",
+        "predicate": "depends_on_project",
+        "object": "tools"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_a7c2f5d5702b",
+      "relation": {
+        "subject": "sandboxexec",
+        "predicate": "depends_on_project",
+        "object": "pkg"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_2c911cee1704",
+      "relation": {
+        "subject": "sandboxexec",
+        "predicate": "depends_on_project",
+        "object": "runsc"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_1e4fe2dcbe9b",
+      "relation": {
+        "subject": "sandboxexec",
+        "predicate": "depends_on_project",
+        "object": "tools"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_ab7291eda862",
+      "relation": {
+        "subject": "shim",
+        "predicate": "depends_on_project",
+        "object": "pkg"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_b1c17334ab02",
+      "relation": {
+        "subject": "shim",
+        "predicate": "depends_on_project",
+        "object": "runsc"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_9834538ead42",
+      "relation": {
+        "subject": "shim",
+        "predicate": "depends_on_project",
+        "object": "tools"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_e753d0cbd61d",
+      "relation": {
+        "subject": "test",
+        "predicate": "depends_on_project",
+        "object": "pkg"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_d20b1249cd06",
+      "relation": {
+        "subject": "test",
+        "predicate": "depends_on_project",
+        "object": "runsc"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_9443553fd154",
+      "relation": {
+        "subject": "test",
+        "predicate": "depends_on_project",
+        "object": "tools"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_abce2281d22c",
+      "relation": {
+        "subject": "vdso",
+        "predicate": "depends_on_project",
+        "object": "tools"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_12089a708715",
+      "relation": {
+        "subject": "webhook",
+        "predicate": "depends_on_project",
+        "object": "images"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_2f2c8340fbda",
+      "relation": {
+        "subject": "webhook",
+        "predicate": "depends_on_project",
+        "object": "pkg"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_88a24831c60c",
+      "relation": {
+        "subject": "webhook",
+        "predicate": "depends_on_project",
+        "object": "tools"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_2e6592790a4d",
+      "relation": {
+        "subject": "website",
+        "predicate": "depends_on_project",
+        "object": "g3doc"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_10c4966e0704",
+      "relation": {
+        "subject": "website",
+        "predicate": "depends_on_project",
+        "object": "images"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_206874f24ae6",
+      "relation": {
+        "subject": "website",
+        "predicate": "depends_on_project",
+        "object": "runsc"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_d3ecc8908bc5",
+      "relation": {
+        "subject": "website",
+        "predicate": "depends_on_project",
+        "object": "tools"
+      },
+      "provenance": {
+        "source": "repo:gvisor",
+        "timestamp": "2026-11-18T14:55:25.300127+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    }
+  ]
+}

@@ -1,0 +1,1791 @@
+{
+  "uri": "urn:repo:Google",
+  "entities": [
+    {
+      "id": "research_project",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "repository_unit",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "rl_and_control_project",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "nlp_and_llm_project",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "vision_and_3d_project",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "graph_and_program_project",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "science_and_bio_project",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "speech_and_audio_project",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "privacy_fairness_safety_project",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "optimization_and_compression_project",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "systems_and_runtime_project",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "agent_orchestration_project",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "general_ml_project",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "ml_framework",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "technical_dependency",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "runtime_artifact",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "build_artifact",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "config_system",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "arxiv_paper",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "provenance_artifact",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "harness_artifact",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "brain_harness_node",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "depends_on_project",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "true",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "uses_framework",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "exports_artifact",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "uses_config_system",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "cites_paper",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "bridges_to_harness",
+      "name": "",
+      "attributes": {}
+    },
+    {
+      "id": "adk_docs",
+      "name": "adk-docs",
+      "attributes": {
+        "raw_name": "adk-docs",
+        "domain_class": "agent_orchestration_project",
+        "primary_framework": "none",
+        "primary_language": "docs_or_config",
+        "packaging": "requirements",
+        "size_tier": "non_python",
+        "has_readme": true,
+        "has_tests": false,
+        "has_gin": false,
+        "has_ipynb": false,
+        "has_cpp_cuda": false,
+        "has_run_sh": false,
+        "has_arxiv": false,
+        "has_bazel_build": false,
+        "has_tflite_or_pb": false,
+        "harness_learned": true,
+        "learned_ki_id": "ki_google_repos_bridge",
+        "py_file_count": 0,
+        "test_file_count": 0,
+        "gin_file_count": 0
+      }
+    },
+    {
+      "id": "ki_google_repos_bridge",
+      "name": "ki_google_repos_bridge",
+      "attributes": {
+        "kind": "harness_artifact"
+      }
+    },
+    {
+      "id": "adk_python",
+      "name": "adk-python",
+      "attributes": {
+        "raw_name": "adk-python",
+        "domain_class": "agent_orchestration_project",
+        "primary_framework": "none",
+        "primary_language": "python",
+        "packaging": "pyproject",
+        "size_tier": "large",
+        "has_readme": true,
+        "has_tests": true,
+        "has_gin": false,
+        "has_ipynb": false,
+        "has_cpp_cuda": false,
+        "has_run_sh": false,
+        "has_arxiv": false,
+        "has_bazel_build": false,
+        "has_tflite_or_pb": false,
+        "harness_learned": true,
+        "learned_ki_id": "ki_google_repos_bridge",
+        "py_file_count": 30,
+        "test_file_count": 1,
+        "gin_file_count": 0
+      }
+    },
+    {
+      "id": "adk_web",
+      "name": "adk-web",
+      "attributes": {
+        "raw_name": "adk-web",
+        "domain_class": "agent_orchestration_project",
+        "primary_framework": "none",
+        "primary_language": "typescript",
+        "packaging": "npm",
+        "size_tier": "large",
+        "has_readme": true,
+        "has_tests": true,
+        "has_gin": false,
+        "has_ipynb": false,
+        "has_cpp_cuda": false,
+        "has_run_sh": false,
+        "has_arxiv": false,
+        "has_bazel_build": false,
+        "has_tflite_or_pb": false,
+        "harness_learned": true,
+        "learned_ki_id": "ki_google_repos_bridge",
+        "py_file_count": 0,
+        "test_file_count": 8,
+        "gin_file_count": 0
+      }
+    },
+    {
+      "id": "earthengine_api",
+      "name": "earthengine-api",
+      "attributes": {
+        "raw_name": "earthengine-api",
+        "domain_class": "vision_and_3d_project",
+        "primary_framework": "none",
+        "primary_language": "typescript",
+        "packaging": "npm",
+        "size_tier": "medium",
+        "has_readme": true,
+        "has_tests": false,
+        "has_gin": false,
+        "has_ipynb": true,
+        "has_cpp_cuda": false,
+        "has_run_sh": false,
+        "has_arxiv": false,
+        "has_bazel_build": false,
+        "has_tflite_or_pb": false,
+        "harness_learned": true,
+        "learned_ki_id": "ki_20260908_earthengine_01",
+        "py_file_count": 6,
+        "test_file_count": 0,
+        "gin_file_count": 0
+      }
+    },
+    {
+      "id": "ki_20260908_earthengine_01",
+      "name": "ki_20260908_earthengine_01",
+      "attributes": {
+        "kind": "harness_artifact"
+      }
+    },
+    {
+      "id": "google_research_master",
+      "name": "google-research-master",
+      "attributes": {
+        "raw_name": "google-research-master",
+        "domain_class": "general_ml_project",
+        "primary_framework": "torch",
+        "primary_language": "python",
+        "packaging": "requirements",
+        "size_tier": "large",
+        "has_readme": true,
+        "has_tests": false,
+        "has_gin": false,
+        "has_ipynb": false,
+        "has_cpp_cuda": false,
+        "has_run_sh": false,
+        "has_arxiv": false,
+        "has_bazel_build": false,
+        "has_tflite_or_pb": false,
+        "harness_learned": false,
+        "learned_ki_id": "",
+        "py_file_count": 33,
+        "test_file_count": 0,
+        "gin_file_count": 0
+      }
+    },
+    {
+      "id": "fw_absl",
+      "name": "absl",
+      "attributes": {
+        "kind": "ml_framework"
+      }
+    },
+    {
+      "id": "fw_numpy",
+      "name": "numpy",
+      "attributes": {
+        "kind": "ml_framework"
+      }
+    },
+    {
+      "id": "fw_sklearn",
+      "name": "sklearn",
+      "attributes": {
+        "kind": "ml_framework"
+      }
+    },
+    {
+      "id": "fw_torch",
+      "name": "torch",
+      "attributes": {
+        "kind": "ml_framework"
+      }
+    },
+    {
+      "id": "cfg_absl_flags",
+      "name": "absl.flags",
+      "attributes": {
+        "kind": "config_system"
+      }
+    },
+    {
+      "id": "gvisor",
+      "name": "gvisor",
+      "attributes": {
+        "raw_name": "gvisor",
+        "domain_class": "systems_and_runtime_project",
+        "primary_framework": "none",
+        "primary_language": "python",
+        "packaging": "go_mod",
+        "size_tier": "small",
+        "has_readme": true,
+        "has_tests": false,
+        "has_gin": false,
+        "has_ipynb": false,
+        "has_cpp_cuda": true,
+        "has_run_sh": false,
+        "has_arxiv": false,
+        "has_bazel_build": true,
+        "has_tflite_or_pb": false,
+        "harness_learned": true,
+        "learned_ki_id": "ki_google_gvisor_sentry_gofer_sandbox",
+        "py_file_count": 1,
+        "test_file_count": 0,
+        "gin_file_count": 0
+      }
+    },
+    {
+      "id": "ki_google_gvisor_sentry_gofer_sandbox",
+      "name": "ki_google_gvisor_sentry_gofer_sandbox",
+      "attributes": {
+        "kind": "harness_artifact"
+      }
+    },
+    {
+      "id": "harness2",
+      "name": "harness2",
+      "attributes": {
+        "raw_name": "harness2",
+        "domain_class": "vision_and_3d_project",
+        "primary_framework": "none",
+        "primary_language": "python",
+        "packaging": "pyproject",
+        "size_tier": "large",
+        "has_readme": true,
+        "has_tests": false,
+        "has_gin": false,
+        "has_ipynb": false,
+        "has_cpp_cuda": false,
+        "has_run_sh": false,
+        "has_arxiv": true,
+        "has_bazel_build": false,
+        "has_tflite_or_pb": false,
+        "harness_learned": true,
+        "learned_ki_id": "ki-harness2-recursive-harnessing",
+        "py_file_count": 40,
+        "test_file_count": 0,
+        "gin_file_count": 0
+      }
+    },
+    {
+      "id": "arxiv_2610_14224",
+      "name": "arXiv:2610.14224",
+      "attributes": {
+        "arxiv_id": "2610.14224"
+      }
+    },
+    {
+      "id": "ki_harness2_recursive_harnessing",
+      "name": "ki-harness2-recursive-harnessing",
+      "attributes": {
+        "kind": "harness_artifact"
+      }
+    },
+    {
+      "id": "magika",
+      "name": "magika",
+      "attributes": {
+        "raw_name": "magika",
+        "domain_class": "vision_and_3d_project",
+        "primary_framework": "none",
+        "primary_language": "docs_or_config",
+        "packaging": "go_mod",
+        "size_tier": "non_python",
+        "has_readme": true,
+        "has_tests": false,
+        "has_gin": false,
+        "has_ipynb": false,
+        "has_cpp_cuda": false,
+        "has_run_sh": false,
+        "has_arxiv": false,
+        "has_bazel_build": false,
+        "has_tflite_or_pb": false,
+        "harness_learned": true,
+        "learned_ki_id": "ki_20260908_magika_01",
+        "py_file_count": 0,
+        "test_file_count": 0,
+        "gin_file_count": 0
+      }
+    },
+    {
+      "id": "ki_20260908_magika_01",
+      "name": "ki_20260908_magika_01",
+      "attributes": {
+        "kind": "harness_artifact"
+      }
+    },
+    {
+      "id": "mantis",
+      "name": "mantis",
+      "attributes": {
+        "raw_name": "mantis",
+        "domain_class": "privacy_fairness_safety_project",
+        "primary_framework": "pydantic",
+        "primary_language": "python",
+        "packaging": "requirements",
+        "size_tier": "medium",
+        "has_readme": true,
+        "has_tests": true,
+        "has_gin": false,
+        "has_ipynb": false,
+        "has_cpp_cuda": false,
+        "has_run_sh": true,
+        "has_arxiv": false,
+        "has_bazel_build": false,
+        "has_tflite_or_pb": false,
+        "harness_learned": true,
+        "learned_ki_id": "ki_20260908_mantis_01",
+        "py_file_count": 16,
+        "test_file_count": 1,
+        "gin_file_count": 0
+      }
+    },
+    {
+      "id": "fw_pydantic",
+      "name": "pydantic",
+      "attributes": {
+        "kind": "ml_framework"
+      }
+    },
+    {
+      "id": "ki_20260908_mantis_01",
+      "name": "ki_20260908_mantis_01",
+      "attributes": {
+        "kind": "harness_artifact"
+      }
+    },
+    {
+      "id": "perfetto",
+      "name": "perfetto",
+      "attributes": {
+        "raw_name": "perfetto",
+        "domain_class": "systems_and_runtime_project",
+        "primary_framework": "none",
+        "primary_language": "python",
+        "packaging": "none",
+        "size_tier": "small",
+        "has_readme": true,
+        "has_tests": false,
+        "has_gin": false,
+        "has_ipynb": false,
+        "has_cpp_cuda": false,
+        "has_run_sh": false,
+        "has_arxiv": false,
+        "has_bazel_build": true,
+        "has_tflite_or_pb": false,
+        "harness_learned": true,
+        "learned_ki_id": "ki_google_repos_bridge",
+        "py_file_count": 3,
+        "test_file_count": 0,
+        "gin_file_count": 0
+      }
+    },
+    {
+      "id": "styleguide",
+      "name": "styleguide",
+      "attributes": {
+        "raw_name": "styleguide",
+        "domain_class": "general_ml_project",
+        "primary_framework": "none",
+        "primary_language": "typescript",
+        "packaging": "none",
+        "size_tier": "small",
+        "has_readme": true,
+        "has_tests": false,
+        "has_gin": false,
+        "has_ipynb": false,
+        "has_cpp_cuda": false,
+        "has_run_sh": false,
+        "has_arxiv": false,
+        "has_bazel_build": false,
+        "has_tflite_or_pb": false,
+        "harness_learned": true,
+        "learned_ki_id": "ki_google_repos_bridge",
+        "py_file_count": 0,
+        "test_file_count": 0,
+        "gin_file_count": 0
+      }
+    },
+    {
+      "id": "tunix_main",
+      "name": "tunix-main",
+      "attributes": {
+        "raw_name": "tunix-main",
+        "domain_class": "rl_and_control_project",
+        "primary_framework": "none",
+        "primary_language": "python",
+        "packaging": "pyproject",
+        "size_tier": "small",
+        "has_readme": true,
+        "has_tests": false,
+        "has_gin": false,
+        "has_ipynb": true,
+        "has_cpp_cuda": false,
+        "has_run_sh": false,
+        "has_arxiv": true,
+        "has_bazel_build": false,
+        "has_tflite_or_pb": false,
+        "harness_learned": true,
+        "learned_ki_id": "ki_google_repos_bridge",
+        "py_file_count": 1,
+        "test_file_count": 0,
+        "gin_file_count": 0
+      }
+    },
+    {
+      "id": "arxiv_2305_18290",
+      "name": "arXiv:2305.18290",
+      "attributes": {
+        "arxiv_id": "2305.18290"
+      }
+    },
+    {
+      "id": "arxiv_2403_07691",
+      "name": "arXiv:2403.07691",
+      "attributes": {
+        "arxiv_id": "2403.07691"
+      }
+    },
+    {
+      "id": "arxiv_1707_06347",
+      "name": "arXiv:1707.06347",
+      "attributes": {
+        "arxiv_id": "1707.06347"
+      }
+    }
+  ],
+  "assertions": [
+    {
+      "assertion_id": "asrt_9d33cc8b6f38",
+      "relation": {
+        "subject": "research_project",
+        "predicate": "subclass_of",
+        "object": "repository_unit"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_949dbee082b7",
+      "relation": {
+        "subject": "rl_and_control_project",
+        "predicate": "subclass_of",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_f4df91621b45",
+      "relation": {
+        "subject": "nlp_and_llm_project",
+        "predicate": "subclass_of",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_30476137cc99",
+      "relation": {
+        "subject": "vision_and_3d_project",
+        "predicate": "subclass_of",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_02a6927d8e71",
+      "relation": {
+        "subject": "graph_and_program_project",
+        "predicate": "subclass_of",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_9dcdad0303a1",
+      "relation": {
+        "subject": "science_and_bio_project",
+        "predicate": "subclass_of",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_82bb04d5736e",
+      "relation": {
+        "subject": "speech_and_audio_project",
+        "predicate": "subclass_of",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_c68c95043394",
+      "relation": {
+        "subject": "privacy_fairness_safety_project",
+        "predicate": "subclass_of",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_cdd5ec49660c",
+      "relation": {
+        "subject": "optimization_and_compression_project",
+        "predicate": "subclass_of",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_7c1d4e3686b7",
+      "relation": {
+        "subject": "systems_and_runtime_project",
+        "predicate": "subclass_of",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_72e27db4ac44",
+      "relation": {
+        "subject": "agent_orchestration_project",
+        "predicate": "subclass_of",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_bde28988dc8e",
+      "relation": {
+        "subject": "general_ml_project",
+        "predicate": "subclass_of",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_3bc27547ef93",
+      "relation": {
+        "subject": "ml_framework",
+        "predicate": "subclass_of",
+        "object": "technical_dependency"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_d36f51cfcce1",
+      "relation": {
+        "subject": "runtime_artifact",
+        "predicate": "subclass_of",
+        "object": "build_artifact"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_b0a1faec7e51",
+      "relation": {
+        "subject": "config_system",
+        "predicate": "subclass_of",
+        "object": "technical_dependency"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_ab348cad56aa",
+      "relation": {
+        "subject": "arxiv_paper",
+        "predicate": "subclass_of",
+        "object": "provenance_artifact"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_355a3d908b10",
+      "relation": {
+        "subject": "harness_artifact",
+        "predicate": "subclass_of",
+        "object": "brain_harness_node"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_afa97b7f760a",
+      "relation": {
+        "subject": "research_project",
+        "predicate": "disjoint_with",
+        "object": "ml_framework"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_1aed80f87aa6",
+      "relation": {
+        "subject": "research_project",
+        "predicate": "disjoint_with",
+        "object": "arxiv_paper"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_2e015a130bae",
+      "relation": {
+        "subject": "depends_on_project",
+        "predicate": "domain",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_8019b035fcbd",
+      "relation": {
+        "subject": "depends_on_project",
+        "predicate": "range",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_f4295cede07f",
+      "relation": {
+        "subject": "depends_on_project",
+        "predicate": "acyclic",
+        "object": "true"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_5bb32ec03add",
+      "relation": {
+        "subject": "uses_framework",
+        "predicate": "domain",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_5b39aad50fa0",
+      "relation": {
+        "subject": "uses_framework",
+        "predicate": "range",
+        "object": "ml_framework"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_359bbb6275da",
+      "relation": {
+        "subject": "exports_artifact",
+        "predicate": "domain",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_50ece6e36867",
+      "relation": {
+        "subject": "exports_artifact",
+        "predicate": "range",
+        "object": "runtime_artifact"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_971af0684105",
+      "relation": {
+        "subject": "uses_config_system",
+        "predicate": "domain",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_f6aaf51627ab",
+      "relation": {
+        "subject": "uses_config_system",
+        "predicate": "range",
+        "object": "config_system"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_aad7c6e8a433",
+      "relation": {
+        "subject": "cites_paper",
+        "predicate": "domain",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_8f5e9cb79c05",
+      "relation": {
+        "subject": "cites_paper",
+        "predicate": "range",
+        "object": "arxiv_paper"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_c5fd1eb5b564",
+      "relation": {
+        "subject": "bridges_to_harness",
+        "predicate": "domain",
+        "object": "research_project"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_85ac3dde2a77",
+      "relation": {
+        "subject": "bridges_to_harness",
+        "predicate": "range",
+        "object": "harness_artifact"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_7622169d9fb2",
+      "relation": {
+        "subject": "adk_docs",
+        "predicate": "instance_of",
+        "object": "agent_orchestration_project"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_ca4afde71434",
+      "relation": {
+        "subject": "ki_google_repos_bridge",
+        "predicate": "instance_of",
+        "object": "harness_artifact"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_beec909ded30",
+      "relation": {
+        "subject": "adk_docs",
+        "predicate": "bridges_to_harness",
+        "object": "ki_google_repos_bridge"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_bb1fe3ca83bf",
+      "relation": {
+        "subject": "adk_python",
+        "predicate": "instance_of",
+        "object": "agent_orchestration_project"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_d84761a8c57e",
+      "relation": {
+        "subject": "adk_python",
+        "predicate": "bridges_to_harness",
+        "object": "ki_google_repos_bridge"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_03daa279fdfc",
+      "relation": {
+        "subject": "adk_web",
+        "predicate": "instance_of",
+        "object": "agent_orchestration_project"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_0be9b8338a8d",
+      "relation": {
+        "subject": "adk_web",
+        "predicate": "bridges_to_harness",
+        "object": "ki_google_repos_bridge"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_0e935c56711b",
+      "relation": {
+        "subject": "earthengine_api",
+        "predicate": "instance_of",
+        "object": "vision_and_3d_project"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_4de3d169e018",
+      "relation": {
+        "subject": "ki_20260908_earthengine_01",
+        "predicate": "instance_of",
+        "object": "harness_artifact"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_a820e75b8e2c",
+      "relation": {
+        "subject": "earthengine_api",
+        "predicate": "bridges_to_harness",
+        "object": "ki_20260908_earthengine_01"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_f685c11d82dd",
+      "relation": {
+        "subject": "google_research_master",
+        "predicate": "instance_of",
+        "object": "general_ml_project"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_aca9e4419b92",
+      "relation": {
+        "subject": "fw_absl",
+        "predicate": "instance_of",
+        "object": "ml_framework"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_2899dfa3b4a7",
+      "relation": {
+        "subject": "google_research_master",
+        "predicate": "uses_framework",
+        "object": "fw_absl"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_87c85515e2aa",
+      "relation": {
+        "subject": "fw_numpy",
+        "predicate": "instance_of",
+        "object": "ml_framework"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_0abb7942d303",
+      "relation": {
+        "subject": "google_research_master",
+        "predicate": "uses_framework",
+        "object": "fw_numpy"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_188860f517b7",
+      "relation": {
+        "subject": "fw_sklearn",
+        "predicate": "instance_of",
+        "object": "ml_framework"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_9c2dc2f7f4de",
+      "relation": {
+        "subject": "google_research_master",
+        "predicate": "uses_framework",
+        "object": "fw_sklearn"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_ed2d55c2073b",
+      "relation": {
+        "subject": "fw_torch",
+        "predicate": "instance_of",
+        "object": "ml_framework"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_93509302914d",
+      "relation": {
+        "subject": "google_research_master",
+        "predicate": "uses_framework",
+        "object": "fw_torch"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_23b2ed6f9692",
+      "relation": {
+        "subject": "cfg_absl_flags",
+        "predicate": "instance_of",
+        "object": "config_system"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_a9d2ba83ffdc",
+      "relation": {
+        "subject": "google_research_master",
+        "predicate": "uses_config_system",
+        "object": "cfg_absl_flags"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_5ee3617a6544",
+      "relation": {
+        "subject": "gvisor",
+        "predicate": "instance_of",
+        "object": "systems_and_runtime_project"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_08bbb918fa5d",
+      "relation": {
+        "subject": "ki_google_gvisor_sentry_gofer_sandbox",
+        "predicate": "instance_of",
+        "object": "harness_artifact"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_ec859acde7f1",
+      "relation": {
+        "subject": "gvisor",
+        "predicate": "bridges_to_harness",
+        "object": "ki_google_gvisor_sentry_gofer_sandbox"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_3da438d82ca7",
+      "relation": {
+        "subject": "harness2",
+        "predicate": "instance_of",
+        "object": "vision_and_3d_project"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_57edd832642e",
+      "relation": {
+        "subject": "arxiv_2610_14224",
+        "predicate": "instance_of",
+        "object": "arxiv_paper"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_8b2bb1976585",
+      "relation": {
+        "subject": "harness2",
+        "predicate": "cites_paper",
+        "object": "arxiv_2610_14224"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_5f82834f74b2",
+      "relation": {
+        "subject": "ki_harness2_recursive_harnessing",
+        "predicate": "instance_of",
+        "object": "harness_artifact"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_22de25dae400",
+      "relation": {
+        "subject": "harness2",
+        "predicate": "bridges_to_harness",
+        "object": "ki_harness2_recursive_harnessing"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_d12b57ae35bb",
+      "relation": {
+        "subject": "magika",
+        "predicate": "instance_of",
+        "object": "vision_and_3d_project"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_07c047fbcdac",
+      "relation": {
+        "subject": "ki_20260908_magika_01",
+        "predicate": "instance_of",
+        "object": "harness_artifact"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_d1ee41525c33",
+      "relation": {
+        "subject": "magika",
+        "predicate": "bridges_to_harness",
+        "object": "ki_20260908_magika_01"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_f51a9f3641e7",
+      "relation": {
+        "subject": "mantis",
+        "predicate": "instance_of",
+        "object": "privacy_fairness_safety_project"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_b8c9eae1d87e",
+      "relation": {
+        "subject": "fw_pydantic",
+        "predicate": "instance_of",
+        "object": "ml_framework"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_f6171a5626e9",
+      "relation": {
+        "subject": "mantis",
+        "predicate": "uses_framework",
+        "object": "fw_pydantic"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_aed5808b8373",
+      "relation": {
+        "subject": "ki_20260908_mantis_01",
+        "predicate": "instance_of",
+        "object": "harness_artifact"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_cccb6e349ca5",
+      "relation": {
+        "subject": "mantis",
+        "predicate": "bridges_to_harness",
+        "object": "ki_20260908_mantis_01"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_1f33d25c553a",
+      "relation": {
+        "subject": "perfetto",
+        "predicate": "instance_of",
+        "object": "systems_and_runtime_project"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_0148fa8fb3dd",
+      "relation": {
+        "subject": "perfetto",
+        "predicate": "bridges_to_harness",
+        "object": "ki_google_repos_bridge"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_7d5ccd6ea117",
+      "relation": {
+        "subject": "styleguide",
+        "predicate": "instance_of",
+        "object": "general_ml_project"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_aadd1792c912",
+      "relation": {
+        "subject": "styleguide",
+        "predicate": "bridges_to_harness",
+        "object": "ki_google_repos_bridge"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_cf3a4bc833bc",
+      "relation": {
+        "subject": "tunix_main",
+        "predicate": "instance_of",
+        "object": "rl_and_control_project"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_d334506a674c",
+      "relation": {
+        "subject": "arxiv_2305_18290",
+        "predicate": "instance_of",
+        "object": "arxiv_paper"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_d03757905e66",
+      "relation": {
+        "subject": "tunix_main",
+        "predicate": "cites_paper",
+        "object": "arxiv_2305_18290"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_4b8c5388397a",
+      "relation": {
+        "subject": "arxiv_2403_07691",
+        "predicate": "instance_of",
+        "object": "arxiv_paper"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_3e63f05baa44",
+      "relation": {
+        "subject": "tunix_main",
+        "predicate": "cites_paper",
+        "object": "arxiv_2403_07691"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_f0c089611ad8",
+      "relation": {
+        "subject": "arxiv_1707_06347",
+        "predicate": "instance_of",
+        "object": "arxiv_paper"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_4a90d366eb9e",
+      "relation": {
+        "subject": "tunix_main",
+        "predicate": "cites_paper",
+        "object": "arxiv_1707_06347"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    },
+    {
+      "assertion_id": "asrt_29e98f9a4a1c",
+      "relation": {
+        "subject": "tunix_main",
+        "predicate": "bridges_to_harness",
+        "object": "ki_google_repos_bridge"
+      },
+      "provenance": {
+        "source": "repo:Google",
+        "timestamp": "2026-11-18T14:53:41.288563+00:00",
+        "turn_id": "repo_scan",
+        "parent_turn_ids": []
+      },
+      "attributes": {}
+    }
+  ]
+}
