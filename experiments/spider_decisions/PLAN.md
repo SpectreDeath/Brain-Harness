@@ -67,7 +67,7 @@
 - [x] **Phase 8** — Plugin vs KI-only vs Skip classifier (#6)
 - [x] **Phase 9** — Brain Harness refactor ordering (#10)
 - [x] **Phase 10** — Spider-assisted skill routing vs `route_intent` (#11)
-- [ ] **Phase 11** — Evidence-grounded swarm voting (#12)
+- [x] **Phase 11** — Evidence-grounded swarm voting (#12)
 - [ ] **Phase 12** — Final report & recommendations
 
 ### Why this order
@@ -519,23 +519,23 @@ Generic **unit names** also pollute "unlearned target" lists: `python`, `tests`,
 **Depends on:** Phase 2. **Model tier:** low.
 
 ### Steps
-- [ ] **11.1** Read `tests/test_swarm_cisc_integration.py` to learn the exact vote dict shape accepted by
+- [x] **11.1** Read `tests/test_swarm_cisc_integration.py` to learn the exact vote dict shape accepted by
   `ConsensusEngine.evaluate_cisc_consensus(votes, *, normalization="softmax", temperature=2.5, only_tie_break=False, uncertainty_service=None)`
   in `src/harness/agent/swarm/consensus.py`, and the key holding the winning choice in its return dict. Note both in
   `write_md(11, "api_notes", ...)`.
-- [ ] **11.2** Create `p11_grounded_voting.py` with 12 synthetic disputes. Each dispute has 2–3 answer choices; each
+- [x] **11.2** Create `p11_grounded_voting.py` with 12 synthetic disputes. Each dispute has 2–3 answer choices; each
   choice is linked to a `ki_id` (or `None`). Build them from real KIs: e.g. choice A linked to a KI with
   `isnad_verified=True`, choice B linked to one with `isnad_verified=False` or `None`. Give the **unsupported**
   choice the plurality of raw votes and/or higher raw confidence in at least 8 of the 12 disputes. Define the
   **correct** answer as the verified-supported choice.
-- [ ] **11.3** For each dispute compute:
+- [x] **11.3** For each dispute compute:
   - **Raw:** `evaluate_cisc_consensus(votes)`.
   - **Grounded:** same votes, but each vote's confidence multiplied by `1.0` if its choice's KI is verified,
     `0.6` if unverified, `0.4` if no KI.
   Record the winner under each, and whether it is correct.
-- [ ] **11.4** Metrics: accuracy (raw vs grounded), number of flips, number of flips toward correct.
+- [x] **11.4** Metrics: accuracy (raw vs grounded), number of flips, number of flips toward correct.
   Write `write_json(11, "results", ...)`, `write_md(11, "summary", ...)`.
-- [ ] **11.5** Append log entry; local commit.
+- [x] **11.5** Append log entry; local commit.
 
 ### Acceptance
 - 12 disputes evaluated both ways. **Expected:** grounded accuracy ≥ raw accuracy; any flip toward an *incorrect*

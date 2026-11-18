@@ -75,3 +75,9 @@ Template for per-phase entries:
 - Key metric(s): Baseline route_intent Hit@1=19/20 (95.0%), Hit@3=19/20 (95.0%); Spider-assisted Hit@1=2/20 (10.0%), Hit@3=4/20 (20.0%); Hybrid rerank top-3 Hit@1=13/20 (65.0%), Hit@3=19/20 (95.0%); Hybrid union Hit@1=8/20 (40.0%), Hit@3=11/20 (55.0%).
 - Finding(s): Unweighted +1 per supporting KI acts as a hub attractor toward broad tags (ai-agent-engineer, epistemic-memory-lifecycle, architecture-deepening-workflow) and hurts calibrated route_intent@1 (95%->65%); Baseline only missed task #2 (ontology-spider -> research).
 - Follow-ups: Run Phase 11 evidence-grounded swarm voting.
+
+## Phase 11 — Evidence-Grounded Swarm Voting (2026-11-18T18:09:30+00:00)
+- Outcome: PASS
+- Key metric(s): Raw CISC accuracy=2/12 (0.1667); Evidence-grounded accuracy=11/12 (0.9167); total_flips=9 (flips_toward_correct=9, flips_toward_incorrect=0).
+- Finding(s): Multiplying CISC confidence by vault isnad_verified status (1.0/0.6/0.4) corrected 9 unverified-majority disputes with zero regressions while keeping 4-to-1 overwhelming plurality bounded (dispute #12).
+- Follow-ups: Collect all headline metrics and author final Phase 12 REPORT.md.

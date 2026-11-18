@@ -1,0 +1,401 @@
+{
+  "metrics": {
+    "disputes_total": 12,
+    "raw_correct": 2,
+    "raw_accuracy": 0.1667,
+    "grounded_correct": 11,
+    "grounded_accuracy": 0.9167,
+    "accuracy_delta": 0.75,
+    "total_flips": 9,
+    "flips_toward_correct": 9,
+    "flips_toward_incorrect": 0
+  },
+  "disputes": [
+    {
+      "dispute_id": 1,
+      "topic": "Vector index asymmetric rescoring budget",
+      "category": "flipped_expected",
+      "correct_choice": "scann_anisotropic_rescore",
+      "choice_evidence": {
+        "scann_anisotropic_rescore": {
+          "ki_id": "ki_google_research_scann_anisotropic_vq",
+          "status": "verified",
+          "multiplier": 1.0
+        },
+        "arrow_mmap_flat_scan": {
+          "ki_id": "ki-hf-datasets-arrow-streaming",
+          "status": "unverified",
+          "multiplier": 0.6
+        },
+        "brute_force_cache": {
+          "ki_id": null,
+          "status": "none",
+          "multiplier": 0.4
+        }
+      },
+      "raw_winner": "arrow_mmap_flat_scan",
+      "raw_correct": false,
+      "raw_weights": {
+        "arrow_mmap_flat_scan": 0.497201,
+        "scann_anisotropic_rescore": 0.427945,
+        "brute_force_cache": 0.074854
+      },
+      "grounded_winner": "scann_anisotropic_rescore",
+      "grounded_correct": true,
+      "grounded_weights": {
+        "arrow_mmap_flat_scan": 0.296189,
+        "scann_anisotropic_rescore": 0.646257,
+        "brute_force_cache": 0.057555
+      },
+      "flipped": true
+    },
+    {
+      "dispute_id": 2,
+      "topic": "Uncertainty guard OOD human escalation gate",
+      "category": "flipped_expected",
+      "correct_choice": "aspest_band_escalation",
+      "choice_evidence": {
+        "aspest_band_escalation": {
+          "ki_id": "ki_google_research_aspest_active_selective_prediction",
+          "status": "verified",
+          "multiplier": 1.0
+        },
+        "three_layer_heuristics": {
+          "ki_id": "ki_njoku_uncertainty_aware_systems",
+          "status": "unverified",
+          "multiplier": 0.6
+        }
+      },
+      "raw_winner": "three_layer_heuristics",
+      "raw_correct": false,
+      "raw_weights": {
+        "three_layer_heuristics": 0.609145,
+        "aspest_band_escalation": 0.390855
+      },
+      "grounded_winner": "aspest_band_escalation",
+      "grounded_correct": true,
+      "grounded_weights": {
+        "three_layer_heuristics": 0.385371,
+        "aspest_band_escalation": 0.614629
+      },
+      "flipped": true
+    },
+    {
+      "dispute_id": 3,
+      "topic": "Swarm multi-trace confidence aggregation strategy",
+      "category": "flipped_expected",
+      "correct_choice": "cisc_softmax_wqd",
+      "choice_evidence": {
+        "cisc_softmax_wqd": {
+          "ki_id": "ki_google_research_cisc_confidence_voting",
+          "status": "verified",
+          "multiplier": 1.0
+        },
+        "unweighted_majority": {
+          "ki_id": null,
+          "status": "none",
+          "multiplier": 0.4
+        }
+      },
+      "raw_winner": "unweighted_majority",
+      "raw_correct": false,
+      "raw_weights": {
+        "unweighted_majority": 0.60204,
+        "cisc_softmax_wqd": 0.39796
+      },
+      "grounded_winner": "cisc_softmax_wqd",
+      "grounded_correct": true,
+      "grounded_weights": {
+        "unweighted_majority": 0.28061,
+        "cisc_softmax_wqd": 0.71939
+      },
+      "flipped": true
+    },
+    {
+      "dispute_id": 4,
+      "topic": "Distribution-shift calibration evaluation metric",
+      "category": "flipped_expected",
+      "correct_choice": "selectivity_sweep_brier",
+      "choice_evidence": {
+        "selectivity_sweep_brier": {
+          "ki_id": "ki_google_research_uq_benchmark_2019_calibration_shift",
+          "status": "verified",
+          "multiplier": 1.0
+        },
+        "single_static_threshold": {
+          "ki_id": "ki_njoku_uncertainty_aware_systems",
+          "status": "unverified",
+          "multiplier": 0.6
+        }
+      },
+      "raw_winner": "single_static_threshold",
+      "raw_correct": false,
+      "raw_weights": {
+        "single_static_threshold": 0.534379,
+        "selectivity_sweep_brier": 0.465621
+      },
+      "grounded_winner": "selectivity_sweep_brier",
+      "grounded_correct": true,
+      "grounded_weights": {
+        "single_static_threshold": 0.309498,
+        "selectivity_sweep_brier": 0.690502
+      },
+      "flipped": true
+    },
+    {
+      "dispute_id": 5,
+      "topic": "Lazily-staged plugin disk artifact cache policy",
+      "category": "flipped_expected",
+      "correct_choice": "superblock_dual_lru",
+      "choice_evidence": {
+        "superblock_dual_lru": {
+          "ki_id": "ki_airllm_plus_superblock_prefetch_runtime",
+          "status": "verified",
+          "multiplier": 1.0
+        },
+        "xxhash_arrow_stream": {
+          "ki_id": "ki-hf-datasets-arrow-streaming",
+          "status": "unverified",
+          "multiplier": 0.6
+        },
+        "unbounded_cache": {
+          "ki_id": null,
+          "status": "none",
+          "multiplier": 0.4
+        }
+      },
+      "raw_winner": "xxhash_arrow_stream",
+      "raw_correct": false,
+      "raw_weights": {
+        "xxhash_arrow_stream": 0.485519,
+        "superblock_dual_lru": 0.428469,
+        "unbounded_cache": 0.086012
+      },
+      "grounded_winner": "superblock_dual_lru",
+      "grounded_correct": true,
+      "grounded_weights": {
+        "xxhash_arrow_stream": 0.293044,
+        "superblock_dual_lru": 0.645725,
+        "unbounded_cache": 0.061231
+      },
+      "flipped": true
+    },
+    {
+      "dispute_id": 6,
+      "topic": "MoE layer offloading pinned host buffer bound",
+      "category": "flipped_expected",
+      "correct_choice": "mxfp4_capped_pinned_2gib",
+      "choice_evidence": {
+        "mxfp4_capped_pinned_2gib": {
+          "ki_id": "ki_airllm_layerwise_streaming_and_moe_expert_offload",
+          "status": "verified",
+          "multiplier": 1.0
+        },
+        "unbounded_pin_all": {
+          "ki_id": null,
+          "status": "none",
+          "multiplier": 0.4
+        }
+      },
+      "raw_winner": "unbounded_pin_all",
+      "raw_correct": false,
+      "raw_weights": {
+        "unbounded_pin_all": 0.546796,
+        "mxfp4_capped_pinned_2gib": 0.453204
+      },
+      "grounded_winner": "mxfp4_capped_pinned_2gib",
+      "grounded_correct": true,
+      "grounded_weights": {
+        "unbounded_pin_all": 0.230139,
+        "mxfp4_capped_pinned_2gib": 0.769861
+      },
+      "flipped": true
+    },
+    {
+      "dispute_id": 7,
+      "topic": "Untrusted external plugin filesystem isolation",
+      "category": "flipped_expected",
+      "correct_choice": "gvisor_sentry_gofer_fd",
+      "choice_evidence": {
+        "gvisor_sentry_gofer_fd": {
+          "ki_id": "ki_google_gvisor_sentry_gofer_sandbox",
+          "status": "verified",
+          "multiplier": 1.0
+        },
+        "ad_hoc_runner_env": {
+          "ki_id": "ki_self_20260904_scratch_01",
+          "status": "unverified",
+          "multiplier": 0.6
+        }
+      },
+      "raw_winner": "ad_hoc_runner_env",
+      "raw_correct": false,
+      "raw_weights": {
+        "ad_hoc_runner_env": 0.531209,
+        "gvisor_sentry_gofer_fd": 0.468791
+      },
+      "grounded_winner": "gvisor_sentry_gofer_fd",
+      "grounded_correct": true,
+      "grounded_weights": {
+        "ad_hoc_runner_env": 0.312072,
+        "gvisor_sentry_gofer_fd": 0.687928
+      },
+      "flipped": true
+    },
+    {
+      "dispute_id": 8,
+      "topic": "Latent sequence pretraining bypass prevention",
+      "category": "flipped_expected",
+      "correct_choice": "vqvae_discrete_latent_plan",
+      "choice_evidence": {
+        "vqvae_discrete_latent_plan": {
+          "ki_id": "ki_google_research_latent_programmer_vqvae",
+          "status": "verified",
+          "multiplier": 1.0
+        },
+        "direct_autoregressive": {
+          "ki_id": null,
+          "status": "none",
+          "multiplier": 0.4
+        }
+      },
+      "raw_winner": "direct_autoregressive",
+      "raw_correct": false,
+      "raw_weights": {
+        "direct_autoregressive": 0.601097,
+        "vqvae_discrete_latent_plan": 0.398903
+      },
+      "grounded_winner": "vqvae_discrete_latent_plan",
+      "grounded_correct": true,
+      "grounded_weights": {
+        "direct_autoregressive": 0.281837,
+        "vqvae_discrete_latent_plan": 0.718163
+      },
+      "flipped": true
+    },
+    {
+      "dispute_id": 9,
+      "topic": "Structured long-context attention complexity routing",
+      "category": "flipped_expected",
+      "correct_choice": "etcmodel_global_local_attn",
+      "choice_evidence": {
+        "etcmodel_global_local_attn": {
+          "ki_id": "ki_google_research_etcmodel_long_structured_attention",
+          "status": "verified",
+          "multiplier": 1.0
+        },
+        "complexity_tier_only": {
+          "ki_id": "ki-5d-complexity-baseline",
+          "status": "unverified",
+          "multiplier": 0.6
+        }
+      },
+      "raw_winner": "complexity_tier_only",
+      "raw_correct": false,
+      "raw_weights": {
+        "complexity_tier_only": 0.540594,
+        "etcmodel_global_local_attn": 0.459406
+      },
+      "grounded_winner": "etcmodel_global_local_attn",
+      "grounded_correct": true,
+      "grounded_weights": {
+        "complexity_tier_only": 0.317028,
+        "etcmodel_global_local_attn": 0.682972
+      },
+      "flipped": true
+    },
+    {
+      "dispute_id": 10,
+      "topic": "AST graph absorption linear solver layer (control)",
+      "category": "control",
+      "correct_choice": "gfsa_richardson_absorption",
+      "choice_evidence": {
+        "gfsa_richardson_absorption": {
+          "ki_id": "ki_google_research_gfsa_automaton_layer",
+          "status": "verified",
+          "multiplier": 1.0
+        },
+        "dense_mlp_pooling": {
+          "ki_id": null,
+          "status": "none",
+          "multiplier": 0.4
+        }
+      },
+      "raw_winner": "gfsa_richardson_absorption",
+      "raw_correct": true,
+      "raw_weights": {
+        "gfsa_richardson_absorption": 0.78268,
+        "dense_mlp_pooling": 0.21732
+      },
+      "grounded_winner": "gfsa_richardson_absorption",
+      "grounded_correct": true,
+      "grounded_weights": {
+        "gfsa_richardson_absorption": 0.91144,
+        "dense_mlp_pooling": 0.08856
+      },
+      "flipped": false
+    },
+    {
+      "dispute_id": 11,
+      "topic": "Multimodal config override immutability (control)",
+      "category": "control",
+      "correct_choice": "locked_dataclass_registry",
+      "choice_evidence": {
+        "locked_dataclass_registry": {
+          "ki_id": "ki_google_research_imp_multimodal_config_registry",
+          "status": "verified",
+          "multiplier": 1.0
+        },
+        "mutable_yaml_dict": {
+          "ki_id": "ki_self_20260907_01",
+          "status": "unverified",
+          "multiplier": 0.6
+        }
+      },
+      "raw_winner": "locked_dataclass_registry",
+      "raw_correct": true,
+      "raw_weights": {
+        "locked_dataclass_registry": 0.769653,
+        "mutable_yaml_dict": 0.230347
+      },
+      "grounded_winner": "locked_dataclass_registry",
+      "grounded_correct": true,
+      "grounded_weights": {
+        "locked_dataclass_registry": 0.872845,
+        "mutable_yaml_dict": 0.127155
+      },
+      "flipped": false
+    },
+    {
+      "dispute_id": 12,
+      "topic": "Chunked vocab loss vs overwhelming unverified plurality (stress)",
+      "category": "overwhelming_plurality",
+      "correct_choice": "chunked_vocab_ce",
+      "choice_evidence": {
+        "chunked_vocab_ce": {
+          "ki_id": "ki_airllm_chunked_vocab_cross_entropy",
+          "status": "verified",
+          "multiplier": 1.0
+        },
+        "full_logits_materialized": {
+          "ki_id": "ki_hf_autoresearch_multi_worker_lab",
+          "status": "unverified",
+          "multiplier": 0.6
+        }
+      },
+      "raw_winner": "full_logits_materialized",
+      "raw_correct": false,
+      "raw_weights": {
+        "full_logits_materialized": 0.868332,
+        "chunked_vocab_ce": 0.131668
+      },
+      "grounded_winner": "full_logits_materialized",
+      "grounded_correct": false,
+      "grounded_weights": {
+        "full_logits_materialized": 0.718351,
+        "chunked_vocab_ce": 0.281649
+      },
+      "flipped": false
+    }
+  ]
+}
