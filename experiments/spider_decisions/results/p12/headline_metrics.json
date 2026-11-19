@@ -23,13 +23,13 @@
     "regression_all_passed": true
   },
   "phase_2": {
-    "unverified_kis_count": 70,
+    "unverified_kis_count": 326,
     "top5_unverified_ids": [
-      "ki_google_agent_skills_enterprise_evals",
-      "ki_self_20260905_08",
-      "ki_solla_contract_first_medallion_lakehouse",
-      "ki_agent_skills_runtime_security_middleware",
-      "ki_hf_autoresearch_multi_worker_lab"
+      "ki_20261110_google_research_gnn_and_scientific_ml",
+      "ki_20261110_google_research_multitarget_edge_ml",
+      "ki_self_20260827_03",
+      "ki_self_20261002_05",
+      "ki_20260913_tool_approval_03"
     ],
     "total_kis_scanned": 382,
     "duplicate_candidates_count": 0,

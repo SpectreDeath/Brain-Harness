@@ -491,7 +491,7 @@
         "learned_ki_id": "ki_self_20260830_01",
         "learned_match_strength": "structured",
         "is_generic_unit": false,
-        "py_file_count": 421,
+        "py_file_count": 422,
         "test_file_count": 1,
         "gin_file_count": 0
       }
@@ -542,7 +542,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -557,7 +557,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -572,7 +572,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -587,7 +587,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -602,7 +602,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -617,7 +617,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -632,7 +632,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -647,7 +647,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -662,7 +662,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -677,7 +677,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -692,7 +692,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -707,7 +707,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -722,7 +722,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -737,7 +737,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -752,7 +752,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -767,7 +767,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -782,7 +782,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -797,7 +797,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -812,7 +812,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -827,7 +827,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -842,7 +842,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -857,7 +857,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -872,7 +872,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -887,7 +887,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -902,7 +902,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -917,7 +917,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -932,7 +932,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -947,7 +947,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -962,7 +962,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -977,7 +977,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -992,7 +992,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1007,7 +1007,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1022,7 +1022,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1037,7 +1037,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1052,7 +1052,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1067,7 +1067,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1082,7 +1082,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1097,7 +1097,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1112,7 +1112,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1127,7 +1127,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1142,7 +1142,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1157,7 +1157,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1172,7 +1172,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1187,7 +1187,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1202,7 +1202,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1217,7 +1217,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1232,7 +1232,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1247,7 +1247,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1262,7 +1262,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1277,7 +1277,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1292,7 +1292,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1307,7 +1307,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1322,7 +1322,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1337,7 +1337,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1352,7 +1352,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1367,7 +1367,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1382,7 +1382,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1397,7 +1397,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1412,7 +1412,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1427,7 +1427,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1442,7 +1442,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1457,7 +1457,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1472,7 +1472,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1487,7 +1487,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1502,7 +1502,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1517,7 +1517,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1532,7 +1532,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1547,7 +1547,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1562,7 +1562,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1577,7 +1577,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1592,7 +1592,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1607,7 +1607,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1622,7 +1622,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1637,7 +1637,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1652,7 +1652,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1667,7 +1667,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1682,7 +1682,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1697,7 +1697,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1712,7 +1712,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1727,7 +1727,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1742,7 +1742,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1757,7 +1757,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1772,7 +1772,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1787,7 +1787,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1802,7 +1802,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1817,7 +1817,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1832,7 +1832,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1847,7 +1847,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1862,7 +1862,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1877,7 +1877,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1892,7 +1892,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1907,7 +1907,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1922,7 +1922,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1937,7 +1937,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1952,7 +1952,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1967,7 +1967,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1982,7 +1982,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -1997,7 +1997,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -2012,7 +2012,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -2027,7 +2027,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -2042,7 +2042,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -2057,7 +2057,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -2072,7 +2072,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -2087,7 +2087,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -2102,7 +2102,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -2117,7 +2117,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -2132,7 +2132,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -2147,7 +2147,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -2162,7 +2162,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -2177,7 +2177,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -2192,7 +2192,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -2207,7 +2207,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -2222,7 +2222,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -2237,7 +2237,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -2252,7 +2252,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -2267,7 +2267,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -2282,7 +2282,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -2297,7 +2297,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -2312,7 +2312,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -2327,7 +2327,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -2342,7 +2342,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -2357,7 +2357,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -2372,7 +2372,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -2387,7 +2387,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -2402,7 +2402,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -2417,7 +2417,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -2432,7 +2432,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -2447,7 +2447,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -2462,7 +2462,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -2477,7 +2477,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -2492,7 +2492,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -2507,7 +2507,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },
@@ -2522,7 +2522,7 @@
       },
       "provenance": {
         "source": "repo:harness",
-        "timestamp": "2026-11-19T10:26:45.494254+00:00",
+        "timestamp": "2026-11-19T23:57:00.994845+00:00",
         "turn_id": "repo_scan",
         "parent_turn_ids": []
       },

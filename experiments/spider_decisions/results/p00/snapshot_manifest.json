@@ -1,58 +1,58 @@
 {
   "vault": {
     "source_path": "vault",
-    "snapshot_file": "d:\\GitHub\\projects\\Brain Harness\\experiments\\spider_decisions\\results\\snapshots\\vault.json",
+    "snapshot_file": "D:\\GitHub\\projects\\Brain Harness\\experiments\\spider_decisions\\results\\snapshots\\vault.json",
     "entities": 674,
     "assertions": 1091,
-    "file_size_bytes": 1829470,
-    "sha256": "cb0c85930d69b0cc6c51eb73a124bc695474636eb21819a611f375d2eecc31e9"
+    "file_size_bytes": 1849140,
+    "sha256": "b39ee07cfc9ae05398c77874ffe08af2f51a93014509462bc2ae583132d58788"
   },
   "google_portfolio_root": {
     "source_path": "D:\\GitHub\\cloned\\Google",
-    "snapshot_file": "d:\\GitHub\\projects\\Brain Harness\\experiments\\spider_decisions\\results\\snapshots\\google_portfolio_root.json",
+    "snapshot_file": "D:\\GitHub\\projects\\Brain Harness\\experiments\\spider_decisions\\results\\snapshots\\google_portfolio_root.json",
     "entities": 57,
     "assertions": 81,
     "file_size_bytes": 49566,
-    "sha256": "cce121e01fbe3166a26487045b95eb09eb3c7bb3259ca3e5525b0c95a18257d1"
+    "sha256": "ce8e9a048655a3a12f2ba8fbb24b22144d3a4a0d42adbb7fdb853315a1ec7ed3"
   },
   "grm": {
     "source_path": "D:\\GitHub\\cloned\\Google\\google-research-master",
-    "snapshot_file": "d:\\GitHub\\projects\\Brain Harness\\experiments\\spider_decisions\\results\\snapshots\\grm.json",
+    "snapshot_file": "D:\\GitHub\\projects\\Brain Harness\\experiments\\spider_decisions\\results\\snapshots\\grm.json",
     "entities": 1279,
     "assertions": 4506,
     "file_size_bytes": 2668518,
-    "sha256": "add37d887fea5bdfeb5c855d1e0b87ec57c2508fdc89252192c5392cabb87e22"
+    "sha256": "ba71acc42dde6b7ab211bf365b259521e7376f87afd22a387ec02a35d9f9054c"
   },
   "gvisor": {
     "source_path": "D:\\GitHub\\cloned\\Google\\gvisor",
-    "snapshot_file": "d:\\GitHub\\projects\\Brain Harness\\experiments\\spider_decisions\\results\\snapshots\\gvisor.json",
+    "snapshot_file": "D:\\GitHub\\projects\\Brain Harness\\experiments\\spider_decisions\\results\\snapshots\\gvisor.json",
     "entities": 44,
     "assertions": 77,
     "file_size_bytes": 46277,
-    "sha256": "912239ab41deadae27c83bcc97193cc0d784762e269e96a64892e7d4558acf1d"
+    "sha256": "014428dac050d41a02657ec99d903c47951a53457286e41229fb25e74e906d6a"
   },
   "airllm": {
     "source_path": "D:\\GitHub\\cloned\\AIRLLM SUITE\\airllm",
-    "snapshot_file": "d:\\GitHub\\projects\\Brain Harness\\experiments\\spider_decisions\\results\\snapshots\\airllm.json",
+    "snapshot_file": "D:\\GitHub\\projects\\Brain Harness\\experiments\\spider_decisions\\results\\snapshots\\airllm.json",
     "entities": 42,
     "assertions": 56,
     "file_size_bytes": 33491,
-    "sha256": "7f719e1be96053e22db935be84dfd3951f9621886c72ed5628c036662286268b"
+    "sha256": "1e1bc4ec31016ed89a76d631ac0dbf447912261e6eea414f586ffe4ad4f6d202"
   },
   "airllm_plus": {
     "source_path": "D:\\GitHub\\cloned\\AIRLLM SUITE\\airllm-plus",
-    "snapshot_file": "d:\\GitHub\\projects\\Brain Harness\\experiments\\spider_decisions\\results\\snapshots\\airllm_plus.json",
+    "snapshot_file": "D:\\GitHub\\projects\\Brain Harness\\experiments\\spider_decisions\\results\\snapshots\\airllm_plus.json",
     "entities": 32,
     "assertions": 36,
     "file_size_bytes": 20437,
-    "sha256": "b09fae47816b64baf04d2840496bf7a3af0fd9d5bea30a31b1076c0aa2dd2a93"
+    "sha256": "8a66dcea98f6dd172a44d78abb582a5b7476a60b2ef798ef2d4d73f68d76c995"
   },
   "brain_harness_src": {
-    "source_path": "d:\\GitHub\\projects\\Brain Harness\\src\\harness",
-    "snapshot_file": "d:\\GitHub\\projects\\Brain Harness\\experiments\\spider_decisions\\results\\snapshots\\brain_harness_src.json",
+    "source_path": "D:\\GitHub\\projects\\Brain Harness\\src\\harness",
+    "snapshot_file": "D:\\GitHub\\projects\\Brain Harness\\experiments\\spider_decisions\\results\\snapshots\\brain_harness_src.json",
     "entities": 48,
     "assertions": 133,
     "file_size_bytes": 69292,
-    "sha256": "80be2769e6312306b738a6bf39d3cc826c9dbb7c8e1fa9919ff979ba353be1a1"
+    "sha256": "59a41ddfb2fa1a5a5a8dc641a3feec10e1bcc9dfea100637a124b6ab796038d1"
   }
 }

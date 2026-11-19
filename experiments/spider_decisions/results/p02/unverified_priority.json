@@ -1,5 +1,2009 @@
 [
   {
+    "id": "ki_20261110_google_research_gnn_and_scientific_ml",
+    "raw_id": "ki_20261110_google_research_gnn_and_scientific_ml",
+    "title": "Graph-Native Program Representations & Differentiable Scientific ML",
+    "category": "machine_learning",
+    "in_degree": 5,
+    "tag_count": 8,
+    "tags": [
+      "machine_learning",
+      "google_research",
+      "graph_neural_networks",
+      "scientific_ml",
+      "jax_dft",
+      "protenn",
+      "aloe",
+      "ipagnn"
+    ],
+    "pointing_kis": [
+      "ki_20261110_google_research_multitarget_edge_ml",
+      "ki_google_research_cisc_confidence_voting",
+      "ki_google_research_dp_sgd_clipping",
+      "ki_google_research_etcmodel_long_structured_attention",
+      "ki_google_research_gfsa_automaton_layer"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_google_research_cisc_confidence_voting",
+        "predicate": "related_to"
+      },
+      {
+        "subject": "ki_google_research_dp_sgd_clipping",
+        "predicate": "related_to"
+      },
+      {
+        "subject": "ki_google_research_etcmodel_long_structured_attention",
+        "predicate": "related_to"
+      },
+      {
+        "subject": "ki_google_research_gfsa_automaton_layer",
+        "predicate": "related_to"
+      },
+      {
+        "subject": "ki_20261110_google_research_multitarget_edge_ml",
+        "predicate": "same_domain"
+      }
+    ],
+    "isnad_count": 3,
+    "verified_isnad_count": 0,
+    "rank": 1
+  },
+  {
+    "id": "ki_20261110_google_research_multitarget_edge_ml",
+    "raw_id": "ki_20261110_google_research_multitarget_edge_ml",
+    "title": "Multi-Target Edge ML Serialization & Streaming Delay-Line Architecture",
+    "category": "machine_learning",
+    "in_degree": 3,
+    "tag_count": 7,
+    "tags": [
+      "machine_learning",
+      "google_research",
+      "edge_ml",
+      "tflite",
+      "tfjs",
+      "kws_streaming",
+      "sign_language_detection"
+    ],
+    "pointing_kis": [
+      "ki_20261110_google_research_gnn_and_scientific_ml",
+      "ki_rea_sig_group1_shard1of1_e7a02dfe",
+      "ki_rea_sig_model1_wfrontend_9a4d5b7c"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_20261110_google_research_gnn_and_scientific_ml",
+        "predicate": "same_domain"
+      },
+      {
+        "subject": "ki_rea_sig_group1_shard1of1_e7a02dfe",
+        "predicate": "same_domain"
+      },
+      {
+        "subject": "ki_rea_sig_model1_wfrontend_9a4d5b7c",
+        "predicate": "same_domain"
+      }
+    ],
+    "isnad_count": 3,
+    "verified_isnad_count": 0,
+    "rank": 2
+  },
+  {
+    "id": "ki_self_20260827_03",
+    "raw_id": "ki_self_20260827_03",
+    "title": "Headless CLI Session DAG Inspection & Export",
+    "category": "developer_experience",
+    "in_degree": 3,
+    "tag_count": 6,
+    "tags": [
+      "cli",
+      "architecture",
+      "introspection",
+      "session_tree",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [
+      "ki_self_20260826_01",
+      "ki_self_20260826_02",
+      "ki_self_20260826_03"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_self_20260826_01",
+        "predicate": "related_to"
+      },
+      {
+        "subject": "ki_self_20260826_02",
+        "predicate": "related_to"
+      },
+      {
+        "subject": "ki_self_20260826_03",
+        "predicate": "related_to"
+      }
+    ],
+    "isnad_count": 2,
+    "verified_isnad_count": 0,
+    "rank": 3
+  },
+  {
+    "id": "ki_self_20261002_05",
+    "raw_id": "ki_self_20261002_05",
+    "title": "Privilege-Aware Posix Cgroup v2 Isolation & Hierarchical Slice Traversal",
+    "category": "security_and_forensics/sandboxing",
+    "in_degree": 3,
+    "tag_count": 6,
+    "tags": [
+      "security",
+      "sandboxing",
+      "cgroups",
+      "resource_isolation",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [
+      "ki_20260823_repo_01",
+      "ki_20260831_em3_01",
+      "ki_self_20260827_02"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_20260823_repo_01",
+        "predicate": "same_domain"
+      },
+      {
+        "subject": "ki_20260831_em3_01",
+        "predicate": "same_domain"
+      },
+      {
+        "subject": "ki_self_20260827_02",
+        "predicate": "same_domain"
+      }
+    ],
+    "isnad_count": 3,
+    "verified_isnad_count": 0,
+    "rank": 4
+  },
+  {
+    "id": "ki_20260913_tool_approval_03",
+    "raw_id": "ki_20260913_tool_approval_03",
+    "title": "Interactive Tool Approval Middleware & Security Sandboxing",
+    "category": "security_and_forensics",
+    "in_degree": 3,
+    "tag_count": 5,
+    "tags": [
+      "security",
+      "tool_approval",
+      "sandbox",
+      "safety_gates",
+      "bash_hooks"
+    ],
+    "pointing_kis": [
+      "ki_20260821_06",
+      "ki_20260823_01",
+      "ki_20260830_grok_03"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_20260821_06",
+        "predicate": "same_domain"
+      },
+      {
+        "subject": "ki_20260823_01",
+        "predicate": "same_domain"
+      },
+      {
+        "subject": "ki_20260830_grok_03",
+        "predicate": "same_domain"
+      }
+    ],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 5
+  },
+  {
+    "id": "ki_self_20260826_04",
+    "raw_id": "ki_self_20260826_04",
+    "title": "Multi-Dimensional Compute Assessment Calibration",
+    "category": "agent_orchestration",
+    "in_degree": 3,
+    "tag_count": 3,
+    "tags": [
+      "performance",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [
+      "ki_self_20260826_01",
+      "ki_self_20260826_02",
+      "ki_self_20260826_03"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_self_20260826_01",
+        "predicate": "related_to"
+      },
+      {
+        "subject": "ki_self_20260826_02",
+        "predicate": "related_to"
+      },
+      {
+        "subject": "ki_self_20260826_03",
+        "predicate": "related_to"
+      }
+    ],
+    "isnad_count": 32,
+    "verified_isnad_count": 0,
+    "rank": 6
+  },
+  {
+    "id": "ki_20260831_cellcog_04",
+    "raw_id": "ki_20260831_cellcog_04",
+    "title": "Monorepo Golden-Copy Multi-Channel Distribution & ClawHub Slug Optimization",
+    "category": "developer_experience",
+    "in_degree": 2,
+    "tag_count": 8,
+    "tags": [
+      "skill_distribution",
+      "golden_copy",
+      "open_plugins",
+      "clawhub_search",
+      "slug_optimization",
+      "manifest_validation",
+      "cellcog",
+      "repo_introspection"
+    ],
+    "pointing_kis": [
+      "ki_20260831_cellcog_01",
+      "ki_20260831_cellcog_03"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_20260831_cellcog_01",
+        "predicate": "same_domain"
+      },
+      {
+        "subject": "ki_20260831_cellcog_03",
+        "predicate": "same_domain"
+      }
+    ],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 7
+  },
+  {
+    "id": "ki_20260831_openclaw_04",
+    "raw_id": "ki_20260831_openclaw_04",
+    "title": "Deterministic Session Tree Branching & Compaction with UUIDv7",
+    "category": "agent_orchestration",
+    "in_degree": 2,
+    "tag_count": 6,
+    "tags": [
+      "session_trees",
+      "uuidv7",
+      "compaction",
+      "branching",
+      "openclaw",
+      "repo_introspection"
+    ],
+    "pointing_kis": [
+      "ki_20260831_openclaw_01",
+      "ki_20260831_openclaw_03"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_20260831_openclaw_01",
+        "predicate": "same_domain"
+      },
+      {
+        "subject": "ki_20260831_openclaw_03",
+        "predicate": "same_domain"
+      }
+    ],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 8
+  },
+  {
+    "id": "ki_orca_orchestration_engine",
+    "raw_id": "ki_orca_orchestration_engine",
+    "title": "Orca Multi-Agent Orchestration Engine & Worktree Sandboxing",
+    "category": "agent_orchestration",
+    "in_degree": 2,
+    "tag_count": 6,
+    "tags": [
+      "architecture",
+      "agent_orchestration",
+      "git_worktree",
+      "multi_agent",
+      "injected_preamble",
+      "fifo_mailbox"
+    ],
+    "pointing_kis": [
+      "ki_20260830_claude_02",
+      "ki_20260913_claude_coord_02"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_20260830_claude_02",
+        "predicate": "same_domain"
+      },
+      {
+        "subject": "ki_20260913_claude_coord_02",
+        "predicate": "same_domain"
+      }
+    ],
+    "isnad_count": 2,
+    "verified_isnad_count": 0,
+    "rank": 9
+  },
+  {
+    "id": "ki_self_20260827_02",
+    "raw_id": "ki_self_20260827_02",
+    "title": "Adversarial Red-Teaming Subprocess Isolation",
+    "category": "security_and_forensics",
+    "in_degree": 2,
+    "tag_count": 6,
+    "tags": [
+      "security",
+      "sandboxing",
+      "pyrit",
+      "red_teaming",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [
+      "ki_20260823_repo_01",
+      "ki_20260831_em3_01"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_20260823_repo_01",
+        "predicate": "same_domain"
+      },
+      {
+        "subject": "ki_20260831_em3_01",
+        "predicate": "same_domain"
+      }
+    ],
+    "isnad_count": 2,
+    "verified_isnad_count": 0,
+    "rank": 10
+  },
+  {
+    "id": "ki_self_20260908_03",
+    "raw_id": "ki_self_20260908_03",
+    "title": "Deep-Module Monolithic CLI Extraction Pattern",
+    "category": "developer_experience",
+    "in_degree": 2,
+    "tag_count": 6,
+    "tags": [
+      "deep-module",
+      "cli",
+      "refactoring",
+      "skill-system",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [
+      "ki_cli_decomposition_pattern",
+      "ki_self_20260908_01"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_self_20260908_01",
+        "predicate": "related_to"
+      },
+      {
+        "subject": "ki_cli_decomposition_pattern",
+        "predicate": "same_domain"
+      }
+    ],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 11
+  },
+  {
+    "id": "ki_20260830_grok_03",
+    "raw_id": "ki_20260830_grok_03",
+    "title": "Sandbox Hook Write-Deny Security Boundary",
+    "category": "security_and_forensics",
+    "in_degree": 2,
+    "tag_count": 5,
+    "tags": [
+      "sandbox",
+      "security",
+      "lifecycle_hooks",
+      "write_deny",
+      "kernel_isolation"
+    ],
+    "pointing_kis": [
+      "ki_20260821_06",
+      "ki_20260823_01"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_20260821_06",
+        "predicate": "same_domain"
+      },
+      {
+        "subject": "ki_20260823_01",
+        "predicate": "same_domain"
+      }
+    ],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 12
+  },
+  {
+    "id": "ki_audit_20260908_02",
+    "raw_id": "ki_audit_20260908_02",
+    "title": "Compound Topology Invariant \u2014 Four Concurrent Data Structures",
+    "category": "agent_orchestration",
+    "in_degree": 2,
+    "tag_count": 5,
+    "tags": [
+      "architecture",
+      "topology",
+      "invariant",
+      "swarm",
+      "event-bus"
+    ],
+    "pointing_kis": [
+      "ki_20260830_claude_02",
+      "ki_20260913_claude_coord_02"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_20260830_claude_02",
+        "predicate": "same_domain"
+      },
+      {
+        "subject": "ki_20260913_claude_coord_02",
+        "predicate": "same_domain"
+      }
+    ],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 13
+  },
+  {
+    "id": "ki_self_20260826_03",
+    "raw_id": "ki_self_20260826_03",
+    "title": "ReAct Agent Step Transactional Isolation",
+    "category": "agent_orchestration",
+    "in_degree": 2,
+    "tag_count": 3,
+    "tags": [
+      "architecture",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [
+      "ki_self_20260826_01",
+      "ki_self_20260826_02"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_self_20260826_01",
+        "predicate": "related_to"
+      },
+      {
+        "subject": "ki_self_20260826_02",
+        "predicate": "related_to"
+      }
+    ],
+    "isnad_count": 10,
+    "verified_isnad_count": 0,
+    "rank": 14
+  },
+  {
+    "id": "ki_self_20260924_01",
+    "raw_id": "ki_self_20260924_01",
+    "title": "Win32 Job Object Kernel Memory Boundaries, CPython Baseline Footprint, and Subprocess Termination Triangulation",
+    "category": "security_and_forensics/sandboxing",
+    "in_degree": 1,
+    "tag_count": 8,
+    "tags": [
+      "security_and_sandboxing",
+      "subprocess",
+      "win32",
+      "job_object",
+      "memory_limits",
+      "oom",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [
+      "ki_self_20260922_01"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_self_20260922_01",
+        "predicate": "same_domain"
+      }
+    ],
+    "isnad_count": 3,
+    "verified_isnad_count": 0,
+    "rank": 15
+  },
+  {
+    "id": "ki_20260831_cellcog_02",
+    "raw_id": "ki_20260831_cellcog_02",
+    "title": "Parent Session Tree Fallback DAG & Interim Rewake Heartbeat Delivery",
+    "category": "agent_orchestration",
+    "in_degree": 1,
+    "tag_count": 7,
+    "tags": [
+      "session_hierarchy",
+      "dag_routing",
+      "gateway_delivery",
+      "webhook_fallback",
+      "subagent_coordination",
+      "cellcog",
+      "repo_introspection"
+    ],
+    "pointing_kis": [
+      "ki_20260829_cellcog_01"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_20260829_cellcog_01",
+        "predicate": "same_domain"
+      }
+    ],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 16
+  },
+  {
+    "id": "ki_20260831_cellcog_03",
+    "raw_id": "ki_20260831_cellcog_03",
+    "title": "Pre-Flight File Integrity Verification & Transparent Blob Path Translation",
+    "category": "developer_experience",
+    "in_degree": 1,
+    "tag_count": 7,
+    "tags": [
+      "file_integrity",
+      "credit_protection",
+      "blob_storage",
+      "path_translation",
+      "fail_early",
+      "cellcog",
+      "repo_introspection"
+    ],
+    "pointing_kis": [
+      "ki_20260831_cellcog_01"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_20260831_cellcog_01",
+        "predicate": "same_domain"
+      }
+    ],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 17
+  },
+  {
+    "id": "ki_20260831_em3_03",
+    "raw_id": "ki_20260831_em3_03",
+    "title": "Kit Fine Counterfactual Fault Localization & Truthmaker State Fragment Fusion",
+    "category": "memory_and_epistemics",
+    "in_degree": 1,
+    "tag_count": 7,
+    "tags": [
+      "truthmaker_semantics",
+      "fault_localization",
+      "counterfactual_reasoning",
+      "ontology",
+      "neuro_symbolic",
+      "em_cubed",
+      "repo_introspection"
+    ],
+    "pointing_kis": [
+      "ki_20260831_em3_02"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_20260831_em3_02",
+        "predicate": "same_domain"
+      }
+    ],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 18
+  },
+  {
+    "id": "ki_20260831_openclaw_02",
+    "raw_id": "ki_20260831_openclaw_02",
+    "title": "Trusted Gateway Control Plane & Deterministic Sandboxed Execution",
+    "category": "security_and_forensics",
+    "in_degree": 1,
+    "tag_count": 7,
+    "tags": [
+      "gateway",
+      "security",
+      "websocket",
+      "rpc",
+      "approval_gates",
+      "openclaw",
+      "repo_introspection"
+    ],
+    "pointing_kis": [
+      "ki_20260831_em3_01"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_20260831_em3_01",
+        "predicate": "same_domain"
+      }
+    ],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 19
+  },
+  {
+    "id": "ki_self_20260829_04",
+    "raw_id": "ki_self_20260829_04",
+    "title": "Typed IoC Context Pipeline & Authoritative Swarm DAG Store",
+    "category": "agent_orchestration",
+    "in_degree": 1,
+    "tag_count": 7,
+    "tags": [
+      "context_pipeline",
+      "agent_graph",
+      "ioc_service",
+      "multi_agent",
+      "token_rollup",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [
+      "ki_20260823_repo_04"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_20260823_repo_04",
+        "predicate": "same_domain"
+      }
+    ],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 20
+  },
+  {
+    "id": "ki_self_20260917_01",
+    "raw_id": "ki_self_20260917_01",
+    "title": "Five-Part Agent Harness Architecture and Four-Mechanism Reliability Invariant",
+    "category": "agent_orchestration",
+    "in_degree": 1,
+    "tag_count": 7,
+    "tags": [
+      "agent_harness",
+      "runtime_shell",
+      "react_loop",
+      "sandboxing",
+      "subagent_delegation",
+      "context_compression",
+      "mcp"
+    ],
+    "pointing_kis": [
+      "ki_koos_typescript_harness_from_scratch"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_koos_typescript_harness_from_scratch",
+        "predicate": "same_domain"
+      }
+    ],
+    "isnad_count": 3,
+    "verified_isnad_count": 0,
+    "rank": 21
+  },
+  {
+    "id": "ki_self_20261019_pyrit_redteam_01",
+    "raw_id": "ki_self_20261019_pyrit_redteam_01",
+    "title": "Subprocess Venv Staging and Adversarial GenAI Red-Teaming Architecture",
+    "category": "security_and_forensics",
+    "in_degree": 1,
+    "tag_count": 7,
+    "tags": [
+      "pyrit",
+      "red_teaming",
+      "adversarial_safety",
+      "lazy_staging",
+      "rule_7",
+      "rule_14",
+      "rule_56"
+    ],
+    "pointing_kis": [
+      "ki_self_20260827_02"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_self_20260827_02",
+        "predicate": "same_domain"
+      }
+    ],
+    "isnad_count": 2,
+    "verified_isnad_count": 0,
+    "rank": 22
+  },
+  {
+    "id": "ki_20260831_em3_01",
+    "raw_id": "ki_20260831_em3_01",
+    "title": "Pre-Execution AST Security Visitor for Dynamic Code Sandboxing",
+    "category": "security_and_forensics",
+    "in_degree": 1,
+    "tag_count": 6,
+    "tags": [
+      "security",
+      "ast_analysis",
+      "sandboxing",
+      "code_generation",
+      "em_cubed",
+      "repo_introspection"
+    ],
+    "pointing_kis": [
+      "ki_20260823_repo_01"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_20260823_repo_01",
+        "predicate": "same_domain"
+      }
+    ],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 23
+  },
+  {
+    "id": "ki_20260831_em3_05",
+    "raw_id": "ki_20260831_em3_05",
+    "title": "Autonomous Self-Healing Feedback Loop with AST Patch Synthesis & Rollback",
+    "category": "agent_orchestration",
+    "in_degree": 1,
+    "tag_count": 6,
+    "tags": [
+      "self_healing",
+      "autonomous_repair",
+      "patch_synthesis",
+      "error_recovery",
+      "em_cubed",
+      "repo_introspection"
+    ],
+    "pointing_kis": [
+      "ki_20260831_em3_04"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_20260831_em3_04",
+        "predicate": "same_domain"
+      }
+    ],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 24
+  },
+  {
+    "id": "ki_20260831_openclaw_03",
+    "raw_id": "ki_20260831_openclaw_03",
+    "title": "A2A (Agent-to-Agent) Multi-Agent Swarm Federation Protocol",
+    "category": "agent_orchestration",
+    "in_degree": 1,
+    "tag_count": 6,
+    "tags": [
+      "a2a",
+      "multi_agent",
+      "swarm_federation",
+      "task_delegation",
+      "openclaw",
+      "repo_introspection"
+    ],
+    "pointing_kis": [
+      "ki_20260831_openclaw_01"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_20260831_openclaw_01",
+        "predicate": "same_domain"
+      }
+    ],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 25
+  },
+  {
+    "id": "ki_20260831_sme_05",
+    "raw_id": "ki_20260831_sme_05",
+    "title": "Circuit-Breaker Sandboxing & Manifest Schema Verification for Dynamic Plugin Ecosystems",
+    "category": "security_and_forensics",
+    "in_degree": 1,
+    "tag_count": 6,
+    "tags": [
+      "plugin_sandboxing",
+      "circuit_breaker",
+      "manifest_validation",
+      "permissions_gating",
+      "sme_forensics",
+      "repo_introspection"
+    ],
+    "pointing_kis": [
+      "ki_20260831_sme_04"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_20260831_sme_04",
+        "predicate": "same_domain"
+      }
+    ],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 26
+  },
+  {
+    "id": "ki_20260913_pr_lens_schema",
+    "raw_id": "ki_20260913_pr_lens_schema",
+    "title": "Strict Dual-Engine Schema Validation & Integrity Invariants",
+    "category": "memory_and_epistemics",
+    "in_degree": 1,
+    "tag_count": 6,
+    "tags": [
+      "architecture",
+      "schema_validation",
+      "zod",
+      "ajv",
+      "graph_integrity",
+      "pr_lens"
+    ],
+    "pointing_kis": [
+      "ki_20260913_pr_lens_overlay"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_20260913_pr_lens_overlay",
+        "predicate": "same_domain"
+      }
+    ],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 27
+  },
+  {
+    "id": "ki_self_20260828_02",
+    "raw_id": "ki_self_20260828_02",
+    "title": "Slotted Dataclass Memory & Invariant Architecture",
+    "category": "developer_experience",
+    "in_degree": 1,
+    "tag_count": 6,
+    "tags": [
+      "performance",
+      "python_craft",
+      "dataclass",
+      "memory_optimization",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [
+      "ki_self_20260826_04"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_self_20260826_04",
+        "predicate": "related_to"
+      }
+    ],
+    "isnad_count": 3,
+    "verified_isnad_count": 0,
+    "rank": 28
+  },
+  {
+    "id": "ki_self_20260831_01",
+    "raw_id": "ki_self_20260831_01",
+    "title": "Formal Social Choice Aggregation for Multi-Persona Agent Swarms",
+    "category": "agent_orchestration",
+    "in_degree": 1,
+    "tag_count": 6,
+    "tags": [
+      "swarm_orchestration",
+      "social_choice",
+      "borda_count",
+      "game_theory",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [
+      "ki_20260831_strategify_04"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_20260831_strategify_04",
+        "predicate": "same_domain"
+      }
+    ],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 29
+  },
+  {
+    "id": "ki_self_20260831_04",
+    "raw_id": "ki_self_20260831_04",
+    "title": "SubsystemRegistry Orchestration for High-Order Multi-Domain Harnesses",
+    "category": "agent_orchestration",
+    "in_degree": 1,
+    "tag_count": 6,
+    "tags": [
+      "architecture",
+      "subsystem_registry",
+      "lifecycle",
+      "dependency_injection",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [
+      "ki_20260831_strategify_01"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_20260831_strategify_01",
+        "predicate": "same_domain"
+      }
+    ],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 30
+  },
+  {
+    "id": "ki_self_20260914_05",
+    "raw_id": "ki_self_20260914_05",
+    "title": "Authoritative Swarm Thread DAG Lifecycle & Session State Keying",
+    "category": "agent_orchestration",
+    "in_degree": 1,
+    "tag_count": 6,
+    "tags": [
+      "endogenous_memory",
+      "agent_graph",
+      "swarm_dag",
+      "session_manager",
+      "rule_17",
+      "rule_36"
+    ],
+    "pointing_kis": [
+      "ki_self_20260829_02"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_self_20260829_02",
+        "predicate": "same_domain"
+      }
+    ],
+    "isnad_count": 3,
+    "verified_isnad_count": 0,
+    "rank": 31
+  },
+  {
+    "id": "ki_20260823_01",
+    "raw_id": "ki_20260823_01",
+    "title": "Subprocess Sandbox Boundary & Dynamic Plugin Isolation",
+    "category": "security_and_forensics",
+    "in_degree": 1,
+    "tag_count": 5,
+    "tags": [
+      "plugin_system",
+      "sandbox",
+      "subprocess_isolation",
+      "json_rpc",
+      "security"
+    ],
+    "pointing_kis": [
+      "ki_20260821_06"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_20260821_06",
+        "predicate": "same_domain"
+      }
+    ],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 32
+  },
+  {
+    "id": "ki_20260823_03",
+    "raw_id": "ki_20260823_03",
+    "title": "Windows PowerShell Command Delimiter Normalization",
+    "category": "infrastructure_and_runtime",
+    "in_degree": 1,
+    "tag_count": 5,
+    "tags": [
+      "cli",
+      "powershell",
+      "cross_platform",
+      "command_runner",
+      "windows"
+    ],
+    "pointing_kis": [
+      "ki_20260821_03"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_20260821_03",
+        "predicate": "same_domain"
+      }
+    ],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 33
+  },
+  {
+    "id": "ki_20260830_grok_04",
+    "raw_id": "ki_20260830_grok_04",
+    "title": "Two-Tier Guest Path Virtualization with Traversal Clipping",
+    "category": "security_and_forensics",
+    "in_degree": 1,
+    "tag_count": 5,
+    "tags": [
+      "workspace",
+      "path_virtualization",
+      "isolation",
+      "security",
+      "guest_mount"
+    ],
+    "pointing_kis": [
+      "ki_20260821_06"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_20260821_06",
+        "predicate": "same_domain"
+      }
+    ],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 34
+  },
+  {
+    "id": "ki_20260913_claude_coord_02",
+    "raw_id": "ki_20260913_claude_coord_02",
+    "title": "Hierarchical Sub-Agent Task Coordination & Lifecycle States",
+    "category": "agent_orchestration",
+    "in_degree": 1,
+    "tag_count": 5,
+    "tags": [
+      "architecture",
+      "agent_coordination",
+      "task_lifecycle",
+      "multi_agent",
+      "swarm"
+    ],
+    "pointing_kis": [
+      "ki_20260830_claude_02"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_20260830_claude_02",
+        "predicate": "same_domain"
+      }
+    ],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 35
+  },
+  {
+    "id": "ki_20260913_context_types_04",
+    "raw_id": "ki_20260913_context_types_04",
+    "title": "Context Item Typing & Evidence Boundary Invariants",
+    "category": "context_engineering",
+    "in_degree": 1,
+    "tag_count": 5,
+    "tags": [
+      "architecture",
+      "context_system",
+      "type_safety",
+      "prompt_engineering",
+      "invariants"
+    ],
+    "pointing_kis": [
+      "ki_20261028_headroom_context_optimization"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_20261028_headroom_context_optimization",
+        "predicate": "same_domain"
+      }
+    ],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 36
+  },
+  {
+    "id": "ki_20260913_memgraph_rag_05",
+    "raw_id": "ki_20260913_memgraph_rag_05",
+    "title": "Multi-Agent Memory Graph RAG with Temporal Decay",
+    "category": "memory_and_epistemics",
+    "in_degree": 1,
+    "tag_count": 5,
+    "tags": [
+      "memory",
+      "graph_rag",
+      "knowledge_graph",
+      "temporal_decay",
+      "epistemics"
+    ],
+    "pointing_kis": [
+      "ki_20260824_repo_01"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_20260824_repo_01",
+        "predicate": "same_domain"
+      }
+    ],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 37
+  },
+  {
+    "id": "ki_20261023_opencode_01",
+    "raw_id": "ki_20261023_opencode_01",
+    "title": "Unidirectional Layered Monorepo Architecture in AI Harnesses",
+    "category": "agent_orchestration",
+    "in_degree": 1,
+    "tag_count": 5,
+    "tags": [
+      "architecture",
+      "monorepo",
+      "layering",
+      "isolation",
+      "ai_harness"
+    ],
+    "pointing_kis": [
+      "ki_20260830_repo_01"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_20260830_repo_01",
+        "predicate": "same_domain"
+      }
+    ],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 38
+  },
+  {
+    "id": "ki_mindreader_20260911_01",
+    "raw_id": "ki_mindreader_20260911_01",
+    "title": "Dual-Store Autobiographical Memory Federation & Anti-Contention SQLite Protocol",
+    "category": "memory_and_epistemics/reflection",
+    "in_degree": 1,
+    "tag_count": 5,
+    "tags": [
+      "memory_architecture",
+      "sqlite",
+      "federation",
+      "anti_contention",
+      "reflection"
+    ],
+    "pointing_kis": [
+      "ki_auto_20260915_01"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_auto_20260915_01",
+        "predicate": "same_domain"
+      }
+    ],
+    "isnad_count": 2,
+    "verified_isnad_count": 0,
+    "rank": 39
+  },
+  {
+    "id": "ki_self_20260827_01",
+    "raw_id": "ki_self_20260827_01",
+    "title": "Deterministic Pre-LLM Context Optimization",
+    "category": "agent_orchestration",
+    "in_degree": 1,
+    "tag_count": 5,
+    "tags": [
+      "optimization",
+      "performance",
+      "context_compiler",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [
+      "ki_self_20260826_04"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_self_20260826_04",
+        "predicate": "related_to"
+      }
+    ],
+    "isnad_count": 3,
+    "verified_isnad_count": 0,
+    "rank": 40
+  },
+  {
+    "id": "ki_self_20260830_01",
+    "raw_id": "ki_self_20260830_01",
+    "title": "Non-Invasive Scoped Metadata Annotations vs. Core Kernel Mutability",
+    "category": "agent_orchestration",
+    "in_degree": 1,
+    "tag_count": 5,
+    "tags": [
+      "ioc_container",
+      "service_context",
+      "di_scopes",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [
+      "ki_20260830_kimi_01"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_20260830_kimi_01",
+        "predicate": "same_domain"
+      }
+    ],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 41
+  },
+  {
+    "id": "ki_self_20260901_scratch_03",
+    "raw_id": "ki_self_20260901_scratch_03",
+    "title": "PowerShell UTF-16 Stream Redirection Traps & Fixes",
+    "category": "infrastructure_and_runtime",
+    "in_degree": 1,
+    "tag_count": 5,
+    "tags": [
+      "platform_isolation",
+      "windows_powershell",
+      "stream_codecs",
+      "utf16_bom_trap",
+      "scratch_distillation"
+    ],
+    "pointing_kis": [
+      "ki_self_20260901_02"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_self_20260901_02",
+        "predicate": "same_domain"
+      }
+    ],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 42
+  },
+  {
+    "id": "ki_self_20260914_01",
+    "raw_id": "ki_self_20260914_01",
+    "title": "Skill-to-IoC Micro-Kernel Seam Elevation Lifecycle",
+    "category": "developer_experience/architecture",
+    "in_degree": 1,
+    "tag_count": 5,
+    "tags": [
+      "endogenous_memory",
+      "architecture_deepening",
+      "ioc_service_key",
+      "plugin_singleton",
+      "rule_49"
+    ],
+    "pointing_kis": [
+      "ki_self_20260911_01"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_self_20260911_01",
+        "predicate": "same_domain"
+      }
+    ],
+    "isnad_count": 2,
+    "verified_isnad_count": 0,
+    "rank": 43
+  },
+  {
+    "id": "ki_self_20261114_08_rule44_backfill_and_deep_auditor_ioc_elevation",
+    "raw_id": "ki_self_20261114_08_rule44_backfill_and_deep_auditor_ioc_elevation",
+    "title": "Rule 44 Zero-Fork Configuration Backfill and Deep Repo Auditor IoC Kernel Elevation",
+    "category": "architecture",
+    "in_degree": 1,
+    "tag_count": 5,
+    "tags": [
+      "architecture",
+      "rule44",
+      "rule49",
+      "deep_auditor",
+      "ioc"
+    ],
+    "pointing_kis": [
+      "ki_self_20260907_01"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_self_20260907_01",
+        "predicate": "same_domain"
+      }
+    ],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 44
+  },
+  {
+    "id": "ki_deepselect_denormal_fp32",
+    "raw_id": "ki_deepselect_denormal_fp32",
+    "title": "Denormal IEEE-754 FP32 Simulated Addition Bypassing CUDA Core ALU Contention",
+    "category": "scientific_computing",
+    "in_degree": 1,
+    "tag_count": 4,
+    "tags": [
+      "cuda",
+      "ptx",
+      "hardware_optimization",
+      "alu_throughput"
+    ],
+    "pointing_kis": [
+      "ki_deepselect_bitmask_filtering"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_deepselect_bitmask_filtering",
+        "predicate": "same_domain"
+      }
+    ],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 45
+  },
+  {
+    "id": "ki_self_20260826_02",
+    "raw_id": "ki_self_20260826_02",
+    "title": "Lazy Subprocess Staging for Sandboxed External Plugins",
+    "category": "agent_orchestration",
+    "in_degree": 1,
+    "tag_count": 3,
+    "tags": [
+      "architecture",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [
+      "ki_self_20260826_01"
+    ],
+    "incoming_edges": [
+      {
+        "subject": "ki_self_20260826_01",
+        "predicate": "related_to"
+      }
+    ],
+    "isnad_count": 2,
+    "verified_isnad_count": 0,
+    "rank": 46
+  },
+  {
+    "id": "ki_20260922_gis_geography_open_source",
+    "raw_id": "ki_20260922_gis_geography_open_source",
+    "title": "Open-Source GIS Architecture & Multicriteria Software Benchmarking",
+    "category": "data_engineering",
+    "in_degree": 0,
+    "tag_count": 19,
+    "tags": [
+      "gis",
+      "geospatial",
+      "qgis",
+      "grass_gis",
+      "whitebox",
+      "saga_gis",
+      "geoda",
+      "mapwindow",
+      "gvsig",
+      "ilwis",
+      "lidar",
+      "dem",
+      "topology",
+      "spatial_statistics",
+      "hydrology",
+      "remote_sensing",
+      "field_survey",
+      "biodiversity",
+      "defense_restricted"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 8,
+    "verified_isnad_count": 0,
+    "rank": 47
+  },
+  {
+    "id": "ki_20261024_icm_architect",
+    "raw_id": "ki_20261024_icm_architect",
+    "title": "Interpretable Context Methodology (ICM): Folder Structure as Agent Architecture, Five-Layer Hierarchy, Three Primitives, and Verified Stage Checks",
+    "category": "context_engineering/architecture",
+    "in_degree": 0,
+    "tag_count": 16,
+    "tags": [
+      "interpretable_context_methodology",
+      "icm_architecture",
+      "folder_structure_as_agent_architecture",
+      "five_layer_context_hierarchy",
+      "three_primitives",
+      "five_forms",
+      "pipeline_production_line",
+      "record_library",
+      "knowledge_bundle",
+      "context_map",
+      "system_map",
+      "cold_walk_test",
+      "token_bounding",
+      "auditable_stage_checks",
+      "placeholder_syntax",
+      "production_workspaces"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 6,
+    "verified_isnad_count": 0,
+    "rank": 48
+  },
+  {
+    "id": "ki_oliinyk_geospatial_disaster_simulation",
+    "raw_id": "ki_oliinyk_geospatial_disaster_simulation",
+    "title": "Geospatial Disaster Simulation on Real Maps: Tile-Aligned Canvas Draping, Elevation Inundation, Three.js Shared WebGL Context, and Feature-State Building Collapse Physics",
+    "category": "scientific_computing/geospatial",
+    "in_degree": 0,
+    "tag_count": 15,
+    "tags": [
+      "geospatial_simulation",
+      "mapbox_gl_js",
+      "maplibre_gl",
+      "threejs",
+      "web_mercator",
+      "terrarium_elevation",
+      "terrain_rgb",
+      "canvas_raster_source",
+      "fill_extrusion",
+      "feature_state",
+      "promote_id",
+      "instanced_mesh",
+      "seismic_fragility",
+      "rigid_body_physics",
+      "container_shake"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 7,
+    "verified_isnad_count": 0,
+    "rank": 49
+  },
+  {
+    "id": "ki_icm_fifteen_conventions",
+    "raw_id": "ki_icm_fifteen_conventions",
+    "title": "The 15 MWP/ICM Workspace Architecture Conventions: Stage Contracts, Output Handoffs, One-Way Dependencies, Checkpoints, and Stage Audits",
+    "category": "context_engineering/architecture",
+    "in_degree": 0,
+    "tag_count": 13,
+    "tags": [
+      "interpretable_context_methodology",
+      "fifteen_conventions",
+      "stage_contracts",
+      "stage_handoffs",
+      "one_way_references",
+      "selective_section_routing",
+      "canonical_sources",
+      "specs_as_contracts",
+      "checkpoints",
+      "stage_audits",
+      "value_validation",
+      "docs_over_outputs",
+      "shared_constants"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 4,
+    "verified_isnad_count": 0,
+    "rank": 50
+  },
+  {
+    "id": "ki_vudathala_agentic_reliability_harness",
+    "raw_id": "ki_vudathala_agentic_reliability_harness",
+    "title": "Agentic AI Reliability Testing Harness: Asymmetric Trust Boundaries, Five Structural Evaluation Levels, PEP Gateways, Behavioral Invariants, and Three-State Release Gates",
+    "category": "developer_experience/architecture",
+    "in_degree": 0,
+    "tag_count": 13,
+    "tags": [
+      "agentic_ai_reliability",
+      "testing_harness",
+      "asymmetric_trust_boundary",
+      "policy_enforcement_point",
+      "five_evaluation_levels",
+      "six_evaluation_activities",
+      "outcome_correctness",
+      "loop_detection",
+      "chaos_fault_injection",
+      "three_state_release_gate",
+      "rule_of_three",
+      "wilson_score_interval",
+      "write_idempotence"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 5,
+    "verified_isnad_count": 0,
+    "rank": 51
+  },
+  {
+    "id": "ki_20260908_earthengine_01",
+    "raw_id": "ki_20260908_earthengine_01",
+    "title": "Google Earth Engine Planetary Geospatial Processing & Domain Partitioning Architecture",
+    "category": "infrastructure_and_runtime",
+    "in_degree": 0,
+    "tag_count": 12,
+    "tags": [
+      "earth_engine",
+      "geospatial",
+      "remote_sensing",
+      "sentinel2",
+      "landsat",
+      "ndvi",
+      "spectral_index",
+      "zonal_statistics",
+      "terrain_analysis",
+      "dem",
+      "repo_bridge",
+      "subprocess_isolation"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 3,
+    "verified_isnad_count": 0,
+    "rank": 52
+  },
+  {
+    "id": "ki_20260923_ethical_hacker_networking",
+    "raw_id": "ki_20260923_ethical_hacker_networking",
+    "title": "Practical Networking for Ethical Hacking: Protocol Encapsulation, Tri-State Recon, and 7-Layer Fault Isolation",
+    "category": "security_and_forensics",
+    "in_degree": 0,
+    "tag_count": 12,
+    "tags": [
+      "networking",
+      "ethical_hacking",
+      "traceroute",
+      "tcp",
+      "wireshark",
+      "nmap",
+      "subnetting",
+      "ipv6",
+      "firewall",
+      "dns",
+      "fault_isolation",
+      "osi_model"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 6,
+    "verified_isnad_count": 0,
+    "rank": 53
+  },
+  {
+    "id": "ki_20261028_headroom_context_optimization",
+    "raw_id": "ki_20261028_headroom_context_optimization",
+    "title": "Headroom Context Optimization Layer: Content Routing, SmartCrusher, Cross-Context Retrieval (CCR), and Detector-Only Cache Alignment",
+    "category": "memory_and_epistemics",
+    "in_degree": 0,
+    "tag_count": 11,
+    "tags": [
+      "context_optimization",
+      "token_budgeting",
+      "content_router",
+      "smart_crusher",
+      "cross_context_retrieval",
+      "ccr_markers",
+      "cache_alignment",
+      "prompt_cache_hotzone",
+      "thinking_compactor",
+      "lossless_vs_lossy_compaction",
+      "structural_parsers"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 4,
+    "verified_isnad_count": 0,
+    "rank": 54
+  },
+  {
+    "id": "ki_koos_typescript_harness_from_scratch",
+    "raw_id": "ki_koos_typescript_harness_from_scratch",
+    "title": "Zero-Dependency AI Agent Harness Construction in TypeScript: Provider-Agnostic Loops, Workspace Jailing, Atomic Batch Budgets, and Seeded Failure Testing",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 11,
+    "tags": [
+      "typescript",
+      "agent_harness",
+      "react_loop",
+      "workspace_confinement",
+      "ancestor_lstat_walk",
+      "atomic_batch_budget",
+      "context_windowing",
+      "scripted_model",
+      "prng_failure_testing",
+      "observer_isolation",
+      "provider_adapter"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 7,
+    "verified_isnad_count": 0,
+    "rank": 55
+  },
+  {
+    "id": "ki_self_20260917_02",
+    "raw_id": "ki_self_20260917_02",
+    "title": "Three-Layer LLM Evaluation Architecture, Golden Regression Suites, and Paired T-Test Significance Gating",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 10,
+    "tags": [
+      "llm_evaluation",
+      "deterministic_guardrails",
+      "llm_as_judge",
+      "rubric_anchoring",
+      "human_in_the_loop",
+      "cohens_kappa",
+      "regression_testing",
+      "golden_datasets",
+      "paired_t_test",
+      "statistical_significance"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 3,
+    "verified_isnad_count": 0,
+    "rank": 56
+  },
+  {
+    "id": "ki_self_20260917_04",
+    "raw_id": "ki_self_20260917_04",
+    "title": "Gradio Production Architecture: Decoupled Logic, Session State Isolation, Multimodal Pipelines, and Hugging Face Deployment",
+    "category": "developer_experience/ui",
+    "in_degree": 0,
+    "tag_count": 10,
+    "tags": [
+      "gradio",
+      "web_interfaces",
+      "ai_applications",
+      "state_management",
+      "blocks_layout",
+      "chatinterface",
+      "multimodal_pipelines",
+      "streaming_inference",
+      "production_deployment",
+      "huggingface_spaces"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 4,
+    "verified_isnad_count": 0,
+    "rank": 57
+  },
+  {
+    "id": "ki_self_20261019_six_vector_expansion_synthesis",
+    "raw_id": "ki_self_20261019_six_vector_expansion_synthesis",
+    "title": "Six-Vector Brain Harness Expansion Synthesis: Architectural Seams, Invariants, and Zero-Regression Governance",
+    "category": "developer_experience/architecture",
+    "in_degree": 0,
+    "tag_count": 10,
+    "tags": [
+      "architecture_synthesis",
+      "six_vectors",
+      "ebbinghaus_decay",
+      "prompt_pruning",
+      "pyrit_redteam",
+      "hyperframes_multimedia",
+      "prometheus_exporter",
+      "gods_eye_view",
+      "barrel_partitioning",
+      "zero_regression"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 3,
+    "verified_isnad_count": 0,
+    "rank": 58
+  },
+  {
+    "id": "ki_20260908_magika_01",
+    "raw_id": "ki_20260908_magika_01",
+    "title": "Google Magika Deep Learning Content Type & MIME Detection Architecture",
+    "category": "developer_experience",
+    "in_degree": 0,
+    "tag_count": 9,
+    "tags": [
+      "deep_learning",
+      "file_identification",
+      "mime_detection",
+      "format_forensics",
+      "polyglot_detection",
+      "extension_spoofing",
+      "onnx_runtime",
+      "google_magika",
+      "repo_bridge"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 3,
+    "verified_isnad_count": 0,
+    "rank": 59
+  },
+  {
+    "id": "ki_20260908_mantis_01",
+    "raw_id": "ki_20260908_mantis_01",
+    "title": "Google Mantis Decoupled Security Review Pipeline & Sandboxed Crash Verification",
+    "category": "security_and_forensics",
+    "in_degree": 0,
+    "tag_count": 9,
+    "tags": [
+      "security_audit",
+      "vulnerability_research",
+      "crash_reproduction",
+      "exploit_chaining",
+      "sandbox_isolation",
+      "okf",
+      "ast_indexing",
+      "google_mantis",
+      "repo_bridge"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 3,
+    "verified_isnad_count": 0,
+    "rank": 60
+  },
+  {
+    "id": "ki_empirical_harness_calibration",
+    "raw_id": "ki-empirical-harness-calibration",
+    "title": "An Empirical Study of Harness Design for Coding Agents",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 9,
+    "tags": [
+      "coding_agent_harness",
+      "empirical_ablation",
+      "staged_context_management",
+      "planning_scaffold",
+      "action_space_specialization",
+      "swe_bench_verified",
+      "terminal_bench",
+      "stuck_detection",
+      "dead_machinery_deprecation"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 5,
+    "verified_isnad_count": 0,
+    "rank": 61
+  },
+  {
+    "id": "ki_hira_python_system_design_diagrams",
+    "raw_id": "ki_hira_python_system_design_diagrams",
+    "title": "Diagram-as-Code for Cloud Architecture: Provider Node Hierarchies, Context Canvases, Fan-Out Grouping, Nested Clusters, and Typed Edge Protocols",
+    "category": "developer_experience/architecture",
+    "in_degree": 0,
+    "tag_count": 9,
+    "tags": [
+      "diagrams_as_code",
+      "system_design",
+      "cloud_architecture",
+      "graphviz",
+      "mingrammer_diagrams",
+      "cluster_hierarchy",
+      "fan_out_grouping",
+      "typed_edges",
+      "headless_ci"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 5,
+    "verified_isnad_count": 0,
+    "rank": 62
+  },
+  {
+    "id": "ki_self_20260910_01",
+    "raw_id": "ki_self_20260910_01",
+    "title": "Markdown AST Codeblock Stripping & Skill Link Portability Invariant",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 9,
+    "tags": [
+      "markdown",
+      "ast",
+      "linter",
+      "portability",
+      "relative_links",
+      "codeblocks",
+      "invariant",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 63
+  },
+  {
+    "id": "ki_self_20260910_02",
+    "raw_id": "ki_self_20260910_02",
+    "title": "Dual-Tier Skill Prompt Budgeting & Zero-Fork Configuration Governance",
+    "category": "context_engineering",
+    "in_degree": 0,
+    "tag_count": 9,
+    "tags": [
+      "prompt_budget",
+      "zero_fork",
+      "config",
+      "token_optimization",
+      "google_evals",
+      "sdlc",
+      "invariant",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 64
+  },
+  {
+    "id": "ki_self_20260917_03",
+    "raw_id": "ki_self_20260917_03",
+    "title": "Deterministic Validation Loops, 3-Tier Spec Validation, and Exact Error Feedback in AI Agent Architectures",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 9,
+    "tags": [
+      "deterministic_validation",
+      "llm_reflection_failure",
+      "structured_output",
+      "json_schema",
+      "langgraph",
+      "cross_field_rules",
+      "error_feedback_injection",
+      "bounded_retries",
+      "spec_first_design"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 4,
+    "verified_isnad_count": 0,
+    "rank": 65
+  },
+  {
+    "id": "ki_self_20260924_03",
+    "raw_id": "ki_self_20260924_03",
+    "title": "Bounded ReAct Context Accumulator Rotation, Interceptor Epoch Invalidation, and AST Codeblock Anti-Pattern Interception",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 9,
+    "tags": [
+      "agent_orchestration",
+      "react",
+      "kernel",
+      "dispose_stack",
+      "interceptors",
+      "ast_analysis",
+      "anti_patterns",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 4,
+    "verified_isnad_count": 0,
+    "rank": 66
+  },
+  {
+    "id": "ki_self_20261019_hyperframes_video_01",
+    "raw_id": "ki_self_20261019_hyperframes_video_01",
+    "title": "Programmatic Motion Graphics Rendering via Node.js Subprocess JSON-RPC and Slotted Models",
+    "category": "developer_experience/tooling",
+    "in_degree": 0,
+    "tag_count": 9,
+    "tags": [
+      "hyperframes",
+      "multimedia",
+      "video_rendering",
+      "json_rpc",
+      "subprocess_bridge",
+      "gsap",
+      "rule_12",
+      "rule_14",
+      "rule_56"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 2,
+    "verified_isnad_count": 0,
+    "rank": 67
+  },
+  {
+    "id": "ki_system_design_architect",
+    "raw_id": "ki_system_design_architect",
+    "title": "Senior Software System Design: The 5-Step Architecture Progression, 5-Dimension Evaluation Matrix, and Distributed Production Case Studies",
+    "category": "developer_experience/architecture",
+    "in_degree": 0,
+    "tag_count": 9,
+    "tags": [
+      "system_design",
+      "distributed_systems",
+      "architecture_interview",
+      "capacity_estimation",
+      "concurrency_control",
+      "case_studies",
+      "spotify",
+      "booking_com",
+      "whatsapp"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 5,
+    "verified_isnad_count": 0,
+    "rank": 68
+  },
+  {
+    "id": "ki_umairmirza_precommit_security",
+    "raw_id": "ki_umairmirza_precommit_security",
+    "title": "Shift-Left Pre-Commit Security: Multi-Engine Division of Labor, Synthetic Failure Smoke Gates, and Dual-Gate CI Parity",
+    "category": "security_and_forensics",
+    "in_degree": 0,
+    "tag_count": 9,
+    "tags": [
+      "shift_left",
+      "pre_commit",
+      "sast",
+      "devskim",
+      "gitleaks",
+      "secret_scanning",
+      "dual_gate_ci",
+      "synthetic_smoke_testing",
+      "suppression_hygiene"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 4,
+    "verified_isnad_count": 0,
+    "rank": 69
+  },
+  {
+    "id": "ki_20260831_cellcog_01",
+    "raw_id": "ki_20260831_cellcog_01",
+    "title": "Zero-Footprint Asynchronous Daemon & WebSocket-to-Polling State Machine",
+    "category": "developer_experience",
+    "in_degree": 0,
+    "tag_count": 8,
+    "tags": [
+      "daemon",
+      "asyncio",
+      "websocket",
+      "fallback_polling",
+      "process_lifecycle",
+      "zero_footprint",
+      "cellcog",
+      "repo_introspection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 70
+  },
+  {
     "id": "ki_google_agent_skills_enterprise_evals",
     "raw_id": "ki_google_agent_skills_enterprise_evals",
     "title": "Google Enterprise Agent Skills: Continuous Evals & Product Governance",
@@ -20,7 +2024,30 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 1
+    "rank": 71
+  },
+  {
+    "id": "ki_harnesscompass_evolution",
+    "raw_id": "ki-harnesscompass-evolution",
+    "title": "HarnessCompass: Guiding Automatic Harness Evolution toward Generalizable and Effective Agent Harnesses",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 8,
+    "tags": [
+      "harness_compass",
+      "automatic_harness_evolution",
+      "generalization_gate",
+      "proactive_feedback",
+      "component_wise_optimization",
+      "r3_integration",
+      "swe_bench_verified",
+      "overfitting_defense"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 5,
+    "verified_isnad_count": 0,
+    "rank": 72
   },
   {
     "id": "ki_self_20260905_08",
@@ -43,7 +2070,122 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 2
+    "rank": 73
+  },
+  {
+    "id": "ki_self_20260909_01",
+    "raw_id": "ki_self_20260909_01",
+    "title": "Authoritative Critic Seam Consolidation & Adapter Pattern",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 8,
+    "tags": [
+      "architecture",
+      "plugins",
+      "seams",
+      "critic",
+      "evaluation",
+      "adapter_pattern",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 74
+  },
+  {
+    "id": "ki_self_20260909_02",
+    "raw_id": "ki_self_20260909_02",
+    "title": "External Ingestion Workspace Scope Boundary & Non-Workspace Shell Fallback",
+    "category": "security_and_forensics",
+    "in_degree": 0,
+    "tag_count": 8,
+    "tags": [
+      "ingestion",
+      "security_boundary",
+      "sandbox",
+      "ide_tools",
+      "shell_fallback",
+      "powershell",
+      "invariant",
+      "endogenous_memory"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 75
+  },
+  {
+    "id": "ki_self_20260922_01",
+    "raw_id": "ki_self_20260922_01",
+    "title": "Subprocess Stderr Drainage, Ring Buffers, and Crash Visibility in Sandboxed Transports",
+    "category": "security_and_forensics/sandboxing",
+    "in_degree": 0,
+    "tag_count": 8,
+    "tags": [
+      "security_and_sandboxing",
+      "subprocess",
+      "json_rpc",
+      "transport",
+      "stderr_drain",
+      "ring_buffer",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 2,
+    "verified_isnad_count": 0,
+    "rank": 76
+  },
+  {
+    "id": "ki_self_20260922_03",
+    "raw_id": "ki_self_20260922_03",
+    "title": "Strict Directed Graph Reachability & YAML Frontmatter Precedence in Skill Knowledge Graphs",
+    "category": "agent_orchestration/skills",
+    "in_degree": 0,
+    "tag_count": 8,
+    "tags": [
+      "skill_graph_and_routing",
+      "skill_graph",
+      "knowledge_graph",
+      "reachability",
+      "frontmatter_dependencies",
+      "routing",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 2,
+    "verified_isnad_count": 0,
+    "rank": 77
+  },
+  {
+    "id": "ki_self_20260924_02",
+    "raw_id": "ki_self_20260924_02",
+    "title": "Dual-Silo CLI Consolidation, Slotted Domain Engine Architecture, and IoC Service Elevation (discovery-index-scout)",
+    "category": "data_engineering",
+    "in_degree": 0,
+    "tag_count": 8,
+    "tags": [
+      "data_engineering",
+      "architecture",
+      "ioc",
+      "slotted_models",
+      "micro_kernel",
+      "plugin_elevation",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 3,
+    "verified_isnad_count": 0,
+    "rank": 78
   },
   {
     "id": "ki_solla_contract_first_medallion_lakehouse",
@@ -66,7 +2208,161 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 3
+    "rank": 79
+  },
+  {
+    "id": "ki_20260824_repo_02",
+    "raw_id": "ki_20260824_repo_02",
+    "title": "Tri-brid Search Fusion with Balanced Merge for Knowledge Graphs",
+    "category": "memory_and_epistemics",
+    "in_degree": 0,
+    "tag_count": 7,
+    "tags": [
+      "search",
+      "hybrid_search",
+      "cross_encoder",
+      "reranking",
+      "balanced_merge",
+      "bm25",
+      "vector_search"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 80
+  },
+  {
+    "id": "ki_20260831_em3_02",
+    "raw_id": "ki_20260831_em3_02",
+    "title": "Zero-Copy Polyglot Memory Substrate via PyArrow IPC Streams",
+    "category": "memory_and_epistemics",
+    "in_degree": 0,
+    "tag_count": 7,
+    "tags": [
+      "pyarrow",
+      "zero_copy",
+      "shared_memory",
+      "polyglot_execution",
+      "ipc",
+      "em_cubed",
+      "repo_introspection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 81
+  },
+  {
+    "id": "ki_20260831_strategify_03",
+    "raw_id": "ki_20260831_strategify_03",
+    "title": "Multilateral Alliance Hypergraph & Defense Treaty Modeling",
+    "category": "developer_experience",
+    "in_degree": 0,
+    "tag_count": 7,
+    "tags": [
+      "hypergraph",
+      "alliances",
+      "treaties",
+      "jaccard_similarity",
+      "gexf",
+      "em_cubed",
+      "strategify"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 82
+  },
+  {
+    "id": "ki_20260831_strategify_06",
+    "raw_id": "ki_20260831_strategify_06",
+    "title": "Epidemiology MCP Bridge & ODE Parameter Fitting Pipeline",
+    "category": "infrastructure_and_runtime",
+    "in_degree": 0,
+    "tag_count": 7,
+    "tags": [
+      "mcp",
+      "epidemiology",
+      "cdc_soda",
+      "nih_reporter",
+      "rxnorm",
+      "ode_fitting",
+      "strategify"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 83
+  },
+  {
+    "id": "ki_20260831_strategify_07",
+    "raw_id": "ki_20260831_strategify_07",
+    "title": "Cross-Language Neuro-Symbolic Logic Bridges (SWI-Prolog & Clojure MCTS)",
+    "category": "memory_and_epistemics",
+    "in_degree": 0,
+    "tag_count": 7,
+    "tags": [
+      "prolog",
+      "pyswip",
+      "clojure",
+      "mcts",
+      "neuro_symbolic",
+      "epistemology",
+      "strategify"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 84
+  },
+  {
+    "id": "ki_20261010_gev_offline_spatial_infrastructure_ingestion",
+    "raw_id": "ki_20261010_gev_offline_spatial_infrastructure_ingestion",
+    "title": "Offline Critical Infrastructure Multi-Source Spatial Indexing Engine",
+    "category": "scientific_computing/geospatial",
+    "in_degree": 0,
+    "tag_count": 7,
+    "tags": [
+      "geospatial",
+      "critical_infrastructure",
+      "spatial_hash_grid",
+      "geojsonl",
+      "submarine_cables",
+      "datacenters",
+      "defense_installations"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 2,
+    "verified_isnad_count": 0,
+    "rank": 85
+  },
+  {
+    "id": "ki_20261010_gev_wasm_eccodes_wind_decoding",
+    "raw_id": "ki_20261010_gev_wasm_eccodes_wind_decoding",
+    "title": "Zero-Copy WebAssembly GRIB Meteorological Grid Decoding via eccodes-wasm",
+    "category": "scientific_computing/geospatial",
+    "in_degree": 0,
+    "tag_count": 7,
+    "tags": [
+      "meteorology",
+      "webassembly",
+      "eccodes",
+      "grib2",
+      "wind_grids",
+      "weather",
+      "performance"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 86
   },
   {
     "id": "ki_agent_skills_runtime_security_middleware",
@@ -88,7 +2384,73 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 4
+    "rank": 87
+  },
+  {
+    "id": "ki_egm_antagonistic_review_pipeline",
+    "raw_id": "ki_egm_antagonistic_review_pipeline",
+    "title": "5-Stage Antagonistic Review Pipeline with Synthesizer Fan-Out/Fan-In and In-Thread Remediation",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 7,
+    "tags": [
+      "antagonistic_review",
+      "synthesizer_fanout_fanin",
+      "five_stage_pipeline",
+      "comprehension_test",
+      "zoom_out_simplicity",
+      "implementation_readiness",
+      "in_thread_remediation"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 3,
+    "verified_isnad_count": 0,
+    "rank": 88
+  },
+  {
+    "id": "ki_egm_artifact_first_sdd_protocol",
+    "raw_id": "ki_egm_artifact_first_sdd_protocol",
+    "title": "Artifact-First Spec-Driven Development (SDD) & Altitude Boundary Protocol: Chat Dump Prohibition and Semantic Range Isolation",
+    "category": "software_engineering",
+    "in_degree": 0,
+    "tag_count": 7,
+    "tags": [
+      "spec_driven_development",
+      "artifact_first_ux",
+      "chat_dump_prohibition",
+      "semantic_boundary_isolation",
+      "altitude_control",
+      "anti_weeds",
+      "yagni_enforcement"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 3,
+    "verified_isnad_count": 0,
+    "rank": 89
+  },
+  {
+    "id": "ki_egm_bifurcated_context_architecture",
+    "raw_id": "ki_egm_bifurcated_context_architecture",
+    "title": "Elephant & Goldfish Bifurcated Cognitive Context Architecture: Asymmetric Memory Partitioning, Zero-Context Subagents, and Hallucination Suppression",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 7,
+    "tags": [
+      "elephant_goldfish_model",
+      "bifurcated_context",
+      "zero_context_subagent",
+      "hallucination_suppression",
+      "spec_driven_development",
+      "confirmation_bias_elimination",
+      "context_pollution_mitigation"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 3,
+    "verified_isnad_count": 0,
+    "rank": 90
   },
   {
     "id": "ki_hf_autoresearch_multi_worker_lab",
@@ -110,7 +2472,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 5
+    "rank": 91
   },
   {
     "id": "ki_hf_fastmcp_dynamic_tool_protocol",
@@ -132,7 +2494,95 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 6
+    "rank": 92
+  },
+  {
+    "id": "ki_icm_placeholder_templating_engine",
+    "raw_id": "ki_icm_placeholder_templating_engine",
+    "title": "ICM Factory-Configuration Templating: Double-Brace Placeholders, Whole-Section Conditionals, and Questionnaire Onboarding",
+    "category": "context_engineering/templates",
+    "in_degree": 0,
+    "tag_count": 7,
+    "tags": [
+      "icm_templating",
+      "placeholder_syntax",
+      "screaming_snake_case",
+      "conditional_sections",
+      "factory_not_product",
+      "onboarding_questionnaire",
+      "whole_section_boundary"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 3,
+    "verified_isnad_count": 0,
+    "rank": 93
+  },
+  {
+    "id": "ki_icm_workspace_builder_metapipeline",
+    "raw_id": "ki_icm_workspace_builder_metapipeline",
+    "title": "ICM Workspace-Builder: Self-Hosting 5-Stage Meta-Pipeline for Autonomous Agent Workspace Synthesis and Cold Walk Validation",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 7,
+    "tags": [
+      "workspace_builder",
+      "self_hosting_pipeline",
+      "metapipeline",
+      "cold_walk_test",
+      "five_stage_synthesis",
+      "questionnaire_design",
+      "guardrail_verification"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 3,
+    "verified_isnad_count": 0,
+    "rank": 94
+  },
+  {
+    "id": "ki_okf_agent_memory_v02",
+    "raw_id": "ki_okf_agent_memory_v02",
+    "title": "Open Knowledge Framework (OKF v0.2): Git-Native Agent Memory, BM25 Scoping, and Trust Ordering",
+    "category": "memory_and_epistemics",
+    "in_degree": 0,
+    "tag_count": 7,
+    "tags": [
+      "architecture",
+      "memory",
+      "okf",
+      "governance",
+      "bm25",
+      "mcp",
+      "git-native"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 5,
+    "verified_isnad_count": 0,
+    "rank": 95
+  },
+  {
+    "id": "ki_self_20260901_03",
+    "raw_id": "ki_self_20260901_03",
+    "title": "Stateless MCP Scientific Bridge Isolation",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 7,
+    "tags": [
+      "plugin_seams",
+      "mcp_2026_07_28",
+      "scientific_bridges",
+      "json_schema",
+      "stateless_tools",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 96
   },
   {
     "id": "ki_self_20260904_scratch_01",
@@ -154,7 +2604,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 7
+    "rank": 97
   },
   {
     "id": "ki_self_20260907_01",
@@ -176,7 +2626,7 @@
     "incoming_edges": [],
     "isnad_count": 1,
     "verified_isnad_count": 0,
-    "rank": 8
+    "rank": 98
   },
   {
     "id": "ki_self_20260907_04",
@@ -198,7 +2648,920 @@
     "incoming_edges": [],
     "isnad_count": 1,
     "verified_isnad_count": 0,
-    "rank": 9
+    "rank": 99
+  },
+  {
+    "id": "ki_self_20260909_03",
+    "raw_id": "ki_self_20260909_03",
+    "title": "Plugin Module Singleton & IoC Container Dynamic Loader Invariant",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 7,
+    "tags": [
+      "ioc_container",
+      "plugin_loader",
+      "singleton",
+      "lifecycle",
+      "invariant",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 100
+  },
+  {
+    "id": "ki_self_20260914_06",
+    "raw_id": "ki_self_20260914_06",
+    "title": "Micro-Kernel ServiceContext Typed Key Provider Contract & Singleton Export",
+    "category": "infrastructure_and_runtime/kernel",
+    "in_degree": 0,
+    "tag_count": 7,
+    "tags": [
+      "endogenous_memory",
+      "ioc_kernel",
+      "service_key",
+      "plugin_singleton",
+      "rule_1",
+      "rule_2",
+      "rule_45"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 3,
+    "verified_isnad_count": 0,
+    "rank": 101
+  },
+  {
+    "id": "ki_self_20260922_02",
+    "raw_id": "ki_self_20260922_02",
+    "title": "IoC Dispose Stack Inverse Accumulator Synchronization & Lifecycle Epoch Caching",
+    "category": "infrastructure_and_runtime/kernel",
+    "in_degree": 0,
+    "tag_count": 7,
+    "tags": [
+      "kernel_and_ioc",
+      "service_context",
+      "dispose_stack",
+      "lifecycle",
+      "epoch_cache",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 2,
+    "verified_isnad_count": 0,
+    "rank": 102
+  },
+  {
+    "id": "ki_self_20261109_01_bounded_bfs_explanation_provenance",
+    "raw_id": "ki_self_20261109_01_bounded_bfs_explanation_provenance",
+    "title": "Bounded BFS Explanation Provenance",
+    "category": "data_structures",
+    "in_degree": 0,
+    "tag_count": 7,
+    "tags": [
+      "data_structures",
+      "graph_algorithms",
+      "bfs_explanation",
+      "memory_bounding",
+      "oom_prevention",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 2,
+    "verified_isnad_count": 0,
+    "rank": 103
+  },
+  {
+    "id": "ki_self_20261109_03_coarse_os_timer_resolution_bifurcation",
+    "raw_id": "ki_self_20261109_03_coarse_os_timer_resolution_bifurcation",
+    "title": "Coarse OS Timer Resolution Bifurcation",
+    "category": "testing",
+    "in_degree": 0,
+    "tag_count": 7,
+    "tags": [
+      "testing",
+      "virtualization",
+      "timer_resolution",
+      "flaky_tests",
+      "clock_mocking",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 2,
+    "verified_isnad_count": 0,
+    "rank": 104
+  },
+  {
+    "id": "ki_self_20261109_04_noisy_neighbor_benchmark_budget_calibration",
+    "raw_id": "ki_self_20261109_04_noisy_neighbor_benchmark_budget_calibration",
+    "title": "Noisy Neighbor Benchmark Budget Calibration",
+    "category": "performance",
+    "in_degree": 0,
+    "tag_count": 7,
+    "tags": [
+      "performance",
+      "benchmarking",
+      "ci_budgets",
+      "noisy_neighbors",
+      "hardware_baselines",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 2,
+    "verified_isnad_count": 0,
+    "rank": 105
+  },
+  {
+    "id": "ki_self_20261109_05_non_atomic_plan_execution_honesty_gate",
+    "raw_id": "ki_self_20261109_05_non_atomic_plan_execution_honesty_gate",
+    "title": "Non-Atomic Plan/Execution Honesty Gate",
+    "category": "governance",
+    "in_degree": 0,
+    "tag_count": 7,
+    "tags": [
+      "governance",
+      "agentic_alignment",
+      "honesty_gate",
+      "plan_execution",
+      "adversarial_verification",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 2,
+    "verified_isnad_count": 0,
+    "rank": 106
+  },
+  {
+    "id": "ki_self_20261110_01_rea_managed_serialization_and_memgraphrag_partition_invariant",
+    "raw_id": "ki_self_20261110_01_rea_managed_serialization_and_memgraphrag_partition_invariant",
+    "title": "REA Slotted Report Serialization & MemGraphRAG Partition Propagation Invariant",
+    "category": "software_engineering",
+    "in_degree": 0,
+    "tag_count": 7,
+    "tags": [
+      "software_engineering",
+      "endogenous_memory",
+      "self_reflection",
+      "rea_toolkit",
+      "memgraphrag",
+      "slotted_dataclasses",
+      "ai_model_forensics"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 3,
+    "verified_isnad_count": 0,
+    "rank": 107
+  },
+  {
+    "id": "ki_techwithrj_harness_engineering",
+    "raw_id": "ki_techwithrj_harness_engineering",
+    "title": "Harness Engineering for AI-Native Organizations: Four Behavioral Gates, Credential-Free MCP, and Continuous Drift Telemetry",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 7,
+    "tags": [
+      "harness_engineering",
+      "ai_native",
+      "behavioral_gates",
+      "mcp_security",
+      "personal_access_tokens",
+      "documentation_drift",
+      "negative_telemetry"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 4,
+    "verified_isnad_count": 0,
+    "rank": 108
+  },
+  {
+    "id": "ki_temp_20261003_01",
+    "raw_id": "ki_temp_20261003_01",
+    "title": "Antigravity Tri-Store Trinity: Ephemeral Runtime Archaeology and Visual Brief Preservation",
+    "category": "memory_and_epistemics",
+    "in_degree": 0,
+    "tag_count": 7,
+    "tags": [
+      "temp_store",
+      "tri_store_trinity",
+      "visual_brief_salvage",
+      "mermaid_extraction",
+      "topology_bounding",
+      "pytest_sandbox",
+      "epistemics"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 3,
+    "verified_isnad_count": 0,
+    "rank": 109
+  },
+  {
+    "id": "ki_20260823_repo_01",
+    "raw_id": "ki_20260823_repo_01",
+    "title": "Multi-Tier OS Process Sandboxing & Policy Transforms",
+    "category": "security_and_forensics",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "sandboxing",
+      "security",
+      "process_isolation",
+      "landlock",
+      "seatbelt",
+      "windows_tokens"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 110
+  },
+  {
+    "id": "ki_20260823_repo_05",
+    "raw_id": "ki_20260823_repo_05",
+    "title": "App-Server Daemon RPC Gate & Automated Rust-to-TS Schema Synchronization",
+    "category": "infrastructure_and_runtime",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "app_server",
+      "json_rpc",
+      "ipc",
+      "schema_sync",
+      "typescript_export",
+      "ts_rs"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 111
+  },
+  {
+    "id": "ki_20260824_repo_01",
+    "raw_id": "ki_20260824_repo_01",
+    "title": "Bi-Temporal Edge Invalidation in Dynamic Knowledge Graphs",
+    "category": "memory_and_epistemics",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "knowledge_graph",
+      "bitemporal",
+      "agent_memory",
+      "edge_invalidation",
+      "graphiti",
+      "epistemics"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 112
+  },
+  {
+    "id": "ki_20260824_repo_03",
+    "raw_id": "ki_20260824_repo_03",
+    "title": "Embedded In-Process Graph Database Drivers with K\u00f9zu",
+    "category": "memory_and_epistemics",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "graph_database",
+      "kuzu",
+      "embedded_database",
+      "driver_architecture",
+      "testing",
+      "in_process"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 113
+  },
+  {
+    "id": "ki_20260824_repo_04",
+    "raw_id": "ki_20260824_repo_04",
+    "title": "Async Initialization Task Reference Retention & Graceful Cancellation",
+    "category": "memory_and_epistemics",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "asyncio",
+      "python",
+      "resource_management",
+      "lifecycle",
+      "driver_architecture",
+      "memory_leaks"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 114
+  },
+  {
+    "id": "ki_20260829_cellcog_01",
+    "raw_id": "ki_20260829_cellcog_01",
+    "title": "Any-to-Any Sub-Agent Delegation & <SHOW_FILE> Multimodal Protocol",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "multimodal_subagent",
+      "delegation",
+      "cloud_tools",
+      "show_file_protocol",
+      "cellcog",
+      "repo_introspection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 115
+  },
+  {
+    "id": "ki_20260829_cellcog_02",
+    "raw_id": "ki_20260829_cellcog_02",
+    "title": "Pure Copy Multi-Channel Skill Distribution & Drift-Proof Catalogs",
+    "category": "infrastructure_and_runtime",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "skill_distribution",
+      "catalog_sync",
+      "drift_prevention",
+      "monorepo_sync",
+      "invariants",
+      "repo_introspection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 116
+  },
+  {
+    "id": "ki_20260830_django_01",
+    "raw_id": "ki_20260830_django_01",
+    "title": "Thread-Safe Lazy App Registry & Topological Initialization in Multi-Tenant / Plugin Architectures",
+    "category": "data_engineering",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "django",
+      "architecture",
+      "app_registry",
+      "ioc_container",
+      "plugin_lifecycle",
+      "thread_safety"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 117
+  },
+  {
+    "id": "ki_20260830_django_02",
+    "raw_id": "ki_20260830_django_02",
+    "title": "WeakRef Signal Dispatcher Pattern with Dead-Receiver Garbage Collection",
+    "category": "memory_and_epistemics",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "django",
+      "signals",
+      "event_bus",
+      "weakref",
+      "memory_management",
+      "pubsub"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 118
+  },
+  {
+    "id": "ki_20260830_django_03",
+    "raw_id": "ki_20260830_django_03",
+    "title": "Declarative Metaclass Field Descriptors & Deferred QuerySet Compilation",
+    "category": "data_engineering",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "django",
+      "orm",
+      "metaclass",
+      "queryset",
+      "lazy_evaluation",
+      "ast_compiler"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 119
+  },
+  {
+    "id": "ki_20260830_django_04",
+    "raw_id": "ki_20260830_django_04",
+    "title": "Transactional Atomic Savepoint Stacks & Multi-Database Router Isolation",
+    "category": "data_engineering",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "django",
+      "transactions",
+      "savepoints",
+      "acid",
+      "database_router",
+      "rollback"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 120
+  },
+  {
+    "id": "ki_20260830_django_05",
+    "raw_id": "ki_20260830_django_05",
+    "title": "Django 6.x Native Background Tasks Architecture & Result Backend Contracts",
+    "category": "data_engineering",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "django",
+      "django_6",
+      "background_tasks",
+      "async",
+      "job_queue",
+      "task_result"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 121
+  },
+  {
+    "id": "ki_20260830_kimi_01",
+    "raw_id": "ki_20260830_kimi_01",
+    "title": "4-Tier Hierarchical DI Scopes & Cascade Engine in Agent Frameworks",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "kimi_code",
+      "ioc_container",
+      "di_scopes",
+      "cascade_engine",
+      "agent_architecture",
+      "fiber_lifecycle"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 122
+  },
+  {
+    "id": "ki_20260830_kimi_02",
+    "raw_id": "ki_20260830_kimi_02",
+    "title": "4-Layer Isomorphic Transcript Data Engine with Granularity Subscriptions",
+    "category": "developer_experience",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "kimi_code",
+      "transcript",
+      "event_streaming",
+      "granularity",
+      "isomorphic_ui",
+      "telemetry"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 123
+  },
+  {
+    "id": "ki_20260830_kimi_03",
+    "raw_id": "ki_20260830_kimi_03",
+    "title": "Pure-Language Tree-Sitter Bash AST Parsing for Agent Shell Security Gates",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "kimi_code",
+      "tree_sitter",
+      "bash_ast",
+      "shell_security",
+      "execpolicy",
+      "command_parsing"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 124
+  },
+  {
+    "id": "ki_20260830_kimi_04",
+    "raw_id": "ki_20260830_kimi_04",
+    "title": "Hybrid In-Memory KV with Durable WAL Snapshot Persistence (MiniDb Pattern)",
+    "category": "memory_and_epistemics",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "kimi_code",
+      "minidb",
+      "wal_persistence",
+      "embedded_database",
+      "snapshot_compaction",
+      "zero_dependency"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 125
+  },
+  {
+    "id": "ki_20260830_kimi_05",
+    "raw_id": "ki_20260830_kimi_05",
+    "title": "Differential Terminal Rendering & Synchronized Output Protocol for Agent TUIs",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "kimi_code",
+      "pi_tui",
+      "terminal_ui",
+      "differential_rendering",
+      "synchronized_output",
+      "csi_2026"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 126
+  },
+  {
+    "id": "ki_20260831_em3_04",
+    "raw_id": "ki_20260831_em3_04",
+    "title": "Distributed DAG Task Execution with Dynamic Template Value Resolution",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "dag_scheduler",
+      "distributed_workflows",
+      "template_resolution",
+      "process_isolation",
+      "em_cubed",
+      "repo_introspection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 127
+  },
+  {
+    "id": "ki_20260831_openclaw_01",
+    "raw_id": "ki_20260831_openclaw_01",
+    "title": "In-Flight Plain-Text Tool-Call Stream Normalization & Repair",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "tool_calling",
+      "stream_repair",
+      "ast_parsing",
+      "llm_resilience",
+      "openclaw",
+      "repo_introspection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 128
+  },
+  {
+    "id": "ki_20260831_sme_01",
+    "raw_id": "ki_20260831_sme_01",
+    "title": "MIMO 6D Dynamic Control Surface for Multi-Objective Agentic Harnesses",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "mimo_control",
+      "harness_configuration",
+      "dynamic_routing",
+      "agentic_boundaries",
+      "sme_forensics",
+      "repo_introspection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 129
+  },
+  {
+    "id": "ki_20260831_sme_02",
+    "raw_id": "ki_20260831_sme_02",
+    "title": "Agentic Neural Network (ANN) Textual Backpropagation & Momentum Smoothing",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "ann_backprop",
+      "textual_gradient",
+      "momentum_smoothing",
+      "self_evolving_agents",
+      "multi_agent_optimization",
+      "repo_introspection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 130
+  },
+  {
+    "id": "ki_20260831_sme_03",
+    "raw_id": "ki_20260831_sme_03",
+    "title": "4-Stage Candidate Block Validation Filter & SQLite WAL Candidate Pool Storage",
+    "category": "data_engineering",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "candidate_validation",
+      "candidate_pool",
+      "sqlite_wal",
+      "multi_stage_filter",
+      "sme_forensics",
+      "repo_introspection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 131
+  },
+  {
+    "id": "ki_20260831_sme_04",
+    "raw_id": "ki_20260831_sme_04",
+    "title": "Cryptographic Merkle Tree Chaining & HDF5 Claim Drift Audit Engine",
+    "category": "security_and_forensics",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "merkle_audit",
+      "cryptographic_provenance",
+      "drift_analysis",
+      "tamper_evidence",
+      "sme_forensics",
+      "repo_introspection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 132
+  },
+  {
+    "id": "ki_20260831_strategify_01",
+    "raw_id": "ki_20260831_strategify_01",
+    "title": "SubsystemRegistry & Modular Simulation Orchestration",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "simulation",
+      "lifecycle",
+      "subsystem_registry",
+      "mesa",
+      "abm",
+      "strategify"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 133
+  },
+  {
+    "id": "ki_20260831_strategify_02",
+    "raw_id": "ki_20260831_strategify_02",
+    "title": "Multi-Commodity Supply Chain Vulnerability & Shock Engine",
+    "category": "security_and_forensics",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "supply_chain",
+      "betweenness_centrality",
+      "chokepoints",
+      "shocks",
+      "networkx",
+      "strategify"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 134
+  },
+  {
+    "id": "ki_20260831_strategify_04",
+    "raw_id": "ki_20260831_strategify_04",
+    "title": "Multi-Persona LLM Swarm Orchestration with Game-Theoretic Voting",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "llm_swarm",
+      "game_theory",
+      "borda_count",
+      "deliberation",
+      "voting_rules",
+      "strategify"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 135
+  },
+  {
+    "id": "ki_20260831_strategify_05",
+    "raw_id": "ki_20260831_strategify_05",
+    "title": "Web API Seam Decoupling via AnalysisRegistry & AgentStateAdapter",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "web_api",
+      "fastapi",
+      "geojson",
+      "analysis_registry",
+      "agent_adapter",
+      "strategify"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 136
+  },
+  {
+    "id": "ki_20260913_pr_lens_byok_provider",
+    "raw_id": "ki_20260913_pr_lens_byok_provider",
+    "title": "Normalized BYOK Multi-LLM Provider Architecture",
+    "category": "developer_experience",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "llm_provider",
+      "byok",
+      "gemini",
+      "openai",
+      "abstraction_seam",
+      "pr_lens"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 137
+  },
+  {
+    "id": "ki_20260913_pr_lens_svg_animation",
+    "raw_id": "ki_20260913_pr_lens_svg_animation",
+    "title": "Zero-Dependency Standalone Animated SVG Embedding Pattern",
+    "category": "developer_experience",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "svg",
+      "animation",
+      "css_keyframes",
+      "github_pr",
+      "zero_dependency",
+      "pr_lens"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 138
+  },
+  {
+    "id": "ki_20260918_gemini_vercel_streaming",
+    "raw_id": "ki_20260918_gemini_vercel_streaming",
+    "title": "Plain-Text Chunk Streaming Architecture for Gemini on Vercel Serverless",
+    "category": "infrastructure_and_runtime/integration",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "gemini",
+      "vercel_serverless",
+      "streaming",
+      "react_stream_reader",
+      "cors_preflight",
+      "plain_text_chunks"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 3,
+    "verified_isnad_count": 0,
+    "rank": 139
+  },
+  {
+    "id": "ki_20261010_gev_downward_dependency_architecture",
+    "raw_id": "ki_20261010_gev_downward_dependency_architecture",
+    "title": "Downward-Only Tool Boundary Architecture & Package Isolation Invariant",
+    "category": "scientific_computing/geospatial",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "architecture",
+      "boundary_enforcement",
+      "dependency_hygiene",
+      "mcp",
+      "tool_catalog",
+      "gods_eye_view"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 2,
+    "verified_isnad_count": 0,
+    "rank": 140
+  },
+  {
+    "id": "ki_20261010_gev_inverse_pinhole_reprojection",
+    "raw_id": "ki_20261010_gev_inverse_pinhole_reprojection",
+    "title": "Equirectangular Inverse-Sampling Pinhole Camera Reprojection Engine",
+    "category": "scientific_computing/geospatial",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "computer_vision",
+      "pinhole_camera",
+      "streetview",
+      "panorama",
+      "inverse_mapping",
+      "geospatial"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 141
+  },
+  {
+    "id": "ki_agent_desktop_mcp_cancellation",
+    "raw_id": "ki_agent_desktop_mcp_cancellation",
+    "title": "Clap-Derived Dynamic MCP Server with Pre-Spawn Cancel & SIGTERM Input Release",
+    "category": "integration_and_io",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "mcp",
+      "stdio_server",
+      "cancellation",
+      "sigterm",
+      "concurrency_cap",
+      "agent_desktop"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 142
   },
   {
     "id": "ki_aslanyan_four_level_ladder",
@@ -219,7 +3582,70 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 10
+    "rank": 143
+  },
+  {
+    "id": "ki_brain_20261003_01",
+    "raw_id": "ki_brain_20261003_01",
+    "title": "Antigravity IDE Brain Workspace Epistemic Topology and Scratch Salvage Invariants",
+    "category": "memory_and_epistemics",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "brain_store",
+      "artifact_archaeology",
+      "scratch_salvage",
+      "dual_transcript",
+      "task_triage",
+      "epistemics"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 3,
+    "verified_isnad_count": 0,
+    "rank": 144
+  },
+  {
+    "id": "ki_conversations_20261003_01",
+    "raw_id": "ki_conversations_20261003_01",
+    "title": "Multi-Store Autobiographical Trajectory Mining with Proactor-Safe Read-Only Handshake",
+    "category": "memory_and_epistemics",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "autobiographical_memory",
+      "trajectory_mining",
+      "sqlite_wal",
+      "proactor_safety",
+      "byte_offset_indexing",
+      "epistemics"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 3,
+    "verified_isnad_count": 0,
+    "rank": 145
+  },
+  {
+    "id": "ki_egm_living_spec_drift_detection",
+    "raw_id": "ki_egm_living_spec_drift_detection",
+    "title": "Living Specification Governance & Continuous Codebase Drift Detection: AST Differential Auditing across Implementations and Checked-In Specs",
+    "category": "software_engineering",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "living_specifications",
+      "drift_detection",
+      "ast_codebase_auditing",
+      "specification_governance",
+      "ground_truth_synchronization",
+      "drift_taxonomy"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 3,
+    "verified_isnad_count": 0,
+    "rank": 146
   },
   {
     "id": "ki_epistemic_graph_traversal_evidence_boundary",
@@ -240,7 +3666,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 11
+    "rank": 147
   },
   {
     "id": "ki_hf_lifecycle_hooks_guardrails_dashboard",
@@ -261,7 +3687,28 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 12
+    "rank": 148
+  },
+  {
+    "id": "ki_hf_mdx_component_pipeline",
+    "raw_id": "ki_hf_mdx_component_pipeline",
+    "title": "Multi-Dialect Unified MDX Transpilation & Hierarchical Search Chunking",
+    "category": "developer_experience",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "documentation",
+      "mdx",
+      "transpilation",
+      "chunking",
+      "search",
+      "embeddings"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 149
   },
   {
     "id": "ki_hf_nano_harness_react_sandboxing",
@@ -282,7 +3729,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 13
+    "rank": 150
   },
   {
     "id": "ki_hf_subagent_topology_patterns",
@@ -303,7 +3750,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 14
+    "rank": 151
   },
   {
     "id": "ki_njoku_dynamic_model_routing",
@@ -324,7 +3771,238 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 15
+    "rank": 152
+  },
+  {
+    "id": "ki_self_20260828_03",
+    "raw_id": "ki_self_20260828_03",
+    "title": "Inspect-Before-Edit Seam QA & Adversarial Diff Verification",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "testing",
+      "quality_assurance",
+      "verification",
+      "adversarial_review",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 3,
+    "verified_isnad_count": 0,
+    "rank": 153
+  },
+  {
+    "id": "ki_self_20260828_04",
+    "raw_id": "ki_self_20260828_04",
+    "title": "Relational Recursive CTE Graph Cycle Brakes",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "data_engineering",
+      "sql",
+      "graph_traversal",
+      "cte",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 3,
+    "verified_isnad_count": 0,
+    "rank": 154
+  },
+  {
+    "id": "ki_self_20260828_05",
+    "raw_id": "ki_self_20260828_05",
+    "title": "Dual-Mode UI Serving & Zero-Build SPA Fallback",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "ui_architecture",
+      "serving",
+      "web_dashboard",
+      "spa",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 3,
+    "verified_isnad_count": 0,
+    "rank": 155
+  },
+  {
+    "id": "ki_self_20260828_06",
+    "raw_id": "ki_self_20260828_06",
+    "title": "Subprocess Pipe Transport Lifecycle & Windows Proactor Guard",
+    "category": "infrastructure_and_runtime",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "sandboxing",
+      "subprocess_isolation",
+      "proactor_events",
+      "resource_management",
+      "windows_asyncio",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 3,
+    "verified_isnad_count": 0,
+    "rank": 156
+  },
+  {
+    "id": "ki_self_20260828_07",
+    "raw_id": "ki_self_20260828_07",
+    "title": "Secure Credential Handling & Shell-Free Git Push Protocol",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "security",
+      "devops",
+      "git_authentication",
+      "runner_isolation",
+      "windows_powershell",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 3,
+    "verified_isnad_count": 0,
+    "rank": 157
+  },
+  {
+    "id": "ki_self_20260831_02",
+    "raw_id": "ki_self_20260831_02",
+    "title": "In-Flight Tool-Call Stream Normalization & AST Auto-Repair",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "tool_calling",
+      "stream_parsing",
+      "ast_repair",
+      "json_normalization",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 158
+  },
+  {
+    "id": "ki_self_20260831_03",
+    "raw_id": "ki_self_20260831_03",
+    "title": "4-Stage Candidate Block Validation for Textual Backprop Loops",
+    "category": "developer_experience",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "optimization",
+      "textual_backprop",
+      "candidate_validation",
+      "gradient_smoothing",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 159
+  },
+  {
+    "id": "ki_self_20260901_01",
+    "raw_id": "ki_self_20260901_01",
+    "title": "Multi-Store Autobiographical Memory Federation",
+    "category": "data_engineering",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "memory_architecture",
+      "autobiographical_reflection",
+      "sqlite_proactor",
+      "wal_isolation",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 160
+  },
+  {
+    "id": "ki_self_20260901_02",
+    "raw_id": "ki_self_20260901_02",
+    "title": "Windows UTF-8 Stream Codec Isolation",
+    "category": "infrastructure_and_runtime",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "platform_isolation",
+      "windows_proactor",
+      "stream_codecs",
+      "utf8_encoding",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 161
+  },
+  {
+    "id": "ki_self_20260901_04",
+    "raw_id": "ki_self_20260901_04",
+    "title": "Dynamic 5D Compute Complexity Budgeting",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "compute_calibration",
+      "5d_complexity",
+      "model_routing",
+      "reasoning_budget",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 162
+  },
+  {
+    "id": "ki_self_20260901_scratch_01",
+    "raw_id": "ki_self_20260901_scratch_01",
+    "title": "Burrows' Delta Stylometry & Corpus Normalization",
+    "category": "memory_and_epistemics",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "nlp_stylometry",
+      "authorship_attribution",
+      "corpus_normalization",
+      "burrows_delta",
+      "faststylometry",
+      "scratch_distillation"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 163
   },
   {
     "id": "ki_self_20260902_01",
@@ -345,7 +4023,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 16
+    "rank": 164
   },
   {
     "id": "ki_self_20260902_02",
@@ -366,7 +4044,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 17
+    "rank": 165
   },
   {
     "id": "ki_self_20260902_04",
@@ -387,7 +4065,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 18
+    "rank": 166
   },
   {
     "id": "ki_self_20260904_scratch_02",
@@ -408,7 +4086,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 19
+    "rank": 167
   },
   {
     "id": "ki_self_20260904_scratch_03",
@@ -429,7 +4107,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 20
+    "rank": 168
   },
   {
     "id": "ki_self_20260905_01",
@@ -450,7 +4128,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 21
+    "rank": 169
   },
   {
     "id": "ki_self_20260905_02",
@@ -471,7 +4149,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 22
+    "rank": 170
   },
   {
     "id": "ki_self_20260905_03",
@@ -492,7 +4170,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 23
+    "rank": 171
   },
   {
     "id": "ki_self_20260905_04",
@@ -513,7 +4191,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 24
+    "rank": 172
   },
   {
     "id": "ki_self_20260905_05",
@@ -534,7 +4212,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 25
+    "rank": 173
   },
   {
     "id": "ki_self_20260905_06",
@@ -555,7 +4233,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 26
+    "rank": 174
   },
   {
     "id": "ki_self_20260905_07",
@@ -576,7 +4254,259 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 27
+    "rank": 175
+  },
+  {
+    "id": "ki_self_20260908_02",
+    "raw_id": "ki_self_20260908_02",
+    "title": "BuiltinSkillRegistry Dual-Parser Divergence Gap",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "skill-system",
+      "parser",
+      "registry",
+      "divergence",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 176
+  },
+  {
+    "id": "ki_self_20260908_04",
+    "raw_id": "ki_self_20260908_04",
+    "title": "Time-Relative Fixture Anchoring Invariant",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "testing",
+      "fixtures",
+      "time-sensitive",
+      "invariant",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 177
+  },
+  {
+    "id": "ki_self_20261002_02",
+    "raw_id": "ki_self_20261002_02",
+    "title": "Shared Memory (SHM) IPC Acceleration & Safe Native Engine Graceful Degradation",
+    "category": "infrastructure_and_runtime/sandbox",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "sandboxing",
+      "ipc_transport",
+      "shared_memory",
+      "wasm",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 3,
+    "verified_isnad_count": 0,
+    "rank": 178
+  },
+  {
+    "id": "ki_self_20261002_04",
+    "raw_id": "ki_self_20261002_04",
+    "title": "Continuous Reflection Daemon, JUnit Test Trajectory Harvesting & CI Distillation",
+    "category": "memory_and_epistemics/reflection",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "reflection",
+      "junit_harvesting",
+      "daemon",
+      "continuous_distillation",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 3,
+    "verified_isnad_count": 0,
+    "rank": 179
+  },
+  {
+    "id": "ki_self_20261019_prometheus_exporter_01",
+    "raw_id": "ki_self_20261019_prometheus_exporter_01",
+    "title": "Zero-Dependency Prometheus Text Exposition Architecture and Observability Seams",
+    "category": "infrastructure_and_runtime/cloud",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "prometheus",
+      "observability",
+      "metrics_exposition",
+      "fastapi",
+      "thread_safety",
+      "rule_12"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 2,
+    "verified_isnad_count": 0,
+    "rank": 180
+  },
+  {
+    "id": "ki_self_20261104_01_powershell_splatting_guard",
+    "raw_id": "ki_self_20261104_01_powershell_splatting_guard",
+    "title": "PowerShell Qualified Ref Splatting Defense for CLI Agents",
+    "category": "software_engineering",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "software_engineering",
+      "powershell",
+      "ref_splatting",
+      "cli_agents",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 181
+  },
+  {
+    "id": "ki_self_20261104_02_simulation_backed_domain_engine",
+    "raw_id": "ki_self_20261104_02_simulation_backed_domain_engine",
+    "title": "Dual-Mode Simulation-Backed Engine for Native System Sandboxes",
+    "category": "software_engineering",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "software_engineering",
+      "simulation_fallback",
+      "plugin_architecture",
+      "ci_cd",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 182
+  },
+  {
+    "id": "ki_self_20261104_03_planted_violation_boundary_gate",
+    "raw_id": "ki_self_20261104_03_planted_violation_boundary_gate",
+    "title": "Planted-Violation Self-Testing Architecture Boundary Gate",
+    "category": "software_engineering",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "software_engineering",
+      "architecture_linter",
+      "planted_violation",
+      "self_testing",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 183
+  },
+  {
+    "id": "ki_self_20261109_02_reasoner_parameter_propagation_invariant",
+    "raw_id": "ki_self_20261109_02_reasoner_parameter_propagation_invariant",
+    "title": "QuerySpec Parameter Pass-Through Invariant",
+    "category": "software_engineering",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "software_engineering",
+      "ipc_subprocesses",
+      "parameter_shadowing",
+      "reasoner_adapters",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 2,
+    "verified_isnad_count": 0,
+    "rank": 184
+  },
+  {
+    "id": "ki_self_20261114_01_python310_timezone_utc_ci_matrix_gate",
+    "raw_id": "ki_self_20261114_01_python310_timezone_utc_ci_matrix_gate",
+    "title": "Python 3.10 Matrix Compatibility: Prefer datetime.timezone.utc Over 3.11+ datetime.UTC",
+    "category": "software_engineering",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "software_engineering",
+      "endogenous_memory",
+      "self_reflection",
+      "python310",
+      "ci_matrix",
+      "datetime_utc"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 185
+  },
+  {
+    "id": "ki_self_20261114_02_skill_card_single_key_lines_and_numbered_stages",
+    "raw_id": "ki_self_20261114_02_skill_card_single_key_lines_and_numbered_stages",
+    "title": "SkillCardParser Grammar: Single-Key CARD.md Header Lines & Numbered SKILL.md Stage Headings",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "agent_orchestration",
+      "endogenous_memory",
+      "self_reflection",
+      "skill_card_parser",
+      "skills_hygiene",
+      "crafting_skills"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 186
+  },
+  {
+    "id": "ki_self_20261114_03_fenced_codeblock_isolation_for_planned_paths",
+    "raw_id": "ki_self_20261114_03_fenced_codeblock_isolation_for_planned_paths",
+    "title": "ADR Hygiene: Fenced Codeblock Isolation for Aspirational Future Paths Under Context Lint",
+    "category": "software_engineering",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "software_engineering",
+      "endogenous_memory",
+      "self_reflection",
+      "context_lint",
+      "rule_47",
+      "adr_hygiene"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 187
   },
   {
     "id": "ki_solla_six_dimension_quality_observability",
@@ -597,7 +4527,348 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 28
+    "rank": 188
+  },
+  {
+    "id": "ki_waza_small_n_binomial_statistics",
+    "raw_id": "ki-waza-small-n-binomial-statistics",
+    "title": "Waza: Small-N Wilson CI, Unbiased Pass^k, Seeded Bootstrap & Hake Gain",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 6,
+    "tags": [
+      "waza",
+      "statistics",
+      "wilson_ci",
+      "pass_hat_k",
+      "bootstrap",
+      "hake_gain"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 189
+  },
+  {
+    "id": "ki_20260821_05",
+    "raw_id": "ki_20260821_05",
+    "title": "Cross-Brain Knowledge Distillation via TF-IDF",
+    "category": "memory_and_epistemics",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "brain_bridge",
+      "tfidf",
+      "cross_brain",
+      "knowledge_distillation",
+      "retrieval"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 190
+  },
+  {
+    "id": "ki_20260821_06",
+    "raw_id": "ki_20260821_06",
+    "title": "Verification Standard \u2014 Isolated Plugin Sandboxing",
+    "category": "security_and_forensics",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "plugin_system",
+      "sandbox",
+      "isolation",
+      "security",
+      "trust_boundary"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 191
+  },
+  {
+    "id": "ki_20260823_02",
+    "raw_id": "ki_20260823_02",
+    "title": "High-Scale Trajectory Ingestion & Overlapping Token Indexing",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "brain_bridge",
+      "indexing",
+      "tf_idf",
+      "search",
+      "trajectory_memory"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 192
+  },
+  {
+    "id": "ki_20260823_repo_02",
+    "raw_id": "ki_20260823_repo_02",
+    "title": "Deterministic AST-Level Command Authorization via execpolicy",
+    "category": "security_and_forensics",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "execpolicy",
+      "security",
+      "ast_parsing",
+      "command_authorization",
+      "approval_elevation"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 193
+  },
+  {
+    "id": "ki_20260823_repo_03",
+    "raw_id": "ki_20260823_repo_03",
+    "title": "Subagent Thread Forking & Safety Auditing with guardian-v2",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "guardian",
+      "safety",
+      "subagent_forking",
+      "adversarial_review",
+      "thread_isolation"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 194
+  },
+  {
+    "id": "ki_20260823_repo_04",
+    "raw_id": "ki_20260823_repo_04",
+    "title": "Storage-Neutral Parent/Child Topology with agent-graph-store",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "agent_graph",
+      "multi_agent",
+      "thread_topology",
+      "dag",
+      "state_management"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 195
+  },
+  {
+    "id": "ki_20260830_grok_01",
+    "raw_id": "ki_20260830_grok_01",
+    "title": "Hashline Anchoring with Bounded Shift Recovery",
+    "category": "developer_experience",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "tools",
+      "file_editing",
+      "hashline_anchors",
+      "shift_recovery",
+      "robustness"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 196
+  },
+  {
+    "id": "ki_20260830_grok_02",
+    "raw_id": "ki_20260830_grok_02",
+    "title": "Pure Subagent Configuration Precedence Engine",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "agent_loop",
+      "subagents",
+      "resolution_engine",
+      "configuration_precedence",
+      "pure_logic"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 197
+  },
+  {
+    "id": "ki_20260830_grok_05",
+    "raw_id": "ki_20260830_grok_05",
+    "title": "Preemptive Interjection Buffer & Prompt Queue",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "agent_loop",
+      "interjections",
+      "prompt_queue",
+      "preemption",
+      "streaming"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 198
+  },
+  {
+    "id": "ki_20260913_pr_lens_eli5_pedagogy",
+    "raw_id": "ki_20260913_pr_lens_eli5_pedagogy",
+    "title": "Progressive Disclosure Diagram Generation Pedagogy (ELI5)",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "pedagogy",
+      "diagram_generation",
+      "progressive_disclosure",
+      "eli5",
+      "agent_skills"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 199
+  },
+  {
+    "id": "ki_20260913_pr_lens_overlay",
+    "raw_id": "ki_20260913_pr_lens_overlay",
+    "title": "Idempotent Human Architectural Overlay Invariant",
+    "category": "memory_and_epistemics",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "architecture",
+      "graph_overlay",
+      "human_in_the_loop",
+      "idempotent_patch",
+      "pr_lens"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 200
+  },
+  {
+    "id": "ki_20260913_repomap_01",
+    "raw_id": "ki_20260913_repomap_01",
+    "title": "PageRanked AST Context Prioritization & Token Budget Pruning",
+    "category": "context_engineering",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "architecture",
+      "context_pruning",
+      "ast_repomap",
+      "pagerank",
+      "token_budget"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 201
+  },
+  {
+    "id": "ki_20260913_stagehand_06",
+    "raw_id": "ki_20260913_stagehand_06",
+    "title": "Semantic DOM Extraction & Self-Healing Web Action Primitives",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "automation",
+      "browser",
+      "stagehand",
+      "dom_extraction",
+      "self_healing"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 202
+  },
+  {
+    "id": "ki_20261023_opencode_02",
+    "raw_id": "ki_20261023_opencode_02",
+    "title": "Dual-Runtime Plugin Interface Architecture (Effect & Promise)",
+    "category": "infrastructure_and_runtime",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "plugin_system",
+      "effect_ts",
+      "async_await",
+      "api_design",
+      "developer_experience"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 203
+  },
+  {
+    "id": "ki_20261023_opencode_03",
+    "raw_id": "ki_20261023_opencode_03",
+    "title": "Persistent PTY Multiplexing Daemon for Long-Running Agents",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "pty",
+      "terminal_multiplexing",
+      "background_daemon",
+      "agent_resilience",
+      "session_recovery"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 204
+  },
+  {
+    "id": "ki_20261023_opencode_04",
+    "raw_id": "ki_20261023_opencode_04",
+    "title": "AST-Grep Structural Pattern Enforcement over Generic Linters",
+    "category": "developer_experience",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "ast_grep",
+      "static_analysis",
+      "linting",
+      "oxlint",
+      "architecture_governance"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 205
   },
   {
     "id": "ki_20261023_rea_01",
@@ -617,7 +4888,7 @@
     "incoming_edges": [],
     "isnad_count": 1,
     "verified_isnad_count": 0,
-    "rank": 29
+    "rank": 206
   },
   {
     "id": "ki_20261023_rea_02",
@@ -637,7 +4908,7 @@
     "incoming_edges": [],
     "isnad_count": 1,
     "verified_isnad_count": 0,
-    "rank": 30
+    "rank": 207
   },
   {
     "id": "ki_20261023_rea_04",
@@ -657,7 +4928,87 @@
     "incoming_edges": [],
     "isnad_count": 1,
     "verified_isnad_count": 0,
-    "rank": 31
+    "rank": 208
+  },
+  {
+    "id": "ki_agent_desktop_capture_proof",
+    "raw_id": "ki_agent_desktop_capture_proof",
+    "title": "Evidence Tri-State & Capture-Proof Ref Identity Resolution",
+    "category": "software_engineering",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "accessibility",
+      "ref_identity",
+      "capture_proof",
+      "tri_state",
+      "agent_desktop"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 209
+  },
+  {
+    "id": "ki_agent_desktop_disposition_matrix",
+    "raw_id": "ki_agent_desktop_disposition_matrix",
+    "title": "2D Delivery \u00d7 Retry Disposition Matrix with Stability Sampling",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "delivery_disposition",
+      "retry_safety",
+      "actionability",
+      "react_loop",
+      "agent_desktop"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 210
+  },
+  {
+    "id": "ki_agent_desktop_interaction_lease",
+    "raw_id": "ki_agent_desktop_interaction_lease",
+    "title": "Cross-Process Interaction Lease & Web-Wrapper Depth Bypass",
+    "category": "software_engineering",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "interaction_lease",
+      "web_wrapper_bypass",
+      "chromium",
+      "concurrency",
+      "agent_desktop"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 211
+  },
+  {
+    "id": "ki_agent_desktop_self_testing_arch",
+    "raw_id": "ki_agent_desktop_self_testing_arch",
+    "title": "Self-Mutating Architecture Linter & Zero-OS-Dependency Core",
+    "category": "software_engineering",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "architecture_linter",
+      "self_testing",
+      "crate_isolation",
+      "zero_os_deps",
+      "agent_desktop"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 212
   },
   {
     "id": "ki_antigravity_001",
@@ -677,7 +5028,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 32
+    "rank": 213
   },
   {
     "id": "ki_antigravity_002",
@@ -697,7 +5048,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 33
+    "rank": 214
   },
   {
     "id": "ki_antigravity_003",
@@ -717,7 +5068,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 34
+    "rank": 215
   },
   {
     "id": "ki_antigravity_004",
@@ -737,7 +5088,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 35
+    "rank": 216
   },
   {
     "id": "ki_aslanyan_canonical_failures_antidotes",
@@ -757,7 +5108,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 36
+    "rank": 217
   },
   {
     "id": "ki_aslanyan_sixty_agent_patterns",
@@ -777,7 +5128,267 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 37
+    "rank": 218
+  },
+  {
+    "id": "ki_audit_20260908_03",
+    "raw_id": "ki_audit_20260908_03",
+    "title": "Blast Radius Registry \u2014 Critical Seam Nodes",
+    "category": "security_and_forensics",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "architecture",
+      "blast-radius",
+      "seams",
+      "risk",
+      "kernel"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 219
+  },
+  {
+    "id": "ki_audit_20260908_06",
+    "raw_id": "ki_audit_20260908_06",
+    "title": "Frontend Integration Gap \u2014 Vite App Unconnected to Harness CLI",
+    "category": "developer_experience",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "frontend",
+      "ui",
+      "integration",
+      "websocket",
+      "gap"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 220
+  },
+  {
+    "id": "ki_audit_20260908_07",
+    "raw_id": "ki_audit_20260908_07",
+    "title": "Delta Innovation Summary \u2014 8 Novel Architectural Patterns",
+    "category": "security_and_forensics",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "innovation",
+      "architecture",
+      "patterns",
+      "distillation",
+      "audit-output"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 221
+  },
+  {
+    "id": "ki_audit_20260915_01",
+    "raw_id": "ki_audit_20260915_01",
+    "title": "Micro-Kernel IoC Topo-Sort & Domain-Partitioned Plugin Synthesis",
+    "category": "security_and_forensics",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "architecture",
+      "ioc-container",
+      "plugin-lifecycle",
+      "domain-partitioning",
+      "topological-sort"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 222
+  },
+  {
+    "id": "ki_audit_20260915_02",
+    "raw_id": "ki_audit_20260915_02",
+    "title": "Dynamic 5D Compute Complexity & Reasoning Budget Escalation",
+    "category": "security_and_forensics",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "compute-budget",
+      "5d-complexity",
+      "reasoning-escalation",
+      "model-routing",
+      "timeout-scaling"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 223
+  },
+  {
+    "id": "ki_audit_20260915_03",
+    "raw_id": "ki_audit_20260915_03",
+    "title": "Bounded Directory Traversal & Noise-Root Pruning Invariant",
+    "category": "infrastructure_and_runtime",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "directory-traversal",
+      "deep-scan-hygiene",
+      "noise-pruning",
+      "proactor-safety",
+      "windows"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 224
+  },
+  {
+    "id": "ki_audit_20260915_04",
+    "raw_id": "ki_audit_20260915_04",
+    "title": "Multi-Store Autobiographical Memory & System Protection Boundary Fallback",
+    "category": "data_engineering",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "autobiographical-memory",
+      "protection-boundary",
+      "sqlite-uri",
+      "transcript-federation",
+      "fallback"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 225
+  },
+  {
+    "id": "ki_auto_20260915_01",
+    "raw_id": "ki_auto_20260915_01",
+    "title": "Dual-Store Autobiographical Memory Federation & SQLite Fallback",
+    "category": "memory_and_epistemics",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "memory_architecture",
+      "sqlite",
+      "autobiographical",
+      "antigravity",
+      "permission_boundary"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 226
+  },
+  {
+    "id": "ki_auto_20260915_02",
+    "raw_id": "ki_auto_20260915_02",
+    "title": "Bounded Directory Traversal & Deep-Scan Hygiene",
+    "category": "developer_experience/software_engineering",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "filesystem",
+      "traversal",
+      "performance",
+      "task_isolation",
+      "rglob"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 227
+  },
+  {
+    "id": "ki_bot_hq_primary_managed_isolation",
+    "raw_id": "ki-bot-hq-primary-managed-isolation",
+    "title": "Bot HQ: Primary-vs-Managed Gateway & Screen Isolation",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "bot-hq",
+      "hermes",
+      "orgo",
+      "isolation",
+      "multi_bot"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 228
+  },
+  {
+    "id": "ki_bot_hq_serial_queue_hop_guard",
+    "raw_id": "ki-bot-hq-serial-queue-hop-guard",
+    "title": "Bot HQ: Per-Bot Serial Turn Queue & Bounded Hop-Depth Guard",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "bot-hq",
+      "turn_queue",
+      "hop_depth",
+      "silent_turn",
+      "concurrency"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 229
+  },
+  {
+    "id": "ki_bot_hq_upsert_transcript",
+    "raw_id": "ki-bot-hq-upsert-transcript",
+    "title": "Bot HQ: Append-Mostly (seq, updatedSeq) Upsert Transcript Model",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "bot-hq",
+      "transcript",
+      "sse",
+      "streaming",
+      "sqlite"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 230
+  },
+  {
+    "id": "ki_dsh_superagent_gate_mandate_auth",
+    "raw_id": "ki-dsh-superagent-gate-mandate-auth",
+    "title": "DSH Superagent: Two-Layer Deterministic Gate, Follow-Up Ownership & Mandates",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "dsh-superagent",
+      "authorization",
+      "admission_gate",
+      "mandate",
+      "follow_up"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 231
   },
   {
     "id": "ki_harness2_recursive_harnessing",
@@ -797,7 +5408,7 @@
     "incoming_edges": [],
     "isnad_count": 6,
     "verified_isnad_count": 0,
-    "rank": 38
+    "rank": 232
   },
   {
     "id": "ki_hermes_002",
@@ -817,7 +5428,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 39
+    "rank": 233
   },
   {
     "id": "ki_hermes_004",
@@ -837,7 +5448,27 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 40
+    "rank": 234
+  },
+  {
+    "id": "ki_hf_autodoc_mock_virtualization",
+    "raw_id": "ki_hf_autodoc_mock_virtualization",
+    "title": "Zero-Dependency Meta-Path Mock Virtualization for AST Introspection",
+    "category": "developer_experience",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "documentation",
+      "autodoc",
+      "meta_path",
+      "mocking",
+      "ast"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 235
   },
   {
     "id": "ki_hf_context_engineering_six_layer_stack",
@@ -857,7 +5488,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 41
+    "rank": 236
   },
   {
     "id": "ki_hf_datasets_arrow_streaming",
@@ -877,7 +5508,27 @@
     "incoming_edges": [],
     "isnad_count": 4,
     "verified_isnad_count": 0,
-    "rank": 42
+    "rank": 237
+  },
+  {
+    "id": "ki_hf_doc_anchor_graph_integrity",
+    "raw_id": "ki_hf_doc_anchor_graph_integrity",
+    "title": "Deterministic Markdown Anchor Graph & Cross-Reference Link Verification",
+    "category": "developer_experience",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "documentation",
+      "link_checker",
+      "markdown",
+      "anchors",
+      "verification"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 238
   },
   {
     "id": "ki_ontological_engineering_gruber_criteria",
@@ -897,7 +5548,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 43
+    "rank": 239
   },
   {
     "id": "ki_paperless_ai_rag_sqlite_vec",
@@ -917,7 +5568,127 @@
     "incoming_edges": [],
     "isnad_count": 3,
     "verified_isnad_count": 0,
-    "rank": 44
+    "rank": 240
+  },
+  {
+    "id": "ki_self_20260828_01",
+    "raw_id": "ki_self_20260828_01",
+    "title": "Agent Instruction File Hygiene & Boundary Control",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "configuration",
+      "agent_hygiene",
+      "instruction_architecture",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 3,
+    "verified_isnad_count": 0,
+    "rank": 241
+  },
+  {
+    "id": "ki_self_20260829_01",
+    "raw_id": "ki_self_20260829_01",
+    "title": "Unified 5-Stage Pre-LLM Context Pipeline Seam",
+    "category": "context_engineering",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "context_optimization",
+      "repomap",
+      "compactor",
+      "token_budgeting",
+      "service_key"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 242
+  },
+  {
+    "id": "ki_self_20260829_02",
+    "raw_id": "ki_self_20260829_02",
+    "title": "Authoritative Thread DAG Lifecycle & Execution Graph Store",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "agent_graph",
+      "swarm_dag",
+      "thread_lifecycle",
+      "tree_export",
+      "cli_introspection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 243
+  },
+  {
+    "id": "ki_self_20260829_03",
+    "raw_id": "ki_self_20260829_03",
+    "title": "Transactional Git Checkpoints & In-Flight Syntax Diagnostic Self-Repair",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "react_agent",
+      "git_checkpoint",
+      "transactional_isolation",
+      "linter",
+      "self_repair"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 244
+  },
+  {
+    "id": "ki_self_20260830_02",
+    "raw_id": "ki_self_20260830_02",
+    "title": "In-Place Foundational Deepening over Redundant Plugin Sprawl",
+    "category": "security_and_forensics",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "execpolicy",
+      "bash_ast",
+      "deep_modules",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 245
+  },
+  {
+    "id": "ki_self_20260901_scratch_02",
+    "raw_id": "ki_self_20260901_scratch_02",
+    "title": "Isolated Extension Mock Contracts for Forensic Pipelines",
+    "category": "security_and_forensics",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "forensics_testing",
+      "extension_isolation",
+      "mock_contracts",
+      "nexus_dal",
+      "scratch_distillation"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 246
   },
   {
     "id": "ki_self_20260902_03",
@@ -937,7 +5708,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 45
+    "rank": 247
   },
   {
     "id": "ki_self_20260902_05",
@@ -957,7 +5728,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 46
+    "rank": 248
   },
   {
     "id": "ki_self_20260903_01",
@@ -977,7 +5748,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 47
+    "rank": 249
   },
   {
     "id": "ki_self_20260903_02",
@@ -997,7 +5768,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 48
+    "rank": 250
   },
   {
     "id": "ki_self_20260903_03",
@@ -1017,7 +5788,700 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 49
+    "rank": 251
+  },
+  {
+    "id": "ki_self_20260908_01",
+    "raw_id": "ki_self_20260908_01",
+    "title": "SkillPipelineEngine Unification Invariant",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "architecture",
+      "skill-system",
+      "deep-module",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 252
+  },
+  {
+    "id": "ki_self_20260911_01",
+    "raw_id": "ki_self_20260911_01",
+    "title": "Dual-Kernel Micro-Kernel Seam Elevation & O(1) Binary Byte-Offset Seek Slicing",
+    "category": "developer_experience/architecture",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "endogenous_memory",
+      "architecture_deepening",
+      "ioc_service_key",
+      "binary_seeking",
+      "agentwikis"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 2,
+    "verified_isnad_count": 0,
+    "rank": 253
+  },
+  {
+    "id": "ki_self_20260914_02",
+    "raw_id": "ki_self_20260914_02",
+    "title": "Di\u00e1taxis 4-Quadrant Docs-as-Code Synchronization Pipeline",
+    "category": "developer_experience/documentation",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "endogenous_memory",
+      "diataxis",
+      "documentation_governance",
+      "ast_linting",
+      "c4_topology"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 2,
+    "verified_isnad_count": 0,
+    "rank": 254
+  },
+  {
+    "id": "ki_self_20260914_03",
+    "raw_id": "ki_self_20260914_03",
+    "title": "Scratch Runner UTF-8 Stream Codec & SysPath Precedence Protocol",
+    "category": "infrastructure_and_runtime/sandbox",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "endogenous_memory",
+      "windows_cp1252",
+      "syspath_isolation",
+      "fstring_escaping",
+      "scratch_runner"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 3,
+    "verified_isnad_count": 0,
+    "rank": 255
+  },
+  {
+    "id": "ki_self_20260914_04",
+    "raw_id": "ki_self_20260914_04",
+    "title": "Slotted Triad Pipeline & Dual-Mode Visual Brief Synthesis Invariant",
+    "category": "developer_experience/software_engineering",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "endogenous_memory",
+      "slotted_domain_models",
+      "visual_brief_synthesis",
+      "rule_12",
+      "rule_51"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 3,
+    "verified_isnad_count": 0,
+    "rank": 256
+  },
+  {
+    "id": "ki_self_20260916_01",
+    "raw_id": "ki_self_20260916_01",
+    "title": "Atomic Asynchronous Task Settlement Seam Invariant",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "endogenous_memory",
+      "agent_orchestration",
+      "architecture_deepening",
+      "task_settlement",
+      "rule_53"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 2,
+    "verified_isnad_count": 0,
+    "rank": 257
+  },
+  {
+    "id": "ki_self_20260916_02",
+    "raw_id": "ki_self_20260916_02",
+    "title": "ReAct Step Tool Safe-Loop Dispatch Invariant",
+    "category": "infrastructure_and_runtime",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "endogenous_memory",
+      "runtime_kernel",
+      "event_loop_safety",
+      "react_tools",
+      "rule_54"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 2,
+    "verified_isnad_count": 0,
+    "rank": 258
+  },
+  {
+    "id": "ki_self_20260916_03",
+    "raw_id": "ki_self_20260916_03",
+    "title": "In-Memory Mock Fallback Schema Parity Invariant",
+    "category": "developer_experience/testing",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "endogenous_memory",
+      "testing_and_contracts",
+      "mock_simulation",
+      "schema_parity",
+      "rule_55"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 2,
+    "verified_isnad_count": 0,
+    "rank": 259
+  },
+  {
+    "id": "ki_self_20261002_01",
+    "raw_id": "ki_self_20261002_01",
+    "title": "Copy-on-Write (COW) Lock-Free Context Registry & Transaction Inverse Compaction",
+    "category": "developer_experience/architecture",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "architecture",
+      "ioc_container",
+      "concurrency",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 3,
+    "verified_isnad_count": 0,
+    "rank": 260
+  },
+  {
+    "id": "ki_self_20261002_03",
+    "raw_id": "ki_self_20261002_03",
+    "title": "Stage Artifact Contracts, Dynamic Directed FEEDS Edge Synthesis & Cycle Prevention",
+    "category": "agent_orchestration/skills",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "skill_graph",
+      "dag_routing",
+      "artifact_contracts",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 3,
+    "verified_isnad_count": 0,
+    "rank": 261
+  },
+  {
+    "id": "ki_self_20261003_01",
+    "raw_id": "ki_self_20261003_01",
+    "title": "Stage-Pillar Heading Disambiguation in Markdown AST Parsers",
+    "category": "developer_experience/architecture",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "markdown_ast",
+      "parser_seams",
+      "skill_scaffolding",
+      "regex_isolation",
+      "invariants"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 3,
+    "verified_isnad_count": 0,
+    "rank": 262
+  },
+  {
+    "id": "ki_self_20261003_02",
+    "raw_id": "ki_self_20261003_02",
+    "title": "Dynamic Importlib sys.modules Registration for Slotted/Frozen Dataclasses",
+    "category": "infrastructure_and_runtime",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "importlib",
+      "dataclasses",
+      "slotted_frozen",
+      "dynamic_loading",
+      "python313"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 2,
+    "verified_isnad_count": 0,
+    "rank": 263
+  },
+  {
+    "id": "ki_self_20261003_03",
+    "raw_id": "ki_self_20261003_03",
+    "title": "Monotonic Threshold Assertions for Dynamic Skill and Plugin Catalogs",
+    "category": "developer_experience/testing",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "test_hardening",
+      "catalog_discovery",
+      "regression_testing",
+      "dynamic_skills",
+      "bounded_traversal"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 2,
+    "verified_isnad_count": 0,
+    "rank": 264
+  },
+  {
+    "id": "ki_self_20261003_04",
+    "raw_id": "ki_self_20261003_04",
+    "title": "Dual-Store Autobiographical Memory Federation Architecture",
+    "category": "developer_experience/architecture",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "autobiographical_memory",
+      "federation",
+      "rule20",
+      "sqlite_wal",
+      "brain_workspace"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 2,
+    "verified_isnad_count": 0,
+    "rank": 265
+  },
+  {
+    "id": "ki_self_20261014_01",
+    "raw_id": "ki_self_20261014_01",
+    "title": "Skill CLI Script Single-File Self-Containment and Language Server Isolation",
+    "category": "developer_experience/architecture",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "architecture_and_deepening",
+      "endogenous_memory",
+      "self_reflection",
+      "cli_tooling",
+      "rule_11"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 2,
+    "verified_isnad_count": 0,
+    "rank": 266
+  },
+  {
+    "id": "ki_self_20261014_02",
+    "raw_id": "ki_self_20261014_02",
+    "title": "Markdown Document Structural Formatting and Unified Unordered List Hygiene",
+    "category": "developer_experience/documentation",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "documentation_hygiene",
+      "endogenous_memory",
+      "self_reflection",
+      "markdownlint",
+      "context_map"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 2,
+    "verified_isnad_count": 0,
+    "rank": 267
+  },
+  {
+    "id": "ki_self_20261019_memory_decay_01",
+    "raw_id": "ki_self_20261019_memory_decay_01",
+    "title": "Ebbinghaus Forgetting Curves and Cognitive Working Memory Retention",
+    "category": "memory_and_epistemics",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "memory_decay",
+      "ebbinghaus",
+      "cognitive_governance",
+      "slotted_dataclass",
+      "rule_12"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 2,
+    "verified_isnad_count": 0,
+    "rank": 268
+  },
+  {
+    "id": "ki_self_20261019_prompt_pruning_01",
+    "raw_id": "ki_self_20261019_prompt_pruning_01",
+    "title": "Deterministic 3-Pass Prompt Pruning with Fixed-Point Idempotence",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "prompt_pruning",
+      "compiler_passes",
+      "context_optimization",
+      "idempotence",
+      "rule_19"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 2,
+    "verified_isnad_count": 0,
+    "rank": 269
+  },
+  {
+    "id": "ki_self_20261114_04_brainbridge_external_plugin_pruning",
+    "raw_id": "ki_self_20261114_04_brainbridge_external_plugin_pruning",
+    "title": "BrainBridge Indexer Pruning of test_ingested_plugins and external Directories",
+    "category": "software_engineering",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "software_engineering",
+      "brain_bridge",
+      "rule52",
+      "directory_pruning",
+      "self_audit"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 270
+  },
+  {
+    "id": "ki_self_20261114_05_kernel_composition_root_mypy_and_singletons",
+    "raw_id": "ki_self_20261114_05_kernel_composition_root_mypy_and_singletons",
+    "title": "Micro-Kernel Composition Root Boundary, Transitive Mypy Hygiene & Rule 45 Singletons",
+    "category": "software_engineering",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "software_engineering",
+      "micro_kernel",
+      "mypy",
+      "rule45",
+      "ioc"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 271
+  },
+  {
+    "id": "ki_self_20261114_06_monolith_decomposition_reflection_spawner_dock",
+    "raw_id": "ki_self_20261114_06_monolith_decomposition_reflection_spawner_dock",
+    "title": "Subpackage Decomposition of Reflection Commands, Harness Spawner, and Repository Dock",
+    "category": "software_engineering",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "software_engineering",
+      "decomposition",
+      "rule6",
+      "click",
+      "architecture"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 272
+  },
+  {
+    "id": "ki_self_20261114_07_ci_scoped_format_and_epistemic_gates",
+    "raw_id": "ki_self_20261114_07_ci_scoped_format_and_epistemic_gates",
+    "title": "Scoped Ruff Formatting & Architectural/Epistemic Hygiene Gates in GitHub Actions CI",
+    "category": "software_engineering",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "software_engineering",
+      "ci_cd",
+      "ruff",
+      "mypy",
+      "epistemic_gates"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 273
+  },
+  {
+    "id": "ki_vercel_ui_sdk_agent_webmcp_bridge",
+    "raw_id": "ki-vercel-ui-sdk-agent-webmcp-bridge",
+    "title": "Vercel UI SDK: Agent Bridge (snapshot/act/query), Retired-Ref Hysteresis, Guarded DOM Marks & WebMCP Tools",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "ui-sdk",
+      "webmcp",
+      "agent-bridge",
+      "dom-marks",
+      "ref-hysteresis"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 274
+  },
+  {
+    "id": "ki_vercel_ui_sdk_aria_ssr_rtl_verification",
+    "raw_id": "ki-vercel-ui-sdk-aria-ssr-rtl-verification",
+    "title": "Vercel UI SDK: Tri-Modal UI Verification \u2014 WAI-ARIA APG Key Checks, Clock/DOM-Isolated SSR & Mirrored RTL Parity",
+    "category": "software_engineering",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "ui-sdk",
+      "wai-aria",
+      "ssr-isolation",
+      "rtl-parity",
+      "deterministic-testing"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 275
+  },
+  {
+    "id": "ki_vercel_ui_sdk_expert_scope_governance",
+    "raw_id": "ki-vercel-ui-sdk-expert-scope-governance",
+    "title": "Vercel UI SDK: Git-Diff Framework Expert Routing (expert-scope.mjs) & Multi-Skill Agent Hygiene",
+    "category": "software_engineering",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "ui-sdk",
+      "expert-routing",
+      "agent-skills",
+      "unslop",
+      "monorepo-governance"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 276
+  },
+  {
+    "id": "ki_vercel_ui_sdk_primitive_asleep_lifecycle",
+    "raw_id": "ki-vercel-ui-sdk-primitive-asleep-lifecycle",
+    "title": "Vercel UI SDK: Headless definePrimitive Kernel, Asleep Lazy Wake-Up & Provisional Render Isolation",
+    "category": "software_engineering",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "ui-sdk",
+      "headless-primitives",
+      "lazy-wakeup",
+      "provisional-render",
+      "state-store"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 277
+  },
+  {
+    "id": "ki_waza_sealed_release_and_attempt_lineage",
+    "raw_id": "ki-waza-sealed-release-and-attempt-lineage",
+    "title": "Waza: Canonical SealJSON Admission & Immutable Execution Attempt DAG",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "waza",
+      "release_policy",
+      "canonical_digest",
+      "execution_attempts",
+      "lineage"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 278
+  },
+  {
+    "id": "ki_waza_trajectory_constraint_graders",
+    "raw_id": "ki-waza-trajectory-constraint-graders",
+    "title": "Waza: Deterministic Trajectory, Tool Constraint & Skill Invocation Graders",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 5,
+    "tags": [
+      "waza",
+      "graders",
+      "action_sequence",
+      "tool_constraint",
+      "skill_invocation"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 279
+  },
+  {
+    "id": "ki_20260821_01",
+    "raw_id": "ki_20260821_01",
+    "title": "Plugin Card + Quickstart Standardization",
+    "category": "developer_experience",
+    "in_degree": 0,
+    "tag_count": 4,
+    "tags": [
+      "plugin_system",
+      "documentation",
+      "onboarding",
+      "skill_routing"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 280
+  },
+  {
+    "id": "ki_20260821_02",
+    "raw_id": "ki_20260821_02",
+    "title": "Transcript-Trajectory Debugging Pattern",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 4,
+    "tags": [
+      "debugging",
+      "transcripts",
+      "ci_cd",
+      "agent_trajectories"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 281
+  },
+  {
+    "id": "ki_20260821_03",
+    "raw_id": "ki_20260821_03",
+    "title": "PowerShell String Parsing Pitfall Guard",
+    "category": "infrastructure_and_runtime",
+    "in_degree": 0,
+    "tag_count": 4,
+    "tags": [
+      "powershell",
+      "parsing",
+      "cross_platform",
+      "tool_execution"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 282
+  },
+  {
+    "id": "ki_20260821_04",
+    "raw_id": "ki_20260821_04",
+    "title": "Epistemic Habit \u2014 Skill SKILL.md as Design Contract",
+    "category": "developer_experience",
+    "in_degree": 0,
+    "tag_count": 4,
+    "tags": [
+      "skill_system",
+      "design_contract",
+      "documentation",
+      "architecture"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 283
+  },
+  {
+    "id": "ki_20260830_claude_01",
+    "raw_id": "ki_20260830_claude_01",
+    "title": "Async Rewake in Agent Lifecycle Hooks",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 4,
+    "tags": [
+      "architecture",
+      "lifecycle_hooks",
+      "async_rewake",
+      "agent_loop"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 284
+  },
+  {
+    "id": "ki_20260830_claude_02",
+    "raw_id": "ki_20260830_claude_02",
+    "title": "Aspect-Oriented Multi-Agent Review Swarm",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 4,
+    "tags": [
+      "architecture",
+      "multi_agent",
+      "swarm",
+      "code_review"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 285
+  },
+  {
+    "id": "ki_20260830_repo_02",
+    "raw_id": "ki_20260830_repo_02",
+    "title": "Invariant Verification Gates",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 4,
+    "tags": [
+      "testing",
+      "ci",
+      "invariants",
+      "scripts"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 286
   },
   {
     "id": "ki_20260922_tau_pi_agent_architecture",
@@ -1036,7 +6500,7 @@
     "incoming_edges": [],
     "isnad_count": 4,
     "verified_isnad_count": 0,
-    "rank": 50
+    "rank": 287
   },
   {
     "id": "ki_20261023_rea_03",
@@ -1055,7 +6519,7 @@
     "incoming_edges": [],
     "isnad_count": 1,
     "verified_isnad_count": 0,
-    "rank": 51
+    "rank": 288
   },
   {
     "id": "ki_5d_complexity_baseline",
@@ -1074,7 +6538,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 52
+    "rank": 289
   },
   {
     "id": "ki_agentwikis_governance",
@@ -1093,7 +6557,102 @@
     "incoming_edges": [],
     "isnad_count": 4,
     "verified_isnad_count": 0,
-    "rank": 53
+    "rank": 290
+  },
+  {
+    "id": "ki_audit_20260908_01",
+    "raw_id": "ki_audit_20260908_01",
+    "title": "Clock-Sensitive Test Smell in Data Management Tests",
+    "category": "security_and_forensics",
+    "in_degree": 0,
+    "tag_count": 4,
+    "tags": [
+      "testing",
+      "data-management",
+      "clock-sensitive",
+      "anti-pattern"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 291
+  },
+  {
+    "id": "ki_audit_20260908_04",
+    "raw_id": "ki_audit_20260908_04",
+    "title": "Coverage Threshold Gap \u2014 No CI Assertion",
+    "category": "security_and_forensics",
+    "in_degree": 0,
+    "tag_count": 4,
+    "tags": [
+      "testing",
+      "coverage",
+      "ci",
+      "quality-gate"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 292
+  },
+  {
+    "id": "ki_audit_20260908_05",
+    "raw_id": "ki_audit_20260908_05",
+    "title": "OpenRouter KiloCode Header Coupling in Gateway Service",
+    "category": "security_and_forensics",
+    "in_degree": 0,
+    "tag_count": 4,
+    "tags": [
+      "gateway",
+      "coupling",
+      "openrouter",
+      "architecture"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 293
+  },
+  {
+    "id": "ki_audit_20260908_08",
+    "raw_id": "ki_audit_20260908_08",
+    "title": "CHANGELOG Absence \u2014 Evolution Record Gap",
+    "category": "developer_experience",
+    "in_degree": 0,
+    "tag_count": 4,
+    "tags": [
+      "documentation",
+      "changelog",
+      "release",
+      "governance"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 294
+  },
+  {
+    "id": "ki_bot_hq_inband_mcp_approval",
+    "raw_id": "ki-bot-hq-inband-mcp-approval",
+    "title": "Bot HQ: In-Band MCP Tool Approval Gate",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 4,
+    "tags": [
+      "bot-hq",
+      "mcp",
+      "approval_gate",
+      "human_in_the_loop"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 295
   },
   {
     "id": "ki_chatbotx_dynamic_mcp_orpc",
@@ -1112,7 +6671,7 @@
     "incoming_edges": [],
     "isnad_count": 3,
     "verified_isnad_count": 0,
-    "rank": 54
+    "rank": 296
   },
   {
     "id": "ki_chatbotx_isolated_vm_execution",
@@ -1131,7 +6690,7 @@
     "incoming_edges": [],
     "isnad_count": 2,
     "verified_isnad_count": 0,
-    "rank": 55
+    "rank": 297
   },
   {
     "id": "ki_chatbotx_omnichannel_messaging_bus",
@@ -1150,7 +6709,7 @@
     "incoming_edges": [],
     "isnad_count": 2,
     "verified_isnad_count": 0,
-    "rank": 56
+    "rank": 298
   },
   {
     "id": "ki_cli_decomposition_pattern",
@@ -1169,7 +6728,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 57
+    "rank": 299
   },
   {
     "id": "ki_deepening_cycle_history",
@@ -1188,7 +6747,121 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 58
+    "rank": 300
+  },
+  {
+    "id": "ki_deepselect_adaptive_scan",
+    "raw_id": "ki_deepselect_adaptive_scan",
+    "title": "Adaptive Randomized Block Scan with Monotonic Threshold Filtering",
+    "category": "scientific_computing",
+    "in_degree": 0,
+    "tag_count": 4,
+    "tags": [
+      "algorithm",
+      "topk",
+      "deepseek_sparse_attention",
+      "complexity_bound"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 301
+  },
+  {
+    "id": "ki_deepselect_bitmask_filtering",
+    "raw_id": "ki_deepselect_bitmask_filtering",
+    "title": "Single-Pass PTX Bitmask Accumulation & Warp-Level Traversal",
+    "category": "scientific_computing",
+    "in_degree": 0,
+    "tag_count": 4,
+    "tags": [
+      "cuda",
+      "ptx",
+      "bitmask",
+      "warp_primitives"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 302
+  },
+  {
+    "id": "ki_deepselect_cluster_partitioning",
+    "raw_id": "ki_deepselect_cluster_partitioning",
+    "title": "Threadblock Cluster Multi-SM Sequence Partitioning for Wave-Quantization Resilience",
+    "category": "scientific_computing",
+    "in_degree": 0,
+    "tag_count": 4,
+    "tags": [
+      "cuda",
+      "cluster",
+      "sm_occupancy",
+      "wave_quantization"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 303
+  },
+  {
+    "id": "ki_dsh_superagent_attention_philosophy",
+    "raw_id": "ki-dsh-superagent-attention-philosophy",
+    "title": "DSH Superagent: Attention-Minimizing Proactive Agent Philosophy",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 4,
+    "tags": [
+      "dsh-superagent",
+      "proactive_agent",
+      "attention_budget",
+      "ux_governance"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 304
+  },
+  {
+    "id": "ki_dsh_superagent_ticket_isolation",
+    "raw_id": "ki-dsh-superagent-ticket-isolation",
+    "title": "DSH Superagent: Per-Ticket Execution Isolation & Serialized Channel Replies",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 4,
+    "tags": [
+      "dsh-superagent",
+      "isolation",
+      "outbox_ordering",
+      "crash_recovery"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 305
+  },
+  {
+    "id": "ki_dsh_superagent_transactional_outbox",
+    "raw_id": "ki-dsh-superagent-transactional-outbox",
+    "title": "DSH Superagent: Synchronous Hexagonal Core & Transactional Outbox",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 4,
+    "tags": [
+      "dsh-superagent",
+      "hexagonal_architecture",
+      "transactional_outbox",
+      "passes"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 306
   },
   {
     "id": "ki_file_size_hotspots",
@@ -1207,7 +6880,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 59
+    "rank": 307
   },
   {
     "id": "ki_garf_reporting_engine",
@@ -1226,7 +6899,7 @@
     "incoming_edges": [],
     "isnad_count": 4,
     "verified_isnad_count": 0,
-    "rank": 60
+    "rank": 308
   },
   {
     "id": "ki_gradio_app_architect",
@@ -1245,7 +6918,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 61
+    "rank": 309
   },
   {
     "id": "ki_guarino_precision_coverage_tradeoff",
@@ -1264,7 +6937,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 62
+    "rank": 310
   },
   {
     "id": "ki_hermes_001",
@@ -1283,7 +6956,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 63
+    "rank": 311
   },
   {
     "id": "ki_hermes_003",
@@ -1302,7 +6975,26 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 64
+    "rank": 312
+  },
+  {
+    "id": "ki_mindreader_20260911_02",
+    "raw_id": "ki_mindreader_20260911_02",
+    "title": "External Ingestion Security Boundary Shell Pivot Pattern",
+    "category": "security_and_forensics",
+    "in_degree": 0,
+    "tag_count": 4,
+    "tags": [
+      "security_boundaries",
+      "shell_execution",
+      "external_ingestion",
+      "error_recovery"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 313
   },
   {
     "id": "ki_omarchy_quattro_bridge",
@@ -1321,7 +7013,7 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 65
+    "rank": 314
   },
   {
     "id": "ki_paperless_ngx_architecture",
@@ -1340,7 +7032,7 @@
     "incoming_edges": [],
     "isnad_count": 3,
     "verified_isnad_count": 0,
-    "rank": 66
+    "rank": 315
   },
   {
     "id": "ki_responsible_ai_prototyping",
@@ -1359,7 +7051,83 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 67
+    "rank": 316
+  },
+  {
+    "id": "ki_token_economizer_dynamic_tool_pruning",
+    "raw_id": "ki_token_economizer_dynamic_tool_pruning",
+    "title": "Empirical Evidence-Based Tool Pruning & Capability Masking",
+    "category": "memory_and_epistemics",
+    "in_degree": 0,
+    "tag_count": 4,
+    "tags": [
+      "tool_pruning",
+      "token_economy",
+      "schema_optimization",
+      "context_compression"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 317
+  },
+  {
+    "id": "ki_token_economizer_microskills_lifecycle",
+    "raw_id": "ki_token_economizer_microskills_lifecycle",
+    "title": "Experience-Driven Micro-Skills Lifecycle & Asymmetric Contradiction Eviction",
+    "category": "memory_and_epistemics",
+    "in_degree": 0,
+    "tag_count": 4,
+    "tags": [
+      "token_economy",
+      "micro_skills",
+      "context_optimization",
+      "cognitive_retention"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 318
+  },
+  {
+    "id": "ki_token_economizer_multi_agent_trace_federation",
+    "raw_id": "ki_token_economizer_multi_agent_trace_federation",
+    "title": "Standardized Multi-Harness Session Trajectory & Cost Ledger Federation",
+    "category": "memory_and_epistemics",
+    "in_degree": 0,
+    "tag_count": 4,
+    "tags": [
+      "trace_federation",
+      "domain_adapter",
+      "pricing_ledger",
+      "multi_agent"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 319
+  },
+  {
+    "id": "ki_token_economizer_turn_guard_loop_intervention",
+    "raw_id": "ki_token_economizer_turn_guard_loop_intervention",
+    "title": "3-Tier Failure-Loop Intervention & Conjunction Gating",
+    "category": "memory_and_epistemics",
+    "in_degree": 0,
+    "tag_count": 4,
+    "tags": [
+      "loop_guard",
+      "failure_intervention",
+      "agentic_reliability",
+      "circuit_breaker"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 320
   },
   {
     "id": "ki_topology_map",
@@ -1378,7 +7146,44 @@
     "incoming_edges": [],
     "isnad_count": 0,
     "verified_isnad_count": 0,
-    "rank": 68
+    "rank": 321
+  },
+  {
+    "id": "ki_waza_preflight_boundary_honesty",
+    "raw_id": "ki-waza-preflight-boundary-honesty",
+    "title": "Waza: Static Preflight Boundary Honesty vs Preventive Runtime Enforcement",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 4,
+    "tags": [
+      "waza",
+      "preflight",
+      "boundary_honesty",
+      "security"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 322
+  },
+  {
+    "id": "ki_20260830_repo_01",
+    "raw_id": "ki_20260830_repo_01",
+    "title": "Tool Package Decoupling",
+    "category": "agent_orchestration",
+    "in_degree": 0,
+    "tag_count": 3,
+    "tags": [
+      "architecture",
+      "monorepo",
+      "tool_isolation"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 1,
+    "verified_isnad_count": 0,
+    "rank": 323
   },
   {
     "id": "ki_rea_facet_availability_semantics",
@@ -1396,7 +7201,7 @@
     "incoming_edges": [],
     "isnad_count": 3,
     "verified_isnad_count": 0,
-    "rank": 69
+    "rank": 324
   },
   {
     "id": "ki_rea_reconstruction_obligations",
@@ -1414,6 +7219,24 @@
     "incoming_edges": [],
     "isnad_count": 3,
     "verified_isnad_count": 0,
-    "rank": 70
+    "rank": 325
+  },
+  {
+    "id": "ki_self_20260826_01",
+    "raw_id": "ki_self_20260826_01",
+    "title": "Click CLI Group Single-Source Consolidation",
+    "category": "developer_experience",
+    "in_degree": 0,
+    "tag_count": 3,
+    "tags": [
+      "architecture",
+      "endogenous_memory",
+      "self_reflection"
+    ],
+    "pointing_kis": [],
+    "incoming_edges": [],
+    "isnad_count": 8,
+    "verified_isnad_count": 0,
+    "rank": 326
   }
 ]

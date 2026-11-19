@@ -5,18 +5,26 @@ from __future__ import annotations
 from collections.abc import Mapping
 from datetime import UTC, datetime
 import json
+import os
 from pathlib import Path
 import sys
 from typing import Any
 
-WORKSPACE = Path(r"d:\GitHub\projects\Brain Harness")
-VAULT = WORKSPACE / ".harness" / "knowledge"
+
+def _env_path(name: str, default: Path) -> Path:
+    raw = os.environ.get(name, "").strip()
+    return Path(raw).resolve() if raw else default.resolve()
+
+
+WORKSPACE = _env_path("BRAIN_HARNESS_ROOT", Path(__file__).resolve().parents[2])
+VAULT = _env_path("BRAIN_HARNESS_VAULT", WORKSPACE / ".harness" / "knowledge")
 EXP_DIR = WORKSPACE / "experiments" / "spider_decisions"
 RESULTS = EXP_DIR / "results"
 SNAPSHOTS = RESULTS / "snapshots"
-GOOGLE_ROOT = Path(r"D:\GitHub\cloned\Google")
-GRM_ROOT = GOOGLE_ROOT / "google-research-master"
-AIRLLM_ROOT = Path(r"D:\GitHub\cloned\AIRLLM SUITE")
+_CLONED_ROOT = WORKSPACE.parent.parent / "cloned"
+GOOGLE_ROOT = _env_path("BRAIN_HARNESS_GOOGLE_ROOT", _CLONED_ROOT / "Google")
+GRM_ROOT = _env_path("BRAIN_HARNESS_GRM_ROOT", GOOGLE_ROOT / "google-research-master")
+AIRLLM_ROOT = _env_path("BRAIN_HARNESS_AIRLLM_ROOT", _CLONED_ROOT / "AIRLLM SUITE")
 
 
 def bootstrap() -> None:
