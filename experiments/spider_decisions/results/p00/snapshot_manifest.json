@@ -2,10 +2,10 @@
   "vault": {
     "source_path": "vault",
     "snapshot_file": "d:\\GitHub\\projects\\Brain Harness\\experiments\\spider_decisions\\results\\snapshots\\vault.json",
-    "entities": 630,
-    "assertions": 959,
-    "file_size_bytes": 1694673,
-    "sha256": "e454a7c0df6400d5638e0dba73e344aef3308d9ccd0884592481f030c8c1c719"
+    "entities": 674,
+    "assertions": 1091,
+    "file_size_bytes": 1829470,
+    "sha256": "cb0c85930d69b0cc6c51eb73a124bc695474636eb21819a611f375d2eecc31e9"
   },
   "google_portfolio_root": {
     "source_path": "D:\\GitHub\\cloned\\Google",
@@ -13,31 +13,31 @@
     "entities": 57,
     "assertions": 81,
     "file_size_bytes": 49566,
-    "sha256": "dcaac4c0b793aaf2d76478262c8ed582ffd63108286dab316f6d22a8ffd76b96"
+    "sha256": "cce121e01fbe3166a26487045b95eb09eb3c7bb3259ca3e5525b0c95a18257d1"
   },
   "grm": {
     "source_path": "D:\\GitHub\\cloned\\Google\\google-research-master",
     "snapshot_file": "d:\\GitHub\\projects\\Brain Harness\\experiments\\spider_decisions\\results\\snapshots\\grm.json",
-    "entities": 1274,
-    "assertions": 4496,
-    "file_size_bytes": 2662934,
-    "sha256": "aa9d8aae5053c2db8b88ff0829513b35dcd694516911241c07e606cacddadef0"
+    "entities": 1279,
+    "assertions": 4506,
+    "file_size_bytes": 2668518,
+    "sha256": "add37d887fea5bdfeb5c855d1e0b87ec57c2508fdc89252192c5392cabb87e22"
   },
   "gvisor": {
     "source_path": "D:\\GitHub\\cloned\\Google\\gvisor",
     "snapshot_file": "d:\\GitHub\\projects\\Brain Harness\\experiments\\spider_decisions\\results\\snapshots\\gvisor.json",
-    "entities": 46,
-    "assertions": 81,
-    "file_size_bytes": 48569,
-    "sha256": "05b321a17c1d522da8201d6a1df04c9c46d99eaf7aa560f2d3d2153dcbd63de3"
+    "entities": 44,
+    "assertions": 77,
+    "file_size_bytes": 46277,
+    "sha256": "912239ab41deadae27c83bcc97193cc0d784762e269e96a64892e7d4558acf1d"
   },
   "airllm": {
     "source_path": "D:\\GitHub\\cloned\\AIRLLM SUITE\\airllm",
     "snapshot_file": "d:\\GitHub\\projects\\Brain Harness\\experiments\\spider_decisions\\results\\snapshots\\airllm.json",
     "entities": 42,
     "assertions": 56,
-    "file_size_bytes": 33484,
-    "sha256": "f76f06b72ce92b9a041c638a0cf1549661e3bf03c76d0cff160eff00cbbeed5a"
+    "file_size_bytes": 33491,
+    "sha256": "7f719e1be96053e22db935be84dfd3951f9621886c72ed5628c036662286268b"
   },
   "airllm_plus": {
     "source_path": "D:\\GitHub\\cloned\\AIRLLM SUITE\\airllm-plus",
@@ -45,14 +45,14 @@
     "entities": 32,
     "assertions": 36,
     "file_size_bytes": 20437,
-    "sha256": "3efa7dbcf709ad7cb165d185292b3c6cc254a5526f70cac0a086456abb087079"
+    "sha256": "b09fae47816b64baf04d2840496bf7a3af0fd9d5bea30a31b1076c0aa2dd2a93"
   },
   "brain_harness_src": {
     "source_path": "d:\\GitHub\\projects\\Brain Harness\\src\\harness",
     "snapshot_file": "d:\\GitHub\\projects\\Brain Harness\\experiments\\spider_decisions\\results\\snapshots\\brain_harness_src.json",
-    "entities": 49,
-    "assertions": 129,
-    "file_size_bytes": 67351,
-    "sha256": "19e5f7f59a5c6819a7b83beac94fbe3e6e082a0955d0b3b56b0e708b2d0935bb"
+    "entities": 48,
+    "assertions": 133,
+    "file_size_bytes": 69292,
+    "sha256": "80be2769e6312306b738a6bf39d3cc826c9dbb7c8e1fa9919ff979ba353be1a1"
   }
 }

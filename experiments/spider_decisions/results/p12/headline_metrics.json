@@ -2,19 +2,19 @@
   "phase_0": {
     "snapshots_count": 7,
     "roundtrip_all_passed": true,
-    "vault_entities": 630,
-    "vault_assertions": 959,
-    "grm_entities": 1274,
-    "grm_assertions": 4496
+    "vault_entities": 674,
+    "vault_assertions": 1091,
+    "grm_entities": 1279,
+    "grm_assertions": 4506
   },
   "phase_1": {
     "bridges_before": 40,
     "fp_before": 7,
     "fp_rate_before": 0.175,
-    "bridges_after": 34,
+    "bridges_after": 37,
     "tp_after": 32,
-    "fp_after": 2,
-    "fp_rate_after": 0.0588,
+    "fp_after": 0,
+    "fp_rate_after": 0.0,
     "true_bridge_recall": 0.9697,
     "known_false_bridges_gone": {
       "airllm_plus/runtime": true,
@@ -23,17 +23,17 @@
     "regression_all_passed": true
   },
   "phase_2": {
-    "unverified_kis_count": 78,
+    "unverified_kis_count": 70,
     "top5_unverified_ids": [
-      "ki_solla_dmbok_governance_decision_rights",
-      "ki_njoku_uncertainty_aware_systems",
-      "ki_agent_skills_progressive_disclosure",
-      "ki_self_20260907_02",
-      "ki_self_20260907_03"
+      "ki_google_agent_skills_enterprise_evals",
+      "ki_self_20260905_08",
+      "ki_solla_contract_first_medallion_lakehouse",
+      "ki_agent_skills_runtime_security_middleware",
+      "ki_hf_autoresearch_multi_worker_lab"
     ],
-    "total_kis_scanned": 377,
-    "duplicate_candidates_count": 12,
-    "intentional_siblings_count": 0
+    "total_kis_scanned": 382,
+    "duplicate_candidates_count": 0,
+    "intentional_siblings_count": 12
   },
   "phase_3": {
     "domain_classes_count": 11,
@@ -41,21 +41,21 @@
     "top3_blind_spots": [
       {
         "domain": "vision_and_3d_project",
-        "gap_score": 158.0,
+        "gap_score": 79.0,
         "repo_units": 158,
-        "vault_kis": 0
-      },
-      {
-        "domain": "nlp_and_llm_project",
-        "gap_score": 77.0,
-        "repo_units": 154,
         "vault_kis": 1
       },
       {
-        "domain": "rl_and_control_project",
-        "gap_score": 58.0,
-        "repo_units": 58,
-        "vault_kis": 0
+        "domain": "nlp_and_llm_project",
+        "gap_score": 51.3333,
+        "repo_units": 154,
+        "vault_kis": 2
+      },
+      {
+        "domain": "general_ml_project",
+        "gap_score": 29.4444,
+        "repo_units": 265,
+        "vault_kis": 8
       }
     ]
   },
@@ -118,14 +118,14 @@
   "phase_6": {
     "macro_average": {
       "hop0": {
-        "precision": 0.4,
-        "recall": 0.25,
-        "f1": 0.28
+        "precision": 0.96,
+        "recall": 1.0,
+        "f1": 0.9778
       },
       "hop1": {
-        "precision": 0.4,
-        "recall": 0.3,
-        "f1": 0.3333
+        "precision": 0.7527,
+        "recall": 1.0,
+        "f1": 0.8209
       },
       "grep_baseline": {
         "precision": 0.8476,
@@ -135,8 +135,8 @@
     },
     "sparsity": {
       "unique_gold_kis": 13,
-      "gold_kis_with_zero_references_code": 6,
-      "missing_module_edges_count": 12
+      "gold_kis_with_zero_references_code": 0,
+      "missing_module_edges_count": 0
     }
   },
   "phase_7": {
@@ -180,25 +180,26 @@
     }
   },
   "phase_9": {
-    "total_units": 11,
-    "total_depends_on_edges": 52,
+    "total_units": 12,
+    "total_depends_on_edges": 58,
     "spider_cycles": [
-      "ui -> commands -> ui"
+      "services -> creator -> services"
     ],
     "tarjan_scc_count": 1,
     "tarjan_scc_sizes": [
-      11
+      6
     ],
     "ordered_units": [
+      "services",
+      "creator",
       "commands",
       "ui",
       "mcp",
+      "runtime",
       "agent",
-      "creator",
       "bridges",
-      "services",
-      "plugins",
       "ingestion",
+      "plugins",
       "kernel",
       "events"
     ],
@@ -260,11 +261,11 @@
     "disputes_total": 12,
     "raw_correct": 2,
     "raw_accuracy": 0.1667,
-    "grounded_correct": 11,
-    "grounded_accuracy": 0.9167,
-    "accuracy_delta": 0.75,
-    "total_flips": 9,
-    "flips_toward_correct": 9,
+    "grounded_correct": 9,
+    "grounded_accuracy": 0.75,
+    "accuracy_delta": 0.5833,
+    "total_flips": 7,
+    "flips_toward_correct": 7,
     "flips_toward_incorrect": 0
   },
   "summaries_present": {

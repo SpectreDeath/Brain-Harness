@@ -36,6 +36,11 @@ SNAPSHOT_TARGETS: dict[str, Path | None] = {
 }
 
 
+def snapshot_max_files_per_unit(name: str) -> int | None:
+    """Use uncapped file scanning for internal self-audit snapshots."""
+    return None if name == "brain_harness_src" else 60
+
+
 def build_vault_snapshot() -> Any:
     """Build and export the vault ontology snapshot to results/snapshots/vault.json."""
     from ontology_spider.api import export_model
@@ -62,7 +67,12 @@ def main() -> int:
             model = build_vault_snapshot()
         else:
             assert target_path is not None
-            model = load_repo_model(target_path, name, refresh=True)
+            model = load_repo_model(
+                target_path,
+                name,
+                refresh=True,
+                max_files_per_unit=snapshot_max_files_per_unit(name),
+            )
         snap_path = SNAPSHOTS / f"{name}.json"
         ent_count = len(model.entities)
         asrt_count = len(model.assertions)

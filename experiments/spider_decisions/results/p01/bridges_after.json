@@ -121,6 +121,14 @@
   },
   {
     "snapshot": "grm",
+    "subject": "dp_sgd_clipping",
+    "raw_name": "dp_sgd_clipping",
+    "object": "ki_google_research_dp_sgd_clipping",
+    "match_strength": "structured",
+    "ground_truth": null
+  },
+  {
+    "snapshot": "grm",
     "subject": "etcmodel",
     "raw_name": "etcmodel",
     "object": "ki_google_research_etcmodel_long_structured_attention",
@@ -201,11 +209,35 @@
   },
   {
     "snapshot": "grm",
+    "subject": "norml",
+    "raw_name": "norml",
+    "object": "ki_google_research_norml",
+    "match_strength": "structured",
+    "ground_truth": null
+  },
+  {
+    "snapshot": "grm",
+    "subject": "perturbations",
+    "raw_name": "perturbations",
+    "object": "ki_google_research_perturbations",
+    "match_strength": "structured",
+    "ground_truth": null
+  },
+  {
+    "snapshot": "grm",
     "subject": "protenn",
     "raw_name": "protenn",
     "object": "ki_20261110_google_research_gnn_and_scientific_ml",
     "match_strength": "tag",
     "ground_truth": true
+  },
+  {
+    "snapshot": "grm",
+    "subject": "psycholab",
+    "raw_name": "psycholab",
+    "object": "ki_google_research_psycholab",
+    "match_strength": "structured",
+    "ground_truth": null
   },
   {
     "snapshot": "grm",
@@ -230,6 +262,14 @@
     "object": "ki_rea_sig_group1_shard1of1_e7a02dfe",
     "match_strength": "tag",
     "ground_truth": true
+  },
+  {
+    "snapshot": "grm",
+    "subject": "smart_eval",
+    "raw_name": "smart_eval",
+    "object": "ki_google_research_smart_eval",
+    "match_strength": "structured",
+    "ground_truth": null
   },
   {
     "snapshot": "grm",

@@ -1,6 +1,6 @@
 # Phase 2 — Duplicate KI Candidate Review Sheet
 
-Scanned **377** KIs: **0** candidate duplicate pair(s) and **12** intentional sibling pair(s) (connected via `same_domain` / `related_to`).
+Scanned **382** KIs: **0** candidate duplicate pair(s) and **12** intentional sibling pair(s) (connected via `same_domain` / `related_to`).
 
 ## Candidate Duplicate Pairs
 

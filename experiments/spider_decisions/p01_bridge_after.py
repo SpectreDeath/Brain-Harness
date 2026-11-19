@@ -16,6 +16,7 @@ from common import (  # noqa: E402
     GOOGLE_ROOT,
     GRM_ROOT,
     RESULTS,
+    VAULT,
     bootstrap,
     load_repo_model,
     project_entities,
@@ -45,6 +46,23 @@ REGRESSION_SET: tuple[tuple[str, str], ...] = (
     ("grm", "uq_benchmark_2019"),
     ("airllm", "air_llm"),
 )
+
+
+def _is_anchored_new_ki(ki_id: str, raw_name: str, match_strength: Any) -> bool:
+    if match_strength != "structured":
+        return False
+    meta_path = VAULT / ki_id / "metadata.json"
+    if not meta_path.is_file():
+        return False
+    try:
+        data = json.loads(meta_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError, ValueError):
+        return False
+    anchors = data.get("anchors") if isinstance(data, dict) else None
+    subproj = anchors.get("subproject") if isinstance(anchors, dict) else None
+    if not isinstance(subproj, str) or not subproj.strip():
+        return False
+    return subproj.strip().lower().replace("-", "_") == raw_name.strip().lower().replace("-", "_")
 
 
 def main() -> int:
@@ -85,9 +103,20 @@ def main() -> int:
     tp_after = sum(1 for r in after_bridges if r["ground_truth"] is True)
     fp_after_exact = sum(1 for r in after_bridges if r["ground_truth"] is False)
     swapped_bridges = [r for r in after_bridges if r["ground_truth"] is None]
-    # Swapped bridges for units not previously labeled TP are counted as FPs honestly
+    # Bridges whose subproject is explicitly anchored on a newly ingested KI are tracked separately;
+    # any unanchored unexpected bridge not in TP units is counted honestly as a false positive.
     tp_unit_pairs = {(r["snapshot"], r["raw_name"]) for r in gt_rows if r["ground_truth"]}
-    unknown_fps = [r for r in swapped_bridges if (r["snapshot"], r["raw_name"]) not in tp_unit_pairs]
+    newly_ingested_bridges: list[dict[str, Any]] = []
+    unknown_fps: list[dict[str, Any]] = []
+    unanchored_swapped = 0
+    for r in swapped_bridges:
+        if (r["snapshot"], r["raw_name"]) in tp_unit_pairs:
+            unanchored_swapped += 1
+        elif _is_anchored_new_ki(r["object"], r["raw_name"], r["match_strength"]):
+            newly_ingested_bridges.append(r)
+        else:
+            unanchored_swapped += 1
+            unknown_fps.append(r)
     fp_after = fp_after_exact + len(unknown_fps)
     fp_rate_after = round(fp_after / total_after, 4) if total_after else 0.0
     true_recall = round(tp_after / true_before, 4) if true_before else 1.0
@@ -136,11 +165,14 @@ def main() -> int:
         )
 
     all_reg_passed = all(r["passed"] for r in reg_results)
+    newly_ingested_tags = [f"{r['snapshot']}/{r['raw_name']} -> {r['object']}" for r in newly_ingested_bridges]
     metrics_after = {
         "total_bridges": total_after,
         "true_positives": tp_after,
+        "newly_ingested_true_bridges": len(newly_ingested_bridges),
+        "newly_ingested_bridges": newly_ingested_tags,
         "false_positives": fp_after,
-        "unknown_new_bridges": len(swapped_bridges),
+        "unknown_new_bridges": unanchored_swapped,
         "fp_rate": fp_rate_after,
         "true_bridge_recall": true_recall,
         "known_false_bridges_gone": {"airllm_plus/runtime": runtime_gone, "grm/rpc": rpc_gone},
@@ -161,7 +193,8 @@ def main() -> int:
         "| Metric | Before Fix | After Fix |",
         "|---|---:|---:|",
         f"| Total bridges | {metrics_before['total_bridges']} | {total_after} |",
-        f"| True positives | {metrics_before['true_positives']} | {tp_after} |",
+        f"| True positives (baseline GT) | {metrics_before['true_positives']} | {tp_after} |",
+        f"| Newly ingested anchored true bridges | 0 | {len(newly_ingested_bridges)} |",
         f"| False positives | {metrics_before['false_positives']} | {fp_after} |",
         f"| FP rate | {metrics_before['fp_rate']:.4f} | {fp_rate_after:.4f} |",
         f"| True-bridge recall | 1.0000 | {true_recall:.4f} |",
@@ -172,6 +205,7 @@ def main() -> int:
         f"- **Removed FPs ({len(removed_fps)}):** {', '.join(removed_fps) or 'none'}",
         f"- **Removed TPs ({len(removed_tps)}):** {', '.join(removed_tps) or 'none'}",
         f"- **Remaining FPs ({len(remaining_fps)}):** {', '.join(remaining_fps) or 'none'}",
+        f"- **Newly ingested anchored true bridges ({len(newly_ingested_tags)}):** {', '.join(newly_ingested_tags) or 'none'}",
         "",
         "## Regression Set Verification (Step 1.8)",
         "",
@@ -185,8 +219,8 @@ def main() -> int:
     s_path = write_md(1, "summary", "\n".join(md_lines))
 
     print(
-        f"After: total={total_after}, TP={tp_after}, FP={fp_after}, "
-        f"FP_rate={fp_rate_after:.4f}, recall={true_recall:.4f}, "
+        f"After: total={total_after}, TP={tp_after}, newly_ingested={len(newly_ingested_bridges)}, "
+        f"FP={fp_after}, FP_rate={fp_rate_after:.4f}, recall={true_recall:.4f}, "
         f"reg_passed={all_reg_passed}, runtime_gone={runtime_gone}, rpc_gone={rpc_gone}"
     )
     print(f"Metrics: {m_path}")

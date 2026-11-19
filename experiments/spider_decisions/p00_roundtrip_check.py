@@ -18,7 +18,7 @@ from common import (  # noqa: E402
     spider,
     write_json,
 )
-from p00_snapshot import SNAPSHOT_TARGETS  # noqa: E402
+from p00_snapshot import SNAPSHOT_TARGETS, snapshot_max_files_per_unit  # noqa: E402
 
 bootstrap()
 
@@ -40,7 +40,12 @@ def main() -> int:
             live = load_vault_model()
         else:
             assert target_path is not None
-            live = svc.load_repository_model(target_path, vault_dir=VAULT, max_depth=4, max_files_per_unit=60)
+            live = svc.load_repository_model(
+                target_path,
+                vault_dir=VAULT,
+                max_depth=4,
+                max_files_per_unit=snapshot_max_files_per_unit(name),
+            )
 
         cached_triples = _triple_set(cached)
         live_triples = _triple_set(live)

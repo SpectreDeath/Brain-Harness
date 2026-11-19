@@ -1,6 +1,14 @@
 {
-  "total_bridges": 32,
+  "total_bridges": 37,
   "true_positives": 32,
+  "newly_ingested_true_bridges": 5,
+  "newly_ingested_bridges": [
+    "grm/dp_sgd_clipping -> ki_google_research_dp_sgd_clipping",
+    "grm/norml -> ki_google_research_norml",
+    "grm/perturbations -> ki_google_research_perturbations",
+    "grm/psycholab -> ki_google_research_psycholab",
+    "grm/smart_eval -> ki_google_research_smart_eval"
+  ],
   "false_positives": 0,
   "unknown_new_bridges": 0,
   "fp_rate": 0.0,

@@ -64,6 +64,11 @@
           "references_code"
         ],
         [
+          "ki_google_research_smart_eval",
+          0,
+          "references_code"
+        ],
+        [
           "ki_google_research_uq_benchmark_2019_calibration_shift",
           0,
           "references_code"
@@ -82,6 +87,11 @@
         ],
         [
           "ki_google_research_cisc_confidence_voting",
+          0,
+          "references_code"
+        ],
+        [
+          "ki_google_research_smart_eval",
           0,
           "references_code"
         ],
@@ -106,6 +116,11 @@
           "related_to"
         ],
         [
+          "ki_google_research_psycholab",
+          1,
+          "same_domain"
+        ],
+        [
           "ki_google_research_scaling_transformer_inference",
           1,
           "related_to"
@@ -118,19 +133,19 @@
       ],
       "hop0": {
         "tp": 4,
-        "retrieved_count": 4,
+        "retrieved_count": 5,
         "gold_count": 4,
-        "precision": 1.0,
+        "precision": 0.8,
         "recall": 1.0,
-        "f1": 1.0
+        "f1": 0.8889
       },
       "hop1": {
         "tp": 4,
-        "retrieved_count": 8,
+        "retrieved_count": 10,
         "gold_count": 4,
-        "precision": 0.5,
+        "precision": 0.4,
         "recall": 1.0,
-        "f1": 0.6667
+        "f1": 0.5714
       },
       "grep_baseline": {
         "tp": 3,
@@ -198,9 +213,19 @@
           "related_to"
         ],
         [
+          "ki_google_research_psycholab",
+          1,
+          "same_domain"
+        ],
+        [
           "ki_google_research_scaling_transformer_inference",
           1,
           "related_to"
+        ],
+        [
+          "ki_google_research_smart_eval",
+          1,
+          "same_domain"
         ],
         [
           "ki_google_research_uq_benchmark_2019_calibration_shift",
@@ -228,11 +253,11 @@
       },
       "hop1": {
         "tp": 4,
-        "retrieved_count": 9,
+        "retrieved_count": 11,
         "gold_count": 4,
-        "precision": 0.4444,
+        "precision": 0.3636,
         "recall": 1.0,
-        "f1": 0.6154
+        "f1": 0.5333
       },
       "grep_baseline": {
         "tp": 4,
@@ -367,14 +392,14 @@
   ],
   "macro_average": {
     "hop0": {
-      "precision": 1.0,
+      "precision": 0.96,
       "recall": 1.0,
-      "f1": 1.0
+      "f1": 0.9778
     },
     "hop1": {
-      "precision": 0.7889,
+      "precision": 0.7527,
       "recall": 1.0,
-      "f1": 0.8564
+      "f1": 0.8209
     },
     "grep_baseline": {
       "precision": 0.8476,

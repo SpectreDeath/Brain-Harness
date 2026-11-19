@@ -4,8 +4,9 @@
 
 | Metric | Before Fix | After Fix |
 |---|---:|---:|
-| Total bridges | 40 | 32 |
-| True positives | 33 | 32 |
+| Total bridges | 40 | 37 |
+| True positives (baseline GT) | 33 | 32 |
+| Newly ingested anchored true bridges | 0 | 5 |
 | False positives | 7 | 0 |
 | FP rate | 0.1750 | 0.0000 |
 | True-bridge recall | 1.0000 | 0.9697 |
@@ -16,6 +17,7 @@
 - **Removed FPs (7):** grm/rpc -> ki_20260831_openclaw_02, gvisor/governance -> ki_responsible_ai_prototyping, gvisor/shim -> ki_shim_bounded_session_and_layered_skill_loader, gvisor/tools -> ki_20260830_grok_01, airllm/data -> ki_solla_dikw_data_asset_continuum, airllm/eval -> ki_rea_sig_anthea_eval_1f061854, airllm_plus/runtime -> ki_agent_reach_layered_backend_fallback
 - **Removed TPs (1):** grm/aloe -> ki_20261110_google_research_gnn_and_scientific_ml
 - **Remaining FPs (0):** none
+- **Newly ingested anchored true bridges (5):** grm/dp_sgd_clipping -> ki_google_research_dp_sgd_clipping, grm/norml -> ki_google_research_norml, grm/perturbations -> ki_google_research_perturbations, grm/psycholab -> ki_google_research_psycholab, grm/smart_eval -> ki_google_research_smart_eval
 
 ## Regression Set Verification (Step 1.8)
 

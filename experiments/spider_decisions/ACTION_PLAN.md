@@ -62,7 +62,7 @@ A 🧑 **HUMAN CHECKPOINT** must never present the user with a single list longe
 - [x] **Phase 6** — P2: Ingest Next-5 research targets (`dp_sgd_clipping`, `smart_eval`, `perturbations`, `norml`, `psycholab`)
 - [x] **Phase 7** — P3: Polish `ontology_spider` — zero residual false bridges, reverse blast radius & uncapped self-scan
 - [x] **Phase 8** — P4: Dual-capped LRU eviction & bounded prefetch for lazily-staged plugin artifacts
-- [ ] **Phase 9** — Final re-benchmark, quality gates & `ACTION_SUMMARY.md`
+- [x] **Phase 9** — Final re-benchmark, quality gates & `ACTION_SUMMARY.md`
 
 ### Why this order
 ```mermaid
@@ -367,16 +367,16 @@ Updated `plugins/memory_and_epistemics/ontology_spider/repo_adapter.py`, `src/ha
 **Depends on:** Phases 1, 2, 4, 5, 6, 7, 8. **Model tier:** ⚠️ **high** for writing `ACTION_SUMMARY.md`.
 
 ### Steps
-- [ ] **9.1** Refresh snapshots (`vault`, `grm`, `gvisor`, `airllm`, `airllm_plus`, `google_portfolio_root`, `brain_harness_src`) via `experiments/spider_decisions/p00_snapshot.py` + `p00_roundtrip_check.py`, and re-run affected scripts:
+- [x] **9.1** Refresh snapshots (`vault`, `grm`, `gvisor`, `airllm`, `airllm_plus`, `google_portfolio_root`, `brain_harness_src`) via `experiments/spider_decisions/p00_snapshot.py` + `p00_roundtrip_check.py`, and re-run affected scripts:
   `p01_bridge_after.py`, `p02_unverified_priority.py`, `p02_duplicates.py`, `p03_blind_spots.py`, `p06_eval_retrieval.py`, `p09_refactor_order.py`, `p11_grounded_voting.py`, and `p12_collect.py`.
-- [ ] **9.2** ⚠️ **ESCALATE** — Write `experiments/spider_decisions/ACTION_SUMMARY.md` comparing `REPORT.md` baseline vs post-action metrics across all 8 improvements, citing exact JSON/Markdown evidence files and test outputs for every claim.
-- [ ] **9.3** Run final quality gates across the repo:
+- [x] **9.2** ⚠️ **ESCALATE** — Write `experiments/spider_decisions/ACTION_SUMMARY.md` comparing `REPORT.md` baseline vs post-action metrics across all 8 improvements, citing exact JSON/Markdown evidence files and test outputs for every claim.
+- [x] **9.3** Run final quality gates across the repo:
   ```powershell
   .venv\Scripts\python.exe -m ruff check .
   .venv\Scripts\python.exe -m ruff format --check experiments/spider_decisions
   .venv\Scripts\python.exe -m pytest tests/test_repo_ontology_seam.py tests/test_ontology_spider_service.py tests/test_ontology_spider_adapter_fixes.py tests/test_swarm_cisc_integration.py tests/test_uncertainty_cisc_calibration.py tests/test_layer_import_boundaries.py tests/test_plugin_artifact_cache.py tests/test_service_storage_vault_integrity.py -q
   ```
-- [ ] **9.4** Append final entry to `experiments/spider_decisions/ACTION_LOG.md`, tick remaining boxes in this file, create local commit `docs(spider-followup): phase 9 final action summary and verification`, and **ask before pushing**.
+- [x] **9.4** Append final entry to `experiments/spider_decisions/ACTION_LOG.md`, tick remaining boxes in this file, create local commit `docs(spider-followup): phase 9 final action summary and verification`, and **ask before pushing**.
 
 ### Outputs
 `experiments/spider_decisions/ACTION_SUMMARY.md`, refreshed `results/p12/headline_metrics.json`, final `ACTION_LOG.md`.

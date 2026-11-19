@@ -7,9 +7,9 @@ Evaluated **12** disputes (`verified=1.0x`, `unverified=0.6x`, `no KI=0.4x`) usi
 | Metric | Value |
 |---|---:|
 | Raw CISC accuracy | 2/12 (16.7%) |
-| Evidence-grounded accuracy | 11/12 (91.7%) |
-| Total winner flips | 9 |
-| Flips toward **correct** (verified KI) | 9 |
+| Evidence-grounded accuracy | 9/12 (75.0%) |
+| Total winner flips | 7 |
+| Flips toward **correct** (verified KI) | 7 |
 | Flips toward **incorrect** | 0 |
 
 ## Per-Dispute Breakdown
@@ -17,9 +17,9 @@ Evaluated **12** disputes (`verified=1.0x`, `unverified=0.6x`, `no KI=0.4x`) usi
 | # | Topic | Raw Winner | Grounded Winner | Correct Choice | Flipped | Grounded OK |
 |---:|---|---|---|---|---|---|
 | 1 | Vector index asymmetric rescoring budget | `arrow_mmap_flat_scan` (`False`) | `scann_anisotropic_rescore` | `scann_anisotropic_rescore` | True | True |
-| 2 | Uncertainty guard OOD human escalation gate | `three_layer_heuristics` (`False`) | `aspest_band_escalation` | `aspest_band_escalation` | True | True |
+| 2 | Uncertainty guard OOD human escalation gate | `three_layer_heuristics` (`False`) | `three_layer_heuristics` | `aspest_band_escalation` | False | False |
 | 3 | Swarm multi-trace confidence aggregation strategy | `unweighted_majority` (`False`) | `cisc_softmax_wqd` | `cisc_softmax_wqd` | True | True |
-| 4 | Distribution-shift calibration evaluation metric | `single_static_threshold` (`False`) | `selectivity_sweep_brier` | `selectivity_sweep_brier` | True | True |
+| 4 | Distribution-shift calibration evaluation metric | `single_static_threshold` (`False`) | `single_static_threshold` | `selectivity_sweep_brier` | False | False |
 | 5 | Lazily-staged plugin disk artifact cache policy | `xxhash_arrow_stream` (`False`) | `superblock_dual_lru` | `superblock_dual_lru` | True | True |
 | 6 | MoE layer offloading pinned host buffer bound | `unbounded_pin_all` (`False`) | `mxfp4_capped_pinned_2gib` | `mxfp4_capped_pinned_2gib` | True | True |
 | 7 | Untrusted external plugin filesystem isolation | `ad_hoc_runner_env` (`False`) | `gvisor_sentry_gofer_fd` | `gvisor_sentry_gofer_fd` | True | True |

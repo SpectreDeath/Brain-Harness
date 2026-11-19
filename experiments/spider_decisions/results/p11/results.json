@@ -3,11 +3,11 @@
     "disputes_total": 12,
     "raw_correct": 2,
     "raw_accuracy": 0.1667,
-    "grounded_correct": 11,
-    "grounded_accuracy": 0.9167,
-    "accuracy_delta": 0.75,
-    "total_flips": 9,
-    "flips_toward_correct": 9,
+    "grounded_correct": 9,
+    "grounded_accuracy": 0.75,
+    "accuracy_delta": 0.5833,
+    "total_flips": 7,
+    "flips_toward_correct": 7,
     "flips_toward_incorrect": 0
   },
   "disputes": [
@@ -62,8 +62,8 @@
         },
         "three_layer_heuristics": {
           "ki_id": "ki_njoku_uncertainty_aware_systems",
-          "status": "unverified",
-          "multiplier": 0.6
+          "status": "verified",
+          "multiplier": 1.0
         }
       },
       "raw_winner": "three_layer_heuristics",
@@ -72,13 +72,13 @@
         "three_layer_heuristics": 0.609145,
         "aspest_band_escalation": 0.390855
       },
-      "grounded_winner": "aspest_band_escalation",
-      "grounded_correct": true,
+      "grounded_winner": "three_layer_heuristics",
+      "grounded_correct": false,
       "grounded_weights": {
-        "three_layer_heuristics": 0.385371,
-        "aspest_band_escalation": 0.614629
+        "three_layer_heuristics": 0.609145,
+        "aspest_band_escalation": 0.390855
       },
-      "flipped": true
+      "flipped": false
     },
     {
       "dispute_id": 3,
@@ -124,8 +124,8 @@
         },
         "single_static_threshold": {
           "ki_id": "ki_njoku_uncertainty_aware_systems",
-          "status": "unverified",
-          "multiplier": 0.6
+          "status": "verified",
+          "multiplier": 1.0
         }
       },
       "raw_winner": "single_static_threshold",
@@ -134,13 +134,13 @@
         "single_static_threshold": 0.534379,
         "selectivity_sweep_brier": 0.465621
       },
-      "grounded_winner": "selectivity_sweep_brier",
-      "grounded_correct": true,
+      "grounded_winner": "single_static_threshold",
+      "grounded_correct": false,
       "grounded_weights": {
-        "single_static_threshold": 0.309498,
-        "selectivity_sweep_brier": 0.690502
+        "single_static_threshold": 0.534379,
+        "selectivity_sweep_brier": 0.465621
       },
-      "flipped": true
+      "flipped": false
     },
     {
       "dispute_id": 5,
