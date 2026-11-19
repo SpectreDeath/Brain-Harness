@@ -59,7 +59,7 @@ A 🧑 **HUMAN CHECKPOINT** must never present the user with a single list longe
 - [x] **Phase 3** — P1: Break `ui <-> commands` cycle & `services/` upward leaks (zero kernel edits)
 - [x] **Phase 4** — P1 (Arch): Decouple `kernel/runtime/` composition root & verify SCC reduction
 - [x] **Phase 5** — P2: Vault hygiene — verify top-8 central unverified KIs & triage 12 duplicate pairs
-- [ ] **Phase 6** — P2: Ingest Next-5 research targets (`dp_sgd_clipping`, `smart_eval`, `perturbations`, `norml`, `psycholab`)
+- [x] **Phase 6** — P2: Ingest Next-5 research targets (`dp_sgd_clipping`, `smart_eval`, `perturbations`, `norml`, `psycholab`)
 - [x] **Phase 7** — P3: Polish `ontology_spider` — zero residual false bridges, reverse blast radius & uncapped self-scan
 - [x] **Phase 8** — P4: Dual-capped LRU eviction & bounded prefetch for lazily-staged plugin artifacts
 - [ ] **Phase 9** — Final re-benchmark, quality gates & `ACTION_SUMMARY.md`
@@ -292,11 +292,11 @@ Updated metadata in `.harness/knowledge/*/metadata.json`, refreshed `results/p02
 **Depends on:** Phase 1 (and ideally Phase 7). **Model tier:** medium; **human checkpoint before writing KIs**.
 
 ### Steps
-- [ ] **6.1** Inspect each target subproject under `D:\GitHub\cloned\Google\google-research-master\google-research-master\<unit>` (README, arXiv ID, core modules, tests). Compute exact line spans and SHA-256 hashes for verifiable `isnad.claims[]`, plus structured `source_target`/`anchors` and `edges` (`distilled_from`, `same_domain`/`related_to`, and canonical `references_code` where relevant).
-- [ ] **6.2** 🧑 **HUMAN CHECKPOINT (5 KIs `<= 8`)** — Present the 5 draft KI specifications (`ki_id`, title, category, tags, claims, edges) to the user for approval before writing to `.harness/knowledge/**`.
-- [ ] **6.3** Write the 5 approved dual-file KIs (`metadata.json` + `summary.md`) under `.harness/knowledge/ki_google_research_<unit>/` following Rule 40 (`isnad.status = "VERIFIED"`, `anchors.subproject = "<unit>"`).
-- [ ] **6.4** Refresh `results/snapshots/vault.json` and `results/snapshots/grm.json`; assert all 5 units now resolve `harness_learned=True` (`learned_match_strength="structured"`) and re-run `experiments/spider_decisions/p03_blind_spots.py` to record updated domain gap metrics.
-- [ ] **6.5** Run `pytest tests/test_service_storage_vault_integrity.py tests/test_track4_track5_vault_integrity.py tests/test_repo_ontology_seam.py -q`, append `ACTION_LOG.md`, local commit `feat(spider-followup): phase 6 ingest next-5 grm shortlist picks`.
+- [x] **6.1** Inspect each target subproject under `D:\GitHub\cloned\Google\google-research-master\google-research-master\<unit>` (README, arXiv ID, core modules, tests). Compute exact line spans and SHA-256 hashes for verifiable `isnad.claims[]`, plus structured `source_target`/`anchors` and `edges` (`distilled_from`, `same_domain`/`related_to`, and canonical `references_code` where relevant).
+- [x] **6.2** 🧑 **HUMAN CHECKPOINT (5 KIs `<= 8`)** — Present the 5 draft KI specifications (`ki_id`, title, category, tags, claims, edges) to the user for approval before writing to `.harness/knowledge/**`.
+- [x] **6.3** Write the 5 approved dual-file KIs (`metadata.json` + `summary.md`) under `.harness/knowledge/ki_google_research_<unit>/` following Rule 40 (`isnad.status = "VERIFIED"`, `anchors.subproject = "<unit>"`).
+- [x] **6.4** Refresh `results/snapshots/vault.json` and `results/snapshots/grm.json`; assert all 5 units now resolve `harness_learned=True` (`learned_match_strength="structured"`) and re-run `experiments/spider_decisions/p03_blind_spots.py` to record updated domain gap metrics.
+- [x] **6.5** Run `pytest tests/test_service_storage_vault_integrity.py tests/test_track4_track5_vault_integrity.py tests/test_repo_ontology_seam.py -q`, append `ACTION_LOG.md`, local commit `feat(spider-followup): phase 6 ingest next-5 grm shortlist picks`.
 
 ### Outputs
 5 new verified dual-file KIs under `.harness/knowledge/`, refreshed `results/p03/blind_spots.{json,md}`.

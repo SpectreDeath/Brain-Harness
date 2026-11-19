@@ -12,15 +12,15 @@
     {
       "domain_class": "vision_and_3d_project",
       "repo_units": 158,
-      "learned_units": 5,
-      "unlearned_units": 153,
-      "vault_kis": 0,
-      "gap_score": 158.0,
-      "learned_pct": 3.16,
+      "learned_units": 6,
+      "unlearned_units": 152,
+      "vault_kis": 1,
+      "gap_score": 79.0,
+      "learned_pct": 3.8,
       "per_snapshot": {
         "grm": {
           "repo_units": 155,
-          "learned_units": 2
+          "learned_units": 3
         },
         "google_portfolio_root": {
           "repo_units": 3,
@@ -32,15 +32,15 @@
     {
       "domain_class": "nlp_and_llm_project",
       "repo_units": 154,
-      "learned_units": 6,
-      "unlearned_units": 148,
-      "vault_kis": 1,
-      "gap_score": 77.0,
-      "learned_pct": 3.9,
+      "learned_units": 7,
+      "unlearned_units": 147,
+      "vault_kis": 2,
+      "gap_score": 51.3333,
+      "learned_pct": 4.55,
       "per_snapshot": {
         "grm": {
           "repo_units": 151,
-          "learned_units": 5
+          "learned_units": 6
         },
         "airllm": {
           "repo_units": 3,
@@ -50,37 +50,17 @@
       "rank": 2
     },
     {
-      "domain_class": "rl_and_control_project",
-      "repo_units": 58,
-      "learned_units": 3,
-      "unlearned_units": 55,
-      "vault_kis": 0,
-      "gap_score": 58.0,
-      "learned_pct": 5.17,
-      "per_snapshot": {
-        "grm": {
-          "repo_units": 57,
-          "learned_units": 2
-        },
-        "google_portfolio_root": {
-          "repo_units": 1,
-          "learned_units": 1
-        }
-      },
-      "rank": 3
-    },
-    {
       "domain_class": "general_ml_project",
       "repo_units": 265,
       "learned_units": 3,
       "unlearned_units": 262,
-      "vault_kis": 7,
-      "gap_score": 33.125,
+      "vault_kis": 8,
+      "gap_score": 29.4444,
       "learned_pct": 1.13,
       "per_snapshot": {
         "grm": {
           "repo_units": 257,
-          "learned_units": 0
+          "learned_units": 1
         },
         "google_portfolio_root": {
           "repo_units": 2,
@@ -88,30 +68,34 @@
         },
         "gvisor": {
           "repo_units": 5,
-          "learned_units": 2
+          "learned_units": 1
         },
         "airllm_plus": {
           "repo_units": 1,
           "learned_units": 0
         }
       },
-      "rank": 4
+      "rank": 3
     },
     {
-      "domain_class": "optimization_and_compression_project",
-      "repo_units": 48,
+      "domain_class": "rl_and_control_project",
+      "repo_units": 58,
       "learned_units": 4,
-      "unlearned_units": 44,
+      "unlearned_units": 54,
       "vault_kis": 1,
-      "gap_score": 24.0,
-      "learned_pct": 8.33,
+      "gap_score": 29.0,
+      "learned_pct": 6.9,
       "per_snapshot": {
         "grm": {
-          "repo_units": 48,
-          "learned_units": 4
+          "repo_units": 57,
+          "learned_units": 3
+        },
+        "google_portfolio_root": {
+          "repo_units": 1,
+          "learned_units": 1
         }
       },
-      "rank": 5
+      "rank": 4
     },
     {
       "domain_class": "science_and_bio_project",
@@ -125,6 +109,22 @@
         "grm": {
           "repo_units": 24,
           "learned_units": 1
+        }
+      },
+      "rank": 5
+    },
+    {
+      "domain_class": "optimization_and_compression_project",
+      "repo_units": 48,
+      "learned_units": 5,
+      "unlearned_units": 43,
+      "vault_kis": 2,
+      "gap_score": 16.0,
+      "learned_pct": 10.42,
+      "per_snapshot": {
+        "grm": {
+          "repo_units": 48,
+          "learned_units": 5
         }
       },
       "rank": 6
@@ -188,11 +188,11 @@
     {
       "domain_class": "systems_and_runtime_project",
       "repo_units": 6,
-      "learned_units": 3,
-      "unlearned_units": 3,
+      "learned_units": 2,
+      "unlearned_units": 4,
       "vault_kis": 25,
       "gap_score": 0.2308,
-      "learned_pct": 50.0,
+      "learned_pct": 33.33,
       "per_snapshot": {
         "grm": {
           "repo_units": 2,
@@ -204,7 +204,7 @@
         },
         "gvisor": {
           "repo_units": 2,
-          "learned_units": 1
+          "learned_units": 0
         }
       },
       "rank": 10

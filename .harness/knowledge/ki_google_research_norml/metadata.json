@@ -1,0 +1,73 @@
+{
+  "id": "ki_google_research_norml",
+  "title": "Google Research NoRML: No-Reward Meta-Learning with Learned Advantage Functions & Weight Offsets",
+  "category": "rl_and_control",
+  "schema_version": "1.0.0",
+  "source_target": "https://github.com/google-research/google-research",
+  "detected_format": "git_repository",
+  "created_at": "2026-11-19T10:20:00Z",
+  "author": "repo-triad-forge",
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "tags": [
+    "norml",
+    "google_research",
+    "google-research",
+    "meta_rl",
+    "maml",
+    "learned_advantage",
+    "ppo",
+    "dynamics_adaptation",
+    "arxiv_1903_01063"
+  ],
+  "anchors": {
+    "repo": "https://github.com/google-research/google-research",
+    "subproject": "norml",
+    "arxiv": "https://arxiv.org/abs/1903.01063"
+  },
+  "edges": [
+    {
+      "type": "distilled_from",
+      "target": "https://github.com/google-research/google-research",
+      "target_kind": "external_repo",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Subproject norml in snapshot google-research-master (archive snapshot, non-git); arXiv:1903.01063"
+    },
+    {
+      "type": "related_to",
+      "target": "ki_google_research_distracting_control_suite",
+      "target_kind": "knowledge_item",
+      "derived": false,
+      "confidence": 0.9,
+      "description": "Complements continuous-control robustness shifts with test-time no-reward dynamics adaptation"
+    }
+  ],
+  "isnad": {
+    "status": "VERIFIED",
+    "source_repo": "https://github.com/google-research/google-research",
+    "snapshot": "google-research-master (archive snapshot, non-git)",
+    "subproject": "norml",
+    "verified_at": "2026-11-19T10:20:00Z",
+    "claims": [
+      {
+        "assertion": "MAMLReinforcementLearning adapts policies under dynamics shifts without test-time rewards by computing inner advantages from a meta-learned advantage network over [s_{t+1}, s_t, a_t] (learn_advantage_function_inner) and applying a meta-learned parameter offset test_weights = theta - a * grad + e (learn_offset), while optimizing the outer meta-objective with clipped PPO (ppo_clip_value).",
+        "file": "norml/maml_rl.py",
+        "lines": "L128-L154,L291-L390",
+        "sha256_hash": "02d3ae9a964e2478266b4b48e2f092cd6dcfee00763f09b82858b6e60bfc7896",
+        "verified": true
+      },
+      {
+        "assertion": "Declarative {ENV}_{ALG} config registry (e.g. MOVE_POINT_ROTATE_MAML with task_env_modifiers, per-tensor learn_inner_lr_tensor, learn_offset, ppo_clip_value=0.2) systematically isolates DR, MAML, MAML_OFFSET, MAML_LAF, and NORML ablations.",
+        "file": "norml/config_maml.py",
+        "lines": "L41-L90",
+        "sha256_hash": "553085108eb7f4b8548e9081425c65b48c372a6283ac16084a5286f2c139e826",
+        "verified": true
+      }
+    ]
+  },
+  "distilled_learning": "Enable test-time reinforcement-learning adaptation without external reward signals by meta-learning both an inner-loop advantage estimator conditioned on state transitions (s_t, a_t, s_{t+1}) and a learned policy parameter adaptation offset under clipped PPO outer training."
+}

@@ -44,6 +44,9 @@
     "performance": "unmapped",
     "scientific_computing/machine_learning": "general_ml_project",
     "security_and_forensics/auditing": "privacy_fairness_safety_project",
-    "testing": "unmapped"
+    "testing": "unmapped",
+    "optimization_and_compression": "optimization_and_compression_project",
+    "rl_and_control": "rl_and_control_project",
+    "vision_and_3d": "vision_and_3d_project"
   }
 }

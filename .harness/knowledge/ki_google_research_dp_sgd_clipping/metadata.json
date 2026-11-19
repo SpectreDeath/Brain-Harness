@@ -1,0 +1,81 @@
+{
+  "id": "ki_google_research_dp_sgd_clipping",
+  "title": "Google Research DP-SGD Clipping: In-Place Fast Gradient Norm, Ghost Norm & FFT Dispatch for CNNs",
+  "category": "machine_learning",
+  "schema_version": "1.0.0",
+  "source_target": "https://github.com/google-research/google-research",
+  "detected_format": "git_repository",
+  "created_at": "2026-11-19T10:20:00Z",
+  "author": "repo-triad-forge",
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "tags": [
+    "dp_sgd_clipping",
+    "google_research",
+    "google-research",
+    "dp_sgd",
+    "gradient_clipping",
+    "ghost_norm",
+    "fft_convolution",
+    "differential_privacy",
+    "arxiv_2205_10683"
+  ],
+  "anchors": {
+    "repo": "https://github.com/google-research/google-research",
+    "subproject": "dp_sgd_clipping",
+    "arxiv": "https://arxiv.org/abs/2205.10683"
+  },
+  "edges": [
+    {
+      "type": "distilled_from",
+      "target": "https://github.com/google-research/google-research",
+      "target_kind": "external_repo",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Subproject dp_sgd_clipping in snapshot google-research-master (archive snapshot, non-git); arXiv:2205.10683"
+    },
+    {
+      "type": "related_to",
+      "target": "ki_airllm_chunked_vocab_cross_entropy",
+      "target_kind": "knowledge_item",
+      "derived": false,
+      "confidence": 0.9,
+      "description": "Shares memory-bounded backward/gradient tensor reformulation without full intermediate materialization"
+    },
+    {
+      "type": "related_to",
+      "target": "ki_20261110_google_research_gnn_and_scientific_ml",
+      "target_kind": "knowledge_item",
+      "derived": false,
+      "confidence": 0.95,
+      "description": "Sibling subproject distillation from https://github.com/google-research/google-research"
+    }
+  ],
+  "isnad": {
+    "status": "VERIFIED",
+    "source_repo": "https://github.com/google-research/google-research",
+    "snapshot": "google-research-master (archive snapshot, non-git)",
+    "subproject": "dp_sgd_clipping",
+    "verified_at": "2026-11-19T10:20:00Z",
+    "claims": [
+      {
+        "assertion": "fast_cnn_grad_norm.py implements three incomparable per-sample 1D-CNN squared L2 gradient-norm algorithms without materializing unfolded per-sample Jacobians: in_place_fast_grad_norm (np.lib.stride_tricks.sliding_window_view + np.tensordot), in_place_ghost_norm (double output-index Frobenius inner product), and in_place_norm_fft (circulant-matrix convolution via np.fft.fft/ifft on strided padded partial gradients).",
+        "file": "dp_sgd_clipping/fast_cnn_grad_norm.py",
+        "lines": "L61-L291",
+        "sha256_hash": "2abe8df40e02e49bf04b75c4e9b1b817995d37bf325f462825f7bdc7178cab4c",
+        "verified": true
+      },
+      {
+        "assertion": "grad_norm_computation_selector estimates regime-dependent asymptotic runtimes (fft, ghost, fast_grad) weighted by empirical constants (20, 6, 4, 3, 2) and delegates to _select_method (L113-L154) honoring memory_efficient_implementation_required.",
+        "file": "dp_sgd_clipping/fast_cnn_grad_norm.py",
+        "lines": "L430-L536",
+        "sha256_hash": "2abe8df40e02e49bf04b75c4e9b1b817995d37bf325f462825f7bdc7178cab4c",
+        "verified": true
+      }
+    ]
+  },
+  "distilled_learning": "Avoid O(output_dim * kernel * channels) per-sample Jacobian materialization in differentially private CNN training by dispatching across in-place sliding-window, ghost-norm Gramian, and FFT circulant estimators according to layer shape and memory constraints."
+}

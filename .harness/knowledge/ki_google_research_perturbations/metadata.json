@@ -1,0 +1,73 @@
+{
+  "id": "ki_google_research_perturbations",
+  "title": "Google Research Differentiable Perturbed Optimizers & Fenchel-Young Losses",
+  "category": "optimization_and_compression",
+  "schema_version": "1.0.0",
+  "source_target": "https://github.com/google-research/google-research",
+  "detected_format": "git_repository",
+  "created_at": "2026-11-19T10:20:00Z",
+  "author": "repo-triad-forge",
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "tags": [
+    "perturbations",
+    "google_research",
+    "google-research",
+    "differentiable_optimization",
+    "fenchel_young_loss",
+    "gumbel_noise",
+    "custom_gradient",
+    "optimization",
+    "arxiv_2002_08676"
+  ],
+  "anchors": {
+    "repo": "https://github.com/google-research/google-research",
+    "subproject": "perturbations",
+    "arxiv": "https://arxiv.org/abs/2002.08676"
+  },
+  "edges": [
+    {
+      "type": "distilled_from",
+      "target": "https://github.com/google-research/google-research",
+      "target_kind": "external_repo",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Subproject perturbations in snapshot google-research-master (archive snapshot, non-git); arXiv:2002.08676"
+    },
+    {
+      "type": "same_domain",
+      "target": "ki_google_research_model_pruning_schedules",
+      "target_kind": "knowledge_item",
+      "derived": false,
+      "confidence": 0.88,
+      "description": "Companion optimization and differentiable discrete selection technique from google-research"
+    }
+  ],
+  "isnad": {
+    "status": "VERIFIED",
+    "source_repo": "https://github.com/google-research/google-research",
+    "snapshot": "google-research-master (archive snapshot, non-git)",
+    "subproject": "perturbations",
+    "verified_at": "2026-11-19T10:20:00Z",
+    "claims": [
+      {
+        "assertion": "@perturbed(num_samples=1000, sigma=0.05, noise='normal'|'gumbel', batched=True) wraps any black-box linear-program optimizer inside @tf.custom_gradient, evaluating Monte-Carlo expectations over input_tensor + sigma * additive_noise and computing gradients via integration by parts (tf.einsum('nbd,nb->bd', noise_grad, tf.einsum('nbd,bd->nb', output, dy)) / (sigma * num_samples)).",
+        "file": "perturbations/perturbations.py",
+        "lines": "L47-L184",
+        "sha256_hash": "221616350abc45322871e066c6419bf0aff300a6f82fdb159705134f263b4e46",
+        "verified": true
+      },
+      {
+        "assertion": "FenchelYoungLoss implements a @tf.custom_gradient surrogate loss whose backward gradient is directly dy * (self.perturbed(theta) - y_true) (negated when maximize=False), enabling end-to-end supervised training through discrete combinatorial layers without double perturbation variance.",
+        "file": "perturbations/fenchel_young.py",
+        "lines": "L27-L99",
+        "sha256_hash": "30dc3e3ce0d6191649a3192ba81de408bb52ef4b86d038f61c4f1554b492909d",
+        "verified": true
+      }
+    ]
+  },
+  "distilled_learning": "Turn discrete linear-program optimizers (argmax, shortest path, ranking) into smooth differentiable layers using stochastic Gaussian/Gumbel perturbations with integration-by-parts custom gradients, and train directly on ground-truth outputs with Fenchel-Young loss."
+}

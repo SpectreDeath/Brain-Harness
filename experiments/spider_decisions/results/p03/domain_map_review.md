@@ -67,3 +67,6 @@ Please review or edit the `FINAL_DOMAIN_CLASS` column below (or confirm ``ok`` /
 | 43 | `scientific_computing/machine_learning` | 1 | `general_ml_project` |  | `general_ml_project` |
 | 44 | `security_and_forensics/auditing` | 1 | `privacy_fairness_safety_project` |  | `privacy_fairness_safety_project` |
 | 45 | `testing` | 1 | `unmapped` |  | `unmapped` |
+| 46 | `optimization_and_compression` | 1 | `optimization_and_compression_project` | Added in Phase 6 (approved at Checkpoint 6.2) | `optimization_and_compression_project` |
+| 47 | `rl_and_control` | 1 | `rl_and_control_project` | Added in Phase 6 (approved at Checkpoint 6.2) | `rl_and_control_project` |
+| 48 | `vision_and_3d` | 1 | `vision_and_3d_project` | Added in Phase 6 (approved at Checkpoint 6.2) | `vision_and_3d_project` |

@@ -1,0 +1,81 @@
+{
+  "id": "ki_google_research_psycholab",
+  "title": "Google Research Psycholab: ASCII Multi-Agent Gridworld Games, Conflict Resolution & RGB Visualizer",
+  "category": "vision_and_3d",
+  "schema_version": "1.0.0",
+  "source_target": "https://github.com/google-research/google-research",
+  "detected_format": "git_repository",
+  "created_at": "2026-11-19T10:20:00Z",
+  "author": "repo-triad-forge",
+  "status": "ACTIVE",
+  "superseded_by": null,
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "tags": [
+    "psycholab",
+    "google_research",
+    "google-research",
+    "multi_agent_gridworld",
+    "social_dilemmas",
+    "conflict_resolution",
+    "rgb_rendering",
+    "gym_env",
+    "arxiv_1906_09831"
+  ],
+  "anchors": {
+    "repo": "https://github.com/google-research/google-research",
+    "subproject": "psycholab",
+    "arxiv": "https://arxiv.org/abs/1906.09831"
+  },
+  "edges": [
+    {
+      "type": "distilled_from",
+      "target": "https://github.com/google-research/google-research",
+      "target_kind": "external_repo",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Subproject psycholab in snapshot google-research-master (archive snapshot, non-git); arXiv:1906.09831"
+    },
+    {
+      "type": "related_to",
+      "target": "ki_google_research_distracting_control_suite",
+      "target_kind": "knowledge_item",
+      "derived": false,
+      "confidence": 0.88,
+      "description": "Complements visual RL wrappers with ASCII-specified multi-agent gridworld RGB/discrete environments"
+    },
+    {
+      "type": "same_domain",
+      "target": "ki_google_research_cisc_confidence_voting",
+      "target_kind": "knowledge_item",
+      "derived": false,
+      "confidence": 0.85,
+      "description": "Multi-agent coordination and repeated-game conflict modeling relevant to multi-agent consensus"
+    }
+  ],
+  "isnad": {
+    "status": "VERIFIED",
+    "source_repo": "https://github.com/google-research/google-research",
+    "snapshot": "google-research-master (archive snapshot, non-git)",
+    "subproject": "psycholab",
+    "verified_at": "2026-11-19T10:20:00Z",
+    "claims": [
+      {
+        "assertion": "Game.solve_conflicts enforces wall/item stops, head-on player crossing cancellations, standing-player blocks, and random draw tie-breaking (<player>_lost_the_drawn) for simultaneous target-cell collisions, emitting structured event lists that drive reward_events, apply_effects, terminal_step, and RGB render (uint8 HxWx3 map).",
+        "file": "psycholab/game.py",
+        "lines": "L480-L651",
+        "sha256_hash": "49553816cc70f01ba36da326bedcff2e909efb066fa8a575dcaa97073aadbe26",
+        "verified": true
+      },
+      {
+        "assertion": "Visualizer wraps any Game environment to render live two-pane RGB grid maps and per-player plus mean cumulative reward trajectories with optional FFMpegWriter MP4 video capture.",
+        "file": "psycholab/visualizer.py",
+        "lines": "L31-L95",
+        "sha256_hash": "ffa20439be6e56b6a19f39671491113b78448ba490fa149bb1b2d497f73065e9",
+        "verified": true
+      }
+    ]
+  },
+  "distilled_learning": "Model multi-agent social dilemmas declaratively from ASCII grid layouts with explicit multi-pass conflict resolution (walls, head-on swaps, standing blocks, randomized cell ties) and structured event-driven rewards and RGB visual diagnostics."
+}
