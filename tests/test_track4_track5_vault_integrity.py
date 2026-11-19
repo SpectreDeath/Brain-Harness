@@ -119,3 +119,19 @@ async def test_retrieval_corrupt_metadata_does_not_crash(tmp_path: Path):
     # Must not raise an unhandled JSONDecodeError
     await retrieval.record_knowledge_retrieval(["corrupt_ki"], vault_dir=tmp_path)
     await retrieval.record_knowledge_outcome(["corrupt_ki"], success=True, vault_dir=tmp_path)
+
+
+@pytest.mark.unit
+def test_vault_local_isnad_claim_hashes_recompute_against_git_blobs() -> None:
+    """Every local isnad claim hash must recompute cleanly against canonical LF / git-blob bytes."""
+    from harness.services.storage.isnad_hash import audit_vault_claim_hashes
+
+    report = audit_vault_claim_hashes(Path(".harness/knowledge"), repo_root=Path("."))
+    assert report.local_mismatches == 0, (
+        f"Local hash mismatches detected: {[c for c in report.checks if c.status == 'HASH_MISMATCH']}"
+    )
+    assert report.local_missing_files == 0, (
+        f"Missing local claim files: {[c for c in report.checks if c.status == 'LOCAL_FILE_MISSING']}"
+    )
+    assert report.local_verified >= 22
+    assert report.missing_hash_flagged > 0

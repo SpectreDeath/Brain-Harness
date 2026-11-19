@@ -51,7 +51,7 @@
         "verified": true,
         "verified_at": "2026-11-18T23:26:59Z",
         "file": "src/harness/services/skill_graph/__init__.py",
-        "sha256_hash": "4b08d0acfc8ed08d8399d473995312a055f54e72674d190a3405c833c22e5c58"
+        "sha256_hash": "8634a7ad815621c41a8234e0641d991aa4eef6800821cb2a01425112f041dcb1"
       },
       {
         "claim_id": "isnad-70c-002",
@@ -75,7 +75,10 @@
       }
     ],
     "status": "VERIFIED",
-    "verified_at": "2026-11-18T23:26:59Z"
+    "verified_at": "2026-11-18T23:26:59Z",
+    "hash_method": "git_blob_lf_sha256",
+    "hash_restamped_at": "2026-11-19T23:52:43Z",
+    "provenance_note": "Hashes computed over canonical git-blob (LF) bytes via harness.services.storage.isnad_hash.stamp_claim_sha256 (never raw working-tree CRLF)."
   },
   "retrieval_count": 0,
   "success_count": 0,

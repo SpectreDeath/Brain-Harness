@@ -134,7 +134,7 @@
         "assertion": "Scaffolded Google ecosystem plugin manifest verified on disk: plugins/agent_orchestration/google_adk_runtime/plugin.json.",
         "file": "plugins/agent_orchestration/google_adk_runtime/plugin.json",
         "lines": "L1-L106",
-        "sha256_hash": "3c9bb5b4381813e6e2335f76a19c67f42b7a516522ddeaddd317624fc1f49200",
+        "sha256_hash": "6f349990f32d2731d97a23e4e85042417e99c3cd762fffd87c68cbddeee968e7",
         "verified": true,
         "verified_at": "2026-11-18T23:26:59Z"
       },
@@ -142,7 +142,7 @@
         "assertion": "Scaffolded Google ecosystem plugin manifest verified on disk: plugins/agent_orchestration/google_adk_optimizer/plugin.json.",
         "file": "plugins/agent_orchestration/google_adk_optimizer/plugin.json",
         "lines": "L1-L102",
-        "sha256_hash": "33df15cad1aed60b48a106652e2edb7ee8bb6fc53d7d3879278bcd3513d7e900",
+        "sha256_hash": "12c96fd38d17d70a806107ff42760e6955cbefff267b59b95c0ece0985dbf3ae",
         "verified": true,
         "verified_at": "2026-11-18T23:26:59Z"
       },
@@ -150,7 +150,7 @@
         "assertion": "Scaffolded Google ecosystem plugin manifest verified on disk: plugins/developer_tooling/google_adk_docs_navigator/plugin.json.",
         "file": "plugins/developer_tooling/google_adk_docs_navigator/plugin.json",
         "lines": "L1-L83",
-        "sha256_hash": "9157cdda1b80d7625706a9078064820071d608c1f751a554ac456cc031e1c5ed",
+        "sha256_hash": "b58bd4cf03ee734caa0b57ff1d98007dbc4ff6358523891321354dc6bd047338",
         "verified": true,
         "verified_at": "2026-11-18T23:26:59Z"
       },
@@ -158,7 +158,7 @@
         "assertion": "Scaffolded Google ecosystem plugin manifest verified on disk: plugins/developer_tooling/google_adk_web_bridge/plugin.json.",
         "file": "plugins/developer_tooling/google_adk_web_bridge/plugin.json",
         "lines": "L1-L77",
-        "sha256_hash": "d519fc711f7cd40a0032e0d53bf35e8185891e00548e328da040c6b161d94afe",
+        "sha256_hash": "e1f84ae4e3e09b6c77d54667bd8bfc6638c1da60bef43e6377de2c8fdae50d04",
         "verified": true,
         "verified_at": "2026-11-18T23:26:59Z"
       },
@@ -166,7 +166,7 @@
         "assertion": "Scaffolded Google ecosystem plugin manifest verified on disk: plugins/software_engineering/google_styleguide_auditor/plugin.json.",
         "file": "plugins/software_engineering/google_styleguide_auditor/plugin.json",
         "lines": "L1-L75",
-        "sha256_hash": "ff701d0fbc36d76d3f7088bd77bb120ad21fec3154a3c47101961f846a2cab78",
+        "sha256_hash": "371256d28e79ba39a8eadade4d5a07f211c8d64d9035f597b00c970f1c8a2fce",
         "verified": true,
         "verified_at": "2026-11-18T23:26:59Z"
       },
@@ -174,7 +174,7 @@
         "assertion": "Scaffolded Google ecosystem plugin manifest verified on disk: plugins/machine_learning/google_tunix_posttraining/plugin.json.",
         "file": "plugins/machine_learning/google_tunix_posttraining/plugin.json",
         "lines": "L1-L129",
-        "sha256_hash": "c0c7c2ea3a7fac20b0c7326cfca7ab296284dd5ab16d094e0f3839777c53aedf",
+        "sha256_hash": "1feb34651ff16e3d7037a98f42c7635fd5e235a0eca130c7231ed0a9a5fe5447",
         "verified": true,
         "verified_at": "2026-11-18T23:26:59Z"
       },
@@ -182,11 +182,14 @@
         "assertion": "Scaffolded Google ecosystem plugin manifest verified on disk: plugins/software_engineering/perfetto_trace_processor/plugin.json.",
         "file": "plugins/software_engineering/perfetto_trace_processor/plugin.json",
         "lines": "L1-L97",
-        "sha256_hash": "ffeda50eaf272acf5002e34bec926a98f066f22af47aa516dcc3ab384527d5c7",
+        "sha256_hash": "586eebf20f863e42fd87f89f4337691bd3260f2ea2f944675550794c72000071",
         "verified": true,
         "verified_at": "2026-11-18T23:26:59Z"
       }
-    ]
+    ],
+    "hash_method": "git_blob_lf_sha256",
+    "hash_restamped_at": "2026-11-19T23:52:43Z",
+    "provenance_note": "Hashes computed over canonical git-blob (LF) bytes via harness.services.storage.isnad_hash.stamp_claim_sha256 (never raw working-tree CRLF)."
   },
   "retrieval_count": 0,
   "success_count": 0,

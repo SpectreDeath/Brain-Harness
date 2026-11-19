@@ -14,9 +14,19 @@ from pathlib import Path
 import re
 from typing import Any, Union, cast
 
+from harness.services.storage.isnad_hash import verify_claim_entry
+
 logger = logging.getLogger(__name__)
 
 _NOISE_DIRS = frozenset({".git", "__pycache__", ".venv", "node_modules", "dist", "target"})
+
+
+def _infer_repo_root(dir_path: Path) -> Path:
+    """Infer repository root when scanning canonical .harness/knowledge vaults."""
+    resolved = dir_path.resolve()
+    if resolved.name == "knowledge" and resolved.parent.name == ".harness":
+        return resolved.parent.parent
+    return resolved
 
 try:
     from ontology_spider.model import (
@@ -66,36 +76,43 @@ def _alloc_unique_identifier(
     return candidate
 
 
-def _claim_is_verified(entry: dict[str, Any]) -> bool:
-    """Return True when a claim or envelope carries verifiable isnad evidence."""
-    if bool(
-        entry.get("verified_at")
-        or entry.get("sha256")
-        or entry.get("artifact_sha256")
-        or entry.get("verified") is True
-        or str(entry.get("status", "")).lower() == "verified"
-    ):
-        return True
-    lineage = entry.get("lineage")
-    if isinstance(lineage, list):
-        for node in lineage:
-            if isinstance(node, dict) and (
-                node.get("verified") is True
-                or bool(node.get("sha256"))
-                or (node.get("sha256_hash") not in (None, "", "N/A"))
-            ):
-                return True
-    return False
+def _claim_is_verified(
+    entry: dict[str, Any],
+    *,
+    ki_id: str = "",
+    repo_root: Path | None = None,
+    source_repo: str = "",
+    blob_cache: dict[str, str | None] | None = None,
+) -> bool:
+    """Return True only when a claim or lineage node carries a verified 64-hex SHA-256 hash."""
+    return verify_claim_entry(
+        entry,
+        ki_id=ki_id,
+        repo_root=repo_root,
+        source_repo=source_repo,
+        blob_cache=blob_cache,
+    ).verified
 
 
-def _summarize_isnad(raw_isnad: Any) -> dict[str, Any]:
-    """Normalize dict, nested claims dict, or list isnad claims into verification summary fields."""
-    top_verified = False
+def _summarize_isnad(
+    raw_isnad: Any,
+    *,
+    ki_id: str = "",
+    repo_root: Path | None = None,
+    source_repo: str = "",
+    blob_cache: dict[str, str | None] | None = None,
+) -> dict[str, Any]:
+    """Normalize dict, nested claims dict, or list isnad claims into cryptographic summary fields."""
     if isinstance(raw_isnad, dict) and raw_isnad:
-        top_verified = _claim_is_verified({k: v for k, v in raw_isnad.items() if k != "claims"})
         nested_claims = raw_isnad.get("claims")
-        if isinstance(nested_claims, list):
+        if isinstance(nested_claims, list) and nested_claims:
             claims = [entry for entry in nested_claims if isinstance(entry, dict)]
+        elif isinstance(nested_claims, list):
+            has_envelope_claim = any(
+                k in raw_isnad
+                for k in ("verified", "status", "verified_at", "sha256", "sha256_hash", "artifact_sha256")
+            )
+            claims = [raw_isnad] if has_envelope_claim else []
         else:
             claims = [raw_isnad]
     elif isinstance(raw_isnad, list):
@@ -103,10 +120,19 @@ def _summarize_isnad(raw_isnad: Any) -> dict[str, Any]:
     else:
         claims = []
 
-    verified_count = sum(1 for claim in claims if _claim_is_verified(claim))
-    if verified_count == 0 and top_verified:
-        verified_count = max(1, len(claims))
-    total_count = len(claims) if claims else (1 if top_verified else 0)
+    checks = [
+        verify_claim_entry(
+            claim,
+            ki_id=ki_id,
+            repo_root=repo_root,
+            source_repo=source_repo,
+            blob_cache=blob_cache,
+        )
+        for claim in claims
+    ]
+    verified_count = sum(1 for check in checks if check.verified)
+    flagged_missing_count = sum(1 for check in checks if check.status == "MISSING_HASH_FLAGGED")
+    total_count = len(checks)
 
     conf_vals: list[float] = []
     for claim in claims:
@@ -121,6 +147,7 @@ def _summarize_isnad(raw_isnad: Any) -> dict[str, Any]:
         "isnad_count": total_count,
         "verified_isnad_count": verified_count,
         "isnad_verified": verified_count > 0,
+        "isnad_null_hash_flagged_count": flagged_missing_count,
         "min_isnad_confidence": round(min_conf, 4),
     }
 
@@ -170,13 +197,24 @@ def _extract_item_and_edges(
     *,
     resolved_id: str | None = None,
     raw_to_safe: dict[str, str] | None = None,
+    repo_root: Path | None = None,
+    blob_cache: dict[str, str | None] | None = None,
 ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     """Extract normalized item dictionary and edge records from one KI JSON payload."""
     raw_id = str(data.get("id") or fallback_id)
     item_id = resolved_id or _sanitize_identifier(raw_id)
     raw_meta = data.get("metadata")
     meta = dict(raw_meta) if isinstance(raw_meta, dict) else dict(data)
-    meta.update(_summarize_isnad(data.get("isnad")))
+    source_repo = str(data.get("source_repo") or "")
+    meta.update(
+        _summarize_isnad(
+            data.get("isnad"),
+            ki_id=item_id,
+            repo_root=repo_root,
+            source_repo=source_repo,
+            blob_cache=blob_cache,
+        )
+    )
     if raw_id != item_id:
         meta.setdefault("raw_id", raw_id)
     for field in ("status", "category", "updated_at", "created_at", "title"):
@@ -279,6 +317,7 @@ class HarnessVaultModelSource(ModelSource):
         *,
         as_of: str | None = None,
         min_confidence: float = 0.0,
+        repo_root: Path | None = None,
     ) -> None:
         if not HAS_ONTOLOGY_SPIDER:
             raise RuntimeError(
@@ -289,6 +328,7 @@ class HarnessVaultModelSource(ModelSource):
         self.source = source
         self.as_of = as_of
         self.min_confidence = float(min_confidence)
+        self.repo_root = Path(repo_root) if repo_root is not None else None
         self.source_label = str(source) if not isinstance(source, dict) else "memory_dict"
 
     def _load_data_dict(self) -> dict[str, Any]:
@@ -345,6 +385,8 @@ class HarnessVaultModelSource(ModelSource):
             raw_id = str(data.get("id") or fallback_id)
             _alloc_unique_identifier(raw_id, raw_to_safe, safe_to_raw)
 
+        repo_root = self.repo_root if self.repo_root is not None else _infer_repo_root(dir_path)
+        blob_cache: dict[str, str | None] = {}
         items: list[dict[str, Any]] = []
         edges: list[dict[str, Any]] = []
         for data, fallback_id in loaded_entries:
@@ -356,6 +398,8 @@ class HarnessVaultModelSource(ModelSource):
                 self.min_confidence,
                 resolved_id=resolved_id,
                 raw_to_safe=raw_to_safe,
+                repo_root=repo_root,
+                blob_cache=blob_cache,
             )
             items.append(item_rec)
             edges.extend(item_edges)

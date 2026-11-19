@@ -149,7 +149,8 @@ def test_live_harness_knowledge_vault_ingestion_and_runner() -> None:
     assert isinstance(audit.top_discriminating_attributes, tuple)
 
     rec_res = service.query(vault_dir, "query recommend concept where isnad_verified=True")
-    assert len(rec_res["answers"]) > 100
+    # Strict hash verification rejects bare verified/status flags without a valid 64-hex SHA-256 hash.
+    assert len(rec_res["answers"]) >= 30
 
     runner_path = Path(".agents/skills/ontology-spider/scripts/ontology_spider_runner.py")
     proc = subprocess.run(

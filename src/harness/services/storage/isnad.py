@@ -16,8 +16,10 @@ class IsnadAuditMixin:
         raise NotImplementedError
 
     def compute_sha256(self, content: str | bytes) -> str:
-        """Compute SHA-256 hash for provenance nodes."""
+        """Compute canonical LF / git-blob SHA-256 hash for provenance nodes (never raw CRLF)."""
         data = content.encode("utf-8") if isinstance(content, str) else content
+        if b"\x00" not in data[:8192]:
+            data = data.replace(b"\r\n", b"\n")
         return hashlib.sha256(data).hexdigest()
 
     async def verify_isnad_integrity(self, ki_id: str, base_dir: Path | str = ".") -> dict[str, Any]:

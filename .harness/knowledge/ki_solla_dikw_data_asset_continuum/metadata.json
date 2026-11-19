@@ -52,7 +52,10 @@
         "verified": true,
         "verified_at": "2026-11-18T23:26:59Z"
       }
-    ]
+    ],
+    "hash_method": "git_blob_lf_sha256",
+    "hash_restamped_at": "2026-11-19T23:52:43Z",
+    "provenance_note": "Hashes computed over canonical git-blob (LF) bytes via harness.services.storage.isnad_hash.stamp_claim_sha256 (never raw working-tree CRLF)."
   },
   "retrieval_count": 0,
   "success_count": 0,

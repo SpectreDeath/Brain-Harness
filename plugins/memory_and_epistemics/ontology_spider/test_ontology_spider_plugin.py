@@ -231,6 +231,12 @@ def test_missing_engine_error_message() -> None:
 @skip_if_no_engine
 def test_canonical_knowledge_vault_edges_isnad_and_temporal_slice(tmp_path: Path) -> None:
     """Verify Rule 40 canonical edges, isnad verification metadata, confidence filter, and as_of slice."""
+    from harness.services.storage.isnad_hash import stamp_claim_sha256
+
+    evidence_file = tmp_path / "evidence.py"
+    evidence_file.write_bytes(b"def ok():\n    return True\n")
+    evidence_sha = stamp_claim_sha256("evidence.py", tmp_path)
+
     ki_one = tmp_path / "ki-alpha"
     ki_one.mkdir()
     (ki_one / "metadata.json").write_text(
@@ -259,8 +265,9 @@ def test_canonical_knowledge_vault_edges_isnad_and_temporal_slice(tmp_path: Path
                 ],
                 "isnad": {
                     "source_repo": "https://example.invalid/repo",
+                    "file": "evidence.py",
                     "verified_at": "2026-11-10T10:00:00Z",
-                    "sha256": "abc123",
+                    "sha256": evidence_sha,
                 },
             }
         ),

@@ -35,11 +35,14 @@
         "assertion": "Rules 29 & 33 prohibit inline multi-line python -c in PowerShell (require scratch scripts) and require dict.get(key) or [] for explicit JSON null fields.",
         "file": "AGENTS.md",
         "lines": "L1-L109",
-        "sha256_hash": "5291936695f8d5695476af5d78faca1d124dcad7df13725969d9beac3409f132",
+        "sha256_hash": "b6116ff5ae0a7c10a215a104798b5f351e7ebef9c5be086eaa2b650b9eb45577",
         "verified": true,
         "verified_at": "2026-11-18T23:26:59Z"
       }
-    ]
+    ],
+    "hash_method": "git_blob_lf_sha256",
+    "hash_restamped_at": "2026-11-19T23:52:43Z",
+    "provenance_note": "Hashes computed over canonical git-blob (LF) bytes via harness.services.storage.isnad_hash.stamp_claim_sha256 (never raw working-tree CRLF)."
   },
   "created_at": "2026-09-07T10:20:00Z",
   "distilled_learning": "# Windows PowerShell Scratch Script Execution & JSON Null-Field Salvage",
