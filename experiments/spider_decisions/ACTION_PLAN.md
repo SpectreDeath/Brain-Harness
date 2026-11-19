@@ -61,7 +61,7 @@ A 🧑 **HUMAN CHECKPOINT** must never present the user with a single list longe
 - [x] **Phase 5** — P2: Vault hygiene — verify top-8 central unverified KIs & triage 12 duplicate pairs
 - [ ] **Phase 6** — P2: Ingest Next-5 research targets (`dp_sgd_clipping`, `smart_eval`, `perturbations`, `norml`, `psycholab`)
 - [x] **Phase 7** — P3: Polish `ontology_spider` — zero residual false bridges, reverse blast radius & uncapped self-scan
-- [ ] **Phase 8** — P4: Dual-capped LRU eviction & bounded prefetch for lazily-staged plugin artifacts
+- [x] **Phase 8** — P4: Dual-capped LRU eviction & bounded prefetch for lazily-staged plugin artifacts
 - [ ] **Phase 9** — Final re-benchmark, quality gates & `ACTION_SUMMARY.md`
 
 ### Why this order
@@ -342,15 +342,15 @@ Updated `plugins/memory_and_epistemics/ontology_spider/repo_adapter.py`, `src/ha
 **Depends on:** Phase 0. **Model tier:** medium.
 
 ### Steps
-- [ ] **8.1** Inspect `src/harness/plugins/sandbox/venv.py`, `src/harness/plugins/loader.py`, and `src/harness/plugins/sandboxed.py` to confirm how lazy venv/artifact directories under `.harness/venvs/` are created, reused, and disposed.
-- [ ] **8.2** Write failing tests in `tests/test_plugin_artifact_cache.py` covering:
+- [x] **8.1** Inspect `src/harness/plugins/sandbox/venv.py`, `src/harness/plugins/loader.py`, and `src/harness/plugins/sandboxed.py` to confirm how lazy venv/artifact directories under `.harness/venvs/` are created, reused, and disposed.
+- [x] **8.2** Write failing tests in `tests/test_plugin_artifact_cache.py` covering:
   - Dual cap enforcement (`max_entries` AND `max_size_bytes`) with thread-safe `OrderedDict` LRU promotion on access;
   - Clean skip (no cache thrashing) when a single artifact exceeds `max_size_bytes`;
   - TTL expiration and corrupt/missing-python venv health-check invalidation;
   - Bounded prefetch worker (`queue.Queue(maxsize=depth)`) enforcing backpressure without unbounded thread/subprocess spawning;
   - Offset-indexed artifact/manifest table lookup (`f.seek(offset)` / `f.read(size)` per Rule 48) and Rule 7 preservation (zero eager venv provisioning during kernel startup).
-- [ ] **8.3** Implement `src/harness/plugins/artifact_cache.py` (`<= 200` lines, `@dataclass(slots=True, frozen=True)` records per Rule 12) and integrate non-invasively into `VenvExecutor` / lazy staging in `src/harness/plugins/sandbox/venv.py`.
-- [ ] **8.4** Run quality gates (`ruff check .`, `pytest tests/test_plugin_artifact_cache.py tests/test_sandbox.py tests/test_sandbox_decomposition.py tests/test_track0_sandbox_restrictions.py -q`), append `ACTION_LOG.md`, local commit `feat(spider-followup): phase 8 dual-capped LRU and bounded prefetch for lazy plugins`.
+- [x] **8.3** Implement `src/harness/plugins/artifact_cache.py` (`<= 200` lines, `@dataclass(slots=True, frozen=True)` records per Rule 12) and integrate non-invasively into `VenvExecutor` / lazy staging in `src/harness/plugins/sandbox/venv.py`.
+- [x] **8.4** Run quality gates (`ruff check .`, `pytest tests/test_plugin_artifact_cache.py tests/test_sandbox.py tests/test_sandbox_decomposition.py tests/test_track0_sandbox_restrictions.py -q`), append `ACTION_LOG.md`, local commit `feat(spider-followup): phase 8 dual-capped LRU and bounded prefetch for lazy plugins`.
 
 ### Outputs
 `src/harness/plugins/artifact_cache.py`, `tests/test_plugin_artifact_cache.py`, updated `src/harness/plugins/sandbox/venv.py`.

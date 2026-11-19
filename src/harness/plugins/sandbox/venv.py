@@ -9,6 +9,9 @@ from typing import Any
 
 import structlog
 
+from harness.plugins.artifact_cache import (
+    PluginArtifactCache, estimate_dir_bytes, is_venv_healthy, venv_python_path,
+)
 from harness.plugins.sandbox.base import SandboxError, SandboxExecutor
 from harness.plugins.sandbox.subprocess import SubprocessExecutor
 
@@ -29,6 +32,8 @@ class VenvExecutor(SandboxExecutor):
         dependencies: list[str] | None = None,
         memory_limit_mb: float | None = None,
         network_disabled: bool = False,
+        artifact_cache: PluginArtifactCache | None = None,
+        ttl_seconds: float | None = None,
     ) -> None:
         """Initialize the venv executor.
 
@@ -38,15 +43,16 @@ class VenvExecutor(SandboxExecutor):
             dependencies: pip packages to install in the venv.
             memory_limit_mb: Memory ceiling in megabytes.
             network_disabled: Whether network access is disabled.
+            artifact_cache: Optional dual-capped LRU cache for staged venv reuse.
+            ttl_seconds: Optional cache TTL for staged venv entries.
         """
         self._plugin_dir = plugin_dir
-        if venv_dir is not None:
-            self._venv_dir = venv_dir
-        else:
-            self._venv_dir = Path(".harness") / "venvs" / plugin_dir.name
+        self._venv_dir = venv_dir if venv_dir is not None else Path(".harness") / "venvs" / plugin_dir.name
         self._dependencies = dependencies or []
         self._memory_limit_mb = memory_limit_mb
         self._network_disabled = network_disabled
+        self._artifact_cache = artifact_cache
+        self._ttl_seconds = ttl_seconds
         self._subprocess: SubprocessExecutor | None = None
         self._setup_done = False
 
@@ -58,21 +64,34 @@ class VenvExecutor(SandboxExecutor):
     def is_running(self) -> bool:
         return self._subprocess is not None and self._subprocess.is_running
 
+    @property
+    def cache_key(self) -> str:
+        """Canonical cache key for this executor's target virtualenv."""
+        return str(self._venv_dir.resolve())
+
+    def _is_venv_healthy(self) -> bool:
+        return is_venv_healthy(self._venv_dir)
+
     async def start(self) -> None:
         """Create the venv, install deps, and start the subprocess."""
+        if self._artifact_cache is not None:
+            cached = self._artifact_cache.get(self.cache_key)
+            self._setup_done = cached is not None and self._is_venv_healthy()
+        elif self._setup_done and not self._is_venv_healthy():
+            self._setup_done = False
+
         if not self._setup_done:
             await self._setup_venv()
 
-        # Find the entrypoint
+        if self._artifact_cache is not None:
+            size = estimate_dir_bytes(self._venv_dir)
+            self._artifact_cache.put(self.cache_key, self._venv_dir, size, ttl_seconds=self._ttl_seconds)
+
         entrypoint = self._find_entrypoint()
         if entrypoint is None:
             raise SandboxError("venv", "No Python entrypoint found")
 
-        # Determine the venv Python path
-        if sys.platform == "win32":
-            venv_python = self._venv_dir / "Scripts" / "python.exe"
-        else:
-            venv_python = self._venv_dir / "bin" / "python"
+        venv_python = venv_python_path(self._venv_dir)
 
         self._subprocess = SubprocessExecutor(
             entrypoint,
