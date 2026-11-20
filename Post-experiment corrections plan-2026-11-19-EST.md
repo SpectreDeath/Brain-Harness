@@ -283,10 +283,11 @@ citations plan stays separate (different scope, still unpushed).
   Add a CI step (`uv lock --check`) so a stale lock fails the build, or
   record why that step is not added. Verify the step (or the reason) on
   the fix commit's CI run.
-  *(Verified locally 2026-11-19, `ba27ca1`: `uv lock` resolved `98` packages
+  *(Verified 2026-11-19/20, `ba27ca1` + CI `#245`: `uv lock` resolved `98` packages
   including `mypy==2.4.1`, `fastapi==0.165.0`, `watchdog==7.1.0`; `uv lock --check`
   added to `.github/workflows/ci.yml` and passes locally [`Resolved 98 packages in 1ms`];
-  remote CI run confirmation awaits push under `8.1`.)*
+  verified in Brain-Harness CI run `#245` [`44718762503`], where `Lint & Code Quality (Ruff)`
+  executed `Check uv.lock freshness` with `conclusion=success`.)*
 - [x] **5.2 Fix the counts and gate them.** README/USER_MANUAL:
   entrypoints 690 → **696**, KIs 362 → **382** (re-verify both live
   before editing). Extend the drift gate (`test_plugin_integration_drift.py`)
@@ -381,23 +382,25 @@ citations plan stays separate (different scope, still unpushed).
 
 ## Track 8 — Verification
 
-- [ ] **8.1 Re-run every gate live and record the numbers.** BH: drift
+- [x] **8.1 Re-run every gate live and record the numbers.** BH: drift
   gate (10/10), vault-integrity gate, unit gate (passed/failed/skipped),
   the 9-suite pytest from `ACTION_SUMMARY.md` §5 (target: 56 passed),
   `ruff check .` clean. OS: full suite with swipl and genuine degraded,
   coverage, parity 100%. CI green on the fix commits; record the run
   numbers.
-  *(Local gates verified 2026-11-19 — leaves box unticked until both repos
-  are pushed and remote CI run numbers are recorded:
-  BH `tests/test_plugin_integration_drift.py` `12 passed in 9.40s`;
+  *(Verified 2026-11-19/20 across local runs and GitHub Actions CI:
+  BH local [`ba27ca1`/`55bc4a7`]: `tests/test_plugin_integration_drift.py` `12 passed in 9.40s`;
   `harness.cli knowledge sync --strict` synced `382` KIs;
   28-KI hash audit `22` local + `16` external verified, `0` local mismatches, `62` missing-hash flagged;
   `pytest -m "unit" -q --timeout=60` -> `2305 passed, 887 deselected, 3 warnings in 274.18s`;
   9-suite `ACTION_SUMMARY.md` §5 -> `63 passed in 36.94s`;
   `ruff check .` clean, `mypy src/harness/kernel --ignore-missing-imports` clean [`27` files], `uv lock --check` clean [`98` packages].
-  OS (`fe9d6ac`): with `swipl` `120 passed in 12.90s`, coverage `91%` [`--fail-under=90`],
+  OS local [`fe9d6ac`]: with `swipl` `120 passed in 12.90s`, coverage `91%` [`--fail-under=90`],
   parity `5/5` [`100.0%`], `ruff check src tests` & `mypy src` [`34` files] clean;
-  genuine degraded Python-only `63 passed, 2 skipped in 4.18s`.)*
+  genuine degraded Python-only `63 passed, 2 skipped in 4.18s`.
+  Remote CI [`2026-11-20`]:
+  Brain-Harness `CI` run `#245` [`44718762503`, https://github.com/SpectreDeath/Brain-Harness/actions/runs/44718762503, commit `55bc4a7`] -> `completed / success` across all `6` jobs [`Frontend Build & Lint`, `Lint & Code Quality (Ruff)` including `Check uv.lock freshness`, and 4 `Test Suite` matrix jobs on `ubuntu-latest` 3.11/3.12, `macos-latest` 3.11, `windows-latest` 3.11];
+  Ontology-Spider `CI` run `#44` [`44718728077`, https://github.com/SpectreDeath/Ontology-Spider/actions/runs/44718728077, commit `fe9d6ac`] -> `completed / success` across all `12` jobs [`Degraded Mode`, `Coverage Report`, `Lint & Type Check`, `Latency Benchmark & Budgets`, and 8 OS/Python test matrix jobs].)*
 - [x] **8.2 Confirm the Phase 4 and hash records read correctly.** The
   comparison and report must state the ceiling (2), the provenance
   (laptop-generated shortlists, 4 domains dropped), and the plan fix
