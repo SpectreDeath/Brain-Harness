@@ -181,6 +181,8 @@ class SandboxedPlugin(ToolMountMixin, HarnessPlugin):
         self.setup_tool_mount(ctx, self.name)
         if self._executor is None:
             self._executor = self._resolve_executor()
+        if hasattr(self._executor, "cache_key"):
+            SandboxExecutorFactory.prefetch_venv(Path(str(self._executor.cache_key)))
         for key in self.provides:
             ctx.provide(key, self, provider=self.name)
 

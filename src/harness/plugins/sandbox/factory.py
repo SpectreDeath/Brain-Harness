@@ -3,10 +3,16 @@
 from __future__ import annotations
 
 from pathlib import Path
+import queue
 from typing import Any
 
 import structlog
 
+from harness.plugins.artifact_cache import (
+    BoundedArtifactPrefetcher,
+    PluginArtifactCache,
+    is_venv_healthy,
+)
 from harness.plugins.sandbox.base import SANDBOX_FACTORY_KEY, SandboxExecutor
 from harness.plugins.sandbox.container import ContainerExecutor
 from harness.plugins.sandbox.in_process import InProcessExecutor
@@ -23,6 +29,39 @@ class SandboxExecutorFactory:
     Consolidates isolation strategy resolution, entrypoint discovery, and
     dependency-driven sandbox provisioning across the plugin and ingestion subsystems.
     """
+
+    _default_artifact_cache: PluginArtifactCache | None = None
+    _default_prefetcher: BoundedArtifactPrefetcher | None = None
+
+    @classmethod
+    def get_default_artifact_cache(cls) -> PluginArtifactCache:
+        """Return shared process-wide LRU artifact cache for lazy venv staging."""
+        if cls._default_artifact_cache is None:
+            cls._default_artifact_cache = PluginArtifactCache()
+        return cls._default_artifact_cache
+
+    @classmethod
+    def _prefetch_venv_entry(cls, key: str) -> dict[str, Any]:
+        cached = cls.get_default_artifact_cache().get(key)
+        healthy = is_venv_healthy(Path(key))
+        return {"key": key, "cached": cached is not None, "healthy": healthy}
+
+    @classmethod
+    def get_default_prefetcher(cls) -> BoundedArtifactPrefetcher:
+        """Return lazy bounded prefetcher checking venv cache & health status."""
+        if cls._default_prefetcher is None or cls._default_prefetcher._stop.is_set():
+            cls._default_prefetcher = BoundedArtifactPrefetcher(cls._prefetch_venv_entry, max_depth=4)
+        return cls._default_prefetcher
+
+    @classmethod
+    def prefetch_venv(cls, venv_dir: Path, *, timeout: float | None = None) -> bool:
+        """Submit non-blocking prefetch request for venv_dir; return False if queue is full."""
+        key = str(venv_dir.resolve())
+        try:
+            cls.get_default_prefetcher().submit(key, timeout=0.05 if timeout is None else timeout)
+            return True
+        except (queue.Full, RuntimeError):
+            return False
 
     @classmethod
     def find_entrypoint(cls, manifest: Any, root: Path) -> Path | None:
@@ -49,6 +88,7 @@ class SandboxExecutorFactory:
         root: Path,
         *,
         force_isolation: Any = None,
+        artifact_cache: PluginArtifactCache | None = None,
     ) -> SandboxExecutor | None:
         """Construct the appropriate SandboxExecutor for a manifest and filesystem root.
 
@@ -141,6 +181,7 @@ class SandboxExecutorFactory:
                 dependencies=deps,
                 memory_limit_mb=mem_limit,
                 network_disabled=network_disabled,
+                artifact_cache=artifact_cache if artifact_cache is not None else cls.get_default_artifact_cache(),
             )
 
         if isolation == IsolationMode.WASM:

@@ -138,3 +138,67 @@ async def test_evaluate_cisc_consensus_ki_provenance_weighting() -> None:
     finally:
         await guard_plugin.on_unload(ctx)
 
+
+@pytest.mark.unit
+@pytest.mark.asyncio
+async def test_finalize_swarm_outcome_grounds_cisc_votes_against_live_vault() -> None:
+    """finalize_swarm_outcome resolves live vault KI verification status into CISC voting."""
+    import time
+    from pathlib import Path
+    from harness.agent.swarm.coordinator.outcome import finalize_swarm_outcome
+    from harness.agent.swarm.governor import TokenGovernor
+
+    vault_dir = Path(".harness/knowledge")
+    assert (vault_dir / "ki_google_research_cisc_confidence_voting" / "metadata.json").is_file()
+    assert (vault_dir / "ki_self_20260826_01" / "metadata.json").is_file()
+
+    # Verified KI has lower raw confidence (0.80 * 1.0 = 0.80) vs unverified KI (0.95 * 0.6 = 0.57)
+    accumulated = {
+        "worker_verified": {
+            "choice": "verified_cisc",
+            "confidence": 0.80,
+            "ki_id": "ki_google_research_cisc_confidence_voting",
+        },
+        "worker_unverified": {
+            "choice": "unverified_claim",
+            "confidence": 0.95,
+            "ki_id": "ki_self_20260826_01",
+        },
+    }
+    res = await finalize_swarm_outcome(
+        actual_run_id="run_cisc_live_vault",
+        objective="Live vault grounding check",
+        governor=TokenGovernor(max_tokens=1000),
+        accumulated_results=accumulated,
+        node_executions={},
+        wave_metrics_list=[],
+        swarm_start_time=time.time(),
+        all_success=True,
+        session_mgr=None,
+        graph_svc=None,
+        vault_dir=vault_dir,
+    )
+    assert res.consensus is not None
+    assert res.consensus["provenance_grounded"] is True
+    assert res.consensus["winner"] == "verified_cisc"
+
+    # Without ki_id grounding, higher raw confidence (0.95 > 0.80) would have won
+    raw_res = await finalize_swarm_outcome(
+        actual_run_id="run_cisc_ungrounded",
+        objective="Ungrounded control",
+        governor=TokenGovernor(max_tokens=1000),
+        accumulated_results={
+            "worker_a": {"choice": "verified_cisc", "confidence": 0.80},
+            "worker_b": {"choice": "unverified_claim", "confidence": 0.95},
+        },
+        node_executions={},
+        wave_metrics_list=[],
+        swarm_start_time=time.time(),
+        all_success=True,
+        session_mgr=None,
+        graph_svc=None,
+    )
+    assert raw_res.consensus is not None
+    assert raw_res.consensus["provenance_grounded"] is False
+    assert raw_res.consensus["winner"] == "unverified_claim"
+

@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from collections.abc import Mapping
+from pathlib import Path
 import time
 from typing import Any
 
@@ -15,6 +17,7 @@ from harness.agent.swarm.models import (
     SwarmWaveMetrics,
 )
 from harness.services.agent_graph import AgentExecutionGraphService
+from harness.services.storage.isnad_hash import resolve_ki_verification_map
 
 
 async def finalize_swarm_outcome(
@@ -29,6 +32,8 @@ async def finalize_swarm_outcome(
     session_mgr: AgentSessionManager | None,
     graph_svc: AgentExecutionGraphService | None,
     uncertainty_service: Any | None = None,
+    ki_verification_map: Mapping[str, bool | None] | None = None,
+    vault_dir: Path | str | None = None,
 ) -> SwarmTaskResult:
     """Synthesize final output, calculate execution critical path, and finalize session."""
     swarm_end_time = time.time()
@@ -59,9 +64,18 @@ async def finalize_swarm_outcome(
     if votes_collected:
         consensus_data = ConsensusEngine.tally(votes_collected)
     elif choice_votes:
+        effective_ki_map = ki_verification_map
+        if effective_ki_map is None:
+            cited_ids = [str(v["ki_id"]).strip() for v in choice_votes if v.get("ki_id")]
+            if cited_ids:
+                effective_ki_map = resolve_ki_verification_map(
+                    cited_ids,
+                    vault_dir=vault_dir if vault_dir is not None else Path(".harness/knowledge"),
+                )
         consensus_data = ConsensusEngine.evaluate_cisc_consensus(
             choice_votes,
             uncertainty_service=uncertainty_service,
+            ki_verification_map=effective_ki_map,
         )
 
     task_status = "completed" if all_success else "partial"
