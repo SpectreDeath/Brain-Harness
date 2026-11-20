@@ -11,6 +11,7 @@ from harness.cli import main
 from harness.commands.aliases import CLI_ALIASES
 
 
+@pytest.mark.unit
 def test_cli_md_documents_all_command_groups_and_subcommands():
     cli_md_path = Path("docs/reference/cli.md")
     assert cli_md_path.exists(), "docs/reference/cli.md not found"
@@ -30,6 +31,7 @@ def test_cli_md_documents_all_command_groups_and_subcommands():
             assert f"## `harness {name}`" in content, f"Missing standalone command section for 'harness {name}'"
 
 
+@pytest.mark.unit
 def test_integrated_toolkits_matches_live_subcommands():
     toolkits_md_path = Path("docs/reference/integrated-toolkits.md")
     assert toolkits_md_path.exists(), "docs/reference/integrated-toolkits.md not found"
