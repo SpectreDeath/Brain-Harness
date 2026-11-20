@@ -214,8 +214,8 @@ Updated `src/harness/agent/swarm/consensus.py`, `src/harness/services/uncertaint
 `tests/test_layer_import_boundaries.py`, decoupled `ui/server/routes/skills.py`, `services/skill_graph/joint_query.py`, `services/storage/vault_retrieval.py`, refreshed `results/p09/refactor_order.json` & `summary.md`.
 
 ### Acceptance
-- `tests/test_layer_import_boundaries.py` passes cleanly.
-- `p09_refactor_order.py` reports `0` `spider_cycle_violations` (note: the 11-unit Tarjan SCC remains until Phase 4 moves `kernel/runtime/`).
+- `tests/test_layer_import_boundaries.py` passes cleanly (on `2026-11-19`, moved `reflection_worker.py` to `src/harness/creator/reflection/worker.py`, eliminating `services -> creator -> services` and deleting `ALLOWED_SERVICES_TO_CREATOR`).
+- `p09_refactor_order.py` originally targeted `0` `spider_cycle_violations` at Phase 3; after breaking `services -> creator -> services`, uncapped scanning still surfaces the pre-existing `services -> plugins -> services` core witness cycle inside the 6-unit SCC (`creator`, `events`, `ingestion`, `kernel`, `plugins`, `services`), recorded as a known architectural limitation in `results/p09/refactor_order.json`.
 
 ---
 
@@ -238,7 +238,8 @@ Updated `src/harness/agent/swarm/consensus.py`, `src/harness/services/uncertaint
 Decoupled composition root outside `src/harness/kernel/`, updated import-boundary test, refreshed `results/p09/refactor_order.json` & `summary.md`.
 
 ### Acceptance
-- `kernel` and `events` are no longer trapped in an 11-unit cyclic SCC (`max SCC size < 11`).
+- `kernel` and `events` are no longer trapped in an 11-unit cyclic SCC (`max SCC size < 11`; shrunk to `6`: `creator`, `events`, `ingestion`, `kernel`, `plugins`, `services`, with `kernel` and `events` remaining inside the 6-unit SCC as a known architectural limitation).
+- `harness.kernel.runtime` provides a PEP 562 `DeprecationWarning` compatibility shim (`src/harness/kernel/runtime.py`, added `2026-11-19`) forwarding to `harness.runtime` without introducing static `kernel -> runtime` AST imports.
 - `ServiceContext` constructor and lifecycle signatures remain unchanged (Rule 19).
 
 ---

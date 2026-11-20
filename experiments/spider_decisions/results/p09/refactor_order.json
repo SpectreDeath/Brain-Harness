@@ -1,8 +1,8 @@
 {
   "total_units": 12,
-  "total_depends_on_edges": 58,
+  "total_depends_on_edges": 57,
   "spider_cycle_violations": [
-    "services -> creator -> services"
+    "services -> plugins -> services"
   ],
   "tarjan_scc_cycles": [
     [
@@ -13,6 +13,9 @@
       "plugins",
       "services"
     ]
+  ],
+  "known_limitations": [
+    "2026-11-19: Eliminated the services -> creator -> services edge by moving ReflectionDaemonWorker to src/harness/creator/reflection/worker.py and removing ALLOWED_SERVICES_TO_CREATOR (`depends_on_project` edges 58 -> 57). Because Spider `validate_model` emits one witness cycle per acyclic rule, breaking services -> creator exposed the pre-existing `services -> plugins -> services` 2-cycle inside the 6-unit core Tarjan SCC (`['creator', 'events', 'ingestion', 'kernel', 'plugins', 'services']`), alongside `kernel <-> events`, `kernel <-> plugins`, `creator <-> ingestion`, and `plugins <-> ingestion`."
   ],
   "blast_radius_method": "Python reverse BFS (spider transitive queries follow forward depends_on_project edges only)",
   "dependency_hubs": [
@@ -43,7 +46,7 @@
     },
     {
       "unit": "creator",
-      "in_degree": 5,
+      "in_degree": 4,
       "blast_radius": 11
     },
     {
@@ -85,7 +88,7 @@
       "in_spider_cycle": true,
       "spider_cycle_size": 2,
       "hub_in_degree": 8,
-      "out_degree": 5,
+      "out_degree": 4,
       "blast_radius_reverse_reachable": 11,
       "forward_transitive_deps": 5,
       "in_top10": true,
@@ -95,17 +98,17 @@
     },
     {
       "order": 2,
-      "unit": "creator",
-      "py_file_count": 39,
+      "unit": "plugins",
+      "py_file_count": 23,
       "in_spider_cycle": true,
       "spider_cycle_size": 2,
-      "hub_in_degree": 5,
+      "hub_in_degree": 10,
       "out_degree": 4,
       "blast_radius_reverse_reachable": 11,
       "forward_transitive_deps": 5,
       "in_top10": true,
-      "in_ki_file_size_hotspots": false,
-      "in_ki_deepening_cycle_history": true,
+      "in_ki_file_size_hotspots": true,
+      "in_ki_deepening_cycle_history": false,
       "in_ki_70_cycle_corpus": false
     },
     {
@@ -200,6 +203,21 @@
     },
     {
       "order": 9,
+      "unit": "creator",
+      "py_file_count": 40,
+      "in_spider_cycle": false,
+      "spider_cycle_size": 0,
+      "hub_in_degree": 4,
+      "out_degree": 4,
+      "blast_radius_reverse_reachable": 11,
+      "forward_transitive_deps": 5,
+      "in_top10": true,
+      "in_ki_file_size_hotspots": false,
+      "in_ki_deepening_cycle_history": true,
+      "in_ki_70_cycle_corpus": false
+    },
+    {
+      "order": 10,
       "unit": "ingestion",
       "py_file_count": 16,
       "in_spider_cycle": false,
@@ -214,24 +232,9 @@
       "in_ki_70_cycle_corpus": false
     },
     {
-      "order": 10,
-      "unit": "plugins",
-      "py_file_count": 23,
-      "in_spider_cycle": false,
-      "spider_cycle_size": 0,
-      "hub_in_degree": 10,
-      "out_degree": 4,
-      "blast_radius_reverse_reachable": 11,
-      "forward_transitive_deps": 5,
-      "in_top10": true,
-      "in_ki_file_size_hotspots": true,
-      "in_ki_deepening_cycle_history": false,
-      "in_ki_70_cycle_corpus": false
-    },
-    {
       "order": 11,
       "unit": "kernel",
-      "py_file_count": 26,
+      "py_file_count": 27,
       "in_spider_cycle": false,
       "spider_cycle_size": 0,
       "hub_in_degree": 11,
@@ -273,12 +276,12 @@
       ]
     },
     {
-      "unit": "creator",
+      "unit": "plugins",
       "order": 2,
-      "in_ki_file_size_hotspots": false,
-      "in_ki_deepening_cycle_history": true,
+      "in_ki_file_size_hotspots": true,
+      "in_ki_deepening_cycle_history": false,
       "matched_signals": [
-        "creator package"
+        "cellcog.py"
       ]
     },
     {
@@ -314,12 +317,12 @@
       ]
     },
     {
-      "unit": "plugins",
-      "order": 10,
-      "in_ki_file_size_hotspots": true,
-      "in_ki_deepening_cycle_history": false,
+      "unit": "creator",
+      "order": 9,
+      "in_ki_file_size_hotspots": false,
+      "in_ki_deepening_cycle_history": true,
       "matched_signals": [
-        "cellcog.py"
+        "creator package"
       ]
     }
   ]

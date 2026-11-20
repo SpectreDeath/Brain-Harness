@@ -13,13 +13,9 @@ from typing import Any
 
 import structlog
 
-from harness.creator.reflection import (
-    HarnessReflectorEngine,
-    MemoryPatternPipeline,
-    ReflectionReport,
-    ReflectionScope,
-    resolve_reflector_engine,
-)
+from harness.creator.reflection.engine import resolve_reflector_engine
+from harness.creator.reflection.extractors import MemoryPatternPipeline
+from harness.creator.reflection.models import ReflectionReport, ReflectionScope
 from harness.kernel.context import ServiceKey
 from harness.services.storage import SQLiteStorageService
 

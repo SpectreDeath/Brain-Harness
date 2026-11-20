@@ -210,11 +210,24 @@ def main() -> int:
             )
 
     hubs_ranked = sorted(units, key=lambda u: (-in_degree[u], -blast_radius[u], u))
+    known_limitations = [
+        (
+            "2026-11-19: Eliminated the services -> creator -> services edge by moving "
+            "ReflectionDaemonWorker to src/harness/creator/reflection/worker.py and removing "
+            "ALLOWED_SERVICES_TO_CREATOR (`depends_on_project` edges 58 -> 57). Because Spider "
+            "`validate_model` emits one witness cycle per acyclic rule, breaking services -> creator "
+            "exposed the pre-existing `services -> plugins -> services` 2-cycle inside the 6-unit "
+            "core Tarjan SCC (`['creator', 'events', 'ingestion', 'kernel', 'plugins', 'services']`), "
+            "alongside `kernel <-> events`, `kernel <-> plugins`, `creator <-> ingestion`, and "
+            "`plugins <-> ingestion`."
+        ),
+    ]
     payload = {
         "total_units": len(units),
         "total_depends_on_edges": sum(Counter({u: len(fwd[u]) for u in units}).values()),
         "spider_cycle_violations": spider_cycle_paths,
         "tarjan_scc_cycles": tarjan_sccs,
+        "known_limitations": known_limitations,
         "blast_radius_method": "Python reverse BFS (spider transitive queries follow forward depends_on_project edges only)",
         "dependency_hubs": [
             {"unit": u, "in_degree": in_degree[u], "blast_radius": blast_radius[u]} for u in hubs_ranked
@@ -235,6 +248,9 @@ def main() -> int:
         f"- **Full Tarjan strongly connected components (`size > 1`):** `{tarjan_sccs}`",
         "- **Note on blast radius:** `ontology_spider` `transitive` queries traverse forward `depends_on_project` edges; "
         "reverse reachability (**blast radius** = transitive dependents) was computed via reverse BFS in Python.",
+        "",
+        "## Known Architectural Limitations",
+        *[f"- {lim}" for lim in known_limitations],
         "",
         "## Proposed Refactor Order",
         "",

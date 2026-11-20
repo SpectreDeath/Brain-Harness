@@ -123,7 +123,7 @@ def knowledge_reflect(
     """Reflect on internal history (HTML reports, transcripts, test runs) and distill Knowledge Items."""
     if daemon:
         click.echo(f"Starting continuous reflection daemon (interval: {interval_seconds}s, vault: {vault_dir})...")
-        from harness.services.reflection_worker import ReflectionDaemonWorker
+        from harness.creator.reflection.worker import ReflectionDaemonWorker
 
         worker = ReflectionDaemonWorker(
             interval_seconds=interval_seconds,

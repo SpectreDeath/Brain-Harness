@@ -181,9 +181,9 @@
   },
   "phase_9": {
     "total_units": 12,
-    "total_depends_on_edges": 58,
+    "total_depends_on_edges": 57,
     "spider_cycles": [
-      "services -> creator -> services"
+      "services -> plugins -> services"
     ],
     "tarjan_scc_count": 1,
     "tarjan_scc_sizes": [
@@ -191,15 +191,15 @@
     ],
     "ordered_units": [
       "services",
-      "creator",
+      "plugins",
       "commands",
       "ui",
       "mcp",
       "runtime",
       "agent",
       "bridges",
+      "creator",
       "ingestion",
-      "plugins",
       "kernel",
       "events"
     ],

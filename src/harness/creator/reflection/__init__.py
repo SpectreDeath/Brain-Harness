@@ -31,6 +31,7 @@ from harness.creator.reflection.models import (
     TranscriptSession,
 )
 from harness.creator.reflection.visualizer import generate_reflection_html_brief
+from harness.creator.reflection.worker import REFLECTION_WORKER_KEY, ReflectionDaemonWorker
 
 __all__ = [
     "ArchitectureSeamPatternExtractor",
@@ -43,6 +44,8 @@ __all__ = [
     "HarnessHistoryHarvester",
     "HarnessReflectorEngine",
     "MemoryPatternPipeline",
+    "REFLECTION_WORKER_KEY",
+    "ReflectionDaemonWorker",
     "ReflectionReport",
     "ReflectionScope",
     "ReportArtifact",

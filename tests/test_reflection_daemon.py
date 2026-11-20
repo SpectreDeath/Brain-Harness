@@ -16,7 +16,7 @@ from harness.creator.reflection import (
     ReportArtifact,
     TestExecutionPatternExtractor,
 )
-from harness.services.reflection_worker import ReflectionDaemonWorker
+from harness.creator.reflection.worker import ReflectionDaemonWorker
 from harness.services.storage import SQLiteStorageService
 
 

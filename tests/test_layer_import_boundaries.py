@@ -8,8 +8,6 @@ from pathlib import Path
 import pytest
 
 _SRC_ROOT = Path(__file__).resolve().parents[1] / "src" / "harness"
-# Legacy pre-existing coupling outside Phase 3 scope (ReflectionDaemonWorker orchestrates creator.reflection).
-ALLOWED_SERVICES_TO_CREATOR = frozenset({"reflection_worker.py"})
 
 
 def _collect_forbidden_imports(
@@ -50,11 +48,7 @@ def test_services_never_imports_commands_or_creator() -> None:
     cmd_violations = _collect_forbidden_imports("services", ("harness.commands",))
     assert cmd_violations == [], f"Forbidden services -> commands imports: {cmd_violations}"
 
-    creator_violations = _collect_forbidden_imports(
-        "services",
-        ("harness.creator",),
-        allowed_rel_paths=ALLOWED_SERVICES_TO_CREATOR,
-    )
+    creator_violations = _collect_forbidden_imports("services", ("harness.creator",))
     assert creator_violations == [], f"Forbidden services -> creator imports: {creator_violations}"
 
 
@@ -86,3 +80,14 @@ def test_kernel_only_imports_events_and_plugins() -> None:
                 ):
                     violations.append(f"kernel/{rel}:{node.lineno} -> {mod}")
     assert violations == [], f"Forbidden kernel cross-layer imports: {violations}"
+
+
+@pytest.mark.unit
+def test_kernel_runtime_compat_shim_emits_deprecation_and_preserves_identity() -> None:
+    """Deprecated harness.kernel.runtime shim must warn and forward identical runtime symbols."""
+    from harness.runtime import HarnessRuntime as RealHarnessRuntime
+
+    with pytest.warns(DeprecationWarning, match="harness.runtime"):
+        from harness.kernel.runtime import HarnessRuntime as ShimHarnessRuntime
+
+    assert ShimHarnessRuntime is RealHarnessRuntime
