@@ -54,12 +54,14 @@ previously proven false. One line from the user settles it.
   `"unconfirmed — no transcript in-repo"`, and re-opened the ratify-or-revert
   gate; OS `ruff check src tests`, `mypy src` [`34` files], and `pytest -v`
   [`120 passed in 10.09s`] passed.)*
-- [ ] **0.3 Tick 7.3 in the parent plan only on the user's word.**
+- [x] **0.3 Tick 7.3 in the parent plan only on the user's word.**
   The executor must not tick it. If the answer is "no", 7.3 stays
   unticked until the ratify-or-revert call is made and recorded.
-  *(Unconfirmed 2026-11-20: parent plan `7.3` was unticked `[ ]` and
-  annotated with the `2026-11-20` retraction; both `0.3` and parent `7.3`
-  remain unticked pending the user's explicit ratify-or-revert decision.)*
+  *(Verified `2026-11-20`: user explicitly ratified in visible chat with
+  verbatim reply `"ratify, fix next, push both"`; recorded in OS
+  `docs/decisions.md` §7.15 as `"ratified without a recorded trigger"` in
+  OS `d5bc49a` [`120 passed in 9.05s`, `ruff`/`mypy` clean], and parent
+  plan `7.3` ticked `[x]`.)*
 
 ## Track 1 — 5.5 figure: "26 files already formatted" is wrong
 
@@ -155,9 +157,13 @@ next, bigger job — a scope-and-decision track, not a fix track.
   `sandboxed.py:198`, `tool_mount.py:31`] and `services -> plugins` [`7` imports
   across `6` files]; wrote the 3 scope options + costs in
   `experiments/spider_decisions/results/p09/summary.md` under `Track 3.1`.)*
-- [ ] **3.2 Get the user's pick on scope.** Do not start breaking the
+- [x] **3.2 Get the user's pick on scope.** Do not start breaking the
   cycle in this plan. The pick (fix next / accept / defer) is recorded
   as a decision before any follow-up plan is written.
+  *(Verified `2026-11-20`: user picked **`fix next`** in visible chat
+  with verbatim reply `"ratify, fix next, push both"`; recorded in
+  `experiments/spider_decisions/results/p09/summary.md` under `Track 3.1`.
+  No cycle code was modified in this plan.)*
 
 ## Track 4 — Verification
 

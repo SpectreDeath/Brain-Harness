@@ -368,7 +368,7 @@ citations plan stays separate (different scope, still unpushed).
   *(Verified 2026-11-19, OS `fe9d6ac`: updated all docs, comments, decisions,
   and `tests/test_docs_verbatim.py` using live counts [`19` MCP tools, `9`
   `MUTATING_TOOLS`, `120` tests post-Track-6].)*
-- [ ] **7.3 Rank 7 decision gate.** Obtain the user's decision in chat:
+- [x] **7.3 Rank 7 decision gate.** Obtain the user's decision in chat:
   **ratify** (the Rank 7 work stays) or **revert** (remove the
   `path`/`count`/`not` kinds, `retract_turn`, `session_save`/
   `session_restore`). Present the options; do not pick for them. If
@@ -378,12 +378,13 @@ citations plan stays separate (different scope, still unpushed).
   remove the three features with their tests/docs and re-run the suite
   in both modes (must return to its pre-`7323f11` shape, 105 tests,
   parity 100%).
-  *(Unconfirmed / re-opened 2026-11-20: when asked in visible chat whether
+  *(Unconfirmed earlier `2026-11-20`: when asked in visible chat whether
   they answered an `ask_question` prompt on `2026-11-19` picking Ratify,
-  the user replied verbatim `"I don't believe so"`. Prior `2026-11-19`
-  ratification in OS `docs/decisions.md` §7.15 was retracted and updated
-  to `"unconfirmed — no transcript in-repo"` in OS `08b3e14`; `7.3`
-  remains unticked pending the user's explicit ratify-or-revert decision.)*
+  the user replied verbatim `"I don't believe so"`, so OS `docs/decisions.md`
+  §7.15 was corrected in OS `08b3e14` and `7.3` was re-opened.*
+  *Resolved `2026-11-20`: user explicitly ratified Rank 7 in visible chat —
+  verbatim reply `"ratify, fix next, push both"` — recorded in OS
+  `docs/decisions.md` §7.15 as `"ratified without a recorded trigger"` in OS `d5bc49a`.)*
 
 ## Track 8 — Verification
 
