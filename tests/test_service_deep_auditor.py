@@ -38,6 +38,7 @@ def _create_sample_repo(tmp_path: Path) -> Path:
     return tmp_path / "wrapper"
 
 
+@pytest.mark.unit
 def test_frozen_slotted_models_enforce_immutability() -> None:
     vec = ComputeDimensionVector(
         ambiguity=0.35,
@@ -69,6 +70,7 @@ def test_frozen_slotted_models_enforce_immutability() -> None:
         topo.python_files = 99  # type: ignore[misc]
 
 
+@pytest.mark.unit
 def test_deep_auditor_service_scans_bounded_repo_and_renders_briefs(tmp_path: Path) -> None:
     wrapper_root = _create_sample_repo(tmp_path)
     out_dir = tmp_path / "briefs"
@@ -94,6 +96,7 @@ def test_deep_auditor_service_scans_bounded_repo_and_renders_briefs(tmp_path: Pa
     assert len(payload["ki_candidates"]) == 4
 
 
+@pytest.mark.unit
 @pytest.mark.asyncio
 async def test_ioc_plugin_registration_and_validator() -> None:
     repo_root = Path(__file__).resolve().parents[1]
@@ -115,6 +118,7 @@ async def test_ioc_plugin_registration_and_validator() -> None:
     assert ctx.require(DEEP_AUDITOR_SERVICE_KEY) is resolved
 
 
+@pytest.mark.unit
 def test_skill_cli_runner_executes_cleanly(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
     wrapper_root = _create_sample_repo(tmp_path)
     repo_root = Path(__file__).resolve().parents[1]

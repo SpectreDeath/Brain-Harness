@@ -349,3 +349,30 @@ class TestPluginIntegrationDrift:
                 failures.append(f"{pdir.relative_to(repo_root)}: {failed_checks}")
         assert not failures, f"PluginValidator failures: {failures}"
 
+    def test_readme_and_manual_entrypoint_count_matches_live(self) -> None:
+        """Verify README.md and USER_MANUAL.md report the exact live total plugin entrypoint count."""
+        repo_root = Path.cwd()
+        plugins_root = repo_root / "plugins"
+        manifests = [
+            p for p in sorted(plugins_root.glob("*/*/plugin.json")) if not p.parent.name.startswith(".")
+        ]
+        total_eps = sum(len((json.loads(p.read_text(encoding="utf-8")).get("entrypoints") or {})) for p in manifests)
+        assert total_eps >= 696
+        for doc_name in ("README.md", "USER_MANUAL.md"):
+            text = (repo_root / doc_name).read_text(encoding="utf-8")
+            assert f"**{total_eps} tool entrypoints**" in text, (
+                f"{doc_name} missing live entrypoint count **{total_eps} tool entrypoints**"
+            )
+
+    def test_readme_and_manual_knowledge_item_count_matches_live(self) -> None:
+        """Verify README.md and USER_MANUAL.md report the exact live Knowledge Vault item count."""
+        repo_root = Path.cwd()
+        vault_root = repo_root / ".harness" / "knowledge"
+        ki_count = sum(1 for d in vault_root.iterdir() if d.is_dir() and (d / "metadata.json").is_file())
+        assert ki_count >= 382
+        for doc_name in ("README.md", "USER_MANUAL.md"):
+            text = (repo_root / doc_name).read_text(encoding="utf-8")
+            assert f"**{ki_count} Knowledge Items**" in text, (
+                f"{doc_name} missing live KI count **{ki_count} Knowledge Items**"
+            )
+

@@ -28,6 +28,7 @@ skip_if_no_engine = pytest.mark.skipif(
 )
 
 
+@pytest.mark.unit
 def test_frozen_dataclasses_immutability_and_validation() -> None:
     """Verify Rule 12 & Rule 43 frozen dataclass guards on value objects and reports."""
     rank = AttributeEntropyRank(
@@ -73,6 +74,7 @@ def test_frozen_dataclasses_immutability_and_validation() -> None:
         audit.status = "violations_detected"  # type: ignore[misc]
 
 
+@pytest.mark.unit
 @skip_if_no_engine
 def test_kernel_service_phase5_queries_entropy_competency_and_audit() -> None:
     """Verify Phase-5 path/not/count queries, hop-distance ranking, entropy ranking, and epistemic audits."""
@@ -132,6 +134,7 @@ def test_kernel_service_phase5_queries_entropy_competency_and_audit() -> None:
     assert audit.unverified_entity_ids == ("db_store",)
 
 
+@pytest.mark.unit
 @skip_if_no_engine
 def test_live_harness_knowledge_vault_ingestion_and_runner() -> None:
     """Verify live .harness/knowledge/ canonical directory ingestion and headless runner CLI."""
@@ -173,6 +176,8 @@ def test_live_harness_knowledge_vault_ingestion_and_runner() -> None:
     assert len(parsed["entropy_ranks"]) >= 1
 
 
+@pytest.mark.unit
+@skip_if_no_engine
 def test_skill_and_plugin_validators_pass() -> None:
     """Verify Rule 34, Rule 37, Rule 38, and Rule 44 craft and plugin validator gates."""
     skill_report = SkillValidator.validate_sync(Path(".agents/skills/ontology-spider"))
@@ -187,6 +192,7 @@ def test_skill_and_plugin_validators_pass() -> None:
     assert plugin_report.valid, f"Plugin validation failed: {failing_plugin_checks}"
 
 
+@pytest.mark.unit
 def test_kernel_layer_has_zero_static_plugin_imports() -> None:
     """Verify Rule 1: no module in src/harness/kernel/ statically imports plugins.* transitively."""
     src_root = Path("src")
@@ -240,6 +246,7 @@ def test_kernel_layer_has_zero_static_plugin_imports() -> None:
     assert leaks == [], f"Rule 1 kernel -> plugins static AST leaks detected: {leaks}"
 
 
+@pytest.mark.unit
 @skip_if_no_engine
 def test_service_compute_blast_radius_reverse_transitive() -> None:
     """compute_blast_radius returns cycle-safe reverse transitive dependents per node."""

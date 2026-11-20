@@ -88,6 +88,7 @@ def _create_research_monorepo(tmp_path: Path) -> tuple[Path, Path]:
     return outer, vault
 
 
+@pytest.mark.unit
 def test_repo_ontology_analysis_report_frozen_slotted() -> None:
     """Verify Rule 12 & Rule 43 immutability on RepoOntologyAnalysisReport."""
     rank = AttributeEntropyRank("primary_framework", 1.0, 1.0, 2, 1.0, 1.0, False)
@@ -107,6 +108,7 @@ def test_repo_ontology_analysis_report_frozen_slotted() -> None:
         rep.projects_count = 99  # type: ignore[misc]
 
 
+@pytest.mark.unit
 @skip_if_no_engine
 def test_repo_ontology_model_source_and_kernel_analyze(tmp_path: Path) -> None:
     """RepoOntologyModelSource resolves nested archive, keeps collisions distinct, detects cycles & gaps."""
@@ -131,6 +133,7 @@ def test_repo_ontology_model_source_and_kernel_analyze(tmp_path: Path) -> None:
     assert report.top_discriminating_attributes[0].is_identifier_like is False
 
 
+@pytest.mark.unit
 @skip_if_no_engine
 def test_deep_auditor_and_repo_triad_forge_wire_repo_ontology(tmp_path: Path) -> None:
     """DeepRepoAuditorService and RepoTriadForgePlugin surface ontology_analysis and ontology_summary."""
@@ -155,6 +158,7 @@ def test_deep_auditor_and_repo_triad_forge_wire_repo_ontology(tmp_path: Path) ->
     assert len(kis) >= 3
 
 
+@pytest.mark.unit
 @skip_if_no_engine
 def test_domain_classifier_handles_llm_reasoning_keywords() -> None:
     """_classify_domain maps plural LLMs / self-consistency / prompting repos to nlp_and_llm_project."""
@@ -167,6 +171,7 @@ def test_domain_classifier_handles_llm_reasoning_keywords() -> None:
     assert _classify_domain("cisc", readme) == "nlp_and_llm_project"
 
 
+@pytest.mark.unit
 @skip_if_no_engine
 def test_domain_classifier_routes_selective_prediction_and_systems() -> None:
     """Selective prediction maps to privacy/safety and user-space kernels map to systems."""
@@ -180,6 +185,7 @@ def test_domain_classifier_routes_selective_prediction_and_systems() -> None:
     assert _classify_domain("gvisor", gvisor_readme) == "systems_and_runtime_project"
 
 
+@pytest.mark.unit
 @skip_if_no_engine
 def test_vault_matching_avoids_title_false_positives_and_reads_sources_and_hyphens(tmp_path: Path) -> None:
     """_discover_vault_learned_projects reads structured sources/paths without matching generic title words."""
@@ -247,6 +253,7 @@ def test_vault_matching_avoids_title_false_positives_and_reads_sources_and_hyphe
     assert model.entities["rpc"].attributes["learned_ki_id"] == ""
 
 
+@pytest.mark.unit
 @skip_if_no_engine
 def test_multilanguage_go_bazel_and_tests_discovery(tmp_path: Path) -> None:
     """Go imports, Bazel BUILD deps, and non-Python tests surface cross-unit dependencies and test flags."""
@@ -277,6 +284,7 @@ def test_multilanguage_go_bazel_and_tests_discovery(tmp_path: Path) -> None:
     assert ("runsc", "pkg") in edges
 
 
+@pytest.mark.unit
 @skip_if_no_engine
 def test_portfolio_analysis_and_runner_repo_mode(tmp_path: Path) -> None:
     """Portfolio analysis expands nested monorepos and CLI runner supports --repo + --query."""
@@ -328,6 +336,7 @@ def test_portfolio_analysis_and_runner_repo_mode(tmp_path: Path) -> None:
     assert payload["query"]["answers"][0]["value"] >= 1
 
 
+@pytest.mark.unit
 @skip_if_no_engine
 def test_auditor_and_triad_consume_ontology_summary(tmp_path: Path) -> None:
     """DefaultDeepRepoAuditorService and RepoTriadPipelineEngine ground KI candidates in ontology findings."""
@@ -346,6 +355,7 @@ def test_auditor_and_triad_consume_ontology_summary(tmp_path: Path) -> None:
     assert any(isinstance(k, KiCandidateData) and ("proj_b" in k.id or "ontology" in k.id) for k in triad_kis)
 
 
+@pytest.mark.unit
 @skip_if_no_engine
 def test_generic_unit_tag_match_rejected(tmp_path: Path) -> None:
     """Generic unit names (e.g. runtime) must reject tag-only matches from unrelated KIs."""
@@ -378,6 +388,7 @@ def test_generic_unit_tag_match_rejected(tmp_path: Path) -> None:
     assert attrs["is_generic_unit"] is True
 
 
+@pytest.mark.unit
 @skip_if_no_engine
 def test_structured_match_kept_for_generic_name(tmp_path: Path) -> None:
     """Generic unit names keep a structured match when source_target explicitly targets /<unit>."""
@@ -410,6 +421,7 @@ def test_structured_match_kept_for_generic_name(tmp_path: Path) -> None:
     assert attrs["learned_ki_id"] == "ki_runtime_core"
 
 
+@pytest.mark.unit
 @skip_if_no_engine
 def test_generic_units_excluded_from_unlearned(tmp_path: Path) -> None:
     """Generic helper folders (tests, scripts) with tests are excluded from unlearned_tested_projects."""
@@ -431,6 +443,7 @@ def test_generic_units_excluded_from_unlearned(tmp_path: Path) -> None:
     assert "scripts" not in report.unlearned_tested_projects
 
 
+@pytest.mark.unit
 @skip_if_no_engine
 def test_generic_slug_trailing_words_do_not_bridge(tmp_path: Path) -> None:
     """Generic slug segments like 'governance' must not bridge unrelated sub-units."""
@@ -518,6 +531,7 @@ def test_generic_slug_trailing_words_do_not_bridge(tmp_path: Path) -> None:
     assert air_model.entities["air_llm"].attributes["learned_match_strength"] == "structured"
 
 
+@pytest.mark.unit
 @skip_if_no_engine
 def test_external_repo_leaf_does_not_bridge_unrelated_subproject(tmp_path: Path) -> None:
     """External repo source_target (Balanov/shim) must not bridge gvisor/shim, while portfolio shim still matches."""
@@ -583,6 +597,7 @@ def test_external_repo_leaf_does_not_bridge_unrelated_subproject(tmp_path: Path)
     )
 
 
+@pytest.mark.unit
 @skip_if_no_engine
 def test_max_files_per_unit_none_scans_all_non_pruned_files(tmp_path: Path) -> None:
     """max_files_per_unit=None scans all non-pruned files while still skipping _PRUNE_DIRS (.git)."""

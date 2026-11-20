@@ -38,6 +38,11 @@ jobs:
         run: |
           ruff format --check src/harness/kernel src/harness/services/brain_bridge src/harness/services/deep_auditor src/harness/services/harness_spawner src/harness/services/dock src/harness/commands/reflection plugins/software_engineering/deep_repo_auditor tests/test_service_deep_auditor.py
 
+      - name: Check uv.lock freshness
+        run: |
+          pip install uv
+          uv lock --check
+
   frontend:
     name: Frontend Build & Lint
     runs-on: ubuntu-latest

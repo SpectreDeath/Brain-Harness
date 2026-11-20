@@ -21,6 +21,7 @@ skip_if_no_engine = pytest.mark.skipif(
 )
 
 
+@pytest.mark.unit
 @skip_if_no_engine
 def test_vault_adapter_unwraps_nested_isnad_claims_and_disambiguates_collisions(tmp_path: Path) -> None:
     """Nested isnad.claims[] must verify real 64-hex LF hashes, and colliding sanitized IDs stay distinct."""
@@ -127,6 +128,7 @@ def test_vault_adapter_unwraps_nested_isnad_claims_and_disambiguates_collisions(
     assert 0.0 < audit.isnad_verification_rate < 1.0
 
 
+@pytest.mark.unit
 @skip_if_no_engine
 def test_code_edge_normalizes_src_module_paths(tmp_path: Path) -> None:
     """Path-style src/ module targets on applicable_to/references_code also emit canonical references_code."""
@@ -168,6 +170,7 @@ def test_code_edge_normalizes_src_module_paths(tmp_path: Path) -> None:
     assert ("ki_path_edges", "references_code", "src_harness_services_deep_auditor___init___py") in triples
 
 
+@pytest.mark.unit
 @skip_if_no_engine
 def test_code_edge_strips_pre_sanitized_src_and_py_suffix(tmp_path: Path) -> None:
     """Pre-sanitized src_*_py targets and dotted applicable_to module targets normalize cleanly without dupes."""

@@ -27,6 +27,7 @@ from harness.services.brain_bridge import (
 )
 
 
+@pytest.mark.unit
 def test_resolve_brain_bridge_without_context() -> None:
     """Verify resolve_brain_bridge returns DefaultBrainBridgeService when ctx is None."""
     svc = resolve_brain_bridge(None)
@@ -34,6 +35,7 @@ def test_resolve_brain_bridge_without_context() -> None:
     assert isinstance(svc, BrainBridgeService)
 
 
+@pytest.mark.unit
 def test_resolve_brain_bridge_from_ioc_context() -> None:
     """Verify resolve_brain_bridge extracts registered service from ServiceContext."""
     ctx = ServiceContext()
@@ -44,6 +46,7 @@ def test_resolve_brain_bridge_from_ioc_context() -> None:
     assert resolved is custom_service
 
 
+@pytest.mark.unit
 def test_detect_brain_format_and_git_url(tmp_path: Path) -> None:
     """Verify brain format detector and git url recognizer in core service."""
     assert is_git_url("https://github.com/example/repo.git") is True
@@ -60,6 +63,7 @@ def test_detect_brain_format_and_git_url(tmp_path: Path) -> None:
     assert detect_brain_format(doc_dir) == "raw_docs"
 
 
+@pytest.mark.unit
 def test_default_brain_bridge_attach_query_detach_lifecycle(tmp_path: Path) -> None:
     """Verify complete in-memory lifecycle on DefaultBrainBridgeService."""
     repo = tmp_path / "sample_brain"
@@ -107,6 +111,7 @@ def test_default_brain_bridge_attach_query_detach_lifecycle(tmp_path: Path) -> N
     assert list_after.attached_count == 0
 
 
+@pytest.mark.unit
 @pytest.mark.asyncio
 async def test_async_bridge_methods(tmp_path: Path) -> None:
     """Verify asynchronous attach_async and query_async methods."""
@@ -123,6 +128,7 @@ async def test_async_bridge_methods(tmp_path: Path) -> None:
     assert query_res.results_count > 0
 
 
+@pytest.mark.unit
 def test_index_text_files_skips_external_and_ingested_fixtures(tmp_path: Path) -> None:
     """Verify test_ingested_plugins and external directories are excluded from BrainBridge indexing."""
     from harness.services.brain_bridge import index_text_files

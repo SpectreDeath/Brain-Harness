@@ -39,6 +39,7 @@ def vault_sample_path() -> Path:
     return p
 
 
+@pytest.mark.unit
 @skip_if_no_engine
 def test_harness_vault_adapter_loads_sample(vault_sample_path: Path) -> None:
     adapter = HarnessVaultModelSource(vault_sample_path)
@@ -50,6 +51,7 @@ def test_harness_vault_adapter_loads_sample(vault_sample_path: Path) -> None:
     assert "impl_plugin" in model.entities
 
 
+@pytest.mark.unit
 @skip_if_no_engine
 def test_ontology_spider_service_transitive_query_and_proof(vault_sample_path: Path) -> None:
     service = OntologySpiderService()
@@ -66,6 +68,7 @@ def test_ontology_spider_service_transitive_query_and_proof(vault_sample_path: P
     assert len(core_ans["provenance"]) >= 2
 
 
+@pytest.mark.unit
 @skip_if_no_engine
 def test_vault_directory_loading() -> None:
     """Verify loading a directory-based knowledge vault structure."""
@@ -133,6 +136,7 @@ def test_vault_directory_loading() -> None:
         assert db_ans["path"] == ["service_a", "service_b", "database_c"]
 
 
+@pytest.mark.unit
 @skip_if_no_engine
 def test_schema_validation_detects_cycles() -> None:
     cyclical_vault = {
@@ -152,6 +156,7 @@ def test_schema_validation_detects_cycles() -> None:
     assert any(v["check_type"] == "cycle_violation" for v in violations)
 
 
+@pytest.mark.unit
 @pytest.mark.asyncio
 async def test_plugin_lifecycle_and_ioc_registration() -> None:
     """Verify plugin registers services into IoC container even when engine is absent (offline mode)."""
@@ -167,6 +172,7 @@ async def test_plugin_lifecycle_and_ioc_registration() -> None:
     await p.on_unload()
 
 
+@pytest.mark.unit
 @skip_if_no_engine
 def test_standalone_entrypoints(vault_sample_path: Path) -> None:
     loaded = load_vault_ontology(vault_sample_path)
@@ -180,6 +186,7 @@ def test_standalone_entrypoints(vault_sample_path: Path) -> None:
     assert isinstance(val_res, list)
 
 
+@pytest.mark.unit
 @skip_if_no_engine
 def test_engine_zero_brain_harness_imports() -> None:
     """Verify that Ontology-Spider engine imports ZERO Brain Harness code (Track 2 guardrail)."""
@@ -218,6 +225,7 @@ def test_engine_zero_brain_harness_imports() -> None:
                     ), f"Forbidden import from {node.module} in {py_file}"
 
 
+@pytest.mark.unit
 def test_missing_engine_error_message() -> None:
     """Verify that when engine is absent, calling service methods surfaces actionable install message."""
     if not HAS_ONTOLOGY_SPIDER:
@@ -228,6 +236,7 @@ def test_missing_engine_error_message() -> None:
         assert "README.md" in str(exc_info.value)
 
 
+@pytest.mark.unit
 @skip_if_no_engine
 def test_canonical_knowledge_vault_edges_isnad_and_temporal_slice(tmp_path: Path) -> None:
     """Verify Rule 40 canonical edges, isnad verification metadata, confidence filter, and as_of slice."""
@@ -310,6 +319,7 @@ def test_canonical_knowledge_vault_edges_isnad_and_temporal_slice(tmp_path: Path
     assert neg_res["answers"][0]["value"] == "true"
 
 
+@pytest.mark.unit
 @skip_if_no_engine
 @pytest.mark.asyncio
 async def test_plugin_exposes_kernel_service_and_new_entrypoints(vault_sample_path: Path) -> None:
