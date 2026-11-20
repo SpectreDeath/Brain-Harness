@@ -140,8 +140,8 @@ citations plan stays separate (different scope, still unpushed).
   live, do not trust this count blindly). Recompute each hash over the
   file's git-blob bytes (LF as stored in git) and record the corrected
   values with the date and the method.
-  *(Verified 2026-11-19, `999571b`: re-stamped all 12 CRLF-mismatched local
-  claims across the Phase 5 verified KIs via `scratch/restamp_git_blob_hashes.py`
+  *(Verified 2026-11-19, `999571b`; script committed 2026-11-20: re-stamped all 12 CRLF-mismatched local
+  claims across the Phase 5 verified KIs via `scripts/verification/restamp_git_blob_hashes.py`
   with `hash_method="git_blob_lf_sha256"`, `hash_restamped_at`, and `provenance_note`.)*
 - [x] **1.2 Fix the stamping rule.** Wherever hashes are stamped (the
   stamping script/workflow that produced the CRLF hashes), change it to
@@ -168,9 +168,10 @@ citations plan stays separate (different scope, still unpushed).
   match, with zero `sha256_hash: null` inside a VERIFIED claim left
   unflagged (flag the pre-existing HTML-artifact nulls rather than
   silently passing them).
-  *(Verified 2026-11-19, `999571b` + Track 8 `verify_track8_records.py`:
-  28 touched KIs / 103 claims audited: `local_verified=22`, `external_verified=16`,
-  `local_mismatches=0`, `malformed=0`, `missing_hash_flagged=62`; `harness.cli knowledge sync --strict` synced `382` KIs.)*
+  *(Verified 2026-11-19, `999571b` + Track 8 / `2026-11-20` `scripts/verification/verify_track8_records.py`:
+  28 touched KIs / `103` claims audited (`22 + 16 + 62 + 3 = 103`): `local_verified=22`, `external_verified=16`,
+  `missing_hash_flagged=62`, `unverified=3` [`ki_20260831_strategify_04`, `ki_self_20260831_01`, `ki_self_20260907_01`],
+  `local_mismatches=0`, `malformed=0`; `harness.cli knowledge sync --strict` synced `382` KIs.)*
 
 ## Track 2 — Phase 1 acceptance, regression, and re-runnability
 
@@ -367,7 +368,7 @@ citations plan stays separate (different scope, still unpushed).
   *(Verified 2026-11-19, OS `fe9d6ac`: updated all docs, comments, decisions,
   and `tests/test_docs_verbatim.py` using live counts [`19` MCP tools, `9`
   `MUTATING_TOOLS`, `120` tests post-Track-6].)*
-- [x] **7.3 Rank 7 decision gate.** Obtain the user's decision in chat:
+- [ ] **7.3 Rank 7 decision gate.** Obtain the user's decision in chat:
   **ratify** (the Rank 7 work stays) or **revert** (remove the
   `path`/`count`/`not` kinds, `retract_turn`, `session_save`/
   `session_restore`). Present the options; do not pick for them. If
@@ -377,8 +378,12 @@ citations plan stays separate (different scope, still unpushed).
   remove the three features with their tests/docs and re-run the suite
   in both modes (must return to its pre-`7323f11` shape, 105 tests,
   parity 100%).
-  *(Verified 2026-11-19, OS `fe9d6ac`: user ratified Rank 7 in chat; recorded in
-  `docs/decisions.md` §7.15 as `"ratified without a recorded trigger"`.)*
+  *(Unconfirmed / re-opened 2026-11-20: when asked in visible chat whether
+  they answered an `ask_question` prompt on `2026-11-19` picking Ratify,
+  the user replied verbatim `"I don't believe so"`. Prior `2026-11-19`
+  ratification in OS `docs/decisions.md` §7.15 was retracted and updated
+  to `"unconfirmed — no transcript in-repo"` in OS `08b3e14`; `7.3`
+  remains unticked pending the user's explicit ratify-or-revert decision.)*
 
 ## Track 8 — Verification
 
@@ -391,8 +396,8 @@ citations plan stays separate (different scope, still unpushed).
   *(Verified 2026-11-19/20 across local runs and GitHub Actions CI:
   BH local [`ba27ca1`/`55bc4a7`]: `tests/test_plugin_integration_drift.py` `12 passed in 9.40s`;
   `harness.cli knowledge sync --strict` synced `382` KIs;
-  28-KI hash audit `22` local + `16` external verified, `0` local mismatches, `62` missing-hash flagged;
   `pytest -m "unit" -q --timeout=60` -> `2305 passed, 887 deselected, 3 warnings in 274.18s`;
+  28-KI hash audit (`22 + 16 + 62 + 3 = 103` claims): `22` local + `16` external verified, `62` missing-hash flagged, `3` `UNVERIFIED` (`ki_20260831_strategify_04`, `ki_self_20260831_01`, `ki_self_20260907_01`), `0` local mismatches;
   9-suite `ACTION_SUMMARY.md` §5 -> `63 passed in 36.94s`;
   `ruff check .` clean, `mypy src/harness/kernel --ignore-missing-imports` clean [`27` files], `uv lock --check` clean [`98` packages].
   OS local [`fe9d6ac`]: with `swipl` `120 passed in 12.90s`, coverage `91%` [`--fail-under=90`],
@@ -407,8 +412,8 @@ citations plan stays separate (different scope, still unpushed).
   must be in `PLAN.md`. All 38 hash-bearing claims must recompute
   correctly under the new verifier. One of the two, verified live —
   not asserted.
-  *(Verified live 2026-11-19: `PLAN.md` `81` checked / `0` unchecked, ceiling `2`,
+  *(Verified live 2026-11-19/20 via `scripts/verification/verify_track8_records.py`: `PLAN.md` `81` checked / `0` unchecked, ceiling `2`,
   provenance `"unconfirmed — no transcript in-repo"` [`seed 2026111841`, 4 domains dropped];
-  28-KI 103-claim live recompute `local_verified=22, external_verified=16, local_mismatches=0, malformed=0, missing_hash_flagged=62`.)*
+  28-KI `103`-claim live recompute (`22 + 16 + 62 + 3 = 103`): `local_verified=22, external_verified=16, missing_hash_flagged=62, unverified=3` [`ki_20260831_strategify_04`, `ki_self_20260831_01`, `ki_self_20260907_01`], `local_mismatches=0, malformed=0`.)*
 - [ ] **8.3 Independent check.** Left unticked until a genuinely
   separate check lands. The executor must not tick it.

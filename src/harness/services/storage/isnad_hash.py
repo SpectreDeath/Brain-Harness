@@ -6,6 +6,7 @@ import hashlib
 import json
 import re
 import subprocess
+from collections import Counter
 from collections.abc import Iterable
 from dataclasses import dataclass
 from pathlib import Path
@@ -16,11 +17,13 @@ LOCAL_PATH_PREFIXES = ("src/", "plugins/", "tests/", ".agents/", "experiments/",
 LOCAL_EXACT_FILES = frozenset({"AGENTS.md", "pyproject.toml", "README.md", "CLAUDE.md"})
 _HASH_KEYS = ("sha256_hash", "sha256", "artifact_sha256")
 _PATH_KEYS = ("file", "path", "source_file", "uri", "artifact")
+StrMap = dict[str, str | None] | None
 
 
 @dataclass(slots=True, frozen=True)
 class ClaimHashCheck:
     """Verification outcome for a single isnad claim entry or lineage node."""
+
     ki_id: str
     file_path: str
     claim_sha256: str | None
@@ -33,6 +36,7 @@ class ClaimHashCheck:
 @dataclass(slots=True, frozen=True)
 class VaultHashAuditReport:
     """Aggregate audit summary of isnad claim hashes across vault knowledge items."""
+
     total_claims: int
     local_verified: int
     local_mismatches: int
@@ -40,6 +44,7 @@ class VaultHashAuditReport:
     external_verified: int
     missing_hash_flagged: int
     malformed_hash: int
+    unverified: int
     checks: tuple[ClaimHashCheck, ...]
 
 
@@ -47,10 +52,7 @@ def normalize_claim_path(raw: Any) -> str:
     """Normalize claim file/URI string to a relative POSIX path without line fragments."""
     if not isinstance(raw, str):
         return ""
-    text = raw.strip().split("#", 1)[0]
-    if text.startswith("file:///"):
-        text = text[8:]
-    text = text.replace("\\", "/").lstrip("/")
+    text = raw.strip().split("#", 1)[0].removeprefix("file:///").replace("\\", "/").lstrip("/")
     while text.startswith("./"):
         text = text[2:]
     return text
@@ -58,18 +60,16 @@ def normalize_claim_path(raw: Any) -> str:
 
 def is_local_repo_path(rel_path: str) -> bool:
     """Return True when rel_path addresses a Brain Harness repository path."""
-    norm = normalize_claim_path(rel_path)
-    return norm in LOCAL_EXACT_FILES or norm.startswith(LOCAL_PATH_PREFIXES)
+    return (n := normalize_claim_path(rel_path)) in LOCAL_EXACT_FILES or n.startswith(LOCAL_PATH_PREFIXES)
 
 
 def extract_claim_path(entry: dict[str, Any]) -> str:
     """Extract normalized target file path from an isnad claim or lineage dict."""
-    for key in _PATH_KEYS:
-        if isinstance(val := entry.get(key), str) and val.strip():
-            return normalize_claim_path(val)
-    src = entry.get("source")
-    if isinstance(src, str) and src.strip() and not src.strip().startswith(("http://", "https://")):
-        norm = normalize_claim_path(src)
+    direct = next((normalize_claim_path(v) for k in _PATH_KEYS if isinstance(v := entry.get(k), str) and v.strip()), "")
+    if direct:
+        return direct
+    if isinstance(s := entry.get("source"), str) and (t := s.strip()) and not t.startswith(("http://", "https://")):
+        norm = normalize_claim_path(t)
         if is_local_repo_path(norm) or ("/" in norm and " " not in norm):
             return norm
     return ""
@@ -83,9 +83,7 @@ def extract_claim_hash(entry: dict[str, Any]) -> str | None:
     return None
 
 
-def compute_canonical_blob_sha256(
-    rel_path: str, repo_root: Path, *, cache: dict[str, str | None] | None = None
-) -> str | None:
+def compute_canonical_blob_sha256(rel_path: str, repo_root: Path, *, cache: StrMap = None) -> str | None:
     """Compute SHA-256 using git-blob HEAD bytes first, then LF-normalized working file."""
     norm = normalize_claim_path(rel_path)
     if not norm or norm.startswith(("http://", "https://")):
@@ -105,7 +103,7 @@ def compute_canonical_blob_sha256(
     return digest
 
 
-def stamp_claim_sha256(rel_path: str, repo_root: Path, *, cache: dict[str, str | None] | None = None) -> str:
+def stamp_claim_sha256(rel_path: str, repo_root: Path, *, cache: StrMap = None) -> str:
     """Return canonical LF SHA-256 for rel_path or raise FileNotFoundError."""
     if (digest := compute_canonical_blob_sha256(rel_path, repo_root, cache=cache)) is None:
         raise FileNotFoundError(f"Cannot resolve canonical blob hash for {rel_path!r} under {repo_root}")
@@ -113,7 +111,7 @@ def stamp_claim_sha256(rel_path: str, repo_root: Path, *, cache: dict[str, str |
 
 
 def _verify_hash_pair(
-    rel_path: str, claim_hash: str, *, ki_id: str, repo_root: Path | None, blob_cache: dict[str, str | None] | None
+    rel_path: str, claim_hash: str, *, ki_id: str, repo_root: Path | None, blob_cache: StrMap
 ) -> ClaimHashCheck:
     lower_hash = claim_hash.lower()
     if not _HEX64_RE.match(lower_hash):
@@ -129,8 +127,12 @@ def _verify_hash_pair(
 
 
 def verify_claim_entry(
-    entry: dict[str, Any], *, ki_id: str = "", repo_root: Path | None = None,
-    source_repo: str = "", blob_cache: dict[str, str | None] | None = None,
+    entry: dict[str, Any],
+    *,
+    ki_id: str = "",
+    repo_root: Path | None = None,
+    source_repo: str = "",
+    blob_cache: StrMap = None,
 ) -> ClaimHashCheck:
     """Verify an isnad claim dictionary strictly against cryptographic 64-hex hashes."""
     _ = source_repo
@@ -138,26 +140,29 @@ def verify_claim_entry(
     if (claim_hash := extract_claim_hash(entry)) is not None:
         return _verify_hash_pair(rel_path, claim_hash, ki_id=ki_id, repo_root=repo_root, blob_cache=blob_cache)
     if isinstance(lineage := entry.get("lineage"), list):
-        node_checks = [
-            _verify_hash_pair(extract_claim_path(n), nh, ki_id=ki_id, repo_root=repo_root, blob_cache=blob_cache)
-            for n in lineage if isinstance(n, dict) and (nh := extract_claim_hash(n)) is not None
+        nodes = [
+            _verify_hash_pair(extract_claim_path(n), h, ki_id=ki_id, repo_root=repo_root, blob_cache=blob_cache)
+            for n in lineage
+            if isinstance(n, dict) and (h := extract_claim_hash(n))
         ]
-        if node_checks:
-            return next((c for c in node_checks if not c.verified), node_checks[0])
-    flagged = bool(entry.get("verified") is True or str(entry.get("status", "")).lower() == "verified" or entry.get("verified_at"))
-    st = "MISSING_HASH_FLAGGED" if flagged else "UNVERIFIED"
+        if nodes:
+            return next((c for c in nodes if not c.verified), nodes[0])
+    is_v = (
+        entry.get("verified") is True or entry.get("verified_at") or str(entry.get("status", "")).lower() == "verified"
+    )
+    st = "MISSING_HASH_FLAGGED" if is_v else "UNVERIFIED"
     return ClaimHashCheck(ki_id, rel_path, None, None, False, st, "No valid 64-hex hash")
 
 
 def _verify_metadata_file(meta_path: Path, root: Path, cache: dict[str, str | None]) -> list[ClaimHashCheck]:
     data = json.loads(meta_path.read_text(encoding="utf-8"))
-    raw_isnad, src = data.get("isnad"), str(data.get("source_repo") or "")
-    if isinstance(raw_isnad, dict) and raw_isnad:
-        nested = raw_isnad.get("claims")
-        entries = [e for e in nested if isinstance(e, dict)] if isinstance(nested, list) and nested else [raw_isnad]
+    raw, src, kid = data.get("isnad"), str(data.get("source_repo") or ""), meta_path.parent.name
+    if isinstance(raw, dict) and raw:
+        nested = raw.get("claims")
+        entries = [e for e in nested if isinstance(e, dict)] if isinstance(nested, list) and nested else [raw]
     else:
-        entries = [e for e in raw_isnad if isinstance(e, dict)] if isinstance(raw_isnad, list) else []
-    return [verify_claim_entry(e, ki_id=meta_path.parent.name, repo_root=root, source_repo=src, blob_cache=cache) for e in entries]
+        entries = [e for e in raw if isinstance(e, dict)] if isinstance(raw, list) else []
+    return [verify_claim_entry(e, ki_id=kid, repo_root=root, source_repo=src, blob_cache=cache) for e in entries]
 
 
 def resolve_ki_verification_map(
@@ -166,7 +171,8 @@ def resolve_ki_verification_map(
     """Resolve live hash-verification status for cited KIs (True/False/None if missing)."""
     vdir = Path(vault_dir)
     root = repo_root or (vdir.parent.parent if vdir.name == "knowledge" else vdir)
-    cache, out = {}, {}
+    cache: dict[str, str | None] = {}
+    out: dict[str, bool | None] = {}
     for raw_id in ki_ids:
         if not (key := str(raw_id or "").strip()) or key in out:
             continue
@@ -177,17 +183,17 @@ def resolve_ki_verification_map(
     return out
 
 
-def audit_vault_claim_hashes(vault_dir: Path, *, repo_root: Path | None = None, ki_ids: set[str] | None = None) -> VaultHashAuditReport:
+def audit_vault_claim_hashes(
+    vault_dir: Path, *, repo_root: Path | None = None, ki_ids: set[str] | None = None
+) -> VaultHashAuditReport:
     """Audit all isnad claims across a Knowledge Vault directory against canonical hashes."""
     root = repo_root or (vault_dir.parent.parent if vault_dir.name == "knowledge" else vault_dir)
-    cache, checks = {}, []
+    cache: dict[str, str | None] = {}
+    checks: list[ClaimHashCheck] = []
     for meta in sorted(vault_dir.glob("*/metadata.json")):
         if ki_ids is None or meta.parent.name in ki_ids:
             checks.extend(_verify_metadata_file(meta, root, cache))
-    cts = {s: sum(1 for c in checks if c.status == s) for s in (
-        "VERIFIED_LOCAL_MATCH", "HASH_MISMATCH", "LOCAL_FILE_MISSING", "VERIFIED_EXTERNAL_HASH", "MISSING_HASH_FLAGGED", "MALFORMED_HASH",
-    )}
-    return VaultHashAuditReport(
-        len(checks), cts["VERIFIED_LOCAL_MATCH"], cts["HASH_MISMATCH"], cts["LOCAL_FILE_MISSING"],
-        cts["VERIFIED_EXTERNAL_HASH"], cts["MISSING_HASH_FLAGGED"], cts["MALFORMED_HASH"], tuple(checks),
-    )
+    cts = Counter(c.status for c in checks)
+    k1 = "VERIFIED_LOCAL_MATCH HASH_MISMATCH LOCAL_FILE_MISSING VERIFIED_EXTERNAL_HASH"
+    n = [cts[s] for s in f"{k1} MISSING_HASH_FLAGGED MALFORMED_HASH UNVERIFIED".split()]
+    return VaultHashAuditReport(len(checks), n[0], n[1], n[2], n[3], n[4], n[5], n[6], tuple(checks))

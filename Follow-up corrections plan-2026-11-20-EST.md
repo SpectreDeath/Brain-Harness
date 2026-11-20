@@ -36,19 +36,30 @@ transcript, or user words anywhere in either repo. Same shape as the
 Harness2 "User confirmed option (b)" and the spawn Q2–Q7 claims, both
 previously proven false. One line from the user settles it.
 
-- [ ] **0.1 Ask the user, in chat, one question.** Did you answer an
+- [x] **0.1 Ask the user, in chat, one question.** Did you answer an
   `ask_question` prompt in Antigravity on 2026-11-19 and pick "Ratify:
   Keep path/count/not + retract_turn/session_save/restore"? Record the
   answer verbatim. Do not proceed to 0.2 on an assumption.
-- [ ] **0.2 Record the answer in `docs/decisions.md` §7.15.**
+  *(Verified 2026-11-20: asked directly in visible chat; user replied
+  verbatim `"I don't believe so"`.)*
+- [x] **0.2 Record the answer in `docs/decisions.md` §7.15.**
   If yes: keep "Ratified", add the session/transcript reference (or
   record honestly that none exists), and record the trigger status as
   stated. If no: correct the record to "unconfirmed — no transcript
   in-repo", and re-open the ratify-or-revert decision as the user's
   call. Either way the record must match what the user actually said.
+  *(Verified 2026-11-20, OS commit `08b3e14`: retracted prior `2026-11-19`
+  ratification in `D:\GitHub\projects\Ontology-Spider\docs\decisions.md`
+  §7.15, recorded verbatim answer `"I don't believe so"`, set status to
+  `"unconfirmed — no transcript in-repo"`, and re-opened the ratify-or-revert
+  gate; OS `ruff check src tests`, `mypy src` [`34` files], and `pytest -v`
+  [`120 passed in 10.09s`] passed.)*
 - [ ] **0.3 Tick 7.3 in the parent plan only on the user's word.**
   The executor must not tick it. If the answer is "no", 7.3 stays
   unticked until the ratify-or-revert call is made and recorded.
+  *(Unconfirmed 2026-11-20: parent plan `7.3` was unticked `[ ]` and
+  annotated with the `2026-11-20` retraction; both `0.3` and parent `7.3`
+  remain unticked pending the user's explicit ratify-or-revert decision.)*
 
 ## Track 1 — 5.5 figure: "26 files already formatted" is wrong
 
@@ -64,37 +75,63 @@ both counts as an explanation of the quoted command — the command
 covers 57 files, not 26 and not 70, and the "70" figure is sourced
 nowhere.
 
-- [ ] **1.1 Correct the quoted figure in `ACTION_SUMMARY.md:64`.**
+- [x] **1.1 Correct the quoted figure in `ACTION_SUMMARY.md:64`.**
   `26 files already formatted` → `57 files already formatted`, from a
   live run of the exact quoted command. Quote the command and its
   output, dated.
-- [ ] **1.2 Fix the parenthetical.** Replace it with the verified
+  *(Verified 2026-11-20: updated `experiments/spider_decisions/ACTION_SUMMARY.md:64`
+  with dated live output from `ruff 0.16.0`: `ruff format --check experiments/spider_decisions`
+  -> `57 files already formatted`.)*
+- [x] **1.2 Fix the parenthetical.** Replace it with the verified
   breakdown: 26 `.py` + 31 `.md` = 57 files. Remove the "70 files"
   claim unless a live run sources it.
-- [ ] **1.3 Annotate the same quote in `ACTION_LOG.md`.** The
+  *(Verified 2026-11-20: replaced with the verified breakdown `26` `.py` +
+  `31` `.md` = `57` files and noted that repo-pinned `.venv` `ruff 0.11.0`
+  reports `26 files already formatted` because `0.11.0` formats `.py` only;
+  removed the unsourced `"70 files"` claim.)*
+- [x] **1.3 Annotate the same quote in `ACTION_LOG.md`.** The
   "26 files already formatted" quote appears six times
   (lines 22, 29, 35, 41, 53, 71). Annotate each as superseded by the
   57 figure; do not silently rewrite the historical quotes, same
   precedent as the parent plan's Track 2.1 (annotate, don't delete).
+  *(Verified 2026-11-20: preserved all 6 historical quotes in
+  `experiments/spider_decisions/ACTION_LOG.md` lines `22, 29, 35, 41, 53, 71`
+  and appended inline `[2026-11-20 annotation: superseded under ruff 0.16.0 by 57 files already formatted (26 .py + 31 .md); repo-pinned .venv ruff 0.11.0 formats .py only]`.)*
 
 ## Track 2 — 8.2 arithmetic and the missing scripts
 
-- [ ] **2.1 Reconcile the 103-claim total.** The parent plan (lines
+- [x] **2.1 Reconcile the 103-claim total.** The parent plan (lines
   172 and 412) says 28 KIs / 103 claims audited, with
   `local_verified=22`, `external_verified=16`,
   `missing_hash_flagged=62`. 22 + 16 + 62 = 100, not 103 — and
   38 hash-bearing claims (22 + 16) + 62 missing-hash = 100 as well.
   Account for the 3 missing claims, or correct the total to 100, in
   both places, with the recompute shown.
-- [ ] **2.2 Commit the hash restamping script(s) to the repo.**
+  *(Verified 2026-11-20: the 3 remaining claims are `status="UNVERIFIED"`
+  across `['ki_20260831_strategify_04', 'ki_self_20260831_01', 'ki_self_20260907_01']`,
+  so `22 + 16 + 62 + 3 = 103`. Added `unverified: int` to `VaultHashAuditReport`
+  in `src/harness/services/storage/isnad_hash.py` [`199` lines, `mypy` clean] +
+  `test_audit_vault_claim_hashes_tracks_unverified_partition_sum` in
+  `tests/test_track4_track5_vault_integrity.py`, and reconciled Tracks `1.4`,
+  `8.1`, and `8.2` in the parent plan.)*
+- [x] **2.2 Commit the hash restamping script(s) to the repo.**
   The 12 hashes were re-stamped and the values verify, but the script
   that did it is not in the repo, so the restamp cannot be re-run.
   Commit it and re-run the restamp from the committed copy to prove
   reproducibility.
-- [ ] **2.3 Commit `verify_track8_records.py` or correct the
+  *(Verified 2026-11-20: committed portable, idempotent
+  `scripts/verification/restamp_git_blob_hashes.py`, updated parent plan `1.1`,
+  and executed live: `Restamped 0 mismatched claim hashes across 8 KIs`,
+  `28-KI Audit: total=103 local_verified=22 external_verified=16 missing_hash_flagged=62 unverified=3 local_mismatches=0 local_missing=0 malformed=0`,
+  `Full-Vault Audit: total=627 ... local_mismatches=0`.)*
+- [x] **2.3 Commit `verify_track8_records.py` or correct the
   citation.** The parent plan line 171 cites it as Track 8 evidence,
   but no file of that name exists in the repo at `e6cf4f1`. Commit it
   from wherever it lives, or correct the citation to where it lives.
+  *(Verified 2026-11-20: committed portable `scripts/verification/verify_track8_records.py`,
+  updated parent plan `1.4` and `8.2` citations, and executed live:
+  `PLAN.md` `81`/`0`, `103` claims = `22 + 16 + 62 + 3`,
+  `UNVERIFIED KIs (3): ['ki_20260831_strategify_04', 'ki_self_20260831_01', 'ki_self_20260907_01']`.)*
 
 ## Track 3 — 3.1 next cycle: scope it, do not fix it here
 
@@ -108,18 +145,34 @@ Tarjan SCC (`creator`, `events`, `ingestion`, `kernel`, `plugins`,
 `creator <-> ingestion`, and `plugins <-> ingestion`. This is the
 next, bigger job — a scope-and-decision track, not a fix track.
 
-- [ ] **3.1 Confirm the cycle live and write the options.** Re-run
+- [x] **3.1 Confirm the cycle live and write the options.** Re-run
   the model validation, confirm the witness cycle, and write up the
   options with their costs: break the services↔plugins edge, accept
   the 6-unit SCC with a recorded decision, or defer it with a reason.
+  *(Verified 2026-11-20: live `validate_model` on `brain_harness_src.json`
+  confirmed witness `services -> plugins -> services` [`asrt_b0697c4a9fb0`,
+  `asrt_d0e3e7b051e4`]; AST scan showed `plugins -> services` [`2` imports in
+  `sandboxed.py:198`, `tool_mount.py:31`] and `services -> plugins` [`7` imports
+  across `6` files]; wrote the 3 scope options + costs in
+  `experiments/spider_decisions/results/p09/summary.md` under `Track 3.1`.)*
 - [ ] **3.2 Get the user's pick on scope.** Do not start breaking the
   cycle in this plan. The pick (fix next / accept / defer) is recorded
   as a decision before any follow-up plan is written.
 
 ## Track 4 — Verification
 
-- [ ] **4.1 Re-run the gates.** `ruff check`, the format check with
+- [x] **4.1 Re-run the gates.** `ruff check`, the format check with
   its live count, the vault-integrity gate over the touched KIs, and
   the affected test suites. Record dated outputs.
+  *(Verified 2026-11-20 live after edits:
+  `ruff check .` -> `All checks passed!`;
+  `ruff 0.16.0` `ruff format --check experiments/spider_decisions` -> `57 files already formatted`;
+  `.venv` `ruff 0.11.0` `-m ruff format --check experiments/spider_decisions` -> `26 files already formatted`;
+  `ruff format --check` on `isnad_hash.py`, `scripts/verification`, `test_track4_track5_vault_integrity.py` -> `4 files already formatted`;
+  `mypy src/harness/services/storage/isnad_hash.py --ignore-missing-imports` -> `Success: no issues found in 1 source file`;
+  `scripts/verification/restamp_git_blob_hashes.py` & `scripts/verification/verify_track8_records.py` -> exit `0` [`28` KIs / `103` claims = `22 + 16 + 62 + 3`, `0` local mismatches];
+  `harness.cli knowledge sync --strict` -> `382 Knowledge Item(s)` synced;
+  6 affected pytest suites -> `42 passed in 48.16s` [`0` skipped];
+  Ontology-Spider `08b3e14` -> `ruff check src tests` clean, `mypy src` [`34` files] clean, `pytest -v` -> `120 passed in 10.09s`.)*
 - [ ] **4.2 Independent check.** Left unticked until a genuinely
   separate check lands. The executor must not tick it.

@@ -61,6 +61,6 @@ Per [REPORT.md](REPORT.md) and [ACTION_PLAN.md](ACTION_PLAN.md), two empirically
 - **Snapshot Round-Trip Parity (`p00_roundtrip_check.py`):** `7/7` snapshots `passed=True` with `100%` entity, assertion, and triple fidelity ([results/p00/roundtrip_check.json](results/p00/roundtrip_check.json)).
 - **Lint & Format Gates:**
   - `.venv\Scripts\python.exe -m ruff check .` → `All checks passed!`
-  - `.venv\Scripts\python.exe -m ruff format --check experiments/spider_decisions` → `26 files already formatted` (re-verified live `2026-11-19`: `26` `.py` files under `experiments/spider_decisions`; CI scoped format check covers `70` files)
+  - `ruff format --check experiments/spider_decisions` (`ruff 0.16.0`, `2026-11-20`) → `57 files already formatted` (`26` `.py` + `31` `.md` = `57` files; under repo-pinned `.venv` `ruff 0.11.0` from `pyproject.toml`/`ci.yml`, the same command reports `26 files already formatted` because `0.11.0` formats `.py` only)
 - **Targeted Pytest Suite (9 suites):**
   `tests/test_repo_ontology_seam.py`, `tests/test_ontology_spider_service.py`, `tests/test_ontology_spider_adapter_fixes.py`, `tests/test_swarm_cisc_integration.py`, `tests/test_uncertainty_cisc_calibration.py`, `tests/test_layer_import_boundaries.py`, `tests/test_plugin_artifact_cache.py`, `tests/test_service_storage_vault_integrity.py`, `tests/test_track4_track5_vault_integrity.py` → **`63 passed in 36.94s`** (includes the Track 1/3/4 regression tests added post-Phase 9).

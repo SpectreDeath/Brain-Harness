@@ -37,3 +37,14 @@ Analyzed **12** subpackages in `src/harness` (`57` `depends_on_project` edges).
 | `mcp` | 5 | True | False | server.py |
 | `agent` | 7 | True | True | archetypes.py, swarm.py, session.py, agent session |
 | `creator` | 9 | False | True | creator package |
+
+## Track 3.1 — Next-Cycle Scope Options (2026-11-20)
+
+- **Live Model Confirmation (`validate_model` on `brain_harness_src.json`):** Confirmed witness cycle **`services -> plugins -> services`** (assertions `asrt_b0697c4a9fb0` and `asrt_d0e3e7b051e4`) inside the intact 6-unit Tarjan SCC (`['creator', 'events', 'ingestion', 'kernel', 'plugins', 'services']`), alongside `kernel <-> events`, `kernel <-> plugins`, `creator <-> ingestion`, and `plugins <-> ingestion`.
+- **Live AST Seam Counts (`src/harness`):**
+  - `plugins -> services` (`2` imports): `src/harness/plugins/sandboxed.py:198` (`ToolSpec`) and `src/harness/plugins/tool_mount.py:31` (`TOOL_REGISTRY_KEY`, `ToolRegistry`, `ToolSpec`) importing from `harness.services.tools`.
+  - `services -> plugins` (`7` imports across `6` files): `services/compute/service.py:12`, `services/data_management/plugin.py:11-12`, `services/llm.py:18`, `services/skill_graph/plugin.py:10`, `services/storage/plugin.py:11`, and `services/tools/plugin.py:16` importing from `harness.plugins.{base,manifest}`.
+- **Scope Options (Awaiting User Pick under Track 3.2):**
+  1. **Fix next (dedicated follow-up plan):** Extract `ToolSpec` / `TOOL_REGISTRY_KEY` contracts out of `services.tools` to break the `plugins -> services` edge (`2` imports, low-to-moderate refactor cost), reducing `depends_on_project` edges `57 -> 56`. *Caveat:* the 6-unit Tarjan SCC remains intact and `validate_model` will immediately report the next witness cycle inside the SCC (`kernel <-> events`, `kernel <-> plugins`, `creator <-> ingestion`, or `plugins <-> ingestion`).
+  2. **Accept the 6-unit core SCC:** Zero code churn; formally document the 6 micro-kernel core packages (`creator`, `events`, `ingestion`, `kernel`, `plugins`, `services`) as a co-dependent core layer while keeping all 6 outer packages (`commands`, `ui`, `mcp`, `runtime`, `agent`, `bridges`) acyclic.
+  3. **Defer with a named trigger:** Retain current layer boundary tests (`services` never imports `commands`/`creator`; `kernel` only imports `events`/`plugins`) and defer breaking `services <-> plugins` until a named architectural trigger (e.g., extracting `harness-core` or splitting `ToolRegistry`).

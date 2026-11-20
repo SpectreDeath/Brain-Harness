@@ -135,3 +135,50 @@ def test_vault_local_isnad_claim_hashes_recompute_against_git_blobs() -> None:
     )
     assert report.local_verified >= 22
     assert report.missing_hash_flagged > 0
+    assert (
+        report.local_verified
+        + report.local_mismatches
+        + report.local_missing_files
+        + report.external_verified
+        + report.missing_hash_flagged
+        + report.malformed_hash
+        + report.unverified
+        == report.total_claims
+    )
+
+
+@pytest.mark.unit
+def test_audit_vault_claim_hashes_tracks_unverified_partition_sum(tmp_path: Path) -> None:
+    """VaultHashAuditReport counters must partition total_claims cleanly, including unverified claims."""
+    from harness.services.storage.isnad_hash import audit_vault_claim_hashes
+
+    ki_dir = tmp_path / "sample_unverified_ki"
+    ki_dir.mkdir(parents=True)
+    (ki_dir / "metadata.json").write_text(
+        json.dumps(
+            {
+                "id": "sample_unverified_ki",
+                "isnad": {
+                    "claims": [
+                        {"assertion": "Claim lacking hash and verified flags"},
+                        {"assertion": "Flagged missing hash", "verified": True},
+                    ]
+                },
+            }
+        ),
+        encoding="utf-8",
+    )
+    report = audit_vault_claim_hashes(tmp_path, repo_root=tmp_path)
+    assert report.total_claims == 2
+    assert report.missing_hash_flagged == 1
+    assert report.unverified == 1
+    assert (
+        report.local_verified
+        + report.local_mismatches
+        + report.local_missing_files
+        + report.external_verified
+        + report.missing_hash_flagged
+        + report.malformed_hash
+        + report.unverified
+        == report.total_claims
+    )
