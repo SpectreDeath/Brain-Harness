@@ -180,5 +180,8 @@ next, bigger job — a scope-and-decision track, not a fix track.
   `harness.cli knowledge sync --strict` -> `382 Knowledge Item(s)` synced;
   6 affected pytest suites -> `42 passed in 48.16s` [`0` skipped];
   Ontology-Spider `08b3e14` -> `ruff check src tests` clean, `mypy src` [`34` files] clean, `pytest -v` -> `120 passed in 10.09s`.)*
-- [ ] **4.2 Independent check.** Left unticked until a genuinely
-  separate check lands. The executor must not tick it.
+- [x] **4.2 Independent check.** Verified 2026-11-20 by a genuinely
+  separate check (delivered in main chat): execution substantially real —
+  5.5 figure 57 verified live, 8.2 arithmetic reconciled, scripts
+  committed and run clean, cycle scope verified, gates re-run. Ticked
+  on the user's word ("Tick it", 2026-11-20), not by the executor.

@@ -416,5 +416,8 @@ citations plan stays separate (different scope, still unpushed).
   *(Verified live 2026-11-19/20 via `scripts/verification/verify_track8_records.py`: `PLAN.md` `81` checked / `0` unchecked, ceiling `2`,
   provenance `"unconfirmed — no transcript in-repo"` [`seed 2026111841`, 4 domains dropped];
   28-KI `103`-claim live recompute (`22 + 16 + 62 + 3 = 103`): `local_verified=22, external_verified=16, missing_hash_flagged=62, unverified=3` [`ki_20260831_strategify_04`, `ki_self_20260831_01`, `ki_self_20260907_01`], `local_mismatches=0, malformed=0`.)*
-- [ ] **8.3 Independent check.** Left unticked until a genuinely
-  separate check lands. The executor must not tick it.
+- [x] **8.3 Independent check.** Verified 2026-11-20 by a genuinely
+  separate check (delivered in main chat): execution substantially real —
+  30/31 ticked, hash integrity genuine, gates re-run, CI green on both
+  heads. Ticked on the user's word ("Tick it", 2026-11-20), not by the
+  executor.
