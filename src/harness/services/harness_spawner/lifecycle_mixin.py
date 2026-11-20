@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import dataclasses
+from pathlib import Path
 import uuid
 from collections.abc import Callable
 from typing import Any
@@ -29,6 +31,8 @@ from .models import (
     SpawnTrialResult,
     SpawnedHarnessRecord,
 )
+from .diff_review import compute_tree_sha256, verify_diff_approval
+from .materialize import materialize_spawn_as_dock
 from .helpers import (
     _build_spawn_record_and_handle,
     _dispose_contexts_sync,
@@ -44,6 +48,9 @@ class _SpawnerLifecycleMixin:
         spec: SpawnSpec,
         *,
         probe_fn: Callable[[SpawnSpec, ServiceContext], bool] | None = None,
+        materialize_dir: Path | str | None = None,
+        dock_service: Any = None,
+        approve_dock: bool = False,
     ) -> SpawnedHarnessRecord:
         """Validate, isolate, k=1 probe-gate, and admit a child harness."""
         parent_rec: SpawnedHarnessRecord | None = None
@@ -146,15 +153,18 @@ class _SpawnerLifecycleMixin:
             },
         )
 
-        # Admission gate: SurfaceSpec validation + leak-free clean tree + k=1 probe check
+        # Admission gate: SurfaceSpec validation + leak-free clean tree + optional write diff approval + k=1 probe
         errors: list[str] = []
         census: dict[str, int] = {}
         try:
             guards.assert_tree_clean(spec.tree)
             census = surface_ops.validate(spec.surface, spec.tree)
+            if spec.write_permitted:
+                verify_diff_approval(spec.tree, approved_digest=spec.approved_tree_digest)
         except Exception as exc:
             errors.append(str(exc))
 
+        tree_sha = compute_tree_sha256(spec.tree)
         fp = identity.fingerprint_tree(spec.tree)
         probe_tokens = 0
         if not errors and probe_fn is not None:
@@ -204,6 +214,21 @@ class _SpawnerLifecycleMixin:
 
         # Transition SPAWNED -> VALIDATED -> RUNNING and materialize validated tree
         surface_ops.write_tree(spec.surface, spec.tree, child_save_dir / "harness")
+        mat_dir_str, mat_dock_name = "", ""
+        if materialize_dir is not None:
+            mat_info = materialize_spawn_as_dock(
+                spec.surface,
+                spec.tree,
+                materialize_dir,
+                name=spec.name,
+                description=spec.description or spec.task,
+                dock_service=dock_service,
+                approve=approve_dock,
+            )
+            mat_dir_str = str(mat_info["repo_dir"])
+            mat_dock_name = str(mat_info["dock_name"])
+            tree_sha = str(mat_info["tree_sha256"])
+
         rec, handle = _build_spawn_record_and_handle(
             spawn_id=spawn_id,
             spec=spec,
@@ -222,6 +247,7 @@ class _SpawnerLifecycleMixin:
             child_library=child_library,
             disposed=False,
         )
+        rec = dataclasses.replace(rec, materialized_dir=mat_dir_str, dock_name=mat_dock_name, tree_sha256=tree_sha)
         self._records[spawn_id] = rec
         self._handles[spawn_id] = handle
         if probe_tokens:

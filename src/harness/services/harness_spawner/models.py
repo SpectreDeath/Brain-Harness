@@ -75,6 +75,9 @@ class SpawnSpec:
     current_depth: int = 0
     max_spawn_depth: int = DEFAULT_MAX_SPAWN_DEPTH
     lifetime: str = "persistent"
+    write_permitted: bool = False
+    approved_tree_digest: str | None = None
+    description: str = ""
 
     def __post_init__(self) -> None:
         if not self.name or not self.name.strip():
@@ -117,6 +120,9 @@ class SpawnMergeProposal:
     why: str = ""
     ki_id: str = ""
     status: str = "pending"
+    proposal_kind: str = "ki"
+    reviewer: str = ""
+    review_note: str = ""
 
     def __post_init__(self) -> None:
         if not self.proposal_id.strip():
@@ -133,6 +139,8 @@ class SpawnMergeProposal:
                 raise ValueError(f"SpawnMergeProposal.{field_name} must be non-empty")
         if self.status not in ("pending", "adopted", "rejected"):
             raise ValueError(f"Invalid proposal status: {self.status!r}")
+        if self.proposal_kind not in ("ki", "skill", "config"):
+            raise ValueError(f"Invalid proposal_kind: {self.proposal_kind!r}")
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -147,6 +155,9 @@ class SpawnMergeProposal:
             "why": self.why,
             "ki_id": self.ki_id,
             "status": self.status,
+            "proposal_kind": self.proposal_kind,
+            "reviewer": self.reviewer,
+            "review_note": self.review_note,
         }
 
 
@@ -174,6 +185,9 @@ class SpawnedHarnessRecord:
     lifetime: str
     trial: SpawnTrialResult | None = None
     error: str = ""
+    materialized_dir: str = ""
+    dock_name: str = ""
+    tree_sha256: str = ""
 
     def to_dict(self) -> dict[str, Any]:
         trial_dict: dict[str, Any] | None = None
@@ -211,6 +225,9 @@ class SpawnedHarnessRecord:
             "lifetime": self.lifetime,
             "trial": trial_dict,
             "error": self.error,
+            "materialized_dir": self.materialized_dir,
+            "dock_name": self.dock_name,
+            "tree_sha256": self.tree_sha256,
         }
 
 

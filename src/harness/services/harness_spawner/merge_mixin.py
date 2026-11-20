@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import dataclasses
 import uuid
+from collections.abc import Mapping
 from pathlib import Path
 from typing import Any
 
@@ -27,6 +28,18 @@ from .helpers import (
 )
 
 
+_PROTECTED_MERGE_PATHS = frozenset({"CLAUDE.md", "dock.yaml"})
+
+
+def _validate_merge_tree_policy(tree: Mapping[str, str], proposal_kind: str) -> None:
+    if proposal_kind not in ("ki", "skill", "config"):
+        raise ValueError(f"Invalid proposal_kind: {proposal_kind!r}")
+    for raw_path in tree:
+        norm = surface_ops.normalize_rel(str(raw_path))
+        if norm in _PROTECTED_MERGE_PATHS or norm.startswith(".github/"):
+            raise ValueError(f"Merge-back policy forbids modifying protected target: {norm!r}")
+
+
 class _SpawnerMergeMixin:
     """Mixin supplying merge mixin operations."""
 
@@ -41,6 +54,7 @@ class _SpawnerMergeMixin:
         why: str = "",
         tree: Tree | None = None,
         ki_id: str = "",
+        proposal_kind: str = "ki",
     ) -> SpawnMergeProposal:
         """Stage a validated learning in the child's ExperienceLibrary & draft_kis partition."""
         rec = self._require_record(spawn_id)
@@ -57,6 +71,7 @@ class _SpawnerMergeMixin:
         else:
             candidate_tree = surface_ops.read_tree(surface, Path(rec.save_dir) / "harness")
 
+        _validate_merge_tree_policy(candidate_tree, proposal_kind)
         guards.assert_tree_clean(candidate_tree)
         surface_ops.validate(surface, candidate_tree)
 
@@ -87,6 +102,7 @@ class _SpawnerMergeMixin:
             why=why,
             ki_id=resolved_ki_id,
             status="pending",
+            proposal_kind=proposal_kind,
         )
 
         draft_dir = Path(rec.save_dir) / "draft_kis" / resolved_ki_id
@@ -115,6 +131,8 @@ class _SpawnerMergeMixin:
         *,
         parent_library_root: Path | str | None = None,
         parent_knowledge_root: Path | str | None = None,
+        reviewer: str = "human",
+        review_note: str = "",
     ) -> dict[str, Any]:
         """Explicitly adopt a pending child proposal into parent ExperienceLibrary & Knowledge Vault."""
         proposal = self._proposals.get(proposal_id)
@@ -127,6 +145,7 @@ class _SpawnerMergeMixin:
         handle = self._handles.get(proposal.spawn_id)
         surface = handle.surface if handle is not None else BRAIN_SURFACE
 
+        _validate_merge_tree_policy(proposal.tree, proposal.proposal_kind)
         guards.assert_tree_clean(proposal.tree)
         surface_ops.validate(surface, proposal.tree)
 
@@ -164,17 +183,48 @@ class _SpawnerMergeMixin:
             status="adopted",
         )
 
-        adopted = dataclasses.replace(proposal, status="adopted")
+        adopted = dataclasses.replace(
+            proposal,
+            status="adopted",
+            reviewer=reviewer.strip() or "human",
+            review_note=review_note,
+        )
         self._proposals[proposal_id] = adopted
         self._save_state()
         return {
             "proposal_id": proposal_id,
             "status": "adopted",
+            "proposal_kind": proposal.proposal_kind,
+            "reviewer": adopted.reviewer,
             "domain": proposal.domain,
             "library_entry": str(lib_entry),
             "knowledge_dir": str(ki_dir),
             "ki_id": proposal.ki_id,
         }
+
+    def reject_merge_proposal(
+        self,
+        proposal_id: str,
+        *,
+        reviewer: str = "human",
+        reason: str = "",
+    ) -> SpawnMergeProposal:
+        """Explicitly reject a pending proposal; nothing lands in parent stores."""
+        proposal = self._proposals.get(proposal_id)
+        if proposal is None:
+            raise KeyError(f"Unknown merge proposal: {proposal_id!r}")
+        if proposal.status != "pending":
+            raise ValueError(f"Proposal '{proposal_id}' is already {proposal.status!r} and cannot be rejected")
+
+        rejected = dataclasses.replace(
+            proposal,
+            status="rejected",
+            reviewer=reviewer.strip() or "human",
+            review_note=reason,
+        )
+        self._proposals[proposal_id] = rejected
+        self._save_state()
+        return rejected
 
     def list_proposals(self, *, status: str | None = None) -> list[SpawnMergeProposal]:
         items = list(self._proposals.values())

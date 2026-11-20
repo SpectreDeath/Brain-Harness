@@ -93,6 +93,16 @@ def spawn_group() -> None:
     show_default=True,
     help="Root directory for child harness artifacts and registry state.",
 )
+@click.option(
+    "--materialize",
+    "materialize_dir",
+    type=click.Path(file_okay=False, path_type=Path),
+    default=None,
+    help="Optional directory to materialize as a dock-linked repo harness.",
+)
+@click.option("--approve-dock", is_flag=True, help="Approve the materialized dock.yaml manifest upon linking.")
+@click.option("--write-permitted", is_flag=True, help="Require matching --approve-digest before admission.")
+@click.option("--approve-digest", default=None, help="Approved SHA-256 digest of the proposed harness tree.")
 def run_cmd(
     name: str,
     domain: str,
@@ -105,6 +115,10 @@ def run_cmd(
     parent_spawn_id: str | None,
     lifetime: str,
     save_dir: Path,
+    materialize_dir: Path | None,
+    approve_dock: bool,
+    write_permitted: bool,
+    approve_digest: str | None,
 ) -> None:
     """Validate, probe-gate, and spawn an isolated child harness."""
     if harness_dir is not None:
@@ -130,8 +144,10 @@ def run_cmd(
             current_depth=depth,
             max_spawn_depth=max_depth,
             lifetime=lifetime,
+            write_permitted=write_permitted,
+            approved_tree_digest=approve_digest,
         )
-        rec = engine.spawn(spec)
+        rec = engine.spawn(spec, materialize_dir=materialize_dir, approve_dock=approve_dock)
     except (ValueError, KeyError) as exc:
         _emit({"status": "error", "error": str(exc)})
         raise SystemExit(1) from exc
@@ -206,6 +222,14 @@ def retire_cmd(spawn_id: str | None, retire_all_flag: bool, save_dir: Path) -> N
 @click.option("--why", default="", show_default=True, help="Rationale for adoption review.")
 @click.option("--ki-id", default="", show_default=True, help="Optional KI slug identifier.")
 @click.option(
+    "--kind",
+    "proposal_kind",
+    type=click.Choice(["ki", "skill", "config"]),
+    default="ki",
+    show_default=True,
+    help="Proposal category allowed under merge-back policy.",
+)
+@click.option(
     "--save-dir",
     type=click.Path(path_type=Path),
     default=Path(".harness/spawns"),
@@ -220,6 +244,7 @@ def propose_cmd(
     evidence: str,
     why: str,
     ki_id: str,
+    proposal_kind: str,
     save_dir: Path,
 ) -> None:
     """Stage a reviewed learning and dual-file KI draft in the child partition."""
@@ -233,6 +258,7 @@ def propose_cmd(
             evidence=evidence,
             why=why,
             ki_id=ki_id,
+            proposal_kind=proposal_kind,
         )
     except (KeyError, ValueError, RuntimeError) as exc:
         _emit({"status": "error", "error": str(exc)})
@@ -263,11 +289,15 @@ def propose_cmd(
     show_default=True,
     help="Parent Knowledge Vault root to adopt the dual-file KI into.",
 )
+@click.option("--reviewer", default="human", show_default=True, help="Reviewer identifier.")
+@click.option("--note", "review_note", default="", show_default=True, help="Optional review note.")
 def adopt_cmd(
     proposal_id: str,
     save_dir: Path,
     library_root: Path,
     knowledge_root: Path,
+    reviewer: str,
+    review_note: str,
 ) -> None:
     """Explicitly review and adopt a staged child proposal into parent stores."""
     engine = HarnessSpawnerEngine(state_file=save_dir / "registry.json")
@@ -276,8 +306,51 @@ def adopt_cmd(
             proposal_id,
             parent_library_root=library_root,
             parent_knowledge_root=knowledge_root,
+            reviewer=reviewer,
+            review_note=review_note,
         )
     except (KeyError, ValueError, RuntimeError) as exc:
         _emit({"status": "error", "error": str(exc)})
         raise SystemExit(1) from exc
     _emit(result)
+
+
+@spawn_group.command("reject")
+@click.argument("proposal_id")
+@click.option("--reviewer", default="human", show_default=True, help="Reviewer identifier.")
+@click.option("--reason", default="", show_default=True, help="Rejection reason.")
+@click.option(
+    "--save-dir",
+    type=click.Path(path_type=Path),
+    default=Path(".harness/spawns"),
+    show_default=True,
+    help="Root directory containing registry state.",
+)
+def reject_cmd(proposal_id: str, reviewer: str, reason: str, save_dir: Path) -> None:
+    """Explicitly reject a staged child proposal (writes nothing to parent stores)."""
+    engine = HarnessSpawnerEngine(state_file=save_dir / "registry.json")
+    try:
+        rejected = engine.reject_merge_proposal(proposal_id, reviewer=reviewer, reason=reason)
+    except (KeyError, ValueError, RuntimeError) as exc:
+        _emit({"status": "error", "error": str(exc)})
+        raise SystemExit(1) from exc
+    _emit(rejected.to_dict())
+
+
+@spawn_group.command("check-drift")
+@click.argument("repo_dir", type=click.Path(exists=True, file_okay=False, path_type=Path))
+@click.option("--expected-digest", default=None, help="Expected canonical SHA-256 tree digest.")
+@click.option("--dock-name", default=None, help="Optional dock name to look up.")
+def check_drift_cmd(repo_dir: Path, expected_digest: str | None, dock_name: str | None) -> None:
+    """Verify a materialized dock repo has not drifted from its approved manifest or tree digest."""
+    from harness.services.harness_spawner import check_materialized_drift
+
+    report = check_materialized_drift(
+        repo_dir,
+        BRAIN_SURFACE,
+        expected_tree_sha256=expected_digest,
+        dock_name=dock_name,
+    )
+    _emit(report)
+    if report["drifted"]:
+        raise SystemExit(1)

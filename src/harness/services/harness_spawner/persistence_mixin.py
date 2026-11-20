@@ -129,6 +129,9 @@ class _SpawnerPersistenceMixin:
                 lifetime=str(item.get("lifetime", "persistent")),
                 trial=trial,
                 error=str(item.get("error", "")),
+                materialized_dir=str(item.get("materialized_dir", "")),
+                dock_name=str(item.get("dock_name", "")),
+                tree_sha256=str(item.get("tree_sha256", "")),
             )
             self._records[rec.spawn_id] = rec
 
@@ -145,6 +148,9 @@ class _SpawnerPersistenceMixin:
                 why=str(p_item.get("why", "")),
                 ki_id=str(p_item.get("ki_id", "")),
                 status=str(p_item.get("status", "pending")),
+                proposal_kind=str(p_item.get("proposal_kind", "ki")),
+                reviewer=str(p_item.get("reviewer", "")),
+                review_note=str(p_item.get("review_note", "")),
             )
             self._proposals[prop.proposal_id] = prop
 

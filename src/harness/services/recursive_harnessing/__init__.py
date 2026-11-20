@@ -34,6 +34,7 @@ from harness.services.recursive_harnessing.ledger import (
     expected_sessions,
 )
 from harness.services.recursive_harnessing.library import ExperienceLibrary, library_root
+from harness.services.recursive_harnessing.proposer import LiveHarnessProposer
 from harness.services.recursive_harnessing.models import (
     BRAIN_SURFACE,
     ModeResult,
@@ -83,6 +84,7 @@ __all__ = [
     "EvidenceLeakError",
     "ExperienceLibrary",
     "HarnessProposer",
+    "LiveHarnessProposer",
     "ModeResult",
     "ProposalReply",
     "ProposerError",

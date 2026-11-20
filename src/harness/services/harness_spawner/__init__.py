@@ -2,7 +2,17 @@
 
 from __future__ import annotations
 
+from .diff_review import (
+    TreeDiffReview,
+    build_tree_diff_review,
+    compute_tree_sha256,
+    verify_diff_approval,
+)
 from .engine import HarnessSpawnerEngine
+from .materialize import (
+    check_materialized_drift,
+    materialize_spawn_as_dock,
+)
 from .helpers import (
     _dispose_contexts_async,
     _dispose_contexts_sync,
@@ -49,4 +59,10 @@ __all__ = [
     "SpawnSpec",
     "SpawnTrialResult",
     "SpawnedHarnessRecord",
+    "TreeDiffReview",
+    "build_tree_diff_review",
+    "check_materialized_drift",
+    "compute_tree_sha256",
+    "materialize_spawn_as_dock",
+    "verify_diff_approval",
 ]
