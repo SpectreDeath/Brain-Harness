@@ -35,6 +35,13 @@ def _emit(payload: dict[str, Any]) -> None:
     click.echo(json.dumps(payload, indent=2, default=str))
 
 
+def _resolve_proposed_tree(name: str, domain: str, task: str, harness_dir: Path | None) -> dict[str, str]:
+    """Build the exact proposed tree `spawn run` would admit (shared so review and run digests agree)."""
+    if harness_dir is not None:
+        return surface_ops.read_tree(BRAIN_SURFACE, harness_dir)
+    return {"AGENTS.md": f"# Spawned Harness: {name}\n\nDomain: {domain}\nTask: {task}\n"}
+
+
 @click.group("spawn")
 def spawn_group() -> None:
     """Spawn, inspect, retire, and adopt learnings from isolated child harnesses."""
@@ -121,10 +128,7 @@ def run_cmd(
     approve_digest: str | None,
 ) -> None:
     """Validate, probe-gate, and spawn an isolated child harness."""
-    if harness_dir is not None:
-        tree = surface_ops.read_tree(BRAIN_SURFACE, harness_dir)
-    else:
-        tree = {"AGENTS.md": f"# Spawned Harness: {name}\n\nDomain: {domain}\nTask: {task}\n"}
+    tree = _resolve_proposed_tree(name, domain, task, harness_dir)
 
     engine = HarnessSpawnerEngine(state_file=save_dir / "registry.json")
     try:
@@ -157,6 +161,62 @@ def run_cmd(
     payload["ascii_tree"] = export.formatted_ascii_tree
     _emit(payload)
     if rec.state == SpawnLifecycleState.FAILED:
+        raise SystemExit(1)
+
+
+@spawn_group.command("review")
+@click.option("--name", required=True, help="Short identifier for the proposed child harness.")
+@click.option("--domain", required=True, help="Domain partition (used for the default proposed tree).")
+@click.option("--task", default="spawned_harness", show_default=True, help="Assigned task summary.")
+@click.option(
+    "--harness-dir",
+    type=click.Path(exists=True, file_okay=False, path_type=Path),
+    default=None,
+    help="Optional harness directory to read the proposed editable tree from.",
+)
+@click.option(
+    "--base-dir",
+    type=click.Path(exists=True, file_okay=False, path_type=Path),
+    default=None,
+    help="Optional harness directory to diff against (default: empty base tree).",
+)
+@click.option(
+    "--approve-digest",
+    default=None,
+    help="Optional digest to check against the proposed tree; exits 1 on mismatch.",
+)
+@click.option("--json", "as_json", is_flag=True, help="Emit the review as JSON instead of human-readable text.")
+def review_cmd(
+    name: str,
+    domain: str,
+    task: str,
+    harness_dir: Path | None,
+    base_dir: Path | None,
+    approve_digest: str | None,
+    as_json: bool,
+) -> None:
+    """Present the proposed tree diff and its canonical SHA-256 digest for `--approve-digest`."""
+    from harness.services.harness_spawner import build_tree_diff_review
+
+    proposed = _resolve_proposed_tree(name, domain, task, harness_dir)
+    base = surface_ops.read_tree(BRAIN_SURFACE, base_dir) if base_dir is not None else {}
+    review = build_tree_diff_review(BRAIN_SURFACE, base, proposed, approved_digest=approve_digest)
+
+    if as_json:
+        _emit(review.to_dict())
+    else:
+        click.echo(f"Proposed harness: {name} (domain={domain})")
+        click.echo(f"Base digest:      {review.base_sha256}")
+        click.echo(f"Added:    {', '.join(review.added) or '-'}")
+        click.echo(f"Modified: {', '.join(review.modified) or '-'}")
+        click.echo(f"Removed:  {', '.join(review.removed) or '-'}")
+        click.echo("")
+        click.echo(review.unified_diff or "(no changes)")
+        click.echo("")
+        click.echo(f"Approval digest (pass to `spawn run --write-permitted --approve-digest`): {review.tree_sha256}")
+        if approve_digest:
+            click.echo(f"Supplied digest matches: {review.approved}")
+    if approve_digest and not review.approved:
         raise SystemExit(1)
 
 

@@ -4,6 +4,9 @@ from __future__ import annotations
 
 from collections.abc import Mapping
 import json
+import os
+import shlex
+import sys
 from pathlib import Path
 from typing import Any
 
@@ -16,6 +19,14 @@ from harness.services.recursive_harnessing.models import SurfaceSpec
 from .diff_review import compute_tree_sha256
 
 _TREE_DIGEST_REL = ".harness/spawn_tree_digest.json"
+
+
+def _python_invocation() -> str:
+    """Return a shell-safe interpreter invocation that does not rely on a bare `python` on PATH."""
+    exe = sys.executable or "python3"
+    if os.name == "nt":
+        return f'"{exe}"'
+    return shlex.quote(exe)
 
 
 def build_spawn_dock_yaml(
@@ -50,7 +61,7 @@ def build_spawn_dock_yaml(
                 "steps": [
                     {
                         "command": (
-                            f'python -c "import os; assert os.path.isfile({always_on_entry!r}); '
+                            f'{_python_invocation()} -c "import os; assert os.path.isfile({always_on_entry!r}); '
                             "print('DOCK_HARNESS_OK')\""
                         ),
                         "workdir": ".",

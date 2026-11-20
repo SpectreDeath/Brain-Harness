@@ -57,7 +57,7 @@ harness [OPTIONS] COMMAND [ARGS]...
 | [`harness router`](#harness-router) | `brief`, `profile`, `route`, `simulate` | Dynamic Model Router CLI — 3-tier switching & resilient failover commands. |
 | [`harness session`](#harness-session) | `export`, `get`, `list`, `tree` | Manage and inspect agent execution sessions and hierarchical trees. |
 | [`harness skills`](#harness-skills) | `bridges`, `capabilities`, `chain`, `check-chain`, `clusters`, `create`, `graph`, `guidance`, `index`, `info`, `intercept`, `joint-query`, `list`, `prereqs`, `route`, `run`, `select`, `validate` | Manage and query the agent skill knowledge graph. |
-| [`harness spawn`](#harness-spawn) | `adopt`, `check-drift`, `list`, `propose`, `reject`, `retire`, `run` | Spawn, inspect, retire, and adopt learnings from isolated child harnesses. |
+| [`harness spawn`](#harness-spawn) | `adopt`, `check-drift`, `list`, `propose`, `reject`, `retire`, `review`, `run` | Spawn, inspect, retire, and adopt learnings from isolated child harnesses. |
 | [`harness tau`](#harness-tau) | `append-journal`, `repair-history`, `resolve-path`, `tree`, `trust-check` | Pi-style coding agent harness commands (DAG trees, journals, repair, trust). |
 | [`harness temp`](#harness-temp) | `bifurcate`, `salvage`, `sandbox`, `scan`, `tail` | Ephemeral workspace archaeology, HTML visual brief extraction, and sandbox triage. |
 | [`harness tool`](#harness-tool) | `disable`, `enable`, `list` | Inspect and manage granular tool and skill enablement. |
@@ -2777,6 +2777,20 @@ Retire a spawned child harness (or all active ones) and close its DAG edge.
 **Options:**
 - `--all`: Retire all active child harnesses. [default: False]
 - `--save-dir`: Root directory containing registry state. [default: .harness\spawns]
+
+#### `harness spawn review`
+```text
+Present the proposed tree diff and its canonical SHA-256 digest for `--approve-digest`.
+```
+
+**Options:**
+- `--name` *(required)*: Short identifier for the proposed child harness.
+- `--domain` *(required)*: Domain partition (used for the default proposed tree).
+- `--task`: Assigned task summary. [default: spawned_harness]
+- `--harness-dir`: Optional harness directory to read the proposed editable tree from.
+- `--base-dir`: Optional harness directory to diff against (default: empty base tree).
+- `--approve-digest`: Optional digest to check against the proposed tree; exits 1 on mismatch.
+- `--json`: Emit the review as JSON instead of human-readable text. [default: False]
 
 #### `harness spawn run`
 ```text

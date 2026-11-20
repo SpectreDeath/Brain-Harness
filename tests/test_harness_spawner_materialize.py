@@ -101,6 +101,19 @@ class TestSpawnMaterializeAndMergePolicy:
         assert manifest_report["dock_status"] == "manifest_changed"
         assert manifest_report["manifest_drifted"] is True
 
+    def test_generated_dock_yaml_does_not_depend_on_bare_python(self) -> None:
+        import sys
+
+        from harness.services.harness_spawner.materialize import build_spawn_dock_yaml
+
+        payload = build_spawn_dock_yaml(
+            name="portable", description="", surface=BRAIN_SURFACE, tree={"AGENTS.md": "# Portable\n"}
+        )
+        command = payload["entrypoints"]["validate"]["steps"][0]["command"]
+        assert not command.startswith("python "), command
+        assert sys.executable in command
+        assert "DOCK_HARNESS_OK" in command
+
     def test_merge_back_policy_adopt_reject_and_protected_block(self, tmp_path: Path) -> None:
         save_dir = tmp_path / "spawns"
         parent_lib = tmp_path / "parent_lib"
