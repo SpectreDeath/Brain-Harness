@@ -8,7 +8,9 @@ from pathlib import Path
 from typing import Any
 
 import click
+import structlog
 
+from harness.kernel.context import ServiceContext
 from harness.services.harness_spawner import (
     DEFAULT_K,
     DEFAULT_MAX_ROLLOUTS,
@@ -16,7 +18,8 @@ from harness.services.harness_spawner import (
     DEFAULT_MAX_SPAWN_DEPTH,
     DEFAULT_MAX_TOKENS,
     HARD_MAX_SPAWN_DEPTH,
-    HarnessSpawnerEngine,
+    HARNESS_SPAWNER_SERVICE_KEY,
+    HarnessSpawnerProtocol,
     SpawnBudgetSpec,
     SpawnLifecycleState,
     SpawnSpec,
@@ -29,6 +32,43 @@ if sys.platform == "win32":
     for _stream in (sys.stdout, sys.stderr):
         if hasattr(_stream, "reconfigure"):
             _stream.reconfigure(encoding="utf-8")
+
+logger = structlog.get_logger(__name__)
+
+
+def get_spawner_service(
+    *,
+    save_dir: Path | None = None,
+    context: ServiceContext | None = None,
+) -> HarnessSpawnerProtocol:
+    """Resolve the spawner plugin service via IoC context or plugin singleton (Rule 45, 49)."""
+    if context is not None:
+        svc = context.optional(HARNESS_SPAWNER_SERVICE_KEY)
+        if svc is not None:
+            return svc
+
+    ws_root = Path(__file__).resolve().parents[3]
+    if not (ws_root / "plugins").is_dir():
+        ws_root = Path.cwd()
+    if str(ws_root) not in sys.path:
+        sys.path.insert(0, str(ws_root))
+    if str(ws_root / "src") not in sys.path:
+        sys.path.insert(0, str(ws_root / "src"))
+
+    state_file = (save_dir / "registry.json") if save_dir is not None else None
+    try:
+        from plugins.agent_orchestration.harness_spawner.main import (
+            plugin as spawner_plugin,
+        )
+
+        if state_file is not None:
+            return spawner_plugin.for_state_file(state_file)
+        return spawner_plugin
+    except ImportError as exc:
+        logger.warning("harness_spawner_plugin_fallback", error=str(exc))
+        from harness.services.harness_spawner import HarnessSpawnerEngine
+
+        return HarnessSpawnerEngine(state_file=state_file)
 
 
 def _emit(payload: dict[str, Any]) -> None:
@@ -130,7 +170,7 @@ def run_cmd(
     """Validate, probe-gate, and spawn an isolated child harness."""
     tree = _resolve_proposed_tree(name, domain, task, harness_dir)
 
-    engine = HarnessSpawnerEngine(state_file=save_dir / "registry.json")
+    spawner = get_spawner_service(save_dir=save_dir)
     try:
         spec = SpawnSpec(
             name=name,
@@ -151,12 +191,12 @@ def run_cmd(
             write_permitted=write_permitted,
             approved_tree_digest=approve_digest,
         )
-        rec = engine.spawn(spec, materialize_dir=materialize_dir, approve_dock=approve_dock)
+        rec = spawner.spawn(spec, materialize_dir=materialize_dir, approve_dock=approve_dock)
     except (ValueError, KeyError) as exc:
         _emit({"status": "error", "error": str(exc)})
         raise SystemExit(1) from exc
 
-    export = engine.export_dag()
+    export = spawner.export_dag()
     payload = rec.to_dict()
     payload["ascii_tree"] = export.formatted_ascii_tree
     _emit(payload)
@@ -196,6 +236,8 @@ def review_cmd(
     as_json: bool,
 ) -> None:
     """Present the proposed tree diff and its canonical SHA-256 digest for `--approve-digest`."""
+    # Pure stateless pre-spawn diff/digest preview: operates directly on tree dicts via
+    # `build_tree_diff_review` without instantiating an engine or touching registry state.
     from harness.services.harness_spawner import build_tree_diff_review
 
     proposed = _resolve_proposed_tree(name, domain, task, harness_dir)
@@ -236,9 +278,9 @@ def review_cmd(
 )
 def list_cmd(save_dir: Path, state: str | None) -> None:
     """List registered child harnesses and their lifecycle state / budget usage."""
-    engine = HarnessSpawnerEngine(state_file=save_dir / "registry.json")
+    spawner = get_spawner_service(save_dir=save_dir)
     filter_state = SpawnLifecycleState(state.upper()) if state else None
-    records = engine.list_spawns(state=filter_state)
+    records = spawner.list_spawns(state=filter_state)
     _emit({"count": len(records), "spawns": [r.to_dict() for r in records]})
 
 
@@ -258,15 +300,15 @@ def retire_cmd(spawn_id: str | None, retire_all_flag: bool, save_dir: Path) -> N
         _emit({"status": "error", "error": "Specify SPAWN_ID or --all"})
         raise SystemExit(1)
 
-    engine = HarnessSpawnerEngine(state_file=save_dir / "registry.json")
+    spawner = get_spawner_service(save_dir=save_dir)
     if retire_all_flag:
-        retired = engine.retire_all()
+        retired = spawner.retire_all()
         _emit({"retired_count": len(retired), "spawns": [r.to_dict() for r in retired]})
         return
 
     assert spawn_id is not None
     try:
-        rec = engine.retire(spawn_id)
+        rec = spawner.retire(spawn_id)
     except KeyError as exc:
         _emit({"status": "error", "error": str(exc)})
         raise SystemExit(1) from exc
@@ -308,9 +350,9 @@ def propose_cmd(
     save_dir: Path,
 ) -> None:
     """Stage a reviewed learning and dual-file KI draft in the child partition."""
-    engine = HarnessSpawnerEngine(state_file=save_dir / "registry.json")
+    spawner = get_spawner_service(save_dir=save_dir)
     try:
-        proposal = engine.propose_merge_back(
+        proposal = spawner.propose_merge_back(
             spawn_id,
             task_id=task_id,
             cue=cue,
@@ -360,9 +402,9 @@ def adopt_cmd(
     review_note: str,
 ) -> None:
     """Explicitly review and adopt a staged child proposal into parent stores."""
-    engine = HarnessSpawnerEngine(state_file=save_dir / "registry.json")
+    spawner = get_spawner_service(save_dir=save_dir)
     try:
-        result = engine.adopt_merge_proposal(
+        result = spawner.adopt_merge_proposal(
             proposal_id,
             parent_library_root=library_root,
             parent_knowledge_root=knowledge_root,
@@ -388,9 +430,9 @@ def adopt_cmd(
 )
 def reject_cmd(proposal_id: str, reviewer: str, reason: str, save_dir: Path) -> None:
     """Explicitly reject a staged child proposal (writes nothing to parent stores)."""
-    engine = HarnessSpawnerEngine(state_file=save_dir / "registry.json")
+    spawner = get_spawner_service(save_dir=save_dir)
     try:
-        rejected = engine.reject_merge_proposal(proposal_id, reviewer=reviewer, reason=reason)
+        rejected = spawner.reject_merge_proposal(proposal_id, reviewer=reviewer, reason=reason)
     except (KeyError, ValueError, RuntimeError) as exc:
         _emit({"status": "error", "error": str(exc)})
         raise SystemExit(1) from exc
@@ -403,14 +445,23 @@ def reject_cmd(proposal_id: str, reviewer: str, reason: str, save_dir: Path) -> 
 @click.option("--dock-name", default=None, help="Optional dock name to look up.")
 def check_drift_cmd(repo_dir: Path, expected_digest: str | None, dock_name: str | None) -> None:
     """Verify a materialized dock repo has not drifted from its approved manifest or tree digest."""
-    from harness.services.harness_spawner import check_materialized_drift
+    spawner = get_spawner_service()
+    if hasattr(spawner, "check_drift"):
+        report = spawner.check_drift(
+            repo_dir,
+            BRAIN_SURFACE,
+            expected_tree_sha256=expected_digest,
+            dock_name=dock_name,
+        )
+    else:
+        from harness.services.harness_spawner import check_materialized_drift
 
-    report = check_materialized_drift(
-        repo_dir,
-        BRAIN_SURFACE,
-        expected_tree_sha256=expected_digest,
-        dock_name=dock_name,
-    )
+        report = check_materialized_drift(
+            repo_dir,
+            BRAIN_SURFACE,
+            expected_tree_sha256=expected_digest,
+            dock_name=dock_name,
+        )
     _emit(report)
     if report["drifted"]:
         raise SystemExit(1)

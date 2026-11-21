@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import sys
-from collections.abc import Callable
+from collections.abc import Callable, Mapping
 from pathlib import Path
 from typing import Any
 
@@ -23,6 +23,8 @@ if _HARNESS_SRC.exists() and str(_HARNESS_SRC) not in sys.path:
 
 from harness.kernel.context import ServiceContext, ServiceKey  # noqa: E402
 from harness.plugins.base import HarnessPlugin  # noqa: E402
+from harness.services.agent_graph import ExecutionGraphExport  # noqa: E402
+from harness.services.dock import DefaultDockService  # noqa: E402
 from harness.services.harness_spawner import (  # noqa: E402
     DEFAULT_MAX_SPAWN_DEPTH,
     DEFAULT_MAX_TOKENS,
@@ -34,7 +36,7 @@ from harness.services.harness_spawner import (  # noqa: E402
     SpawnMergeProposal,
     SpawnSpec,
 )
-from harness.services.recursive_harnessing.models import Tree  # noqa: E402
+from harness.services.recursive_harnessing.models import BRAIN_SURFACE, SurfaceSpec, Tree  # noqa: E402
 
 try:
     from .service import DefaultHarnessSpawnerService
@@ -55,9 +57,11 @@ class HarnessSpawnerPlugin(HarnessPlugin, HarnessSpawnerProtocol):
     )
     trusted = True
 
-    def __init__(self) -> None:
+    def __init__(self, state_file: Path | str | None = None) -> None:
         super().__init__()
-        self._service = DefaultHarnessSpawnerService()
+        self._state_file: Path | None = Path(state_file) if state_file is not None else None
+        self._parent_context: ServiceContext | None = None
+        self._service = DefaultHarnessSpawnerService(state_file=self._state_file)
 
     @property
     def provides(self) -> list[ServiceKey[Any]]:
@@ -71,8 +75,23 @@ class HarnessSpawnerPlugin(HarnessPlugin, HarnessSpawnerProtocol):
     def engine(self) -> Any:
         return self._service.engine
 
+    def for_state_file(self, state_file: Path | str | None) -> HarnessSpawnerPlugin:
+        """Return a plugin-backed spawner scoped to ``state_file`` while preserving IoC context."""
+        scoped = HarnessSpawnerPlugin(state_file=state_file)
+        scoped._parent_context = self._parent_context
+        if self._parent_context is not None:
+            scoped._service = DefaultHarnessSpawnerService(
+                parent_context=self._parent_context,
+                state_file=state_file,
+            )
+        return scoped
+
     async def on_load(self, context: ServiceContext) -> None:
-        self._service = DefaultHarnessSpawnerService(parent_context=context)
+        self._parent_context = context
+        self._service = DefaultHarnessSpawnerService(
+            parent_context=context,
+            state_file=self._state_file,
+        )
         context.provide(HARNESS_SPAWNER_SERVICE_KEY, self, provider=self.name)
         logger.info("HarnessSpawnerPlugin registered into IoC container")
 
@@ -90,8 +109,17 @@ class HarnessSpawnerPlugin(HarnessPlugin, HarnessSpawnerProtocol):
         spec: SpawnSpec,
         *,
         probe_fn: Callable[[SpawnSpec, ServiceContext], bool] | None = None,
+        materialize_dir: Path | str | None = None,
+        dock_service: Any = None,
+        approve_dock: bool = False,
     ) -> SpawnedHarnessRecord:
-        return self._service.spawn(spec, probe_fn=probe_fn)
+        return self._service.spawn(
+            spec,
+            probe_fn=probe_fn,
+            materialize_dir=materialize_dir,
+            dock_service=dock_service,
+            approve_dock=approve_dock,
+        )
 
     def record_usage(
         self,
@@ -101,9 +129,7 @@ class HarnessSpawnerPlugin(HarnessPlugin, HarnessSpawnerProtocol):
         rollouts: int = 0,
         sessions: int = 0,
     ) -> SpawnedHarnessRecord:
-        return self._service.record_usage(
-            spawn_id, tokens=tokens, rollouts=rollouts, sessions=sessions
-        )
+        return self._service.record_usage(spawn_id, tokens=tokens, rollouts=rollouts, sessions=sessions)
 
     def complete(
         self,
@@ -122,9 +148,7 @@ class HarnessSpawnerPlugin(HarnessPlugin, HarnessSpawnerProtocol):
     def get_spawn(self, spawn_id: str) -> SpawnedHarnessRecord | None:
         return self._service.get_spawn(spawn_id)
 
-    def list_spawns(
-        self, *, state: SpawnLifecycleState | None = None
-    ) -> list[SpawnedHarnessRecord]:
+    def list_spawns(self, *, state: SpawnLifecycleState | None = None) -> list[SpawnedHarnessRecord]:
         return self._service.list_spawns(state=state)
 
     def propose_merge_back(
@@ -138,6 +162,7 @@ class HarnessSpawnerPlugin(HarnessPlugin, HarnessSpawnerProtocol):
         why: str = "",
         tree: Tree | None = None,
         ki_id: str = "",
+        proposal_kind: str = "ki",
     ) -> SpawnMergeProposal:
         return self._service.propose_merge_back(
             spawn_id,
@@ -148,6 +173,7 @@ class HarnessSpawnerPlugin(HarnessPlugin, HarnessSpawnerProtocol):
             why=why,
             tree=tree,
             ki_id=ki_id,
+            proposal_kind=proposal_kind,
         )
 
     def adopt_merge_proposal(
@@ -156,15 +182,76 @@ class HarnessSpawnerPlugin(HarnessPlugin, HarnessSpawnerProtocol):
         *,
         parent_library_root: Path | str | None = None,
         parent_knowledge_root: Path | str | None = None,
+        reviewer: str = "human",
+        review_note: str = "",
     ) -> dict[str, Any]:
         return self._service.adopt_merge_proposal(
             proposal_id,
             parent_library_root=parent_library_root,
             parent_knowledge_root=parent_knowledge_root,
+            reviewer=reviewer,
+            review_note=review_note,
+        )
+
+    def reject_merge_proposal(
+        self,
+        proposal_id: str,
+        *,
+        reviewer: str = "human",
+        reason: str = "",
+    ) -> SpawnMergeProposal:
+        return self._service.reject_merge_proposal(
+            proposal_id,
+            reviewer=reviewer,
+            reason=reason,
         )
 
     def list_proposals(self, *, status: str | None = None) -> list[SpawnMergeProposal]:
         return self._service.list_proposals(status=status)
+
+    def materialize(
+        self,
+        surface: SurfaceSpec,
+        tree: Mapping[str, str],
+        target_dir: Path | str,
+        *,
+        name: str,
+        description: str = "",
+        dock_service: DefaultDockService | None = None,
+        approve: bool = False,
+    ) -> dict[str, Any]:
+        """Materialize a validated tree as a dock-linked repo via the plugin service."""
+        return self._service.materialize(
+            surface,
+            tree,
+            target_dir,
+            name=name,
+            description=description,
+            dock_service=dock_service,
+            approve=approve,
+        )
+
+    def check_drift(
+        self,
+        target_dir: Path | str,
+        surface: SurfaceSpec = BRAIN_SURFACE,
+        *,
+        expected_tree_sha256: str | None = None,
+        dock_service: DefaultDockService | None = None,
+        dock_name: str | None = None,
+    ) -> dict[str, Any]:
+        """Detect manifest or tree digest drift on a materialized repo via the plugin service."""
+        return self._service.check_drift(
+            target_dir,
+            surface,
+            expected_tree_sha256=expected_tree_sha256,
+            dock_service=dock_service,
+            dock_name=dock_name,
+        )
+
+    def export_dag(self, root_node_id: str | None = None) -> ExecutionGraphExport:
+        """Export the ExecutionGraph for spawned child harnesses via the plugin service."""
+        return self._service.export_dag(root_node_id)
 
 
 plugin = HarnessSpawnerPlugin()
