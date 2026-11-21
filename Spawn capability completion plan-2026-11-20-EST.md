@@ -65,12 +65,12 @@ tick the independent-check box (5.2) yourself.
   k=1 probe gate admits)? Record each answer word-for-word with the
   date; an answer given on the laptop counts only if it is repeated
   in visible chat or quoted verbatim with its source named.
-  *(Corrected `2026-11-21` on the user's word (`"Correct it"`): asked all 6 defaults in visible chat; no verbatim reply appears in the visible chat record — the user did not say `"leave all 6 on default"` there. Defaults re-marked "executor default — pending confirmation" in the research doc.)*
+  *(Corrected `2026-11-21` on the user's word (`"Correct it"`): asked all 6 defaults in visible chat; no verbatim reply appears in the visible `2026-11-20` chat record — the user did not say `"leave all 6 on default"` there. Subsequently confirmed `2026-11-21` in visible chat: user replied verbatim `"keep all six as-is"`.)*
 - [x] **0.2 Record deferrals honestly.** For any question the user does
   not answer, write "deferred — executor default stands, pending
   confirmation" next to that default in the research doc. Do not
   present a deferred default as confirmed anywhere.
-  *(Corrected `2026-11-21` on the user's word (`"Correct it"`): the `2026-11-20` record was wrong — no verbatim confirmation happened in visible chat. All 6 defaults re-marked "executor default — pending confirmation" in `Harness spawning research-2026-11-13-EST.md` lines 222–235; zero defaults altered in code.)*
+  *(Corrected `2026-11-21`: no verbatim confirmation happened on `2026-11-20`, so all 6 defaults were re-marked pending; then on `2026-11-21` in visible chat the user answered verbatim `"keep all six as-is"`, recorded against Q2–Q7 in `Harness spawning research-2026-11-13-EST.md` lines 222–235 with zero defaults altered in code.)*
 
 ## Track 1 — Live HarnessProposer (Step 2)
 

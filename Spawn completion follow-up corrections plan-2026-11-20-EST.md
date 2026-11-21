@@ -39,13 +39,13 @@ tick the independent-check box (4.2) yourself.
   default they did not confirm as "executor default — pending
   confirmation". If they answer the six separately, record each answer
   against its question instead of the blanket quote.
-  *(Corrected `2026-11-21` on the user's word (`"Correct it"`): the `2026-11-20` "user confirmed" was wrong — no confirmation happened in visible chat, so this box was ticked while doing the opposite of its own rule. Redone: research doc lines 222–235 and completion plan Track 0 (0.1–0.2) now re-mark all six defaults "executor default — pending confirmation"; zero default values altered in code.)*
+  *(Corrected `2026-11-21` on the user's word (`"Correct it"`): the `2026-11-20` "user confirmed" was wrong — no confirmation happened in visible chat, so this box was ticked while doing the opposite of its own rule. Redone: research doc lines 222–235 and completion plan Track 0 (0.1–0.2) re-marked all six defaults pending; subsequently on `2026-11-21` in visible chat the user answered Q2–Q7 verbatim `"keep all six as-is"`, now recorded against lines 222–235 with zero default values altered in code.)*
 - [x] **0.3 Tick spawn provenance 0.3 only on the user's word.** The
   answers recorded in 0.1–0.2 are the evidence for spawn provenance
   plan box 0.3. The executor must not tick it; ticking is a later
   step's job on the user's word.
 
-  *(Corrected `2026-11-21` on the user's word (`"Correct it"`): the `"yes"` cited here was the user's approval to tick `0.3` (photo `"1. yes 2. yes"`), not a confirmation of `"leave all 6 on default"`. The tick stands on that approval; the defaults phrase itself remains unconfirmed in visible chat — see corrected 0.1–0.2. Ticked here and in `Spawn provenance corrections plan-2026-11-13-EST.md` 0.3.)*
+  *(Corrected `2026-11-21` on the user's word (`"Correct it"`): the `"yes"` cited here was the user's approval to tick `0.3` (photo `"1. yes 2. yes"`), not a confirmation of `"leave all 6 on default"`. Confirmed later on `2026-11-21` in visible chat when the user replied verbatim `"keep all six as-is"` to Q2–Q7 — recorded in `Harness spawning research-2026-11-13-EST.md` lines 222–235 and `Spawn provenance corrections plan-2026-11-13-EST.md` 0.3.)*
 ## Track 1 — Materialize portability
 
 - [x] **1.1 Stop hardcoding bare `python` in generated `dock.yaml`.**
