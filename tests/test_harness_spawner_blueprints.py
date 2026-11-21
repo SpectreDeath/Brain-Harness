@@ -179,3 +179,15 @@ class TestHarnessSpawnerBlueprints:
         assert res_rev.exit_code == 0, res_rev.output
         rev_data = json.loads(res_rev.output)
         assert rev_data["tree_sha256"]
+
+    def test_seeded_kis_rank_by_domain_relevance_and_skip_signature_dumps(self) -> None:
+        sec_bp = recommend_harness_blueprints(name="harness-security-forensics")[0]
+        sec_ids = [k.ki_id for k in sec_bp.seeded_kis]
+        assert "ki_20260908_mantis_01" in sec_ids
+        assert not any(kid.startswith("ki-rea-sig-") for kid in sec_ids)
+
+        econ_bp = recommend_harness_blueprints(name="harness-context-economizer")[0]
+        assert "ki_20261028_headroom_context_optimization" in [k.ki_id for k in econ_bp.seeded_kis]
+
+        arch_bp = recommend_harness_blueprints(name="harness-arch-modernizer")[0]
+        assert "ki_20260908_earthengine_01" not in [k.ki_id for k in arch_bp.seeded_kis]

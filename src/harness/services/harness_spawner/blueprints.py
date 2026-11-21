@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -129,30 +130,60 @@ class HarnessBlueprint:
         }
 
 
+_GENERIC_DOMAIN_TOKENS = frozenset({"and", "general", "engineering", "software", "developer", "experience"})
+
+
+def _domain_tokens(val: str) -> set[str]:
+    return {t for t in re.split(r"[^a-z0-9]+", val.lower()) if len(t) >= 4 and t not in _GENERIC_DOMAIN_TOKENS}
+
+
 def _collect_kis(
-    keywords: tuple[str, ...], *, vault_dir: str, root_path: str
+    keywords: tuple[str, ...], *, domain: str = "", vault_dir: str, root_path: str
 ) -> tuple[tuple[SeededKI, ...], tuple[str, ...]]:
     seen_verified: dict[str, SeededKI] = {}
+    scores: dict[str, float] = {}
+    matched_tags_or_titles: set[str] = set()
     excluded: set[str] = set()
+    bp_tokens = _domain_tokens(domain)
+
     for kw in keywords:
+        kw_low = kw.lower()
         res = query_knowledge_and_skills(kw, vault_dir=vault_dir, root_path=root_path, limit=8)
-        for item in res.get("knowledge_items") or []:
+        for rank_idx, item in enumerate(res.get("knowledge_items") or []):
             ki_id = str(item.get("ki_id") or "").strip()
-            if not ki_id:
+            if not ki_id or ki_id.startswith("ki-rea-sig-"):
                 continue
             isnad_status = str(item.get("isnad_status") or "UNKNOWN").upper()
             if isnad_status != "VERIFIED":
                 excluded.add(ki_id)
                 continue
+            title = str(item.get("title") or ki_id)
+            ki_domain = str(item.get("domain") or "general")
+            tags = [str(t).lower() for t in (item.get("tags") or [])]
             if ki_id not in seen_verified:
                 seen_verified[ki_id] = SeededKI(
                     ki_id=ki_id,
-                    title=str(item.get("title") or ki_id),
-                    domain=str(item.get("domain") or "general"),
+                    title=title,
+                    domain=ki_domain,
                     isnad_status=isnad_status,
                     status=str(item.get("status") or "ACTIVE").upper(),
                 )
-    verified = tuple(sorted(seen_verified.values(), key=lambda k: k.ki_id)[:6])
+                scores[ki_id] = 3.0 if (bp_tokens & _domain_tokens(ki_domain)) else 0.0
+
+            delta = 1.0 + max(0.0, (8 - rank_idx) * 0.1)
+            if kw_low in title.lower():
+                delta += 3.0
+                matched_tags_or_titles.add(ki_id)
+            if kw_low in ki_domain.lower() or any(kw_low in t for t in tags):
+                delta += 2.0
+                matched_tags_or_titles.add(ki_id)
+            scores[ki_id] += delta
+
+    for ki_id, ki in seen_verified.items():
+        if ki_id not in matched_tags_or_titles and not (bp_tokens & _domain_tokens(ki.domain)):
+            scores[ki_id] -= 2.0
+
+    verified = tuple(sorted(seen_verified.values(), key=lambda k: (-scores[k.ki_id], k.ki_id))[:6])
     return verified, tuple(sorted(excluded))
 
 
@@ -202,7 +233,9 @@ def recommend_harness_blueprints(
         cluster = clusters_by_id.get(spec.cluster_id)
         cohesion = round(float(cluster.get("cohesion_score") or 0.0), 4) if cluster else 0.0
         bridge_count = _count_bridges(spec.cluster_id, capped_skills, bridges)
-        verified_kis, excluded_kis = _collect_kis(spec.query_keywords, vault_dir=vault, root_path=str(root))
+        verified_kis, excluded_kis = _collect_kis(
+            spec.query_keywords, domain=spec.domain, vault_dir=vault, root_path=str(root)
+        )
         savings_pct = round(100.0 * (1.0 - len(capped_skills) / max(prime_count, 1)), 2)
         tier_bonus = 6.0 if spec.tier == 1 else 0.0
         score = round(

@@ -28,6 +28,15 @@ if str(_src_dir) not in sys.path:
     sys.path.insert(0, str(_src_dir))
 if str(_ws_root) not in sys.path:
     sys.path.insert(0, str(_ws_root))
+if not (_ws_root / "plugins").is_dir():
+    try:
+        import harness as _harness_pkg
+
+        _prime_root = Path(_harness_pkg.__file__).resolve().parents[2]
+        if (_prime_root / "plugins").is_dir() and str(_prime_root) not in sys.path:
+            sys.path.insert(0, str(_prime_root))
+    except ImportError:
+        pass
 
 from plugins.security_and_forensics.network_forensics.engine import (
     NetworkForensicsEngine,
@@ -36,9 +45,7 @@ from plugins.security_and_forensics.network_forensics.engine import (
 
 def build_parser() -> argparse.ArgumentParser:
     """Build CLI argument parser for standalone diagnostics."""
-    parser = argparse.ArgumentParser(
-        description="Ethical Hacker Networking — Standalone Protocol Diagnostics & Recon"
-    )
+    parser = argparse.ArgumentParser(description="Ethical Hacker Networking — Standalone Protocol Diagnostics & Recon")
     parser.add_argument(
         "--traceroute",
         type=str,
@@ -68,7 +75,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--brief",
         action="store_true",
-        help="Generate interactive HTML visual brief in %TEMP%",
+        help="Generate interactive HTML visual brief in %%TEMP%%",
     )
     parser.add_argument(
         "--json",
@@ -89,20 +96,14 @@ def main() -> None:
     if args.traceroute:
         executed = True
         path = Path(args.traceroute)
-        raw_text = (
-            path.read_text(encoding="utf-8") if path.is_file() else args.traceroute
-        )
+        raw_text = path.read_text(encoding="utf-8") if path.is_file() else args.traceroute
         report = engine.analyze_traceroute_hops(raw_text)
         if args.json:
             print(json.dumps(report.model_dump(), indent=2))
         else:
-            print(
-                f"Traceroute Target: {report.target} | Total Hops: {report.total_hops}"
-            )
+            print(f"Traceroute Target: {report.target} | Total Hops: {report.total_hops}")
             for h in report.hops:
-                print(
-                    f"  Hop {h.hop_number:2d}: {h.ip_address:20s} {h.rtt_ms:6.1f} ms [{h.status}]"
-                )
+                print(f"  Hop {h.hop_number:2d}: {h.ip_address:20s} {h.rtt_ms:6.1f} ms [{h.status}]")
 
     if args.decode_flags:
         executed = True
@@ -110,9 +111,7 @@ def main() -> None:
         if args.json:
             print(json.dumps(flag_report.model_dump(), indent=2))
         else:
-            print(
-                f"TCP Flags ({args.decode_flags}): {', '.join(flag_report.flags_set) or 'NONE'}"
-            )
+            print(f"TCP Flags ({args.decode_flags}): {', '.join(flag_report.flags_set) or 'NONE'}")
             if flag_report.anomalous:
                 print(f"  [!] Anomalous Evasion: {flag_report.evasion_type}")
 
@@ -123,16 +122,12 @@ def main() -> None:
             print(json.dumps(sub_report.model_dump(), indent=2))
         else:
             print(f"Subnet Geometry ({args.subnet}):")
-            print(
-                f"  Netmask: {sub_report.netmask} | Usable Hosts: {sub_report.usable_hosts}"
-            )
+            print(f"  Netmask: {sub_report.netmask} | Usable Hosts: {sub_report.usable_hosts}")
             print(f"  Usable Range: {sub_report.usable_host_range}")
 
     if args.diagnose_7layer:
         executed = True
-        diag_report = engine.run_7layer_diagnostic_chain(
-            args.diagnose_7layer, port=args.port
-        )
+        diag_report = engine.run_7layer_diagnostic_chain(args.diagnose_7layer, port=args.port)
         if args.json:
             print(json.dumps(diag_report.model_dump(), indent=2))
         else:
@@ -141,9 +136,7 @@ def main() -> None:
                 badge = "[PASS]" if r.passed else "[FAIL]"
                 print(f"  Layer {r.layer} ({r.layer_name}): {badge} {r.details}")
             if diag_report.earliest_failing_layer:
-                print(
-                    f"  Root Cause: Layer {diag_report.earliest_failing_layer} Failure"
-                )
+                print(f"  Root Cause: Layer {diag_report.earliest_failing_layer} Failure")
 
     if args.brief:
         executed = True

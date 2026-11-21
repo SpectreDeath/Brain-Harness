@@ -110,6 +110,18 @@ class TestHarnessSpawnerDocBundle:
         assert res_audit_docs.exit_code == 0, res_audit_docs.output
         assert "DOCS_AUDIT_OK" in res_audit_docs.output
 
+        res_icm_audit = runner.invoke(main, ["dock", "run", blueprint_name, "icm-audit"])
+        assert res_icm_audit.exit_code == 0, res_icm_audit.output
+        assert "ICM_AUDIT_OK" in res_icm_audit.output
+
+        res_icm_links = runner.invoke(main, ["dock", "run", blueprint_name, "icm-links"])
+        assert res_icm_links.exit_code == 0, res_icm_links.output
+        assert "ICM_LINKS_OK" in res_icm_links.output
+
+        use_cases_text = (mat_dir / "docs" / "USE_CASES.md").read_text(encoding="utf-8")
+        assert f"harness dock run {blueprint_name} audit-docs" in use_cases_text
+        assert "harness dock run audit-docs" not in use_cases_text
+
     @pytest.mark.parametrize(
         "missing_rel",
         [
@@ -231,3 +243,41 @@ class TestHarnessSpawnerDocBundle:
         runner = CliRunner()
         res_bad = runner.invoke(main, ["dock", "run", bp.name, "audit-docs"])
         assert res_bad.exit_code != 0
+
+    def test_standalone_cwd_dock_run_and_check_drift_without_env_override(
+        self,
+        tmp_path: Path,
+        monkeypatch: pytest.MonkeyPatch,
+        distiller_bundle: tuple[HarnessBlueprint, dict[str, str]],
+    ) -> None:
+        monkeypatch.delenv("HARNESS_DOCKS_STATE_FILE", raising=False)
+        prime_ws = tmp_path / "prime_ws"
+        prime_ws.mkdir()
+        mat_dir = tmp_path / "standalone_distiller"
+        bp, tree = distiller_bundle
+
+        monkeypatch.chdir(prime_ws)
+        info = materialize_spawn_as_dock(
+            BRAIN_SURFACE,
+            tree,
+            mat_dir,
+            name=bp.name,
+            description=bp.mission,
+            approve=True,
+            blueprint=bp,
+        )
+        assert info["approved"] is True
+        assert (prime_ws / ".harness" / "docks.json").is_file()
+        assert (mat_dir / ".harness" / "docks.json").is_file()
+
+        monkeypatch.chdir(mat_dir)
+        runner = CliRunner()
+        res_val = runner.invoke(main, ["dock", "run", bp.name, "validate"])
+        assert res_val.exit_code == 0, res_val.output
+        assert "DOCK_HARNESS_OK" in res_val.output
+
+        res_drift = runner.invoke(main, ["spawn", "check-drift", "."])
+        assert res_drift.exit_code == 0, res_drift.output
+        drift_data = json.loads(res_drift.output)
+        assert drift_data["dock_status"] == "approved"
+        assert drift_data["drifted"] is False

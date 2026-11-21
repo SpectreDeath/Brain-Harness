@@ -251,13 +251,17 @@ def render_readme(bp: BlueprintLike, *, prime_commit: str, spawn_id: str, create
         f"| ICM Form | `{bp.icm_form}` |\n"
         f"| Generated (UTC) | `{created_utc}` |\n\n"
         "## Quick Start\n\n"
+        "Run from this harness directory (or via Prime's `.venv\\Scripts\\harness.exe` if not on PATH):\n\n"
         "```powershell\n"
         f"harness dock inspect .\n"
         f"harness dock run {bp.name} validate\n"
         f"harness dock run {bp.name} audit-docs\n"
+        f"harness dock run {bp.name} icm-audit\n"
+        f"harness dock run {bp.name} icm-links\n"
         "harness icm audit .\n"
         "harness icm links .\n"
         "```\n\n"
+        "Without an activated venv, standalone doc verification also runs directly via `python _tools/audit_docs.py`.\n\n"
         "Deep references: [CONTEXT.md](CONTEXT.md), [Worked Use Cases](docs/USE_CASES.md), "
         "[Graph Provenance](docs/PROVENANCE.md), [Operations Runbook](docs/RUNBOOK.md).\n\n"
         "## Skills\n\n"
@@ -282,7 +286,7 @@ def render_use_cases(bp: BlueprintLike) -> str:
                 f"- **Trigger / Input:** {uc}",
                 f"- **Command / Stage Sequence:** Inspect [../CONTEXT.md](../CONTEXT.md), execute step workflow under `{bp.icm_form}`, and record structured outputs on disk.",
                 "- **Expected Artifact:** Verified output artifact in the harness workspace folder matching ICM shelf/stage schema.",
-                "- **Pass/Fail Check:** `harness icm audit .`, `harness icm links .`, and `harness dock run audit-docs` pass with zero errors.",
+                f"- **Pass/Fail Check:** `harness icm audit .`, `harness icm links .`, and `harness dock run {bp.name} audit-docs` pass with zero errors.",
                 "",
             ]
         )
@@ -347,9 +351,13 @@ def render_runbook(bp: BlueprintLike) -> str:
         "harness dock list\n"
         "```\n\n"
         "## Verification\n\n"
+        "All commands below run either from `Brain Harness` or directly inside this harness directory "
+        "(invoke Prime `.venv\\Scripts\\harness.exe` if `harness` is not on global `PATH`):\n\n"
         "```powershell\n"
         f"harness dock run {bp.name} validate\n"
         f"harness dock run {bp.name} audit-docs\n"
+        f"harness dock run {bp.name} icm-audit\n"
+        f"harness dock run {bp.name} icm-links\n"
         "harness icm audit .\n"
         "harness icm links .\n"
         "harness icm quotes .\n"

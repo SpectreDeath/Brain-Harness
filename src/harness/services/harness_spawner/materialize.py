@@ -87,8 +87,45 @@ def build_spawn_dock_yaml(
                     }
                 ],
             },
+            "icm-audit": {
+                "description": "Verify ICM workspace audit invariants (10/10, entry file < 80 lines).",
+                "write_path": False,
+                "steps": [
+                    {
+                        "command": (
+                            f'{_python_invocation()} -c "from harness.services.icm_architect import IcmAuditor; '
+                            "r = IcmAuditor().audit_workspace('.'); assert r.valid, r.violations; print('ICM_AUDIT_OK')\""
+                        ),
+                        "workdir": ".",
+                        "expected_output": "ICM_AUDIT_OK",
+                    }
+                ],
+            },
+            "icm-links": {
+                "description": "Verify all ICM relative links and contract inputs resolve cleanly.",
+                "write_path": False,
+                "steps": [
+                    {
+                        "command": (
+                            f'{_python_invocation()} -c "from harness.services.icm_architect import IcmVerifier; '
+                            "r = IcmVerifier().verify_links('.'); assert r.valid, r.broken_links; print('ICM_LINKS_OK')\""
+                        ),
+                        "workdir": ".",
+                        "expected_output": "ICM_LINKS_OK",
+                    }
+                ],
+            },
         },
     }
+
+
+def _find_dock_status(dock: DefaultDockService, repo_dir: Path, dock_name: str | None) -> str:
+    for entry in dock.list_docks():
+        if (dock_name and entry.get("dock_name") == dock_name) or (
+            Path(str(entry.get("repo_path") or "")).resolve() == repo_dir
+        ):
+            return str(entry.get("status") or "unknown")
+    return "unlinked"
 
 
 def materialize_spawn_as_dock(
@@ -126,6 +163,7 @@ def materialize_spawn_as_dock(
     dock_payload = build_spawn_dock_yaml(name=name, description=description, surface=surface, tree=tree_dict)
     (repo_dir / "dock.yaml").write_text(yaml.safe_dump(dock_payload, sort_keys=False), encoding="utf-8")
 
+    dock = dock_service if dock_service is not None else DefaultDockService()
     tree_sha256 = compute_tree_sha256(tree_dict)
     docs_sha256 = compute_docs_sha256(repo_dir, TRACKED_DOC_PATHS)
     digest_path = repo_dir / _TREE_DIGEST_REL
@@ -138,6 +176,7 @@ def materialize_spawn_as_dock(
                 "docs_sha256": docs_sha256,
                 "tracked_docs": list(TRACKED_DOC_PATHS),
                 "icm_form": doc_info["icm_form"],
+                "prime_docks_state_file": str(dock.state_file),
                 "surface": surface.name,
             },
             indent=2,
@@ -146,8 +185,14 @@ def materialize_spawn_as_dock(
         encoding="utf-8",
     )
 
-    dock = dock_service if dock_service is not None else DefaultDockService()
     link_rec: DockLinkRecord = dock.link(repo_dir, name=name, approve=approve)
+    # Mirror local state inside repo_dir so standalone dock run / check-drift works from cwd=repo_dir.
+    if dock_service is None and not os.environ.get("HARNESS_DOCKS_STATE_FILE"):
+        local_docks = (repo_dir / ".harness" / "docks.json").resolve()
+        if dock.state_file.resolve() != local_docks:
+            DefaultDockService(workspace_root=repo_dir, state_file=local_docks).link(
+                repo_dir, name=name, approve=approve
+            )
     return {
         "repo_dir": str(repo_dir),
         "dock_name": link_rec.dock_name,
@@ -187,13 +232,19 @@ def check_materialized_drift(
     docs_drifted = bool(recorded_docs_sha and live_docs_sha != recorded_docs_sha)
 
     dock = dock_service if dock_service is not None else DefaultDockService()
-    dock_status = "unlinked"
-    for entry in dock.list_docks():
-        if (dock_name and entry.get("dock_name") == dock_name) or (
-            Path(str(entry.get("repo_path") or "")).resolve() == repo_dir
-        ):
-            dock_status = str(entry.get("status") or "unknown")
-            break
+    dock_status = _find_dock_status(dock, repo_dir, dock_name)
+    if dock_status == "unlinked" and dock_service is None:
+        fallbacks: list[Path] = [(repo_dir / ".harness" / "docks.json").resolve()]
+        prime_state = str(digest_data.get("prime_docks_state_file") or "").strip()
+        if prime_state:
+            fallbacks.append(Path(prime_state).resolve())
+        for fb in fallbacks:
+            if fb.is_file() and fb != dock.state_file.resolve():
+                dock_status = _find_dock_status(
+                    DefaultDockService(workspace_root=repo_dir, state_file=fb), repo_dir, dock_name
+                )
+                if dock_status != "unlinked":
+                    break
 
     manifest_drifted = dock_status == "manifest_changed"
     return {
