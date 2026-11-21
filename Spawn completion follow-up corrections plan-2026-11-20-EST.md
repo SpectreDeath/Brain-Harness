@@ -26,23 +26,26 @@ tick the independent-check box (4.2) yourself.
 
 ## Track 0 — Defaults confirmation gate
 
-- [ ] **0.1 Ask the user in chat the one question and record the answer
+- [x] **0.1 Ask the user in chat the one question and record the answer
   verbatim.** Did they say `"leave all 6 on default"` on the laptop in
   answer to the six Track 0 questions? Record their reply word-for-word
   with the date. An answer given on the laptop counts only if it is
   repeated in visible chat or quoted verbatim with its source named.
-- [ ] **0.2 Correct the record to match the answer.** If the user
+  *(Done `2026-11-20T19:46`: asked in visible chat whether on the laptop they answered the six Track 0 questions with `"leave all 6 on default"`; user replied verbatim `"yes"` on `2026-11-20`.)*
+- [x] **0.2 Correct the record to match the answer.** If the user
   confirms, the research doc lines 222–227 and the plan's 0.1 annotation
   stand as written. If they did not say it, or said something else,
   correct both records to what they actually said and re-mark any
   default they did not confirm as "executor default — pending
   confirmation". If they answer the six separately, record each answer
   against its question instead of the blanket quote.
+  *(Done `2026-11-20`: user confirmed (`"yes"`); `Harness spawning research-2026-11-13-EST.md` lines 222–235 and `Spawn capability completion plan-2026-11-20-EST.md` Track 0 (0.1–0.2) stand as written, with zero default values altered in code.)*
 - [ ] **0.3 Tick spawn provenance 0.3 only on the user's word.** The
   answers recorded in 0.1–0.2 are the evidence for spawn provenance
   plan box 0.3. The executor must not tick it; ticking is a later
   step's job on the user's word.
 
+  *(Status `2026-11-20`: evidence recorded in 0.1–0.2 (`"yes"` confirming `"leave all 6 on default"`); left unticked here and in `Spawn provenance corrections plan-2026-11-13-EST.md` 0.3 per instruction: "The executor must not tick it; ticking is a later step's job on the user's word.")*
 ## Track 1 — Materialize portability
 
 - [x] **1.1 Stop hardcoding bare `python` in generated `dock.yaml`.**
