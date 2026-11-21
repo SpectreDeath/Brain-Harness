@@ -41,7 +41,7 @@ from harness.services.recursive_harnessing.models import BRAIN_SURFACE, SurfaceS
 try:
     from .service import DefaultHarnessSpawnerService
 except ImportError:
-    from service import DefaultHarnessSpawnerService  # type: ignore[no-redef]
+    from service import DefaultHarnessSpawnerService  # type: ignore[import-not-found,no-redef]
 
 logger = structlog.get_logger(__name__)
 
