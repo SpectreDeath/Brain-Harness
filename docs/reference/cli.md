@@ -57,7 +57,7 @@ harness [OPTIONS] COMMAND [ARGS]...
 | [`harness router`](#harness-router) | `brief`, `profile`, `route`, `simulate` | Dynamic Model Router CLI — 3-tier switching & resilient failover commands. |
 | [`harness session`](#harness-session) | `export`, `get`, `list`, `tree` | Manage and inspect agent execution sessions and hierarchical trees. |
 | [`harness skills`](#harness-skills) | `bridges`, `capabilities`, `chain`, `check-chain`, `clusters`, `create`, `graph`, `guidance`, `index`, `info`, `intercept`, `joint-query`, `list`, `prereqs`, `route`, `run`, `select`, `validate` | Manage and query the agent skill knowledge graph. |
-| [`harness spawn`](#harness-spawn) | `adopt`, `check-drift`, `list`, `propose`, `reject`, `retire`, `review`, `run` | Spawn, inspect, retire, and adopt learnings from isolated child harnesses. |
+| [`harness spawn`](#harness-spawn) | `adopt`, `blueprints`, `check-drift`, `list`, `propose`, `reject`, `retire`, `review`, `run` | Spawn, inspect, retire, and adopt learnings from isolated child harnesses. |
 | [`harness tau`](#harness-tau) | `append-journal`, `repair-history`, `resolve-path`, `tree`, `trust-check` | Pi-style coding agent harness commands (DAG trees, journals, repair, trust). |
 | [`harness temp`](#harness-temp) | `bifurcate`, `salvage`, `sandbox`, `scan`, `tail` | Ephemeral workspace archaeology, HTML visual brief extraction, and sandbox triage. |
 | [`harness tool`](#harness-tool) | `disable`, `enable`, `list` | Inspect and manage granular tool and skill enablement. |
@@ -2726,6 +2726,19 @@ Explicitly review and adopt a staged child proposal into parent stores.
 - `--reviewer`: Reviewer identifier. [default: human]
 - `--note`: Optional review note. [default: ]
 
+#### `harness spawn blueprints`
+```text
+Recommend prioritized domain harness blueprints from the live skill graph and Knowledge Vault.
+```
+
+**Options:**
+- `--root`: Workspace root containing .agents/skills/ and skill graph inputs. [default: .]
+- `--vault`: Knowledge Vault directory used for verified KI grounding. [default: .harness\knowledge]
+- `--max-skills`: Maximum skills allowed per recommended blueprint. [default: 5]
+- `--limit`: Maximum number of ranked blueprints to return. [default: 8]
+- `--name`: Filter to a specific blueprint name.
+- `--json`: Emit raw JSON payload. [default: False]
+
 #### `harness spawn check-drift`
 ```text
 Verify a materialized dock repo has not drifted from its approved manifest or tree digest.
@@ -2784,8 +2797,9 @@ Present the proposed tree diff and its canonical SHA-256 digest for `--approve-d
 ```
 
 **Options:**
-- `--name` *(required)*: Short identifier for the proposed child harness.
-- `--domain` *(required)*: Domain partition (used for the default proposed tree).
+- `--blueprint`: Graph blueprint name from `harness spawn blueprints`.
+- `--name`: Short identifier for the proposed child harness.
+- `--domain`: Domain partition (used for the default proposed tree).
 - `--task`: Assigned task summary. [default: spawned_harness]
 - `--harness-dir`: Optional harness directory to read the proposed editable tree from.
 - `--base-dir`: Optional harness directory to diff against (default: empty base tree).
@@ -2798,8 +2812,9 @@ Validate, probe-gate, and spawn an isolated child harness.
 ```
 
 **Options:**
-- `--name` *(required)*: Short identifier for the spawned child harness.
-- `--domain` *(required)*: Domain partition for isolated ExperienceLibrary storage.
+- `--blueprint`: Graph blueprint name from `harness spawn blueprints`.
+- `--name`: Short identifier for the spawned child harness.
+- `--domain`: Domain partition for isolated ExperienceLibrary storage.
 - `--task`: Assigned task summary. [default: spawned_harness]
 - `--harness-dir`: Optional harness directory to read initial editable tree from.
 - `--max-tokens`: Token budget ceiling. [default: 16000]

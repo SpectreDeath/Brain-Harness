@@ -13,16 +13,21 @@ import structlog
 from harness.kernel.context import ServiceContext
 from harness.services.harness_spawner import (
     DEFAULT_K,
+    DEFAULT_MAX_BLUEPRINT_SKILLS,
     DEFAULT_MAX_ROLLOUTS,
     DEFAULT_MAX_SESSIONS,
     DEFAULT_MAX_SPAWN_DEPTH,
     DEFAULT_MAX_TOKENS,
+    HARD_MAX_BLUEPRINT_SKILLS,
     HARD_MAX_SPAWN_DEPTH,
     HARNESS_SPAWNER_SERVICE_KEY,
+    HarnessBlueprint,
     HarnessSpawnerProtocol,
     SpawnBudgetSpec,
     SpawnLifecycleState,
     SpawnSpec,
+    build_blueprint_tree,
+    recommend_harness_blueprints,
 )
 from harness.services.recursive_harnessing import surface as surface_ops
 from harness.services.recursive_harnessing.models import BRAIN_SURFACE
@@ -82,14 +87,127 @@ def _resolve_proposed_tree(name: str, domain: str, task: str, harness_dir: Path 
     return {"AGENTS.md": f"# Spawned Harness: {name}\n\nDomain: {domain}\nTask: {task}\n"}
 
 
+def _resolve_blueprint_selection(
+    blueprint_name: str | None,
+    name: str | None,
+    domain: str | None,
+    task: str,
+    harness_dir: Path | None,
+    *,
+    root_path: Path = Path("."),
+    vault_dir: Path = Path(".harness/knowledge"),
+) -> tuple[str, str, str, str, dict[str, str], HarnessBlueprint | None]:
+    """Resolve target metadata and tree for `--blueprint` or explicit `--name/--domain` callers."""
+    if blueprint_name:
+        matches = recommend_harness_blueprints(root_path=root_path, vault_dir=vault_dir, name=blueprint_name)
+        if not matches:
+            raise ValueError(f"Unknown blueprint: {blueprint_name!r}")
+        bp = matches[0]
+        resolved_name = name or bp.name
+        resolved_domain = domain or bp.domain
+        resolved_task = bp.mission if task == "spawned_harness" else task
+        skills_root = Path(root_path).resolve() / ".agents" / "skills"
+        tree = (
+            surface_ops.read_tree(BRAIN_SURFACE, harness_dir)
+            if harness_dir is not None
+            else build_blueprint_tree(bp, skills_root=skills_root)
+        )
+        return resolved_name, resolved_domain, resolved_task, bp.mission, tree, bp
+
+    if not name or not domain:
+        raise ValueError("Specify --blueprint or both --name and --domain")
+    return name, domain, task, task, _resolve_proposed_tree(name, domain, task, harness_dir), None
+
+
 @click.group("spawn")
 def spawn_group() -> None:
     """Spawn, inspect, retire, and adopt learnings from isolated child harnesses."""
 
 
+@spawn_group.command("blueprints")
+@click.option(
+    "--root",
+    "root_path",
+    type=click.Path(exists=True, file_okay=False, path_type=Path),
+    default=Path("."),
+    show_default=True,
+    help="Workspace root containing .agents/skills/ and skill graph inputs.",
+)
+@click.option(
+    "--vault",
+    "vault_dir",
+    type=click.Path(file_okay=False, path_type=Path),
+    default=Path(".harness/knowledge"),
+    show_default=True,
+    help="Knowledge Vault directory used for verified KI grounding.",
+)
+@click.option(
+    "--max-skills",
+    type=click.IntRange(min=1, max=HARD_MAX_BLUEPRINT_SKILLS),
+    default=DEFAULT_MAX_BLUEPRINT_SKILLS,
+    show_default=True,
+    help="Maximum skills allowed per recommended blueprint.",
+)
+@click.option(
+    "--limit",
+    type=click.IntRange(min=1),
+    default=8,
+    show_default=True,
+    help="Maximum number of ranked blueprints to return.",
+)
+@click.option("--name", default=None, help="Filter to a specific blueprint name.")
+@click.option("--json", "as_json", is_flag=True, help="Emit raw JSON payload.")
+def blueprints_cmd(
+    root_path: Path,
+    vault_dir: Path,
+    max_skills: int,
+    limit: int,
+    name: str | None,
+    as_json: bool,
+) -> None:
+    """Recommend prioritized domain harness blueprints from the live skill graph and Knowledge Vault."""
+    spawner = get_spawner_service()
+    if hasattr(spawner, "recommend_blueprints"):
+        bps = spawner.recommend_blueprints(
+            root_path=root_path,
+            vault_dir=vault_dir,
+            max_skills=max_skills,
+            limit=limit,
+            name=name,
+        )
+    else:
+        bps = recommend_harness_blueprints(
+            root_path=root_path,
+            vault_dir=vault_dir,
+            max_skills=max_skills,
+            limit=limit,
+            name=name,
+        )
+
+    if as_json:
+        _emit({"count": len(bps), "blueprints": [bp.to_dict() for bp in bps]})
+        return
+
+    if not bps:
+        click.echo("No matching harness blueprints found.")
+        return
+
+    for idx, bp in enumerate(bps, 1):
+        click.echo(
+            f"{idx}. {bp.name} (score={bp.score:.2f}, form={bp.icm_form}, "
+            f"skills={len(bp.skills)}/{bp.prime_skill_count}, savings={bp.estimated_token_savings_pct:.1f}%, "
+            f"verified_kis={len(bp.seeded_kis)}, excluded_unverified={len(bp.excluded_unverified_kis)})"
+        )
+        click.echo(f"   skills: {', '.join(bp.skills)}")
+        click.echo(f"   source: {bp.graph_source}")
+
+
 @spawn_group.command("run")
-@click.option("--name", required=True, help="Short identifier for the spawned child harness.")
-@click.option("--domain", required=True, help="Domain partition for isolated ExperienceLibrary storage.")
+@click.option(
+    "--blueprint", "blueprint_name", default=None, help="Graph blueprint name from `harness spawn blueprints`."
+)
+@click.option("--name", default=None, help="Short identifier for the spawned child harness.")
+@click.option("--domain", default=None, help="Domain partition for isolated ExperienceLibrary storage.")
 @click.option("--task", default="spawned_harness", show_default=True, help="Assigned task summary.")
 @click.option(
     "--harness-dir",
@@ -151,8 +269,9 @@ def spawn_group() -> None:
 @click.option("--write-permitted", is_flag=True, help="Require matching --approve-digest before admission.")
 @click.option("--approve-digest", default=None, help="Approved SHA-256 digest of the proposed harness tree.")
 def run_cmd(
-    name: str,
-    domain: str,
+    blueprint_name: str | None,
+    name: str | None,
+    domain: str | None,
     task: str,
     harness_dir: Path | None,
     max_tokens: int,
@@ -168,14 +287,21 @@ def run_cmd(
     approve_digest: str | None,
 ) -> None:
     """Validate, probe-gate, and spawn an isolated child harness."""
-    tree = _resolve_proposed_tree(name, domain, task, harness_dir)
+    try:
+        resolved_name, resolved_domain, resolved_task, resolved_desc, tree, bp = _resolve_blueprint_selection(
+            blueprint_name, name, domain, task, harness_dir
+        )
+    except (ValueError, FileNotFoundError) as exc:
+        _emit({"status": "error", "error": str(exc)})
+        raise SystemExit(1) from exc
 
     spawner = get_spawner_service(save_dir=save_dir)
     try:
         spec = SpawnSpec(
-            name=name,
-            domain=domain,
-            task=task,
+            name=resolved_name,
+            domain=resolved_domain,
+            task=resolved_task,
+            description=resolved_desc,
             tree=tree,
             budget=SpawnBudgetSpec(
                 max_tokens=max_tokens,
@@ -191,7 +317,7 @@ def run_cmd(
             write_permitted=write_permitted,
             approved_tree_digest=approve_digest,
         )
-        rec = spawner.spawn(spec, materialize_dir=materialize_dir, approve_dock=approve_dock)
+        rec = spawner.spawn(spec, materialize_dir=materialize_dir, approve_dock=approve_dock, blueprint=bp)
     except (ValueError, KeyError) as exc:
         _emit({"status": "error", "error": str(exc)})
         raise SystemExit(1) from exc
@@ -205,8 +331,11 @@ def run_cmd(
 
 
 @spawn_group.command("review")
-@click.option("--name", required=True, help="Short identifier for the proposed child harness.")
-@click.option("--domain", required=True, help="Domain partition (used for the default proposed tree).")
+@click.option(
+    "--blueprint", "blueprint_name", default=None, help="Graph blueprint name from `harness spawn blueprints`."
+)
+@click.option("--name", default=None, help="Short identifier for the proposed child harness.")
+@click.option("--domain", default=None, help="Domain partition (used for the default proposed tree).")
 @click.option("--task", default="spawned_harness", show_default=True, help="Assigned task summary.")
 @click.option(
     "--harness-dir",
@@ -227,8 +356,9 @@ def run_cmd(
 )
 @click.option("--json", "as_json", is_flag=True, help="Emit the review as JSON instead of human-readable text.")
 def review_cmd(
-    name: str,
-    domain: str,
+    blueprint_name: str | None,
+    name: str | None,
+    domain: str | None,
     task: str,
     harness_dir: Path | None,
     base_dir: Path | None,
@@ -240,14 +370,21 @@ def review_cmd(
     # `build_tree_diff_review` without instantiating an engine or touching registry state.
     from harness.services.harness_spawner import build_tree_diff_review
 
-    proposed = _resolve_proposed_tree(name, domain, task, harness_dir)
+    try:
+        resolved_name, resolved_domain, _, _, proposed, _ = _resolve_blueprint_selection(
+            blueprint_name, name, domain, task, harness_dir
+        )
+    except (ValueError, FileNotFoundError) as exc:
+        _emit({"status": "error", "error": str(exc)})
+        raise SystemExit(1) from exc
+
     base = surface_ops.read_tree(BRAIN_SURFACE, base_dir) if base_dir is not None else {}
     review = build_tree_diff_review(BRAIN_SURFACE, base, proposed, approved_digest=approve_digest)
 
     if as_json:
         _emit(review.to_dict())
     else:
-        click.echo(f"Proposed harness: {name} (domain={domain})")
+        click.echo(f"Proposed harness: {resolved_name} (domain={resolved_domain})")
         click.echo(f"Base digest:      {review.base_sha256}")
         click.echo(f"Added:    {', '.join(review.added) or '-'}")
         click.echo(f"Modified: {', '.join(review.modified) or '-'}")

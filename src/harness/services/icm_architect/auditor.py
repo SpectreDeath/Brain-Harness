@@ -11,7 +11,7 @@ from .models import (
     IcmWorkspaceRole,
 )
 
-SKIP_DIRS = {".git", "node_modules", "__pycache__", ".venv", ".gemini", "_archive"}
+SKIP_DIRS = {".git", "node_modules", "__pycache__", ".venv", ".gemini", "_archive", ".agents", ".harness"}
 CATALOG_FILENAMES = {"agents.md", "claude.md", "gemini.md", "index.md", "_index.md", "log.md"}
 FACTORY_FOLDERS = {"_shared", "_tools", "_templates", "_meta", "setup"}
 
@@ -114,7 +114,10 @@ class IcmAuditor:
                     else:
                         text = contract.read_text(encoding="utf-8", errors="replace")
                         text_lower = text.lower()
-                        has_check = any(h in text_lower for h in ("## check", "## audit", "## stage audit", "## checkpoints", "## verification"))
+                        has_check = any(
+                            h in text_lower
+                            for h in ("## check", "## audit", "## stage audit", "## checkpoints", "## verification")
+                        )
                         if not has_check:
                             violations.append(
                                 IcmInvariantViolation(
@@ -125,7 +128,7 @@ class IcmAuditor:
                                     severity="warning",
                                 )
                             )
-                        
+
                         # Invariant: CONTEXT.md line count guardrail (Pattern Quality Guardrail: <= 80 lines)
                         contract_lines = text.splitlines()
                         if len(contract_lines) > 80:

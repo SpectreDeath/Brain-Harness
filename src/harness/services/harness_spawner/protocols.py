@@ -33,6 +33,7 @@ class HarnessSpawnerProtocol(Protocol):
         materialize_dir: Path | str | None = None,
         dock_service: Any = None,
         approve_dock: bool = False,
+        blueprint: Any = None,
     ) -> SpawnedHarnessRecord: ...
 
     def record_usage(

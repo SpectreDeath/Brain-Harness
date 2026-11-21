@@ -51,6 +51,7 @@ class _SpawnerLifecycleMixin:
         materialize_dir: Path | str | None = None,
         dock_service: Any = None,
         approve_dock: bool = False,
+        blueprint: Any = None,
     ) -> SpawnedHarnessRecord:
         """Validate, isolate, k=1 probe-gate, and admit a child harness."""
         parent_rec: SpawnedHarnessRecord | None = None
@@ -224,6 +225,8 @@ class _SpawnerLifecycleMixin:
                 description=spec.description or spec.task,
                 dock_service=dock_service,
                 approve=approve_dock,
+                blueprint=blueprint,
+                spawn_id=spawn_id,
             )
             mat_dir_str = str(mat_info["repo_dir"])
             mat_dock_name = str(mat_info["dock_name"])

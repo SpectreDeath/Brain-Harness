@@ -10,8 +10,10 @@ from harness.kernel.context import ServiceContext
 from harness.services.agent_graph import AgentExecutionGraphService, ExecutionGraphExport
 from harness.services.dock import DefaultDockService
 from harness.services.harness_spawner import (
+    DEFAULT_MAX_BLUEPRINT_SKILLS,
     DEFAULT_MAX_SPAWN_DEPTH,
     DEFAULT_MAX_TOKENS,
+    HarnessBlueprint,
     HarnessSpawnerEngine,
     HarnessSpawnerProtocol,
     SpawnBudgetSpec,
@@ -21,6 +23,7 @@ from harness.services.harness_spawner import (
     SpawnSpec,
     check_materialized_drift,
     materialize_spawn_as_dock,
+    recommend_harness_blueprints,
 )
 from harness.services.recursive_harnessing.models import BRAIN_SURFACE, SurfaceSpec, Tree
 
@@ -52,6 +55,7 @@ class DefaultHarnessSpawnerService(HarnessSpawnerProtocol):
         materialize_dir: Path | str | None = None,
         dock_service: Any = None,
         approve_dock: bool = False,
+        blueprint: Any = None,
     ) -> SpawnedHarnessRecord:
         return self._engine.spawn(
             spec,
@@ -59,6 +63,7 @@ class DefaultHarnessSpawnerService(HarnessSpawnerProtocol):
             materialize_dir=materialize_dir,
             dock_service=dock_service,
             approve_dock=approve_dock,
+            blueprint=blueprint,
         )
 
     def record_usage(
@@ -162,6 +167,7 @@ class DefaultHarnessSpawnerService(HarnessSpawnerProtocol):
         description: str = "",
         dock_service: DefaultDockService | None = None,
         approve: bool = False,
+        blueprint: Any = None,
     ) -> dict[str, Any]:
         """Materialize a validated tree as a dock-linked repo via `materialize_spawn_as_dock`."""
         return materialize_spawn_as_dock(
@@ -172,6 +178,25 @@ class DefaultHarnessSpawnerService(HarnessSpawnerProtocol):
             description=description,
             dock_service=dock_service,
             approve=approve,
+            blueprint=blueprint,
+        )
+
+    def recommend_blueprints(
+        self,
+        *,
+        root_path: Path | str = ".",
+        vault_dir: Path | str = ".harness/knowledge",
+        max_skills: int = DEFAULT_MAX_BLUEPRINT_SKILLS,
+        limit: int = 8,
+        name: str | None = None,
+    ) -> list[HarnessBlueprint]:
+        """Discover and rank graph-driven domain harness blueprints."""
+        return recommend_harness_blueprints(
+            root_path=root_path,
+            vault_dir=vault_dir,
+            max_skills=max_skills,
+            limit=limit,
+            name=name,
         )
 
     def check_drift(
@@ -223,6 +248,7 @@ class DefaultHarnessSpawnerService(HarnessSpawnerProtocol):
                 materialize_dir=kwargs.get("materialize_dir"),
                 dock_service=kwargs.get("dock_service"),
                 approve_dock=bool(kwargs.get("approve_dock", False)),
+                blueprint=kwargs.get("blueprint"),
             ).to_dict()
         if action == "list":
             return [r.to_dict() for r in self.list_spawns()]
@@ -253,5 +279,15 @@ class DefaultHarnessSpawnerService(HarnessSpawnerProtocol):
                 description=str(kwargs.get("description", "")),
                 dock_service=kwargs.get("dock_service"),
                 approve=bool(kwargs.get("approve", False)),
+                blueprint=kwargs.get("blueprint"),
             )
+        if action == "blueprints":
+            bps = self.recommend_blueprints(
+                root_path=kwargs.get("root_path", "."),
+                vault_dir=kwargs.get("vault_dir", ".harness/knowledge"),
+                max_skills=int(kwargs.get("max_skills", DEFAULT_MAX_BLUEPRINT_SKILLS)),
+                limit=int(kwargs.get("limit", 8)),
+                name=kwargs.get("name"),
+            )
+            return [bp.to_dict() for bp in bps]
         raise ValueError(f"Unsupported harness_spawner action: {action!r}")

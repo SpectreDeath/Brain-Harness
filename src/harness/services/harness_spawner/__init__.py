@@ -2,11 +2,26 @@
 
 from __future__ import annotations
 
+from .blueprints import (
+    DEFAULT_MAX_BLUEPRINT_SKILLS,
+    HARD_MAX_BLUEPRINT_SKILLS,
+    HarnessBlueprint,
+    SeededKI,
+    build_blueprint_tree,
+    recommend_harness_blueprints,
+)
 from .diff_review import (
     TreeDiffReview,
     build_tree_diff_review,
     compute_tree_sha256,
     verify_diff_approval,
+)
+from .doc_bundle import (
+    TRACKED_DOC_PATHS,
+    HarnessDocContext,
+    build_harness_docs,
+    compute_docs_sha256,
+    validate_harness_docs,
 )
 from .engine import HarnessSpawnerEngine
 from .materialize import (
@@ -42,17 +57,23 @@ from .protocols import HARNESS_SPAWNER_SERVICE_KEY, HarnessSpawnerProtocol
 
 __all__ = [
     "DEFAULT_K",
+    "DEFAULT_MAX_BLUEPRINT_SKILLS",
     "DEFAULT_MAX_ROLLOUTS",
     "DEFAULT_MAX_SESSIONS",
     "DEFAULT_MAX_SPAWN_DEPTH",
     "DEFAULT_MAX_TOKENS",
     "EXPERIENCE_LIBRARY_KEY",
+    "HARD_MAX_BLUEPRINT_SKILLS",
     "HARD_MAX_SPAWN_DEPTH",
     "HARNESS_SPAWNER_SERVICE_KEY",
     "SPAWN_DEPTH_KEY",
     "SPAWN_MAX_DEPTH_KEY",
+    "TRACKED_DOC_PATHS",
+    "HarnessBlueprint",
+    "HarnessDocContext",
     "HarnessSpawnerEngine",
     "HarnessSpawnerProtocol",
+    "SeededKI",
     "SpawnBudgetSpec",
     "SpawnLifecycleState",
     "SpawnMergeProposal",
@@ -60,9 +81,14 @@ __all__ = [
     "SpawnTrialResult",
     "SpawnedHarnessRecord",
     "TreeDiffReview",
+    "build_blueprint_tree",
+    "build_harness_docs",
     "build_tree_diff_review",
     "check_materialized_drift",
+    "compute_docs_sha256",
     "compute_tree_sha256",
     "materialize_spawn_as_dock",
+    "recommend_harness_blueprints",
+    "validate_harness_docs",
     "verify_diff_approval",
 ]

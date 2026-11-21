@@ -8,7 +8,7 @@ import pytest
 import yaml
 
 from harness.creator.skills import SkillValidator
-from harness.services.icm_architect import DefaultIcmArchitectService, IcmFormType
+from harness.services.icm_architect import DefaultIcmArchitectService, IcmAuditor, IcmFormType, IcmVerifier
 from plugins.memory_and_epistemics.skill_knowledge_graph.parser import SkillCardParser
 
 
@@ -96,3 +96,34 @@ def test_canonical_workspace_template_scaffolding() -> None:
         assert len(ws_res.created_files) > 0
         agents_or_claude = (Path(tmpdir) / "AGENTS.md").exists() or (Path(tmpdir) / "CLAUDE.md").exists()
         assert agents_or_claude is True
+
+
+@pytest.mark.unit
+@pytest.mark.parametrize("form", list(IcmFormType))
+def test_scaffold_form_all_five_canonical_forms_audit_clean(tmp_path: Path, form: IcmFormType) -> None:
+    svc = DefaultIcmArchitectService()
+    target = tmp_path / f"ws_{form.value}"
+    res = svc.scaffold_form(target_dir=target, form=form, name=f"Harness {form.value}")
+
+    assert res.status == "ok", res.error
+    assert res.form == form.value
+    assert (target / "AGENTS.md").is_file()
+    assert (target / "CONTEXT.md").is_file()
+    assert len((target / "AGENTS.md").read_text(encoding="utf-8").splitlines()) < 60
+    assert len((target / "CONTEXT.md").read_text(encoding="utf-8").splitlines()) <= 80
+
+    audit = IcmAuditor().audit_workspace(target)
+    assert audit.valid is True, audit.violations
+    assert audit.invariants_passed == 10
+    assert audit.form_detected == form.value
+    assert audit.violations == []
+
+    links = IcmVerifier().verify_links(target)
+    assert links.valid is True, links.broken_links
+    assert links.broken_links == []
+    assert links.resolved_links >= 1
+
+    quotes = IcmVerifier().verify_quotes(target)
+    assert quotes.valid is True, quotes.broken_quotes
+    assert quotes.broken_quotes == []
+    assert quotes.keep_out_violations == []

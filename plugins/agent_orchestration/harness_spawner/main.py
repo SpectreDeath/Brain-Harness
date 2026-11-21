@@ -26,9 +26,11 @@ from harness.plugins.base import HarnessPlugin  # noqa: E402
 from harness.services.agent_graph import ExecutionGraphExport  # noqa: E402
 from harness.services.dock import DefaultDockService  # noqa: E402
 from harness.services.harness_spawner import (  # noqa: E402
+    DEFAULT_MAX_BLUEPRINT_SKILLS,
     DEFAULT_MAX_SPAWN_DEPTH,
     DEFAULT_MAX_TOKENS,
     HARNESS_SPAWNER_SERVICE_KEY,
+    HarnessBlueprint,
     HarnessSpawnerProtocol,
     SpawnBudgetSpec,
     SpawnedHarnessRecord,
@@ -112,6 +114,7 @@ class HarnessSpawnerPlugin(HarnessPlugin, HarnessSpawnerProtocol):
         materialize_dir: Path | str | None = None,
         dock_service: Any = None,
         approve_dock: bool = False,
+        blueprint: Any = None,
     ) -> SpawnedHarnessRecord:
         return self._service.spawn(
             spec,
@@ -119,6 +122,7 @@ class HarnessSpawnerPlugin(HarnessPlugin, HarnessSpawnerProtocol):
             materialize_dir=materialize_dir,
             dock_service=dock_service,
             approve_dock=approve_dock,
+            blueprint=blueprint,
         )
 
     def record_usage(
@@ -219,6 +223,7 @@ class HarnessSpawnerPlugin(HarnessPlugin, HarnessSpawnerProtocol):
         description: str = "",
         dock_service: DefaultDockService | None = None,
         approve: bool = False,
+        blueprint: Any = None,
     ) -> dict[str, Any]:
         """Materialize a validated tree as a dock-linked repo via the plugin service."""
         return self._service.materialize(
@@ -229,6 +234,25 @@ class HarnessSpawnerPlugin(HarnessPlugin, HarnessSpawnerProtocol):
             description=description,
             dock_service=dock_service,
             approve=approve,
+            blueprint=blueprint,
+        )
+
+    def recommend_blueprints(
+        self,
+        *,
+        root_path: Path | str = ".",
+        vault_dir: Path | str = ".harness/knowledge",
+        max_skills: int = DEFAULT_MAX_BLUEPRINT_SKILLS,
+        limit: int = 8,
+        name: str | None = None,
+    ) -> list[HarnessBlueprint]:
+        """Discover and rank graph-driven domain harness blueprints via the plugin service."""
+        return self._service.recommend_blueprints(
+            root_path=root_path,
+            vault_dir=vault_dir,
+            max_skills=max_skills,
+            limit=limit,
+            name=name,
         )
 
     def check_drift(

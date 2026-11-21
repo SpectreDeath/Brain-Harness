@@ -16,7 +16,14 @@ from harness.services.dock import DefaultDockService, DockLinkRecord
 from harness.services.recursive_harnessing import guards, surface as surface_ops
 from harness.services.recursive_harnessing.models import SurfaceSpec
 
+from ._doc_templates import BlueprintLike
 from .diff_review import compute_tree_sha256
+from .doc_bundle import (
+    TRACKED_DOC_PATHS,
+    build_harness_docs,
+    compute_docs_sha256,
+    fallback_doc_context,
+)
 
 _TREE_DIGEST_REL = ".harness/spawn_tree_digest.json"
 
@@ -68,7 +75,18 @@ def build_spawn_dock_yaml(
                         "expected_output": "DOCK_HARNESS_OK",
                     }
                 ],
-            }
+            },
+            "audit-docs": {
+                "description": "Verify 7-part documentation bundle, companion CARD.md files, and relative links.",
+                "write_path": False,
+                "steps": [
+                    {
+                        "command": f"{_python_invocation()} _tools/audit_docs.py",
+                        "workdir": ".",
+                        "expected_output": "DOCS_AUDIT_OK",
+                    }
+                ],
+            },
         },
     }
 
@@ -82,27 +100,53 @@ def materialize_spawn_as_dock(
     description: str,
     dock_service: DefaultDockService | None = None,
     approve: bool = False,
+    blueprint: BlueprintLike | None = None,
+    prime_commit: str = "",
+    spawn_id: str = "",
+    skills_root: Path | str = ".agents/skills",
 ) -> dict[str, Any]:
-    """Validate, write a spawn tree + `dock.yaml`, record tree digest, and link via `DefaultDockService`."""
+    """Validate, build 7-part docs + ICM layout, write spawn tree + `dock.yaml`, and link dock."""
     tree_dict = dict(tree)
     guards.assert_tree_clean(tree_dict)
     census = surface_ops.validate(surface, tree_dict)
 
     repo_dir = Path(target_dir).resolve()
+    doc_ctx: BlueprintLike = (
+        blueprint if blueprint is not None else fallback_doc_context(name, description, surface, tree_dict)
+    )
+    doc_info = build_harness_docs(
+        doc_ctx,
+        repo_dir=repo_dir,
+        prime_commit=prime_commit,
+        spawn_id=spawn_id,
+        skills_root=skills_root,
+    )
     surface_ops.write_tree(surface, tree_dict, repo_dir)
 
     dock_payload = build_spawn_dock_yaml(name=name, description=description, surface=surface, tree=tree_dict)
     (repo_dir / "dock.yaml").write_text(yaml.safe_dump(dock_payload, sort_keys=False), encoding="utf-8")
 
     tree_sha256 = compute_tree_sha256(tree_dict)
+    docs_sha256 = compute_docs_sha256(repo_dir, TRACKED_DOC_PATHS)
     digest_path = repo_dir / _TREE_DIGEST_REL
     digest_path.parent.mkdir(parents=True, exist_ok=True)
     digest_path.write_text(
-        json.dumps({"name": name, "tree_sha256": tree_sha256, "surface": surface.name}, indent=2) + "\n",
+        json.dumps(
+            {
+                "name": name,
+                "tree_sha256": tree_sha256,
+                "docs_sha256": docs_sha256,
+                "tracked_docs": list(TRACKED_DOC_PATHS),
+                "icm_form": doc_info["icm_form"],
+                "surface": surface.name,
+            },
+            indent=2,
+        )
+        + "\n",
         encoding="utf-8",
     )
 
-    dock = dock_service if dock_service is not None else DefaultDockService(workspace_root=repo_dir)
+    dock = dock_service if dock_service is not None else DefaultDockService()
     link_rec: DockLinkRecord = dock.link(repo_dir, name=name, approve=approve)
     return {
         "repo_dir": str(repo_dir),
@@ -111,6 +155,9 @@ def materialize_spawn_as_dock(
         "approved": link_rec.approved,
         "approved_sha256": link_rec.approved_sha256,
         "tree_sha256": tree_sha256,
+        "docs_sha256": docs_sha256,
+        "tracked_docs": list(TRACKED_DOC_PATHS),
+        "icm_form": doc_info["icm_form"],
         "census": census,
     }
 
@@ -123,18 +170,23 @@ def check_materialized_drift(
     dock_service: DefaultDockService | None = None,
     dock_name: str | None = None,
 ) -> dict[str, Any]:
-    """Detect manifest approval drift (`list_docks`) or editable tree digest drift on a materialized repo."""
+    """Detect manifest, editable tree, or documentation digest drift on a materialized repo."""
     repo_dir = Path(target_dir).resolve()
     digest_file = repo_dir / _TREE_DIGEST_REL
-    recorded_sha = expected_tree_sha256 or ""
-    if not recorded_sha and digest_file.is_file():
-        recorded_sha = str(json.loads(digest_file.read_text(encoding="utf-8")).get("tree_sha256") or "")
+    digest_data: dict[str, Any] = {}
+    if digest_file.is_file():
+        digest_data = json.loads(digest_file.read_text(encoding="utf-8"))
+    recorded_sha = expected_tree_sha256 or str(digest_data.get("tree_sha256") or "")
+    recorded_docs_sha = str(digest_data.get("docs_sha256") or "")
+    tracked_docs = [str(p) for p in (digest_data.get("tracked_docs") or TRACKED_DOC_PATHS)]
 
     live_tree = surface_ops.read_tree(surface, repo_dir)
     live_tree_sha = compute_tree_sha256(live_tree)
     tree_drifted = bool(recorded_sha and live_tree_sha != recorded_sha)
+    live_docs_sha = compute_docs_sha256(repo_dir, tracked_docs) if recorded_docs_sha else ""
+    docs_drifted = bool(recorded_docs_sha and live_docs_sha != recorded_docs_sha)
 
-    dock = dock_service if dock_service is not None else DefaultDockService(workspace_root=repo_dir)
+    dock = dock_service if dock_service is not None else DefaultDockService()
     dock_status = "unlinked"
     for entry in dock.list_docks():
         if (dock_name and entry.get("dock_name") == dock_name) or (
@@ -149,9 +201,12 @@ def check_materialized_drift(
         "dock_status": dock_status,
         "expected_tree_sha256": recorded_sha,
         "live_tree_sha256": live_tree_sha,
+        "expected_docs_sha256": recorded_docs_sha,
+        "live_docs_sha256": live_docs_sha,
         "tree_drifted": tree_drifted,
+        "docs_drifted": docs_drifted,
         "manifest_drifted": manifest_drifted,
-        "drifted": tree_drifted or manifest_drifted,
+        "drifted": tree_drifted or manifest_drifted or docs_drifted,
     }
 
 

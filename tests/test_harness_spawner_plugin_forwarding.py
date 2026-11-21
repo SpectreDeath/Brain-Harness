@@ -288,6 +288,7 @@ class TestHarnessSpawnerPluginForwarding:
     def test_cli_commands_dispatch_through_plugin_for_state_file(
         self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
     ) -> None:
+        monkeypatch.setenv("HARNESS_DOCKS_STATE_FILE", str(tmp_path / "docks.json"))
         calls: list[Path] = []
         orig_for_state_file = spawner_plugin.for_state_file
 
