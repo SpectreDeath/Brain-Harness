@@ -53,29 +53,33 @@ tick the independent-check box (1.2) yourself.
 
 ## Track 0 — Forward the Step 2–4 surface
 
-- [ ] **0.1 Add the missing forwards to `HarnessSpawnerPlugin`.**
+- [x] **0.1 Add the missing forwards to `HarnessSpawnerPlugin`.**
   `spawn` gains `materialize_dir` and `approve_dock`;
   `propose_merge_back` gains `proposal_kind`; `adopt_merge_proposal`
   gains `reviewer`; add `reject_merge_proposal` and a `materialize`
   method. Each forwards to `self._service` with the same signature
   the engine already accepts. No engine behavior changes.
-- [ ] **0.2 Route `harness spawn` through the plugin service.**
+  *(Done `2026-11-21`, commit `5718fa6`: updated `HarnessSpawnerProtocol` (`src/harness/services/harness_spawner/protocols.py`), `DefaultHarnessSpawnerService` (`plugins/agent_orchestration/harness_spawner/service.py`), and `HarnessSpawnerPlugin` (`plugins/agent_orchestration/harness_spawner/main.py`) to forward `spawn(..., materialize_dir, dock_service, approve_dock)`, `propose_merge_back(..., proposal_kind)`, `adopt_merge_proposal(..., reviewer, review_note)`, `reject_merge_proposal(..., reviewer, reason)`, `materialize(...)` -> `materialize_spawn_as_dock`, `check_drift(...)` -> `check_materialized_drift`, and `export_dag(...)`, plus `for_state_file(state_file)`. Zero engine behavior changes.)*
+- [x] **0.2 Route `harness spawn` through the plugin service.**
   `commands/spawn.py` constructs `HarnessSpawnerEngine` directly in
   every command. Make the CLI resolve the spawner through the plugin
   service (the IoC seam) instead. If any command cannot go through
   the service for a concrete reason, record that reason in the code
   comment and in the plan annotation — do not leave a silent bypass.
-- [ ] **0.3 Tests.** Plugin-level tests proving each forwarded
+  *(Done `2026-11-21`, commit `5718fa6`: added `get_spawner_service(*, save_dir=None, context=None)` in `src/harness/commands/spawn.py` resolving `HARNESS_SPAWNER_SERVICE_KEY` from `ServiceContext` first, then `plugins.agent_orchestration.harness_spawner.main.plugin.for_state_file(save_dir / "registry.json")` (with `ImportError`-only fallback if `plugins` is absent), and routed `run`, `list`, `retire`, `propose`, `adopt`, `reject`, and `check-drift` (with partial-mock fallback to `check_materialized_drift`) through it. Exception documented inline in `review_cmd`: `harness spawn review` stays on `build_tree_diff_review` because it is a stateless pre-spawn tree diff/digest preview with no engine or registry state.)*
+- [x] **0.3 Tests.** Plugin-level tests proving each forwarded
   parameter reaches the engine (`materialize_dir`, `proposal_kind`,
   `reviewer`, reject, materialize), plus a test that the CLI path and
   the plugin path reach the same engine state. Marked
   `@pytest.mark.unit` where they belong in the unit gate. Existing
   spawn suites still pass.
+  *(Done `2026-11-21`, commit `5718fa6`: added `tests/test_harness_spawner_plugin_forwarding.py` (`4` `@pytest.mark.unit` tests covering parameter forwarding + `execute()`, `ServiceContext` IoC priority, bidirectional CLI ↔ plugin engine-state parity, and plugin-dispatch spies across `run`/`list`/`propose`/`adopt`/`reject`/`check-drift`), plus `@pytest.mark.unit` `test_plugin_singleton_forwards_step2_to_4_methods` in `plugins/agent_orchestration/harness_spawner/test_harness_spawner_plugin.py`. All `28` spawn/plugin tests pass alongside `60/60` in `test_service_recursive_harnessing.py`.)*
 
 ## Track 1 — Verification
 
-- [ ] **1.1 Re-run the gates with dated outputs.** Spawn test suites,
+- [x] **1.1 Re-run the gates with dated outputs.** Spawn test suites,
   drift gate, ruff check + format. Record numbers that reproduce on
   a fresh checkout; note any that are machine-specific.
+  *(Done `2026-11-21`, head `5718fa6`: `7` spawn/plugin suites -> `28 passed in 4.57s`; drift gate `test_plugin_integration_drift.py` + `test_cli_content_drift.py` -> `14 passed in 9.15s`; `ruff check .` -> `All checks passed!`; `ruff format --check` on the `6` touched `.py` files -> `6 files already formatted`; CI-scoped `ruff format --check` -> `73 files already formatted`; full unit gate `pytest -m "unit" -q --timeout=60` -> `2325 passed, 885 deselected, 2 warnings in 269.39s` (+4 from the new forwarding unit tests; `269.39s` runtime is machine-specific; an unrelated unit test mutated `.harness/config.json`, restored via `git checkout -- .harness/config.json`). Pre-commit at identical code: `test_service_recursive_harnessing.py` -> `60 passed in 4.27s`, `mypy` (`kernel` + `protocols.py`, `28` files; `spawn.py` + `main.py` + `service.py`, `3` files) -> `Success: no issues found`, `harness context lint` -> `PASS`, `uv lock --check` -> exit `0`.)*
 - [ ] **1.2 Independent check.** Left unticked until a genuinely
   separate check lands. The executor must not tick it.
