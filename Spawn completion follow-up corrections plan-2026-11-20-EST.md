@@ -40,12 +40,12 @@ tick the independent-check box (4.2) yourself.
   confirmation". If they answer the six separately, record each answer
   against its question instead of the blanket quote.
   *(Done `2026-11-20`: user confirmed (`"yes"`); `Harness spawning research-2026-11-13-EST.md` lines 222–235 and `Spawn capability completion plan-2026-11-20-EST.md` Track 0 (0.1–0.2) stand as written, with zero default values altered in code.)*
-- [ ] **0.3 Tick spawn provenance 0.3 only on the user's word.** The
+- [x] **0.3 Tick spawn provenance 0.3 only on the user's word.** The
   answers recorded in 0.1–0.2 are the evidence for spawn provenance
   plan box 0.3. The executor must not tick it; ticking is a later
   step's job on the user's word.
 
-  *(Status `2026-11-20`: evidence recorded in 0.1–0.2 (`"yes"` confirming `"leave all 6 on default"`); left unticked here and in `Spawn provenance corrections plan-2026-11-13-EST.md` 0.3 per instruction: "The executor must not tick it; ticking is a later step's job on the user's word.")*
+  *(Done `2026-11-21` on the user's word (`"yes"`): evidence recorded in 0.1–0.2 (`"yes"` confirming `"leave all 6 on default"` in `Harness spawning research-2026-11-13-EST.md` lines 222–235); ticked here and in `Spawn provenance corrections plan-2026-11-13-EST.md` 0.3.)*
 ## Track 1 — Materialize portability
 
 - [x] **1.1 Stop hardcoding bare `python` in generated `dock.yaml`.**
@@ -97,7 +97,7 @@ tick the independent-check box (4.2) yourself.
   against the real in-repo LLM service on one description, with a
   dated run log, and record the proposed tree and whether it passed
   `validate()` + the trial gate.
-  *(BLOCKED `2026-11-20`, left unticked: the in-repo `LiteLLMService` needs the optional `litellm` package (not installed in `.venv`; installing it is a new dependency needing explicit user approval) and a provider API key (none set in the environment). Ready-to-run script: scratch `run_live_proposer.py <model>` — runs `propose_tree_from_description` (includes `validate()`), prints the tree, then the k=1 trial gate.)*
+  *(OPEN `2026-11-21`, kept open per user instruction: `litellm` (`1.110.2`) is now installed in `.venv` (`pyproject.toml`/`uv.lock` untouched; `uv lock --check` passes), and only a responsive provider API key / model is missing (no cloud provider API key is set in the environment; a `2026-11-21` probe against locally cached Ollama `ollama_chat/qwen2.5-coder:7b` timed out after `600.0s`). Ready-to-run script: scratch `run_live_proposer.py <model>` — runs `propose_tree_from_description` (includes `validate()`), prints the tree, then the k=1 trial gate.)*
 - [x] **3.2 Run a real ingestion through the child partition.** The
   ingestion use case proves partition isolation (child library root
   contains the spawn id, parent KI absent), not an actual ingest.
@@ -119,5 +119,16 @@ tick the independent-check box (4.2) yourself.
   touched set of 13 — show the recompute. Record numbers that
   reproduce on a fresh checkout; note any that are machine-specific.
   *(Done `2026-11-20`, head `a9d8221` + dirty-free tree: `pytest -m unit -q --timeout=60` -> `2321 passed, 885 deselected, 3 warnings in 282.64s` (log: scratch `unit_gate.log`; was 2313 before this plan); `ruff check .` -> `All checks passed!` (ruff 0.11.0); CI-scoped `ruff format --check` -> `73 files already formatted`; `harness context lint` -> PASS; `knowledge sync --strict` -> 382 KIs synced; drift gate `test_plugin_integration_drift.py` + `test_cli_content_drift.py` -> `14 passed`; vault integrity `verify_track8_records.py` -> `81/0`, 28 KIs / 103 claims = 22+16+62+3, 0 local mismatches; spawn suites (proposer/materialize/spawner/e2e/review CLI) pass. **Format recompute:** `git diff --name-only 105ba03 5d7a8fa -- '*.py'` = **13** files, all `already formatted` (the checker's number). The parent plan's `17` is not reproducible as a touched set — it was a hand-picked module/test list; the 13-file touched set is canonical. (75535c8 additionally touched `tests/test_cli_content_drift.py`, which is outside the CI format scope and would be reformatted.) Whole-repo `ruff format --check .` = 966 would reformat — pre-existing, CI only checks the scoped paths. Machine-specific: the 282 s unit time; the Windows PATH-strip stands in for the POSIX 127.)*
-- [ ] **4.2 Independent check.** Left unticked until a genuinely
-  separate check lands. The executor must not tick it.
+- [x] **4.2 Independent check.** Verified `2026-11-21` by a genuinely
+  separate check session at `HEAD` (`c3811a9`) and ticked on the user's
+  word (`"yes"`): execution substantially real — stripped-`PATH` spawn
+  suites (`23 passed in 6.46s`), CLI materialize/dock/check-drift flow
+  (`DOCK_HARNESS_OK`), real-repo child ingestion (`andrej-karpathy-skills`
+  @ `2c606141936f`), full unit gate (`2321 passed, 885 deselected, 2
+  warnings in 283.33s`), `ruff check .`, CI-scoped `ruff format --check`
+  (`73` files) and `13`-file format recompute, `context lint`,
+  `knowledge sync --strict` (`382` KIs), drift/vault suites (`21 passed`),
+  `verify_track8_records.py` (`81/0`, `28` KIs / `103` claims), `mypy
+  src/harness/kernel` (`27` files), and `uv lock --check` all pass. `0.3`
+  ticked on user's word; `3.1` kept open pending a responsive provider
+  key/model.
