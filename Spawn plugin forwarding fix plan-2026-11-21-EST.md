@@ -81,5 +81,18 @@ tick the independent-check box (1.2) yourself.
   drift gate, ruff check + format. Record numbers that reproduce on
   a fresh checkout; note any that are machine-specific.
   *(Done `2026-11-21`, head `5718fa6`: `7` spawn/plugin suites -> `28 passed in 4.57s`; drift gate `test_plugin_integration_drift.py` + `test_cli_content_drift.py` -> `14 passed in 9.15s`; `ruff check .` -> `All checks passed!`; `ruff format --check` on the `6` touched `.py` files -> `6 files already formatted`; CI-scoped `ruff format --check` -> `73 files already formatted`; full unit gate `pytest -m "unit" -q --timeout=60` -> `2325 passed, 885 deselected, 2 warnings in 269.39s` (+4 from the new forwarding unit tests; `269.39s` runtime is machine-specific; an unrelated unit test mutated `.harness/config.json`, restored via `git checkout -- .harness/config.json`). Pre-commit at identical code: `test_service_recursive_harnessing.py` -> `60 passed in 4.27s`, `mypy` (`kernel` + `protocols.py`, `28` files; `spawn.py` + `main.py` + `service.py`, `3` files) -> `Success: no issues found`, `harness context lint` -> `PASS`, `uv lock --check` -> exit `0`.)*
-- [ ] **1.2 Independent check.** Left unticked until a genuinely
-  separate check lands. The executor must not tick it.
+- [x] **1.2 Independent check.** Verified `2026-11-21` by a genuinely
+  separate check session at `HEAD` (`b543ab3`) and ticked on the user's
+  word (`"Tick it"`): execution substantially real — forwards verified in
+  code (zero engine behavior changes), CLI routed through
+  `get_spawner_service` (IoC-first), 7 suites `26 passed + 2 deselected`
+  (engine absent in this box's venv; `26+2=28` collected, matching the
+  laptop's `28 passed`), drift gate `14 passed`, `ruff check` clean,
+  `6` touched `.py` files formatted, full unit gate `9 failed / 2226
+  passed / 90 skipped / 885 deselected` (`2226+90+9=2325` collected
+  exactly; the 9 failures are the known pre-existing set, no new ones),
+  CI green on `b543ab3` (run `44905823911`). Nits: this box's ruff
+  0.17.4 flags pre-existing `kernel/README.md:56` (not in the diff; CI's
+  pinned 0.11.0 does not); the laptop's mypy "no issues found" does not
+  reproduce from the repo root (1 pre-existing import-not-found at
+  `main.py:44` + pre-existing transitive errors).
