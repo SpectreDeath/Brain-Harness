@@ -58,9 +58,7 @@ def query_knowledge_and_skills(
 
                 lifecycle_status = str(meta.get("status") or "ACTIVE").upper()
                 isnad_status = str(
-                    isnad.get("status", "VERIFIED")
-                    if isinstance(isnad, dict)
-                    else getattr(isnad, "status", "VERIFIED")
+                    isnad.get("status", "VERIFIED") if isinstance(isnad, dict) else getattr(isnad, "status", "VERIFIED")
                 ).upper()
 
                 if not include_inactive and lifecycle_status in {"DEMOTED", "ARCHIVED", "SUPERSEDED", "REJECTED"}:
@@ -81,22 +79,24 @@ def query_knowledge_and_skills(
                     if lifecycle_status == "PROMOTED":
                         score *= 1.15
 
-                    matched_kis.append({
-                        "ki_id": ki_id,
-                        "title": title,
-                        "domain": domain,
-                        "status": lifecycle_status,
-                        "isnad_status": isnad_status,
-                        "tags": list(tags),
-                        "summary_preview": (summary or "").split("\n")[0][:100],
-                        "edges": edges,
-                        "_score": score,
-                    })
+                    matched_kis.append(
+                        {
+                            "ki_id": ki_id,
+                            "title": title,
+                            "domain": domain,
+                            "status": lifecycle_status,
+                            "isnad_status": isnad_status,
+                            "tags": list(tags),
+                            "summary_preview": (summary or "").split("\n")[0][:100],
+                            "edges": edges,
+                            "_score": score,
+                        }
+                    )
             except Exception:
                 continue
 
-    # Sort KIs by score
-    matched_kis.sort(key=lambda x: x.get("_score", 0.0), reverse=True)
+    # Sort KIs deterministically by score descending, breaking ties by ki_id across all filesystems
+    matched_kis.sort(key=lambda x: (-float(x.get("_score", 0.0)), str(x.get("ki_id") or "")))
     for k in matched_kis:
         k.pop("_score", None)
 
@@ -111,12 +111,14 @@ def query_knowledge_and_skills(
     skill_list = []
     for s in matches[:limit]:
         s_name = s.get("skill_name") or s.get("name") or "unknown"
-        skill_list.append({
-            "skill_name": s_name,
-            "confidence": s.get("confidence", 0.0),
-            "cluster": s.get("cluster", "general"),
-            "recommended_chain": s.get("recommended_chain", []),
-        })
+        skill_list.append(
+            {
+                "skill_name": s_name,
+                "confidence": s.get("confidence", 0.0),
+                "cluster": s.get("cluster", "general"),
+                "recommended_chain": s.get("recommended_chain", []),
+            }
+        )
 
     # Lineage and cross-link discovery (prioritizing typed became_skill / distilled_from edges over heuristics)
     linked_pairs = []
@@ -159,11 +161,13 @@ def query_knowledge_and_skills(
                     rel_type = "domain_lineage"
 
             if rel_type:
-                linked_pairs.append({
-                    "ki_id": ki["ki_id"],
-                    "skill_name": sk["skill_name"],
-                    "relationship": rel_type,
-                })
+                linked_pairs.append(
+                    {
+                        "ki_id": ki["ki_id"],
+                        "skill_name": sk["skill_name"],
+                        "relationship": rel_type,
+                    }
+                )
                 matched_ki_ids.add(ki["ki_id"])
                 matched_skill_names.add(sk["skill_name"])
 

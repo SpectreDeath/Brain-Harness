@@ -138,17 +138,37 @@ def _domain_tokens(val: str) -> set[str]:
 
 
 def _collect_kis(
-    keywords: tuple[str, ...], *, domain: str = "", vault_dir: str, root_path: str
+    keywords: tuple[str, ...],
+    *,
+    domain: str = "",
+    skills: tuple[str, ...] = (),
+    vault_dir: str,
+    root_path: str,
 ) -> tuple[tuple[SeededKI, ...], tuple[str, ...]]:
     seen_verified: dict[str, SeededKI] = {}
     scores: dict[str, float] = {}
     matched_tags_or_titles: set[str] = set()
+    edge_credited: set[str] = set()
     excluded: set[str] = set()
     bp_tokens = _domain_tokens(domain)
+    skill_set = {s.strip().lower() for s in skills if s.strip()}
+    skill_slug_tokens = {
+        tok
+        for s in skill_set
+        for tok in re.split(r"[^a-z0-9]+", s)
+        if len(tok) >= 4 and tok not in _GENERIC_DOMAIN_TOKENS
+    }
+    pool_limit = 24
 
     for kw in keywords:
         kw_low = kw.lower()
-        res = query_knowledge_and_skills(kw, vault_dir=vault_dir, root_path=root_path, limit=8)
+        res = query_knowledge_and_skills(kw, vault_dir=vault_dir, root_path=root_path, limit=pool_limit)
+        typed_linked_ids = {
+            str(lp.get("ki_id") or "").strip()
+            for lp in (res.get("linked_pairs") or [])
+            if str(lp.get("skill_name") or "").strip().lower() in skill_set
+            and str(lp.get("relationship") or "") in ("became_skill", "distilled_from", "implements")
+        }
         for rank_idx, item in enumerate(res.get("knowledge_items") or []):
             ki_id = str(item.get("ki_id") or "").strip()
             if not ki_id or ki_id.startswith("ki-rea-sig-"):
@@ -170,12 +190,19 @@ def _collect_kis(
                 )
                 scores[ki_id] = 3.0 if (bp_tokens & _domain_tokens(ki_domain)) else 0.0
 
-            delta = 1.0 + max(0.0, (8 - rank_idx) * 0.1)
+            delta = 1.0 + max(0.0, (pool_limit - rank_idx) * 0.02)
             if kw_low in title.lower():
                 delta += 3.0
                 matched_tags_or_titles.add(ki_id)
             if kw_low in ki_domain.lower() or any(kw_low in t for t in tags):
                 delta += 2.0
+                matched_tags_or_titles.add(ki_id)
+            if ki_id in typed_linked_ids and ki_id not in edge_credited:
+                delta += 2.5
+                edge_credited.add(ki_id)
+                matched_tags_or_titles.add(ki_id)
+            if skill_slug_tokens and any(tok in t for t in tags for tok in skill_slug_tokens):
+                delta += 0.5
                 matched_tags_or_titles.add(ki_id)
             scores[ki_id] += delta
 
@@ -234,7 +261,11 @@ def recommend_harness_blueprints(
         cohesion = round(float(cluster.get("cohesion_score") or 0.0), 4) if cluster else 0.0
         bridge_count = _count_bridges(spec.cluster_id, capped_skills, bridges)
         verified_kis, excluded_kis = _collect_kis(
-            spec.query_keywords, domain=spec.domain, vault_dir=vault, root_path=str(root)
+            spec.query_keywords,
+            domain=spec.domain,
+            skills=capped_skills,
+            vault_dir=vault,
+            root_path=str(root),
         )
         savings_pct = round(100.0 * (1.0 - len(capped_skills) / max(prime_count, 1)), 2)
         tier_bonus = 6.0 if spec.tier == 1 else 0.0

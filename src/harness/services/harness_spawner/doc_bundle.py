@@ -4,7 +4,6 @@ from __future__ import annotations
 
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
-from datetime import datetime, timezone
 import hashlib
 import json
 from pathlib import Path
@@ -152,7 +151,6 @@ def build_harness_docs(
     repo_root = Path(repo_dir).resolve()
     skills_base = Path(skills_root).resolve()
     resolved_commit = prime_commit.strip() or _resolve_prime_commit(skills_base)
-    created_utc = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
     scaffold_res = IcmScaffolder().scaffold_form(repo_root, form=blueprint.icm_form, name=blueprint.name)
     if scaffold_res.status != "ok":
@@ -160,14 +158,14 @@ def build_harness_docs(
 
     (repo_root / "CONTEXT.md").write_text(render_root_context(blueprint), encoding="utf-8")
     (repo_root / "README.md").write_text(
-        render_readme(blueprint, prime_commit=resolved_commit, spawn_id=spawn_id, created_utc=created_utc),
+        render_readme(blueprint, prime_commit=resolved_commit, spawn_id=spawn_id),
         encoding="utf-8",
     )
     docs_dir = repo_root / "docs"
     docs_dir.mkdir(parents=True, exist_ok=True)
     (docs_dir / "USE_CASES.md").write_text(render_use_cases(blueprint), encoding="utf-8")
     (docs_dir / "PROVENANCE.md").write_text(
-        render_provenance(blueprint, prime_commit=resolved_commit, created_utc=created_utc),
+        render_provenance(blueprint, prime_commit=resolved_commit),
         encoding="utf-8",
     )
     (docs_dir / "RUNBOOK.md").write_text(render_runbook(blueprint), encoding="utf-8")

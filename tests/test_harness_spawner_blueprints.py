@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+import random
 from typing import Any
 
 from click.testing import CliRunner
@@ -191,3 +192,28 @@ class TestHarnessSpawnerBlueprints:
 
         arch_bp = recommend_harness_blueprints(name="harness-arch-modernizer")[0]
         assert "ki_20260908_earthengine_01" not in [k.ki_id for k in arch_bp.seeded_kis]
+
+    def test_blueprint_collection_is_invariant_to_iterdir_order(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        vault_resolved = Path(".harness/knowledge").resolve()
+        orig_iterdir = Path.iterdir
+
+        def _run_with_order(mode: str) -> list[tuple[str, float, tuple[str, ...], list[str]]]:
+            def _fake_iterdir(self: Path) -> Any:
+                items = list(orig_iterdir(self))
+                if self.resolve() == vault_resolved:
+                    if mode == "reversed":
+                        items.reverse()
+                    elif mode == "shuffled":
+                        random.Random(17).shuffle(items)
+                    else:
+                        items.sort()
+                return iter(items)
+
+            with monkeypatch.context() as mp:
+                mp.setattr(Path, "iterdir", _fake_iterdir)
+                bps = recommend_harness_blueprints(max_skills=5, limit=8)
+            return [(b.name, b.score, b.skills, [k.ki_id for k in b.seeded_kis]) for b in bps]
+
+        baseline = _run_with_order("sorted")
+        assert _run_with_order("reversed") == baseline
+        assert _run_with_order("shuffled") == baseline

@@ -57,7 +57,7 @@ harness [OPTIONS] COMMAND [ARGS]...
 | [`harness router`](#harness-router) | `brief`, `profile`, `route`, `simulate` | Dynamic Model Router CLI — 3-tier switching & resilient failover commands. |
 | [`harness session`](#harness-session) | `export`, `get`, `list`, `tree` | Manage and inspect agent execution sessions and hierarchical trees. |
 | [`harness skills`](#harness-skills) | `bridges`, `capabilities`, `chain`, `check-chain`, `clusters`, `create`, `graph`, `guidance`, `index`, `info`, `intercept`, `joint-query`, `list`, `prereqs`, `route`, `run`, `select`, `validate` | Manage and query the agent skill knowledge graph. |
-| [`harness spawn`](#harness-spawn) | `adopt`, `blueprints`, `check-drift`, `list`, `propose`, `reject`, `retire`, `review`, `run` | Spawn, inspect, retire, and adopt learnings from isolated child harnesses. |
+| [`harness spawn`](#harness-spawn) | `adopt`, `blueprints`, `check-drift`, `cold-walk`, `list`, `propose`, `reject`, `retire`, `review`, `run` | Spawn, inspect, retire, and adopt learnings from isolated child harnesses. |
 | [`harness tau`](#harness-tau) | `append-journal`, `repair-history`, `resolve-path`, `tree`, `trust-check` | Pi-style coding agent harness commands (DAG trees, journals, repair, trust). |
 | [`harness temp`](#harness-temp) | `bifurcate`, `salvage`, `sandbox`, `scan`, `tail` | Ephemeral workspace archaeology, HTML visual brief extraction, and sandbox triage. |
 | [`harness tool`](#harness-tool) | `disable`, `enable`, `list` | Inspect and manage granular tool and skill enablement. |
@@ -2747,6 +2747,17 @@ Verify a materialized dock repo has not drifted from its approved manifest or tr
 **Options:**
 - `--expected-digest`: Expected canonical SHA-256 tree digest.
 - `--dock-name`: Optional dock name to look up.
+
+#### `harness spawn cold-walk`
+```text
+Run ICM's 8-Point Cold Walk Check on a materialized domain harness.
+```
+
+**Options:**
+- `--dock-name`: Optional dock name for drift lookup.
+- `--prime-skills-root`: Prime skills root used to measure catalog token reduction. [default: .agents\skills]
+- `--strict`: Also exit 1 when human-judged points (#1, #5, #8) are unverified. [default: False]
+- `--json`: Emit structured JSON report. [default: False]
 
 #### `harness spawn list`
 ```text

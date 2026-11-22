@@ -602,3 +602,38 @@ def check_drift_cmd(repo_dir: Path, expected_digest: str | None, dock_name: str 
     _emit(report)
     if report["drifted"]:
         raise SystemExit(1)
+
+
+@spawn_group.command("cold-walk")
+@click.argument("repo_dir", type=click.Path(exists=True, file_okay=False, path_type=Path))
+@click.option("--dock-name", default=None, help="Optional dock name for drift lookup.")
+@click.option(
+    "--prime-skills-root",
+    type=click.Path(file_okay=False, path_type=Path),
+    default=Path(".agents/skills"),
+    show_default=True,
+    help="Prime skills root used to measure catalog token reduction.",
+)
+@click.option("--strict", is_flag=True, help="Also exit 1 when human-judged points (#1, #5, #8) are unverified.")
+@click.option("--json", "as_json", is_flag=True, help="Emit structured JSON report.")
+def cold_walk_cmd(
+    repo_dir: Path,
+    dock_name: str | None,
+    prime_skills_root: Path,
+    strict: bool,
+    as_json: bool,
+) -> None:
+    """Run ICM's 8-Point Cold Walk Check on a materialized domain harness."""
+    from harness.services.harness_spawner import format_cold_walk_markdown, run_cold_walk
+
+    report = run_cold_walk(
+        repo_dir,
+        dock_name=dock_name,
+        prime_skills_root=prime_skills_root,
+    )
+    if as_json:
+        _emit(report.to_dict())
+    else:
+        click.echo(format_cold_walk_markdown(report))
+    if not report.automated_passed or (strict and not report.overall_passed):
+        raise SystemExit(1)

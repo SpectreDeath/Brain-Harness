@@ -10,6 +10,12 @@ from .blueprints import (
     build_blueprint_tree,
     recommend_harness_blueprints,
 )
+from .cold_walk import (
+    ColdWalkPoint,
+    ColdWalkReport,
+    format_cold_walk_markdown,
+    run_cold_walk,
+)
 from .diff_review import (
     TreeDiffReview,
     build_tree_diff_review,
@@ -69,6 +75,8 @@ __all__ = [
     "SPAWN_DEPTH_KEY",
     "SPAWN_MAX_DEPTH_KEY",
     "TRACKED_DOC_PATHS",
+    "ColdWalkPoint",
+    "ColdWalkReport",
     "HarnessBlueprint",
     "HarnessDocContext",
     "HarnessSpawnerEngine",
@@ -87,8 +95,10 @@ __all__ = [
     "check_materialized_drift",
     "compute_docs_sha256",
     "compute_tree_sha256",
+    "format_cold_walk_markdown",
     "materialize_spawn_as_dock",
     "recommend_harness_blueprints",
+    "run_cold_walk",
     "validate_harness_docs",
     "verify_diff_approval",
 ]

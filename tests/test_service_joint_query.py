@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+import random
+from typing import Any
 import pytest
 
 from harness.services.skill_graph.joint_query import query_knowledge_and_skills
@@ -60,7 +62,8 @@ def test_query_knowledge_and_skills_typed_edge_priority(tmp_path: Path) -> None:
 
     # Verify that linked_pairs identifies the became_skill relationship
     matching_pairs = [
-        lp for lp in res["linked_pairs"]
+        lp
+        for lp in res["linked_pairs"]
         if lp["ki_id"] == "ki_test_sample" and lp["skill_name"] == "rea-reverse-engineering"
     ]
     assert len(matching_pairs) == 1
@@ -92,3 +95,56 @@ def test_query_knowledge_and_skills_filters_demoted(tmp_path: Path) -> None:
     res_inactive = query_knowledge_and_skills("test", vault_dir=str(vault_dir), include_inactive=True)
     assert len(res_inactive["knowledge_items"]) == 2
 
+
+@pytest.mark.unit
+def test_joint_query_sort_is_filesystem_independent(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """Verify tied scores break deterministically by ki_id regardless of Path.iterdir() order."""
+    vault_dir = tmp_path / "knowledge"
+    vault_dir.mkdir()
+    names = [f"ki_ctx_{letter}_{idx:02d}" for idx, letter in enumerate("lkjihgfedcba")]
+    for kid in names:
+        d = vault_dir / kid
+        d.mkdir()
+        (d / "metadata.json").write_text(
+            json.dumps(
+                {
+                    "id": kid,
+                    "title": "Context Optimization Pattern",
+                    "domain": "context_engineering",
+                    "status": "ACTIVE",
+                    "tags": ["context"],
+                    "isnad": {"status": "VERIFIED"},
+                }
+            ),
+            encoding="utf-8",
+        )
+        (d / "summary.md").write_text("# Summary\nContext notes.", encoding="utf-8")
+
+    orig_iterdir = Path.iterdir
+    target_resolved = vault_dir.resolve()
+
+    def _ordered_results(mode: str) -> list[str]:
+        def _fake_iterdir(self: Path) -> Any:
+            items = list(orig_iterdir(self))
+            if self.resolve() == target_resolved:
+                if mode == "reversed":
+                    items.reverse()
+                elif mode == "shuffled":
+                    random.Random(42).shuffle(items)
+                else:
+                    items.sort()
+            return iter(items)
+
+        with monkeypatch.context() as mp:
+            mp.setattr(Path, "iterdir", _fake_iterdir)
+            res = query_knowledge_and_skills("context", vault_dir=str(vault_dir), limit=8)
+        return [item["ki_id"] for item in res["knowledge_items"]]
+
+    sorted_ids = _ordered_results("sorted")
+    reversed_ids = _ordered_results("reversed")
+    shuffled_ids = _ordered_results("shuffled")
+
+    expected = sorted(names)[:8]
+    assert sorted_ids == expected
+    assert reversed_ids == expected
+    assert shuffled_ids == expected

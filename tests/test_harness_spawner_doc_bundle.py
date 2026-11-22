@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
 from typing import Any
 
@@ -11,11 +12,13 @@ import pytest
 
 from harness.cli import main
 from harness.services.dock import DefaultDockService
+from harness.services.dock.safety import _build_scrubbed_env
 from harness.services.harness_spawner import (
     HarnessBlueprint,
     build_blueprint_tree,
     materialize_spawn_as_dock,
     recommend_harness_blueprints,
+    run_cold_walk,
     validate_harness_docs,
 )
 from harness.services.icm_architect import IcmAuditor, IcmVerifier
@@ -281,3 +284,146 @@ class TestHarnessSpawnerDocBundle:
         drift_data = json.loads(res_drift.output)
         assert drift_data["dock_status"] == "approved"
         assert drift_data["drifted"] is False
+
+    def test_docs_sha256_is_reproducible_across_rematerializations(
+        self,
+        tmp_path: Path,
+        distiller_bundle: tuple[HarnessBlueprint, dict[str, str]],
+    ) -> None:
+        bp, tree = distiller_bundle
+        mat_a = tmp_path / "run_a"
+        mat_b = tmp_path / "run_b"
+        dock_a = DefaultDockService(workspace_root=tmp_path, state_file=tmp_path / "docks_a.json")
+        dock_b = DefaultDockService(workspace_root=tmp_path, state_file=tmp_path / "docks_b.json")
+
+        res_a1 = materialize_spawn_as_dock(
+            BRAIN_SURFACE,
+            tree,
+            mat_a,
+            name=bp.name,
+            description=bp.mission,
+            dock_service=dock_a,
+            approve=True,
+            blueprint=bp,
+            prime_commit="deadbeef",
+            spawn_id="spawn_fixed_id",
+        )
+        res_a2 = materialize_spawn_as_dock(
+            BRAIN_SURFACE,
+            tree,
+            mat_a,
+            name=bp.name,
+            description=bp.mission,
+            dock_service=dock_a,
+            approve=True,
+            blueprint=bp,
+            prime_commit="deadbeef",
+            spawn_id="spawn_fixed_id",
+        )
+        res_b = materialize_spawn_as_dock(
+            BRAIN_SURFACE,
+            tree,
+            mat_b,
+            name=bp.name,
+            description=bp.mission,
+            dock_service=dock_b,
+            approve=True,
+            blueprint=bp,
+            prime_commit="deadbeef",
+            spawn_id="spawn_fixed_id",
+        )
+
+        assert res_a1["docs_sha256"] == res_a2["docs_sha256"] == res_b["docs_sha256"]
+        assert "Generated (UTC)" not in (mat_a / "README.md").read_text(encoding="utf-8")
+        assert "Generated (UTC)" not in (mat_a / "docs" / "PROVENANCE.md").read_text(encoding="utf-8")
+
+    def test_dock_run_portability_with_relative_pythonpath_env(
+        self,
+        tmp_path: Path,
+        monkeypatch: pytest.MonkeyPatch,
+        distiller_bundle: tuple[HarnessBlueprint, dict[str, str]],
+    ) -> None:
+        bp, tree = distiller_bundle
+        prime_root = Path.cwd().resolve()
+        docks_state = tmp_path / "docks.json"
+        mat_dir = tmp_path / "portable_distiller"
+        dock = DefaultDockService(workspace_root=prime_root, state_file=docks_state)
+        materialize_spawn_as_dock(
+            BRAIN_SURFACE,
+            tree,
+            mat_dir,
+            name=bp.name,
+            description=bp.mission,
+            dock_service=dock,
+            approve=True,
+            blueprint=bp,
+        )
+
+        monkeypatch.setenv("HARNESS_DOCKS_STATE_FILE", str(docks_state))
+        monkeypatch.setenv("PYTHONPATH", f".{os.pathsep}src")
+        scrubbed = _build_scrubbed_env(mat_dir)
+        entries = scrubbed["PYTHONPATH"].split(os.pathsep)
+        assert all(Path(e).is_absolute() for e in entries), entries
+        assert entries[0] == str((mat_dir / "src").resolve())
+        assert str((prime_root / "src").resolve()) in entries
+
+        monkeypatch.chdir(mat_dir)
+        runner = CliRunner()
+        res_icm = runner.invoke(main, ["dock", "run", bp.name, "icm-audit"])
+        assert res_icm.exit_code == 0, res_icm.output
+        assert "ICM_AUDIT_OK" in res_icm.output
+
+    def test_cold_walk_runner_and_cli_separates_automated_vs_human_points(
+        self,
+        tmp_path: Path,
+        monkeypatch: pytest.MonkeyPatch,
+        security_bundle: tuple[HarnessBlueprint, dict[str, str]],
+    ) -> None:
+        docks_state = tmp_path / "docks.json"
+        monkeypatch.setenv("HARNESS_DOCKS_STATE_FILE", str(docks_state))
+        bp, tree = security_bundle
+        mat_dir = tmp_path / "sec_walk"
+        dock = DefaultDockService(workspace_root=tmp_path, state_file=docks_state)
+        materialize_spawn_as_dock(
+            BRAIN_SURFACE,
+            tree,
+            mat_dir,
+            name=bp.name,
+            description=bp.mission,
+            dock_service=dock,
+            approve=True,
+            blueprint=bp,
+        )
+
+        report_auto = run_cold_walk(mat_dir, dock_name=bp.name)
+        assert report_auto.automated_passed is True
+        assert report_auto.human_points_verified is False
+        assert report_auto.overall_passed is False
+        assert len(report_auto.points) == 8
+        assert report_auto.underlying_gates["icm_auditor_invariants"] == "10/10"
+        by_num = {p.point_number: p for p in report_auto.points}
+        assert by_num[1].status == "pending_human_judgment"
+        assert by_num[5].status == "pending_human_judgment"
+        assert by_num[8].status == "pending_human_judgment"
+        assert all(by_num[n].status == "passed" for n in (2, 3, 4, 6, 7))
+
+        runner = CliRunner()
+        cli_ok = runner.invoke(main, ["spawn", "cold-walk", str(mat_dir), "--dock-name", bp.name, "--json"])
+        assert cli_ok.exit_code == 0, cli_ok.output
+        assert json.loads(cli_ok.output)["automated_passed"] is True
+
+        cli_strict = runner.invoke(main, ["spawn", "cold-walk", str(mat_dir), "--dock-name", bp.name, "--strict"])
+        assert cli_strict.exit_code == 1
+
+        report_full = run_cold_walk(
+            mat_dir,
+            dock_name=bp.name,
+            human_judgments={
+                1: {"passed": True, "note": "Located scope in 2 reads"},
+                5: {"passed": True, "note": "No duplicate canon"},
+                8: {"passed": True, "note": "0 broken invariants"},
+            },
+            reader="test-reviewer",
+        )
+        assert report_full.overall_passed is True
+        assert all(p.reader == "test-reviewer" for p in report_full.points if p.evaluation_mode == "human_judgment")

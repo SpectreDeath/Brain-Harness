@@ -217,7 +217,8 @@ def render_root_context(bp: BlueprintLike) -> str:
     )
 
 
-def render_readme(bp: BlueprintLike, *, prime_commit: str, spawn_id: str, created_utc: str) -> str:
+def render_readme(bp: BlueprintLike, *, prime_commit: str, spawn_id: str, created_utc: str = "") -> str:
+    del created_utc  # Intentionally omitted from hashed README so docs_sha256 is deterministic across runs.
     uc_lines = "\n".join(f"- **Use Case {i}:** {uc}" for i, uc in enumerate(bp.use_cases, 1))
     oos_lines = "\n".join(f"- Do NOT use for {item}" for item in bp.out_of_scope)
     if bp.skills:
@@ -248,8 +249,7 @@ def render_readme(bp: BlueprintLike, *, prime_commit: str, spawn_id: str, create
         f"| Prime Commit | `{prime_commit}` |\n"
         f"| Spawn ID | `{spawn_id or 'materialized-direct'}` |\n"
         f"| Graph Source | `{bp.graph_source}` |\n"
-        f"| ICM Form | `{bp.icm_form}` |\n"
-        f"| Generated (UTC) | `{created_utc}` |\n\n"
+        f"| ICM Form | `{bp.icm_form}` |\n\n"
         "## Quick Start\n\n"
         "Run from this harness directory (or via Prime's `.venv\\Scripts\\harness.exe` if not on PATH):\n\n"
         "```powershell\n"
@@ -304,7 +304,8 @@ def render_use_cases(bp: BlueprintLike) -> str:
     return "\n".join(sections)
 
 
-def render_provenance(bp: BlueprintLike, *, prime_commit: str, created_utc: str) -> str:
+def render_provenance(bp: BlueprintLike, *, prime_commit: str, created_utc: str = "") -> str:
+    del created_utc  # Intentionally omitted from hashed provenance so docs_sha256 is deterministic across runs.
     if bp.seeded_kis:
         ki_rows = "\n".join(
             f"| `{k.ki_id}` | {k.title} | `{k.domain}` | `{k.status}` | `{k.isnad_status}` |" for k in bp.seeded_kis
@@ -328,8 +329,7 @@ def render_provenance(bp: BlueprintLike, *, prime_commit: str, created_utc: str)
         f"- **Cohesion Score:** `{bp.cohesion_score:.4f}`\n"
         f"- **Cross-Cluster Bridges:** `{bp.bridge_count}`\n"
         f"- **Composite Blueprint Score:** `{bp.score:.4f}`\n"
-        f"- **Prime Commit:** `{prime_commit}`\n"
-        f"- **Generated (UTC):** `{created_utc}`\n\n"
+        f"- **Prime Commit:** `{prime_commit}`\n\n"
         "## Token Budget Savings\n\n"
         f"- **Prime Workspace Baseline:** `{bp.prime_skill_count}` skills\n"
         f"- **Spawned Domain Harness:** `{len(bp.skills)}` skills\n"

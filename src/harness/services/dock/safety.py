@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import os
 import re
+import sys
 from pathlib import Path
 
 from .models import DockBoundaries
@@ -70,8 +71,17 @@ def check_command_safety(
     return True, ""
 
 
+def _resolve_prime_pythonpath() -> Path:
+    """Resolve Prime's package parent directory (`src/` in source checkout or `site-packages`)."""
+    harness_mod = sys.modules.get("harness")
+    mod_file = getattr(harness_mod, "__file__", None)
+    if mod_file:
+        return Path(mod_file).resolve().parent.parent
+    return Path(__file__).resolve().parents[3]
+
+
 def _build_scrubbed_env(repo_path: Path) -> dict[str, str]:
-    """Prepare credential-scrubbed subprocess environment with repo PYTHONPATH/venv (Rules 15, 23, 50)."""
+    """Prepare credential-scrubbed subprocess environment with absolute PYTHONPATH/venv (Rules 15, 23, 50)."""
     env = dict(os.environ)
     for k in list(env.keys()):
         ku = k.upper()
@@ -79,13 +89,22 @@ def _build_scrubbed_env(repo_path: Path) -> dict[str, str]:
             env.pop(k, None)
     env["PYTHONIOENCODING"] = "utf-8"
 
-    repo_pp = f"{repo_path / 'src'}{os.pathsep}{repo_path}"
-    if "PYTHONPATH" in env and env["PYTHONPATH"]:
-        env["PYTHONPATH"] = f"{repo_pp}{os.pathsep}{env['PYTHONPATH']}"
-    else:
-        env["PYTHONPATH"] = repo_pp
+    parent_cwd = Path.cwd().resolve()
+    raw_inherited = [p for p in env.get("PYTHONPATH", "").split(os.pathsep) if p.strip()]
+    resolved_inherited = [
+        str(Path(p).resolve() if Path(p).is_absolute() else (parent_cwd / p).resolve()) for p in raw_inherited
+    ]
+    repo_root = repo_path.resolve()
+    prime_pkg_root = _resolve_prime_pythonpath()
+    candidates = [
+        str(repo_root / "src"),
+        str(repo_root),
+        *resolved_inherited,
+        str(prime_pkg_root),
+    ]
+    env["PYTHONPATH"] = os.pathsep.join(dict.fromkeys(candidates))
 
-    venv_bin = repo_path / ".venv" / ("Scripts" if os.name == "nt" else "bin")
+    venv_bin = repo_root / ".venv" / ("Scripts" if os.name == "nt" else "bin")
     if venv_bin.is_dir():
         env["PATH"] = f"{venv_bin}{os.pathsep}{env.get('PATH', '')}"
     return env
