@@ -1,0 +1,1118 @@
+{
+  "generated_utc": "2026-11-22T23:12:48Z",
+  "prime_commit": "52296a4",
+  "command": "harness spawn blueprints --json",
+  "count": 15,
+  "blueprints": [
+    {
+      "name": "harness-repo-distiller",
+      "domain": "knowledge_distillation",
+      "title": "Repository & Trajectory Distiller Harness",
+      "mission": "Ingest external repositories and session trajectories in isolation, verifying verbatim quotes against raw sources and staging dual-file Knowledge Items for reviewed adoption.",
+      "icm_form": "knowledge_bundle",
+      "skills": [
+        "icm-workspace-architect",
+        "repo-triad-forge",
+        "epistemic-isnad-audit",
+        "brain-artifact-miner",
+        "conversation-trajectory-miner"
+      ],
+      "skill_count": 5,
+      "graph_source": "cluster_12_brain_artifact_miner (cohesion=0.50, bridges=7)",
+      "cohesion_score": 0.5,
+      "bridge_count": 7,
+      "score": 59.061,
+      "seeded_kis": [
+        {
+          "ki_id": "ki_self_20261002_04",
+          "title": "Continuous Reflection Daemon, JUnit Test Trajectory Harvesting & CI Distillation",
+          "domain": "memory_and_epistemics/reflection",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_conversations_20261003_01",
+          "title": "Multi-Store Autobiographical Trajectory Mining with Proactor-Safe Read-Only Handshake",
+          "domain": "memory_and_epistemics",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_20260821_05",
+          "title": "Cross-Brain Knowledge Distillation via TF-IDF",
+          "domain": "memory_and_epistemics",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_20260823_02",
+          "title": "High-Scale Trajectory Ingestion & Overlapping Token Indexing",
+          "domain": "agent_orchestration",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_brain_20261003_01",
+          "title": "Antigravity IDE Brain Workspace Epistemic Topology and Scratch Salvage Invariants",
+          "domain": "memory_and_epistemics",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_self_20260903_03",
+          "title": "Epistemic Memory Promotion Pipeline & Held-Out Judge Invariant",
+          "domain": "memory_and_epistemics",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        }
+      ],
+      "excluded_unverified_kis": [],
+      "use_cases": [
+        "Inspect an external GitHub repository in isolation, capture verbatim raw excerpts under sources/raw/, verify quotes with harness icm quotes, and stage dual-file KIs via harness spawn propose.",
+        "Mine recorded execution trajectories or session artifacts into candidate skill briefs and isnad-audited concept notes without loading all Prime workspace skills."
+      ],
+      "out_of_scope": [
+        "Production Kubernetes deployment or runtime cluster remediation",
+        "Live network packet capture or exploit validation against remote targets",
+        "Unreviewed silent auto-adoption into Prime .harness/knowledge/ or raw git merge into main"
+      ],
+      "prime_skill_count": 114,
+      "estimated_token_savings_pct": 95.61
+    },
+    {
+      "name": "harness-context-economizer",
+      "domain": "context_engineering",
+      "title": "Context & Token Economy Auditor Harness",
+      "mission": "Audit AGENTS.md, skills, and documentation surfaces for prompt bloat, link drift, and multi-layer rule collisions prior to spawning or release.",
+      "icm_form": "context_map",
+      "skills": [
+        "icm-workspace-architect",
+        "headroom-context-optimizer",
+        "token-economizer",
+        "codebase-context-governor",
+        "repo-doc-synchronizer"
+      ],
+      "skill_count": 5,
+      "graph_source": "cluster_19_headroom_context_optimizer (cohesion=0.50, bridges=6)",
+      "cohesion_score": 0.5,
+      "bridge_count": 6,
+      "score": 57.561,
+      "seeded_kis": [
+        {
+          "ki_id": "ki_20261028_headroom_context_optimization",
+          "title": "Headroom Context Optimization Layer: Content Routing, SmartCrusher, Cross-Context Retrieval (CCR), and Detector-Only Cache Alignment",
+          "domain": "memory_and_epistemics",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_20260913_repomap_01",
+          "title": "PageRanked AST Context Prioritization & Token Budget Pruning",
+          "domain": "context_engineering",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_20261024_icm_architect",
+          "title": "Interpretable Context Methodology (ICM): Folder Structure as Agent Architecture, Five-Layer Hierarchy, Three Primitives, and Verified Stage Checks",
+          "domain": "context_engineering/architecture",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_self_20260829_01",
+          "title": "Unified 5-Stage Pre-LLM Context Pipeline Seam",
+          "domain": "context_engineering",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_self_20260829_04",
+          "title": "Typed IoC Context Pipeline & Authoritative Swarm DAG Store",
+          "domain": "agent_orchestration",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_20260913_context_types_04",
+          "title": "Context Item Typing & Evidence Boundary Invariants",
+          "domain": "context_engineering",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        }
+      ],
+      "excluded_unverified_kis": [],
+      "use_cases": [
+        "Audit AGENTS.md line caps, Rule 44 skill description budgets, and relative documentation links across domain boundaries.",
+        "Profile high-token tool observations and compress multi-turn context payloads deterministically."
+      ],
+      "out_of_scope": [
+        "GPU kernel sparse-attention tuning or BigQuery data warehouse ETL",
+        "Binary reverse engineering or security exploit triage"
+      ],
+      "prime_skill_count": 114,
+      "estimated_token_savings_pct": 95.61
+    },
+    {
+      "name": "harness-arch-modernizer",
+      "domain": "architecture",
+      "title": "Architecture Deepening & Monolith Decomposition Harness",
+      "mission": "Map causal DAG seams, isolate legacy blast radii, and decompose monolithic modules behind characterization tests with bounded stage contracts.",
+      "icm_form": "system_map",
+      "skills": [
+        "icm-workspace-architect",
+        "architecture-deepening-workflow",
+        "monolith-decomposition-engine",
+        "data-topology-mapper",
+        "legacy-modernization-pipeline"
+      ],
+      "skill_count": 5,
+      "graph_source": "cluster_11_architecture_deepening_workflow (cohesion=0.17, bridges=13)",
+      "cohesion_score": 0.167,
+      "bridge_count": 13,
+      "score": 56.571,
+      "seeded_kis": [
+        {
+          "ki_id": "ki_20261014_70_cycle_deepening_corpus",
+          "title": "Empirical 70-Cycle Architecture Deepening and Monolith Decomposition Corpus",
+          "domain": "developer_experience/architecture",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki-deepening-cycle-history",
+          "title": "Architecture Deepening Cycle History \u2014 Cycle 2026-09-01",
+          "domain": "developer_experience",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_self_20261003_04",
+          "title": "Dual-Store Autobiographical Memory Federation Architecture",
+          "domain": "developer_experience/architecture",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_self_20260907_04",
+          "title": "Architecture Deepening Loop Convergence & Verification Metrics",
+          "domain": "developer_experience/velocity",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_20261024_icm_architect",
+          "title": "Interpretable Context Methodology (ICM): Folder Structure as Agent Architecture, Five-Layer Hierarchy, Three Primitives, and Verified Stage Checks",
+          "domain": "context_engineering/architecture",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_self_20260907_01",
+          "title": "Deep-Module 3-Layer Architecture Graduation Pattern",
+          "domain": "developer_experience/architecture",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        }
+      ],
+      "excluded_unverified_kis": [],
+      "use_cases": [
+        "Inventory domain nouns and workflow verbs under objects/ and processes/ before refactoring tightly coupled modules.",
+        "Split monolithic files above 200 lines behind characterization test safety nets cleanly."
+      ],
+      "out_of_scope": [
+        "Ad-hoc binary disassembly or network forensic packet captures",
+        "Greenfield visual design or unstructured prose editing"
+      ],
+      "prime_skill_count": 114,
+      "estimated_token_savings_pct": 95.61
+    },
+    {
+      "name": "harness-skill-factory",
+      "domain": "meta_skills",
+      "title": "Skill Authoring & Statistical Assurance Harness",
+      "mission": "Design, scaffold, and statistically assure new deep-module agent skills before proposing admission into Prime.",
+      "icm_form": "pipeline",
+      "skills": [
+        "icm-workspace-architect",
+        "crafting-skills",
+        "agent-skills-architect",
+        "skill-eval-assurance-runner"
+      ],
+      "skill_count": 4,
+      "graph_source": "cluster_05_deep_skill_forge (cohesion=0.11, bridges=15)",
+      "cohesion_score": 0.109,
+      "bridge_count": 15,
+      "score": 48.919,
+      "seeded_kis": [
+        {
+          "ki_id": "ki_google_agent_skills_enterprise_evals",
+          "title": "Google Enterprise Agent Skills: Continuous Evals & Product Governance",
+          "domain": "agent_orchestration",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_self_20260910_02",
+          "title": "Dual-Tier Skill Prompt Budgeting & Zero-Fork Configuration Governance",
+          "domain": "context_engineering",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_self_20260903_02",
+          "title": "Skill Knowledge Graph Catalog Summary & Match Key Standardization",
+          "domain": "agent_orchestration/skills",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_self_20260905_03",
+          "title": "Skill Knowledge Graph Parser & ASCII Single-Pipe Card Formatting",
+          "domain": "developer_experience/skills",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_self_20260922_03",
+          "title": "Strict Directed Graph Reachability & YAML Frontmatter Precedence in Skill Knowledge Graphs",
+          "domain": "agent_orchestration/skills",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_self_20260917_02",
+          "title": "Three-Layer LLM Evaluation Architecture, Golden Regression Suites, and Paired T-Test Significance Gating",
+          "domain": "agent_orchestration",
+          "isnad_status": "VERIFIED",
+          "status": "PROMOTED"
+        }
+      ],
+      "excluded_unverified_kis": [],
+      "use_cases": [
+        "Author new SKILL.md and companion CARD.md artifacts through staged ICM contracts and Wilson CI checks.",
+        "Validate existing skill frontmatter budgets and negative boundaries prior to PR review."
+      ],
+      "out_of_scope": [
+        "External repository reverse engineering or database schema migrations",
+        "Unreviewed silent edits to Prime .agents/skills/"
+      ],
+      "prime_skill_count": 114,
+      "estimated_token_savings_pct": 96.49
+    },
+    {
+      "name": "harness-geospatial-gis",
+      "domain": "geospatial_and_osint",
+      "title": "Open-Source GIS, Spatial Simulation & Planetary OSINT Harness",
+      "mission": "Route spatial workloads across 14 open-source GIS engines with CRS projection safety gates, Mercator hazard simulations, and God's Eye View telemetry resolution.",
+      "icm_form": "system_map",
+      "skills": [
+        "icm-workspace-architect",
+        "open-source-gis-architect",
+        "geospatial-disaster-simulation",
+        "gods-eye-view"
+      ],
+      "skill_count": 4,
+      "graph_source": "cluster_04_external_repo_bridge_forge (cohesion=0.10, bridges=13)",
+      "cohesion_score": 0.1,
+      "bridge_count": 13,
+      "score": 48.649,
+      "seeded_kis": [
+        {
+          "ki_id": "ki_oliinyk_geospatial_disaster_simulation",
+          "title": "Geospatial Disaster Simulation on Real Maps: Tile-Aligned Canvas Draping, Elevation Inundation, Three.js Shared WebGL Context, and Feature-State Building Collapse Physics",
+          "domain": "scientific_computing/geospatial",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_20260908_earthengine_01",
+          "title": "Google Earth Engine Planetary Geospatial Processing & Domain Partitioning Architecture",
+          "domain": "infrastructure_and_runtime",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_20260922_gis_geography_open_source",
+          "title": "Open-Source GIS Architecture & Multicriteria Software Benchmarking",
+          "domain": "data_engineering",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_20261010_gev_offline_spatial_infrastructure_ingestion",
+          "title": "Offline Critical Infrastructure Multi-Source Spatial Indexing Engine",
+          "domain": "scientific_computing/geospatial",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_20261010_gev_inverse_pinhole_reprojection",
+          "title": "Equirectangular Inverse-Sampling Pinhole Camera Reprojection Engine",
+          "domain": "scientific_computing/geospatial",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_20261010_gev_downward_dependency_architecture",
+          "title": "Downward-Only Tool Boundary Architecture & Package Isolation Invariant",
+          "domain": "scientific_computing/geospatial",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        }
+      ],
+      "excluded_unverified_kis": [],
+      "use_cases": [
+        "Route GIS workloads deterministically across open-source spatial engines and enforce CRS transformation safety gates.",
+        "Audit geospatial disaster tile simulations and offline God's Eye View telemetry adapters cleanly."
+      ],
+      "out_of_scope": [
+        "Commercial Esri licensing procurement or kinetic/unauthorized target tracking",
+        "Binary reverse engineering or Kubernetes manifest auditing"
+      ],
+      "prime_skill_count": 114,
+      "estimated_token_savings_pct": 96.49
+    },
+    {
+      "name": "harness-docs-architect",
+      "domain": "developer_experience",
+      "title": "AST Docs-as-Code, Diataxis & Architecture Diagrams Harness",
+      "mission": "Synchronize live code AST symbols with developer docs, enforce Diataxis and OpenAPI/MDX link integrity, and generate validated Python Diagrams-as-Code topologies.",
+      "icm_form": "system_map",
+      "skills": [
+        "icm-workspace-architect",
+        "developer-docs-architect",
+        "repo-doc-synchronizer",
+        "hf-doc-builder-architect",
+        "python-diagrams-architect"
+      ],
+      "skill_count": 5,
+      "graph_source": "cluster_04_external_repo_bridge_forge (cohesion=0.10, bridges=14)",
+      "cohesion_score": 0.1,
+      "bridge_count": 14,
+      "score": 48.561,
+      "seeded_kis": [
+        {
+          "ki_id": "ki_self_20260914_02",
+          "title": "Di\u00e1taxis 4-Quadrant Docs-as-Code Synchronization Pipeline",
+          "domain": "developer_experience/documentation",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_20260913_pr_lens_eli5_pedagogy",
+          "title": "Progressive Disclosure Diagram Generation Pedagogy (ELI5)",
+          "domain": "agent_orchestration",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_hira_python_system_design_diagrams",
+          "title": "Diagram-as-Code for Cloud Architecture: Provider Node Hierarchies, Context Canvases, Fan-Out Grouping, Nested Clusters, and Typed Edge Protocols",
+          "domain": "developer_experience/architecture",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_hf_doc_anchor_graph_integrity",
+          "title": "Deterministic Markdown Anchor Graph & Cross-Reference Link Verification",
+          "domain": "developer_experience",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_20260821_04",
+          "title": "Epistemic Habit \u2014 Skill SKILL.md as Design Contract",
+          "domain": "developer_experience",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_self_20261014_02",
+          "title": "Markdown Document Structural Formatting and Unified Unordered List Hygiene",
+          "domain": "developer_experience/documentation",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        }
+      ],
+      "excluded_unverified_kis": [],
+      "use_cases": [
+        "Audit codebase AST drift against markdown references and lint Diataxis, OpenAPI, and MDX documentation suites.",
+        "Validate and render deterministic Python Diagrams-as-Code architecture topologies."
+      ],
+      "out_of_scope": [
+        "Rule 11 AGENTS.md prompt token trimming (use harness-context-economizer)",
+        "Monolith code refactoring or characterization test extraction (use harness-arch-modernizer)"
+      ],
+      "prime_skill_count": 114,
+      "estimated_token_savings_pct": 95.61
+    },
+    {
+      "name": "harness-reverse-engineering",
+      "domain": "reverse_engineering",
+      "title": "Software Reverse Engineering & Obligation Verification Harness",
+      "mission": "Passively dissect native binaries, managed assemblies, APKs, JS/WASM/EVM bundles, and firmware via REA and govern behavioral reconstruction obligations through immutable CanonicalEvidence and ROL proofs.",
+      "icm_form": "pipeline",
+      "skills": [
+        "icm-workspace-architect",
+        "rea-reverse-engineering",
+        "reconstruction-obligation-ledger",
+        "differential-facet-verifier",
+        "epistemic-isnad-audit"
+      ],
+      "skill_count": 5,
+      "graph_source": "cluster_09_mantis_security_review (cohesion=0.20, bridges=10)",
+      "cohesion_score": 0.2,
+      "bridge_count": 10,
+      "score": 48.561,
+      "seeded_kis": [
+        {
+          "ki_id": "ki-rea-reconstruction-obligations",
+          "title": "Reconstruction Obligation Ledgers & Canonical Evidence Records",
+          "domain": "security_and_forensics/reverse_engineering",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki-rea-facet-availability-semantics",
+          "title": "Differential Facet Availability Semantics & Multi-Provider Comparison",
+          "domain": "security_and_forensics/reverse_engineering",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_20261023_rea_04",
+          "title": "Static Native Boundary Mapping for Managed CLI/PE Runtimes",
+          "domain": "security_and_forensics",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_solla_contract_first_medallion_lakehouse",
+          "title": "Open Data Contracts and Contract-First Medallion Lakehouse Engineering",
+          "domain": "data_engineering",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_self_20260924_02",
+          "title": "Dual-Silo CLI Consolidation, Slotted Domain Engine Architecture, and IoC Service Elevation (discovery-index-scout)",
+          "domain": "data_engineering",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_20261023_rea_03",
+          "title": "Bounded Worker Control Framing and NUL-Delimited IPC Streams",
+          "domain": "infrastructure_and_runtime",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        }
+      ],
+      "excluded_unverified_kis": [],
+      "use_cases": [
+        "Dissect binaries, bytecode, or bundles passively via harness rea inspect and extract deterministic semantic signatures.",
+        "Ingest multi-provider dissection dossiers into ROL with strict 3-valued facet availability, differential comparison, and ReconstructionProof verification."
+      ],
+      "out_of_scope": [
+        "Mantis commit-history SAST triage or active network port scanning (use harness-security-forensics)",
+        "Executing untrusted target binaries or live exploit payloads in-process",
+        "Unreviewed silent writes into Prime .harness/knowledge/ without isnad closure"
+      ],
+      "prime_skill_count": 114,
+      "estimated_token_savings_pct": 95.61
+    },
+    {
+      "name": "harness-swarm-orchestrator",
+      "domain": "agent_orchestration",
+      "title": "Multi-Agent Swarm, Orca & Consensus Deliberation Harness",
+      "mission": "Coordinate supervised parallel agent worktrees, serial multi-bot turn queues, game-theoretic consensus voting, and ANN textual DAG backpropagation.",
+      "icm_form": "context_map",
+      "skills": [
+        "icm-workspace-architect",
+        "orca-orchestrator",
+        "swarm-reflection-optimizer",
+        "game-theoretic-swarm-deliberator",
+        "multi-bot-desk-orchestrator"
+      ],
+      "skill_count": 5,
+      "graph_source": "cluster_03_agent_harness_architect (cohesion=0.10, bridges=12)",
+      "cohesion_score": 0.1,
+      "bridge_count": 12,
+      "score": 48.561,
+      "seeded_kis": [
+        {
+          "ki_id": "ki_20260831_strategify_04",
+          "title": "Multi-Persona LLM Swarm Orchestration with Game-Theoretic Voting",
+          "domain": "agent_orchestration",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_self_20260831_01",
+          "title": "Formal Social Choice Aggregation for Multi-Persona Agent Swarms",
+          "domain": "agent_orchestration",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_20260831_sme_02",
+          "title": "Agentic Neural Network (ANN) Textual Backpropagation & Momentum Smoothing",
+          "domain": "agent_orchestration",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_20260830_claude_02",
+          "title": "Aspect-Oriented Multi-Agent Review Swarm",
+          "domain": "agent_orchestration",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_20260831_openclaw_03",
+          "title": "A2A (Agent-to-Agent) Multi-Agent Swarm Federation Protocol",
+          "domain": "agent_orchestration",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_self_20260904_scratch_02",
+          "title": "Swarm Execution Composite Thread Keying & Session Manager Interface Contracts",
+          "domain": "agent_orchestration",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        }
+      ],
+      "excluded_unverified_kis": [],
+      "use_cases": [
+        "Coordinate multi-bot turn leases with hop-depth bounds and verify Orca threaded FIFO worker settlements.",
+        "Resolve game-theoretic payoff matrices and textual backpropagation updates over team boundary contracts."
+      ],
+      "out_of_scope": [
+        "Single-agent calibration or 3-layer uncertainty logprobs evaluation (use harness-agent-reliability)",
+        "Static binary disassembly or Kubernetes RBAC manifest remediation"
+      ],
+      "prime_skill_count": 114,
+      "estimated_token_savings_pct": 95.61
+    },
+    {
+      "name": "harness-knowledge-graph",
+      "domain": "data_engineering",
+      "title": "Knowledge Graph & Ontology Pipeline Harness",
+      "mission": "Model domain ontologies under Gruber criteria and ingest governed tabular corpora into Neo4j property graphs or recursive SQL CTE hierarchies.",
+      "icm_form": "knowledge_bundle",
+      "skills": [
+        "icm-workspace-architect",
+        "knowledge-graph-pipeline",
+        "neo4j-knowledge-graph-architect",
+        "sql-recursive-graph-traversal",
+        "ontological-engineering-coach"
+      ],
+      "skill_count": 5,
+      "graph_source": "cluster_13_knowledge_graph_pipeline (cohesion=0.50, bridges=3)",
+      "cohesion_score": 0.5,
+      "bridge_count": 3,
+      "score": 47.061,
+      "seeded_kis": [
+        {
+          "ki_id": "ki_epistemic_graph_traversal_evidence_boundary",
+          "title": "Epistemic Graph Traversal and the Relation-vs-Inference Boundary",
+          "domain": "data_engineering",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_ontological_engineering_gruber_criteria",
+          "title": "Gruber's 5 Criteria for Robust Knowledge Modeling",
+          "domain": "data_engineering/modeling",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki-getzep-community-clustering-and-typed-ontology",
+          "title": "GetZep: Weighted Label Propagation Communities, Per-Group Sequential Queues & Typed Ontology Builder",
+          "domain": "memory_and_epistemics",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki-trustgraph-ontology-rag-subclass-validation",
+          "title": "TrustGraph: OntologyRAG Small-Schema Bypass & Cycle-Safe Subclass Domain/Range Validation",
+          "domain": "memory_and_epistemics",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_20260824_repo_01",
+          "title": "Bi-Temporal Edge Invalidation in Dynamic Knowledge Graphs",
+          "domain": "memory_and_epistemics",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_self_20260903_02",
+          "title": "Skill Knowledge Graph Catalog Summary & Match Key Standardization",
+          "domain": "agent_orchestration/skills",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        }
+      ],
+      "excluded_unverified_kis": [],
+      "use_cases": [
+        "Validate domain ontology precision and coverage before generating idempotent Cypher ingestion pipelines.",
+        "Verify termination bounds on recursive SQL CTE hierarchy queries."
+      ],
+      "out_of_scope": [
+        "Kubernetes cluster security auditing or UI primitive styling",
+        "Unverified free-form text clustering without source lineage"
+      ],
+      "prime_skill_count": 114,
+      "estimated_token_savings_pct": 95.61
+    },
+    {
+      "name": "harness-agent-reliability",
+      "domain": "agent_orchestration",
+      "title": "Agent Harness Reliability, Calibration & Uncertainty Harness",
+      "mission": "Evaluate, calibrate, and harden autonomous coding harnesses using 5-part reliability scoring, 3-layer LLM eval gates, T0-T4 staging calibration, and entropy uncertainty bounds.",
+      "icm_form": "pipeline",
+      "skills": [
+        "icm-workspace-architect",
+        "agentic-reliability-harness",
+        "self-evaluating-ai-pipeline",
+        "coding-harness-calibrator",
+        "uncertainty-aware-ai-architect"
+      ],
+      "skill_count": 5,
+      "graph_source": "cluster_03_agent_harness_architect (cohesion=0.10, bridges=10)",
+      "cohesion_score": 0.1,
+      "bridge_count": 10,
+      "score": 45.561,
+      "seeded_kis": [
+        {
+          "ki_id": "ki_vudathala_agentic_reliability_harness",
+          "title": "Agentic AI Reliability Testing Harness: Asymmetric Trust Boundaries, Five Structural Evaluation Levels, PEP Gateways, Behavioral Invariants, and Three-State Release Gates",
+          "domain": "developer_experience/architecture",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_google_research_uq_benchmark_2019_calibration_shift",
+          "title": "Google Research UQ Benchmark 2019: Predictive Uncertainty Under Dataset Shift, Brier Decomposition & Confidence-Threshold Coverage",
+          "domain": "agent_orchestration",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki-harnesscompass-evolution",
+          "title": "HarnessCompass: Guiding Automatic Harness Evolution toward Generalizable and Effective Agent Harnesses",
+          "domain": "agent_orchestration",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_njoku_uncertainty_aware_systems",
+          "title": "Deterministic 3-Layer Uncertainty Interception & Overconfidence Mitigation",
+          "domain": "agent_orchestration",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_self_20260917_01",
+          "title": "Five-Part Agent Harness Architecture and Four-Mechanism Reliability Invariant",
+          "domain": "agent_orchestration",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_self_20260917_02",
+          "title": "Three-Layer LLM Evaluation Architecture, Golden Regression Suites, and Paired T-Test Significance Gating",
+          "domain": "agent_orchestration",
+          "isnad_status": "VERIFIED",
+          "status": "PROMOTED"
+        }
+      ],
+      "excluded_unverified_kis": [],
+      "use_cases": [
+        "Audit agent harnesses across the Five Evaluation Levels, 4-gate behavioral checks, and T4 staging calibration simulations.",
+        "Execute 3-layer LLM eval pipelines and semantic/logit-entropy interception checks before production deployment."
+      ],
+      "out_of_scope": [
+        "AGENTS.md line-count or Skill Catalog token trimming (use harness-context-economizer)",
+        "Parallel multi-agent worktree orchestration or payoff consensus voting (use harness-swarm-orchestrator)"
+      ],
+      "prime_skill_count": 114,
+      "estimated_token_savings_pct": 95.61
+    },
+    {
+      "name": "harness-security-forensics",
+      "domain": "security_and_forensics",
+      "title": "Security Audit, Reverse Engineering & Forensics Harness",
+      "mission": "Execute commit-history security triage, binary/bundle dissection, and multi-provider evidence verification tracked as auditable ICM finding records.",
+      "icm_form": "record_library",
+      "skills": [
+        "icm-workspace-architect",
+        "mantis-security-review",
+        "rea-reverse-engineering",
+        "differential-facet-verifier",
+        "ethical-hacker-networking"
+      ],
+      "skill_count": 5,
+      "graph_source": "cluster_09_mantis_security_review (cohesion=0.20, bridges=4)",
+      "cohesion_score": 0.2,
+      "bridge_count": 4,
+      "score": 45.561,
+      "seeded_kis": [
+        {
+          "ki_id": "ki_20260908_mantis_01",
+          "title": "Google Mantis Decoupled Security Review Pipeline & Sandboxed Crash Verification",
+          "domain": "security_and_forensics",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki-rea-facet-availability-semantics",
+          "title": "Differential Facet Availability Semantics & Multi-Provider Comparison",
+          "domain": "security_and_forensics/reverse_engineering",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_20260830_grok_03",
+          "title": "Sandbox Hook Write-Deny Security Boundary",
+          "domain": "security_and_forensics",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_20260831_em3_01",
+          "title": "Pre-Execution AST Security Visitor for Dynamic Code Sandboxing",
+          "domain": "security_and_forensics",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_20260913_tool_approval_03",
+          "title": "Interactive Tool Approval Middleware & Security Sandboxing",
+          "domain": "security_and_forensics",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_mindreader_20260911_02",
+          "title": "External Ingestion Security Boundary Shell Pivot Pattern",
+          "domain": "security_and_forensics",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        }
+      ],
+      "excluded_unverified_kis": [],
+      "use_cases": [
+        "Run commit-history and AST taint triage on a target codebase, record structured findings in records/, rebuild records/_index.md via harness icm index, and stage verified lessons.",
+        "Cross-check multi-provider reverse-engineering evidence dossiers with explicit facet availability semantics and network fault isolation checks."
+      ],
+      "out_of_scope": [
+        "Unauthorized offensive testing, active exploitation, or credential harvesting on external networks",
+        "Generic frontend CSS styling or full-stack web UI prototyping",
+        "Direct unreviewed writes into Prime knowledge vault or dock boundary paths"
+      ],
+      "prime_skill_count": 114,
+      "estimated_token_savings_pct": 95.61
+    },
+    {
+      "name": "harness-memory-graph",
+      "domain": "memory_and_epistemics",
+      "title": "Bi-Temporal Memory Graph, OKF & Epistemic Lifecycle Harness",
+      "mission": "Govern agent working-memory retention, bi-temporal Graphiti/Zep normalization, MinHash/LSH entity dedup, RRF/MMR reranking, Git-native OKF BM25 scoping, and 8-state epistemic promotion lifecycles.",
+      "icm_form": "context_map",
+      "skills": [
+        "icm-workspace-architect",
+        "graphiti-zep-memory-governor",
+        "ebbinghaus-memory-governor",
+        "okf-memory-governor",
+        "epistemic-memory-lifecycle"
+      ],
+      "skill_count": 5,
+      "graph_source": "cluster_08_ebbinghaus_memory_governor (cohesion=0.10, bridges=8)",
+      "cohesion_score": 0.1,
+      "bridge_count": 8,
+      "score": 42.561,
+      "seeded_kis": [
+        {
+          "ki_id": "ki-getzep-graphiti-bitemporal-edge-normalization",
+          "title": "Graphiti: Bi-Temporal Edge Timelines, Future-Tense Clamping & Contradiction Invalidation",
+          "domain": "memory_and_epistemics",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki-getzep-graphiti-hybrid-rrf-mmr-reranking",
+          "title": "Graphiti: Hybrid BM25/Vector RRF Fusion, Maximal Marginal Relevance & Shortest-Hop Node Distance Reranking",
+          "domain": "memory_and_epistemics",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki-getzep-graphiti-minhash-lsh-entity-dedup",
+          "title": "Graphiti: Shannon Entropy Gate, 32-Perm MinHash/LSH Entity Deduplication & Dangling Endpoint Pruning",
+          "domain": "memory_and_epistemics",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_self_20261019_memory_decay_01",
+          "title": "Ebbinghaus Forgetting Curves and Cognitive Working Memory Retention",
+          "domain": "memory_and_epistemics",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_20260824_repo_01",
+          "title": "Bi-Temporal Edge Invalidation in Dynamic Knowledge Graphs",
+          "domain": "memory_and_epistemics",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki-getzep-community-clustering-and-typed-ontology",
+          "title": "GetZep: Weighted Label Propagation Communities, Per-Group Sequential Queues & Typed Ontology Builder",
+          "domain": "memory_and_epistemics",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        }
+      ],
+      "excluded_unverified_kis": [],
+      "use_cases": [
+        "Normalize bi-temporal assertions against reference timestamps, deduplicate high-entropy entities via MinHash/LSH, and tune RRF/MMR retrieval reranking.",
+        "Scope pre-edit OKF knowledge bundles via BM25 ranking and govern cross-turn Ebbinghaus decay multipliers and knowledge promotion gates."
+      ],
+      "out_of_scope": [
+        "Formal SWI-Prolog .dialog closures or SHACL-AF triple policy filtering (use harness-ontology-spider)",
+        "Static binary reverse engineering or Kubernetes manifest auditing"
+      ],
+      "prime_skill_count": 114,
+      "estimated_token_savings_pct": 95.61
+    },
+    {
+      "name": "harness-data-lakehouse",
+      "domain": "data_engineering",
+      "title": "Lakehouse & Analytical SQL Reporting Harness",
+      "mission": "Govern Medallion data contracts, BigQuery augmented analytics, and declarative SQL reporting DAGs cleanly across analytical pipelines.",
+      "icm_form": "pipeline",
+      "skills": [
+        "icm-workspace-architect",
+        "bigquery-augmented-analytics",
+        "data-management-architect",
+        "garf-reporting-architect",
+        "paperless-document-pipeline"
+      ],
+      "skill_count": 5,
+      "graph_source": "cluster_10_bigquery_augmented_analytics (cohesion=0.25, bridges=1)",
+      "cohesion_score": 0.25,
+      "bridge_count": 1,
+      "score": 36.561,
+      "seeded_kis": [
+        {
+          "ki_id": "ki_garf_reporting_engine",
+          "title": "Google Garf Declarative SQL Reporting & Multi-Destination Data Pipeline Architecture",
+          "domain": "data_engineering",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_solla_contract_first_medallion_lakehouse",
+          "title": "Open Data Contracts and Contract-First Medallion Lakehouse Engineering",
+          "domain": "data_engineering",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki-hf-datasets-arrow-streaming",
+          "title": "PyArrow Memory-Mapped Zero-Copy Execution, Lazy Generator Streaming & xxhash Deterministic Caching in Hugging Face Datasets",
+          "domain": "data_engineering",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_solla_dikw_data_asset_continuum",
+          "title": "The DIKW Pyramid & Data Lifecycle Asset Progression",
+          "domain": "data_engineering",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_agentwikis_governance",
+          "title": "AgentWikis Corpus Architecture, Trust Semantics & Data Governance",
+          "domain": "memory_and_epistemics/integration",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_audit_20260908_07",
+          "title": "Delta Innovation Summary \u2014 8 Novel Architectural Patterns",
+          "domain": "security_and_forensics",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        }
+      ],
+      "excluded_unverified_kis": [],
+      "use_cases": [
+        "Draft Open Data Contracts and BigQuery anomaly/attribution TVF queries in staged verification pipelines.",
+        "Execute declarative reporting DAG checks over structured tabular feeds."
+      ],
+      "out_of_scope": [
+        "Live production OLTP mutations without dry-run gates",
+        "Low-level binary disassembly or K8s pod RBAC hardening"
+      ],
+      "prime_skill_count": 114,
+      "estimated_token_savings_pct": 95.61
+    },
+    {
+      "name": "harness-ontology-spider",
+      "domain": "ontology_reasoning",
+      "title": "Formal Ontology Reasoning, SHACL-AF Governance & Vault Audit Harness",
+      "mission": "Query, traverse, and audit Knowledge Vaults and domain ontologies using SWI-Prolog/Python .dialog logic, Laya attribute-entropy ranking, SHACL-AF policies, PROV-O explainability, and bi-temporal as_of checks.",
+      "icm_form": "system_map",
+      "skills": [
+        "icm-workspace-architect",
+        "ontology-spider",
+        "trustgraph-ontology-governor",
+        "graphiti-zep-memory-governor",
+        "ontological-engineering-coach"
+      ],
+      "skill_count": 5,
+      "graph_source": "cluster_08_ebbinghaus_memory_governor (cohesion=0.10, bridges=3)",
+      "cohesion_score": 0.1,
+      "bridge_count": 3,
+      "score": 35.061,
+      "seeded_kis": [
+        {
+          "ki_id": "ki-trustgraph-ontology-rag-subclass-validation",
+          "title": "TrustGraph: OntologyRAG Small-Schema Bypass & Cycle-Safe Subclass Domain/Range Validation",
+          "domain": "memory_and_epistemics",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki-trustgraph-shacl-af-policy-filter",
+          "title": "TrustGraph: SHACL-AF Subject-IRI Policy Filter, Bounded Query/Node Caches & Open-Mode Fallback",
+          "domain": "memory_and_epistemics",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki-getzep-community-clustering-and-typed-ontology",
+          "title": "GetZep: Weighted Label Propagation Communities, Per-Group Sequential Queues & Typed Ontology Builder",
+          "domain": "memory_and_epistemics",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_ontological_engineering_gruber_criteria",
+          "title": "Gruber's 5 Criteria for Robust Knowledge Modeling",
+          "domain": "data_engineering/modeling",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki-getzep-graphiti-bitemporal-edge-normalization",
+          "title": "Graphiti: Bi-Temporal Edge Timelines, Future-Tense Clamping & Contradiction Invalidation",
+          "domain": "memory_and_epistemics",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki-trustgraph-laya-onnx-entropy-decision-scoring",
+          "title": "TrustGraph: Laya ONNX Decision Scoring, Temperature Clamping, Normalized Entropy Confidence & Head-Budgeting",
+          "domain": "memory_and_epistemics",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        }
+      ],
+      "excluded_unverified_kis": [],
+      "use_cases": [
+        "Execute formal .dialog transitive, shortest-path, closed-world negation, and cardinality queries alongside Laya entropy attribute ranking over .harness/knowledge/.",
+        "Enforce SHACL-AF triple filtering, cycle-safe subClassOf validation, dual named-graph PROV-O traces, and bi-temporal edge normalization."
+      ],
+      "out_of_scope": [
+        "Neo4j Cypher UNWIND batch ETL or relational recursive SQL CTE pipelines (use harness-knowledge-graph)",
+        "Fuzzy embedding similarity searches where exact logical closures are required",
+        "Unbounded cyclic traversals without acyclicity verification"
+      ],
+      "prime_skill_count": 114,
+      "estimated_token_savings_pct": 95.61
+    },
+    {
+      "name": "harness-cloud-k8s",
+      "domain": "infra_and_cloud",
+      "title": "Cloud Infrastructure & Kubernetes Drift Guardian Harness",
+      "mission": "Detect Kubernetes manifest drift, audit RBAC least-privilege posture, and verify container sandboxing controls using tracked record shelves.",
+      "icm_form": "record_library",
+      "skills": [
+        "icm-workspace-architect",
+        "cloud-infrastructure-architect",
+        "kubernetes-drift-guardian"
+      ],
+      "skill_count": 3,
+      "graph_source": "cluster_16_cloud_infrastructure_architect (cohesion=0.10, bridges=1)",
+      "cohesion_score": 0.1,
+      "bridge_count": 1,
+      "score": 32.237,
+      "seeded_kis": [
+        {
+          "ki_id": "ki_self_20261019_prometheus_exporter_01",
+          "title": "Zero-Dependency Prometheus Text Exposition Architecture and Observability Seams",
+          "domain": "infrastructure_and_runtime/cloud",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_hira_python_system_design_diagrams",
+          "title": "Diagram-as-Code for Cloud Architecture: Provider Node Hierarchies, Context Canvases, Fan-Out Grouping, Nested Clusters, and Typed Edge Protocols",
+          "domain": "developer_experience/architecture",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_self_20260922_01",
+          "title": "Subprocess Stderr Drainage, Ring Buffers, and Crash Visibility in Sandboxed Transports",
+          "domain": "security_and_forensics/sandboxing",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki-shim-tiered-permission-and-symlink-sandbox",
+          "title": "Shim: 4-Tier Capability Permission Gating, Ancestor Symlink Sandbox & Bounded File/Shell Execution",
+          "domain": "agent_orchestration",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_20260821_06",
+          "title": "Verification Standard \u2014 Isolated Plugin Sandboxing",
+          "domain": "security_and_forensics",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        },
+        {
+          "ki_id": "ki_20260823_01",
+          "title": "Subprocess Sandbox Boundary & Dynamic Plugin Isolation",
+          "domain": "security_and_forensics",
+          "isnad_status": "VERIFIED",
+          "status": "ACTIVE"
+        }
+      ],
+      "excluded_unverified_kis": [],
+      "use_cases": [
+        "Audit Kubernetes manifests and RBAC bindings for policy drift and track remediation tickets in records/.",
+        "Verify container sandbox isolation and Prometheus metric exposition posture."
+      ],
+      "out_of_scope": [
+        "Unauthenticated external cluster mutation or active network exploitation",
+        "Text stylometry or BigQuery marketing attribution workflows"
+      ],
+      "prime_skill_count": 114,
+      "estimated_token_savings_pct": 97.37
+    }
+  ]
+}

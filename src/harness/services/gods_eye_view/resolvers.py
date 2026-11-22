@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import asyncio
 from datetime import datetime, timezone
+from pathlib import Path
+import sys
 from typing import Any, Literal
 import structlog
 
@@ -69,7 +71,9 @@ def attach_provenance_envelope(
 ) -> dict[str, Any]:
     """Wrap output dictionary with explicit provenance and freshness metadata."""
     now_utc = datetime.now(timezone.utc).isoformat()
-    base_data = data.model_dump() if hasattr(data, "model_dump") else (data.to_dict() if hasattr(data, "to_dict") else data)
+    base_data = (
+        data.model_dump() if hasattr(data, "model_dump") else (data.to_dict() if hasattr(data, "to_dict") else data)
+    )
     return {
         "status": "ok",
         "source_mode": source_mode,
@@ -287,6 +291,15 @@ class GodsEyeViewAdapter(GodsEyeViewService):
         return raw if isinstance(raw, dict) else {"status": "ok", "result": raw}
 
 
+def _ensure_prime_plugins_on_path() -> None:
+    """Expose Prime's root directory so ``plugins.*`` imports succeed from materialized harnesses."""
+    prime_root = Path(__file__).resolve().parents[4]
+    if (prime_root / "plugins").is_dir():
+        prime_str = str(prime_root)
+        if prime_str not in sys.path:
+            sys.path.insert(0, prime_str)
+
+
 def resolve_gods_eye_view(ctx: ServiceContext | None = None) -> GodsEyeViewService:
     """Resolve authoritative GodsEyeViewService adhering to Rule 58 dual-mode adaptation."""
     if ctx and ctx.has(GODS_EYE_VIEW_SERVICE_KEY):
@@ -297,11 +310,13 @@ def resolve_gods_eye_view(ctx: ServiceContext | None = None) -> GodsEyeViewServi
         return GodsEyeViewAdapter(provider)
 
     # In-process plugin fallback
+    _ensure_prime_plugins_on_path()
     try:
         from plugins.geospatial_and_osint.gods_eye_view.main import plugin
+
         return plugin
     except Exception as e:
         logger.debug("gods_eye_view_plugin_import_fallback", error=str(e))
         from plugins.geospatial_and_osint.gods_eye_view.main import GodsEyeViewPlugin
-        return GodsEyeViewPlugin()
 
+        return GodsEyeViewPlugin()

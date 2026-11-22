@@ -243,7 +243,7 @@ class HarnessSpawnerPlugin(HarnessPlugin, HarnessSpawnerProtocol):
         root_path: Path | str = ".",
         vault_dir: Path | str = ".harness/knowledge",
         max_skills: int = DEFAULT_MAX_BLUEPRINT_SKILLS,
-        limit: int = 12,
+        limit: int = 16,
         name: str | None = None,
     ) -> list[HarnessBlueprint]:
         """Discover and rank graph-driven domain harness blueprints via the plugin service."""

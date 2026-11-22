@@ -188,7 +188,7 @@ CANONICAL_SPECS: tuple[CanonicalSpec, ...] = (
         skills=(
             "icm-workspace-architect",
             "crafting-skills",
-            "agent-skill-sdlc",
+            "agent-skills-architect",
             "skill-eval-assurance-runner",
         ),
         query_keywords=("skill", "eval", "assurance"),
@@ -339,6 +339,117 @@ CANONICAL_SPECS: tuple[CanonicalSpec, ...] = (
         out_of_scope=(
             "Formal SWI-Prolog .dialog closures or SHACL-AF triple policy filtering (use harness-ontology-spider)",
             "Static binary reverse engineering or Kubernetes manifest auditing",
+        ),
+        tier=2,
+    ),
+    CanonicalSpec(
+        name="harness-agent-reliability",
+        domain="agent_orchestration",
+        title="Agent Harness Reliability, Calibration & Uncertainty Harness",
+        mission=(
+            "Evaluate, calibrate, and harden autonomous coding harnesses using 5-part reliability "
+            "scoring, 3-layer LLM eval gates, T0-T4 staging calibration, and entropy uncertainty bounds."
+        ),
+        icm_form="pipeline",
+        cluster_id="cluster_03_agent_harness_architect",
+        skills=(
+            "icm-workspace-architect",
+            "agentic-reliability-harness",
+            "self-evaluating-ai-pipeline",
+            "coding-harness-calibrator",
+            "uncertainty-aware-ai-architect",
+        ),
+        query_keywords=("reliability", "evaluation", "compass", "uncertainty"),
+        use_cases=(
+            "Audit agent harnesses across the Five Evaluation Levels, 4-gate behavioral checks, and T4 staging calibration simulations.",
+            "Execute 3-layer LLM eval pipelines and semantic/logit-entropy interception checks before production deployment.",
+        ),
+        out_of_scope=(
+            "AGENTS.md line-count or Skill Catalog token trimming (use harness-context-economizer)",
+            "Parallel multi-agent worktree orchestration or payoff consensus voting (use harness-swarm-orchestrator)",
+        ),
+        tier=2,
+    ),
+    CanonicalSpec(
+        name="harness-swarm-orchestrator",
+        domain="agent_orchestration",
+        title="Multi-Agent Swarm, Orca & Consensus Deliberation Harness",
+        mission=(
+            "Coordinate supervised parallel agent worktrees, serial multi-bot turn queues, "
+            "game-theoretic consensus voting, and ANN textual DAG backpropagation."
+        ),
+        icm_form="context_map",
+        cluster_id="cluster_03_agent_harness_architect",
+        skills=(
+            "icm-workspace-architect",
+            "orca-orchestrator",
+            "swarm-reflection-optimizer",
+            "game-theoretic-swarm-deliberator",
+            "multi-bot-desk-orchestrator",
+        ),
+        query_keywords=("orca", "swarm", "consensus", "backprop"),
+        use_cases=(
+            "Coordinate multi-bot turn leases with hop-depth bounds and verify Orca threaded FIFO worker settlements.",
+            "Resolve game-theoretic payoff matrices and textual backpropagation updates over team boundary contracts.",
+        ),
+        out_of_scope=(
+            "Single-agent calibration or 3-layer uncertainty logprobs evaluation (use harness-agent-reliability)",
+            "Static binary disassembly or Kubernetes RBAC manifest remediation",
+        ),
+        tier=2,
+    ),
+    CanonicalSpec(
+        name="harness-docs-architect",
+        domain="developer_experience",
+        title="AST Docs-as-Code, Diataxis & Architecture Diagrams Harness",
+        mission=(
+            "Synchronize live code AST symbols with developer docs, enforce Diataxis and OpenAPI/MDX "
+            "link integrity, and generate validated Python Diagrams-as-Code topologies."
+        ),
+        icm_form="system_map",
+        cluster_id="cluster_04_external_repo_bridge_forge",
+        skills=(
+            "icm-workspace-architect",
+            "developer-docs-architect",
+            "repo-doc-synchronizer",
+            "hf-doc-builder-architect",
+            "python-diagrams-architect",
+        ),
+        query_keywords=("diataxis", "diagram", "doc_builder", "documentation"),
+        use_cases=(
+            "Audit codebase AST drift against markdown references and lint Diataxis, OpenAPI, and MDX documentation suites.",
+            "Validate and render deterministic Python Diagrams-as-Code architecture topologies.",
+        ),
+        out_of_scope=(
+            "Rule 11 AGENTS.md prompt token trimming (use harness-context-economizer)",
+            "Monolith code refactoring or characterization test extraction (use harness-arch-modernizer)",
+        ),
+        tier=2,
+    ),
+    CanonicalSpec(
+        name="harness-geospatial-gis",
+        domain="geospatial_and_osint",
+        title="Open-Source GIS, Spatial Simulation & Planetary OSINT Harness",
+        mission=(
+            "Route spatial workloads across 14 open-source GIS engines with CRS projection safety gates, "
+            "Mercator hazard simulations, and God's Eye View telemetry resolution."
+        ),
+        icm_form="system_map",
+        cluster_id="cluster_04_external_repo_bridge_forge",
+        skills=(
+            "icm-workspace-architect",
+            "open-source-gis-architect",
+            "geospatial-disaster-simulation",
+            "gods-eye-view",
+        ),
+        query_keywords=("geospatial", "gis", "earthengine", "spatial"),
+        use_cases=(
+            "Route GIS workloads deterministically across open-source spatial engines and enforce CRS transformation safety gates.",
+            "Audit geospatial disaster tile simulations and offline God's Eye View telemetry adapters cleanly.",
+        ),
+        out_of_scope=(
+            "Commercial Esri licensing procurement or kinetic/unauthorized target tracking",
+            "Binary reverse engineering or Kubernetes manifest auditing",
         ),
         tier=2,
     ),

@@ -168,6 +168,13 @@ class TestHarnessSpawnerBlueprints:
         assert "harness-ontology-spider" in names
         assert "harness-knowledge-graph" in names
         assert "harness-memory-graph" in names
+        assert "harness-data-lakehouse" in names
+        assert "harness-agent-reliability" in names
+        assert "harness-swarm-orchestrator" in names
+        assert "harness-docs-architect" in names
+        assert "harness-cloud-k8s" in names
+        assert "harness-geospatial-gis" in names
+        assert "harness-skill-factory" in names
 
         res_one = runner.invoke(main, ["spawn", "blueprints", "--name", "harness-repo-distiller", "--json"])
         assert res_one.exit_code == 0, res_one.output
@@ -252,3 +259,29 @@ class TestHarnessSpawnerBlueprints:
 
         re_bp = recommend_harness_blueprints(name="harness-reverse-engineering")[0]
         assert "ki-rea-reconstruction-obligations" in [k.ki_id for k in re_bp.seeded_kis]
+
+    def test_wave3_blueprints_seed_verified_kis_and_pass_surface_and_guards(self) -> None:
+        expected = {
+            "harness-data-lakehouse": ("pipeline", 5, 4),
+            "harness-agent-reliability": ("pipeline", 5, 4),
+            "harness-swarm-orchestrator": ("context_map", 5, 4),
+            "harness-docs-architect": ("system_map", 5, 4),
+            "harness-cloud-k8s": ("record_library", 3, 4),
+            "harness-geospatial-gis": ("system_map", 4, 4),
+            "harness-skill-factory": ("pipeline", 4, 4),
+        }
+        assert len(CANONICAL_SPECS) == 15
+        for name, (expected_form, expected_skills, min_kis) in expected.items():
+            bps = recommend_harness_blueprints(name=name, max_skills=5)
+            assert len(bps) == 1
+            bp = bps[0]
+            assert bp.icm_form == expected_form
+            assert len(bp.skills) == expected_skills
+            assert len(bp.seeded_kis) >= min_kis
+            ki_ids = [k.ki_id for k in bp.seeded_kis]
+            assert not any(kid.startswith("ki-rea-sig-") for kid in ki_ids)
+            assert all(k.isnad_status == "VERIFIED" for k in bp.seeded_kis)
+            tree = build_blueprint_tree(bp)
+            guards.assert_tree_clean(tree)
+            census = surface_ops.validate(BRAIN_SURFACE, tree)
+            assert census["skills"] == expected_skills

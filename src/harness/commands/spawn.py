@@ -151,7 +151,7 @@ def spawn_group() -> None:
 @click.option(
     "--limit",
     type=click.IntRange(min=1),
-    default=12,
+    default=16,
     show_default=True,
     help="Maximum number of ranked blueprints to return.",
 )
