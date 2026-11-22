@@ -7,6 +7,7 @@ from dataclasses import dataclass
 import importlib
 import inspect
 from pathlib import Path
+import sys
 from typing import Any, Protocol, Union, runtime_checkable
 
 from harness.kernel.context import ServiceKey
@@ -293,12 +294,22 @@ class OntologySpiderProtocol(Protocol):
 ONTOLOGY_SPIDER_SERVICE_KEY: ServiceKey[OntologySpiderProtocol] = ServiceKey("memory.ontology_spider_service")
 
 
+def _ensure_prime_plugins_on_path() -> None:
+    """Expose Prime's root directory so dynamic ``plugins.*`` imports succeed from external harnesses."""
+    prime_root = Path(__file__).resolve().parents[3]
+    if (prime_root / "plugins").is_dir():
+        prime_str = str(prime_root)
+        if prime_str not in sys.path:
+            sys.path.insert(0, prime_str)
+
+
 def _require_engine() -> None:
     if not HAS_ONTOLOGY_SPIDER:
         raise RuntimeError(
             "Ontology-Spider engine is not installed. Run: pip install -e <path-to-Ontology-Spider> "
             "(see plugins/memory_and_epistemics/ontology_spider/README.md)."
         )
+    _ensure_prime_plugins_on_path()
 
 
 def _to_entropy_ranks(raw_ranks: Sequence[dict[str, Any]]) -> tuple[AttributeEntropyRank, ...]:

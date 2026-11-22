@@ -27,15 +27,29 @@ if sys.platform == "win32":
     except AttributeError:
         pass
 
-# Ensure workspace root and plugins are in sys.path
+# Ensure workspace root and plugins are in sys.path (with Prime package fallback when materialized)
 _current = Path(__file__).resolve()
+_found_plugins = False
 for parent in _current.parents:
-    if (parent / "pyproject.toml").exists() or (parent / "plugins").exists():
-        if str(parent) not in sys.path:
-            sys.path.insert(0, str(parent))
+    if (parent / "plugins").is_dir():
         if str(parent / "src") not in sys.path:
             sys.path.insert(0, str(parent / "src"))
+        if str(parent) not in sys.path:
+            sys.path.insert(0, str(parent))
+        _found_plugins = True
         break
+if not _found_plugins:
+    try:
+        import harness as _harness_pkg
+
+        _prime_root = Path(_harness_pkg.__file__).resolve().parents[2]
+        if (_prime_root / "plugins").is_dir():
+            if str(_prime_root / "src") not in sys.path:
+                sys.path.insert(0, str(_prime_root / "src"))
+            if str(_prime_root) not in sys.path:
+                sys.path.insert(0, str(_prime_root))
+    except Exception:
+        pass
 
 from plugins.memory_and_epistemics.okf_memory.main import OKFMemoryEngine
 
@@ -43,6 +57,7 @@ from plugins.memory_and_epistemics.okf_memory.main import OKFMemoryEngine
 # -----------------------------------------------------------------------------
 # Slotted and Frozen Dataclasses (Rule 12)
 # -----------------------------------------------------------------------------
+
 
 @dataclass(slots=True, frozen=True)
 class BM25Token:
@@ -101,6 +116,7 @@ class OKFConceptNode:
 # -----------------------------------------------------------------------------
 # CLI Entrypoint Dispatcher (Rule 42 — Non-interactive, zero input() calls)
 # -----------------------------------------------------------------------------
+
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="OKF Memory Governor CLI Dispatcher")

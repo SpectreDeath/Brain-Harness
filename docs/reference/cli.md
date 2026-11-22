@@ -2735,7 +2735,7 @@ Recommend prioritized domain harness blueprints from the live skill graph and Kn
 - `--root`: Workspace root containing .agents/skills/ and skill graph inputs. [default: .]
 - `--vault`: Knowledge Vault directory used for verified KI grounding. [default: .harness\knowledge]
 - `--max-skills`: Maximum skills allowed per recommended blueprint. [default: 5]
-- `--limit`: Maximum number of ranked blueprints to return. [default: 8]
+- `--limit`: Maximum number of ranked blueprints to return. [default: 12]
 - `--name`: Filter to a specific blueprint name.
 - `--json`: Emit raw JSON payload. [default: False]
 

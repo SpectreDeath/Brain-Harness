@@ -16,10 +16,21 @@ if hasattr(sys.stderr, "reconfigure"):
 
 _SCRIPT_PATH = Path(__file__).resolve()
 _REPO_ROOT = _SCRIPT_PATH.parents[4]
-_SRC_ROOT = _REPO_ROOT / "src"
-for _candidate in (str(_SRC_ROOT), str(_REPO_ROOT)):
-    if _candidate not in sys.path:
-        sys.path.insert(0, _candidate)
+_SEARCH_ROOTS: list[Path] = [_REPO_ROOT / "src", _REPO_ROOT]
+if not (_REPO_ROOT / "plugins").is_dir():
+    try:
+        import harness as _harness_pkg
+    except ImportError:
+        _harness_pkg = None  # type: ignore[assignment]
+    if _harness_pkg is not None and getattr(_harness_pkg, "__file__", None):
+        _prime_root = Path(_harness_pkg.__file__).resolve().parents[2]
+        if (_prime_root / "plugins").is_dir():
+            _SEARCH_ROOTS.extend([_prime_root / "src", _prime_root])
+for _candidate in reversed(_SEARCH_ROOTS):
+    if _candidate.is_dir():
+        _candidate_str = str(_candidate)
+        if _candidate_str not in sys.path:
+            sys.path.insert(0, _candidate_str)
 
 from harness.services.ontology_spider import OntologySpiderKernelService  # noqa: E402
 

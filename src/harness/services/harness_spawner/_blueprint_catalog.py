@@ -256,6 +256,92 @@ CANONICAL_SPECS: tuple[CanonicalSpec, ...] = (
         ),
         tier=2,
     ),
+    CanonicalSpec(
+        name="harness-reverse-engineering",
+        domain="reverse_engineering",
+        title="Software Reverse Engineering & Obligation Verification Harness",
+        mission=(
+            "Passively dissect native binaries, managed assemblies, APKs, JS/WASM/EVM bundles, and firmware via REA "
+            "and govern behavioral reconstruction obligations through immutable CanonicalEvidence and ROL proofs."
+        ),
+        icm_form="pipeline",
+        cluster_id="cluster_09_mantis_security_review",
+        skills=(
+            "icm-workspace-architect",
+            "rea-reverse-engineering",
+            "reconstruction-obligation-ledger",
+            "differential-facet-verifier",
+            "epistemic-isnad-audit",
+        ),
+        query_keywords=("reverse engineering", "reconstruction", "obligation", "facet"),
+        use_cases=(
+            "Dissect binaries, bytecode, or bundles passively via harness rea inspect and extract deterministic semantic signatures.",
+            "Ingest multi-provider dissection dossiers into ROL with strict 3-valued facet availability, differential comparison, and ReconstructionProof verification.",
+        ),
+        out_of_scope=(
+            "Mantis commit-history SAST triage or active network port scanning (use harness-security-forensics)",
+            "Executing untrusted target binaries or live exploit payloads in-process",
+            "Unreviewed silent writes into Prime .harness/knowledge/ without isnad closure",
+        ),
+        tier=2,
+    ),
+    CanonicalSpec(
+        name="harness-ontology-spider",
+        domain="ontology_reasoning",
+        title="Formal Ontology Reasoning, SHACL-AF Governance & Vault Audit Harness",
+        mission=(
+            "Query, traverse, and audit Knowledge Vaults and domain ontologies using SWI-Prolog/Python .dialog logic, "
+            "Laya attribute-entropy ranking, SHACL-AF policies, PROV-O explainability, and bi-temporal as_of checks."
+        ),
+        icm_form="system_map",
+        cluster_id="cluster_08_ebbinghaus_memory_governor",
+        skills=(
+            "icm-workspace-architect",
+            "ontology-spider",
+            "trustgraph-ontology-governor",
+            "graphiti-zep-memory-governor",
+            "ontological-engineering-coach",
+        ),
+        query_keywords=("ontology", "trustgraph", "shacl", "gruber", "graphiti"),
+        use_cases=(
+            "Execute formal .dialog transitive, shortest-path, closed-world negation, and cardinality queries alongside Laya entropy attribute ranking over .harness/knowledge/.",
+            "Enforce SHACL-AF triple filtering, cycle-safe subClassOf validation, dual named-graph PROV-O traces, and bi-temporal edge normalization.",
+        ),
+        out_of_scope=(
+            "Neo4j Cypher UNWIND batch ETL or relational recursive SQL CTE pipelines (use harness-knowledge-graph)",
+            "Fuzzy embedding similarity searches where exact logical closures are required",
+            "Unbounded cyclic traversals without acyclicity verification",
+        ),
+        tier=2,
+    ),
+    CanonicalSpec(
+        name="harness-memory-graph",
+        domain="memory_and_epistemics",
+        title="Bi-Temporal Memory Graph, OKF & Epistemic Lifecycle Harness",
+        mission=(
+            "Govern agent working-memory retention, bi-temporal Graphiti/Zep normalization, MinHash/LSH entity dedup, "
+            "RRF/MMR reranking, Git-native OKF BM25 scoping, and 8-state epistemic promotion lifecycles."
+        ),
+        icm_form="context_map",
+        cluster_id="cluster_08_ebbinghaus_memory_governor",
+        skills=(
+            "icm-workspace-architect",
+            "graphiti-zep-memory-governor",
+            "ebbinghaus-memory-governor",
+            "okf-memory-governor",
+            "epistemic-memory-lifecycle",
+        ),
+        query_keywords=("graphiti", "ebbinghaus", "okf", "epistemic"),
+        use_cases=(
+            "Normalize bi-temporal assertions against reference timestamps, deduplicate high-entropy entities via MinHash/LSH, and tune RRF/MMR retrieval reranking.",
+            "Scope pre-edit OKF knowledge bundles via BM25 ranking and govern cross-turn Ebbinghaus decay multipliers and knowledge promotion gates.",
+        ),
+        out_of_scope=(
+            "Formal SWI-Prolog .dialog closures or SHACL-AF triple policy filtering (use harness-ontology-spider)",
+            "Static binary reverse engineering or Kubernetes manifest auditing",
+        ),
+        tier=2,
+    ),
 )
 
 __all__ = ["CANONICAL_SPECS", "CanonicalSpec", "VALID_ICM_FORMS"]

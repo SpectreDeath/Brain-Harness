@@ -19,7 +19,8 @@ from harness.services.harness_spawner import (
     recommend_harness_blueprints,
 )
 from harness.services.harness_spawner import blueprints as blueprints_mod
-from harness.services.recursive_harnessing import surface as surface_ops
+from harness.services.harness_spawner._blueprint_catalog import CANONICAL_SPECS
+from harness.services.recursive_harnessing import guards, surface as surface_ops
 from harness.services.recursive_harnessing.models import BRAIN_SURFACE
 from plugins.agent_orchestration.harness_spawner.main import plugin as spawner_plugin
 
@@ -29,12 +30,12 @@ class TestHarnessSpawnerBlueprints:
     """Verify deterministic graph ranking, UNVERIFIED KI exclusion, caps, and CLI parity."""
 
     def test_deterministic_ranking_and_skill_caps(self) -> None:
-        first = recommend_harness_blueprints(max_skills=5, limit=8)
-        second = recommend_harness_blueprints(max_skills=5, limit=8)
+        first = recommend_harness_blueprints(max_skills=5)
+        second = recommend_harness_blueprints(max_skills=5)
         assert [b.name for b in first] == [b.name for b in second]
         assert [b.score for b in first] == [b.score for b in second]
         assert [b.skills for b in first] == [b.skills for b in second]
-        assert len(first) == 8
+        assert len(first) == len(CANONICAL_SPECS)
 
         for bp in first:
             assert 1 <= len(bp.skills) <= 5
@@ -159,10 +160,14 @@ class TestHarnessSpawnerBlueprints:
         res_all = runner.invoke(main, ["spawn", "blueprints", "--json", "--max-skills", "5"])
         assert res_all.exit_code == 0, res_all.output
         payload = json.loads(res_all.output)
-        assert payload["count"] == 8
+        assert payload["count"] == len(CANONICAL_SPECS)
         names = [item["name"] for item in payload["blueprints"]]
         assert "harness-repo-distiller" in names
         assert "harness-security-forensics" in names
+        assert "harness-reverse-engineering" in names
+        assert "harness-ontology-spider" in names
+        assert "harness-knowledge-graph" in names
+        assert "harness-memory-graph" in names
 
         res_one = runner.invoke(main, ["spawn", "blueprints", "--name", "harness-repo-distiller", "--json"])
         assert res_one.exit_code == 0, res_one.output
@@ -211,9 +216,39 @@ class TestHarnessSpawnerBlueprints:
 
             with monkeypatch.context() as mp:
                 mp.setattr(Path, "iterdir", _fake_iterdir)
-                bps = recommend_harness_blueprints(max_skills=5, limit=8)
+                bps = recommend_harness_blueprints(max_skills=5)
             return [(b.name, b.score, b.skills, [k.ki_id for k in b.seeded_kis]) for b in bps]
 
         baseline = _run_with_order("sorted")
         assert _run_with_order("reversed") == baseline
         assert _run_with_order("shuffled") == baseline
+
+    def test_wave2_blueprints_seed_verified_kis_and_pass_surface_and_guards(self) -> None:
+        expected = {
+            "harness-reverse-engineering": ("pipeline", 4),
+            "harness-ontology-spider": ("system_map", 6),
+            "harness-knowledge-graph": ("knowledge_bundle", 6),
+            "harness-memory-graph": ("context_map", 6),
+        }
+        for name, (expected_form, min_kis) in expected.items():
+            bps = recommend_harness_blueprints(name=name, max_skills=5)
+            assert len(bps) == 1
+            bp = bps[0]
+            assert bp.icm_form == expected_form
+            assert len(bp.skills) == 5
+            assert len(bp.seeded_kis) >= min_kis
+            ki_ids = [k.ki_id for k in bp.seeded_kis]
+            assert not any(kid.startswith("ki-rea-sig-") for kid in ki_ids)
+            assert all(k.isnad_status == "VERIFIED" for k in bp.seeded_kis)
+            tree = build_blueprint_tree(bp)
+            guards.assert_tree_clean(tree)
+            census = surface_ops.validate(BRAIN_SURFACE, tree)
+            assert census["skills"] == 5
+
+        sec_wiki = recommend_harness_blueprints(name="harness-ontology-spider")[0]
+        sec_wiki_ids = [k.ki_id for k in sec_wiki.seeded_kis]
+        assert any(kid.startswith("ki-trustgraph-") for kid in sec_wiki_ids)
+        assert "ki_ontological_engineering_gruber_criteria" in sec_wiki_ids
+
+        re_bp = recommend_harness_blueprints(name="harness-reverse-engineering")[0]
+        assert "ki-rea-reconstruction-obligations" in [k.ki_id for k in re_bp.seeded_kis]
