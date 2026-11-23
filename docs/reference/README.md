@@ -10,6 +10,7 @@ The reference documentation provides factual, comprehensive technical specificat
 |---|---|
 | [Micro-Kernel Reference](kernel.md) | `ServiceContext`, `ServiceKey[T]`, `DependencyGraph`, `PluginLifecycleManager`, and `StateReconciler`. |
 | [Agent Reasoning Reference](agent.md) | `ReActAgentLoop`, `StepExecutionEngine`, `SwarmCoordinator`, and `DefaultContextOptimizer`. |
+| [Agent Coding Invariants (Rules 1–59)](agent-invariants.md) | Complete catalog of micro-kernel, plugin, skill, Windows/PowerShell, and verification invariants. |
 | [Ingestion Pipeline Reference](ingestion.md) | `UniversalSourceRegistry`, `RepoFetcher`, `RepoInspector`, and `RepoConverter`. |
 | [Core Services Catalog](services.md) | Complete directory of 70+ authoritative typed `ServiceKey[T]` tokens and protocol interfaces. |
 | [Click CLI Command Reference](cli.md) | Comprehensive command specification for all 41 command groups, subcommands, and flags. |

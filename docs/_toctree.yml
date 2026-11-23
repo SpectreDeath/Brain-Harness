@@ -17,6 +17,8 @@
       title: "Micro-Kernel Reference"
     - local: reference/agent
       title: "Agent Reasoning Reference"
+    - local: reference/agent-invariants
+      title: "Agent Coding Invariants (Rules 1–59)"
     - local: reference/ingestion
       title: "Ingestion Pipeline Reference"
     - local: reference/services
