@@ -453,6 +453,174 @@ CANONICAL_SPECS: tuple[CanonicalSpec, ...] = (
         ),
         tier=2,
     ),
+    CanonicalSpec(
+        name="harness-repo-plugin-forge",
+        domain="plugin_engineering",
+        title="Foreign Repository Ingestion, 4-Axis Audit & Sandboxed Plugin Forge Harness",
+        mission=(
+            "Introspect external GitHub repositories via 4-axis architectural audits and commit trajectories, "
+            "and scaffold/validate sandboxed HarnessPlugin packages with zero-fork config bounds."
+        ),
+        icm_form="pipeline",
+        cluster_id="cluster_04_external_repo_bridge_forge",
+        skills=(
+            "icm-workspace-architect",
+            "external-repo-bridge-forge",
+            "repo-to-plugin-forge",
+            "deep-repo-auditor",
+            "repo-reader",
+        ),
+        query_keywords=("plugin", "ingestion", "bridge", "repo", "triad"),
+        use_cases=(
+            "Execute 4-axis repository audits and extract architectural commit trajectories from foreign Git repositories.",
+            "Scaffold and validate sandboxed HarnessPlugin packages with typed ServiceKey contracts and Diataxis documentation.",
+        ),
+        out_of_scope=(
+            "IDE session trajectory or temp sandbox mining (use harness-repo-distiller or harness-mind-artifact-miner)",
+            "Book, paper, or video multimedia transcript distillation (use harness-literature-media-forge)",
+        ),
+        tier=2,
+    ),
+    CanonicalSpec(
+        name="harness-literature-media-forge",
+        domain="knowledge_distillation",
+        title="Books, Technical Literature & Multimedia-to-Skill / Knowledge Vault Forge Harness",
+        mission=(
+            "Distill non-fiction books, technical papers, lectures, and multimedia video transcripts into "
+            "deep-module agent skills and isnad-verified Knowledge Vault items."
+        ),
+        icm_form="knowledge_bundle",
+        cluster_id="cluster_04_external_repo_bridge_forge",
+        skills=(
+            "icm-workspace-architect",
+            "book-to-skill-forge",
+            "deep-skill-forge",
+            "multimedia-intelligence-forge",
+            "media-to-vault-pipeline",
+        ),
+        query_keywords=("multimedia", "youtube", "distillation", "skill", "isnad"),
+        use_cases=(
+            "Transform books, research papers, and technical chapters into deep-module SKILL.md + CARD.md packages.",
+            "Ingest video lectures and media transcripts into cryptographically verified Knowledge Vault items.",
+        ),
+        out_of_scope=(
+            "External GitHub repository plugin wrapping (use harness-repo-plugin-forge)",
+            "Small-N Wilson confidence interval skill assurance grading (use harness-skill-factory)",
+        ),
+        tier=2,
+    ),
+    CanonicalSpec(
+        name="harness-kernel-plugin-dev",
+        domain="software_engineering",
+        title="Brain Harness Kernel, IoC Seam Auditor, Slotted Models & Shift-Left Security Harness",
+        mission=(
+            "Audit Brain Harness ServiceKey IoC DAG seams and AST documentation mirrors, enforce slotted/frozen "
+            "dataclass architectures, and run adversarial and shift-left pre-commit security gates."
+        ),
+        icm_form="system_map",
+        cluster_id="cluster_01_plugin_seam_and_mirror_auditor",
+        skills=(
+            "icm-workspace-architect",
+            "plugin-seam-and-mirror-auditor",
+            "adversarial-agent-verifier",
+            "python-dataclass-architect",
+            "pre-commit-security-guard",
+        ),
+        query_keywords=("seam", "plugin", "adversarial", "dataclass", "ioc"),
+        use_cases=(
+            "Audit IoC ServiceKey DAG topology, adversarial entrypoint parameter fuzzing, and AST doc mirroring across plugins.",
+            "Enforce slotted frozen dataclasses and intercept secrets or SAST flaws via pre-commit security gates.",
+        ),
+        out_of_scope=(
+            "Legacy monolith decomposition <= 200 lines (use harness-arch-modernizer)",
+            "Evolutionary benchmark calibration across harness rollouts (use harness-self-evolution)",
+        ),
+        tier=2,
+    ),
+    CanonicalSpec(
+        name="harness-self-evolution",
+        domain="agent_orchestration",
+        title="Brain Harness Self-Evolution, Compass Benchmarking, 4-Gate Telemetry & Reflection Harness",
+        mission=(
+            "Evaluate and evolve Brain Harness architecture via 5-part harness diagnostics, 4-gate behavioral "
+            "pipelines, HarnessCompass + R3 evolutionary loops, and endogenous report/trajectory reflection."
+        ),
+        icm_form="pipeline",
+        cluster_id="cluster_03_agent_harness_architect",
+        skills=(
+            "icm-workspace-architect",
+            "agent-harness-architect",
+            "ai-native-harness-engineer",
+            "harness-compass",
+            "harness-reflector",
+        ),
+        query_keywords=("compass", "reflection", "harness", "evolution", "telemetry"),
+        use_cases=(
+            "Audit 5-part agent harness architectures and 4-gate behavioral pipelines with continuous drift telemetry.",
+            "Execute HarnessCompass + R3 constrained evolution and endogenous reflection over Harness reports and logs.",
+        ),
+        out_of_scope=(
+            "Multi-bot desk turn queues and Borda swarm deliberation (use harness-swarm-orchestrator)",
+            "Prompt token pruning and AGENTS.md line-budget linting (use harness-context-economizer)",
+        ),
+        tier=2,
+    ),
+    CanonicalSpec(
+        name="harness-mind-artifact-miner",
+        domain="memory_and_epistemics",
+        title="External IDE Brain, Temp Pytest Sandbox & Dialectical Reflection Miner Harness",
+        mission=(
+            "Mine foreign IDE brains, conversation artifacts, and ephemeral pytest/system temp sandboxes into "
+            "reusable engineering rubrics gated by Aquinas-style dialectical reflection."
+        ),
+        icm_form="record_library",
+        cluster_id="cluster_06_mind_reader",
+        skills=(
+            "icm-workspace-architect",
+            "mind-reader",
+            "temp-artifact-miner",
+            "brain-artifact-miner",
+            "questio-reflection",
+        ),
+        query_keywords=("mindreader", "brain", "trajectory", "temp", "epistemic"),
+        use_cases=(
+            "Extract plan evolutions, visual DAG briefs, and scratch utilities from IDE brain stores and %TEMP% pytest sandboxes.",
+            "Run structured Aquinas-style adversarial objection and reply reflection before irreversible architectural changes.",
+        ),
+        out_of_scope=(
+            "Bi-temporal Graphiti/OKF working-memory decay governance (use harness-memory-graph)",
+            "External GitHub repository plugin scaffolding (use harness-repo-plugin-forge)",
+        ),
+        tier=2,
+    ),
+    CanonicalSpec(
+        name="harness-runtime-governor",
+        domain="agent_orchestration",
+        title="Agent Loop Layering, 4-Tier Permission Sandboxes & Bifurcated Context Governor Harness",
+        mission=(
+            "Govern portable 3-tier terminal coding agent loops, 4-tier tool permissions with symlink sandboxes, "
+            "Elephant-Goldfish 5-stage antagonistic review gates, and 6-layer context stacks."
+        ),
+        icm_form="context_map",
+        cluster_id="cluster_03_agent_harness_architect",
+        skills=(
+            "icm-workspace-architect",
+            "pi-coding-harness",
+            "shim-harness-governor",
+            "elephant-goldfish-governor",
+            "context-engineering-architect",
+        ),
+        query_keywords=("shim", "session", "sandbox", "context", "harness"),
+        use_cases=(
+            "Architect branchable JSONL session tree DAGs, provider-safe tool history repair, and 4-tier permission sandboxes.",
+            "Enforce Elephant-Goldfish bifurcated context specs, 5-stage antagonistic review gates, and 6-layer context stacks.",
+        ),
+        out_of_scope=(
+            "HarnessCompass evolutionary benchmark loops (use harness-self-evolution)",
+            "Headroom tool output compression or compiler-style prompt pruning (use harness-context-economizer)",
+        ),
+        tier=2,
+    ),
 )
 
 __all__ = ["CANONICAL_SPECS", "CanonicalSpec", "VALID_ICM_FORMS"]

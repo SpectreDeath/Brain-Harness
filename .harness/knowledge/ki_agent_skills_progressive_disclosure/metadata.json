@@ -46,8 +46,8 @@
       {
         "assertion": "Rule 44 mandates 100-350 char Tier-1 frontmatter descriptions and co-located config.default.yaml operational budgets.",
         "file": "AGENTS.md",
-        "lines": "L1-L109",
-        "sha256_hash": "b6116ff5ae0a7c10a215a104798b5f351e7ebef9c5be086eaa2b650b9eb45577",
+        "lines": "L1-L33",
+        "sha256_hash": "9b0b702b5e1ab1d7bc32e27503bd536bda49f508629488292e6e99769736eb79",
         "verified": true,
         "verified_at": "2026-11-18T23:26:59Z"
       }

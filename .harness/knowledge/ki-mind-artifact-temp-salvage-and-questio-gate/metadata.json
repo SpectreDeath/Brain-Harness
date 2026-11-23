@@ -1,0 +1,89 @@
+{
+  "id": "ki-mind-artifact-temp-salvage-and-questio-gate",
+  "title": "Spawn Learning: memory_and_epistemics (mind-artifact-miner-1)",
+  "summary": "when harvesting architectural learnings from external IDE brains or ephemeral %TEMP% pytest sandboxes -> index transcript byte offsets in read-only mode, bifurcate visual HTML briefs from %TEMP% before OS cleanup, and subject proposed structural changes to Questio dialectical objection-and-reply reflection",
+  "domain": "memory_and_epistemics",
+  "status": "ACTIVE",
+  "tags": [
+    "spawn",
+    "memory_and_epistemics",
+    "mind_reader",
+    "temp_artifact_miner",
+    "brain_artifact_miner",
+    "questio_reflection"
+  ],
+  "created_at": "2026-11-23T18:17:53.502844+00:00",
+  "updated_at": "2026-11-23T18:17:53.502844+00:00",
+  "source_spawn_id": "spawn_harness-mind-artifact-miner_46d8f64c",
+  "source_proposal_id": "prop_mind-artifact-miner-1_df3a55d6",
+  "task_id": "mind-artifact-miner-1",
+  "isnad_claim": {
+    "cue": "when harvesting architectural learnings from external IDE brains or ephemeral %TEMP% pytest sandboxes",
+    "lesson": "index transcript byte offsets in read-only mode, bifurcate visual HTML briefs from %TEMP% before OS cleanup, and subject proposed structural changes to Questio dialectical objection-and-reply reflection",
+    "evidence": "standalone temp_artifact_miner.py --scan (briefs=0) + brain_artifact_miner.py scan ok; records indexed; ICM 10/10"
+  },
+  "schema_version": "1.0.0",
+  "category": "memory_and_epistemics/reflection",
+  "source_target": "spawn:spawn_harness-mind-artifact-miner_46d8f64c",
+  "detected_format": "spawn_adoption",
+  "author": "Brain Harness Wave 4 Spawner (operator-live)",
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "superseded_by": null,
+  "anchors": {},
+  "edges": [
+    {
+      "type": "distilled_from",
+      "target": "mind-reader",
+      "target_kind": "skill",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Synthesized from Wave 4 worked execution of mind-reader in spawn_harness-mind-artifact-miner_46d8f64c"
+    },
+    {
+      "type": "distilled_from",
+      "target": "temp-artifact-miner",
+      "target_kind": "skill",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Synthesized from Wave 4 worked execution of temp-artifact-miner in spawn_harness-mind-artifact-miner_46d8f64c"
+    },
+    {
+      "type": "distilled_from",
+      "target": "brain-artifact-miner",
+      "target_kind": "skill",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Synthesized from Wave 4 worked execution of brain-artifact-miner in spawn_harness-mind-artifact-miner_46d8f64c"
+    },
+    {
+      "type": "distilled_from",
+      "target": "questio-reflection",
+      "target_kind": "skill",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Synthesized from Wave 4 worked execution of questio-reflection in spawn_harness-mind-artifact-miner_46d8f64c"
+    }
+  ],
+  "isnad": {
+    "decision_id": "dec_prop_mind-artifact-miner-1_df3a55d6",
+    "timestamp": "2026-11-23T18:17:53.502844+00:00",
+    "status": "VERIFIED",
+    "claims": [
+      {
+        "claim_id": "ki-mind-artifact-temp-salvage-and-questio-gate_claim_01",
+        "assertion": "when harvesting architectural learnings from external IDE brains or ephemeral %TEMP% pytest sandboxes -> index transcript byte offsets in read-only mode, bifurcate visual HTML briefs from %TEMP% before OS cleanup, and subject proposed structural changes to Questio dialectical objection-and-reply reflection",
+        "status": "verified",
+        "confidence": 1.0,
+        "evidence": "standalone temp_artifact_miner.py --scan (briefs=0) + brain_artifact_miner.py scan ok; records indexed; ICM 10/10",
+        "evidence_type": "worked_harness_execution",
+        "source": "Wave 4 spawn spawn_harness-mind-artifact-miner_46d8f64c (mind-artifact-miner-1)",
+        "verified": true,
+        "verified_by": "execute_wave4_pipeline.py",
+        "lineage": []
+      }
+    ]
+  },
+  "distilled_learning": "# Spawn Learning: memory_and_epistemics (mind-artifact-miner-1)\n\nwhen harvesting architectural learnings from external IDE brains or ephemeral %TEMP% pytest sandboxes -> index transcript byte offsets in read-only mode, bifurcate visual HTML briefs from %TEMP% before OS cleanup, and subject proposed structural changes to Questio dialectical objection-and-reply reflection"
+}

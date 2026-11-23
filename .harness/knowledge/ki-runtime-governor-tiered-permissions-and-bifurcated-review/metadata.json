@@ -1,0 +1,88 @@
+{
+  "id": "ki-runtime-governor-tiered-permissions-and-bifurcated-review",
+  "title": "Spawn Learning: agent_orchestration (runtime-governor-1)",
+  "summary": "when governing CLI coding agent loops, workspace sandboxes, and multi-stage specification reviews -> enforce 3-tier session tree DAGs with provider-safe tool history repair, 4-tier capability permissions with ancestor-symlink confinement, and Elephant-Goldfish 5-stage antagonistic review gates",
+  "domain": "agent_orchestration",
+  "status": "ACTIVE",
+  "tags": [
+    "spawn",
+    "agent_orchestration",
+    "pi_coding_harness",
+    "shim_harness_governor",
+    "elephant_goldfish_governor"
+  ],
+  "created_at": "2026-11-23T18:17:59.125826+00:00",
+  "updated_at": "2026-11-23T18:17:59.125826+00:00",
+  "source_spawn_id": "spawn_harness-runtime-governor_50ed32ef",
+  "source_proposal_id": "prop_runtime-governor-1_1ef87b22",
+  "task_id": "runtime-governor-1",
+  "isnad_claim": {
+    "cue": "when governing CLI coding agent loops, workspace sandboxes, and multi-stage specification reviews",
+    "lesson": "enforce 3-tier session tree DAGs with provider-safe tool history repair, 4-tier capability permissions with ancestor-symlink confinement, and Elephant-Goldfish 5-stage antagonistic review gates",
+    "evidence": "standalone pi_harness_engine.py (rc=0) + shim_governor_engine.py (rc=2) + context_engineering_engine.py (rc=0); ICM 10/10"
+  },
+  "schema_version": "1.0.0",
+  "category": "agent_orchestration/harness",
+  "source_target": "spawn:spawn_harness-runtime-governor_50ed32ef",
+  "detected_format": "spawn_adoption",
+  "author": "Brain Harness Wave 4 Spawner (operator-live)",
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "superseded_by": null,
+  "anchors": {},
+  "edges": [
+    {
+      "type": "distilled_from",
+      "target": "pi-coding-harness",
+      "target_kind": "skill",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Synthesized from Wave 4 worked execution of pi-coding-harness in spawn_harness-runtime-governor_50ed32ef"
+    },
+    {
+      "type": "distilled_from",
+      "target": "shim-harness-governor",
+      "target_kind": "skill",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Synthesized from Wave 4 worked execution of shim-harness-governor in spawn_harness-runtime-governor_50ed32ef"
+    },
+    {
+      "type": "distilled_from",
+      "target": "elephant-goldfish-governor",
+      "target_kind": "skill",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Synthesized from Wave 4 worked execution of elephant-goldfish-governor in spawn_harness-runtime-governor_50ed32ef"
+    },
+    {
+      "type": "distilled_from",
+      "target": "context-engineering-architect",
+      "target_kind": "skill",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Synthesized from Wave 4 worked execution of context-engineering-architect in spawn_harness-runtime-governor_50ed32ef"
+    }
+  ],
+  "isnad": {
+    "decision_id": "dec_prop_runtime-governor-1_1ef87b22",
+    "timestamp": "2026-11-23T18:17:59.125826+00:00",
+    "status": "VERIFIED",
+    "claims": [
+      {
+        "claim_id": "ki-runtime-governor-tiered-permissions-and-bifurcated-review_claim_01",
+        "assertion": "when governing CLI coding agent loops, workspace sandboxes, and multi-stage specification reviews -> enforce 3-tier session tree DAGs with provider-safe tool history repair, 4-tier capability permissions with ancestor-symlink confinement, and Elephant-Goldfish 5-stage antagonistic review gates",
+        "status": "verified",
+        "confidence": 1.0,
+        "evidence": "standalone pi_harness_engine.py (rc=0) + shim_governor_engine.py (rc=2) + context_engineering_engine.py (rc=0); ICM 10/10",
+        "evidence_type": "worked_harness_execution",
+        "source": "Wave 4 spawn spawn_harness-runtime-governor_50ed32ef (runtime-governor-1)",
+        "verified": true,
+        "verified_by": "execute_wave4_pipeline.py",
+        "lineage": []
+      }
+    ]
+  },
+  "distilled_learning": "# Spawn Learning: agent_orchestration (runtime-governor-1)\n\nwhen governing CLI coding agent loops, workspace sandboxes, and multi-stage specification reviews -> enforce 3-tier session tree DAGs with provider-safe tool history repair, 4-tier capability permissions with ancestor-symlink confinement, and Elephant-Goldfish 5-stage antagonistic review gates"
+}

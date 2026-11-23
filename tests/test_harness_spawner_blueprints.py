@@ -175,6 +175,12 @@ class TestHarnessSpawnerBlueprints:
         assert "harness-cloud-k8s" in names
         assert "harness-geospatial-gis" in names
         assert "harness-skill-factory" in names
+        assert "harness-repo-plugin-forge" in names
+        assert "harness-literature-media-forge" in names
+        assert "harness-kernel-plugin-dev" in names
+        assert "harness-self-evolution" in names
+        assert "harness-mind-artifact-miner" in names
+        assert "harness-runtime-governor" in names
 
         res_one = runner.invoke(main, ["spawn", "blueprints", "--name", "harness-repo-distiller", "--json"])
         assert res_one.exit_code == 0, res_one.output
@@ -270,7 +276,31 @@ class TestHarnessSpawnerBlueprints:
             "harness-geospatial-gis": ("system_map", 4, 4),
             "harness-skill-factory": ("pipeline", 4, 4),
         }
-        assert len(CANONICAL_SPECS) == 15
+        assert len(CANONICAL_SPECS) == 21
+        for name, (expected_form, expected_skills, min_kis) in expected.items():
+            bps = recommend_harness_blueprints(name=name, max_skills=5)
+            assert len(bps) == 1
+            bp = bps[0]
+            assert bp.icm_form == expected_form
+            assert len(bp.skills) == expected_skills
+            assert len(bp.seeded_kis) >= min_kis
+            ki_ids = [k.ki_id for k in bp.seeded_kis]
+            assert not any(kid.startswith("ki-rea-sig-") for kid in ki_ids)
+            assert all(k.isnad_status == "VERIFIED" for k in bp.seeded_kis)
+            tree = build_blueprint_tree(bp)
+            guards.assert_tree_clean(tree)
+            census = surface_ops.validate(BRAIN_SURFACE, tree)
+            assert census["skills"] == expected_skills
+
+    def test_wave4_blueprints_seed_verified_kis_and_pass_surface_and_guards(self) -> None:
+        expected = {
+            "harness-repo-plugin-forge": ("pipeline", 5, 6),
+            "harness-literature-media-forge": ("knowledge_bundle", 5, 6),
+            "harness-kernel-plugin-dev": ("system_map", 5, 6),
+            "harness-self-evolution": ("pipeline", 5, 6),
+            "harness-mind-artifact-miner": ("record_library", 5, 6),
+            "harness-runtime-governor": ("context_map", 5, 6),
+        }
         for name, (expected_form, expected_skills, min_kis) in expected.items():
             bps = recommend_harness_blueprints(name=name, max_skills=5)
             assert len(bps) == 1

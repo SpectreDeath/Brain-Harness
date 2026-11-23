@@ -232,7 +232,7 @@ def recommend_harness_blueprints(
     root_path: Path | str = ".",
     vault_dir: Path | str = ".harness/knowledge",
     max_skills: int = DEFAULT_MAX_BLUEPRINT_SKILLS,
-    limit: int = 16,
+    limit: int = 22,
     name: str | None = None,
 ) -> list[HarnessBlueprint]:
     """Discover, filter, and deterministically rank domain harness blueprints from live graph data."""

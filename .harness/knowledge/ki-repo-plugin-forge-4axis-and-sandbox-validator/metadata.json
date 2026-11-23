@@ -1,0 +1,88 @@
+{
+  "id": "ki-repo-plugin-forge-4axis-and-sandbox-validator",
+  "title": "Spawn Learning: plugin_engineering (repo-plugin-forge-1)",
+  "summary": "when ingesting an external GitHub repository to forge a sandboxed Brain Harness plugin -> run 4-axis deep-repo-auditor inspection first to map entrypoints and hotspots, then scaffold and verify the plugin package with PluginValidator static and dry-run checks before enabling in the IoC container",
+  "domain": "plugin_engineering",
+  "status": "ACTIVE",
+  "tags": [
+    "spawn",
+    "plugin_engineering",
+    "external_repo_bridge_forge",
+    "deep_repo_auditor",
+    "sandbox_validation"
+  ],
+  "created_at": "2026-11-23T18:17:39.985264+00:00",
+  "updated_at": "2026-11-23T18:17:39.985264+00:00",
+  "source_spawn_id": "spawn_harness-repo-plugin-forge_6e908a64",
+  "source_proposal_id": "prop_repo-plugin-forge-1_b299226b",
+  "task_id": "repo-plugin-forge-1",
+  "isnad_claim": {
+    "cue": "when ingesting an external GitHub repository to forge a sandboxed Brain Harness plugin",
+    "lesson": "run 4-axis deep-repo-auditor inspection first to map entrypoints and hotspots, then scaffold and verify the plugin package with PluginValidator static and dry-run checks before enabling in the IoC container",
+    "evidence": "standalone run_audit.py --no-briefs on harness_spawner (files=5, axes=4, composite=0.268) + PluginValidator valid=True (5 checks); stages 01-03 check=pass"
+  },
+  "schema_version": "1.0.0",
+  "category": "developer_experience/tooling",
+  "source_target": "spawn:spawn_harness-repo-plugin-forge_6e908a64",
+  "detected_format": "spawn_adoption",
+  "author": "Brain Harness Wave 4 Spawner (operator-live)",
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "superseded_by": null,
+  "anchors": {},
+  "edges": [
+    {
+      "type": "distilled_from",
+      "target": "external-repo-bridge-forge",
+      "target_kind": "skill",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Synthesized from Wave 4 worked execution of external-repo-bridge-forge in spawn_harness-repo-plugin-forge_6e908a64"
+    },
+    {
+      "type": "distilled_from",
+      "target": "repo-to-plugin-forge",
+      "target_kind": "skill",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Synthesized from Wave 4 worked execution of repo-to-plugin-forge in spawn_harness-repo-plugin-forge_6e908a64"
+    },
+    {
+      "type": "distilled_from",
+      "target": "deep-repo-auditor",
+      "target_kind": "skill",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Synthesized from Wave 4 worked execution of deep-repo-auditor in spawn_harness-repo-plugin-forge_6e908a64"
+    },
+    {
+      "type": "distilled_from",
+      "target": "repo-reader",
+      "target_kind": "skill",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Synthesized from Wave 4 worked execution of repo-reader in spawn_harness-repo-plugin-forge_6e908a64"
+    }
+  ],
+  "isnad": {
+    "decision_id": "dec_prop_repo-plugin-forge-1_b299226b",
+    "timestamp": "2026-11-23T18:17:39.985264+00:00",
+    "status": "VERIFIED",
+    "claims": [
+      {
+        "claim_id": "ki-repo-plugin-forge-4axis-and-sandbox-validator_claim_01",
+        "assertion": "when ingesting an external GitHub repository to forge a sandboxed Brain Harness plugin -> run 4-axis deep-repo-auditor inspection first to map entrypoints and hotspots, then scaffold and verify the plugin package with PluginValidator static and dry-run checks before enabling in the IoC container",
+        "status": "verified",
+        "confidence": 1.0,
+        "evidence": "standalone run_audit.py --no-briefs on harness_spawner (files=5, axes=4, composite=0.268) + PluginValidator valid=True (5 checks); stages 01-03 check=pass",
+        "evidence_type": "worked_harness_execution",
+        "source": "Wave 4 spawn spawn_harness-repo-plugin-forge_6e908a64 (repo-plugin-forge-1)",
+        "verified": true,
+        "verified_by": "execute_wave4_pipeline.py",
+        "lineage": []
+      }
+    ]
+  },
+  "distilled_learning": "# Spawn Learning: plugin_engineering (repo-plugin-forge-1)\n\nwhen ingesting an external GitHub repository to forge a sandboxed Brain Harness plugin -> run 4-axis deep-repo-auditor inspection first to map entrypoints and hotspots, then scaffold and verify the plugin package with PluginValidator static and dry-run checks before enabling in the IoC container"
+}

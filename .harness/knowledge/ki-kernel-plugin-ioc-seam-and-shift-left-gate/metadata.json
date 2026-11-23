@@ -1,0 +1,88 @@
+{
+  "id": "ki-kernel-plugin-ioc-seam-and-shift-left-gate",
+  "title": "Spawn Learning: software_engineering (kernel-plugin-dev-1)",
+  "summary": "when developing or refactoring Brain Harness kernel services, ServiceKey protocols, or internal plugins -> audit IoC provides/requires DAG topology and AST documentation mirroring with plugin_auditor.py, enforce @dataclass(slots=True, frozen=True) domain models, and run shift-left pre-commit SAST/secret scans before committing",
+  "domain": "software_engineering",
+  "status": "ACTIVE",
+  "tags": [
+    "spawn",
+    "software_engineering",
+    "plugin_seam_and_mirror_auditor",
+    "python_dataclass_architect",
+    "pre_commit_security_guard"
+  ],
+  "created_at": "2026-11-23T18:17:44.365839+00:00",
+  "updated_at": "2026-11-23T18:17:44.365839+00:00",
+  "source_spawn_id": "spawn_harness-kernel-plugin-dev_20dd44ab",
+  "source_proposal_id": "prop_kernel-plugin-dev-1_5e91c658",
+  "task_id": "kernel-plugin-dev-1",
+  "isnad_claim": {
+    "cue": "when developing or refactoring Brain Harness kernel services, ServiceKey protocols, or internal plugins",
+    "lesson": "audit IoC provides/requires DAG topology and AST documentation mirroring with plugin_auditor.py, enforce @dataclass(slots=True, frozen=True) domain models, and run shift-left pre-commit SAST/secret scans before committing",
+    "evidence": "standalone plugin_auditor.py dag (cycles=0) + PreCommitSecurityService passed=True (findings=0); ICM 10/10"
+  },
+  "schema_version": "1.0.0",
+  "category": "developer_experience/software_engineering",
+  "source_target": "spawn:spawn_harness-kernel-plugin-dev_20dd44ab",
+  "detected_format": "spawn_adoption",
+  "author": "Brain Harness Wave 4 Spawner (operator-live)",
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "superseded_by": null,
+  "anchors": {},
+  "edges": [
+    {
+      "type": "distilled_from",
+      "target": "plugin-seam-and-mirror-auditor",
+      "target_kind": "skill",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Synthesized from Wave 4 worked execution of plugin-seam-and-mirror-auditor in spawn_harness-kernel-plugin-dev_20dd44ab"
+    },
+    {
+      "type": "distilled_from",
+      "target": "adversarial-agent-verifier",
+      "target_kind": "skill",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Synthesized from Wave 4 worked execution of adversarial-agent-verifier in spawn_harness-kernel-plugin-dev_20dd44ab"
+    },
+    {
+      "type": "distilled_from",
+      "target": "python-dataclass-architect",
+      "target_kind": "skill",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Synthesized from Wave 4 worked execution of python-dataclass-architect in spawn_harness-kernel-plugin-dev_20dd44ab"
+    },
+    {
+      "type": "distilled_from",
+      "target": "pre-commit-security-guard",
+      "target_kind": "skill",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Synthesized from Wave 4 worked execution of pre-commit-security-guard in spawn_harness-kernel-plugin-dev_20dd44ab"
+    }
+  ],
+  "isnad": {
+    "decision_id": "dec_prop_kernel-plugin-dev-1_5e91c658",
+    "timestamp": "2026-11-23T18:17:44.365839+00:00",
+    "status": "VERIFIED",
+    "claims": [
+      {
+        "claim_id": "ki-kernel-plugin-ioc-seam-and-shift-left-gate_claim_01",
+        "assertion": "when developing or refactoring Brain Harness kernel services, ServiceKey protocols, or internal plugins -> audit IoC provides/requires DAG topology and AST documentation mirroring with plugin_auditor.py, enforce @dataclass(slots=True, frozen=True) domain models, and run shift-left pre-commit SAST/secret scans before committing",
+        "status": "verified",
+        "confidence": 1.0,
+        "evidence": "standalone plugin_auditor.py dag (cycles=0) + PreCommitSecurityService passed=True (findings=0); ICM 10/10",
+        "evidence_type": "worked_harness_execution",
+        "source": "Wave 4 spawn spawn_harness-kernel-plugin-dev_20dd44ab (kernel-plugin-dev-1)",
+        "verified": true,
+        "verified_by": "execute_wave4_pipeline.py",
+        "lineage": []
+      }
+    ]
+  },
+  "distilled_learning": "# Spawn Learning: software_engineering (kernel-plugin-dev-1)\n\nwhen developing or refactoring Brain Harness kernel services, ServiceKey protocols, or internal plugins -> audit IoC provides/requires DAG topology and AST documentation mirroring with plugin_auditor.py, enforce @dataclass(slots=True, frozen=True) domain models, and run shift-left pre-commit SAST/secret scans before committing"
+}

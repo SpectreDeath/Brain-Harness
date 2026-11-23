@@ -187,7 +187,7 @@ class DefaultHarnessSpawnerService(HarnessSpawnerProtocol):
         root_path: Path | str = ".",
         vault_dir: Path | str = ".harness/knowledge",
         max_skills: int = DEFAULT_MAX_BLUEPRINT_SKILLS,
-        limit: int = 16,
+        limit: int = 22,
         name: str | None = None,
     ) -> list[HarnessBlueprint]:
         """Discover and rank graph-driven domain harness blueprints."""
@@ -286,7 +286,7 @@ class DefaultHarnessSpawnerService(HarnessSpawnerProtocol):
                 root_path=kwargs.get("root_path", "."),
                 vault_dir=kwargs.get("vault_dir", ".harness/knowledge"),
                 max_skills=int(kwargs.get("max_skills", DEFAULT_MAX_BLUEPRINT_SKILLS)),
-                limit=int(kwargs.get("limit", 16)),
+                limit=int(kwargs.get("limit", 22)),
                 name=kwargs.get("name"),
             )
             return [bp.to_dict() for bp in bps]

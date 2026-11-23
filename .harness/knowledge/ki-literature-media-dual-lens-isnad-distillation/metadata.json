@@ -1,0 +1,88 @@
+{
+  "id": "ki-literature-media-dual-lens-isnad-distillation",
+  "title": "Spawn Learning: knowledge_distillation (lit-media-forge-1)",
+  "summary": "when distilling non-fiction books, technical papers, or video lecture transcripts into agent skills and Knowledge Items -> preserve verbatim source quotes in sources/raw/ verified by IcmVerifier.verify_quotes, apply dual-lens epistemic/procedural seam extraction, and scaffold dual-file KIs with verified isnad claims",
+  "domain": "knowledge_distillation",
+  "status": "ACTIVE",
+  "tags": [
+    "spawn",
+    "knowledge_distillation",
+    "book_to_skill_forge",
+    "deep_skill_forge",
+    "multimedia_intelligence_forge"
+  ],
+  "created_at": "2026-11-23T18:17:42.224257+00:00",
+  "updated_at": "2026-11-23T18:17:42.224257+00:00",
+  "source_spawn_id": "spawn_harness-literature-media-forge_ed7fffbd",
+  "source_proposal_id": "prop_lit-media-forge-1_3b9c51ee",
+  "task_id": "lit-media-forge-1",
+  "isnad_claim": {
+    "cue": "when distilling non-fiction books, technical papers, or video lecture transcripts into agent skills and Knowledge Items",
+    "lesson": "preserve verbatim source quotes in sources/raw/ verified by IcmVerifier.verify_quotes, apply dual-lens epistemic/procedural seam extraction, and scaffold dual-file KIs with verified isnad claims",
+    "evidence": "standalone ki_scaffolder.py + media_pipeline_cli.py distill-seams ok; IcmVerifier quotes verified=1 (valid=True)"
+  },
+  "schema_version": "1.0.0",
+  "category": "memory_and_epistemics/integration",
+  "source_target": "spawn:spawn_harness-literature-media-forge_ed7fffbd",
+  "detected_format": "spawn_adoption",
+  "author": "Brain Harness Wave 4 Spawner (operator-live)",
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "superseded_by": null,
+  "anchors": {},
+  "edges": [
+    {
+      "type": "distilled_from",
+      "target": "book-to-skill-forge",
+      "target_kind": "skill",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Synthesized from Wave 4 worked execution of book-to-skill-forge in spawn_harness-literature-media-forge_ed7fffbd"
+    },
+    {
+      "type": "distilled_from",
+      "target": "deep-skill-forge",
+      "target_kind": "skill",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Synthesized from Wave 4 worked execution of deep-skill-forge in spawn_harness-literature-media-forge_ed7fffbd"
+    },
+    {
+      "type": "distilled_from",
+      "target": "multimedia-intelligence-forge",
+      "target_kind": "skill",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Synthesized from Wave 4 worked execution of multimedia-intelligence-forge in spawn_harness-literature-media-forge_ed7fffbd"
+    },
+    {
+      "type": "distilled_from",
+      "target": "media-to-vault-pipeline",
+      "target_kind": "skill",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Synthesized from Wave 4 worked execution of media-to-vault-pipeline in spawn_harness-literature-media-forge_ed7fffbd"
+    }
+  ],
+  "isnad": {
+    "decision_id": "dec_prop_lit-media-forge-1_3b9c51ee",
+    "timestamp": "2026-11-23T18:17:42.224257+00:00",
+    "status": "VERIFIED",
+    "claims": [
+      {
+        "claim_id": "ki-literature-media-dual-lens-isnad-distillation_claim_01",
+        "assertion": "when distilling non-fiction books, technical papers, or video lecture transcripts into agent skills and Knowledge Items -> preserve verbatim source quotes in sources/raw/ verified by IcmVerifier.verify_quotes, apply dual-lens epistemic/procedural seam extraction, and scaffold dual-file KIs with verified isnad claims",
+        "status": "verified",
+        "confidence": 1.0,
+        "evidence": "standalone ki_scaffolder.py + media_pipeline_cli.py distill-seams ok; IcmVerifier quotes verified=1 (valid=True)",
+        "evidence_type": "worked_harness_execution",
+        "source": "Wave 4 spawn spawn_harness-literature-media-forge_ed7fffbd (lit-media-forge-1)",
+        "verified": true,
+        "verified_by": "execute_wave4_pipeline.py",
+        "lineage": []
+      }
+    ]
+  },
+  "distilled_learning": "# Spawn Learning: knowledge_distillation (lit-media-forge-1)\n\nwhen distilling non-fiction books, technical papers, or video lecture transcripts into agent skills and Knowledge Items -> preserve verbatim source quotes in sources/raw/ verified by IcmVerifier.verify_quotes, apply dual-lens epistemic/procedural seam extraction, and scaffold dual-file KIs with verified isnad claims"
+}

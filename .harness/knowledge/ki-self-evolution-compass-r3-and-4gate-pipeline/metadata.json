@@ -1,0 +1,88 @@
+{
+  "id": "ki-self-evolution-compass-r3-and-4gate-pipeline",
+  "title": "Spawn Learning: agent_orchestration (self-evolution-1)",
+  "summary": "when evolving Brain Harness runtime loops, context budgets, or behavioral quality gates -> combine 5-part harness architecture diagnostics and 4-gate behavioral pipelines with HarnessCompass dual-track (Structural vs Guidance) R3 evolution and endogenous trajectory reflection",
+  "domain": "agent_orchestration",
+  "status": "ACTIVE",
+  "tags": [
+    "spawn",
+    "agent_orchestration",
+    "agent_harness_architect",
+    "ai_native_harness_engineer",
+    "harness_compass"
+  ],
+  "created_at": "2026-11-23T18:17:48.067078+00:00",
+  "updated_at": "2026-11-23T18:17:48.067078+00:00",
+  "source_spawn_id": "spawn_harness-self-evolution_6fd5ddd6",
+  "source_proposal_id": "prop_self-evolution-1_70a4cb22",
+  "task_id": "self-evolution-1",
+  "isnad_claim": {
+    "cue": "when evolving Brain Harness runtime loops, context budgets, or behavioral quality gates",
+    "lesson": "combine 5-part harness architecture diagnostics and 4-gate behavioral pipelines with HarnessCompass dual-track (Structural vs Guidance) R3 evolution and endogenous trajectory reflection",
+    "evidence": "standalone agent_harness_architect.py audit + ai_native_harness.py --gates + harness_compass_engine.py & r3_integrator.py ok; stages 01-03 check=pass"
+  },
+  "schema_version": "1.0.0",
+  "category": "agent_orchestration/harness",
+  "source_target": "spawn:spawn_harness-self-evolution_6fd5ddd6",
+  "detected_format": "spawn_adoption",
+  "author": "Brain Harness Wave 4 Spawner (operator-live)",
+  "retrieval_count": 0,
+  "success_count": 0,
+  "last_retrieved_at": null,
+  "superseded_by": null,
+  "anchors": {},
+  "edges": [
+    {
+      "type": "distilled_from",
+      "target": "agent-harness-architect",
+      "target_kind": "skill",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Synthesized from Wave 4 worked execution of agent-harness-architect in spawn_harness-self-evolution_6fd5ddd6"
+    },
+    {
+      "type": "distilled_from",
+      "target": "ai-native-harness-engineer",
+      "target_kind": "skill",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Synthesized from Wave 4 worked execution of ai-native-harness-engineer in spawn_harness-self-evolution_6fd5ddd6"
+    },
+    {
+      "type": "distilled_from",
+      "target": "harness-compass",
+      "target_kind": "skill",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Synthesized from Wave 4 worked execution of harness-compass in spawn_harness-self-evolution_6fd5ddd6"
+    },
+    {
+      "type": "distilled_from",
+      "target": "harness-reflector",
+      "target_kind": "skill",
+      "derived": false,
+      "confidence": 1.0,
+      "description": "Synthesized from Wave 4 worked execution of harness-reflector in spawn_harness-self-evolution_6fd5ddd6"
+    }
+  ],
+  "isnad": {
+    "decision_id": "dec_prop_self-evolution-1_70a4cb22",
+    "timestamp": "2026-11-23T18:17:48.067078+00:00",
+    "status": "VERIFIED",
+    "claims": [
+      {
+        "claim_id": "ki-self-evolution-compass-r3-and-4gate-pipeline_claim_01",
+        "assertion": "when evolving Brain Harness runtime loops, context budgets, or behavioral quality gates -> combine 5-part harness architecture diagnostics and 4-gate behavioral pipelines with HarnessCompass dual-track (Structural vs Guidance) R3 evolution and endogenous trajectory reflection",
+        "status": "verified",
+        "confidence": 1.0,
+        "evidence": "standalone agent_harness_architect.py audit + ai_native_harness.py --gates + harness_compass_engine.py & r3_integrator.py ok; stages 01-03 check=pass",
+        "evidence_type": "worked_harness_execution",
+        "source": "Wave 4 spawn spawn_harness-self-evolution_6fd5ddd6 (self-evolution-1)",
+        "verified": true,
+        "verified_by": "execute_wave4_pipeline.py",
+        "lineage": []
+      }
+    ]
+  },
+  "distilled_learning": "# Spawn Learning: agent_orchestration (self-evolution-1)\n\nwhen evolving Brain Harness runtime loops, context budgets, or behavioral quality gates -> combine 5-part harness architecture diagnostics and 4-gate behavioral pipelines with HarnessCompass dual-track (Structural vs Guidance) R3 evolution and endogenous trajectory reflection"
+}
